@@ -16,7 +16,7 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Dispositivo</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="../backed/IngresoDispositivo.php" id="formDispositivo" class="needs-validation" novalidate>
+                    <form method="POST" action="../Controller/parqueadero_dispositivo/ControladorDispositivo.php" id="formDispositivo" class="needs-validation" novalidate>
 
                         <div class="row">
                             <!-- QR deshabilitado, ahora solo botón -->
