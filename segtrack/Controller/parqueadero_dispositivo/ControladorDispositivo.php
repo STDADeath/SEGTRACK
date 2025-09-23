@@ -3,9 +3,9 @@
 header('Content-Type: application/json');
 
 // ✅ Requerimos la conexión (ya creada previamente en conexion.php)
-require_once "conexion.php";
+require_once "../Conexion/conexion.php";
 // ✅ Requerimos la librería de QR que ya tienes instalada
-require_once "phpqrcode/qrlib.php";
+require_once "../libs/phpqrcode/qrlib.php";
 
 class DispositivoController {
     // 🔒 Atributo privado para la conexión
