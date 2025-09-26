@@ -136,9 +136,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'] ?? '';
 
     switch ($accion) {
-        case 'registrar':
-            echo json_encode($controller->registrarDispositivo($_POST));
-            break;
+    case 'insertar':  // 👈 ahora coincide con tu JS
+    case 'registrar': // puedes dejar ambos si quieres
+        echo json_encode($controller->registrarDispositivo($_POST));
+        break;
 
         case 'eliminar':
             echo json_encode($controller->eliminarDispositivo($_POST['id']));
