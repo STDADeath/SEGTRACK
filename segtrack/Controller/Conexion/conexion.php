@@ -18,6 +18,13 @@
         return $this->conexion; //
     }
 }*/
+class Conexion {
+    private $host = "localhost";
+    private $usuario = "root";
+    private $clave = "";
+    private $db = "seggtack";
+    private $conexion;
+
 public function __construct() {
         try {
             // Crear la conexión con PDO
