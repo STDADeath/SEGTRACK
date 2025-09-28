@@ -27,7 +27,7 @@ class Conexion {
     private $host = "localhost";   // Servidor de la BD
     private $usuario = "root";     // Usuario de la BD
     private $clave = "";           // Contraseña del usuario
-    private $db = "segtrack21";    // Nombre de la base de datos
+    private $db = "DBSegtrack";    // Nombre de la base de datos
     private $conexion;             // Aquí se guardará el objeto PDO
 
     // Constructor: se ejecuta automáticamente cuando se crea un objeto de la clase
