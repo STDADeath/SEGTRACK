@@ -1,7 +1,9 @@
 # SEGTRACK
 Proyecto Segtrack
-## Esto rd un documrnto rdtsndsr el cual se realizara los cambios del proyecto y este sera documentado paso a paso para poder visualizar la creacion del proyecto y laforma en la que se puede usar 
-*
-1.PASOS DE CREACION DE SEGTRACK.
-2Direcionamientoo del dashboard.
-*
+## Esto es un documento estandar el cual su objetivo es demostrar la elaboracion y el uso del proyecto en genereal. 
+*1.Pasos de creación de segtrack.
+*2.Creacion de modeloFuncionario con base al MVC con PDO.
+*3.Creación de modeloUsuario con base al MVC con PDO.
+*4.Creacion de modeloSede con base al MVC con PDO.
+#
+
