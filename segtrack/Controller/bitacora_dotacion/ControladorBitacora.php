@@ -1,11 +1,11 @@
 <?php
-// Verificar y cargar conexión de manera segura
+
 $ruta_conexion = __DIR__ . '/../../core/conexion.php';
 
 if (file_exists($ruta_conexion)) {
     require_once $ruta_conexion;
 } else {
-    // Si no encuentra el archivo, mostrar error en JSON
+
     header('Content-Type: application/json; charset=utf-8');
     die(json_encode([
         'success' => false, 
@@ -26,7 +26,7 @@ class ControladorBitacora {
         return !isset($array[$campo]) || trim($array[$campo]) === "";
     }
 
-    // Valida datetime-local (ejemplo: 2025-09-29T10:30)
+    // Valida datetime-local 
     private function fechaValida(string $fecha): bool {
         $d = DateTime::createFromFormat('Y-m-d\TH:i', $fecha);
         return $d && $d->format('Y-m-d\TH:i') === $fecha;
@@ -58,7 +58,7 @@ class ControladorBitacora {
         $fecha = DateTime::createFromFormat('Y-m-d\TH:i', $DatosBitacora['FechaBitacora']);
         $DatosBitacora['FechaBitacora'] = $fecha->format('Y-m-d H:i:s');
 
-        // Manejar campos condicionales según la lógica de tu vista
+
         if ($DatosBitacora['TieneVisitante'] === 'si') {
             // Si tiene visitante, validar IdVisitante
             if ($this->campoVacio($DatosBitacora, 'IdVisitante')) {
@@ -71,11 +71,11 @@ class ControladorBitacora {
                     return ['success' => false, 'message' => "Cuando el visitante trae dispositivo, el ID Dispositivo es obligatorio"];
                 }
             } else {
-                // Si no trae dispositivo, asegurar que IdDispositivo sea null
+    
                 $DatosBitacora['IdDispositivo'] = null;
             }
         } else {
-            // Si no tiene visitante, asegurar que estos campos sean null
+
             $DatosBitacora['IdVisitante'] = null;
             $DatosBitacora['IdDispositivo'] = null;
             $DatosBitacora['TraeDispositivo'] = 'no';
@@ -118,9 +118,10 @@ class ControladorBitacora {
     }
 }
 
-// =================== Ruteo de acciones ===================
+
+
 try {
-    // Verificar que la conexión esté disponible
+
     if (!isset($conexion)) {
         throw new Exception("Conexión a la base de datos no disponible");
     }
@@ -159,5 +160,7 @@ try {
         'success' => false, 
         'message' => 'Error del servidor: ' . $e->getMessage()
     ]);
+    
 }
+
 ?>
