@@ -17,7 +17,12 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="TurnoBitacora" class="form-label">Turno</label>
-                        <input type="text" id="TurnoBitacora" name="TurnoBitacora" class="form-control" placeholder="Ej: Jornada mañana" required>
+                        <select id="TurnoBitacora" name="TurnoBitacora" class="form-select border-primary shadow-sm" required>
+                            <option value="" disabled selected>-- Seleccione --</option>
+                            <option value="Jornada mañana">Jornada mañana</option>
+                            <option value="Jornada tarde">Jornada tarde</option>
+                            <option value="Jornada noche">Jornada noche</option>
+                        </select>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="FechaBitacora" class="form-label">Fecha y Hora</label>
@@ -87,7 +92,7 @@
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script>
 $(document).ready(function () {
-    // Mostrar u ocultar campo visitante
+
     $("#TieneVisitante").change(function () {
         if ($(this).val() === "si") {
             $("#VisitanteContainer").slideDown();
@@ -98,7 +103,7 @@ $(document).ready(function () {
         }
     });
 
-    // Mostrar u ocultar campo dispositivo
+
     $("#TraeDispositivo").change(function () {
         if ($(this).val() === "si") {
             $("#DispositivoContainer").slideDown();
@@ -108,34 +113,53 @@ $(document).ready(function () {
         }
     });
 
-    // Registrar Bitácora
-    $("#formRegistrarBitacora").submit(function (e) {
-        e.preventDefault();
 
-        $.ajax({
-            url: "../controller/bitacora_dotacion/controladorBitacora.php",
-            type: "POST",
-            data: $(this).serialize(),
-            dataType: "json",
-            success: function (response) {
-                console.log("Respuesta del servidor:", response);
+$("#formRegistrarBitacora").submit(function (e) {
+    e.preventDefault();
 
-                if (response.success) {
-                    alert("✅ Bitácora registrada correctamente");
-                    $("#formRegistrarBitacora")[0].reset();
-                    $("#VisitanteContainer, #DispositivoContainer").hide();
-                } else {
-                    alert("❌ Error: " + (response.message || "Error desconocido"));
+    // Mostrar loading
+    const btn = $(this).find('button[type="submit"]');
+    const originalText = btn.html();
+    btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
+    btn.prop('disabled', true);
+
+    $.ajax({
+        url: "../controller/bitacora_dotacion/controladorBitacora.php",
+        type: "POST",
+        data: $(this).serialize() + "&accion=registrar",
+        dataType: "json",
+        success: function (response) {
+            console.log("Respuesta del servidor:", response);
+
+            if (response.success) {
+                alert("✅ " + response.message);
+                $("#formRegistrarBitacora")[0].reset();
+                $("#VisitanteContainer, #DispositivoContainer").hide();
+            } else {
+                let errorMsg = "❌ " + (response.message || "Error al registrar la bitácora");
+                if (response.error) {
+                    errorMsg += "\nDetalles: " + response.error;
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error AJAX:", error);
-                console.log("Estado:", status);
-                console.log("Respuesta completa del servidor:", xhr.responseText);
-                alert("⚠️ Error al registrar la bitácora. Revisa la consola para más detalles.");
+                alert(errorMsg);
             }
-        });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error AJAX:", error);
+            console.log("Estado:", status);
+            console.log("Respuesta completa del servidor:", xhr.responseText);
+            
+            let errorMsg = "⚠️ Error de conexión con el servidor";
+            if (xhr.responseText && xhr.responseText.includes('conexión')) {
+                errorMsg += "\nVerifica la configuración de la base de datos";
+            }
+            alert(errorMsg);
+        },
+        complete: function() {
+            btn.html(originalText);
+            btn.prop('disabled', false);
+        }
     });
+});
 });
 </script>
 
