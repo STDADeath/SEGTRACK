@@ -9,10 +9,8 @@ require_once __DIR__ . "/../Conexion/conexion.php";
 require_once __DIR__ . "/../../libs/phpqrcode/qrlib.php";
 
 class DispositivoController {
-    // 🔒 Atributo privado para la conexión
     private $conexion;
 
-    // 🚀 Constructor: recibe la conexión al instanciar la clase
     public function __construct($conexion) {
         $this->conexion = $conexion;
     }
@@ -20,22 +18,36 @@ class DispositivoController {
     // 📌 Método para registrar un dispositivo
     public function registrarDispositivo($datos) {
         try {
-            // ⚠️ Validamos que los datos no estén vacíos
-            if (empty($datos['nombre']) || empty($datos['marca']) || empty($datos['serial'])) {
-                return ['success' => false, 'message' => 'Faltan datos obligatorios'];
+            // ⚠️ Validamos campos obligatorios (tipo + marca + uno de los IDs)
+            if (empty($datos['TipoDispositivo']) || empty($datos['Marca'])) {
+                return ['success' => false, 'message' => 'Tipo y Marca son obligatorios'];
             }
 
-            // 📝 Insertamos en la tabla dispositivos
-            $sql = "INSERT INTO dispositivos (nombre, marca, serial) VALUES (?, ?, ?)";
+            if ((empty($datos['IdFuncionario']) && empty($datos['IdVisitante'])) ||
+                (!empty($datos['IdFuncionario']) && !empty($datos['IdVisitante']))) {
+                return ['success' => false, 'message' => 'Debe ingresar solo un ID: Funcionario o Visitante'];
+            }
+
+            $tipo = $datos['TipoDispositivo'];
+            $marca = $datos['Marca'];
+            $idFuncionario = !empty($datos['IdFuncionario']) ? $datos['IdFuncionario'] : null;
+            $idVisitante = !empty($datos['IdVisitante']) ? $datos['IdVisitante'] : null;
+
+            // 📝 Generar código único para QR (ej: tipo + marca + timestamp)
+            $codigoQR = $tipo . "_" . $marca . "_" . time();
+
+            // Insertar en la tabla
+            $sql = "INSERT INTO dispositivos (QrDispositivo, TipoDispositivo, Marca, IdFuncionario, IdVisitante) 
+                    VALUES (?, ?, ?, ?, ?)";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->bind_param("sss", $datos['nombre'], $datos['marca'], $datos['serial']);
+            $stmt->bind_param("sssii", $codigoQR, $tipo, $marca, $idFuncionario, $idVisitante);
 
             if ($stmt->execute()) {
-                // 📌 Generamos QR basado en el serial
-                $this->generarQR($datos['serial']);
-                return ['success' => true, 'message' => 'Dispositivo registrado y QR generado'];
+                // 📌 Generar archivo QR
+                $this->generarQR($codigoQR);
+                return ['success' => true, 'message' => '✅ Dispositivo registrado y QR generado'];
             } else {
-                return ['success' => false, 'message' => 'Error al registrar dispositivo'];
+                return ['success' => false, 'message' => '❌ Error al registrar dispositivo: ' . $stmt->error];
             }
 
         } catch (Exception $e) {
@@ -46,7 +58,7 @@ class DispositivoController {
     // 📌 Método para eliminar un dispositivo
     public function eliminarDispositivo($id) {
         try {
-            $sql = "DELETE FROM dispositivos WHERE id = ?";
+            $sql = "DELETE FROM dispositivos WHERE IdDispositivo = ?";
             $stmt = $this->conexion->prepare($sql);
             $stmt->bind_param("i", $id);
 
@@ -64,41 +76,32 @@ class DispositivoController {
     // 📌 Método para editar un dispositivo
     public function editarDispositivo($datos) {
         try {
-            // ⚠️ Validamos ID
-            if (empty($datos['id']) || intval($datos['id']) <= 0) {
+            if (empty($datos['IdDispositivo'])) {
                 return ['success' => false, 'message' => 'ID inválido'];
             }
 
-            // ⚠️ Validamos campos requeridos
-            if (empty($datos['qr']) || empty($datos['tipo']) || empty($datos['marca'])) {
-                return ['success' => false, 'message' => 'Todos los campos son obligatorios'];
-            }
-
-            // 📝 Consulta SQL para actualizar
             $sql = "UPDATE dispositivos SET 
-                        qr = ?, 
-                        tipo = ?, 
-                        marca = ?, 
-                        id_funcionario = ?, 
-                        id_visitante = ? 
-                    WHERE id = ?";
+                        TipoDispositivo = ?, 
+                        Marca = ?, 
+                        IdFuncionario = ?, 
+                        IdVisitante = ?
+                    WHERE IdDispositivo = ?";
 
             $stmt = $this->conexion->prepare($sql);
             $stmt->bind_param(
-                "sssiii",
-                $datos['qr'],
-                $datos['tipo'],
-                $datos['marca'],
-                $datos['id_funcionario'],
-                $datos['id_visitante'],
-                $datos['id']
+                "ssiii",
+                $datos['TipoDispositivo'],
+                $datos['Marca'],
+                $datos['IdFuncionario'],
+                $datos['IdVisitante'],
+                $datos['IdDispositivo']
             );
 
             if ($stmt->execute()) {
                 if ($stmt->affected_rows > 0) {
-                    return ['success' => true, 'message' => 'Dispositivo actualizado correctamente'];
+                    return ['success' => true, 'message' => '✅ Dispositivo actualizado correctamente'];
                 } else {
-                    return ['success' => false, 'message' => 'No se realizaron cambios o el dispositivo no existe'];
+                    return ['success' => false, 'message' => 'No se realizaron cambios'];
                 }
             } else {
                 return ['success' => false, 'message' => 'Error en la consulta: ' . $stmt->error];
@@ -109,18 +112,14 @@ class DispositivoController {
         }
     }
 
-    // 📌 Método privado para generar QR
-    private function generarQR($serial) {
+    // 📌 Generar QR
+    private function generarQR($codigo) {
         $dir = "qrs/";
         if (!file_exists($dir)) {
             mkdir($dir);
         }
-
-        $archivoQR = $dir . $serial . ".png";
-        $contenido = "Dispositivo: " . $serial;
-
-        // 📌 Generamos QR
-        QRcode::png($contenido, $archivoQR, QR_ECLEVEL_L, 10);
+        $archivoQR = $dir . $codigo . ".png";
+        QRcode::png($codigo, $archivoQR, QR_ECLEVEL_L, 10);
         return $archivoQR;
     }
 }
@@ -128,18 +127,18 @@ class DispositivoController {
 // =============================
 // 🚀 USO DEL CONTROLADOR
 // =============================
-$conexionObj = new Conexion();          // Instancia la clase
-$conexion = $conexionObj->getConexion(); // Obtén la conexión real (mysqli)
+$conexionObj = new Conexion();
+$conexion = $conexionObj->getConexion();
 $controller = new DispositivoController($conexion);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'] ?? '';
 
     switch ($accion) {
-    case 'insertar':  // 👈 ahora coincide con tu JS
-    case 'registrar': // puedes dejar ambos si quieres
-        echo json_encode($controller->registrarDispositivo($_POST));
-        break;
+        case 'insertar':
+        case 'registrar':
+            echo json_encode($controller->registrarDispositivo($_POST));
+            break;
 
         case 'eliminar':
             echo json_encode($controller->eliminarDispositivo($_POST['id']));

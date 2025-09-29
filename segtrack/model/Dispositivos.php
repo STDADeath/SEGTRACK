@@ -16,7 +16,7 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Dispositivo</h6>
                 </div>
                 <div class="card-body">
-                    <form action="../Controller/parqueadero_dispositivo/ControladorDispositivo.php" method="POST">
+                    <form id="formDispositivo" action="../Controller/parqueadero_dispositivo/ControladorDispositivo.php" method="POST">
                         <div class="row">
                             <!-- QR deshabilitado, ahora solo botón -->
                             <div class="col-md-6 mb-3">
