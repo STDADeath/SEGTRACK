@@ -17,9 +17,9 @@
         rel="stylesheet">
 
 
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/icono.css">
+    <link href="../view/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../view/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="../view/css/icono.css">
 
 </head>
 
@@ -34,7 +34,7 @@
 
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon">
-                    <img src="../img/LOGO_SEGTRACK.ico" alt="Logo" id="logo">
+                    <img src="../view/img/LOGO_SEGTRACK-con.ico" alt="Logo" id="logo">
                 </div>
                 <div class="sidebar-brand-text mx-3"></div>
             </a>

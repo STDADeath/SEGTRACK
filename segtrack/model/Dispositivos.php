@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../models/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../model/parte_superior.php'; ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
@@ -6,7 +6,7 @@
 
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Registrar Dispositivos</h1>
-                <a href="../models/DispositivoLista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+                <a href="../model/DispositivoLista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
                     <i class="fas fa-list me-1"></i> Ver Dispositivos
                 </a>
             </div>
@@ -16,8 +16,7 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Dispositivo</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="../backed/IngresoDispositivo.php" id="formDispositivo" class="needs-validation" novalidate>
-
+                    <form id="formDispositivo" action="../Controller/parqueadero_dispositivo/ControladorDispositivo.php" method="POST">
                         <div class="row">
                             <!-- QR deshabilitado, ahora solo botón -->
                             <div class="col-md-6 mb-3">
@@ -107,10 +106,10 @@
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="../js/sb-admin-2.min.js"></script>
+<script src="../js/javascript/demo/sb-admin-2.min.js"></script>
 <script src="../js/javascript/js/ValidacionDispositivo.js"></script>
 
 </body>
 </html>
 
-<?php require_once __DIR__ . '/../models/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../model/parte_inferior.php'; ?>

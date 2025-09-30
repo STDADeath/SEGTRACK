@@ -1,3 +1,4 @@
+// ../js/javascript/js/ValidacionDispositivo.js
 // Espera a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formDispositivo');
@@ -58,24 +59,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // ✅ Enviar con fetch (AJAX)
-        fetch("../backed/IngresoDispositivo.php", {
+        fetch("../Controller/parqueadero_dispositivo/ControladorDispositivo.php", {
             method: "POST",
             body: formData
         })
-        .then(response => response.text())
+        .then(response => response.json()) // esperamos JSON del controlador
         .then(data => {
-            console.log(data); // Para depuración
+            console.log("Respuesta del servidor:", data); // Para depuración
 
-            if (data.includes("✅")) {
-                alert('✅ Dispositivo agregado con éxito');
+            if (data.success) {
+                alert('✅ ' + data.message);
                 form.reset();
                 document.getElementById("campoOtro").style.display = "none"; // Ocultar campo extra
             } else {
-                alert('❌ ' + data);
+                alert('❌ ' + data.message);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error en fetch:', error);
             alert('❌ Hubo un error al registrar el dispositivo');
         });
     });

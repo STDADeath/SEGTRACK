@@ -1,15 +1,15 @@
-<?php require_once __DIR__ . '/../models/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../model/parte_superior.php'; ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Dispositivos Registrados</h1>
-        <a href="../models/Dispositivos.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="../model/Dispositivos.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus me-1"></i> Nuevo Dispositivo
         </a>
     </div>
 
     <?php
-    require_once "../backed/conexion.php";
+    require_once "../Controller/Conexion/conexion.php";
     $conexion = new Conexion();
     $conn = $conexion->getConexion();
     $sql = "SELECT * FROM Dispositivo ORDER BY IdDispositivo DESC";
@@ -152,7 +152,7 @@
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="../js/sb-admin-2.min.js"></script>
+<script src="../js/javascript/js/sb-admin-2.min.js"></script>
 
 <script>
 let dispositivoIdAEliminar = null;
@@ -176,7 +176,7 @@ function confirmarEliminacion(id) {
 function eliminarDispositivo() {
     if (dispositivoIdAEliminar) {
         $.ajax({
-            url: '../backed/EliminarDipositivo.php',
+            url: '../Controller/parqueadero_dispositivo/ControladorDispositivo.php',
             type: 'POST',
             data: { id: dispositivoIdAEliminar },
             dataType: 'json',
@@ -214,7 +214,7 @@ $('#btnGuardarCambios').click(function() {
         return;
     }
     $.ajax({
-        url: '../backed/ActualizarDipositivo.php',
+        url: '../Controller/parqueadero_dispositivo/ControladorDispositivo.php',
         type: 'POST',
         data: formData,
         dataType: 'json',
@@ -237,4 +237,4 @@ $('#btnGuardarCambios').click(function() {
 document.getElementById('btnConfirmarEliminar').addEventListener('click', eliminarDispositivo);
 </script>
 
-<?php require_once __DIR__ . '/../models/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../model/parte_inferior.php'; ?>
