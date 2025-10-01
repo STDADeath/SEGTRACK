@@ -9,7 +9,7 @@
     </div>
 
     <?php
-    require_once "../Controller/Conexion/conexion.php";
+    require_once "../controller/Conexion/conexion.php";
     $conexion = new Conexion();
     $conn = $conexion->getConexion();
     $sql = "SELECT * FROM Dispositivo ORDER BY IdDispositivo DESC";
@@ -130,13 +130,13 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="editFuncionario" class="form-label">ID Funcionario</label>
-                            <input type="number" id="editFuncionario" class="form-control" name="id_funcionario" required>
+                            <input type="number" id="editFuncionario" class="form-control" name="IdFuncionario" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="editVisitante" class="form-label">ID Visitante</label>
-                            <input type="number" id="editVisitante" class="form-control" name="id_visitante" required>
+                            <input type="number" id="editVisitante" class="form-control" name="IdVisitante" required>
                         </div>
                     </div>
                 </form>
@@ -152,7 +152,7 @@
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="../js/javascript/js/sb-admin-2.min.js"></script>
+<script src="../js/javascript/demo/sb-admin-2.min.js"></script>
 
 <script>
 let dispositivoIdAEliminar = null;

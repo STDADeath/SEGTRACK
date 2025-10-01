@@ -60,7 +60,7 @@
                                 <label class="form-label fw-semibold">ID Funcionario</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-                                    <input type="number" class="form-control" name="IdFuncionario" required>
+                                    <input type="number" class="form-control" name="IdFuncionario">
                                 </div>
                             </div>
 

@@ -37,6 +37,7 @@ class DispositivoController {
             $idFuncionario = !empty($datos['IdFuncionario']) ? $datos['IdFuncionario'] : null;
             $idVisitante = !empty($datos['IdVisitante']) ? $datos['IdVisitante'] : null;
 
+
             // 📝 Generar código único para QR
             $codigoQR = $tipo . "_" . $marca . "_" . time();
 
@@ -49,9 +50,9 @@ class DispositivoController {
             if ($stmt->execute()) {
                 // 📌 Generar archivo QR
                 $this->generarQR($codigoQR);
-                return ['success' => true, 'message' => 'Dispositivo registrado y QR generado'];
+                return ['success' => true, 'message' => '✅ Dispositivo registrado y QR generado'];
             } else {
-                return ['success' => false, 'message' => 'Error al registrar dispositivo: ' . $stmt->error];
+                return ['success' => false, 'message' => '❌ Error al registrar dispositivo: ' . $stmt->error];
             }
 
         } catch (Exception $e) {
@@ -67,9 +68,9 @@ class DispositivoController {
             $stmt->bind_param("i", $id);
 
             if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Dispositivo eliminado correctamente'];
+                return ['success' => true, 'message' => '✅ Dispositivo eliminado correctamente'];
             } else {
-                return ['success' => false, 'message' => 'Error al eliminar dispositivo: ' . $stmt->error];
+                return ['success' => false, 'message' => '❌ Error al eliminar dispositivo'];
             }
 
         } catch (Exception $e) {
@@ -103,7 +104,7 @@ class DispositivoController {
 
             if ($stmt->execute()) {
                 if ($stmt->affected_rows > 0) {
-                    return ['success' => true, 'message' => 'Dispositivo actualizado correctamente'];
+                    return ['success' => true, 'message' => '✅ Dispositivo actualizado correctamente'];
                 } else {
                     return ['success' => false, 'message' => 'No se realizaron cambios'];
                 }
@@ -136,7 +137,7 @@ $conexion = $conexionObj->getConexion();
 $controller = new DispositivoController($conexion);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $accion = $_POST['accion'] ?? 'insertar'; // por defecto es insertar
+    $accion = $_POST['accion'] ?? 'registrar';
 
     switch ($accion) {
         case 'insertar':
@@ -158,3 +159,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(['success' => false, 'message' => 'Método no permitido']);
 }
+?>
