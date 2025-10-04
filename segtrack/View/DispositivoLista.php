@@ -176,7 +176,7 @@ function confirmarEliminacion(id) {
 function eliminarDispositivo() {
     if (dispositivoIdAEliminar) {
         $.ajax({
-            url: '../Controller/parqueadero_dispositivo/ControladorDispositivo.php',
+            url: "../Controller/parqueadero_dispositivo/ControladorDispositivo.php",
             type: 'POST',
             data: { id: dispositivoIdAEliminar },
             dataType: 'json',

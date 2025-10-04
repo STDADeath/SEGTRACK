@@ -3,19 +3,28 @@ class Conexion {
     private $host = "localhost";
     private $usuario = "root";
     private $clave = "";
-    private $db = "seggtack";
+    private $db = "segtrack"; // ✅ SIN el punto final
     private $conexion;
 
     public function __construct() {
-        $this->conexion = new mysqli($this->host, $this->usuario, $this->clave, $this->db);
-
-        if ($this->conexion->connect_error) {
-            die("❌ Error en la conexión: " . $this->conexion->connect_error);
+        try {
+            $this->conexion = new PDO(
+                "mysql:host={$this->host};dbname={$this->db};charset=utf8",
+                $this->usuario,
+                $this->clave
+            );
+            $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("❌ Error en la conexión: " . $e->getMessage());
         }
     }
 
     public function getConexion() {
-        return $this->conexion; //
+        return $this->conexion;
     }
 }
+
+// ✅ Conexión global
+$conexionObj = new Conexion();
+$conexion = $conexionObj->getConexion();
 ?>
