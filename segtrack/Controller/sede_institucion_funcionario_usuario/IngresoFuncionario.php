@@ -1,71 +1,102 @@
 <?php
-require_once "conexion.php";
+header('Content-Type: application/json; charset=utf-8');
 
-class Funcionario {
-    private $conn;
+require_once __DIR__ . '../../Conexion/conexion.php';
+require_once __DIR__ . '/../../model/Funcionario.php';
 
-    public function __construct() {
-        $this->conn = (new Conexion())->getConexion();
-    }
-
-    // Método para registrar un funcionario
-    public function registrar($NombreFuncionario, $DocumentoFuncionario, $TelefonoFuncionario, $CorreoFuncionario, $CargoFuncionario, $IdSede) {
-        try {
-            // 1. Validar campos vacíos
-            if (empty($NombreFuncionario) || empty($DocumentoFuncionario) || empty($TelefonoFuncionario) || empty($CorreoFuncionario) || empty($CargoFuncionario) || empty($IdSede)) {
-                return "❌ Complete todos los campos obligatorios.";
-            }
-
-            // 2. Validar duplicado en documento
-            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM funcionario WHERE DocumentoFuncionario = ?");
-            $stmt->execute([$DocumentoFuncionario]);
-            if ($stmt->fetchColumn() > 0) {
-                return "❌ Ya existe un funcionario con el documento $DocumentoFuncionario.";
-            }
-
-            // 3. Validar duplicado en correo
-            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM funcionario WHERE CorreoFuncionario = ?");
-            $stmt->execute([$CorreoFuncionario]);
-            if ($stmt->fetchColumn() > 0) {
-                return "❌ Ya existe un funcionario con el correo $CorreoFuncionario.";
-            }
-
-            // 4. Validar sede existente
-            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM sede WHERE IdSede = ?");
-            $stmt->execute([$IdSede]);
-            if ($stmt->fetchColumn() == 0) {
-                return "❌ La sede seleccionada no existe.";
-            }
-
-            // 5. Generar QR único
-            $QrCodigoFuncionario = "QR-FUNC-" . strtoupper(substr(md5(uniqid(rand(), true)), 0, 4));
-
-            // 6. Insertar funcionario
-            $sql = "INSERT INTO funcionario 
-                    (CargoFuncionario, QrCodigoFuncionario, NombreFuncionario, IdSede, TelefonoFuncionario, DocumentoFuncionario, CorreoFuncionario) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([$CargoFuncionario, $QrCodigoFuncionario, $NombreFuncionario, $IdSede, $TelefonoFuncionario, $DocumentoFuncionario, $CorreoFuncionario]);
-
-            // 7. Retornar mensaje de éxito con datos
-            $idInsertado = $this->conn->lastInsertId();
-            return "
-                ✅ Funcionario registrado correctamente.<br><br>
-                <strong>ID:</strong> $idInsertado <br>
-                <strong>Nombre:</strong> $NombreFuncionario <br>
-                <strong>Documento:</strong> $DocumentoFuncionario <br>
-                <strong>Teléfono:</strong> $TelefonoFuncionario <br>
-                <strong>Correo:</strong> $CorreoFuncionario <br>
-                <strong>Cargo:</strong> $CargoFuncionario <br>
-                <strong>Sede:</strong> $IdSede <br>
-                <strong>Código QR:</strong> $QrCodigoFuncionario <br>
-            ";
-
-        } catch (PDOException $e) {
-            return "❌ Error en el registro: " . $e->getMessage();
-        }
-    }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+    exit;
 }
 
+try {
+    $conexion = (new Conexion())->getConexion();
+    $modelo = new Funcionario($conexion);
+
+    $datos = [
+        'NombreFuncionario' => trim($_POST['NombreFuncionario'] ?? ''),
+        'DocumentoFuncionario' => trim($_POST['DocumentoFuncionario'] ?? ''),
+        'TelefonoFuncionario' => trim($_POST['TelefonoFuncionario'] ?? ''),
+        'CorreoFuncionario' => trim($_POST['CorreoFuncionario'] ?? ''),
+        'CargoFuncionario' => trim($_POST['CargoFuncionario'] ?? ''),
+        'IdSede' => trim($_POST['IdSede'] ?? '')
+    ];
+
+    // Validaciones
+    if (empty($datos['NombreFuncionario']) || empty($datos['DocumentoFuncionario']) || 
+        empty($datos['TelefonoFuncionario']) || empty($datos['CorreoFuncionario']) || 
+        empty($datos['CargoFuncionario']) || empty($datos['IdSede'])) {
+        echo json_encode(['success' => false, 'error' => 'Complete todos los campos obligatorios']);
+        exit;
+    }
+
+    if (strlen($datos['NombreFuncionario']) > 30) {
+        echo json_encode(['success' => false, 'error' => 'El nombre no debe superar 30 caracteres']);
+        exit;
+    }
+
+    if (strlen($datos['DocumentoFuncionario']) > 12) {
+        echo json_encode(['success' => false, 'error' => 'El documento no debe superar 12 dígitos']);
+        exit;
+    }
+
+    if (!ctype_digit($datos['DocumentoFuncionario'])) {
+        echo json_encode(['success' => false, 'error' => 'El documento debe contener solo números']);
+        exit;
+    }
+
+    if (strlen($datos['TelefonoFuncionario']) != 10) {
+        echo json_encode(['success' => false, 'error' => 'El teléfono debe tener exactamente 10 dígitos']);
+        exit;
+    }
+
+    if (!ctype_digit($datos['TelefonoFuncionario'])) {
+        echo json_encode(['success' => false, 'error' => 'El teléfono debe contener solo números']);
+        exit;
+    }
+
+    if (!filter_var($datos['CorreoFuncionario'], FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['success' => false, 'error' => 'El correo electrónico no es válido']);
+        exit;
+    }
+
+    if (strlen($datos['CorreoFuncionario']) > 80) {
+        echo json_encode(['success' => false, 'error' => 'El correo no debe superar 80 caracteres']);
+        exit;
+    }
+
+    if ($modelo->existeDocumento($datos['DocumentoFuncionario'])) {
+        echo json_encode(['success' => false, 'error' => "Ya existe un funcionario con el documento {$datos['DocumentoFuncionario']}"]);
+        exit;
+    }
+
+    if ($modelo->existeCorreo($datos['CorreoFuncionario'])) {
+        echo json_encode(['success' => false, 'error' => "Ya existe un funcionario con el correo {$datos['CorreoFuncionario']}"]);
+        exit;
+    }
+
+    if (!$modelo->existeSede($datos['IdSede'])) {
+        echo json_encode(['success' => false, 'error' => 'La sede seleccionada no existe']);
+        exit;
+    }
+
+    $resultado = $modelo->insertar($datos);
+
+    if ($resultado['success']) {
+        $funcionario = $modelo->obtenerPorId($resultado['id']);
+        echo json_encode([
+            'success' => true,
+            'message' => 'Funcionario registrado correctamente',
+            'data' => $funcionario
+        ], JSON_UNESCAPED_UNICODE);
+    } else {
+        echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
+    }
+
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false, 
+        'error' => 'Error del servidor: ' . $e->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
+}
 ?>

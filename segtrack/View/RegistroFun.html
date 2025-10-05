@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Segtrack - Registro de Funcionarios</title>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/RegistroFun.css">
+    <link rel="stylesheet" href="css/RegistroFun.css">
 </head>
 <body>
     <div class="container">
@@ -22,7 +22,7 @@
         <!-- Contenido -->
         <div class="content">
             <div class="welcome-section">
-                <img src="../img/LOGO_SEGTRACK-con.ico" alt="Segtrack Logo">
+                <img src="img/LOGO_SEGTRACK-con.ico" alt="Segtrack Logo">
                 <h2>Registro de Funcionarios</h2>
                 <p>El llevar un control preciso ayuda a facilitar el flujo del personal activo.</p>
             </div>
@@ -32,7 +32,7 @@
                     <h2>Registrar Personal</h2>
 
                     <!-- FORMULARIO -->
-                    <form id="formFuncionario" action="../Controller/sede_institucion_funcionario_usuario/ContollerFuncionario.php" method="POST" novalidate>
+                    <form id="formFuncionario" action="../Controller/sede_institucion_funcionario_usuario/IngresoFuncionario.php" method="POST" novalidate>
                         
                         <!-- Nombre -->
                         <div class="input-box">
@@ -110,7 +110,7 @@
                     <!-- /FORMULARIO -->
 
                     <div class="links">
-                        <a href="#">¿No estás registrado? Registrar Datos</a>
+                        <a href="RegistroFun.html">Ver Registros</a>
                         <a href="#">¿Olvidaste tu contraseña?</a>
                     </div>
                 </div>
@@ -120,8 +120,7 @@
 
     <!-- Librería SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Script externo para manejar AJAX y alertas -->
+     <!-- Script externo para manejar AJAX y alertas -->
     <script src="../js/javascript/js/registro-funcionario.js" defer></script>
 
 

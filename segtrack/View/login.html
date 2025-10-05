@@ -4,9 +4,14 @@
     <meta charset="UTF-8">     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">     
     <title>Segtrack - Login y Registro</title>     
+
+    <!-- Íconos -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>     
-    <link rel="stylesheet" href="../css/loginn.css"> 
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/loginn.css"> 
 </head> 
+
 <body>     
     <div class="container">         
         <div class="navbar">             
@@ -20,7 +25,7 @@
 
         <div class="content">             
             <div class="welcome-section">                        
-                <img src="../img/LOGO_SEGTRACK-con.ico" alt="Segtrack Logo">                 
+                <img src="img/LOGO_SEGTRACK-con.ico" alt="Segtrack Logo">                 
                 <h2>BIENVENIDO</h2>                 
                 <p>Estamos para ayudarte. Sé parte de nuestro grupo.</p>             
             </div>                          
@@ -29,8 +34,8 @@
                 <div class="form-box">                     
                     <h2>Login</h2>
                     
-                    <!-- FORMULARI -->
-                    <form id="loginForm" action="../backed/validar_correo.php" method="POST">                                          
+                    <!-- FORMULARIO -->
+                    <form id="loginForm" action="../Controller/Login/validar_correo.php" method="POST">                                          
                         <div class="input-box">                         
                             <i class='bx bxs-user'></i>                         
                             <input type="email" id="correo" name="correo" placeholder="Correo electrónico">
@@ -63,7 +68,10 @@
         </div>     
     </div>   
 
+    <!-- ✅ Biblioteca SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- VALIDACIÓN CON JAVASCRIPT -->
-<script src="../js/javascript/js/login.js"></script>
+    <script src="../js/javascript/js/login.js"></script>
 </body> 
 </html>

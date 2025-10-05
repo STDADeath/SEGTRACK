@@ -1,118 +1,195 @@
 <?php
-<?php
-require_once "conexion.php";
+require_once __DIR__ . '/../Conexion/conexion.php';
+require_once __DIR__ . '/../model/Funcionario.php';
 
-class Funcionario {
-    private $conn;
+class FuncionarioController {
+    private $modelo;
 
     public function __construct() {
-        $this->conn = (new Conexion())->getConexion();
+        $conexion = (new Conexion())->getConexion();
+        $this->modelo = new FuncionarioModelo($conexion);
     }
 
-    // ✅ Registrar funcionario
-    public function registrar($NombreFuncionario, $DocumentoFuncionario, $TelefonoFuncionario, $CorreoFuncionario, $CargoFuncionario, $IdSede) {
+    // Validaciones
+    private function validarDatos(array $datos, bool $esActualizacion = false): ?string {
+        // Validar campos vacíos
+        if (empty($datos['NombreFuncionario'])) return 'El nombre es obligatorio';
+        if (empty($datos['DocumentoFuncionario'])) return 'El documento es obligatorio';
+        if (empty($datos['TelefonoFuncionario'])) return 'El teléfono es obligatorio';
+        if (empty($datos['CorreoFuncionario'])) return 'El correo es obligatorio';
+        if (empty($datos['CargoFuncionario'])) return 'El cargo es obligatorio';
+        if (empty($datos['IdSede'])) return 'La sede es obligatoria';
+
+        // Validar longitudes
+        if (strlen($datos['NombreFuncionario']) > 30) {
+            return 'El nombre no debe superar 30 caracteres';
+        }
+        if (strlen($datos['DocumentoFuncionario']) > 12) {
+            return 'El documento no debe superar 12 dígitos';
+        }
+        if (strlen($datos['TelefonoFuncionario']) != 10) {
+            return 'El teléfono debe tener exactamente 10 dígitos';
+        }
+        if (strlen($datos['CorreoFuncionario']) > 80) {
+            return 'El correo no debe superar 80 caracteres';
+        }
+
+        // Validar formatos
+        if (!ctype_digit($datos['DocumentoFuncionario'])) {
+            return 'El documento debe contener solo números';
+        }
+        if (!ctype_digit($datos['TelefonoFuncionario'])) {
+            return 'El teléfono debe contener solo números';
+        }
+        if (!filter_var($datos['CorreoFuncionario'], FILTER_VALIDATE_EMAIL)) {
+            return 'El correo electrónico no es válido';
+        }
+
+        return null;
+    }
+
+    public function insertar(array $datos): array {
         try {
-            if (empty($NombreFuncionario) || empty($DocumentoFuncionario) || empty($TelefonoFuncionario) || empty($CorreoFuncionario) || empty($CargoFuncionario) || empty($IdSede)) {
-                return "❌ Complete todos los campos obligatorios.";
+            // Validar datos
+            $error = $this->validarDatos($datos);
+            if ($error) {
+                return ['success' => false, 'error' => $error];
             }
 
-            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM funcionario WHERE DocumentoFuncionario = ?");
-            $stmt->execute([$DocumentoFuncionario]);
-            if ($stmt->fetchColumn() > 0) {
-                return "❌ Ya existe un funcionario con el documento $DocumentoFuncionario.";
+            // Validar duplicados
+            if ($this->modelo->existeDocumento($datos['DocumentoFuncionario'])) {
+                return ['success' => false, 'error' => "Ya existe un funcionario con el documento {$datos['DocumentoFuncionario']}"];
+            }
+            if ($this->modelo->existeCorreo($datos['CorreoFuncionario'])) {
+                return ['success' => false, 'error' => "Ya existe un funcionario con el correo {$datos['CorreoFuncionario']}"];
             }
 
-            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM funcionario WHERE CorreoFuncionario = ?");
-            $stmt->execute([$CorreoFuncionario]);
-            if ($stmt->fetchColumn() > 0) {
-                return "❌ Ya existe un funcionario con el correo $CorreoFuncionario.";
+            // Validar sede
+            if (!$this->modelo->existeSede($datos['IdSede'])) {
+                return ['success' => false, 'error' => 'La sede seleccionada no existe'];
             }
 
-            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM sede WHERE IdSede = ?");
-            $stmt->execute([$IdSede]);
-            if ($stmt->fetchColumn() == 0) {
-                return "❌ La sede seleccionada no existe.";
+            // Insertar
+            $resultado = $this->modelo->insertar($datos);
+
+            if ($resultado['success']) {
+                $funcionario = $this->modelo->obtenerPorId($resultado['id']);
+                return [
+                    'success' => true,
+                    'message' => 'Funcionario registrado correctamente',
+                    'data' => $funcionario
+                ];
             }
 
-            $QrCodigoFuncionario = "QR-FUNC-" . strtoupper(substr(md5(uniqid(rand(), true)), 0, 4));
+            return $resultado;
 
-            $sql = "INSERT INTO funcionario 
-                    (CargoFuncionario, QrCodigoFuncionario, NombreFuncionario, IdSede, TelefonoFuncionario, DocumentoFuncionario, CorreoFuncionario) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([$CargoFuncionario, $QrCodigoFuncionario, $NombreFuncionario, $IdSede, $TelefonoFuncionario, $DocumentoFuncionario, $CorreoFuncionario]);
-
-            $idInsertado = $this->conn->lastInsertId();
-            return "
-                ✅ Funcionario registrado correctamente.<br><br>
-                <strong>ID:</strong> $idInsertado <br>
-                <strong>Nombre:</strong> $NombreFuncionario <br>
-                <strong>Documento:</strong> $DocumentoFuncionario <br>
-                <strong>Teléfono:</strong> $TelefonoFuncionario <br>
-                <strong>Correo:</strong> $CorreoFuncionario <br>
-                <strong>Cargo:</strong> $CargoFuncionario <br>
-                <strong>Sede:</strong> $IdSede <br>
-                <strong>Código QR:</strong> $QrCodigoFuncionario <br>
-            ";
-
-        } catch (PDOException $e) {
-            return "❌ Error en el registro: " . $e->getMessage();
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => 'Error del servidor: ' . $e->getMessage()];
         }
     }
 
-    // ✅ Obtener todos los funcionarios
-    public function obtenerTodos() {
+    public function actualizar(int $id, array $datos): array {
         try {
-            $stmt = $this->conn->query("SELECT * FROM funcionario");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return [];
+            // Verificar existencia
+            $funcionario = $this->modelo->obtenerPorId($id);
+            if (!$funcionario) {
+                return ['success' => false, 'error' => 'El funcionario no existe'];
+            }
+
+            // Validar datos
+            $error = $this->validarDatos($datos, true);
+            if ($error) {
+                return ['success' => false, 'error' => $error];
+            }
+
+            // Validar duplicados
+            if ($this->modelo->existeDocumento($datos['DocumentoFuncionario'], $id)) {
+                return ['success' => false, 'error' => "Ya existe otro funcionario con el documento {$datos['DocumentoFuncionario']}"];
+            }
+            if ($this->modelo->existeCorreo($datos['CorreoFuncionario'], $id)) {
+                return ['success' => false, 'error' => "Ya existe otro funcionario con el correo {$datos['CorreoFuncionario']}"];
+            }
+
+            // Validar sede
+            if (!$this->modelo->existeSede($datos['IdSede'])) {
+                return ['success' => false, 'error' => 'La sede seleccionada no existe'];
+            }
+
+            // Actualizar
+            $resultado = $this->modelo->actualizar($id, $datos);
+
+            if ($resultado['success']) {
+                $funcionarioActualizado = $this->modelo->obtenerPorId($id);
+                return [
+                    'success' => true,
+                    'message' => 'Funcionario actualizado correctamente',
+                    'data' => $funcionarioActualizado
+                ];
+            }
+
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => 'Error del servidor: ' . $e->getMessage()];
         }
     }
 
-    // ✅ Obtener funcionario por ID
-    public function obtenerPorId($IdFuncionario) {
+    public function eliminar(int $id): array {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM funcionario WHERE IdFuncionario = ?");
-            $stmt->execute([$IdFuncionario]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return null;
+            // Verificar existencia
+            $funcionario = $this->modelo->obtenerPorId($id);
+            if (!$funcionario) {
+                return ['success' => false, 'error' => 'El funcionario no existe'];
+            }
+
+            // Verificar relaciones
+            $relacion = $this->modelo->tieneRelaciones($id);
+            if ($relacion) {
+                return ['success' => false, 'error' => "No se puede eliminar. El funcionario tiene registros en $relacion"];
+            }
+
+            // Eliminar
+            $resultado = $this->modelo->eliminar($id);
+
+            if ($resultado['success']) {
+                return [
+                    'success' => true,
+                    'message' => 'Funcionario eliminado correctamente'
+                ];
+            }
+
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => 'Error del servidor: ' . $e->getMessage()];
         }
     }
 
-    // ✅ Actualizar funcionario
-    public function actualizar($IdFuncionario, $NombreFuncionario, $DocumentoFuncionario, $TelefonoFuncionario, $CorreoFuncionario, $CargoFuncionario, $IdSede) {
+    public function obtenerTodos(): array {
         try {
-            $sql = "UPDATE funcionario SET 
-                        NombreFuncionario = ?, 
-                        DocumentoFuncionario = ?, 
-                        TelefonoFuncionario = ?, 
-                        CorreoFuncionario = ?, 
-                        CargoFuncionario = ?, 
-                        IdSede = ?
-                    WHERE IdFuncionario = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([$NombreFuncionario, $DocumentoFuncionario, $TelefonoFuncionario, $CorreoFuncionario, $CargoFuncionario, $IdSede, $IdFuncionario]);
-
-            return "✅ Funcionario actualizado correctamente.";
-        } catch (PDOException $e) {
-            return "❌ Error al actualizar: " . $e->getMessage();
+            $funcionarios = $this->modelo->obtenerTodos();
+            return [
+                'success' => true,
+                'data' => $funcionarios
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => 'Error al obtener funcionarios: ' . $e->getMessage()];
         }
     }
 
-    // ✅ Eliminar funcionario
-    public function eliminar($IdFuncionario) {
+    public function obtenerPorId(int $id): array {
         try {
-            $stmt = $this->conn->prepare("DELETE FROM funcionario WHERE IdFuncionario = ?");
-            $stmt->execute([$IdFuncionario]);
-            return "✅ Funcionario eliminado correctamente.";
-        } catch (PDOException $e) {
-            return "❌ Error al eliminar: " . $e->getMessage();
+            $funcionario = $this->modelo->obtenerPorId($id);
+            if ($funcionario) {
+                return [
+                    'success' => true,
+                    'data' => $funcionario
+                ];
+            }
+            return ['success' => false, 'error' => 'Funcionario no encontrado'];
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => 'Error al obtener funcionario: ' . $e->getMessage()];
         }
     }
 }
-?>
-
 ?>

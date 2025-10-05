@@ -1,3 +1,4 @@
+/* -------------------- RESETEO GLOBAL -------------------- */
 * {
     margin: 0;
     padding: 0;
@@ -5,6 +6,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* -------------------- CUERPO -------------------- */
 body {
     background: linear-gradient(135deg, #1f46f3, #ffffffd8);
     min-height: 100vh;
@@ -14,6 +16,7 @@ body {
     padding: 20px;
 }
 
+/* -------------------- CONTENEDOR PRINCIPAL -------------------- */
 .container {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 20px;
@@ -25,6 +28,7 @@ body {
     flex-direction: column;
 }
 
+/* -------------------- NAVBAR -------------------- */
 .navbar {
     background: linear-gradient(90deg,#2c3e90, #2c3e90);
     padding: 15px 30px;
@@ -51,6 +55,7 @@ body {
     color: #ff7e14;
 }
 
+/* -------------------- CONTENIDO -------------------- */
 .content {
     display: flex;
     flex-direction: row;
@@ -79,6 +84,7 @@ body {
     line-height: 1.6;
 }
 
+/* -------------------- FORMULARIO -------------------- */
 .form-section {
     flex: 1;
     padding: 40px;
@@ -98,6 +104,7 @@ body {
     font-size: 28px;
 }
 
+/* -------------------- INPUTS -------------------- */
 .input-box {
     position: relative;
     margin-bottom: 25px;
@@ -113,15 +120,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Estados de validación */
-.input-box input.error-input {
-    border: 2px solid red !important;
-}
-
-.input-box input.success-input {
-    border: 2px solid green !important;
-}
-
 .input-box input:focus {
     border-color: #1e3078;
 }
@@ -135,14 +133,29 @@ body {
     font-size: 20px;
 }
 
-/* Mensajes de error */
-.error {
-    font-size: 13px;
-    color: red;
-    margin-top: 5px;
-    display: block;
+/* -------------------- VALIDACIÓN EN TIEMPO REAL -------------------- */
+input.valido {
+    border: 2px solid #28a745 !important; /* Verde */
+    background-color: #e8f5e9;
+    transition: 0.3s ease;
 }
 
+input.invalido {
+    border: 2px solid #dc3545 !important; /* Rojo */
+    background-color: #fdecea;
+    transition: 0.3s ease;
+}
+
+/* -------------------- MENSAJES DE ERROR -------------------- */
+small.error {
+    display: block;
+    font-size: 13px;
+    margin-top: 5px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+/* -------------------- BOTONES -------------------- */
 .btn-container {
     display: flex;
     flex-direction: column;
@@ -196,6 +209,7 @@ body {
     box-shadow: 0 6px 20px rgba(254, 180, 123, 0.4);
 }
 
+/* -------------------- ENLACES -------------------- */
 .links {
     margin-top: 20px;
     text-align: center;
@@ -215,16 +229,17 @@ body {
     text-decoration: underline;
 }
 
+/* -------------------- RESPONSIVE -------------------- */
 @media (max-width: 768px) {
     .content {
         flex-direction: column;
     }
-    
+
     .welcome-section {
         order: 2;
         padding: 30px;
     }
-    
+
     .form-section {
         order: 1;
         padding: 30px;

@@ -1,128 +1,192 @@
-<?php require_once __DIR__ . '/../models/parte_superior.php'; ?>
+<?php
+class Funcionario {
+    private $conexion;
 
-<div class="container-fluid px-4 py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Header -->
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-user-plus me-2"></i>Registrar Funcionario</h1>
-                <a href="FuncionariosLista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
-                    <i class="fas fa-list me-1"></i> Ver Funcionarios
-                </a>
-            </div>
+    public function __construct($conexion) {
+        $this->conexion = $conexion;
+    }
+
+    public function insertar(array $datos): array {
+        try {
+            if (!$this->conexion) {
+                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
+            }
+
+            // Generar QR único
+            $qrCodigo = "QR-FUNC-" . strtoupper(substr(md5(uniqid(rand(), true)), 0, 5));
+
+            $sql = "INSERT INTO funcionario 
+                    (CargoFuncionario, QrCodigoFuncionario, NombreFuncionario, IdSede, TelefonoFuncionario, DocumentoFuncionario, CorreoFuncionario)
+                    VALUES (:cargo, :qr, :nombre, :idSede, :telefono, :documento, :correo)";
             
-            <!-- Form Card -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-primary">
-                    <h6 class="m-0 font-weight-bold text-white">Información del Funcionario</h6>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="../backed/IngresoFuncionario.php" class="needs-validation" novalidate>
-                        <div class="row">
-                            <!-- Nombre -->
-                            <div class="col-md-6 mb-3">
-                                <label for="nombre" class="form-label fw-semibold">Nombre Completo</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input type="text" id="nombre" class="form-control" name="Nombre" required>
-                                </div>
-                            </div>
-
-                            <!-- Documento -->
-                            <div class="col-md-6 mb-3">
-                                <label for="documento" class="form-label fw-semibold">Documento</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                    <input type="number" id="documento" class="form-control" name="Documento" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Teléfono -->
-                            <div class="col-md-6 mb-3">
-                                <label for="telefono" class="form-label fw-semibold">Teléfono</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                    <input type="tel" id="telefono" class="form-control" name="Telefono" required>
-                                </div>
-                            </div>
-
-                            <!-- Correo -->
-                            <div class="col-md-6 mb-3">
-                                <label for="correo" class="form-label fw-semibold">Correo Electrónico</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                    <input type="email" id="correo" class="form-control" name="Correo" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Cargo -->
-                            <div class="col-md-6 mb-3">
-                                <label for="cargo" class="form-label fw-semibold">Cargo</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
-                                    <select id="cargo" class="form-select" name="Cargo" required>
-                                        <option value="">Seleccione un cargo...</option>
-                                        <option value="personalSeguridad">Personal de Seguridad</option>
-                                        <option value="Funcionario">Funcionario</option>
-                                        <option value="empresarial">Empresarial</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- ID Sede (Opcional) -->
-                            <div class="col-md-6 mb-3">
-                                <label for="sede" class="form-label fw-semibold">ID de Sede (Opcional)</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                    <input type="number" id="sede" class="form-control" name="IdSede">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Botones -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='FuncionariosLista.php'">
-                                <i class="fas fa-arrow-left me-1"></i> Volver
-                            </button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-1"></i> Guardar Funcionario
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            $stmt = $this->conexion->prepare($sql);
             
-            <!-- Información adicional -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-light">
-                    <h6 class="m-0 font-weight-bold text-primary">Información Adicional</h6>
-                </div>
-                <div class="card-body">
-                    <div class="alert alert-info mb-0">
-                        <i class="fas fa-info-circle me-2"></i> El código QR se generará automáticamente después de guardar los datos del funcionario.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+            $resultado = $stmt->execute([
+                ':cargo'     => $datos['CargoFuncionario'],
+                ':qr'        => $qrCodigo,
+                ':nombre'    => $datos['NombreFuncionario'],
+                ':idSede'    => $datos['IdSede'],
+                ':telefono'  => $datos['TelefonoFuncionario'],
+                ':documento' => $datos['DocumentoFuncionario'],
+                ':correo'    => $datos['CorreoFuncionario']
+            ]);
 
-<!-- Bootstrap core JavaScript-->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            if ($resultado) {
+                return ['success' => true, 'id' => $this->conexion->lastInsertId()];
+            } else {
+                $errorInfo = $stmt->errorInfo();
+                return ['success' => false, 'error' => $errorInfo[2] ?? 'Error desconocido al insertar'];
+            }
+            
+        } catch (PDOException $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+    
+    public function obtenerTodos(): array {
+        try {
+            $sql = "SELECT f.*, s.TipoSede, s.Ciudad 
+                    FROM funcionario f 
+                    LEFT JOIN sede s ON f.IdSede = s.IdSede 
+                    ORDER BY f.IdFuncionario DESC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
 
-<!-- Core plugin JavaScript-->
-<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    public function obtenerPorId(int $IdFuncionario): ?array {
+        try {
+            $sql = "SELECT f.*, s.TipoSede, s.Ciudad 
+                    FROM funcionario f 
+                    LEFT JOIN sede s ON f.IdSede = s.IdSede 
+                    WHERE f.IdFuncionario = ?";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([$IdFuncionario]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
 
-<!-- Custom scripts for all pages-->
-<script src="../js/sb-admin-2.min.js"></script>
+    public function actualizar(int $IdFuncionario, array $datos): array {
+        try {
+            $sql = "UPDATE funcionario SET 
+                        CargoFuncionario = ?, 
+                        NombreFuncionario = ?, 
+                        IdSede = ?,
+                        TelefonoFuncionario = ?, 
+                        DocumentoFuncionario = ?,
+                        CorreoFuncionario = ?
+                    WHERE IdFuncionario = ?";
+            
+            $stmt = $this->conexion->prepare($sql);
+            
+            $resultado = $stmt->execute([
+                $datos['CargoFuncionario'],
+                $datos['NombreFuncionario'],
+                $datos['IdSede'],
+                $datos['TelefonoFuncionario'],
+                $datos['DocumentoFuncionario'],
+                $datos['CorreoFuncionario'],
+                $IdFuncionario 
+            ]);
 
-</body>
-</html>
+            return [
+                'success' => $resultado, 
+                'rows' => $stmt->rowCount()
+            ];
+            
+        } catch (PDOException $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
 
-<!---fin del contenido principal--->
-<?php require_once __DIR__ . '/../models/parte_inferior.php'; ?>
+    public function eliminar(int $IdFuncionario): array {
+        try {
+            $sql = "DELETE FROM funcionario WHERE IdFuncionario = ?";
+            $stmt = $this->conexion->prepare($sql);
+            $resultado = $stmt->execute([$IdFuncionario]);
+            
+            return [
+                'success' => $resultado, 
+                'rows' => $stmt->rowCount()
+            ];
+            
+        } catch (PDOException $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    public function existeDocumento(string $documento, int $excluirId = null): bool {
+        try {
+            if ($excluirId) {
+                $sql = "SELECT COUNT(*) FROM funcionario WHERE DocumentoFuncionario = ? AND IdFuncionario != ?";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([$documento, $excluirId]);
+            } else {
+                $sql = "SELECT COUNT(*) FROM funcionario WHERE DocumentoFuncionario = ?";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([$documento]);
+            }
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function existeCorreo(string $correo, int $excluirId = null): bool {
+        try {
+            if ($excluirId) {
+                $sql = "SELECT COUNT(*) FROM funcionario WHERE CorreoFuncionario = ? AND IdFuncionario != ?";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([$correo, $excluirId]);
+            } else {
+                $sql = "SELECT COUNT(*) FROM funcionario WHERE CorreoFuncionario = ?";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([$correo]);
+            }
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function existeSede(int $idSede): bool {
+        try {
+            $sql = "SELECT COUNT(*) FROM sede WHERE IdSede = ?";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([$idSede]);
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function tieneRelaciones(int $IdFuncionario): ?string {
+        try {
+            $stmt = $this->conexion->prepare("SELECT COUNT(*) FROM bitacora WHERE IdFuncionario = ?");
+            $stmt->execute([$IdFuncionario]);
+            if ($stmt->fetchColumn() > 0) return 'bitacora';
+
+            $stmt = $this->conexion->prepare("SELECT COUNT(*) FROM dispositivo WHERE IdFuncionario = ?");
+            $stmt->execute([$IdFuncionario]);
+            if ($stmt->fetchColumn() > 0) return 'dispositivo';
+
+            $stmt = $this->conexion->prepare("SELECT COUNT(*) FROM dotacion WHERE IdFuncionario = ?");
+            $stmt->execute([$IdFuncionario]);
+            if ($stmt->fetchColumn() > 0) return 'dotacion';
+
+            $stmt = $this->conexion->prepare("SELECT COUNT(*) FROM ingreso WHERE IdFuncionario = ?");
+            $stmt->execute([$IdFuncionario]);
+            if ($stmt->fetchColumn() > 0) return 'ingreso';
+
+            return null;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
+}
+?>

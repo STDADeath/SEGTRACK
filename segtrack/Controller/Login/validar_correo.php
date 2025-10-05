@@ -3,14 +3,14 @@ session_start();
 
 try {
     // Incluir el archivo de conexión
-    require_once "conexion.php";
+    require_once "../Conexion/conexion.php";
     
     // Instanciar la clase Conexion y obtener la conexión MySQLi
     $conexionObj = new Conexion();
     $mysqli = $conexionObj->getConexion();
     
     // Verificar conexión
-    if ($mysqli->connect_error) {
+    if ($conexion->connect_error) {
         die("Error de conexión: " . $mysqli->connect_error);
     }
     
