@@ -1,18 +1,18 @@
-// Espera a que el DOM esté completamente cargado
+// ✅ Espera a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formDispositivo');
 
     form.addEventListener('submit', function (event) {
         event.preventDefault(); // ❌ Evita recargar la página
 
-        // Obtenemos los valores
+        // 🔍 Obtenemos los valores del formulario
         const tipo = document.getElementById('TipoDispositivo').value;
         const otroTipo = document.querySelector('input[name="OtroTipoDispositivo"]')?.value.trim() || "";
         const marca = document.querySelector('input[name="MarcaDispositivo"]').value.trim();
         const idFuncionario = document.querySelector('input[name="IdFuncionario"]').value.trim();
         const idVisitante = document.querySelector('input[name="IdVisitante"]').value.trim();
 
-        // Expresiones regulares
+        // 🧩 Expresiones regulares para validar texto y números
         const regexTexto = /^[a-zA-Z0-9\s.,-]*$/;
         const regexNumero = /^\d+$/;
 
@@ -39,52 +39,51 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // ✅ Validar formato de ID Funcionario si se llenó
         if (idFuncionario !== "" && !regexNumero.test(idFuncionario)) {
             alert('❌ Error: El campo ID Funcionario solo puede contener números.');
             return;
         }
 
-        // ✅ Validar formato de ID Visitante si se llenó
         if (idVisitante !== "" && !regexNumero.test(idVisitante)) {
             alert('❌ Error: El campo ID Visitante solo puede contener números.');
             return;
         }
-            // ✅ Preparar los datos del formulario
-            const formData = new FormData(form);
 
-            // Si eligió "Otro", reemplazamos el tipo en el formData
-            if (tipo === "Otro") {
-                formData.set("TipoDispositivo", otroTipo);
+        // 🧠 Preparamos los datos para enviar al controlador
+        const formData = new FormData(form);
+
+        // Si eligió "Otro", reemplazamos el tipo por el valor del campo
+        if (tipo === "Otro") {
+            formData.set("TipoDispositivo", otroTipo);
+        }
+
+        // Acción que el backend usará para decidir qué hacer
+        formData.append("accion", "registrar");
+
+        // 🚀 Enviamos con AJAX (fetch)
+        fetch("../Controller/parqueadero_dispositivo/ControladorDispositivo.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json()) // Convertimos la respuesta a JSON
+        .then(data => {
+            console.log(data); // Muestra la respuesta en consola (debug)
+
+            if (data.success) {
+                alert(data.message); // ✅ Mensaje de éxito
+                form.reset(); // Limpia el formulario
+                document.getElementById("campoOtro").style.display = "none"; // Oculta campo extra
+            } else {
+                alert(data.message); // ❌ Mensaje de error
             }
-
-            // 👇 Muy importante: enviamos la acción al backend
-            formData.append("accion", "registrar");
-
-            // ✅ Enviar con fetch (AJAX)
-            fetch("../Controller/parqueadero_dispositivo/ControladorDispositivo.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json()) // 👈 Parsear como JSON
-            .then(data => {
-                console.log(data); // Para depuración en consola
-
-                if (data.success) {
-                    alert(data.message); // ✅ Muestra solo el mensaje
-                    form.reset();
-                    document.getElementById("campoOtro").style.display = "none"; // Ocultar campo extra
-                } else {
-                    alert(data.message); // ❌ Muestra solo el mensaje de error
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('❌ Hubo un error al registrar el dispositivo');
-            });
-
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('❌ Hubo un error al conectar con el servidor. Verifica la ruta o la conexión.');
+        });
     });
-    // Mostrar/Ocultar campo "Otro" según selección
+
+    // 🎛️ Mostrar/Ocultar campo "Otro"
     document.getElementById("TipoDispositivo").addEventListener("change", function() {
         document.getElementById("campoOtro").style.display = this.value === "Otro" ? "block" : "none";
     });

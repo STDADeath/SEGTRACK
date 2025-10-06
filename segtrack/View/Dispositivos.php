@@ -183,7 +183,7 @@ $(document).ready(function () {
         btn.prop('disabled', true);
 
         $.ajax({
-            url: "../Controller/parqueadero_dispositivo/ControladorDispositivo.php",
+            url: "../../Controller/parqueadero_dispositivo/ControladorDispositivo.php",
             type: "POST",
             data: $(this).serialize() + "&accion=registrar",
             dataType: "json",
