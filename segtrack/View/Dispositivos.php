@@ -16,9 +16,9 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Dispositivo</h6>
                 </div>
                 <div class="card-body">
-                    <form id="formDispositivo" method="POST">
+                    <form id="formDispositivo">
                         <div class="row">
-                            <!-- QR deshabilitado, ahora solo botón -->
+                            <!-- QR (solo informativo) -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">QR del Dispositivo</label>
                                 <div class="input-group">
@@ -38,7 +38,8 @@
                                         <option value="Otro">Otro</option>
                                     </select>
                                 </div>
-                                <!-- Campo de texto oculto para "Otro" -->
+
+                                <!-- Campo de texto visible solo si se elige "Otro" -->
                                 <div id="campoOtro" class="mt-2" style="display:none;">
                                     <input type="text" class="form-control" name="OtroTipoDispositivo" placeholder="Especifique el tipo">
                                 </div>
@@ -50,55 +51,29 @@
                                 <label class="form-label fw-semibold">Marca</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                                    <input type="text" class="form-control" name="MarcaDispositivo" required>
+                                    <input type="text" class="form-control" name="MarcaDispositivo" id="MarcaDispositivo" required>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Select para visitante -->
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">¿Hay visitante?</label>
-                                <select id="TieneVisitante" name="TieneVisitante" class="form-select border-primary shadow-sm" required>
-                                    <option value="" disabled selected>-- Seleccione --</option>
-                                    <option value="no">No</option>
-                                    <option value="si">Sí</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Campos de visitante -->
-                        <div class="row" id="VisitanteContainer" style="display: none;">
-                            <div class="col-md-6 mb-3">
-                                <label for="IdVisitante" class="form-label">ID Visitante</label>
-                                <input type="number" id="IdVisitante" name="IdVisitante" class="form-control">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">¿El visitante trae dispositivo?</label>
-                                <select id="TraeDispositivo" name="TraeDispositivo" class="form-select border-primary shadow-sm">
-                                    <option value="" disabled selected>-- Seleccione --</option>
-                                    <option value="no">No</option>
-                                    <option value="si">Sí</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Campos del dispositivo asociado al visitante -->
-                        <div class="row" id="DispositivoContainer" style="display: none;">
-                            <div class="col-md-6 mb-3">
-                                <label for="IdDispositivo" class="form-label">ID Dispositivo</label>
-                                <input type="number" id="IdDispositivo" name="IdDispositivo" class="form-control">
-                            </div>
-                        </div>
-
-                        <!-- Campos funcionario -->
+                        <!-- Campos Funcionario -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">ID Funcionario</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-                                    <input type="number" class="form-control" name="IdFuncionario">
+                                    <input type="number" class="form-control" name="IdFuncionario" id="IdFuncionario">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campos Visitante -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">ID Visitante</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="number" class="form-control" name="IdVisitante" id="IdVisitante">
                                 </div>
                             </div>
                         </div>
@@ -132,100 +107,64 @@
 <!-- Librería SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Librerías necesarias -->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="../js/javascript/demo/sb-admin-2.min.js"></script>
-
-<!-- AJAX Dispositivo -->
+<!-- Script principal -->
 <script>
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("formDispositivo");
+    const tipoDispositivo = document.getElementById("TipoDispositivo");
+    const campoOtro = document.getElementById("campoOtro");
 
-    // Mostrar/ocultar campos de visitante
-    $("#TieneVisitante").change(function () {
-        if ($(this).val() === "si") {
-            $("#VisitanteContainer").slideDown();
-        } else {
-            $("#VisitanteContainer, #DispositivoContainer").slideUp();
-            $("#IdVisitante, #IdDispositivo").val("");
-            $("#TraeDispositivo").val("");
-        }
+    // Mostrar u ocultar el campo "Otro"
+    tipoDispositivo.addEventListener("change", () => {
+        campoOtro.style.display = tipoDispositivo.value === "Otro" ? "block" : "none";
     });
 
-    // Mostrar/ocultar campos de dispositivo visitante
-    $("#TraeDispositivo").change(function () {
-        if ($(this).val() === "si") {
-            $("#DispositivoContainer").slideDown();
-        } else {
-            $("#DispositivoContainer").slideUp();
-            $("#IdDispositivo").val("");
-        }
-    });
-
-    // Mostrar campo "Otro" si se selecciona esa opción
-    $("#TipoDispositivo").change(function () {
-        if ($(this).val() === "Otro") {
-            $("#campoOtro").slideDown();
-        } else {
-            $("#campoOtro").slideUp();
-            $("input[name='OtroTipoDispositivo']").val("");
-        }
-    });
-
-    // Enviar formulario Dispositivo con AJAX
-    $("#formDispositivo").submit(function (e) {
+    // Manejo del envío del formulario
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const btn = $(this).find('button[type="submit"]');
-        const originalText = btn.html();
-        btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
-        btn.prop('disabled', true);
+        // Obtener valores
+        const tipo = tipoDispositivo.value.trim();
+        const otro = document.querySelector("input[name='OtroTipoDispositivo']").value.trim();
+        const marca = document.getElementById("MarcaDispositivo").value.trim();
+        const idFuncionario = document.getElementById("IdFuncionario").value.trim();
+        const idVisitante = document.getElementById("IdVisitante").value.trim();
 
-        $.ajax({
-            url: "../../Controller/parqueadero_dispositivo/ControladorDispositivo.php",
-            type: "POST",
-            data: $(this).serialize() + "&accion=registrar",
-            dataType: "json",
-            success: function (response) {
-                console.log("Respuesta del servidor:", response);
+        // Validaciones básicas
+        if (!tipo) return Swal.fire("Error", "Debe seleccionar un tipo de dispositivo", "error");
+        if (tipo === "Otro" && otro === "") return Swal.fire("Error", "Debe especificar el tipo de dispositivo", "error");
+        if (marca === "") return Swal.fire("Error", "Debe ingresar la marca del dispositivo", "error");
 
-                if (response.success) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "¡Éxito!",
-                        text: response.message,
-                        confirmButtonText: "Aceptar"
-                    });
+        if ((idFuncionario === "" && idVisitante === "") || (idFuncionario && idVisitante)) {
+            return Swal.fire("Error", "Debe ingresar solo un ID: Funcionario o Visitante", "error");
+        }
 
-                    $("#formDispositivo")[0].reset();
-                    $("#VisitanteContainer, #DispositivoContainer, #campoOtro").hide();
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: response.message || "No se pudo registrar el dispositivo"
-                    });
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error AJAX:", error);
-                console.log("Estado:", status);
-                console.log("Respuesta completa del servidor:", xhr.responseText);
+        // Preparar datos
+        const formData = new FormData(form);
+        formData.append("accion", "registrar");
 
-                Swal.fire({
-                    icon: "warning",
-                    title: "Error de conexión",
-                    text: "⚠️ No se pudo conectar con el servidor. Verifica la configuración."
-                });
-            },
-            complete: function () {
-                btn.html(originalText);
-                btn.prop('disabled', false);
+        // Enviar datos al controlador
+        try {
+            const response = await fetch("../../Controller/parqueadero_dispositivo/ControladorDispositivo.php", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log("Respuesta del servidor:", data);
+
+            if (data.success) {
+                Swal.fire("✅ Éxito", data.message, "success");
+                form.reset();
+                campoOtro.style.display = "none";
+            } else {
+                Swal.fire("❌ Error", data.message || "Ocurrió un error al registrar", "error");
             }
-        });
+        } catch (error) {
+            console.error("Error al enviar:", error);
+            Swal.fire("⚠ Error de conexión", "No se pudo contactar con el servidor.", "warning");
+        }
     });
-
 });
 </script>
 
