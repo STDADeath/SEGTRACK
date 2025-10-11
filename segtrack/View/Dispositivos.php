@@ -5,20 +5,20 @@
         <div class="col-lg-8">
 
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Registrar Dispositivos</h1>
-                <a href="../model/DispositivoLista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+                <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Registrar Dispositivo</h1>
+                <a href="../model/DispositivoLista.php" class="btn btn-sm btn-secondary shadow-sm">
                     <i class="fas fa-list me-1"></i> Ver Dispositivos
                 </a>
             </div>
-            
+
             <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-primary">
                     <h6 class="m-0 font-weight-bold text-white">Información del Dispositivo</h6>
                 </div>
+
                 <div class="card-body">
-                    <form id="formDispositivo">
+                    <form id="formDispositivo" method="POST" action="../../Controller/parqueadero_dispositivo/ControladorDispositivo.php">
                         <div class="row">
-                            <!-- QR (solo informativo) -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">QR del Dispositivo</label>
                                 <div class="input-group">
@@ -39,7 +39,6 @@
                                     </select>
                                 </div>
 
-                                <!-- Campo de texto visible solo si se elige "Otro" -->
                                 <div id="campoOtro" class="mt-2" style="display:none;">
                                     <input type="text" class="form-control" name="OtroTipoDispositivo" placeholder="Especifique el tipo">
                                 </div>
@@ -54,26 +53,35 @@
                                     <input type="text" class="form-control" name="MarcaDispositivo" id="MarcaDispositivo" required>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Campos Funcionario -->
-                        <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">ID Funcionario</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-                                    <input type="number" class="form-control" name="IdFuncionario" id="IdFuncionario">
+                                    <input type="number" class="form-control" name="IdFuncionario" id="IdFuncionario" placeholder="Ej: 101">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Campos Visitante -->
+                        <!-- 🔹 Selección de visitante -->
                         <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">¿El dispositivo pertenece a un visitante?</label>
+                                <select id="TieneVisitante" name="TieneVisitante" class="form-select border-primary shadow-sm" required>
+                                    <option value="" disabled selected>-- Seleccione --</option>
+                                    <option value="no">No</option>
+                                    <option value="si">Sí</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 🔹 Campo ID Visitante (oculto por defecto) -->
+                        <div class="row" id="VisitanteContainer" style="display: none;">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">ID Visitante</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input type="number" class="form-control" name="IdVisitante" id="IdVisitante">
+                                    <input type="number" class="form-control" name="IdVisitante" id="IdVisitante" placeholder="Ej: 303">
                                 </div>
                             </div>
                         </div>
@@ -107,65 +115,52 @@
 <!-- Librería SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Script principal -->
+<!-- ✅ Script JS adaptado -->
+<!-- Librería SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ✅ Script JS adaptado -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("formDispositivo");
-    const tipoDispositivo = document.getElementById("TipoDispositivo");
-    const campoOtro = document.getElementById("campoOtro");
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('formDispositivo');
 
-    // Mostrar u ocultar el campo "Otro"
-    tipoDispositivo.addEventListener("change", () => {
-        campoOtro.style.display = tipoDispositivo.value === "Otro" ? "block" : "none";
-    });
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
 
-    // Manejo del envío del formulario
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        // Obtener valores
-        const tipo = tipoDispositivo.value.trim();
-        const otro = document.querySelector("input[name='OtroTipoDispositivo']").value.trim();
-        const marca = document.getElementById("MarcaDispositivo").value.trim();
-        const idFuncionario = document.getElementById("IdFuncionario").value.trim();
-        const idVisitante = document.getElementById("IdVisitante").value.trim();
-
-        // Validaciones básicas
-        if (!tipo) return Swal.fire("Error", "Debe seleccionar un tipo de dispositivo", "error");
-        if (tipo === "Otro" && otro === "") return Swal.fire("Error", "Debe especificar el tipo de dispositivo", "error");
-        if (marca === "") return Swal.fire("Error", "Debe ingresar la marca del dispositivo", "error");
-
-        if ((idFuncionario === "" && idVisitante === "") || (idFuncionario && idVisitante)) {
-            return Swal.fire("Error", "Debe ingresar solo un ID: Funcionario o Visitante", "error");
-        }
-
-        // Preparar datos
         const formData = new FormData(form);
-        formData.append("accion", "registrar");
+        formData.append('accion', 'registrar'); // 👈 importante
 
-        // Enviar datos al controlador
+        console.log([...formData.entries()]); // 🔍 muestra lo que se enviará
+
+        Swal.fire({
+            title: 'Procesando...',
+            text: 'Por favor espera un momento.',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
         try {
-            const response = await fetch("../../Controller/parqueadero_dispositivo/ControladorDispositivo.php", {
-                method: "POST",
+            const response = await fetch('../../Controller/parqueadero_dispositivo/ControladorDispositivo.php', {
+                method: 'POST',
                 body: formData
             });
 
             const data = await response.json();
-            console.log("Respuesta del servidor:", data);
+            Swal.close();
 
             if (data.success) {
-                Swal.fire("✅ Éxito", data.message, "success");
+                Swal.fire('✅ Éxito', data.message, 'success');
                 form.reset();
-                campoOtro.style.display = "none";
             } else {
-                Swal.fire("❌ Error", data.message || "Ocurrió un error al registrar", "error");
+                Swal.fire('❌ Error', data.message || 'Error al registrar el dispositivo', 'error');
             }
+
         } catch (error) {
-            console.error("Error al enviar:", error);
-            Swal.fire("⚠ Error de conexión", "No se pudo contactar con el servidor.", "warning");
+            Swal.close();
+            console.error('Error en el envío:', error);
+            Swal.fire('⚠️ Error de conexión', 'No se pudo contactar al servidor', 'error');
         }
     });
 });
 </script>
-
 <?php require_once __DIR__ . '/../model/Plantilla/parte_inferior.php'; ?>

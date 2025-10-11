@@ -1,4 +1,3 @@
-// ✅ Espera a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formDispositivo');
 
@@ -61,24 +60,24 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append("accion", "registrar");
 
         // 🚀 Enviamos con AJAX (fetch)
-        fetch("../Controller/parqueadero_dispositivo/ControladorDispositivo.php", {
-            method: "POST",
+        fetch('../../Controller/parqueadero_dispositivo/ControladorDispositivo.php', {
+            method: 'POST',
             body: formData
         })
-        .then(response => response.json()) // Convertimos la respuesta a JSON
+        .then(response => response.json())
         .then(data => {
-            console.log(data); // Muestra la respuesta en consola (debug)
+            console.log("✅ Respuesta del servidor:", data);
 
             if (data.success) {
-                alert(data.message); // ✅ Mensaje de éxito
+                alert(data.message); // ✅ Éxito
                 form.reset(); // Limpia el formulario
-                document.getElementById("campoOtro").style.display = "none"; // Oculta campo extra
+                document.getElementById("campoOtro").style.display = "none";
             } else {
-                alert(data.message); // ❌ Mensaje de error
+                alert(`⚠️ ${data.message}`);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('❌ Error al conectar con el servidor:', error);
             alert('❌ Hubo un error al conectar con el servidor. Verifica la ruta o la conexión.');
         });
     });

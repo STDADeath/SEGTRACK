@@ -1,106 +1,146 @@
 <?php
-/**
- * 🔍 Controlador de Dispositivos con mensajes de depuración.
- * En lugar de notificaciones, devuelve mensajes exactos donde se produce el error.
- */
+header('Content-Type: application/json; charset=utf-8');
 
-header('Content-Type: application/json');
+// 🧩 Depuración temporal
+file_put_contents("debug_post.txt", print_r($_POST, true));
 
-// --- PUNTO 1: Conexión a la base de datos ---
+// ✅ Ruta de conexión
+$ruta_conexion = __DIR__ . '/../../Core/conexion.php';
+
+// ✅ Verificar existencia de la conexión
+if (file_exists($ruta_conexion)) {
+    require_once $ruta_conexion;
+} else {
+    die(json_encode([
+        'success' => false,
+        'message' => 'Error: Archivo de conexión no encontrado en: ' . $ruta_conexion
+    ]));
+}
+
+// ✅ Incluir modelo y librería QR
+require_once __DIR__ . "/../../model/parqueadero_dispositivo/ModeloDispositivo.php";
+require_once __DIR__ . "/../../libs/phpqrcode/phpqrcode.php";
+
+class ControladorDispositivo {
+    private ModeloDispositivo $modelo;
+
+    public function __construct($conexion) {
+        $this->modelo = new ModeloDispositivo($conexion);
+    }
+
+    private function campoVacio($campo): bool {
+        return !isset($campo) || trim($campo) === "";
+    }
+
+    public function registrarDispositivo(array $datos): array {
+        $tipo = $datos['TipoDispositivo'] ?? $datos['tipodispositivo'] ?? null;
+        $marca = $datos['MarcaDispositivo'] ?? $datos['marca'] ?? null;
+        $otroTipo = $datos['OtroTipoDispositivo'] ?? $datos['otrotipodispositivo'] ?? null;
+        $idFuncionario = $datos['IdFuncionario'] ?? $datos['idfuncionario'] ?? null;
+        $idVisitante = $datos['IdVisitante'] ?? $datos['idvisitante'] ?? null;
+
+        if ($this->campoVacio($tipo)) {
+            return ['success' => false, 'message' => 'Falta el campo obligatorio: Tipo de dispositivo'];
+        }
+
+        if ($this->campoVacio($marca)) {
+            return ['success' => false, 'message' => 'Falta el campo obligatorio: Marca del dispositivo'];
+        }
+
+        if ($tipo === 'Otro' && $this->campoVacio($otroTipo)) {
+            return ['success' => false, 'message' => 'Debe especificar el tipo de dispositivo'];
+        }
+
+        $tipoFinal = ($tipo === 'Otro') ? $otroTipo : $tipo;
+
+        try {
+            $resultado = $this->modelo->registrarDispositivo($tipoFinal, $marca, $idFuncionario, $idVisitante);
+
+            if ($resultado['success']) {
+                $idDispositivo = $resultado['id'];
+
+                $rutaQR = __DIR__ . "/../../public/qr_dispositivos/";
+                if (!file_exists($rutaQR)) {
+                    mkdir($rutaQR, 0777, true);
+                }
+
+                $nombreArchivoQR = "Dispositivo_" . $idDispositivo . ".png";
+                $contenidoQR = "ID: $idDispositivo | Tipo: $tipoFinal | Marca: $marca";
+                QRcode::png($contenidoQR, $rutaQR . $nombreArchivoQR, QR_ECLEVEL_L, 5);
+
+                $this->modelo->actualizarQR($idDispositivo, "public/qr_dispositivos/" . $nombreArchivoQR);
+
+                return [
+                    "success" => true,
+                    "message" => "✅ Dispositivo registrado correctamente",
+                    "data" => [
+                        "IdDispositivo" => $idDispositivo,
+                        "RutaQR" => "public/qr_dispositivos/" . $nombreArchivoQR
+                    ]
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'No se pudo registrar el dispositivo',
+                    'error' => $resultado['error'] ?? 'Error desconocido en la base de datos'
+                ];
+            }
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Error en el servidor: ' . $e->getMessage()];
+        }
+    }
+
+    public function mostrarDispositivos(): array {
+        return $this->modelo->obtenerTodos();
+    }
+
+    public function obtenerPorId(int $id): ?array {
+        return $this->modelo->obtenerPorId($id);
+    }
+
+    public function actualizar(int $id, array $datos): array {
+        return $this->modelo->actualizar($id, $datos);
+    }
+}
+
+// =======================
+// ✅ Manejo de acciones
+// =======================
 try {
-    require_once __DIR__ . "/../../Core/conexion.php";
-    echo json_encode(["debug" => "✅ conexión.php incluido correctamente"]);
-} catch (Throwable $e) {
-    echo json_encode(["error" => "❌ Error al incluir conexión.php", "detalle" => $e->getMessage()]);
-    exit;
-}
+    if (!isset($conexion)) {
+        throw new Exception("Conexión a la base de datos no disponible");
+    }
 
-// --- PUNTO 2: Modelo ---
-try {
-    require_once __DIR__ . "/../../model/parqueadero_dispositivo/ModeloDispositivo.php";
-    echo json_encode(["debug" => "✅ ModeloDispositivo.php incluido correctamente"]);
-} catch (Throwable $e) {
-    echo json_encode(["error" => "❌ Error al incluir ModeloDispositivo.php", "detalle" => $e->getMessage()]);
-    exit;
-}
-
-// --- PUNTO 3: Librería QR ---
-try {
-    require_once __DIR__ . "/../../libs/phpqrcode/qrlib.php";
-    echo json_encode(["debug" => "✅ Librería qrlib.php incluida correctamente"]);
-} catch (Throwable $e) {
-    echo json_encode(["error" => "❌ Error al incluir librería QR", "detalle" => $e->getMessage()]);
-    exit;
-}
-
-// --- PUNTO 4: Instanciar modelo ---
-try {
-    $model = new DispositivoModel($conexion);
-    echo json_encode(["debug" => "✅ Modelo instanciado correctamente"]);
-} catch (Throwable $e) {
-    echo json_encode(["error" => "❌ Fallo al instanciar DispositivoModel", "detalle" => $e->getMessage()]);
-    exit;
-}
-
-// --- PUNTO 5: Detectar acción ---
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['accion'])) {
-    echo json_encode(["mensaje" => "Controlador alcanzado correctamente"]);
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $accion = $_POST['accion'] ?? '';
+    $controlador = new ControladorDispositivo($conexion);
+    $accion = $_POST['accion'] ?? 'registrar';
 
     switch ($accion) {
         case 'registrar':
-            try {
-                $tipo = $_POST['TipoDispositivo'] ?? '';
-                $marca = $_POST['MarcaDispositivo'] ?? '';
-                $otro = $_POST['OtroTipoDispositivo'] ?? '';
-                $idFuncionario = $_POST['IdFuncionario'] ?? null;
-                $idVisitante = $_POST['IdVisitante'] ?? null;
+            echo json_encode($controlador->registrarDispositivo($_POST));
+            break;
 
-                if (empty($tipo) || empty($marca)) {
-                    echo json_encode(["error" => "Campos obligatorios vacíos", "detalle" => "Tipo o Marca no enviados"]);
-                    exit;
-                }
+        case 'mostrar':
+            echo json_encode($controlador->mostrarDispositivos());
+            break;
 
-                if (($idFuncionario && $idVisitante) || (!$idFuncionario && !$idVisitante)) {
-                    echo json_encode(["error" => "IDs incorrectos", "detalle" => "Debe haber solo un ID válido (Funcionario o Visitante)"]);
-                    exit;
-                }
+        case 'obtener':
+            $id = isset($_POST['IdDispositivo']) ? (int)$_POST['IdDispositivo'] : 0;
+            echo json_encode($controlador->obtenerPorId($id));
+            break;
 
-                if ($tipo === 'Otro' && !empty($otro)) {
-                    $tipo = $otro;
-                }
-
-                $codigoQR = $tipo . "_" . $marca . "_" . time();
-                echo json_encode(["debug" => "⚙️ Insertando dispositivo en BD"]);
-
-                $resultado = $model->insertar($codigoQR, $tipo, $marca, $idFuncionario, $idVisitante);
-
-                if ($resultado === true) {
-                    $dir = __DIR__ . "/../../qrs/";
-                    if (!file_exists($dir)) {
-                        mkdir($dir, 0777, true);
-                    }
-                    $archivoQR = $dir . $codigoQR . ".png";
-                    QRcode::png($codigoQR, $archivoQR, QR_ECLEVEL_L, 10);
-
-                    echo json_encode(["success" => true, "mensaje" => "✅ Dispositivo registrado correctamente"]);
-                } else {
-                    echo json_encode(["error" => "❌ Error al insertar", "detalle" => $resultado]);
-                }
-            } catch (Throwable $e) {
-                echo json_encode(["error" => "❌ Excepción al registrar", "detalle" => $e->getMessage()]);
-            }
+        case 'actualizar':
+            $id = isset($_POST['IdDispositivo']) ? (int)$_POST['IdDispositivo'] : 0;
+            echo json_encode($controlador->actualizar($id, $_POST));
             break;
 
         default:
-            echo json_encode(["error" => "Acción no válida o vacía", "accion_recibida" => $accion]);
+            echo json_encode(['success' => false, 'message' => 'Acción no reconocida']);
             break;
     }
-} else {
-    echo json_encode(["error" => "Método no permitido", "detalle" => $_SERVER['REQUEST_METHOD']]);
+
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error del servidor: ' . $e->getMessage()
+    ]);
 }
-?>
