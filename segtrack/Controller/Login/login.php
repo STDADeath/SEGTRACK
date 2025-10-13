@@ -1,20 +1,52 @@
 <?php
-require_once(__DIR__ . '/conexion.php'); // Usa __DIR__ para asegurar la ruta
+session_start();
+require_once "../../model/usuario.php";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $input = $_POST["correo_o_documento"] ?? '';
-    $password = $_POST["password"] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $correo = trim($_POST['correo'] ?? '');
+    $contrasena = trim($_POST['contrasena'] ?? '');
 
-    $stmt = $conexion->prepare("SELECT * FROM funcionario WHERE Correo = :input OR Documento = :input");
-    $stmt->bindParam(":input", $input);
-    $stmt->execute();
+    if (empty($correo) || empty($contrasena)) {
+        $_SESSION['error'] = "Por favor completa todos los campos.";
+        header("Location: ../vistas/login.php");
+        exit;
+    }
 
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    $usuarioModel = new Usuario();
+    $resultado = $usuarioModel->validarLogin($correo, $contrasena);
 
-    if ($usuario) {
-        echo "Inicio de sesión exitoso. Bienvenido, " . htmlspecialchars($usuario['Nombre']);
+    if ($resultado['success']) {
+        $usuario = $resultado['usuario'];
+
+        $_SESSION['usuario'] = [
+            'id' => $usuario['IdUsuario'],
+            'nombre' => $usuario['NombreFuncionario'],
+            'rol' => $usuario['TipoRol'],
+            'correo' => $usuario['CorreoFuncionario']
+        ];
+
+        // 🔁 Redirección por rol
+        switch ($usuario['TipoRol']) {
+            case 'Supervisor':
+                header("Location: ../vistas/dashboard_supervisor.php");
+                break;
+            case 'Seguridad':
+                header("Location: ../vistas/dashboard_seguridad.php");
+                break;
+            case 'Personal':
+                header("Location: ../vistas/dashboard_personal.php");
+                break;
+            case 'Admin':
+                header("Location: ../vistas/dashboard_admin.php");
+                break;
+            default:
+                header("Location: ../vistas/login.php");
+        }
+        exit;
     } else {
-        echo "Correo o documento no encontrado.";
+        $_SESSION['error'] = $resultado['mensaje'];
+        header("Location: ../vistas/login.php");
+        exit;
     }
 }
 ?>
