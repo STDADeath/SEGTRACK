@@ -7,7 +7,7 @@ class FuncionarioController {
 
     public function __construct() {
         $conexion = (new Conexion())->getConexion();
-        $this->modelo = new FuncionarioModelo($conexion);
+        $this->modelo = new Funcionario($conexion);
     }
 
     // Validaciones
