@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form id="formDispositivo" method="POST" action="../../Controller/parqueadero_dispositivo/ControladorDispositivo.php">
+                    <form id="formDispositivo" method="POST">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">QR del Dispositivo</label>
@@ -27,7 +27,7 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Tipo de Dispositivo</label>
+                                <label class="form-label fw-semibold">Tipo de Dispositivo <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-desktop"></i></span>
                                     <select class="form-select" name="TipoDispositivo" id="TipoDispositivo" required>
@@ -47,7 +47,7 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Marca</label>
+                                <label class="form-label fw-semibold">Marca <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                     <input type="text" class="form-control" name="MarcaDispositivo" id="MarcaDispositivo" required>
@@ -67,9 +67,8 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">¿El dispositivo pertenece a un visitante?</label>
-                                <select id="TieneVisitante" name="TieneVisitante" class="form-select border-primary shadow-sm" required>
-                                    <option value="" disabled selected>-- Seleccione --</option>
-                                    <option value="no">No</option>
+                                <select id="TieneVisitante" name="TieneVisitante" class="form-select border-primary shadow-sm">
+                                    <option value="no" selected>No</option>
                                     <option value="si">Sí</option>
                                 </select>
                             </div>
@@ -78,7 +77,7 @@
                         <!-- 🔹 Campo ID Visitante (oculto por defecto) -->
                         <div class="row" id="VisitanteContainer" style="display: none;">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">ID Visitante</label>
+                                <label class="form-label fw-semibold">ID Visitante <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     <input type="number" class="form-control" name="IdVisitante" id="IdVisitante" placeholder="Ej: 303">
@@ -115,52 +114,7 @@
 <!-- Librería SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- ✅ Script JS adaptado -->
-<!-- Librería SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- ✅ Script de validación externo -->
+<script src="../js/ValidacionDispositivo.js"></script>
 
-<!-- ✅ Script JS adaptado -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('formDispositivo');
-
-    form.addEventListener('submit', async function (event) {
-        event.preventDefault();
-
-        const formData = new FormData(form);
-        formData.append('accion', 'registrar'); // 👈 importante
-
-        console.log([...formData.entries()]); // 🔍 muestra lo que se enviará
-
-        Swal.fire({
-            title: 'Procesando...',
-            text: 'Por favor espera un momento.',
-            allowOutsideClick: false,
-            didOpen: () => Swal.showLoading()
-        });
-
-        try {
-            const response = await fetch('../../Controller/parqueadero_dispositivo/ControladorDispositivo.php', {
-                method: 'POST',
-                body: formData
-            });
-
-            const data = await response.json();
-            Swal.close();
-
-            if (data.success) {
-                Swal.fire('✅ Éxito', data.message, 'success');
-                form.reset();
-            } else {
-                Swal.fire('❌ Error', data.message || 'Error al registrar el dispositivo', 'error');
-            }
-
-        } catch (error) {
-            Swal.close();
-            console.error('Error en el envío:', error);
-            Swal.fire('⚠️ Error de conexión', 'No se pudo contactar al servidor', 'error');
-        }
-    });
-});
-</script>
 <?php require_once __DIR__ . '/../model/Plantilla/parte_inferior.php'; ?>

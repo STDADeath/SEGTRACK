@@ -15,7 +15,8 @@ class ModeloDispositivo {
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
             }
 
-            $sql = "INSERT INTO dispositivos 
+            // ✅ CAMBIADO: dispositivos → dispositivo
+            $sql = "INSERT INTO dispositivo 
                     (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante)
                     VALUES (:tipo, :marca, :funcionario, :visitante)";
 
@@ -44,7 +45,8 @@ class ModeloDispositivo {
      */
     public function actualizarQR(int $idDispositivo, string $rutaQR): array {
         try {
-            $sql = "UPDATE dispositivos SET QrDispositivo = :qr WHERE IdDispositivo = :id";
+            // ✅ CAMBIADO: dispositivos → dispositivo
+            $sql = "UPDATE dispositivo SET QrDispositivo = :qr WHERE IdDispositivo = :id";
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 ':qr' => $rutaQR,
@@ -66,7 +68,8 @@ class ModeloDispositivo {
      */
     public function obtenerTodos(): array {
         try {
-            $sql = "SELECT * FROM dispositivos ORDER BY IdDispositivo DESC";
+            // ✅ CAMBIADO: dispositivos → dispositivo
+            $sql = "SELECT * FROM dispositivo ORDER BY IdDispositivo DESC";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -81,7 +84,8 @@ class ModeloDispositivo {
      */
     public function obtenerPorId(int $idDispositivo): ?array {
         try {
-            $sql = "SELECT * FROM dispositivos WHERE IdDispositivo = ?";
+            // ✅ CAMBIADO: dispositivos → dispositivo
+            $sql = "SELECT * FROM dispositivo WHERE IdDispositivo = ?";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([$idDispositivo]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
@@ -96,7 +100,8 @@ class ModeloDispositivo {
      */
     public function actualizar(int $idDispositivo, array $datos): array {
         try {
-            $sql = "UPDATE dispositivos SET 
+            // ✅ CAMBIADO: dispositivos → dispositivo
+            $sql = "UPDATE dispositivo SET 
                         TipoDispositivo = ?, 
                         MarcaDispositivo = ?, 
                         IdFuncionario = ?, 
@@ -127,7 +132,8 @@ class ModeloDispositivo {
      */
     public function eliminar(int $idDispositivo): array {
         try {
-            $sql = "DELETE FROM dispositivos WHERE IdDispositivo = :id";
+            // ✅ CAMBIADO: dispositivos → dispositivo
+            $sql = "DELETE FROM dispositivo WHERE IdDispositivo = :id";
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([':id' => $idDispositivo]);
 

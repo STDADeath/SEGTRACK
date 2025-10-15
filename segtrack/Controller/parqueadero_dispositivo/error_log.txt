@@ -1,0 +1,1 @@
+[15-Oct-2025 20:43:55 Europe/Berlin] Error de conexión BD: SQLSTATE[HY000] [1049] Unknown database 'seggtrack'

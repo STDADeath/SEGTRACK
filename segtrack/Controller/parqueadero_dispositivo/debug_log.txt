@@ -1,0 +1,4 @@
+2025-10-15 20:43:54 === INICIO ===
+POST recibido:
+[]
+ERROR FINAL: Error al conectar con la base de datos. Verifica las credenciales.
