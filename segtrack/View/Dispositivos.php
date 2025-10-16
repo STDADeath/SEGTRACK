@@ -6,8 +6,8 @@
 
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Registrar Dispositivo</h1>
-                <a href="../model/DispositivoLista.php" class="btn btn-sm btn-secondary shadow-sm">
-                    <i class="fas fa-list me-1"></i> Ver Dispositivos
+                <a href="../view/DispositivoLista.php" class="btn btn-sm btn-secondary shadow-sm">
+                    <i class="fas fa-list me-1"></i> Ver Dispositivos 
                 </a>
             </div>
 
@@ -86,9 +86,6 @@
                         </div>
 
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='../View/DispositivoLista.php'">
-                                <i class="fas fa-arrow-left me-1"></i> Volver
-                            </button>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-1"></i> Guardar Dispositivo
                             </button>

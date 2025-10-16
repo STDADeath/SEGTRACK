@@ -1,18 +1,18 @@
-<?php require_once __DIR__ . '/../model/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../model/Plantilla/parte_superior.php'; ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Dispositivos Registrados</h1>
-        <a href="../model/Dispositivos.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="../View/Dispositivos.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus me-1"></i> Nuevo Dispositivo
         </a>
     </div>
 
     <?php
-    require_once "../controller/Conexion/conexion.php";
-    $conexion = new Conexion();
-    $conn = $conexion->getConexion();
-    $sql = "SELECT * FROM Dispositivo ORDER BY IdDispositivo DESC";
+    require_once __DIR__ . "/../Core/conexion.php";
+    $conexionObj = new Conexion();
+    $conn = $conexionObj->getConexion();
+    $sql = "SELECT * FROM dispositivo ORDER BY IdDispositivo DESC";
     $result = $conn->query($sql);
     ?>
 
@@ -35,19 +35,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if ($result && $result->num_rows > 0) : ?>
-                            <?php while ($row = $result->fetch_assoc()) : ?>
+                        <?php $filas = $result->fetchAll(PDO::FETCH_ASSOC);
+                                if ($filas && count($filas) > 0) : 
+                                ?>
+                            <?php foreach ($filas as $row) : ?>
                                 <tr id="fila-<?php echo $row['IdDispositivo']; ?>">
                                     <td><?php echo $row['IdDispositivo']; ?></td>
-                                    <td><?php echo $row['QrDispositivo']; ?></td>
+                                    <td><?php echo $row['QrDispositivo'] ?? '-'; ?></td>
                                     <td><?php echo $row['TipoDispositivo']; ?></td>
                                     <td><?php echo $row['MarcaDispositivo']; ?></td>
-                                    <td><?php echo $row['IdFuncionario']; ?></td>
-                                    <td><?php echo $row['IdVisitante']; ?></td>
+                                    <td><?php echo $row['IdFuncionario'] ?? '-'; ?></td>
+                                    <td><?php echo $row['IdVisitante'] ?? '-'; ?></td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
                                             <button type="button" class="btn btn-sm btn-outline-primary" 
-                                                    onclick="cargarDatosEdicion(<?php echo $row['IdDispositivo']; ?>, '<?php echo $row['QrDispositivo']; ?>', '<?php echo $row['TipoDispositivo']; ?>', '<?php echo $row['MarcaDispositivo']; ?>', <?php echo $row['IdFuncionario']; ?>, <?php echo $row['IdVisitante']; ?>)"
+                                                    onclick="cargarDatosEdicion(<?php echo $row['IdDispositivo']; ?>, '<?php echo htmlspecialchars($row['QrDispositivo']); ?>', '<?php echo htmlspecialchars($row['TipoDispositivo']); ?>', '<?php echo htmlspecialchars($row['MarcaDispositivo']); ?>', <?php echo $row['IdFuncionario'] ?? 'null'; ?>, <?php echo $row['IdVisitante'] ?? 'null'; ?>)"
                                                     title="Editar dispositivo" data-toggle="modal" data-target="#modalEditar">
                                                 <i class="fas fa-edit"></i>
                                             </button>
@@ -59,7 +61,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         <?php else : ?>
                             <tr>
                                 <td colspan="7" class="text-center py-4">
@@ -75,6 +77,7 @@
     </div>
 </div>
 
+<!-- Modal Confirmar Eliminación -->
 <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -95,6 +98,7 @@
     </div>
 </div>
 
+<!-- Modal Editar Dispositivo -->
 <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -110,7 +114,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="editQr" class="form-label">QR Dispositivo</label>
-                            <input type="text" id="editQr" class="form-control" name="qr" required>
+                            <input type="text" id="editQr" class="form-control" name="qr">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="editTipo" class="form-label">Tipo de Dispositivo</label>
@@ -130,13 +134,13 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="editFuncionario" class="form-label">ID Funcionario</label>
-                            <input type="number" id="editFuncionario" class="form-control" name="IdFuncionario" required>
+                            <input type="number" id="editFuncionario" class="form-control" name="IdFuncionario">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="editVisitante" class="form-label">ID Visitante</label>
-                            <input type="number" id="editVisitante" class="form-control" name="IdVisitante" required>
+                            <input type="number" id="editVisitante" class="form-control" name="IdVisitante">
                         </div>
                     </div>
                 </form>
@@ -178,16 +182,15 @@ function eliminarDispositivo() {
         $.ajax({
             url: "../Controller/parqueadero_dispositivo/ControladorDispositivo.php",
             type: 'POST',
-            data: { id: dispositivoIdAEliminar },
+            data: { accion: 'eliminar', id: dispositivoIdAEliminar },
             dataType: 'json',
             success: function(response) {
                 $('#confirmarEliminarModal').modal('hide');
                 if (response.success) {
                     alert('Dispositivo eliminado correctamente');
-                    $('#fila-' + dispositivoIdAEliminar).remove();
-                    if ($('tbody tr').length === 1) {
-                        location.reload();
-                    }
+                    $('#fila-' + dispositivoIdAEliminar).fadeOut(400, function() {
+                        $(this).remove();
+                    });
                 } else {
                     alert('Error: ' + response.message);
                 }
@@ -202,6 +205,7 @@ function eliminarDispositivo() {
 
 $('#btnGuardarCambios').click(function() {
     const formData = {
+        accion: 'actualizar',
         id: $('#editId').val(),
         qr: $('#editQr').val(),
         tipo: $('#editTipo').val(),
@@ -209,7 +213,7 @@ $('#btnGuardarCambios').click(function() {
         id_funcionario: $('#editFuncionario').val(),
         id_visitante: $('#editVisitante').val()
     };
-    if (!formData.qr || !formData.tipo || !formData.marca) {
+    if (!formData.tipo || !formData.marca) {
         alert('Por favor, complete todos los campos obligatorios');
         return;
     }
@@ -237,4 +241,4 @@ $('#btnGuardarCambios').click(function() {
 document.getElementById('btnConfirmarEliminar').addEventListener('click', eliminarDispositivo);
 </script>
 
-<?php require_once __DIR__ . '/../model/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../model/Plantilla/parte_inferior.php'; ?>
