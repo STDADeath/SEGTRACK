@@ -115,6 +115,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- ✅ Script de validación externo -->
-<script src="../js/ValidacionDispositivo.js"></script>
+<script src="../js/javascript/js/ValidacionDispositivo.js"></script>
 
 <?php require_once __DIR__ . '/../model/Plantilla/parte_inferior.php'; ?>

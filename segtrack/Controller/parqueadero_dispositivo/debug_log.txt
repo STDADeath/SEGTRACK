@@ -2,3 +2,57 @@
 POST recibido:
 []
 ERROR FINAL: Error al conectar con la base de datos. Verifica las credenciales.
+2025-10-16 07:30:22 === INICIO ===
+POST recibido:
+[]
+Conexión cargada
+Conexión verificada como PDO
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Datos recibidos: []
+Variables extraídas - Tipo: , Marca: 
+ERROR: Tipo vacío
+Respuesta final: {"success":false,"message":"Falta el campo: Tipo de dispositivo"}
+2025-10-16 08:08:43 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","IdFuncionario":"12","IdVisitante":"","accion":"registrar"}
+Variables extraídas - Tipo: Portatil, Marca: Dell
+Validaciones pasadas. Tipo final: Portatil
+IDs convertidos - Funcionario: 12, Visitante: null
+Resultado modelo: {"success":true,"id":"7"}
+Dispositivo registrado con ID: 7
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 7","data":{"IdDispositivo":"7"}}
+2025-10-16 08:09:36 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","IdFuncionario":"12","IdVisitante":"","accion":"registrar"}
+Variables extraídas - Tipo: Portatil, Marca: Dell
+Validaciones pasadas. Tipo final: Portatil
+IDs convertidos - Funcionario: 12, Visitante: null
+Resultado modelo: {"success":true,"id":"8"}
+Dispositivo registrado con ID: 8
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 8","data":{"IdDispositivo":"8"}}

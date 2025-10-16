@@ -18,7 +18,7 @@
 
 
     <link href="../view/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../view/css/styles.css" rel="stylesheet">
+    <link href="../vew/css/sytles.css" rel="stylesheet">
     <link rel="stylesheet" href="../view/css/icono.css">
 
 </head>
