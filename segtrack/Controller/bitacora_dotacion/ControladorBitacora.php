@@ -32,7 +32,6 @@ class ControladorBitacora {
     }
 
     public function registrarBitacora(array $DatosBitacora): array {
-        // Validar que todos los campos requeridos estén presentes
         $camposObligatorios = [
             'TurnoBitacora', 
             'NovedadesBitacora', 
@@ -48,23 +47,22 @@ class ControladorBitacora {
             }
         }
 
-        // Validar fecha
+
         if (!$this->fechaValida($DatosBitacora['FechaBitacora'])) {
             return ['success' => false, 'message' => "Formato de fecha inválido. Use: YYYY-MM-DDTHH:MM"];
         }
-        
-        // Convertir formato de fecha para MySQL
+
         $fecha = DateTime::createFromFormat('Y-m-d\TH:i', $DatosBitacora['FechaBitacora']);
         $DatosBitacora['FechaBitacora'] = $fecha->format('Y-m-d H:i:s');
 
 
         if ($DatosBitacora['TieneVisitante'] === 'si') {
-            // Si tiene visitante, validar IdVisitante
+
             if ($this->campoVacio($DatosBitacora, 'IdVisitante')) {
                 return ['success' => false, 'message' => "Cuando hay visitante, el ID Visitante es obligatorio"];
             }
             
-            // Si trae dispositivo, validar IdDispositivo
+
             if (isset($DatosBitacora['TraeDispositivo']) && $DatosBitacora['TraeDispositivo'] === 'si') {
                 if ($this->campoVacio($DatosBitacora, 'IdDispositivo')) {
                     return ['success' => false, 'message' => "Cuando el visitante trae dispositivo, el ID Dispositivo es obligatorio"];

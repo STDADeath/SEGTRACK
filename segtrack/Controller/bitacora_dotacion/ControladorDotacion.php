@@ -45,13 +45,12 @@ class ControladorDotacion {
             }
         }
 
-        // Validar formato de fechas si se envían
+
         foreach (['FechaDevolucion', 'FechaEntrega'] as $campoFecha) {
             if (isset($Datos[$campoFecha]) && !$this->fechaValida($Datos[$campoFecha])) {
                 return ['success' => false, 'message' => "Formato de fecha inválido en $campoFecha. Use: YYYY-MM-DDTHH:MM"];
             }
 
-            // Convertir a formato MySQL si está presente
             if (!empty($Datos[$campoFecha])) {
                 $fecha = DateTime::createFromFormat('Y-m-d\TH:i', $Datos[$campoFecha]);
                 $Datos[$campoFecha] = $fecha->format('Y-m-d H:i:s');
@@ -91,7 +90,7 @@ class ControladorDotacion {
     }
 
     public function actualizarDotacion(int $IdDotacion, array $Datos): array {
-        // Validar fechas antes de actualizar
+
         foreach (['FechaDevolucion', 'FechaEntrega'] as $campoFecha) {
             if (isset($Datos[$campoFecha]) && !$this->fechaValida($Datos[$campoFecha])) {
                 return ['success' => false, 'message' => "Formato de fecha inválido en $campoFecha"];
