@@ -117,7 +117,7 @@ $(document).ready(function () {
 $("#formRegistrarBitacora").submit(function (e) {
     e.preventDefault();
 
-    // Mostrar loading
+
     const btn = $(this).find('button[type="submit"]');
     const originalText = btn.html();
     btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
@@ -136,7 +136,7 @@ $("#formRegistrarBitacora").submit(function (e) {
                 $("#formRegistrarBitacora")[0].reset();
                 $("#VisitanteContainer, #DispositivoContainer").hide();
             } else {
-                let errorMsg = "❌ " + (response.message || "Error al registrar la bitácora");
+                let errorMsg = " " + (response.message || "Error al registrar la bitácora");
                 if (response.error) {
                     errorMsg += "\nDetalles: " + response.error;
                 }
@@ -148,7 +148,7 @@ $("#formRegistrarBitacora").submit(function (e) {
             console.log("Estado:", status);
             console.log("Respuesta completa del servidor:", xhr.responseText);
             
-            let errorMsg = "⚠️ Error de conexión con el servidor";
+            let errorMsg = " Error de conexión con el servidor";
             if (xhr.responseText && xhr.responseText.includes('conexión')) {
                 errorMsg += "\nVerifica la configuración de la base de datos";
             }

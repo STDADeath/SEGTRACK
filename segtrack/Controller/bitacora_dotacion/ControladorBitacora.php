@@ -26,7 +26,6 @@ class ControladorBitacora {
         return !isset($array[$campo]) || trim($array[$campo]) === "";
     }
 
-    // Valida datetime-local 
     private function fechaValida(string $fecha): bool {
         $d = DateTime::createFromFormat('Y-m-d\TH:i', $fecha);
         return $d && $d->format('Y-m-d\TH:i') === $fecha;

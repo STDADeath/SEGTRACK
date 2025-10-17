@@ -24,7 +24,7 @@ class Conexion {
     }
 }
 
-// ESTAS DOS LÍNEAS SON CRÍTICAS
+
 $conexionObj = new Conexion();
 $conexion = $conexionObj->getConexion();
 ?>
