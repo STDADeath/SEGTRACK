@@ -1,6 +1,6 @@
 <?php
-require_once "../../model/Usuario.php";
-require_once "../../Controller/Conexion/conexion.php";
+require_once __DIR__ . "/../../model/Login/usuario.php";
+require_once __DIR__ . "/../../Core/conexion.php";
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             case "Supervisor":
                 echo "<script>
                         alert('Bienvenido Supervisor: ".$_SESSION["nombre"]."');
-                        window.location.href='../../model/Dispositivos.php';
+                        window.location.href='../../View/Dispositivos.php';
                       </script>";
                 break;
 

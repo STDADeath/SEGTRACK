@@ -1,0 +1,9 @@
+Array
+(
+    [TipoDispositivo] => Portatil
+    [OtroTipoDispositivo] => 
+    [MarcaDispositivo] => lenovo
+    [IdFuncionario] => 12
+    [IdVisitante] => 
+    [accion] => registrar
+)

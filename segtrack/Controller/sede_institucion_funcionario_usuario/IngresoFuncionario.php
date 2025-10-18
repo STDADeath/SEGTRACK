@@ -1,8 +1,8 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__ . '../../Conexion/conexion.php';
-require_once __DIR__ . '/../../model/Funcionario.php';
+require_once "../../Core/conexion.php";
+require_once __DIR__ . '/../../View/Funcionario.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Método no permitido']);
