@@ -26,7 +26,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>ID</th>
-                            <th>QR Dispositivo</th>
+                            <th>QR</th>
                             <th>Tipo</th>
                             <th>Marca</th>
                             <th>ID Funcionario</th>
@@ -41,7 +41,17 @@
                             <?php foreach ($filas as $row) : ?>
                                 <tr id="fila-<?php echo $row['IdDispositivo']; ?>">
                                     <td><?php echo $row['IdDispositivo']; ?></td>
-                                    <td><?php echo $row['QrDispositivo'] ?? '-'; ?></td>
+                                    <td class="text-center">
+                                        <?php if ($row['QrDispositivo']) : ?>
+                                            <button type="button" class="btn btn-sm btn-outline-success" 
+                                                    onclick="verQR('<?php echo htmlspecialchars($row['QrDispositivo']); ?>', <?php echo $row['IdDispositivo']; ?>)"
+                                                    title="Ver código QR">
+                                                <i class="fas fa-qrcode me-1"></i> Ver QR
+                                            </button>
+                                        <?php else : ?>
+                                            <span class="badge badge-warning">Sin QR</span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?php echo $row['TipoDispositivo']; ?></td>
                                     <td><?php echo $row['MarcaDispositivo']; ?></td>
                                     <td><?php echo $row['IdFuncionario'] ?? '-'; ?></td>
@@ -49,7 +59,7 @@
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
                                             <button type="button" class="btn btn-sm btn-outline-primary" 
-                                                    onclick="cargarDatosEdicion(<?php echo $row['IdDispositivo']; ?>, '<?php echo htmlspecialchars($row['QrDispositivo']); ?>', '<?php echo htmlspecialchars($row['TipoDispositivo']); ?>', '<?php echo htmlspecialchars($row['MarcaDispositivo']); ?>', <?php echo $row['IdFuncionario'] ?? 'null'; ?>, <?php echo $row['IdVisitante'] ?? 'null'; ?>)"
+                                                    onclick="cargarDatosEdicion(<?php echo $row['IdDispositivo']; ?>, '<?php echo htmlspecialchars($row['QrDispositivo'] ?? ''); ?>', '<?php echo htmlspecialchars($row['TipoDispositivo']); ?>', '<?php echo htmlspecialchars($row['MarcaDispositivo']); ?>', <?php echo $row['IdFuncionario'] ?? 'null'; ?>, <?php echo $row['IdVisitante'] ?? 'null'; ?>)"
                                                     title="Editar dispositivo" data-toggle="modal" data-target="#modalEditar">
                                                 <i class="fas fa-edit"></i>
                                             </button>
@@ -72,6 +82,32 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ Modal para visualizar QR -->
+<div class="modal fade" id="modalVerQR" tabindex="-1" role="dialog" aria-labelledby="modalVerQRLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalVerQRLabel">
+                    <i class="fas fa-qrcode me-2"></i>Código QR - Dispositivo #<span id="qrDispositivoId"></span>
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="qrImagen" src="" alt="Código QR" class="img-fluid" style="max-width: 300px; border: 2px solid #ddd; padding: 10px; border-radius: 5px;">
+                <p class="text-muted mt-3">Escanea este código con tu dispositivo móvil</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a id="btnDescargarQR" href="#" class="btn btn-success" download>
+                    <i class="fas fa-download me-1"></i> Descargar QR
+                </a>
             </div>
         </div>
     </div>
@@ -113,31 +149,25 @@
                     <input type="hidden" id="editId" name="id">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="editQr" class="form-label">QR Dispositivo</label>
-                            <input type="text" id="editQr" class="form-control" name="qr">
-                        </div>
-                        <div class="col-md-6 mb-3">
                             <label for="editTipo" class="form-label">Tipo de Dispositivo</label>
                             <select id="editTipo" class="form-control" name="tipo" required>
                                 <option value="">-- Seleccione un tipo --</option>
-                                <option value="Computador">Computador</option>
+                                <option value="Portatil">Portátil</option>
                                 <option value="Tablet">Tablet</option>
-                                <option value="Portátil">Portátil</option>
+                                <option value="Computador">Computador</option>
                                 <option value="Otro">Otro</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="editMarca" class="form-label">Marca</label>
                             <input type="text" id="editMarca" class="form-control" name="marca" required>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="editFuncionario" class="form-label">ID Funcionario</label>
                             <input type="number" id="editFuncionario" class="form-control" name="IdFuncionario">
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="editVisitante" class="form-label">ID Visitante</label>
                             <input type="number" id="editVisitante" class="form-control" name="IdVisitante">
@@ -162,10 +192,20 @@
 let dispositivoIdAEliminar = null;
 let dispositivoIdAEditar = null;
 
+// ✅ Función para mostrar QR
+function verQR(rutaQR, idDispositivo) {
+    const rutaCompleta = '../' + rutaQR;
+    
+    $('#qrDispositivoId').text(idDispositivo);
+    $('#qrImagen').attr('src', rutaCompleta);
+    $('#btnDescargarQR').attr('href', rutaCompleta).attr('download', 'QR-Dispositivo-' + idDispositivo + '.png');
+    
+    $('#modalVerQR').modal('show');
+}
+
 function cargarDatosEdicion(id, qr, tipo, marca, idFuncionario, idVisitante) {
     dispositivoIdAEditar = id;
     $('#editId').val(id);
-    $('#editQr').val(qr);
     $('#editTipo').val(tipo);
     $('#editMarca').val(marca);
     $('#editFuncionario').val(idFuncionario);
@@ -207,7 +247,6 @@ $('#btnGuardarCambios').click(function() {
     const formData = {
         accion: 'actualizar',
         id: $('#editId').val(),
-        qr: $('#editQr').val(),
         tipo: $('#editTipo').val(),
         marca: $('#editMarca').val(),
         id_funcionario: $('#editFuncionario').val(),

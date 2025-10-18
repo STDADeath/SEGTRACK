@@ -7,7 +7,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * ✅ Inserta un nuevo dispositivo en la base de datos
+     * ✅ Inserta un nuevo dispositivo en la base de datos (SIN QR inicialmente)
      */
     public function registrarDispositivo(string $tipo, string $marca, ?int $idFuncionario, ?int $idVisitante): array {
         try {
@@ -15,7 +15,6 @@ class ModeloDispositivo {
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
             }
 
-            // ✅ CAMBIADO: dispositivos → dispositivo
             $sql = "INSERT INTO dispositivo 
                     (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante)
                     VALUES (:tipo, :marca, :funcionario, :visitante)";
@@ -45,7 +44,10 @@ class ModeloDispositivo {
      */
     public function actualizarQR(int $idDispositivo, string $rutaQR): array {
         try {
-            // ✅ CAMBIADO: dispositivos → dispositivo
+            if (!$this->conexion) {
+                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
+            }
+
             $sql = "UPDATE dispositivo SET QrDispositivo = :qr WHERE IdDispositivo = :id";
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
@@ -68,27 +70,54 @@ class ModeloDispositivo {
      */
     public function obtenerTodos(): array {
         try {
-            // ✅ CAMBIADO: dispositivos → dispositivo
+            if (!$this->conexion) {
+                return [];
+            }
+
             $sql = "SELECT * FROM dispositivo ORDER BY IdDispositivo DESC";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+            return [];
         }
     }
 
     /**
-     * ✅ Obtiene un dispositivo por su ID
+     * ✅ Obtiene un dispositivo por su ID (incluye QR)
      */
     public function obtenerPorId(int $idDispositivo): ?array {
         try {
-            // ✅ CAMBIADO: dispositivos → dispositivo
-            $sql = "SELECT * FROM dispositivo WHERE IdDispositivo = ?";
+            if (!$this->conexion) {
+                return null;
+            }
+
+            $sql = "SELECT * FROM dispositivo WHERE IdDispositivo = :id";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([$idDispositivo]);
+            $stmt->execute([':id' => $idDispositivo]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * ✅ Obtiene solo la ruta del QR de un dispositivo
+     */
+    public function obtenerQR(int $idDispositivo): ?string {
+        try {
+            if (!$this->conexion) {
+                return null;
+            }
+
+            $sql = "SELECT QrDispositivo FROM dispositivo WHERE IdDispositivo = :id";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idDispositivo]);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            return $resultado['QrDispositivo'] ?? null;
 
         } catch (PDOException $e) {
             return null;
@@ -100,21 +129,24 @@ class ModeloDispositivo {
      */
     public function actualizar(int $idDispositivo, array $datos): array {
         try {
-            // ✅ CAMBIADO: dispositivos → dispositivo
+            if (!$this->conexion) {
+                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
+            }
+
             $sql = "UPDATE dispositivo SET 
-                        TipoDispositivo = ?, 
-                        MarcaDispositivo = ?, 
-                        IdFuncionario = ?, 
-                        IdVisitante = ?
-                    WHERE IdDispositivo = ?";
+                        TipoDispositivo = :tipo, 
+                        MarcaDispositivo = :marca, 
+                        IdFuncionario = :funcionario, 
+                        IdVisitante = :visitante
+                    WHERE IdDispositivo = :id";
 
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
-                $datos['TipoDispositivo'],
-                $datos['MarcaDispositivo'],
-                $datos['IdFuncionario'] ?? null,
-                $datos['IdVisitante'] ?? null,
-                $idDispositivo
+                ':tipo' => $datos['TipoDispositivo'] ?? null,
+                ':marca' => $datos['MarcaDispositivo'] ?? null,
+                ':funcionario' => $datos['IdFuncionario'] ?? null,
+                ':visitante' => $datos['IdVisitante'] ?? null,
+                ':id' => $idDispositivo
             ]);
 
             return [
@@ -132,7 +164,10 @@ class ModeloDispositivo {
      */
     public function eliminar(int $idDispositivo): array {
         try {
-            // ✅ CAMBIADO: dispositivos → dispositivo
+            if (!$this->conexion) {
+                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
+            }
+
             $sql = "DELETE FROM dispositivo WHERE IdDispositivo = :id";
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([':id' => $idDispositivo]);
@@ -144,6 +179,25 @@ class ModeloDispositivo {
 
         } catch (PDOException $e) {
             return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * ✅ Verifica si existe un dispositivo
+     */
+    public function existe(int $idDispositivo): bool {
+        try {
+            if (!$this->conexion) {
+                return false;
+            }
+
+            $sql = "SELECT 1 FROM dispositivo WHERE IdDispositivo = :id LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idDispositivo]);
+            return $stmt->rowCount() > 0;
+
+        } catch (PDOException $e) {
+            return false;
         }
     }
 }

@@ -1,0 +1,18 @@
+[18-Oct-2025 23:14:47 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php:62
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php(218): ControladorDispositivo->__construct(Object(PDO))
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(55): require_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php on line 62
+[18-Oct-2025 23:15:13 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php:62
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php(218): ControladorDispositivo->__construct(Object(PDO))
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(55): require_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php on line 62
+[19-Oct-2025 01:11:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php:62
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php(218): ControladorDispositivo->__construct(Object(PDO))
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(55): require_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\model\parqueadero_dispositivo\ModeloDispositivo.php on line 62
