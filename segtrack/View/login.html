@@ -35,17 +35,25 @@
                     <h2>Login</h2>
                     
                     <!-- FORMULARIO -->
-                    <form id="loginForm" action="../Controller/Login/login.php" method="POST">                                          
+                 <form id="loginForm" action="../Controller/Login/login.php" method="POST">
+
+                        
+                        <!-- CAMPO CORREO -->
                         <div class="input-box">                         
+                            <label for="correo" class="label-text">Correo electrónico</label>
                             <i class='bx bxs-user'></i>                         
-                            <input type="email" id="correo" name="correo" placeholder="Correo electrónico">
+                            <input type="email" id="correo" name="correo" placeholder="Ingresa tu correo">
                             <small class="error" id="errorCorreo"></small>                     
-                        </div>                                          
-                        <div class="input-box">                         
+                        </div>   
+
+                        <!-- CAMPO CONTRASEÑA -->
+                        <div class="input-box">  
+                            <label for="contrasena" class="label-text">Contraseña</label>                       
                             <i class='bx bxs-lock-alt'></i>                         
-                            <input type="password" id="contrasena" name="contrasena" placeholder="Contraseña">
+                            <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña">
                             <small class="error" id="errorContrasena"></small>                     
                         </div>                                          
+                        
                         <div class="btn-container">                         
                             <button type="submit" class="btn-login">                             
                                 <i class='bx bx-log-in'></i>                             
@@ -70,8 +78,9 @@
 
     <!-- ✅ Biblioteca SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <!-- VALIDACIÓN CON JAVASCRIPT -->
     <script src="../js/javascript/js/login.js"></script>
+    
+
 </body> 
 </html>

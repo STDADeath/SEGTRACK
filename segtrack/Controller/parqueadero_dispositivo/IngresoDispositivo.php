@@ -1,5 +1,5 @@
 <?php
-require_once "../backed/conexion.php";
+require_once "../Conexion/conexion.php";
 
 $conexion = new Conexion();
 $conn = $conexion->getConexion();
