@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const regexDescripcion = /^[a-zA-Z0-9\s.,-]*$/;
         const regexIdSede = /^\d+$/;
 
+        fetch('../Controller/parqueadero_vehiculo/ControladorParqueadero.php', {
+    method: 'POST',
+    body: new FormData(form)
+})
         // Validaciones
         if (!regexPlacaTarjeta.test(placa)) {
             alert('❌ Error: El campo Placa solo puede contener letras, números, espacios y guiones.');

@@ -1,0 +1,30 @@
+2025-10-18 23:14:47 === INICIO ===
+POST recibido:
+{
+    "accion": "eliminar",
+    "id": "10"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+2025-10-18 23:15:13 === INICIO ===
+POST recibido:
+[]
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+2025-10-19 01:11:38 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "IdFuncionario": "13",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado

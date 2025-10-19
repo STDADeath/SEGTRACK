@@ -1,87 +1,153 @@
-// Espera a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formDispositivo');
+    
+    if (!form) {
+        console.error('Formulario no encontrado');
+        return;
+    }
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault(); // ❌ Evita recargar la página
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
 
-        // Obtenemos los valores
-        const tipo = document.getElementById('TipoDispositivo').value;
-        const otroTipo = document.querySelector('input[name="OtroTipoDispositivo"]')?.value.trim() || "";
-        const marca = document.querySelector('input[name="MarcaDispositivo"]').value.trim();
-        const idFuncionario = document.querySelector('input[name="IdFuncionario"]').value.trim();
-        const idVisitante = document.querySelector('input[name="IdVisitante"]').value.trim();
+        // Obtener valores
+        const tipo = document.getElementById('TipoDispositivo').value.trim();
+        const otroTipo = document.querySelector('input[name="OtroTipoDispositivo"]')?.value.trim() || '';
+        const marca = document.getElementById('MarcaDispositivo').value.trim();
+        const idFuncionario = document.getElementById('IdFuncionario').value.trim();
+        const idVisitante = document.getElementById('IdVisitante').value.trim();
+        const tieneVisitante = document.getElementById('TieneVisitante').value;
 
         // Expresiones regulares
-        const regexTexto = /^[a-zA-Z0-9\s.,-]*$/;
+        const regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]+$/;
         const regexNumero = /^\d+$/;
 
-        // ✅ Validación de tipo de dispositivo
-        if (tipo === "") {
-            alert('❌ Error: Debe seleccionar un tipo de dispositivo.');
+        // 1. Validar Tipo de Dispositivo
+        if (!tipo) {
+            Swal.fire('Error', 'Debe seleccionar un tipo de dispositivo', 'error');
             return;
         }
 
-        if (tipo === "Otro" && (otroTipo === "" || !regexTexto.test(otroTipo))) {
-            alert('❌ Error: Debe especificar un tipo válido en "Otro".');
+        // 2. Si selecciona "Otro", debe especificar el tipo
+        if (tipo === 'Otro' && !otroTipo) {
+            Swal.fire('Error', 'Debe especificar el tipo de dispositivo en el campo "Otro"', 'error');
             return;
         }
 
-        // ✅ Validación de marca
-        if (!regexTexto.test(marca) || marca === "") {
-            alert('❌ Error: El campo Marca solo puede contener letras, números, espacios y algunos símbolos (.,-).');
+        if (tipo === 'Otro' && !regexTexto.test(otroTipo)) {
+            Swal.fire('Error', 'El tipo de dispositivo contiene caracteres inválidos (solo letras, números y .-,)', 'error');
             return;
         }
 
-        // ✅ Validación de IDs (solo uno debe estar lleno)
-        if ((idFuncionario === "" && idVisitante === "") || (idFuncionario !== "" && idVisitante !== "")) {
-            alert('❌ Error: Debe ingresar solo un ID: Funcionario o Visitante.');
+        // 3. Validar Marca
+        if (!marca) {
+            Swal.fire('Error', 'Debe ingresar la marca del dispositivo', 'error');
             return;
         }
 
-        // ✅ Validar formato de ID Funcionario si se llenó
-        if (idFuncionario !== "" && !regexNumero.test(idFuncionario)) {
-            alert('❌ Error: El campo ID Funcionario solo puede contener números.');
+        if (!regexTexto.test(marca)) {
+            Swal.fire('Error', 'La marca contiene caracteres inválidos. Solo se permiten letras, números y .-,', 'error');
             return;
         }
 
-        // ✅ Validar formato de ID Visitante si se llenó
-        if (idVisitante !== "" && !regexNumero.test(idVisitante)) {
-            alert('❌ Error: El campo ID Visitante solo puede contener números.');
-            return;
-        }
+        // 4. Validar que sea funcionario O visitante, pero no ambos ni ninguno
+        const tieneIdFuncionario = idFuncionario !== '';
+        const tieneIdVisitante = idVisitante !== '';
 
-        // ✅ Si eligió "Otro", lo reemplazamos en el formData
-        const formData = new FormData(form);
-        if (tipo === "Otro") {
-            formData.set("TipoDispositivo", otroTipo);
-        }
-
-        // ✅ Enviar con fetch (AJAX)
-        fetch("../backed/IngresoDispositivo.php", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data); // Para depuración
-
-            if (data.includes("✅")) {
-                alert('✅ Dispositivo agregado con éxito');
-                form.reset();
-                document.getElementById("campoOtro").style.display = "none"; // Ocultar campo extra
-            } else {
-                alert('❌ ' + data);
+        // Si dice "no" a visitante, entonces DEBE tener funcionario
+        if (tieneVisitante === 'no') {
+            if (!tieneIdFuncionario) {
+                Swal.fire('Error', 'Si el dispositivo pertenece a un funcionario, debe ingresar su ID', 'error');
+                return;
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('❌ Hubo un error al registrar el dispositivo');
+            
+            if (tieneIdVisitante) {
+                Swal.fire('Error', 'No puede ingresar ID de visitante si selecciona que NO pertenece a un visitante', 'error');
+                return;
+            }
+
+            if (!regexNumero.test(idFuncionario)) {
+                Swal.fire('Error', 'El ID del funcionario solo debe contener números', 'error');
+                return;
+            }
+        }
+
+        // Si dice "sí" a visitante, entonces DEBE tener visitante
+        if (tieneVisitante === 'si') {
+            if (!tieneIdVisitante) {
+                Swal.fire('Error', 'Si el dispositivo pertenece a un visitante, debe ingresar su ID', 'error');
+                return;
+            }
+
+            if (tieneIdFuncionario) {
+                Swal.fire('Error', 'No puede ingresar ID de funcionario si selecciona que pertenece a un visitante', 'error');
+                return;
+            }
+
+            if (!regexNumero.test(idVisitante)) {
+                Swal.fire('Error', 'El ID del visitante solo debe contener números', 'error');
+                return;
+            }
+        }
+
+        // Si llegamos aquí, todas las validaciones pasaron
+        const formData = new FormData();
+        const tipoFinal = tipo === 'Otro' ? otroTipo : tipo;
+        formData.append('TipoDispositivo', tipoFinal);
+        formData.append('MarcaDispositivo', marca);
+        formData.append('IdFuncionario', tieneIdFuncionario ? idFuncionario : '');
+        formData.append('IdVisitante', tieneIdVisitante ? idVisitante : '');
+        formData.append('accion', 'registrar');
+
+        Swal.fire({
+            title: 'Procesando...',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
         });
+
+        try {
+            const response = await fetch('../Controller/parqueadero_dispositivo/ControladorDispositivo.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            Swal.close();
+
+            if (data.success) {
+                Swal.fire('Éxito', data.message, 'success').then(() => {
+                    form.reset();
+                    document.getElementById('campoOtro').style.display = 'none';
+                    document.getElementById('VisitanteContainer').style.display = 'none';
+                    location.reload();
+                });
+            } else {
+                Swal.fire('Error', data.message || 'Error al registrar', 'error');
+            }
+
+        } catch (error) {
+            Swal.close();
+            console.error('Error:', error);
+            Swal.fire('Error de conexión', 'No se pudo conectar al servidor', 'error');
+        }
     });
 
-    // Mostrar/Ocultar campo "Otro" según selección
-    document.getElementById("TipoDispositivo").addEventListener("change", function() {
-        document.getElementById("campoOtro").style.display = this.value === "Otro" ? "block" : "none";
-    });
+    // Mostrar/Ocultar campo "Otro"
+    const tipoSelect = document.getElementById('TipoDispositivo');
+    const campoOtro = document.getElementById('campoOtro');
+    
+    if (tipoSelect && campoOtro) {
+        tipoSelect.addEventListener('change', function() {
+            campoOtro.style.display = this.value === 'Otro' ? 'block' : 'none';
+        });
+    }
+
+    // Mostrar/Ocultar campo "ID Visitante"
+    const tieneVisitante = document.getElementById('TieneVisitante');
+    const visitanteContainer = document.getElementById('VisitanteContainer');
+    
+    if (tieneVisitante && visitanteContainer) {
+        tieneVisitante.addEventListener('change', function() {
+            visitanteContainer.style.display = this.value === 'si' ? 'block' : 'none';
+        });
+    }
 });

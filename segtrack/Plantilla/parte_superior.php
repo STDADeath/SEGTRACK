@@ -18,7 +18,11 @@
 
 
     <link href="../view/css/sb-admin-2.min.css" rel="stylesheet">
+<<<<<<<< HEAD:segtrack/Plantilla/parte_superior.php
     <link href="../view/css/styles.css" rel="stylesheet">
+========
+    <link href="../vew/css/sytles.css" rel="stylesheet">
+>>>>>>>> feature/parqueadero-dispositivo:segtrack/model/Plantilla/parte_superior.php
     <link rel="stylesheet" href="../view/css/icono.css">
 
 </head>
