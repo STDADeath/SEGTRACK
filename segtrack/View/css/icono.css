@@ -1,6 +1,6 @@
 /* Logo normal (pantallas grandes) */
 #logo {
-    content: url("../img/LOGO_SEGTRACK.ico");
+    content: url("../img/LOGO_SEGTRACK-con.ico");
     width: 180px;
     /* Ajusta el tamaño */
 }
@@ -8,7 +8,7 @@
 /* Logo reducido (pantallas pequeñas) */
 @media (max-width: 768px) {
     #logo {
-        content: url("../img/LOGO_SEGTRACK-re.ico");
+        content: url("../img/LOGO_SEGTRACK-re-con.ico");
         width: 90px;
         /* Más pequeño */
     }
