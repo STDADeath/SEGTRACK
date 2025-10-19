@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/../models/parte_superior.php'; ?>
-<?php require_once "../backed/conexion.php"; ?>
+<?php require_once "/segtrack/Core/conexion.php"; ?>
 
 <?php
 $conexion = new Conexion();
@@ -36,8 +36,10 @@ $result = $conn->query($sql);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($result && $result->num_rows > 0) : ?>
-                        <?php while ($row = $result->fetch_assoc()) : ?>
+                    <?php $filas = $result->fetchAll(PDO::FETCH_ASSOC);
+                                if ($filas && count($filas) > 0) : 
+                                ?>
+                            <?php foreach ($filas as $row) : ?>
                             <tr id="fila-<?php echo $row['IdParqueadero']; ?>">
                                 <td><?php echo $row['IdParqueadero']; ?></td>
                                 <td><?php echo $row['TipoVehiculo']; ?></td>
@@ -61,7 +63,7 @@ $result = $conn->query($sql);
                                     </div>
                                 </td>
                             </tr>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
                             <td colspan="8" class="text-center py-4">⚠ No hay vehículos registrados</td>
@@ -73,6 +75,7 @@ $result = $conn->query($sql);
     </div>
 </div>
 
+<!-- Modal Editar Vehículo -->
 <div class="modal fade" id="modalEditarVehiculo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -83,6 +86,7 @@ $result = $conn->query($sql);
             <div class="modal-body">
                 <form id="formEditarVehiculo">
                     <input type="hidden" id="editIdVehiculo" name="id">
+                    <input type="hidden" id="editAccion" name="accion" value="actualizar">
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -133,6 +137,7 @@ $result = $conn->query($sql);
     </div>
 </div>
 
+<!-- Modal Confirmar Eliminación -->
 <div class="modal fade" id="confirmarEliminarModalVehiculo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -153,12 +158,14 @@ $result = $conn->query($sql);
 
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <script>
 let vehiculoIdAEliminar = null;
 
-function cargarDatosEdicionVehiculo(row){
+// Cargar datos en el modal de edición
+function cargarDatosEdicionVehiculo(row) {
     $('#editIdVehiculo').val(row.IdParqueadero);
-    $('#editTipoVehiculo').val(row.tipoVehiculo);
+    $('#editTipoVehiculo').val(row.TipoVehiculo);
     $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
     $('#editIdSede').val(row.IdSede);
 
@@ -169,45 +176,53 @@ function cargarDatosEdicionVehiculo(row){
     $('#editTarjetaPropiedad').val(row.TarjetaPropiedad);
 
     let fechaHora = row.FechaParqueadero;
-    if(fechaHora){
-        fechaHora = fechaHora.replace(' ', 'T').substring(0,16);
+    if (fechaHora) {
+        fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
     }
     $('#editFechaParqueaderoDisabled').val(fechaHora);
     $('#editFechaParqueadero').val(fechaHora);
 }
 
-function confirmarEliminacionVehiculo(id){
+// Confirmar eliminación
+function confirmarEliminacionVehiculo(id) {
     vehiculoIdAEliminar = id;
     $('#confirmarEliminarModalVehiculo').modal('show');
 }
 
-$('#btnConfirmarEliminarVehiculo').click(function(){
-    if(!vehiculoIdAEliminar) return;
+// Botón confirmar eliminación
+$('#btnConfirmarEliminarVehiculo').click(function() {
+    if (!vehiculoIdAEliminar) return;
 
     $.ajax({
-        url: '../backed/EliminarVehiculo.php',
+        url: '../Controller/parqueadero_vehiculo/ControladorParqueadero.php',
         type: 'POST',
-        data: { id: vehiculoIdAEliminar },
+        data: {
+            accion: 'eliminar',
+            id: vehiculoIdAEliminar
+        },
         dataType: 'json',
-        success: function(response){
+        success: function(response) {
             $('#confirmarEliminarModalVehiculo').modal('hide');
-            if(response.success){
+            if (response.success) {
                 alert('Vehículo eliminado correctamente');
-                $('#fila-' + vehiculoIdAEliminar).remove();
-                if($('tbody tr').length === 1) location.reload();
+                $('#fila-' + vehiculoIdAEliminar).fadeOut(400, function() {
+                    $(this).remove();
+                });
             } else {
                 alert('Error: ' + response.message);
             }
         },
-        error: function(){
+        error: function() {
             $('#confirmarEliminarModalVehiculo').modal('hide');
             alert('Error al intentar eliminar el vehículo');
         }
     });
 });
 
-$('#btnGuardarCambiosVehiculo').click(function(){
+// Botón guardar cambios
+$('#btnGuardarCambiosVehiculo').click(function() {
     const formData = {
+        accion: 'actualizar',
         id: $('#editIdVehiculo').val(),
         tipo: $('#editTipoVehiculo').val(),
         placa: $('#editPlacaVehiculo').val(),
@@ -217,28 +232,27 @@ $('#btnGuardarCambiosVehiculo').click(function(){
         idsede: $('#editIdSede').val()
     };
 
-    for(let key in formData){
-        if(!formData[key] || formData[key].toString().trim() === ''){
-            alert('Complete todos los campos obligatorios');
-            return;
-        }
+    // Validar campos
+    if (!formData.tipo || !formData.descripcion || !formData.idsede) {
+        alert('Complete todos los campos obligatorios');
+        return;
     }
 
     $.ajax({
-        url: '../backed/ActualizarVehiculo.php',
+        url: '../Controller/parqueadero_vehiculo/ControladorParqueadero.php',
         type: 'POST',
         data: formData,
         dataType: 'json',
-        success: function(response){
+        success: function(response) {
             $('#modalEditarVehiculo').modal('hide');
-            if(response.success){
+            if (response.success) {
                 alert('Vehículo actualizado correctamente');
                 location.reload();
             } else {
                 alert('Error: ' + response.message);
             }
         },
-        error: function(){
+        error: function() {
             $('#modalEditarVehiculo').modal('hide');
             alert('Error al intentar actualizar el vehículo');
         }

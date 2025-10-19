@@ -17,7 +17,7 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Vehículo</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="../backed/IngresoParqueadero.php" class="needs-validation" novalidate>
+                    <form method="POST" action="../" class="needs-validation" novalidate>
                         <div class="row">
                             <!-- Tipo de vehículo -->
                             <div class="col-md-6 mb-3">
