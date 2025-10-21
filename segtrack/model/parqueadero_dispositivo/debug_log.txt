@@ -1,30 +1,25 @@
-2025-10-18 23:14:47 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "10"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-2025-10-18 23:15:13 === INICIO ===
-POST recibido:
-[]
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-2025-10-19 01:11:38 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "13",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
+✅ Conexión establecida correctamente
+❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'PlacaVehiculo' at row 1
+✅ Conexión establecida correctamente
+✅ Vehículo insertado ID: 1
+✅ Conexión establecida correctamente
+✅ Vehículo insertado ID: 2
+✅ Conexión establecida correctamente
+✅ Conexión establecida correctamente
+✅ Conexión establecida correctamente
+✅ Conexión establecida correctamente
+✅ Vehículo insertado ID: 3
+✅ Conexión establecida correctamente
+✅ Vehículo insertado ID: 4
+✅ Conexión establecida correctamente
+✅ Vehículo actualizado ID: 4
+✅ Conexión establecida correctamente
+✅ Vehículo eliminado ID: 4
+✅ Conexión establecida correctamente
+✅ Vehículo insertado ID: 5
+✅ Conexión establecida correctamente
+✅ Vehículo actualizado ID: 5
+✅ Conexión establecida correctamente
+✅ Vehículo insertado ID: 3
+✅ Conexión establecida correctamente
+✅ Vehículo actualizado ID: 3

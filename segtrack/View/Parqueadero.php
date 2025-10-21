@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../models/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
@@ -6,7 +6,7 @@
             <!-- Header -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-car me-2"></i>Registrar Vehículo</h1>
-                <a href="../models/Vehiculolista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+                <a href="../view/Vehiculolista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
                     <i class="fas fa-list me-1"></i> Ver Vehículos
                 </a>
             </div>
@@ -17,7 +17,7 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Vehículo</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="../" class="needs-validation" novalidate>
+                    <form method="POST" action="../controller/parqueadero_dispositivo/ControladorParqueadero.php" class="needs-validation" novalidate>
                         <div class="row">
                             <!-- Tipo de vehículo -->
                             <div class="col-md-6 mb-3">
@@ -84,7 +84,7 @@
 
                         <!-- Botones -->
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='../models/Vehiculolista.php'">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='../view/Vehiculolista.php'">
                                 <i class="fas fa-arrow-left me-1"></i> Volver
                             </button>
                             <button type="submit" class="btn btn-primary">
@@ -98,21 +98,12 @@
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="../javascript/demo/sb-admin-2.min.js"></script>
-
+<!-- Librería SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Validación de formulario -->
 <script src="../js/javascript/js/ValidacionParqueadero.js"></script>
-
 </body>
 </html>
 
 <!---fin del contenido principal--->
-<?php require_once __DIR__ . '/../models/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>

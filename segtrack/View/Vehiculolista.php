@@ -1,5 +1,5 @@
-<?php require_once __DIR__ . '/../models/parte_superior.php'; ?>
-<?php require_once "/segtrack/Core/conexion.php"; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+<?php require_once(__DIR__ . "/../Core/conexion.php");?>
 
 <?php
 $conexion = new Conexion();
@@ -194,7 +194,7 @@ $('#btnConfirmarEliminarVehiculo').click(function() {
     if (!vehiculoIdAEliminar) return;
 
     $.ajax({
-        url: '../Controller/parqueadero_vehiculo/ControladorParqueadero.php',
+        url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
         type: 'POST',
         data: {
             accion: 'eliminar',
@@ -239,7 +239,7 @@ $('#btnGuardarCambiosVehiculo').click(function() {
     }
 
     $.ajax({
-        url: '../Controller/parqueadero_vehiculo/ControladorParqueadero.php',
+        url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
         type: 'POST',
         data: formData,
         dataType: 'json',
@@ -260,4 +260,7 @@ $('#btnGuardarCambiosVehiculo').click(function() {
 });
 </script>
 
-<?php require_once __DIR__ . '/../models/parte_inferior.php'; ?>
+<script src="../js/javascript/js/ValidacionParqueadero.js"></script>
+
+
+<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
