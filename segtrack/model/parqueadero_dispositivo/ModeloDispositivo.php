@@ -7,7 +7,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * ✅ Inserta un nuevo dispositivo en la base de datos (SIN QR inicialmente)
+     * ✅ Inserta un nuevo dispositivo en la base de datos (SIN QR inicialmente
      */
     public function registrarDispositivo(string $tipo, string $marca, ?int $idFuncionario, ?int $idVisitante): array {
         try {

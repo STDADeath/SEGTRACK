@@ -3,7 +3,7 @@
 // ============================================
 let vehiculoIdAEliminar = null;
 
-// ============================================
+// ===========================================
 // 📌 VALIDACIÓN Y REGISTRO DE VEHÍCULO
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
