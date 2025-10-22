@@ -466,3 +466,35 @@ registrarDispositivo llamado
 Generando QR para dispositivo ID: 15
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-15-68f4216f98003.png
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 15","data":{"IdDispositivo":"15","QrDispositivo":"qr\/QR-DISP-15-68f4216f98003.png"}}
+2025-10-22 06:13:42 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "214321",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 8
+2025-10-22 06:13:45 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "214321",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 9

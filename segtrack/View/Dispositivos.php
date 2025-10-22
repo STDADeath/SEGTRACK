@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../model/Plantilla/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
@@ -114,4 +114,4 @@
 <!-- ✅ Script de validación externo -->
 <script src="../js/javascript/js/ValidacionDispositivo.js"></script>
 
-<?php require_once __DIR__ . '/../model/Plantilla/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?> 

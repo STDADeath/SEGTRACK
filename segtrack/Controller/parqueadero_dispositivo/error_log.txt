@@ -716,3 +716,23 @@ Stack trace:
 [19-Oct-2025 01:23:27 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 15.25 to int loses precision in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php on line 144
 [19-Oct-2025 01:23:27 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 15.5 to int loses precision in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php on line 144
 [19-Oct-2025 01:23:27 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 15.75 to int loses precision in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php on line 144
+[22-Oct-2025 06:13:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 4)
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(494): QRimage::png(Array, 'C:\\xampp\\htdocs...', 10, 4, false)
+#2 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 8\nTipo: Por...', 'C:\\xampp\\htdocs...', false)
+#3 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(74): QRcode::png('ID: 8\nTipo: Por...', 'C:\\xampp\\htdocs...', 3, 10)
+#4 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(123): ControladorDispositivo->generarQR(8, 'Portatil', '214321')
+#5 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(189): ControladorDispositivo->registrarDispositivo(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php on line 74
+[22-Oct-2025 06:13:45 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 4)
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(494): QRimage::png(Array, 'C:\\xampp\\htdocs...', 10, 4, false)
+#2 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 9\nTipo: Por...', 'C:\\xampp\\htdocs...', false)
+#3 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(74): QRcode::png('ID: 9\nTipo: Por...', 'C:\\xampp\\htdocs...', 3, 10)
+#4 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(123): ControladorDispositivo->generarQR(9, 'Portatil', '214321')
+#5 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(189): ControladorDispositivo->registrarDispositivo(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php on line 74
