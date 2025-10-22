@@ -16,13 +16,12 @@
     $filtros = [];
     $params = [];
 
-    // Filtro por identificación
+
     if (!empty($_GET['identificacion'])) {
         $filtros[] = "IdentificacionVisitante LIKE :identificacion";
         $params[':identificacion'] = "%" . $_GET['identificacion'] . "%";
     }
 
-    // Filtro por nombre
     if (!empty($_GET['nombre'])) {
         $filtros[] = "NombreVisitante LIKE :nombre";
         $params[':nombre'] = "%" . $_GET['nombre'] . "%";
@@ -39,7 +38,7 @@
     $visitantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
-    <!-- Filtros -->
+
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Filtrar Visitantes</h6>
@@ -68,7 +67,6 @@
         </div>
     </div>
 
-    <!-- Tabla -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Visitantes</h6>
