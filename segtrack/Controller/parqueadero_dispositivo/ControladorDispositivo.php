@@ -159,25 +159,6 @@ try {
                 return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
         }
-
-        public function eliminarDispositivo(int $id): array {
-            file_put_contents(__DIR__ . '/debug_log.txt', "eliminarDispositivo llamado con ID: $id\n", FILE_APPEND);
-
-            try {
-                $resultado = $this->modelo->eliminar($id);
-                
-                if ($resultado['success']) {
-                    file_put_contents(__DIR__ . '/debug_log.txt', "Dispositivo eliminado exitosamente\n", FILE_APPEND);
-                    return ['success' => true, 'message' => 'Dispositivo eliminado correctamente'];
-                } else {
-                    file_put_contents(__DIR__ . '/debug_log.txt', "Error al eliminar: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
-                    return ['success' => false, 'message' => 'Error al eliminar dispositivo'];
-                }
-            } catch (Exception $e) {
-                file_put_contents(__DIR__ . '/debug_log.txt', "EXCEPCIÓN en eliminar: " . $e->getMessage() . "\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
-            }
-        }
     }
 
     $controlador = new ControladorDispositivo($conexion);
@@ -197,13 +178,6 @@ try {
                 'IdVisitante' => !empty($_POST['id_visitante']) ? (int)$_POST['id_visitante'] : null
             ];
             $resultado = $controlador->actualizarDispositivo($id, $datos);
-        } else {
-            $resultado = ['success' => false, 'message' => 'ID de dispositivo no válido'];
-        }
-    } elseif ($accion === 'eliminar') {
-        $id = (int)($_POST['id'] ?? 0);
-        if ($id > 0) {
-            $resultado = $controlador->eliminarDispositivo($id);
         } else {
             $resultado = ['success' => false, 'message' => 'ID de dispositivo no válido'];
         }

@@ -5,8 +5,40 @@
 $conexion = new Conexion();
 $conn = $conexion->getConexion();
 
-$sql = "SELECT * FROM Parqueadero ORDER BY IdParqueadero DESC";
-$result = $conn->query($sql);
+// Construcción de filtros dinámicos
+$filtros = [];
+$params = [];
+
+if (!empty($_GET['tipo'])) {
+    $filtros[] = "TipoVehiculo = :tipo";
+    $params[':tipo'] = $_GET['tipo'];
+}
+if (!empty($_GET['placa'])) {
+    $filtros[] = "PlacaVehiculo LIKE :placa";
+    $params[':placa'] = '%' . $_GET['placa'] . '%';
+}
+if (!empty($_GET['tarjeta'])) {
+    $filtros[] = "TarjetaPropiedad LIKE :tarjeta";
+    $params[':tarjeta'] = '%' . $_GET['tarjeta'] . '%';
+}
+if (!empty($_GET['fecha'])) {
+    $filtros[] = "DATE(FechaParqueadero) = :fecha";
+    $params[':fecha'] = $_GET['fecha'];
+}
+if (!empty($_GET['sede'])) {
+    $filtros[] = "IdSede = :sede";
+    $params[':sede'] = $_GET['sede'];
+}
+
+$where = "";
+if (count($filtros) > 0) {
+    $where = "WHERE " . implode(" AND ", $filtros);
+}
+
+$sql = "SELECT * FROM Parqueadero $where ORDER BY IdParqueadero DESC";
+$stmt = $conn->prepare($sql);
+$stmt->execute($params);
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -17,6 +49,47 @@ $result = $conn->query($sql);
         </a>
     </div>
 
+    <!-- Filtros -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-light">
+            <h6 class="m-0 font-weight-bold text-primary">Filtrar Vehículos</h6>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-2">
+                    <label for="tipo" class="form-label">Tipo de Vehículo</label>
+                    <select name="tipo" id="tipo" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>>Bicicleta</option>
+                        <option value="Moto" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto') ? 'selected' : '' ?>>Moto</option>
+                        <option value="Carro" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro') ? 'selected' : '' ?>>Carro</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="placa" class="form-label">Placa</label>
+                    <input type="text" name="placa" id="placa" class="form-control" value="<?= $_GET['placa'] ?? '' ?>" placeholder="Buscar placa">
+                </div>
+                <div class="col-md-2">
+                    <label for="tarjeta" class="form-label">Tarjeta Propiedad</label>
+                    <input type="text" name="tarjeta" id="tarjeta" class="form-control" value="<?= $_GET['tarjeta'] ?? '' ?>" placeholder="Buscar tarjeta">
+                </div>
+                <div class="col-md-2">
+                    <label for="fecha" class="form-label">Fecha</label>
+                    <input type="date" name="fecha" id="fecha" class="form-control" value="<?= $_GET['fecha'] ?? '' ?>">
+                </div>
+                <div class="col-md-2">
+                    <label for="sede" class="form-label">ID Sede</label>
+                    <input type="text" name="sede" id="sede" class="form-control" value="<?= $_GET['sede'] ?? '' ?>" placeholder="ID Sede">
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
+                    <a href="VehiculoLista.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Vehículos</h6>
@@ -36,10 +109,8 @@ $result = $conn->query($sql);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $filas = $result->fetchAll(PDO::FETCH_ASSOC);
-                                if ($filas && count($filas) > 0) : 
-                                ?>
-                            <?php foreach ($filas as $row) : ?>
+                    <?php if ($result && count($result) > 0) : ?>
+                        <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdParqueadero']; ?>">
                                 <td><?php echo $row['IdParqueadero']; ?></td>
                                 <td><?php echo $row['TipoVehiculo']; ?></td>
@@ -66,7 +137,10 @@ $result = $conn->query($sql);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="8" class="text-center py-4">⚠ No hay vehículos registrados</td>
+                            <td colspan="8" class="text-center py-4">
+                                <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
+                                <p class="text-muted">No hay vehículos registrados con los filtros seleccionados</p>
+                            </td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

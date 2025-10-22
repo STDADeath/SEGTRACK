@@ -12,10 +12,77 @@
     require_once __DIR__ . "/../Core/conexion.php";
     $conexionObj = new Conexion();
     $conn = $conexionObj->getConexion();
-    $sql = "SELECT * FROM dispositivo ORDER BY IdDispositivo DESC";
-    $result = $conn->query($sql);
+
+    // Construcción de filtros dinámicos
+    $filtros = [];
+    $params = [];
+
+    if (!empty($_GET['tipo'])) {
+        $filtros[] = "TipoDispositivo = :tipo";
+        $params[':tipo'] = $_GET['tipo'];
+    }
+    if (!empty($_GET['marca'])) {
+        $filtros[] = "MarcaDispositivo LIKE :marca";
+        $params[':marca'] = '%' . $_GET['marca'] . '%';
+    }
+    if (!empty($_GET['funcionario'])) {
+        $filtros[] = "IdFuncionario = :funcionario";
+        $params[':funcionario'] = $_GET['funcionario'];
+    }
+    if (!empty($_GET['visitante'])) {
+        $filtros[] = "IdVisitante = :visitante";
+        $params[':visitante'] = $_GET['visitante'];
+    }
+
+    $where = "";
+    if (count($filtros) > 0) {
+        $where = "WHERE " . implode(" AND ", $filtros);
+    }
+
+    $sql = "SELECT * FROM dispositivo $where ORDER BY IdDispositivo DESC";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($params);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
+    <!-- Filtros -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-light">
+            <h6 class="m-0 font-weight-bold text-primary">Filtrar Dispositivos</h6>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label for="tipo" class="form-label">Tipo de Dispositivo</label>
+                    <select name="tipo" id="tipo" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="Portatil" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Portatil') ? 'selected' : '' ?>>Portátil</option>
+                        <option value="Tablet" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Tablet') ? 'selected' : '' ?>>Tablet</option>
+                        <option value="Computador" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Computador') ? 'selected' : '' ?>>Computador</option>
+                        <option value="Otro" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Otro') ? 'selected' : '' ?>>Otro</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="marca" class="form-label">Marca</label>
+                    <input type="text" name="marca" id="marca" class="form-control" value="<?= $_GET['marca'] ?? '' ?>" placeholder="Buscar por marca">
+                </div>
+                <div class="col-md-2">
+                    <label for="funcionario" class="form-label">ID Funcionario</label>
+                    <input type="text" name="funcionario" id="funcionario" class="form-control" value="<?= $_GET['funcionario'] ?? '' ?>" placeholder="ID">
+                </div>
+                <div class="col-md-2">
+                    <label for="visitante" class="form-label">ID Visitante</label>
+                    <input type="text" name="visitante" id="visitante" class="form-control" value="<?= $_GET['visitante'] ?? '' ?>" placeholder="ID">
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
+                    <a href="Dispositivolista.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Dispositivos</h6>
@@ -35,10 +102,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $filas = $result->fetchAll(PDO::FETCH_ASSOC);
-                                if ($filas && count($filas) > 0) : 
-                                ?>
-                            <?php foreach ($filas as $row) : ?>
+                        <?php if ($result && count($result) > 0) : ?>
+                            <?php foreach ($result as $row) : ?>
                                 <tr id="fila-<?php echo $row['IdDispositivo']; ?>">
                                     <td><?php echo $row['IdDispositivo']; ?></td>
                                     <td class="text-center">
@@ -57,18 +122,11 @@
                                     <td><?php echo $row['IdFuncionario'] ?? '-'; ?></td>
                                     <td><?php echo $row['IdVisitante'] ?? '-'; ?></td>
                                     <td class="text-center">
-                                        <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-sm btn-outline-primary" 
-                                                    onclick="cargarDatosEdicion(<?php echo $row['IdDispositivo']; ?>, '<?php echo htmlspecialchars($row['QrDispositivo'] ?? ''); ?>', '<?php echo htmlspecialchars($row['TipoDispositivo']); ?>', '<?php echo htmlspecialchars($row['MarcaDispositivo']); ?>', <?php echo $row['IdFuncionario'] ?? 'null'; ?>, <?php echo $row['IdVisitante'] ?? 'null'; ?>)"
-                                                    title="Editar dispositivo" data-toggle="modal" data-target="#modalEditar">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-danger" 
-                                                    onclick="confirmarEliminacion(<?php echo $row['IdDispositivo']; ?>)"
-                                                    title="Eliminar dispositivo">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" 
+                                                onclick="cargarDatosEdicion(<?php echo $row['IdDispositivo']; ?>, '<?php echo htmlspecialchars($row['QrDispositivo'] ?? ''); ?>', '<?php echo htmlspecialchars($row['TipoDispositivo']); ?>', '<?php echo htmlspecialchars($row['MarcaDispositivo']); ?>', <?php echo $row['IdFuncionario'] ?? 'null'; ?>, <?php echo $row['IdVisitante'] ?? 'null'; ?>)"
+                                                title="Editar dispositivo" data-toggle="modal" data-target="#modalEditar">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -76,7 +134,7 @@
                             <tr>
                                 <td colspan="7" class="text-center py-4">
                                     <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
-                                    <p class="text-muted">No hay dispositivos registrados</p>
+                                    <p class="text-muted">No hay dispositivos registrados con los filtros seleccionados</p>
                                 </td>
                             </tr>
                         <?php endif; ?>
@@ -108,27 +166,6 @@
                 <a id="btnDescargarQR" href="#" class="btn btn-success" download>
                     <i class="fas fa-download me-1"></i> Descargar QR
                 </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Confirmar Eliminación -->
-<div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmarEliminarLabel">Confirmar Eliminación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea eliminar este dispositivo? Esta acción no se puede deshacer.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
             </div>
         </div>
     </div>
@@ -189,7 +226,6 @@
 <script src="../js/javascript/demo/sb-admin-2.min.js"></script>
 
 <script>
-let dispositivoIdAEliminar = null;
 let dispositivoIdAEditar = null;
 
 // ✅ Función para mostrar QR
@@ -210,37 +246,6 @@ function cargarDatosEdicion(id, qr, tipo, marca, idFuncionario, idVisitante) {
     $('#editMarca').val(marca);
     $('#editFuncionario').val(idFuncionario);
     $('#editVisitante').val(idVisitante);
-}
-
-function confirmarEliminacion(id) {
-    dispositivoIdAEliminar = id;
-    $('#confirmarEliminarModal').modal('show');
-}
-
-function eliminarDispositivo() {
-    if (dispositivoIdAEliminar) {
-        $.ajax({
-            url: "../Controller/parqueadero_dispositivo/ControladorDispositivo.php",
-            type: 'POST',
-            data: { accion: 'eliminar', id: dispositivoIdAEliminar },
-            dataType: 'json',
-            success: function(response) {
-                $('#confirmarEliminarModal').modal('hide');
-                if (response.success) {
-                    alert('Dispositivo eliminado correctamente');
-                    $('#fila-' + dispositivoIdAEliminar).fadeOut(400, function() {
-                        $(this).remove();
-                    });
-                } else {
-                    alert('Error: ' + response.message);
-                }
-            },
-            error: function() {
-                $('#confirmarEliminarModal').modal('hide');
-                alert('Error al intentar eliminar el dispositivo');
-            }
-        });
-    }
 }
 
 $('#btnGuardarCambios').click(function() {
@@ -276,8 +281,6 @@ $('#btnGuardarCambios').click(function() {
         }
     });
 });
-
-document.getElementById('btnConfirmarEliminar').addEventListener('click', eliminarDispositivo);
 </script>
 
 <?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>

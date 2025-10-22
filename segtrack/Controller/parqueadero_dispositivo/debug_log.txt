@@ -163,3 +163,21 @@ POST: {"accion":"actualizar","id":"3","tipo":"Moto","placa":"EHO-343","descripci
 Iniciando actualización de vehículo
 Datos actualizar - ID: 3 | Tipo: Moto | Descripción: morada | IdSede: 17
 Resultado: {"success":true,"message":"Vehículo actualizado correctamente"}
+2025-10-22 04:42:42 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "13",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 17
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-17-68f844a27e26f.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 17","data":{"IdDispositivo":"17","QrDispositivo":"qr\/QR-DISP-17-68f844a27e26f.png"}}
