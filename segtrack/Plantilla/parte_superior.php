@@ -80,13 +80,15 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Bitacora</h6>
-                        <a class="collapse-item" href="">Registro De Bitacora </a>
+                         <a class="collapse-item" href="../view/bitacoraLista.php">Registro De Bitacora </a>
+                        <a class="collapse-item" href="../view/bitacora.php">ingreso Bitacora </a>
     
                         <h6 class="collapse-header">Dotacion</h6>
-                        <a class="collapse-item" href="404.html">Registro Dotacion</a>
+                        <a class="collapse-item" href="../view/dotaciones.php">ingresar Dotacion</a>
+                            <a class="collapse-item" href="../view/dotacionLista.php">Registro de dotacion</a>
                         <h6 class="collapse-header">Visitante</h6>
-                        <a class="collapse-item" href="404.html">Registro Visitante</a>
-                        <a class="collapse-item" href="blank.html">Lista De los Visitantes</a>
+                        <a class="collapse-item" href="../view/visitante.php">Registro Visitante</a>
+                        <a class="collapse-item" href="../view/visitanteLista.php">Lista De los Visitantes</a>
                     </div>
                 </div>
             </li>
@@ -100,7 +102,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Tabla de ingreso</span>

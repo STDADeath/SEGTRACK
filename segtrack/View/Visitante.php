@@ -18,13 +18,13 @@
                     <div class="col-md-6 mb-3">
                         <label for="IdentificacionVisitante" class="form-label">Identificación</label>
                         <input type="number" id="IdentificacionVisitante" name="IdentificacionVisitante" 
-                               class="form-control" placeholder="Ej: 1012345678" required>
+                               class="form-control" required>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="NombreVisitante" class="form-label">Nombre Completo</label>
                         <input type="text" id="NombreVisitante" name="NombreVisitante" 
-                               class="form-control" placeholder="Ej: Juan Pérez" required>
+                               class="form-control" required>
                     </div>
                 </div>
 
