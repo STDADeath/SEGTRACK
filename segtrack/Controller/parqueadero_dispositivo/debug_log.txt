@@ -181,3 +181,28 @@ registrarDispositivo llamado
 Generando QR para dispositivo ID: 17
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-17-68f844a27e26f.png
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 17","data":{"IdDispositivo":"17","QrDispositivo":"qr\/QR-DISP-17-68f844a27e26f.png"}}
+2025-10-23 19:23:23 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "13",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 18
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-18-68fa648cdc2ca.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 18","data":{"IdDispositivo":"18","QrDispositivo":"qr\/QR-DISP-18-68fa648cdc2ca.png"}}
+
+2025-10-23 19:24:27 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Bicicleta","PlacaVehiculo":"no aplica","DescripcionVehiculo":"morada","TarjetaPropiedad":"tj324551","FechaParqueadero":"2025-10-23T12:24","IdSede":"17","accion":"registrar"}
+Iniciando registro de vehículo

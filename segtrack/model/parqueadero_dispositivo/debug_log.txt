@@ -23,3 +23,5 @@
 ✅ Vehículo insertado ID: 3
 ✅ Conexión establecida correctamente
 ✅ Vehículo actualizado ID: 3
+✅ Conexión establecida correctamente
+✅ Vehículo insertado ID: 4
