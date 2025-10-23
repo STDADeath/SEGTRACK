@@ -15,7 +15,7 @@ class Conexion {
             );
             $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            die("❌ Error en la conexión: " . $e->getMessage());
+            die("Error en la conexión: " . $e->getMessage());
         }
     }
 
@@ -24,7 +24,7 @@ class Conexion {
     }
 }
 
-
+// Crear objeto y obtener conexión
 $conexionObj = new Conexion();
 $conexion = $conexionObj->getConexion();
 ?>
