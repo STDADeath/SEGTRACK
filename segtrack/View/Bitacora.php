@@ -1,4 +1,5 @@
-<?php require_once __DIR__ . '/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+
 <div class="container-fluid px-4 py-4">
   <div class="d-sm-flex align-items-center justify-content-between mb-3">
     <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-clipboard-list mr-2"></i>Registrar Bitácora</h1>
@@ -12,7 +13,7 @@
       <strong>Información de la Bitácora</strong>
     </div>
     <div class="card-body">
-      <form id="frmBita" method="post" action="/segtrack/backed/BitacoraIngreso.php" novalidate>
+      <form id="frmBita" method="post" action="/../Controller/bitacora_dotacion/BitacoraIngreso.php" novalidate>
         <div class="row">
           <!-- Columna izquierda -->
           <div class="col-lg-7">
@@ -140,7 +141,7 @@
 <script>
 // --- Config (endpoint dinámico) ---
 const API_CREATE = (function () {
-  return location.pathname.replace(/\/models\/[^\/]*$/, '/backed/BitacoraIngreso.php');
+  return location.pathname.replace(/\/models\/[^\/]*$/, '/../Controller/BitacoraIngreso.php');
 })();
 const URL_LIST   = 'BitacoraLista.php';
 
@@ -258,4 +259,4 @@ qs('#frmBita').addEventListener('submit', async (e)=>{
   }
 });
 </script>
-<?php require_once __DIR__ . '/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
