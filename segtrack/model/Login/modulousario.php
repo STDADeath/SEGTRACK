@@ -14,37 +14,41 @@ class Usuario {
     public function validarLogin($correo, $contrasena) {
         try {
             $sql = "SELECT 
+                        f.IdFuncionario,
+                        f.NombreFuncionario,
+                        f.CorreoFuncionario,
                         u.IdUsuario,
-                        u.TipoRol, 
-                        u.Contrasena, 
-                        f.NombreFuncionario 
-                    FROM usuario u
-                    INNER JOIN funcionario f 
+                        u.TipoRol,
+                        u.Contraseña
+                    FROM funcionario f
+                    INNER JOIN usuario u 
                         ON f.IdFuncionario = u.IdFuncionario
-                    WHERE f.CorreoFuncionario = :correo";
+                    WHERE f.CorreoFuncionario = :correo
+                    LIMIT 1";
 
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(":correo", $correo);
             $stmt->execute();
-
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Verificar contraseña (si está encriptada o no)
-            if ($resultado && (
-                password_verify($contrasena, $resultado["Contrasena"]) ||
-                $contrasena === $resultado["Contrasena"]
-            )) {
+            if (!$resultado) {
+                return false; // Correo no encontrado
+            }
+
+            // Verificar la contraseña (encriptada o no)
+            if (password_verify($contrasena, $resultado["Contraseña"]) ||
+                $contrasena === $resultado["Contraseña"]) {
                 return $resultado;
             }
 
-            return false;
+            return false; // Contraseña incorrecta
         } catch (PDOException $e) {
-            die("Error en login: " . $e->getMessage());
+            die("Error en validarLogin: " . $e->getMessage());
         }
     }
 
     // ==================================================
-    // ✅ 2. Obtener todos los usuarios (listar)
+    // ✅ 2. Obtener todos los usuarios
     // ==================================================
     public function obtenerUsuarios($filtro = null) {
         try {
@@ -63,12 +67,10 @@ class Usuario {
             }
 
             $stmt = $this->conexion->prepare($sql);
-
             if ($filtro) {
-                $param = "%" . $filtro . "%";
+                $param = "%".$filtro."%";
                 $stmt->bindParam(":filtro", $param);
             }
-
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -77,7 +79,7 @@ class Usuario {
     }
 
     // ==================================================
-    // ✅ 3. Obtener un solo usuario por ID
+    // ✅ 3. Obtener usuario por ID
     // ==================================================
     public function obtenerUsuarioPorId($idUsuario) {
         try {
@@ -87,13 +89,12 @@ class Usuario {
                         f.NombreFuncionario,
                         f.CorreoFuncionario
                     FROM usuario u
-                    INNER JOIN funcionario f ON f.IdFuncionario = u.IdFuncionario
+                    INNER JOIN funcionario f 
+                        ON f.IdFuncionario = u.IdFuncionario
                     WHERE u.IdUsuario = :id";
-
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(":id", $idUsuario, PDO::PARAM_INT);
             $stmt->execute();
-
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Error al obtener usuario: " . $e->getMessage());
@@ -108,19 +109,18 @@ class Usuario {
             if ($contrasena) {
                 $hash = password_hash($contrasena, PASSWORD_DEFAULT);
                 $sql = "UPDATE usuario 
-                        SET TipoRol = :rol, Contrasena = :contrasena 
+                        SET TipoRol = :rol, Contraseña = :contrasena 
                         WHERE IdUsuario = :id";
                 $stmt = $this->conexion->prepare($sql);
-                $stmt->bindParam(":rol", $tipoRol);
                 $stmt->bindParam(":contrasena", $hash);
             } else {
                 $sql = "UPDATE usuario 
                         SET TipoRol = :rol 
                         WHERE IdUsuario = :id";
                 $stmt = $this->conexion->prepare($sql);
-                $stmt->bindParam(":rol", $tipoRol);
             }
 
+            $stmt->bindParam(":rol", $tipoRol);
             $stmt->bindParam(":id", $idUsuario, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (PDOException $e) {

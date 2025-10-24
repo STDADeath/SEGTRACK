@@ -16,7 +16,7 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Funcionario</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="../Backed/IngresoFuncionario.php" id="formFuncionario" class="needs-validation" novalidate>
+                    <form method="POST" action="../Controller/sede_institucion_funcionario_usuario/ControladorFuncionario.php" id="formFuncionario" class="needs-validation" novalidate>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
