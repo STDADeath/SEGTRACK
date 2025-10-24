@@ -61,8 +61,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Funcionarios:</h6>
-                        <a class="collapse-item" href="Funcionario.php">Registrar Funcionario</a>
-                        <a class="collapse-item" href="FuncionariosLista.php">Lista De los Funcionarios</a>
+                        <a class="collapse-item" href="FuncionarioDash.php">Registrar Funcionario</a>
+                        <a class="collapse-item" href="/../">Lista De los Funcionarios</a>
                         <h6 class="collapse-header">Parqueadero</h6>
                         <a class="collapse-item" href="parqueadero.php">Ingreso Parqueadero</a>
                         <a class="collapse-item" href="Vehiculolista.php">Lista Del Parqueadero</a>
