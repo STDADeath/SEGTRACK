@@ -473,3 +473,43 @@
 [24-Oct-2025 03:46:38 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 15.25 to int loses precision in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php on line 144
 [24-Oct-2025 03:46:38 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 15.5 to int loses precision in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php on line 144
 [24-Oct-2025 03:46:38 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 15.75 to int loses precision in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php on line 144
+[24-Oct-2025 03:54:09 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 4)
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(494): QRimage::png(Array, 'C:\\xampp\\htdocs...', 10, 4, false)
+#2 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 16\nTipo: Po...', 'C:\\xampp\\htdocs...', false)
+#3 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(74): QRcode::png('ID: 16\nTipo: Po...', 'C:\\xampp\\htdocs...', 3, 10)
+#4 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(123): ControladorDispositivo->generarQR(16, 'Portatil', 'LENOVO')
+#5 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(170): ControladorDispositivo->registrarDispositivo(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php on line 74
+[24-Oct-2025 03:57:00 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 4)
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(494): QRimage::png(Array, 'C:\\xampp\\htdocs...', 10, 4, false)
+#2 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 19\nTipo: Po...', 'C:\\xampp\\htdocs...', false)
+#3 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(74): QRcode::png('ID: 19\nTipo: Po...', 'C:\\xampp\\htdocs...', 3, 10)
+#4 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(123): ControladorDispositivo->generarQR(19, 'Portatil', 'LENOVO')
+#5 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(170): ControladorDispositivo->registrarDispositivo(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php on line 74
+[24-Oct-2025 03:57:19 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 4)
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(494): QRimage::png(Array, 'C:\\xampp\\htdocs...', 10, 4, false)
+#2 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 20\nTipo: Po...', 'C:\\xampp\\htdocs...', false)
+#3 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(74): QRcode::png('ID: 20\nTipo: Po...', 'C:\\xampp\\htdocs...', 3, 10)
+#4 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(123): ControladorDispositivo->generarQR(20, 'Portatil', 'LENOVO')
+#5 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(170): ControladorDispositivo->registrarDispositivo(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php on line 74
+[24-Oct-2025 04:08:14 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 4)
+#1 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(494): QRimage::png(Array, 'C:\\xampp\\htdocs...', 10, 4, false)
+#2 C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 21\nTipo: Po...', 'C:\\xampp\\htdocs...', false)
+#3 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(74): QRcode::png('ID: 21\nTipo: Po...', 'C:\\xampp\\htdocs...', 3, 10)
+#4 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(123): ControladorDispositivo->generarQR(21, 'Portatil', 'LENOVO')
+#5 C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo\ControladorDispositivo.php(170): ControladorDispositivo->registrarDispositivo(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\segtrack\libs\phpqrcode\qrimage.php on line 74

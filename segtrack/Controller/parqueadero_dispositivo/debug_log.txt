@@ -231,3 +231,113 @@ Instancia de ModeloParqueadero creada
 Acción: registrar | Método: POST
 POST: {"TipoVehiculo":"Moto","PlacaVehiculo":"B23CDF","DescripcionVehiculo":"Kaguasaki z ninja 300","TarjetaPropiedad":"tj324541","FechaParqueadero":"2025-10-23T20:47","IdSede":"18","accion":"registrar"}
 Iniciando registro de vehículo
+2025-10-24 03:54:09 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 16
+2025-10-24 03:57:00 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 19
+2025-10-24 03:57:19 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 20
+
+2025-10-24 04:00:38 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Bicicleta","PlacaVehiculo":"21","DescripcionVehiculo":"color maicol","TarjetaPropiedad":"21321das","FechaParqueadero":"2025-10-23T21:00","IdSede":"5","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-24 04:00:47 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Carro","PlacaVehiculo":"21","DescripcionVehiculo":"color maicol","TarjetaPropiedad":"21321das","FechaParqueadero":"2025-10-23T21:00","IdSede":"5","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-24 04:01:01 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Carro","PlacaVehiculo":"21sadas","DescripcionVehiculo":"color maicol","TarjetaPropiedad":"124sra","FechaParqueadero":"2025-10-23T21:00","IdSede":"5","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-24 04:01:26 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Carro","PlacaVehiculo":"21sadas","DescripcionVehiculo":"color maicol","TarjetaPropiedad":"124sra","FechaParqueadero":"2025-10-23T21:00","IdSede":"17","accion":"registrar"}
+Iniciando registro de vehículo
+2025-10-24 04:08:14 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 21
+2025-10-24 04:08:44 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 22
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-22-68fadfac47aa5.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 22","data":{"IdDispositivo":"22","QrDispositivo":"qr\/QR-DISP-22-68fadfac47aa5.png"}}
