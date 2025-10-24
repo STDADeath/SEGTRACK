@@ -365,3 +365,28 @@ Generando QR para dispositivo ID: 22
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-22-68fadfac47aa5.png
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 22","data":{"IdDispositivo":"22","QrDispositivo":"qr\/QR-DISP-22-68fadfac47aa5.png"}}
 >>>>>>> feature/parqueadero-dispositivo
+2025-10-24 04:24:26 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 23
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-23-68fae35abc3c7.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 23","data":{"IdDispositivo":"23","QrDispositivo":"qr\/QR-DISP-23-68fae35abc3c7.png"}}
+
+2025-10-24 04:24:52 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Moto","PlacaVehiculo":"2132131","DescripcionVehiculo":"dsadsadsa","TarjetaPropiedad":"00001247sda","FechaParqueadero":"2025-10-23T21:24","IdSede":"17","accion":"registrar"}
+Iniciando registro de vehículo
