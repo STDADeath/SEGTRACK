@@ -160,29 +160,6 @@ class ModeloDispositivo {
     }
 
     /**
-     * ✅ Elimina un dispositivo por ID
-     */
-    public function eliminar(int $idDispositivo): array {
-        try {
-            if (!$this->conexion) {
-                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
-            }
-
-            $sql = "DELETE FROM dispositivo WHERE IdDispositivo = :id";
-            $stmt = $this->conexion->prepare($sql);
-            $resultado = $stmt->execute([':id' => $idDispositivo]);
-
-            return [
-                'success' => $resultado,
-                'rows' => $stmt->rowCount()
-            ];
-
-        } catch (PDOException $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
-        }
-    }
-
-    /**
      * ✅ Verifica si existe un dispositivo
      */
     public function existe(int $idDispositivo): bool {

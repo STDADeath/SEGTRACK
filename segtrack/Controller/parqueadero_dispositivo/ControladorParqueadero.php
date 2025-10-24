@@ -2,190 +2,113 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/error_log_parqueadero.txt');
-
-ob_start();
+ini_set('error_log', __DIR__ . '/error_log.txt');
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', date('Y-m-d H:i:s') . " === INICIO ===\n", FILE_APPEND);
+file_put_contents(__DIR__ . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO ===\n", FILE_APPEND);
 
 try {
-    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "POST recibido:\n" . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
-
-    $ruta_conexion = __DIR__ . '/../../Core/conexion.php';
-    if (!file_exists($ruta_conexion)) {
-        throw new Exception("Archivo de conexión no encontrado: $ruta_conexion");
-    }
-
-    require_once $ruta_conexion;
-    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Conexión cargada\n", FILE_APPEND);
-
-    if (!isset($conexion)) {
-        throw new Exception("Variable \$conexion no inicializada");
-    }
-
-    if (!($conexion instanceof PDO)) {
-        throw new Exception("La conexión no es una instancia de PDO");
-    }
-
-    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Conexión verificada como PDO\n", FILE_APPEND);
-
-    $ruta_modelo = __DIR__ . "/../../model/parqueadero_vehiculo/ModeloParqueadero.php";
+    $ruta_modelo = __DIR__ . '/../../model/parqueadero_dispositivo/ModeloParqueadero.php';
     if (!file_exists($ruta_modelo)) {
         throw new Exception("Modelo no encontrado: $ruta_modelo");
     }
+
     require_once $ruta_modelo;
-    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Modelo cargado\n", FILE_APPEND);
+    file_put_contents(__DIR__ . '/debug_log.txt', "Modelo cargado correctamente\n", FILE_APPEND);
 
-    class ControladorParqueadero {
-        private $modelo;
+    $modelo = new ModeloParqueadero();
+    file_put_contents(__DIR__ . '/debug_log.txt', "Instancia de ModeloParqueadero creada\n", FILE_APPEND);
 
-        public function __construct($conexion) {
-            $this->modelo = new ModeloParqueadero($conexion);
+    // Captura acción
+    $accion = $_POST['accion'] ?? '';
+    file_put_contents(__DIR__ . '/debug_log.txt', "Acción: $accion | Método: " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
+    file_put_contents(__DIR__ . '/debug_log.txt', "POST: " . json_encode($_POST, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+
+    // =============================
+    // 📌 REGISTRAR VEHÍCULO
+    // =============================
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'registrar') {
+        file_put_contents(__DIR__ . '/debug_log.txt', "Iniciando registro de vehículo\n", FILE_APPEND);
+
+        $TipoVehiculo = trim($_POST['TipoVehiculo'] ?? '');
+        $PlacaVehiculo = trim($_POST['PlacaVehiculo'] ?? '');
+        $DescripcionVehiculo = trim($_POST['DescripcionVehiculo'] ?? '');
+        $TarjetaPropiedad = trim($_POST['TarjetaPropiedad'] ?? '');
+        $FechaParqueadero = trim($_POST['FechaParqueadero'] ?? date('Y-m-d H:i:s'));
+        $IdSede = trim($_POST['IdSede'] ?? '');
+
+        if (empty($TipoVehiculo) || empty($PlacaVehiculo) || empty($IdSede)) {
+            $error = "Campos obligatorios faltantes";
+            file_put_contents(__DIR__ . '/debug_log.txt', "❌ $error\n", FILE_APPEND);
+            echo json_encode(['success' => false, 'message' => $error]);
+            exit;
         }
 
-        private function campoVacio($campo): bool {
-            return !isset($campo) || $campo === '' || trim($campo) === '';
-        }
-
-        public function registrarParqueadero(array $datos): array {
-            file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "registrarParqueadero llamado\n", FILE_APPEND);
-            file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Datos recibidos: " . json_encode($datos) . "\n", FILE_APPEND);
-
-            $tipo = $datos['TipoVehiculo'] ?? null;
-            $placa = $datos['PlacaVehiculo'] ?? null;
-            $descripcion = $datos['DescripcionVehiculo'] ?? null;
-            $tarjeta = $datos['TarjetaPropiedad'] ?? null;
-            $fecha = $datos['FechaParqueadero'] ?? null;
-            $idSede = $datos['IdSede'] ?? null;
-
-            // Validaciones
-            if ($this->campoVacio($tipo)) {
-                file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "ERROR: Tipo vacío\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Falta el campo: Tipo de vehículo'];
-            }
-
-            if ($this->campoVacio($placa)) {
-                file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "ERROR: Placa vacía\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Falta el campo: Placa del vehículo'];
-            }
-
-            if ($this->campoVacio($idSede)) {
-                file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "ERROR: IdSede vacío\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Falta el campo: ID de Sede'];
-            }
-
-            try {
-                $resultado = $this->modelo->registrarParqueadero($tipo, $placa, $descripcion, $tarjeta, $fecha, (int)$idSede);
-
-                if ($resultado['success']) {
-                    $idParqueadero = $resultado['id'];
-                    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Vehículo registrado con ID: $idParqueadero\n", FILE_APPEND);
-
-                    return [
-                        "success" => true,
-                        "message" => "Vehículo registrado correctamente con ID: " . $idParqueadero,
-                        "data" => ["IdParqueadero" => $idParqueadero]
-                    ];
-                } else {
-                    return ['success' => false, 'message' => 'Error al registrar en BD'];
-                }
-            } catch (Exception $e) {
-                file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "EXCEPCIÓN: " . $e->getMessage() . "\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
-            }
-        }
-
-        public function actualizarParqueadero(int $id, array $datos): array {
-            file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "actualizarParqueadero llamado con ID: $id\n", FILE_APPEND);
-
-            try {
-                $resultado = $this->modelo->actualizar($id, $datos);
-                
-                if ($resultado['success']) {
-                    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Vehículo actualizado exitosamente\n", FILE_APPEND);
-                    return ['success' => true, 'message' => 'Vehículo actualizado correctamente'];
-                } else {
-                    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Error al actualizar: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
-                    return ['success' => false, 'message' => 'Error al actualizar vehículo'];
-                }
-            } catch (Exception $e) {
-                file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "EXCEPCIÓN en actualizar: " . $e->getMessage() . "\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
-            }
-        }
-
-        public function eliminarParqueadero(int $id): array {
-            file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "eliminarParqueadero llamado con ID: $id\n", FILE_APPEND);
-
-            try {
-                $resultado = $this->modelo->eliminar($id);
-                
-                if ($resultado['success']) {
-                    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Vehículo eliminado exitosamente\n", FILE_APPEND);
-                    return ['success' => true, 'message' => 'Vehículo eliminado correctamente'];
-                } else {
-                    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Error al eliminar: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
-                    return ['success' => false, 'message' => 'Error al eliminar vehículo'];
-                }
-            } catch (Exception $e) {
-                file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "EXCEPCIÓN en eliminar: " . $e->getMessage() . "\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
-            }
-        }
+        $resultado = $modelo->registrarVehiculo($TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo, $TarjetaPropiedad, $FechaParqueadero, $IdSede);
+        echo json_encode($resultado);
+        exit;
     }
 
-    $controlador = new ControladorParqueadero($conexion);
-    $accion = $_POST['accion'] ?? 'registrar';
+    // =============================
+    // 📌 ACTUALIZAR VEHÍCULO
+    // =============================
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'actualizar') {
+        file_put_contents(__DIR__ . '/debug_log.txt', "Iniciando actualización de vehículo\n", FILE_APPEND);
 
-    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Acción: $accion\n", FILE_APPEND);
+        $id = trim($_POST['id'] ?? '');
+        $tipo = trim($_POST['tipo'] ?? '');
+        $descripcion = trim($_POST['descripcion'] ?? '');
+        $idsede = trim($_POST['idsede'] ?? '');
 
-    if ($accion === 'registrar') {
-        $resultado = $controlador->registrarParqueadero($_POST);
-    } elseif ($accion === 'actualizar') {
-        $id = (int)($_POST['id'] ?? 0);
-        if ($id > 0) {
-            $datos = [
-                'TipoVehiculo' => $_POST['tipo'] ?? null,
-                'PlacaVehiculo' => $_POST['placa'] ?? null,
-                'DescripcionVehiculo' => $_POST['descripcion'] ?? null,
-                'TarjetaPropiedad' => $_POST['tarjeta'] ?? null,
-                'FechaParqueadero' => $_POST['fecha'] ?? null,
-                'IdSede' => !empty($_POST['idsede']) ? (int)$_POST['idsede'] : null
-            ];
-            $resultado = $controlador->actualizarParqueadero($id, $datos);
-        } else {
-            $resultado = ['success' => false, 'message' => 'ID de vehículo no válido'];
+        file_put_contents(__DIR__ . '/debug_log.txt', "Datos actualizar - ID: $id | Tipo: $tipo | Descripción: $descripcion | IdSede: $idsede\n", FILE_APPEND);
+
+        if (empty($id) || empty($tipo) || empty($idsede)) {
+            $error = "Campos requeridos: id, tipo, idsede";
+            file_put_contents(__DIR__ . '/debug_log.txt', "❌ $error\n", FILE_APPEND);
+            echo json_encode(['success' => false, 'message' => $error]);
+            exit;
         }
-    } elseif ($accion === 'eliminar') {
-        $id = (int)($_POST['id'] ?? 0);
-        if ($id > 0) {
-            $resultado = $controlador->eliminarParqueadero($id);
-        } else {
-            $resultado = ['success' => false, 'message' => 'ID de vehículo no válido'];
-        }
-    } else {
-        $resultado = ['success' => false, 'message' => 'Acción no reconocida'];
+
+        $resultado = $modelo->actualizarVehiculo($id, $tipo, $descripcion, $idsede);
+        file_put_contents(__DIR__ . '/debug_log.txt', "Resultado: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+        echo json_encode($resultado);
+        exit;
     }
 
-    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "Respuesta final: " . json_encode($resultado) . "\n", FILE_APPEND);
+    // ============================
+    // 📌 ELIMINAR VEHÍCULO
+    // =============================
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'eliminar') {
+        file_put_contents(__DIR__ . '/debug_log.txt', "Iniciando eliminación de vehículo\n", FILE_APPEND);
 
-    ob_end_clean();
-    echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
+        $id = trim($_POST['id'] ?? '');
+
+        file_put_contents(__DIR__ . '/debug_log.txt', "ID a eliminar: $id\n", FILE_APPEND);
+
+        if (empty($id)) {
+            $error = "ID de vehículo requerido";
+            file_put_contents(__DIR__ . '/debug_log.txt', "❌ $error\n", FILE_APPEND);
+            echo json_encode(['success' => false, 'message' => $error]);
+            exit;
+        }
+
+        $resultado = $modelo->eliminarVehiculo($id);
+        file_put_contents(__DIR__ . '/debug_log.txt', "Resultado: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+        echo json_encode($resultado);
+        exit;
+    }
+
+    // No hay acción válida
+    file_put_contents(__DIR__ . '/debug_log.txt', "⚠️ No se especificó acción válida\n", FILE_APPEND);
+    echo json_encode(['success' => false, 'message' => 'Acción no especificada']);
+    exit;
 
 } catch (Exception $e) {
-    ob_end_clean();
-    
     $error = $e->getMessage();
-    file_put_contents(__DIR__ . '/debug_log_parqueadero.txt', "ERROR FINAL: $error\n", FILE_APPEND);
-    
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error del servidor: ' . $error,
-        'error' => $error
-    ], JSON_UNESCAPED_UNICODE);
+    file_put_contents(__DIR__ . '/debug_log.txt', "❌ EXCEPCIÓN: $error\n", FILE_APPEND);
+    echo json_encode(['success' => false, 'message' => "Error: $error"]);
 }
-
 exit;
+?>

@@ -1,111 +1,103 @@
-2025-10-15 20:43:54 === INICIO ===
-POST recibido:
-[]
-ERROR FINAL: Error al conectar con la base de datos. Verifica las credenciales.
-2025-10-16 07:30:22 === INICIO ===
-POST recibido:
-[]
-Conexión cargada
-Conexión verificada como PDO
-Modelo cargado
-Acción: registrar
-registrarDispositivo llamado
-Datos recibidos: []
-Variables extraídas - Tipo: , Marca: 
-ERROR: Tipo vacío
-Respuesta final: {"success":false,"message":"Falta el campo: Tipo de dispositivo"}
-2025-10-16 08:08:43 === INICIO ===
-POST recibido:
+
+2025-10-20 04:35:28 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción recibida: registrar
+Iniciando registro de vehículo
+Datos POST:
 {
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "12",
-    "IdVisitante": "",
-    "accion": "registrar"
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "B23CDF",
+    "DescripcionVehiculo": "Kawasaki negra con verde",
+    "TarjetaPropiedad": "tj324541",
+    "FechaParqueadero": "2025-10-19T21:35",
+    "IdSede": "18"
 }
-Conexión cargada
-Conexión verificada como PDO
-Modelo cargado
-Acción: registrar
-registrarDispositivo llamado
-Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","IdFuncionario":"12","IdVisitante":"","accion":"registrar"}
-Variables extraídas - Tipo: Portatil, Marca: Dell
-Validaciones pasadas. Tipo final: Portatil
-IDs convertidos - Funcionario: 12, Visitante: null
-Resultado modelo: {"success":true,"id":"7"}
-Dispositivo registrado con ID: 7
-Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 7","data":{"IdDispositivo":"7"}}
-2025-10-16 08:09:36 === INICIO ===
-POST recibido:
+✅ Vehículo registrado con ID: 2
+
+2025-10-20 05:07:12 === INICIO ===
+✅ Modelo cargado correctamente
+✅ Instancia de ModeloParqueadero creada
+📌 Acción recibida: 
+📦 Datos POST: []
+⚠️ Acción no válida o método incorrecto
+
+2025-10-20 05:09:45 === INICIO ===
+✅ Modelo cargado correctamente
+✅ Instancia de ModeloParqueadero creada
+📌 Acción recibida: 
+📦 Datos POST: {"TipoVehiculo":"Carro","PlacaVehiculo":"EHO-343","DescripcionVehiculo":"Sandero rojo","TarjetaPropiedad":"tj324551","FechaParqueadero":"2025-10-19T22:09","IdSede":"17"}
+⚠️ Acción no válida o método incorrecto
+
+2025-10-20 05:10:13 === INICIO ===
+✅ Modelo cargado correctamente
+✅ Instancia de ModeloParqueadero creada
+📌 Acción recibida: 
+📦 Datos POST: {"TipoVehiculo":"Carro","PlacaVehiculo":"EHO-343","DescripcionVehiculo":"Sandero rojo","TarjetaPropiedad":"tj324551","FechaParqueadero":"2025-10-19T22:09","IdSede":"17"}
+⚠️ Acción no válida o método incorrecto
+
+2025-10-20 05:10:34 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción recibida: registrar
+Iniciando registro de vehículo
+Datos POST:
 {
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "12",
-    "IdVisitante": "",
-    "accion": "registrar"
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO-343",
+    "DescripcionVehiculo": "Sandero rojo",
+    "TarjetaPropiedad": "tj324551",
+    "FechaParqueadero": "2025-10-19T22:09",
+    "IdSede": "17"
 }
-Conexión cargada
-Conexión verificada como PDO
-Modelo cargado
-Acción: registrar
-registrarDispositivo llamado
-Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","IdFuncionario":"12","IdVisitante":"","accion":"registrar"}
-Variables extraídas - Tipo: Portatil, Marca: Dell
-Validaciones pasadas. Tipo final: Portatil
-IDs convertidos - Funcionario: 12, Visitante: null
-Resultado modelo: {"success":true,"id":"8"}
-Dispositivo registrado con ID: 8
-Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 8","data":{"IdDispositivo":"8"}}
-2025-10-18 21:05:13 === INICIO ===
+✅ Vehículo registrado con ID: 3
+
+2025-10-20 05:45:46 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Bicicleta","PlacaVehiculo":"EHO-343","DescripcionVehiculo":"morada","TarjetaPropiedad":"tj324551","FechaParqueadero":"2025-10-19T22:45","IdSede":"17","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-20 06:52:56 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: actualizar | Método: POST
+POST: {"accion":"actualizar","id":"4","tipo":"Bicicleta","placa":"EHO-343","descripcion":"morada y naranja","tarjeta":"tj324551","fecha":"2025-10-19T22:45","idsede":"17"}
+Iniciando actualización de vehículo
+Datos actualizar - ID: 4 | Tipo: Bicicleta | Descripción: morada y naranja | IdSede: 17
+Resultado: {"success":true,"message":"Vehículo actualizado correctamente"}
+
+2025-10-20 06:53:04 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: eliminar | Método: POST
+POST: {"accion":"eliminar","id":"4"}
+Iniciando eliminación de vehículo
+ID a eliminar: 4
+Resultado: {"success":true,"message":"Vehículo eliminado correctamente"}
+
+2025-10-20 06:59:54 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Bicicleta","PlacaVehiculo":"EHO-343","DescripcionVehiculo":"verde","TarjetaPropiedad":"tj324551","FechaParqueadero":"2025-10-19T23:59","IdSede":"17","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-20 07:00:17 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: actualizar | Método: POST
+POST: {"accion":"actualizar","id":"5","tipo":"Bicicleta","placa":"EHO-343","descripcion":"verde y axul","tarjeta":"tj324551","fecha":"2025-10-19T23:59","idsede":"17"}
+Iniciando actualización de vehículo
+Datos actualizar - ID: 5 | Tipo: Bicicleta | Descripción: verde y axul | IdSede: 17
+Resultado: {"success":true,"message":"Vehículo actualizado correctamente"}
+2025-10-20 07:00:56 === INICIO ===
 POST recibido:
 {
     "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "lenovo",
-    "IdFuncionario": "14",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
-Modelo cargado
-Acción: registrar
-registrarDispositivo llamado
-Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","IdFuncionario":"14","IdVisitante":"","accion":"registrar"}
-Variables extraídas - Tipo: Portatil, Marca: lenovo
-Validaciones pasadas. Tipo final: Portatil
-IDs convertidos - Funcionario: 14, Visitante: null
-Resultado modelo: {"success":true,"id":"7"}
-Dispositivo registrado con ID: 7
-Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 7","data":{"IdDispositivo":"7"}}
-2025-10-18 21:07:44 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "lenovo",
-    "IdFuncionario": "14",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: registrar
-registrarDispositivo llamado
-Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","IdFuncionario":"14","IdVisitante":"","accion":"registrar"}
-Variables extraídas - Tipo: Portatil, Marca: lenovo
-Validaciones pasadas. Tipo final: Portatil
-IDs convertidos - Funcionario: 14, Visitante: null
-Resultado modelo: {"success":true,"id":"8"}
-Dispositivo registrado con ID: 8
-Generando QR para dispositivo ID: 8
-Carpeta QR creada: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../../../qr
-2025-10-18 21:09:18 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "lenovo",
-    "IdFuncionario": "14",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "13",
     "IdVisitante": "",
     "accion": "registrar"
 }
@@ -115,259 +107,17 @@ Librería QR cargada
 Modelo cargado
 Acción: registrar
 registrarDispositivo llamado
-Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","IdFuncionario":"14","IdVisitante":"","accion":"registrar"}
-Variables extraídas - Tipo: Portatil, Marca: lenovo
-Validaciones pasadas. Tipo final: Portatil
-IDs convertidos - Funcionario: 14, Visitante: null
-Resultado modelo: {"success":true,"id":"9"}
-Dispositivo registrado con ID: 9
-Generando QR para dispositivo ID: 9
-2025-10-18 21:14:54 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "lenovo",
-    "IdFuncionario": "14",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: registrar
-registrarDispositivo llamado
-Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","IdFuncionario":"14","IdVisitante":"","accion":"registrar"}
-Variables extraídas - Tipo: Portatil, Marca: lenovo
-Validaciones pasadas. Tipo final: Portatil
-IDs convertidos - Funcionario: 14, Visitante: null
-Resultado modelo: {"success":true,"id":"10"}
-Dispositivo registrado con ID: 10
 Generando QR para dispositivo ID: 10
-2025-10-18 21:18:45 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "lenovo",
-    "IdFuncionario": "14",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: registrar
-registrarDispositivo llamado
-Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","IdFuncionario":"14","IdVisitante":"","accion":"registrar"}
-Variables extraídas - Tipo: Portatil, Marca: lenovo
-Validaciones pasadas. Tipo final: Portatil
-IDs convertidos - Funcionario: 14, Visitante: null
-Resultado modelo: {"success":true,"id":"11"}
-Dispositivo registrado con ID: 11
-Generando QR para dispositivo ID: 11
-Carpeta QR creada: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr
-QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-11-68f3e81527599.png
-QR actualizado en BD: qr/QR-DISP-11-68f3e81527599.png
-Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 11 y QR generado","data":{"IdDispositivo":"11","QrDispositivo":"qr\/QR-DISP-11-68f3e81527599.png"}}
-2025-10-18 21:21:27 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "10"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: eliminar
-Respuesta final: {"success":false,"message":"Acci\u00f3n no reconocida"}
-2025-10-18 23:08:25 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "10"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: eliminar
-Respuesta final: {"success":false,"message":"Acci\u00f3n no reconocida"}
-2025-10-18 23:08:43 === INICIO ===
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-10-68f5c20870914.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 10","data":{"IdDispositivo":"10","QrDispositivo":"qr\/QR-DISP-10-68f5c20870914.png"}}
+2025-10-20 07:01:19 === INICIO ===
 POST recibido:
 {
     "accion": "actualizar",
-    "id": "11",
-    "tipo": "Computador",
-    "marca": "lenovo",
-    "id_funcionario": "14",
-    "id_visitante": ""
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: actualizar
-Respuesta final: {"success":false,"message":"Acci\u00f3n no reconocida"}
-2025-10-18 23:10:09 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "11"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: eliminar
-Respuesta final: {"success":false,"message":"Acci\u00f3n no reconocida"}
-2025-10-18 23:10:32 === INICIO ===
-POST recibido:
-{
-    "accion": "actualizar",
-    "id": "11",
+    "id": "10",
     "tipo": "Tablet",
-    "marca": "lenovo",
-    "id_funcionario": "14",
-    "id_visitante": ""
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: actualizar
-Respuesta final: {"success":false,"message":"Acci\u00f3n no reconocida"}
-2025-10-18 23:14:47 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "10"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-2025-10-18 23:15:13 === INICIO ===
-POST recibido:
-[]
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-2025-10-19 01:11:37 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "13",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-2025-10-19 01:12:27 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "13",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: registrar
-registrarDispositivo llamado
-Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","IdFuncionario":"13","IdVisitante":"","accion":"registrar"}
-Variables extraídas - Tipo: Portatil, Marca: Dell
-Validaciones pasadas. Tipo final: Portatil
-IDs convertidos - Funcionario: 13, Visitante: null
-Resultado modelo: {"success":true,"id":"12"}
-Dispositivo registrado con ID: 12
-Generando QR para dispositivo ID: 12
-Carpeta QR creada: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../../../qr
-QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../../../qr/QR-DISP-12-68f41edc2062c.png
-QR actualizado en BD: qr/QR-DISP-12-68f41edc2062c.png
-Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 12 y QR generado","data":{"IdDispositivo":"12","QrDispositivo":"qr\/QR-DISP-12-68f41edc2062c.png"}}
-2025-10-19 01:14:47 === INICIO ===
-POST recibido:
-{
-    "accion": "actualizar",
-    "id": "12",
-    "tipo": "Computador",
-    "marca": "Dell",
-    "id_funcionario": "13",
-    "id_visitante": ""
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: actualizar
-2025-10-19 01:16:20 === INICIO ===
-POST recibido:
-{
-    "accion": "actualizar",
-    "id": "12",
-    "tipo": "Tablet",
-    "marca": "Dell",
-    "id_funcionario": "13",
-    "id_visitante": ""
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: actualizar
-2025-10-19 01:16:54 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "12"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: eliminar
-2025-10-19 01:19:00 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "12"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: eliminar
-eliminarDispositivo llamado con ID: 12
-Dispositivo eliminado exitosamente
-Respuesta final: {"success":true,"message":"Dispositivo eliminado correctamente"}
-2025-10-19 01:19:08 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "10"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: eliminar
-eliminarDispositivo llamado con ID: 10
-Dispositivo eliminado exitosamente
-Respuesta final: {"success":true,"message":"Dispositivo eliminado correctamente"}
-2025-10-19 01:19:41 === INICIO ===
-POST recibido:
-{
-    "accion": "actualizar",
-    "id": "9",
-    "tipo": "Portatil",
     "marca": "Huawei",
-    "id_funcionario": "14",
+    "id_funcionario": "13",
     "id_visitante": ""
 }
 Conexión cargada
@@ -375,16 +125,93 @@ Conexión verificada como PDO
 Librería QR cargada
 Modelo cargado
 Acción: actualizar
-actualizarDispositivo llamado con ID: 9
-Datos a actualizar: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Huawei","IdFuncionario":14,"IdVisitante":null}
+actualizarDispositivo llamado con ID: 10
+Datos a actualizar: {"TipoDispositivo":"Tablet","MarcaDispositivo":"Huawei","IdFuncionario":13,"IdVisitante":null}
 Dispositivo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente"}
-2025-10-19 01:20:10 === INICIO ===
+2025-10-21 20:02:36 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "13",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 16
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-16-68f7cabc8cfee.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 16","data":{"IdDispositivo":"16","QrDispositivo":"qr\/QR-DISP-16-68f7cabc8cfee.png"}}
+
+2025-10-21 20:07:58 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Moto","PlacaVehiculo":"EHO-343","DescripcionVehiculo":"fgbhnjmk","TarjetaPropiedad":"tj324551","FechaParqueadero":"2025-10-21T13:07","IdSede":"17","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-21 20:08:15 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: actualizar | Método: POST
+POST: {"accion":"actualizar","id":"3","tipo":"Moto","placa":"EHO-343","descripcion":"morada\n","tarjeta":"tj324551","fecha":"2025-10-21T13:07","idsede":"17"}
+Iniciando actualización de vehículo
+Datos actualizar - ID: 3 | Tipo: Moto | Descripción: morada | IdSede: 17
+Resultado: {"success":true,"message":"Vehículo actualizado correctamente"}
+2025-10-22 04:42:42 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "13",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 17
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-17-68f844a27e26f.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 17","data":{"IdDispositivo":"17","QrDispositivo":"qr\/QR-DISP-17-68f844a27e26f.png"}}
+2025-10-23 19:23:23 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "13",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 18
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-18-68fa648cdc2ca.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 18","data":{"IdDispositivo":"18","QrDispositivo":"qr\/QR-DISP-18-68fa648cdc2ca.png"}}
+
+2025-10-23 19:24:27 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Bicicleta","PlacaVehiculo":"no aplica","DescripcionVehiculo":"morada","TarjetaPropiedad":"tj324551","FechaParqueadero":"2025-10-23T12:24","IdSede":"17","accion":"registrar"}
+Iniciando registro de vehículo
+2025-10-24 03:46:38 === INICIO ===
 POST recibido:
 {
     "TipoDispositivo": "Tablet",
     "MarcaDispositivo": "Huawei",
-    "IdFuncionario": "14",
+    "IdFuncionario": "13",
     "IdVisitante": "",
     "accion": "registrar"
 }
@@ -395,13 +222,20 @@ Modelo cargado
 Acción: registrar
 registrarDispositivo llamado
 Generando QR para dispositivo ID: 13
-QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-13-68f420aad1f56.png
-Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 13","data":{"IdDispositivo":"13","QrDispositivo":"qr\/QR-DISP-13-68f420aad1f56.png"}}
-2025-10-19 01:22:27 === INICIO ===
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-13-68fada7ebdb1f.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 13","data":{"IdDispositivo":"13","QrDispositivo":"qr\/QR-DISP-13-68fada7ebdb1f.png"}}
+
+2025-10-24 03:47:48 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Moto","PlacaVehiculo":"B23CDF","DescripcionVehiculo":"Kaguasaki z ninja 300","TarjetaPropiedad":"tj324541","FechaParqueadero":"2025-10-23T20:47","IdSede":"18","accion":"registrar"}
+Iniciando registro de vehículo
+2025-10-24 03:54:09 === INICIO ===
 POST recibido:
 {
     "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "lenovo",
+    "MarcaDispositivo": "LENOVO",
     "IdFuncionario": "12",
     "IdVisitante": "",
     "accion": "registrar"
@@ -412,47 +246,12 @@ Librería QR cargada
 Modelo cargado
 Acción: registrar
 registrarDispositivo llamado
-Generando QR para dispositivo ID: 14
-QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-14-68f4213338db8.png
-Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 14","data":{"IdDispositivo":"14","QrDispositivo":"qr\/QR-DISP-14-68f4213338db8.png"}}
-2025-10-19 01:22:50 === INICIO ===
+Generando QR para dispositivo ID: 16
+2025-10-24 03:57:00 === INICIO ===
 POST recibido:
 {
-    "accion": "actualizar",
-    "id": "14",
-    "tipo": "Tablet",
-    "marca": "lenovo",
-    "id_funcionario": "12",
-    "id_visitante": ""
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: actualizar
-actualizarDispositivo llamado con ID: 14
-Datos a actualizar: {"TipoDispositivo":"Tablet","MarcaDispositivo":"lenovo","IdFuncionario":12,"IdVisitante":null}
-Dispositivo actualizado exitosamente
-Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente"}
-2025-10-19 01:22:59 === INICIO ===
-POST recibido:
-{
-    "accion": "eliminar",
-    "id": "14"
-}
-Conexión cargada
-Conexión verificada como PDO
-Librería QR cargada
-Modelo cargado
-Acción: eliminar
-eliminarDispositivo llamado con ID: 14
-Dispositivo eliminado exitosamente
-Respuesta final: {"success":true,"message":"Dispositivo eliminado correctamente"}
-2025-10-19 01:23:27 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Tablet",
-    "MarcaDispositivo": "lenovo",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
     "IdFuncionario": "12",
     "IdVisitante": "",
     "accion": "registrar"
@@ -463,6 +262,7 @@ Librería QR cargada
 Modelo cargado
 Acción: registrar
 registrarDispositivo llamado
+<<<<<<< HEAD
 Generando QR para dispositivo ID: 15
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-15-68f4216f98003.png
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 15","data":{"IdDispositivo":"15","QrDispositivo":"qr\/QR-DISP-15-68f4216f98003.png"}}
@@ -471,6 +271,14 @@ POST recibido:
 {
     "TipoDispositivo": "Portatil",
     "MarcaDispositivo": "214321",
+=======
+Generando QR para dispositivo ID: 19
+2025-10-24 03:57:19 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+>>>>>>> feature/parqueadero-dispositivo
     "IdFuncionario": "12",
     "IdVisitante": "",
     "accion": "registrar"
@@ -481,12 +289,49 @@ Librería QR cargada
 Modelo cargado
 Acción: registrar
 registrarDispositivo llamado
+<<<<<<< HEAD
 Generando QR para dispositivo ID: 8
 2025-10-22 06:13:45 === INICIO ===
 POST recibido:
 {
     "TipoDispositivo": "Portatil",
     "MarcaDispositivo": "214321",
+=======
+Generando QR para dispositivo ID: 20
+
+2025-10-24 04:00:38 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Bicicleta","PlacaVehiculo":"21","DescripcionVehiculo":"color maicol","TarjetaPropiedad":"21321das","FechaParqueadero":"2025-10-23T21:00","IdSede":"5","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-24 04:00:47 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Carro","PlacaVehiculo":"21","DescripcionVehiculo":"color maicol","TarjetaPropiedad":"21321das","FechaParqueadero":"2025-10-23T21:00","IdSede":"5","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-24 04:01:01 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Carro","PlacaVehiculo":"21sadas","DescripcionVehiculo":"color maicol","TarjetaPropiedad":"124sra","FechaParqueadero":"2025-10-23T21:00","IdSede":"5","accion":"registrar"}
+Iniciando registro de vehículo
+
+2025-10-24 04:01:26 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Carro","PlacaVehiculo":"21sadas","DescripcionVehiculo":"color maicol","TarjetaPropiedad":"124sra","FechaParqueadero":"2025-10-23T21:00","IdSede":"17","accion":"registrar"}
+Iniciando registro de vehículo
+2025-10-24 04:08:14 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+>>>>>>> feature/parqueadero-dispositivo
     "IdFuncionario": "12",
     "IdVisitante": "",
     "accion": "registrar"
@@ -497,4 +342,26 @@ Librería QR cargada
 Modelo cargado
 Acción: registrar
 registrarDispositivo llamado
+<<<<<<< HEAD
 Generando QR para dispositivo ID: 9
+=======
+Generando QR para dispositivo ID: 21
+2025-10-24 04:08:44 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "12",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 22
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-22-68fadfac47aa5.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 22","data":{"IdDispositivo":"22","QrDispositivo":"qr\/QR-DISP-22-68fadfac47aa5.png"}}
+>>>>>>> feature/parqueadero-dispositivo
