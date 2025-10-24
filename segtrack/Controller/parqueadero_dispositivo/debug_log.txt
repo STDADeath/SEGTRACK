@@ -206,3 +206,28 @@ Instancia de ModeloParqueadero creada
 Acción: registrar | Método: POST
 POST: {"TipoVehiculo":"Bicicleta","PlacaVehiculo":"no aplica","DescripcionVehiculo":"morada","TarjetaPropiedad":"tj324551","FechaParqueadero":"2025-10-23T12:24","IdSede":"17","accion":"registrar"}
 Iniciando registro de vehículo
+2025-10-24 03:46:38 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "13",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 13
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-13-68fada7ebdb1f.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 13","data":{"IdDispositivo":"13","QrDispositivo":"qr\/QR-DISP-13-68fada7ebdb1f.png"}}
+
+2025-10-24 03:47:48 === INICIO ===
+Modelo cargado correctamente
+Instancia de ModeloParqueadero creada
+Acción: registrar | Método: POST
+POST: {"TipoVehiculo":"Moto","PlacaVehiculo":"B23CDF","DescripcionVehiculo":"Kaguasaki z ninja 300","TarjetaPropiedad":"tj324541","FechaParqueadero":"2025-10-23T20:47","IdSede":"18","accion":"registrar"}
+Iniciando registro de vehículo

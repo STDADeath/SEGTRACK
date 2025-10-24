@@ -3,7 +3,7 @@ class Conexion {
     private $host = "localhost";
     private $usuario = "root";
     private $clave = "";
-    private $db = "seggtack"; // ✅ CORRECTO: seggtack (con dos 'g' y una 'a')
+    private $db = "dbsegtrack"; // ✅ CORRECTO: seggtack (con dos 'g' y una 'a')
     private $conexion;
 
     public function __construct() {
