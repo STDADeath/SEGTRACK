@@ -1,31 +1,57 @@
 <?php
-require_once(__DIR__ . '/../../Core/conexion.php');
+require_once __DIR__ . "/../../model/Login/modulousuario.php";
 
-class Usuario {
-    private $conexion;
+class ControladorLogin {
+    private $modelo;
 
     public function __construct() {
-        $this->conexion = (new Conexion())->getConexion();
+        $this->modelo = new ModuloUsuario();
     }
 
-    public function validarLogin($correo, $contrasena) {
+    public function login($correo, $contrasena) {
         try {
-            $sql = "SELECT f.NombreFuncionario, u.TipoRol, u.Contrasena
-                    FROM usuario u
-                    INNER JOIN funcionario f ON f.idFuncionario = u.idFuncionario
-                    WHERE (f.Correo = :correo OR f.Documento = :correo)
-                    AND u.Contrasena = :contrasena";
+            $usuario = $this->modelo->validarLogin($correo, $contrasena);
 
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(":correo", $correo);
-            $stmt->bindParam(":contrasena", $contrasena);
-            $stmt->execute();
+            if ($usuario) {
+                session_start();
+                $_SESSION["nombre"] = $usuario["NombreFuncionario"];
+                $_SESSION["rol"] = $usuario["TipoRol"];
 
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo "Error en validarLogin: " . $e->getMessage();
-            return false;
+                switch ($usuario["TipoRol"]) {
+                    case "Supervisor":
+                        header("Location: ../../View/Funcionario.php");
+                        break;
+                    case "Personal_Seguridad":
+                        header("Location: ../../View/RegistroFun.html");
+                        break;
+                    case "Administrador":
+                        header("Location: ../../View/index.html");
+                        break;
+                    default:
+                        header("Location: ../../View/login.html");
+                        break;
+                }
+                exit;
+            } else {
+                throw new Exception("Credenciales incorrectas");
+            }
+        } catch (Exception $e) {
+            echo "<script>
+                    alert('❌ " . $e->getMessage() . "');
+                    window.location.href='../../View/login.html';
+                  </script>";
         }
     }
+}
+
+// ======================================================
+// ✅ EJECUCIÓN (cuando viene del formulario POST)
+// ======================================================
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $correo = $_POST["correo"] ?? "";
+    $contrasena = $_POST["contrasena"] ?? "";
+
+    $controlador = new ControladorLogin();
+    $controlador->login($correo, $contrasena);
 }
 ?>
