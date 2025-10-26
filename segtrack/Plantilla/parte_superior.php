@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+        <title>SEGTRACK | Soluciones Empresariales en Seguridad y Tecnología</title>
 
-    <title>Segtrack</title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -18,11 +18,11 @@
 
 
     <link href="../view/css/sb-admin-2.min.css" rel="stylesheet">
-<<<<<<<< HEAD:segtrack/Plantilla/parte_superior.php
+
     <link href="../view/css/styles.css" rel="stylesheet">
-========
+
     <link href="../vew/css/sytles.css" rel="stylesheet">
->>>>>>>> feature/parqueadero-dispositivo:segtrack/model/Plantilla/parte_superior.php
+
     <link rel="stylesheet" href="../view/css/icono.css">
 
 </head>
@@ -47,10 +47,6 @@
 
             <hr class="sidebar-divider">
 
-
-            <div class="sidebar-heading">
-                Interface
-            </div>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -94,14 +90,6 @@
                     </div>
                 </div>
             </li>
-
-            <hr class="sidebar-divider">
-
-
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"

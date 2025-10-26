@@ -6,7 +6,8 @@
 <footer class="sticky-footer bg-primary">
     <div class="container my-auto">
         <div class="copyright text-center my-auto text-white">
-            <span>Copyright &copy; Your Website 2021</span>
+            <span>© 2025 SEGTRACK | Innovación y Seguridad Inteligente.
+</span>
         </div>
     </div>
 </footer>
