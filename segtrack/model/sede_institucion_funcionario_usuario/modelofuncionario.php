@@ -13,19 +13,35 @@ class ModeloFuncionario {
 
     // ➕ Insertar funcionario
     public function insertarFuncionario($datos) {
-        try {
-            $sql = "INSERT INTO funcionario 
-                    (NombreFuncionario, DocumentoFuncionario, CorreoFuncionario, TelefonoFuncionario, CargoFuncionario, IdSede)
-                    VALUES (:NombreFuncionario, :DocumentoFuncionario, :CorreoFuncionario, :TelefonoFuncionario, :CargoFuncionario, :IdSede)";
-            
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute($datos);
+    try {
+        // ✅ 1. Verificar si ya existe un funcionario con ese documento o correo
+        $sqlVerificar = "SELECT COUNT(*) FROM funcionario 
+                         WHERE DocumentoFuncionario = :DocumentoFuncionario 
+                            OR CorreoFuncionario = :CorreoFuncionario";
+        $stmtVerificar = $this->conexion->prepare($sqlVerificar);
+        $stmtVerificar->execute([
+            ':DocumentoFuncionario' => $datos['DocumentoFuncionario'],
+            ':CorreoFuncionario' => $datos['CorreoFuncionario']
+        ]);
 
-            return ['mensaje' => '✅ Funcionario registrado correctamente'];
-        } catch (PDOException $e) {
-            return ['error' => '❌ Error al insertar: ' . $e->getMessage()];
+        if ($stmtVerificar->fetchColumn() > 0) {
+            return ['error' => '⚠️ Ya existe un funcionario con ese documento o correo.'];
         }
+
+        // ✅ 2. Insertar si no existe duplicado
+        $sql = "INSERT INTO funcionario 
+                (NombreFuncionario, DocumentoFuncionario, CorreoFuncionario, TelefonoFuncionario, CargoFuncionario, IdSede)
+                VALUES (:NombreFuncionario, :DocumentoFuncionario, :CorreoFuncionario, :TelefonoFuncionario, :CargoFuncionario, :IdSede)";
+        
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute($datos);
+
+        return ['mensaje' => '✅ Funcionario registrado correctamente'];
+
+    } catch (PDOException $e) {
+        return ['error' => '❌ Error al insertar: ' . $e->getMessage()];
     }
+}
 
     // 🔄 Actualizar funcionario
     public function actualizarFuncionario($id, $datos) {
@@ -59,6 +75,19 @@ class ModeloFuncionario {
             return ['error' => '❌ Error al eliminar: ' . $e->getMessage()];
         }
     }
+  
+    public function verificarDuplicado($documento, $correo) {
+    try {
+        $sql = "SELECT COUNT(*) FROM funcionario 
+                WHERE DocumentoFuncionario = :documento OR CorreoFuncionario = :correo";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['documento' => $documento, 'correo' => $correo]);
+        $existe = $stmt->fetchColumn();
+        return $existe > 0;
+    } catch (PDOException $e) {
+        return false;
+    }
+}
 
     // 🔍 Filtrar funcionario por ID
     public function filtrarFuncionarioPorId($id) {

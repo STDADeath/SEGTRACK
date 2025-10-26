@@ -10,46 +10,74 @@ class ControladorLogin {
 
     public function login($correo, $contrasena) {
         try {
-            $usuario = $this->modelo->validarLogin($correo, $contrasena);
+            $resultado = $this->modelo->validarLogin($correo, $contrasena);
 
-            if ($usuario) {
+            // Si el modelo devolvió un arreglo con ok = true => login correcto
+            if (is_array($resultado) && isset($resultado['ok']) && $resultado['ok'] === true) {
+                $usuario = $resultado['usuario'];
                 session_start();
                 $_SESSION["nombre"] = $usuario["NombreFuncionario"];
                 $_SESSION["rol"] = $usuario["TipoRol"];
 
+                // Redirigir según rol (ajusta rutas si es necesario)
                 switch ($usuario["TipoRol"]) {
                     case "Supervisor":
-                        header("Location: ../../View/Funcionario.php");
+                        header("Location: ../../View/Funcionariopanel.php");
                         break;
                     case "Personal_Seguridad":
-                        header("Location: ../../View/RegistroFun.html");
+                        header("Location: ../../View/Funcionario.php");
                         break;
                     case "Administrador":
                         header("Location: ../../View/index.html");
                         break;
                     default:
-                        header("Location: ../../View/login.html");
+                        header("Location: ../../View/index.html");
                         break;
                 }
                 exit;
-            } else {
-                throw new Exception("Credenciales incorrectas");
             }
+
+            // Si no fue ok, mostramos depuración (temporal) y redirigimos al login
+            if (is_array($resultado)) {
+                // Mensajes específicos para saber qué pasa
+                if ($resultado['reason'] === 'no_user') {
+                    echo "<script>alert('❌ No existe usuario con ese correo o documento.'); window.location.href='../../View/login.html';</script>";
+                    exit;
+                }
+                if ($resultado['reason'] === 'bad_password') {
+                    // Muestra mensaje claro (temporal): contraseña incorrecta
+                    // Puedes quitar 'stored' y 'given' cuando ya esté solucionado.
+                    $stored = htmlspecialchars($resultado['stored']);
+                    // no muestres $given en producción por seguridad
+                    echo "<script>
+                            alert('❌ Contraseña incorrecta.');
+                            window.location.href='../../View/login.html';
+                          </script>";
+                    exit;
+                }
+                if ($resultado['reason'] === 'exception') {
+                    $msg = addslashes($resultado['message']);
+                    echo "<script>alert('❌ Error: {$msg}'); window.location.href='../../View/login.html';</script>";
+                    exit;
+                }
+            }
+
+            // Por defecto (seguridad)
+            echo "<script>alert('❌ Credenciales incorrectas'); window.location.href='../../View/login.html';</script>";
+            exit;
+
         } catch (Exception $e) {
-            echo "<script>
-                    alert('❌ " . $e->getMessage() . "');
-                    window.location.href='../../View/login.html';
-                  </script>";
+            $msg = addslashes($e->getMessage());
+            echo "<script>alert('❌ Excepción: {$msg}'); window.location.href='../../View/login.html';</script>";
+            exit;
         }
     }
 }
 
-// ======================================================
-// ✅ EJECUCIÓN (cuando viene del formulario POST)
-// ======================================================
+// EJECUCIÓN al venir POST desde el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $correo = $_POST["correo"] ?? "";
-    $contrasena = $_POST["contrasena"] ?? "";
+    $correo = trim($_POST["correo"] ?? "");
+    $contrasena = trim($_POST["contrasena"] ?? "");
 
     $controlador = new ControladorLogin();
     $controlador->login($correo, $contrasena);

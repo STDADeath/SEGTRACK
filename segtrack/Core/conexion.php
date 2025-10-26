@@ -19,12 +19,12 @@ class Conexion {
         }
     }
 
+    // Método para obtener el objeto PDO
     public function getConexion() {
         return $this->conexion;
     }
 }
 
-
+// Crear la instancia de conexión y exponerla como variable global
 $conexionObj = new Conexion();
 $conexion = $conexionObj->getConexion();
-?>
