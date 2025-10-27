@@ -1,48 +1,61 @@
 <?php
 require_once __DIR__ . '/../../model/sede_institucion_funcionario_usuario/modeloFuncionariopanel.php';
 
-class Funcionario {
+class FuncionariopanelController {
     private $modelo;
 
     public function __construct() {
-        $this->modelo = new FuncionarioModel();
+        $this->modelo = new modeloFuncionariopanel(); // Instancia correcta del modelo
     }
 
-    public function procesarFormulario() {
-        try {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $datos = [
-                    'NombreFuncionario' => $_POST['NombreFuncionario'],
-                    'DocumentoFuncionario' => $_POST['DocumentoFuncionario'],
-                    'TelefonoFuncionario' => $_POST['TelefonoFuncionario'],
-                    'CorreoFuncionario' => $_POST['CorreoFuncionario'],
-                    'CargoFuncionario' => $_POST['CargoFuncionario'],
-                    'SedeFuncionario' => $_POST['SedeFuncionario']
-                ];
+    public function manejarSolicitud() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                $resultado = $this->modelo->agregarFuncionario($datos);
+            // Captura de datos del formulario
+            $datos = [
+                'NombreFuncionario'   => trim($_POST['NombreFuncionario'] ?? ''),
+                'DocumentoFuncionario'=> trim($_POST['DocumentoFuncionario'] ?? ''),
+                'TelefonoFuncionario' => trim($_POST['TelefonoFuncionario'] ?? ''),
+                'CorreoFuncionario'   => trim($_POST['CorreoFuncionario'] ?? ''),
+                'CargoFuncionario'    => trim($_POST['CargoFuncionario'] ?? ''),
+                'IdSede'              => trim($_POST['IdSede'] ?? '')
+            ];
 
-                if ($resultado) {
-                    echo "<script>
-                        alert('✅ Funcionario registrado correctamente');
-                        window.location.href='../../View/FuncionarioLista.php';
-                    </script>";
-                } else {
-                    echo "<script>
-                        alert('❌ Error al registrar el funcionario');
-                        window.history.back();
-                    </script>";
+            // Validación simple de campos vacíos
+            foreach ($datos as $campo => $valor) {
+                if (empty($valor)) {
+                    $this->mostrarAlerta(['error' => true, 'mensaje' => "❌ El campo $campo es obligatorio."]);
+                    return;
                 }
             }
-        } catch (Exception $e) {
-            echo "<script>
-                alert('⚠️ Error inesperado: " . $e->getMessage() . "');
-                window.history.back();
-            </script>";
+
+            // Inserta en la base de datos
+            $resultado = $this->modelo->insertarFuncionario($datos);
+            $this->mostrarAlerta($resultado);
         }
+    }
+
+    // Función para mostrar alerta con SweetAlert2
+    private function mostrarAlerta($resultado) {
+        $icon = $resultado['error'] ? 'error' : 'success';
+        $mensaje = $resultado['mensaje'];
+
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        echo "<script>
+            Swal.fire({
+                icon: '$icon',
+                title: 'Resultado',
+                html: `$mensaje`,
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                window.location.href = '../Models/FuncionarioLista.php';
+            });
+        </script>";
+        exit;
     }
 }
 
-$funcionario = new Funcionario();
-$funcionario->procesarFormulario();
+// Ejecutar controlador
+$controlador = new FuncionariopanelController();
+$controlador->manejarSolicitud();
 ?>
