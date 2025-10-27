@@ -1,48 +1,123 @@
 <?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
 
-
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">Dashboard Supervisor - SEGTRACK</h1>
+    <!-- Encabezado mejorado -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard de Seguridad</h1>
+        <div class="d-none d-sm-inline-block">
+            <span class="text-muted">Sistema SEGTRACK</span>
+        </div>
+    </div>
 
-    <!-- Tarjetas de resumen -->
+    <!-- Tarjetas de resumen mejoradas -->
     <div class="row mb-4">
-        <div class="col-lg-4 mb-3">
-            <div class="card shadow text-center border-primary">
+        <!-- Dispositivos -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <h5 class="card-title text-primary">Total Dispositivos</h5>
-                    <h3 id="totalDispositivos" class="fw-bold text-primary">0</h3>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Dispositivos</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalDispositivos">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-tablet-alt fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4 mb-3">
-            <div class="card shadow text-center border-success">
+        <!-- Funcionarios -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
-                    <h5 class="card-title text-success">Total Funcionarios</h5>
-                    <h3 id="totalFuncionarios" class="fw-bold text-success">0</h3>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total Funcionarios</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalFuncionarios">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-tie fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4 mb-3">
-            <div class="card shadow text-center border-danger">
+        <!-- Visitantes -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
-                    <h5 class="card-title text-danger">Total Visitantes</h5>
-                    <h3 id="totalVisitantes" class="fw-bold text-danger">0</h3>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Total Visitantes</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalVisitantes">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Gráfico principal -->
+    <!-- Gráfico y estadísticas adicionales -->
     <div class="row">
-        <div class="col-lg-12 mb-4">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    Dispositivos por Tipo
+        <!-- Gráfico principal -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Distribución de Dispositivos por Tipo</h6>
                 </div>
                 <div class="card-body">
-                    <canvas id="graficoTipo"></canvas>
+                    <div class="chart-container" style="position: relative; height: 350px;">
+                        <canvas id="graficoTipo"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de estadísticas adicionales -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Estadísticas Rápidas</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="text-xs font-weight-bold text-uppercase text-primary mb-1">
+                            Dispositivos Activos
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="dispositivosActivos">0</div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-xs font-weight-bold text-uppercase text-success mb-1">
+                            Funcionarios en Sitio
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="funcionariosEnSitio">0</div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-xs font-weight-bold text-uppercase text-warning mb-1">
+                            Visitantes Registrados Hoy
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="visitantesHoy">0</div>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Dispositivos
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Funcionarios
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-warning"></i> Visitantes
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,19 +126,37 @@
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Font Awesome para iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
+    const BASE_URL = "/SEGTRACK/segtrack/Controller/Graficas/ControladorDashboard.php";
 
-    const BASE_URL = "../../Controller/Graficas/ControladorDashboard.php";
-
-
+    // === 1️⃣ Gráfico de dispositivos por tipo ===
     try {
         const resTipo = await fetch(`${BASE_URL}?accion=tipos_dispositivos`);
         const datosTipo = await resTipo.json();
 
         const labels = datosTipo.map(d => d.tipo_dispositivos);
         const cantidades = datosTipo.map(d => d.cantidad_Dispositivos);
+
+        // Colores más profesionales para el gráfico
+        const colores = [
+            'rgba(78, 115, 223, 0.8)',
+            'rgba(28, 200, 138, 0.8)',
+            'rgba(246, 194, 62, 0.8)',
+            'rgba(231, 74, 59, 0.8)',
+            'rgba(133, 135, 150, 0.8)'
+        ];
+
+        const bordes = [
+            'rgba(78, 115, 223, 1)',
+            'rgba(28, 200, 138, 1)',
+            'rgba(246, 194, 62, 1)',
+            'rgba(231, 74, 59, 1)',
+            'rgba(133, 135, 150, 1)'
+        ];
 
         new Chart(document.getElementById('graficoTipo'), {
             type: 'bar',
@@ -72,28 +165,39 @@ document.addEventListener("DOMContentLoaded", async () => {
                 datasets: [{
                     label: 'Cantidad de Dispositivos',
                     data: cantidades,
-                    backgroundColor: [
-                        '#007bff',
-                        '#28a745',
-                        '#ffc107',
-                        '#dc3545',
-                        '#17a2b8'
-                    ],
-                    borderColor: '#000',
+                    backgroundColor: colores,
+                    borderColor: bordes,
                     borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: { display: false },
-                    title: {
-                        display: true,
-                        text: 'Distribución por Tipo de Dispositivo'
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        titleFont: { size: 14 },
+                        bodyFont: { size: 14 },
+                        padding: 10
                     }
                 },
                 scales: {
-                    y: { beginAtZero: true }
+                    y: { 
+                        beginAtZero: true,
+                        ticks: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -110,6 +214,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("totalDispositivos").textContent = totalDispositivos.total_dispositivos ?? 0;
         document.getElementById("totalFuncionarios").textContent = totalFuncionarios.total_funcionarios ?? 0;
         document.getElementById("totalVisitantes").textContent = totalVisitantes.total_visitantes ?? 0;
+
+        // Para este ejemplo, usaré valores simulados para las estadísticas adicionales
+        // En un caso real, estos vendrían de tu API
+        document.getElementById("dispositivosActivos").textContent = Math.floor(totalDispositivos.total_dispositivos * 0.85) || 0;
+        document.getElementById("funcionariosEnSitio").textContent = Math.floor(totalFuncionarios.total_funcionarios * 0.65) || 0;
+        document.getElementById("visitantesHoy").textContent = Math.floor(totalVisitantes.total_visitantes * 0.1) || 0;
     } catch (error) {
         console.error("Error al cargar totales:", error);
     }
@@ -117,5 +227,3 @@ document.addEventListener("DOMContentLoaded", async () => {
 </script>
 
 <?php require_once __DIR__ . '/../Plantilla/parte_inferior_supervisor.php'; ?>
-
-

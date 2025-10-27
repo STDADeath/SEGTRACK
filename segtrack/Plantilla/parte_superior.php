@@ -22,6 +22,7 @@
     <link href="../view/css/styles.css" rel="stylesheet">
 
     <link href="../vew/css/sytles.css" rel="stylesheet">
+    <link href="../vew/css/graficas.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../view/css/icono.css">
 

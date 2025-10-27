@@ -1,9 +1,12 @@
 <?php
+// =============================
+// ControladorDashboard.php
+// =============================
 
 // Ruta de conexión
 $ruta_conexion = __DIR__ . '/../../core/conexion.php';
 
-// Verifica que exista el archivo de conexión
+// Validar que exista el archivo de conexión
 if (file_exists($ruta_conexion)) {
     require_once $ruta_conexion;
 } else {
@@ -14,15 +17,14 @@ if (file_exists($ruta_conexion)) {
     ]));
 }
 
-// Modelo
-require_once __DIR__ . "/../../Model/Graficas/ModeloDasboard.php";
+// ✅ Nombre del modelo corregido
+require_once __DIR__ . "/../../Model/Graficas/ModeloDashboard.php";
 
 class ControladorDashboard {
 
     private $model;
 
     public function __construct($conexion) {
-        // Inicializa el modelo correctamente
         $this->model = new ModeloDashboard($conexion);
         header('Content-Type: application/json; charset=utf-8');
     }
@@ -30,19 +32,25 @@ class ControladorDashboard {
     public function manejarSolicitud($accion) {
         switch ($accion) {
             case 'tipos_dispositivos':
-                echo json_encode($this->model->dispositivosPorTipo());
+                echo json_encode($this->model->DispositivosPorTipo());
                 break;
 
             case 'total_dispositivos':
-                echo json_encode(["total_dispositivos" => $this->model->DispositivosTotal()]);
+                echo json_encode([
+                    "total_dispositivos" => $this->model->DispositivosTotal()
+                ]);
                 break;
 
             case 'total_funcionarios':
-                echo json_encode(["total_funcionarios" => $this->model->FuncionariosTotal()]);
+                echo json_encode([
+                    "total_funcionarios" => $this->model->FuncionariosTotal()
+                ]);
                 break;
 
             case 'total_visitantes':
-                echo json_encode(["total_visitantes" => $this->model->TotalVisitante()]);
+                echo json_encode([
+                    "total_visitantes" => $this->model->TotalVisitante()
+                ]);
                 break;
 
             default:
@@ -50,16 +58,11 @@ class ControladorDashboard {
                 break;
         }
     }
-
-    // Método estático para iniciar el controlador desde la URL
-    public static function iniciar($conexion) {
-        $accion = $_GET['accion'] ?? '';
-        $controlador = new self($conexion);
-        $controlador->manejarSolicitud($accion);
-    }
 }
 
-// Ejecutar controlador pasando la conexión directamente
-ControladorDashboard::iniciar($conexion);
-
+// ✅ Este bloque ejecuta el controlador cuando se accede vía AJAX
+if (isset($_GET['accion'])) {
+    $dashboard = new ControladorDashboard($conexion);
+    $dashboard->manejarSolicitud($_GET['accion']);
+}
 ?>
