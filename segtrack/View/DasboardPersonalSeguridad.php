@@ -4,7 +4,7 @@
     <!-- Encabezado -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard de Seguridad</h1>
-        <span class="text-muted">Sistema SEGTRACK</span>
+
     </div>
 
     <!-- Tarjetas de resumen -->
@@ -98,7 +98,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const BASE_URL = "/SEGTRACK/segtrack/Controller/Graficas/ControladorDashboard.php";
 
-    // === 📊 Gráfico de Dispositivos ===
     try {
         const resDispositivos = await fetch(`${BASE_URL}?accion=tipos_dispositivos`);
         const datosDispositivos = await resDispositivos.json();

@@ -45,7 +45,41 @@ class ControladorDashboard {
                 break;
 
             case 'vehiculos_por_sede':
-                echo json_encode($this->model->vehiculosPorSede());
+                echo json_encode($this->model->VehiculosPorSede());
+                break;
+
+            case 'dotacion_por_tipo':
+                echo json_encode($this->model->DotacionPorTipo());
+                break;
+
+            case 'dotacion_por_estado':
+                echo json_encode($this->model->DotacionPorEstado());
+                break;
+
+            case 'dotaciones_por_mes':
+                echo json_encode($this->model->DotacionesPorMes());
+                break;
+
+            case 'dotaciones_por_devolucion':
+                echo json_encode($this->model->DotacionesPorDevolucionMes());
+                break;
+
+            // =============================
+            // 📖 BITÁCORA
+            // =============================
+
+            case 'total_bitacora':
+                echo json_encode([
+                    "total_bitacora" => $this->model->TotalBitacora()
+                ]);
+                break;
+
+            case 'bitacora_por_turno':
+                echo json_encode($this->model->BitacoraPorTurno());
+                break;
+
+            case 'bitacora_por_mes':
+                echo json_encode($this->model->BitacoraPorMes());
                 break;
 
             // =============================
@@ -73,6 +107,12 @@ class ControladorDashboard {
             case 'total_vehiculos':
                 echo json_encode([
                     "total_vehiculos" => $this->model->ParqueaderoTotal()
+                ]);
+                break;
+
+            case 'total_dotacion':
+                echo json_encode([
+                    "total_dotacion" => $this->model->DotacionTotal()
                 ]);
                 break;
 
