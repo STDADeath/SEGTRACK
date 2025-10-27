@@ -19,7 +19,6 @@ class ModeloDashboard {
         return $data;
     }
 
-    // 🔹 Total de dispositivos
     public function DispositivosTotal() {
         $sql = "SELECT COUNT(*) AS total_dispositivos FROM dispositivo";
         $stmt = $this->conexion->query($sql);
@@ -27,7 +26,6 @@ class ModeloDashboard {
         return $data['total_dispositivos'];
     }
 
-    // 🔹 Total de funcionarios
     public function FuncionariosTotal() {
         $sql = "SELECT COUNT(*) AS total_funcionarios FROM funcionario";
         $stmt = $this->conexion->query($sql);
@@ -35,7 +33,6 @@ class ModeloDashboard {
         return $data['total_funcionarios'];
     }
 
-    // 🔹 Total de visitantes
     public function TotalVisitante() {
         $sql = "SELECT COUNT(*) AS total_visitantes FROM visitante";
         $stmt = $this->conexion->query($sql);
@@ -43,7 +40,6 @@ class ModeloDashboard {
         return $data['total_visitantes'];
     }
 
-    // 🔹 Gráfica: Vehículos por tipo
     public function VehiculosPorTipo() {
         $sql = "SELECT TipoVehiculo AS tipo_vehiculos, COUNT(*) AS cantidad_Vehiculos 
                 FROM parqueadero GROUP BY TipoVehiculo";
@@ -55,12 +51,31 @@ class ModeloDashboard {
         return $data;
     }
 
-    // 🔹 Total de vehículos en el parqueadero
     public function ParqueaderoTotal() {
         $sql = "SELECT COUNT(*) AS total_vehiculos FROM parqueadero";
         $stmt = $this->conexion->query($sql);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         return $data['total_vehiculos'];
+    }
+
+    // 🔹 NUEVO: Vehículos por sede
+    public function vehiculosPorSede() {
+        $sql = "
+            SELECT 
+                s.NombreSede AS sede,
+                p.TipoVehiculo AS tipo_vehiculo,
+                COUNT(*) AS cantidad
+            FROM parqueadero p
+            INNER JOIN sede s ON s.IdSede = p.IdSede
+            GROUP BY s.NombreSede, p.TipoVehiculo
+            ORDER BY s.NombreSede;
+        ";
+        $stmt = $this->conexion->query($sql);
+        $data = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+        return $data;
     }
 }
 ?>

@@ -17,7 +17,7 @@ if (file_exists($ruta_conexion)) {
     ]));
 }
 
-// ✅ Nombre del modelo corregido
+// ✅ Cargar modelo
 require_once __DIR__ . "/../../Model/Graficas/ModeloDashboard.php";
 
 class ControladorDashboard {
@@ -31,9 +31,26 @@ class ControladorDashboard {
 
     public function manejarSolicitud($accion) {
         switch ($accion) {
+
+            // =============================
+            // 📊 GRAFICAS
+            // =============================
+
             case 'tipos_dispositivos':
                 echo json_encode($this->model->DispositivosPorTipo());
                 break;
+
+            case 'vehiculos_por_tipo':
+                echo json_encode($this->model->VehiculosPorTipo());
+                break;
+
+            case 'vehiculos_por_sede':
+                echo json_encode($this->model->vehiculosPorSede());
+                break;
+
+            // =============================
+            // 🔢 TOTALES
+            // =============================
 
             case 'total_dispositivos':
                 echo json_encode([
@@ -53,6 +70,12 @@ class ControladorDashboard {
                 ]);
                 break;
 
+            case 'total_vehiculos':
+                echo json_encode([
+                    "total_vehiculos" => $this->model->ParqueaderoTotal()
+                ]);
+                break;
+
             default:
                 echo json_encode(["error" => "Acción no válida"]);
                 break;
@@ -60,7 +83,7 @@ class ControladorDashboard {
     }
 }
 
-// ✅ Este bloque ejecuta el controlador cuando se accede vía AJAX
+// ✅ Ejecutar controlador si se llama por AJAX
 if (isset($_GET['accion'])) {
     $dashboard = new ControladorDashboard($conexion);
     $dashboard->manejarSolicitud($_GET['accion']);
