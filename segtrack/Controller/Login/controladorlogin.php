@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $ruta = '../../View/Instituto.php';
                 break;
             case 'Supervisor':
-                $ruta = '../../FuncionarioLista.php';
+                $ruta = '../../View/Sede.php';
                 break;
             case 'Personal Seguridad':
                 $ruta = '../../View/Instituto.php';
