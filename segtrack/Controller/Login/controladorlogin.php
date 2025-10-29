@@ -1,85 +1,99 @@
 <?php
-require_once __DIR__ . "/../../model/Login/modulousuario.php";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+session_start();
 
-class ControladorLogin {
-    private $modelo;
+require_once __DIR__ . '/../../Model/Login/modulousuario.php';
 
-    public function __construct() {
-        $this->modelo = new ModuloUsuario();
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $correo = trim($_POST['correo'] ?? '');
+        $contrasena = trim($_POST['contrasena'] ?? '');
+        $nuevoRol = trim($_POST['rol'] ?? ''); // opcional
 
-    public function login($correo, $contrasena) {
-        try {
-            $resultado = $this->modelo->validarLogin($correo, $contrasena);
-
-            // Si el modelo devolvió un arreglo con ok = true => login correcto
-            if (is_array($resultado) && isset($resultado['ok']) && $resultado['ok'] === true) {
-                $usuario = $resultado['usuario'];
-                session_start();
-                $_SESSION["nombre"] = $usuario["NombreFuncionario"];
-                $_SESSION["rol"] = $usuario["TipoRol"];
-
-                // Redirigir según rol (ajusta rutas si es necesario)
-                switch ($usuario["TipoRol"]) {
-                    case "Supervisor":
-                        header("Location: ../../View/Funcionariopanel.php");
-                        break;
-                    case "Personal_Seguridad":
-                        header("Location: ../../View/Funcionario.php");
-                        break;
-                    case "Administrador":
-                        header("Location: ../../View/index.html");
-                        break;
-                    default:
-                        header("Location: ../../View/index.html");
-                        break;
-                }
-                exit;
-            }
-
-            // Si no fue ok, mostramos depuración (temporal) y redirigimos al login
-            if (is_array($resultado)) {
-                // Mensajes específicos para saber qué pasa
-                if ($resultado['reason'] === 'no_user') {
-                    echo "<script>alert('❌ No existe usuario con ese correo o documento.'); window.location.href='../../View/login.html';</script>";
-                    exit;
-                }
-                if ($resultado['reason'] === 'bad_password') {
-                    // Muestra mensaje claro (temporal): contraseña incorrecta
-                    // Puedes quitar 'stored' y 'given' cuando ya esté solucionado.
-                    $stored = htmlspecialchars($resultado['stored']);
-                    // no muestres $given en producción por seguridad
-                    echo "<script>
-                            alert('❌ Contraseña incorrecta.');
-                            window.location.href='../../View/login.html';
-                          </script>";
-                    exit;
-                }
-                if ($resultado['reason'] === 'exception') {
-                    $msg = addslashes($resultado['message']);
-                    echo "<script>alert('❌ Error: {$msg}'); window.location.href='../../View/login.html';</script>";
-                    exit;
-                }
-            }
-
-            // Por defecto (seguridad)
-            echo "<script>alert('❌ Credenciales incorrectas'); window.location.href='../../View/login.html';</script>";
-            exit;
-
-        } catch (Exception $e) {
-            $msg = addslashes($e->getMessage());
-            echo "<script>alert('❌ Excepción: {$msg}'); window.location.href='../../View/login.html';</script>";
-            exit;
+        if ($correo === '' || $contrasena === '') {
+            throw new Exception('Por favor llena todos los campos.');
         }
+
+        $usuarioModel = new ModuloUsuario();
+        $resultado = $usuarioModel->validarLogin($correo, $contrasena);
+
+        if (!$resultado['ok']) {
+            // Si es contraseña incorrecta o usuario no existe
+            throw new Exception($resultado['message']);
+        }
+
+        // Actualizar rol si se envió y es diferente al actual
+        if ($nuevoRol !== '' && $nuevoRol !== $resultado['usuario']['TipoRol']) {
+            $usuarioModel->actualizarRol($resultado['usuario']['IdFuncionario'], $nuevoRol);
+            $resultado['usuario']['TipoRol'] = $nuevoRol;
+        }
+
+        // Guardar en sesión
+        $_SESSION['usuario'] = $resultado['usuario'];
+
+        // Redirección según rol
+        switch ($resultado['usuario']['TipoRol']) {
+            case 'Administrador':
+                $ruta = '../../View/Instituto.php';
+                break;
+            case 'Supervisor':
+                $ruta = '../../FuncionarioLista.php';
+                break;
+            case 'Personal Seguridad':
+                $ruta = '../../View/Instituto.php';
+                break;
+            default:
+                $ruta = '../../View/login.html'; // por defecto
+                break;
+        }
+
+        // Alerta de éxito y redirección
+        echo "<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset='UTF-8'>
+<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+</head>
+<body>
+<script>
+Swal.fire({
+    icon:'success',
+    title:'Bienvenido',
+    text:'{$resultado['usuario']['NombreFuncionario']}',
+    allowOutsideClick: false
+}).then(() => {
+    window.location.href = '$ruta';
+});
+</script>
+</body>
+</html>";
+        exit;
+
+    } catch (Exception $e) {
+        // Alerta de error y volver al login
+        echo "<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset='UTF-8'>
+<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+</head>
+<body>
+<script>
+Swal.fire({
+    icon:'error',
+    title:'Error',
+    text:'{$e->getMessage()}',
+    allowOutsideClick: false
+}).then(() => {
+    window.location.href = '../../View/login.html';
+});
+</script>
+</body>
+</html>";
+        exit;
     }
 }
 
-// EJECUCIÓN al venir POST desde el formulario
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $correo = trim($_POST["correo"] ?? "");
-    $contrasena = trim($_POST["contrasena"] ?? "");
-
-    $controlador = new ControladorLogin();
-    $controlador->login($correo, $contrasena);
-}
 ?>
+

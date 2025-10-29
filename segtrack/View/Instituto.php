@@ -1,4 +1,24 @@
+<?php
+session_start();
+
+// ===========================================
+// ✅ Verificar sesión activa
+// ===========================================
+if (!isset($_SESSION['usuario'])) {
+    header("Location: ../../View/loginn.html");
+    exit;
+}
+?>
+
 <?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+
+<!-- Bloquea volver atrás -->
+<script>
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
@@ -15,6 +35,12 @@
                     <h6 class="m-0 font-weight-bold text-white">Información de la Institución</h6>
                 </div>
                 <div class="card-body">
+
+                    <!-- Botón cerrar sesión -->
+                    <form method="POST" action="../Controller/Login/logout.php" class="mb-3">
+                        <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+                    </form>
+
                     <form method="POST" action="../Controller/sede_institucion_funcionario_usuario/ControladorInstituto.php" class="needs-validation" novalidate>
                         <input type="hidden" name="accion" value="insertar">
 
@@ -55,6 +81,7 @@
                             <button type="submit" class="btn btn-primary">Guardar Institución</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

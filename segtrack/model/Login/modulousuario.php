@@ -1,86 +1,81 @@
 <?php
-
-require_once(__DIR__ . "/../../Core/conexion.php");
+require_once __DIR__ . '/../../Core/conexion.php';
 
 class ModuloUsuario {
-    private $pdo;
+    private $conexion;
 
     public function __construct() {
-        $this->pdo = (new Conexion())->getConexion();
+        $this->conexion = (new Conexion())->getConexion();
     }
 
-    /**
-     * validarLogin
-     * Busca por correo o documento en la tabla funcionario,
-     * obtiene la contraseña desde la tabla usuario (join por IdFuncionario)
-     * Retorna el array $usuario si todo OK, o false si no.
-     *
-     * IMPORTANTE: para depuración devuelve mensajes claros (temporal).
-     */
     public function validarLogin($correo, $contrasena) {
         try {
-            $sql = "
-                SELECT 
-                    u.IdUsuario,
-                    u.TipoRol,
-                    u.Contrasena,
-                    f.IdFuncionario,
-                    f.NombreFuncionario,
-                    f.CorreoFuncionario,
-                    f.DocumentoFuncionario
-                FROM usuario u
-                INNER JOIN funcionario f ON f.IdFuncionario = u.IdFuncionario
-                WHERE f.CorreoFuncionario = :correo
-                   OR f.DocumentoFuncionario = :correo
-                LIMIT 1
-            ";
+            $sql = "SELECT 
+                        u.IdUsuario,
+                        u.TipoRol,
+                        u.Contrasena AS Contrasena,
+                        f.IdFuncionario,
+                        f.NombreFuncionario,
+                        f.CorreoFuncionario,
+                        f.DocumentoFuncionario,
+                        f.IdSede
+                    FROM usuario u
+                    INNER JOIN funcionario f 
+                        ON u.IdFuncionario = f.IdFuncionario
+                    WHERE f.CorreoFuncionario = :correo 
+                       OR f.DocumentoFuncionario = :correo
+                    LIMIT 1";
 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':correo', $correo);
             $stmt->execute();
 
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (!$usuario) {
-                // Depuración clara: no encontró registro
-                return [
-                    'ok' => false,
-                    'reason' => 'no_user',
-                    'message' => 'No existe funcionario con ese correo o documento'
-                ];
+                return ['ok'=>false, 'message'=>'❌ No existe usuario con ese correo o documento.'];
             }
 
-            // Comparamos contraseñas sin hash (tu caso actual).
-            $stored = trim((string)$usuario['Contrasena']);
-            $given  = trim((string)$contrasena);
+            $hashBD = trim($usuario['Contrasena']);
+            $loginValido = false;
 
-            if ($stored === $given) {
-                // Credenciales correctas: devolver datos útiles
-                return [
-                    'ok' => true,
-                    'usuario' => $usuario
-                ];
-            } else {
-                // Depuración: contraseña no coincide
-                return [
-                    'ok' => false,
-                    'reason' => 'bad_password',
-                    'message' => 'La contraseña no coincide',
-                    'stored' => $stored,    // temporal: muestra lo que hay en BD
-                    'given'  => $given      // temporal: muestra lo que enviaste
-                ];
+            // Verificar contraseña hash o texto plano
+            if (password_verify($contrasena, $hashBD)) {
+                $loginValido = true;
+            } elseif ($contrasena === $hashBD) {
+                $loginValido = true;
+                // Actualizar a hash
+                $nuevoHash = password_hash($contrasena, PASSWORD_DEFAULT);
+                $update = $this->conexion->prepare("UPDATE usuario SET Contrasena = :newHash WHERE IdUsuario = :id");
+                $update->execute([':newHash'=>$nuevoHash, ':id'=>$usuario['IdUsuario']]);
             }
+
+            if (!$loginValido) {
+                return ['ok'=>false, 'message'=>'❌ Contraseña incorrecta.'];
+            }
+
+            return ['ok'=>true, 'usuario'=>[
+                'IdUsuario'=>$usuario['IdUsuario'],
+                'IdFuncionario'=>$usuario['IdFuncionario'],
+                'NombreFuncionario'=>$usuario['NombreFuncionario'],
+                'CorreoFuncionario'=>$usuario['CorreoFuncionario'],
+                'TipoRol'=>$usuario['TipoRol'],
+                'IdSede'=>$usuario['IdSede']
+            ]];
 
         } catch (PDOException $e) {
-            return [
-                'ok' => false,
-                'reason' => 'exception',
-                'message' => 'Error en BD: ' . $e->getMessage()
-            ];
+            return ['ok'=>false, 'message'=>'Error en BD: '.$e->getMessage()];
         }
     }
 
-    /* - Los demás métodos (agregar/editar/eliminar/filtrar) quedan igual
-       que tenías antes: los dejo intactos para que no rompa nada. */
+    public function actualizarRol($idFuncionario, $nuevoRol) {
+        try {
+            $update = $this->conexion->prepare("UPDATE usuario SET TipoRol = :rol WHERE IdFuncionario = :id");
+            $update->execute([':rol'=>$nuevoRol, ':id'=>$idFuncionario]);
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
 ?>

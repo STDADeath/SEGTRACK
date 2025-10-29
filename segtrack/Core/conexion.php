@@ -3,7 +3,7 @@ class Conexion {
     private $host = "localhost";
     private $usuario = "root";
     private $clave = "";
-    private $db = "segtrack12";
+    private $db = "dbsegtrack1";
     private $conexion;
 
     public function __construct() {
@@ -19,12 +19,8 @@ class Conexion {
         }
     }
 
-    // Método para obtener el objeto PDO
     public function getConexion() {
         return $this->conexion;
     }
 }
-
-// Crear la instancia de conexión y exponerla como variable global
-$conexionObj = new Conexion();
-$conexion = $conexionObj->getConexion();
+?>

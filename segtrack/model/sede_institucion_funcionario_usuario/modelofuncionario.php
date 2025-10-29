@@ -2,115 +2,90 @@
 require_once __DIR__ . '/../../Core/conexion.php';
 
 class ModeloFuncionario {
-
     private $conexion;
 
     public function __construct() {
-        // ✅ Obtenemos la conexión desde la clase Conexion
         $conexionObj = new Conexion();
         $this->conexion = $conexionObj->getConexion();
     }
 
-    // ➕ Insertar funcionario
     public function insertarFuncionario($datos) {
-    try {
-        // ✅ 1. Verificar si ya existe un funcionario con ese documento o correo
-        $sqlVerificar = "SELECT COUNT(*) FROM funcionario 
-                         WHERE DocumentoFuncionario = :DocumentoFuncionario 
-                            OR CorreoFuncionario = :CorreoFuncionario";
-        $stmtVerificar = $this->conexion->prepare($sqlVerificar);
-        $stmtVerificar->execute([
-            ':DocumentoFuncionario' => $datos['DocumentoFuncionario'],
-            ':CorreoFuncionario' => $datos['CorreoFuncionario']
-        ]);
+        try {
+            // Validar duplicado
+            $consulta = $this->conexion->prepare("SELECT COUNT(*) FROM funcionario WHERE DocumentoFuncionario = ?");
+            $consulta->execute([$datos['DocumentoFuncionario']]);
+            if ($consulta->fetchColumn() > 0) {
+                return ['error' => '⚠️ El documento ya está registrado.'];
+            }
 
-        if ($stmtVerificar->fetchColumn() > 0) {
-            return ['error' => '⚠️ Ya existe un funcionario con ese documento o correo.'];
+            // Generar el código QR (solo texto, sin imagen)
+            $codigoQR = 'QR-FUNC-' . strtoupper(substr(md5(uniqid()), 0, 5));
+
+            // Insertar funcionario
+            $sql = "INSERT INTO funcionario 
+                    (NombreFuncionario, DocumentoFuncionario, CorreoFuncionario, TelefonoFuncionario, CargoFuncionario, IdSede, QrCodigoFuncionario)
+                    VALUES (:nombre, :documento, :correo, :telefono, :cargo, :idsede, :qr)";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':nombre', $datos['NombreFuncionario']);
+            $stmt->bindParam(':documento', $datos['DocumentoFuncionario']);
+            $stmt->bindParam(':correo', $datos['CorreoFuncionario']);
+            $stmt->bindParam(':telefono', $datos['TelefonoFuncionario']);
+            $stmt->bindParam(':cargo', $datos['CargoFuncionario']);
+            $stmt->bindParam(':idsede', $datos['IdSede']);
+            $stmt->bindParam(':qr', $codigoQR);
+
+            $stmt->execute();
+
+            return ['mensaje' => '✅ Registro exitoso. Código QR: ' . $codigoQR];
+        } catch (PDOException $e) {
+            return ['error' => '❌ Error al registrar: ' . $e->getMessage()];
         }
-
-        // ✅ 2. Insertar si no existe duplicado
-        $sql = "INSERT INTO funcionario 
-                (NombreFuncionario, DocumentoFuncionario, CorreoFuncionario, TelefonoFuncionario, CargoFuncionario, IdSede)
-                VALUES (:NombreFuncionario, :DocumentoFuncionario, :CorreoFuncionario, :TelefonoFuncionario, :CargoFuncionario, :IdSede)";
-        
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->execute($datos);
-
-        return ['mensaje' => '✅ Funcionario registrado correctamente'];
-
-    } catch (PDOException $e) {
-        return ['error' => '❌ Error al insertar: ' . $e->getMessage()];
     }
-}
 
-    // 🔄 Actualizar funcionario
     public function actualizarFuncionario($id, $datos) {
         try {
             $sql = "UPDATE funcionario 
-                    SET NombreFuncionario = :NombreFuncionario,
-                        DocumentoFuncionario = :DocumentoFuncionario,
-                        CorreoFuncionario = :CorreoFuncionario,
-                        TelefonoFuncionario = :TelefonoFuncionario,
-                        CargoFuncionario = :CargoFuncionario,
-                        IdSede = :IdSede
-                    WHERE IdFuncionario = :IdFuncionario";
-
+                    SET NombreFuncionario = :nombre, DocumentoFuncionario = :documento,
+                        CorreoFuncionario = :correo, TelefonoFuncionario = :telefono,
+                        CargoFuncionario = :cargo, IdSede = :idsede
+                    WHERE IdFuncionario = :id";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute(array_merge($datos, ['IdFuncionario' => $id]));
-
-            return ['mensaje' => '✅ Funcionario actualizado correctamente'];
+            $stmt->execute([
+                ':nombre' => $datos['NombreFuncionario'],
+                ':documento' => $datos['DocumentoFuncionario'],
+                ':correo' => $datos['CorreoFuncionario'],
+                ':telefono' => $datos['TelefonoFuncionario'],
+                ':cargo' => $datos['CargoFuncionario'],
+                ':idsede' => $datos['IdSede'],
+                ':id' => $id
+            ]);
+            return ['mensaje' => '✅ Funcionario actualizado correctamente.'];
         } catch (PDOException $e) {
             return ['error' => '❌ Error al actualizar: ' . $e->getMessage()];
         }
     }
 
-    // ❌ Eliminar funcionario
     public function eliminarFuncionario($id) {
         try {
-            $sql = "DELETE FROM funcionario WHERE IdFuncionario = :IdFuncionario";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute(['IdFuncionario' => $id]);
-            return ['mensaje' => '🗑️ Funcionario eliminado correctamente'];
+            $stmt = $this->conexion->prepare("DELETE FROM funcionario WHERE IdFuncionario = ?");
+            $stmt->execute([$id]);
+            return ['mensaje' => '🗑️ Funcionario eliminado correctamente.'];
         } catch (PDOException $e) {
             return ['error' => '❌ Error al eliminar: ' . $e->getMessage()];
         }
     }
-  
-    public function verificarDuplicado($documento, $correo) {
-    try {
-        $sql = "SELECT COUNT(*) FROM funcionario 
-                WHERE DocumentoFuncionario = :documento OR CorreoFuncionario = :correo";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['documento' => $documento, 'correo' => $correo]);
-        $existe = $stmt->fetchColumn();
-        return $existe > 0;
-    } catch (PDOException $e) {
-        return false;
-    }
-}
 
-    // 🔍 Filtrar funcionario por ID
-    public function filtrarFuncionarioPorId($id) {
+    public function actualizarCargoSegunRol($idFuncionario) {
         try {
-            $sql = "SELECT * FROM funcionario WHERE IdFuncionario = :IdFuncionario";
+            $sql = "UPDATE funcionario f 
+                    JOIN usuario u ON f.IdFuncionario = u.IdFuncionario 
+                    SET f.CargoFuncionario = u.tipoRol 
+                    WHERE f.IdFuncionario = ?";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute(['IdFuncionario' => $id]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $resultado ?: ['error' => '⚠️ Funcionario no encontrado'];
+            $stmt->execute([$idFuncionario]);
+            return ['mensaje' => '🔄 Cargo sincronizado con el rol del usuario.'];
         } catch (PDOException $e) {
-            return ['error' => '❌ Error al filtrar: ' . $e->getMessage()];
-        }
-    }
-
-    // 📋 Listar todos los funcionarios
-    public function listarFuncionarios() {
-        try {
-            $sql = "SELECT * FROM funcionario";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return ['error' => '❌ Error al listar: ' . $e->getMessage()];
+            return ['error' => '❌ Error al sincronizar cargo: ' . $e->getMessage()];
         }
     }
 }
