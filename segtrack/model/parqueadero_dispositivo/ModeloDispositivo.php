@@ -16,8 +16,8 @@ class ModeloDispositivo {
             }
 
             $sql = "INSERT INTO dispositivo 
-                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante)
-                    VALUES (:tipo, :marca, :funcionario, :visitante)";
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, 'Activo')";
 
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
@@ -66,7 +66,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * ✅ Obtiene todos los dispositivos registrados
+     * ✅ Obtiene todos los dispositivos ACTIVOS
      */
     public function obtenerTodos(): array {
         try {
@@ -74,7 +74,32 @@ class ModeloDispositivo {
                 return [];
             }
 
-            $sql = "SELECT * FROM dispositivo ORDER BY IdDispositivo DESC";
+            $sql = "SELECT * FROM dispositivo WHERE Estado = 'Activo' ORDER BY IdDispositivo DESC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    /**
+     * ✅ Obtiene todos los dispositivos (incluye activos e inactivos)
+     */
+    public function obtenerTodosConEstado(): array {
+        try {
+            if (!$this->conexion) {
+                return [];
+            }
+
+            $sql = "SELECT * FROM dispositivo ORDER BY 
+                    CASE 
+                        WHEN Estado = 'Activo' THEN 1 
+                        WHEN Estado = 'Inactivo' THEN 2 
+                        ELSE 3 
+                    END, 
+                    IdDispositivo DESC";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -125,7 +150,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * ✅ Actualiza los datos del dispositivo (sin tocar el QR)
+     * ✅ Actualiza los datos del dispositivo (sin tocar el QR ni el Estado)
      */
     public function actualizar(int $idDispositivo, array $datos): array {
         try {
@@ -152,6 +177,38 @@ class ModeloDispositivo {
             return [
                 'success' => $resultado,
                 'rows' => $stmt->rowCount()
+            ];
+
+        } catch (PDOException $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * 🆕 Cambia el estado del dispositivo (Activo <-> Inactivo)
+     */
+    public function cambiarEstado(int $idDispositivo, string $nuevoEstado): array {
+        try {
+            if (!$this->conexion) {
+                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
+            }
+
+            // Validar que el estado sea válido
+            if (!in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
+                return ['success' => false, 'error' => 'Estado no válido'];
+            }
+
+            $sql = "UPDATE dispositivo SET Estado = :estado WHERE IdDispositivo = :id";
+            $stmt = $this->conexion->prepare($sql);
+            $resultado = $stmt->execute([
+                ':estado' => $nuevoEstado,
+                ':id' => $idDispositivo
+            ]);
+
+            return [
+                'success' => $resultado,
+                'rows' => $stmt->rowCount(),
+                'nuevoEstado' => $nuevoEstado
             ];
 
         } catch (PDOException $e) {

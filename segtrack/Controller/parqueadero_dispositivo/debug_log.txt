@@ -231,3 +231,112 @@ Instancia de ModeloParqueadero creada
 Acción: registrar | Método: POST
 POST: {"TipoVehiculo":"Moto","PlacaVehiculo":"B23CDF","DescripcionVehiculo":"Kaguasaki z ninja 300","TarjetaPropiedad":"tj324541","FechaParqueadero":"2025-10-23T20:47","IdSede":"18","accion":"registrar"}
 Iniciando registro de vehículo
+2025-10-24 05:11:53 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Computador",
+    "MarcaDispositivo": "Dell",
+    "IdFuncionario": "",
+    "IdVisitante": "2",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Respuesta final: {"success":false,"message":"Error al registrar en BD"}
+2025-10-24 05:12:31 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Computador",
+    "MarcaDispositivo": "Dell",
+    "IdFuncionario": "",
+    "IdVisitante": "2",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+Generando QR para dispositivo ID: 15
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-15-68faee9f26e72.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 15","data":{"IdDispositivo":"15","QrDispositivo":"qr\/QR-DISP-15-68faee9f26e72.png"}}
+2025-10-29 19:16:04 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "15",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 15, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+2025-10-29 19:22:29 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "15",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 15, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+2025-10-29 19:22:50 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "15",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 15, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+2025-10-29 19:46:08 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "15",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 15, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+2025-10-29 19:48:56 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "15",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 15, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
