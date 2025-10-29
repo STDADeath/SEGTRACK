@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 require_once __DIR__ . '/../../Model/sede_institucion_funcionario_usuario/modelofuncionario.php';
 
@@ -67,3 +68,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controlador->manejarSolicitud();
 }
 ?>
+=======
+>>>>>>> 5117bf3459d7c75113b2c6c82144a473bf2194c3
