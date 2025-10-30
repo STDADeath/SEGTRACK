@@ -1,25 +1,21 @@
 <?php
 require_once __DIR__ . '/../../Core/conexion.php';
 
-class ModeloSede {
+class ModeloInstitucion {
     private $conexion;
 
     public function __construct() {
         $this->conexion = (new Conexion())->getConexion();
     }
 
-    public function insertar($tipoSede, $ciudad, $idInstitucion) {
+    public function listar() {
         try {
-            $sql = "INSERT INTO sede (TipoSede, Ciudad, IdInstitucion) VALUES (:tipoSede, :ciudad, :idInstitucion)";
+            $sql = "SELECT IdInstitucion, NombreInstitucion FROM institucion ORDER BY NombreInstitucion ASC";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([
-                ':tipoSede' => $tipoSede,
-                ':ciudad' => $ciudad,
-                ':idInstitucion' => $idInstitucion
-            ]);
-            return true;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            return false;
+            return [];
         }
     }
 }
