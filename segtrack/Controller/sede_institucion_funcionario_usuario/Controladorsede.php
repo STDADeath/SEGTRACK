@@ -1,57 +1,70 @@
-<?php/*
-require_once __DIR__ . '/../../Core/conexion.php';
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-class ModeloSede {
-    private $conexion;
-
-    public function __construct() {
-        $this->conexion = (new Conexion())->getConexion();
-    }
-
-    // Insertar nueva sede
-    public function insertar($tipoSede, $ciudad, $idInstitucion) {
-        try {
-            $sql = "INSERT INTO sede (TipoSede, Ciudad, IdInstitucion)
-                    VALUES (:tipoSede, :ciudad, :idInstitucion)";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(':tipoSede', $tipoSede, PDO::PARAM_STR);
-            $stmt->bindParam(':ciudad', $ciudad, PDO::PARAM_STR);
-            $stmt->bindParam(':idInstitucion', $idInstitucion, PDO::PARAM_INT);
-            $stmt->execute();
-
-            return ['success' => true];
-        } catch (PDOException $e) {
-            return [
-                'success' => false,
-                'error' => $e->getMessage()
-            ];
-        }
-    }
-}*/
-
-session_start();
 require_once __DIR__ . '/../../Model/sede_institucion_funcionario_usuario/modelosede.php';
 
-$modeloSede = new ModeloSede();
+class ControladorSede {
+    private $modeloSede;
 
-// Registrar nueva sede
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tipoSede = trim($_POST['TipoSede'] ?? '');
-    $ciudad = trim($_POST['Ciudad'] ?? '');
-    $idInstitucion = trim($_POST['IdInstitucion'] ?? '');
-
-    if ($tipoSede === '' || $ciudad === '' || $idInstitucion === '') {
-        echo "<script>alert('Por favor llena todos los campos'); window.history.back();</script>";
-        exit;
+    public function __construct() {
+        $this->modeloSede = new Modelo_Sede();
     }
 
-    $resultado = $modeloSede->insertar($tipoSede, $ciudad, $idInstitucion);
+    public function manejarRegistro() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if ($resultado['success']) {
-        echo "<script>alert('✅ Sede agregada correctamente'); window.location.href='../../View/sede_institucion_funcionario_usuario/vista_sede.php';</script>";
-    } else {
-        echo "<script>alert('❌ Error al agregar la sede: {$resultado['error']}'); window.history.back();</script>";
+            $tipo_sede     = trim($_POST['tipo_sede'] ?? '');
+            $ciudad_sede   = trim($_POST['ciudad_sede'] ?? '');
+            $id_institucion = trim($_POST['id_institucion'] ?? '');
+            $estado_sede   = trim($_POST['estado_sede'] ?? '');
+
+            // Validación básica
+            if (empty($tipo_sede) || empty($ciudad_sede) || empty($id_institucion) || empty($estado_sede)) {
+                $this->mostrarAlerta('warning', 'Datos incompletos', 'Por favor, completa todos los campos antes de continuar.');
+                return;
+            }
+
+            $resultado = $this->modeloSede->registrarSede($tipo_sede, $ciudad_sede, $id_institucion, $estado_sede);
+
+            if ($resultado['error']) {
+                // Error en la inserción
+                $this->mostrarAlerta('error', 'Error al registrar', $resultado['mensaje']);
+            } else {
+                // Éxito
+                $this->mostrarAlerta('success', '¡Sede registrada!', 'La sede fue registrada correctamente.');
+            }
+
+        } else {
+            $this->mostrarAlerta('error', 'Acceso no permitido', 'Solo se permiten solicitudes POST.');
+        }
+    }
+
+    /**
+     * Muestra una alerta SweetAlert2 personalizada.
+     * Luego redirige de nuevo al formulario Sede.php
+     */
+    private function mostrarAlerta($icono, $titulo, $mensaje) {
+        echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: '$icono',
+                    title: '$titulo',
+                    text: '$mensaje',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#3085d6'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '../../View/Sede.php';
+                    }
+                });
+            });
+        </script>";
     }
 }
 
+$controlador = new ControladorSede();
+$controlador->manejarRegistro();
 ?>
