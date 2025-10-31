@@ -77,15 +77,46 @@ try {
         exit;
     }
 
+    // =============================
+    // 🆕 CAMBIAR ESTADO (Soft Delete)
+    // =============================
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'cambiar_estado') {
+        file_put_contents(__DIR__ . '/debug_log.txt', "Iniciando cambio de estado de vehículo\n", FILE_APPEND);
+
+        $id = (int)($_POST['id'] ?? 0);
+        $nuevoEstado = trim($_POST['estado'] ?? '');
+
+        file_put_contents(__DIR__ . '/debug_log.txt', "ID: $id | Nuevo Estado: $nuevoEstado\n", FILE_APPEND);
+
+        if ($id <= 0 || !in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
+            $error = "Datos no válidos para cambiar estado";
+            file_put_contents(__DIR__ . '/debug_log.txt', "❌ $error\n", FILE_APPEND);
+            echo json_encode(['success' => false, 'message' => $error]);
+            exit;
+        }
+
+        $resultado = $modelo->cambiarEstado($id, $nuevoEstado);
+        
+        if ($resultado['success']) {
+            $mensaje = $nuevoEstado === 'Activo' ? 'activado' : 'desactivado';
+            $resultado['message'] = "Vehículo $mensaje correctamente";
+            file_put_contents(__DIR__ . '/debug_log.txt', "✅ Vehículo $mensaje exitosamente\n", FILE_APPEND);
+        }
+        
+        file_put_contents(__DIR__ . '/debug_log.txt', "Resultado: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+        echo json_encode($resultado);
+        exit;
+    }
+
     // ============================
-    // 📌 ELIMINAR VEHÍCULO
+    // ⚠️ ELIMINAR VEHÍCULO (DEPRECADO - ahora usa soft delete)
     // =============================
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'eliminar') {
-        file_put_contents(__DIR__ . '/debug_log.txt', "Iniciando eliminación de vehículo\n", FILE_APPEND);
+        file_put_contents(__DIR__ . '/debug_log.txt', "⚠️ Acción 'eliminar' llamada (deprecada). Se cambiará a Inactivo en su lugar.\n", FILE_APPEND);
 
         $id = trim($_POST['id'] ?? '');
 
-        file_put_contents(__DIR__ . '/debug_log.txt', "ID a eliminar: $id\n", FILE_APPEND);
+        file_put_contents(__DIR__ . '/debug_log.txt', "ID a desactivar: $id\n", FILE_APPEND);
 
         if (empty($id)) {
             $error = "ID de vehículo requerido";
@@ -94,7 +125,13 @@ try {
             exit;
         }
 
-        $resultado = $modelo->eliminarVehiculo($id);
+        // Usar soft delete en lugar de eliminar
+        $resultado = $modelo->cambiarEstado((int)$id, 'Inactivo');
+        
+        if ($resultado['success']) {
+            $resultado['message'] = 'Vehículo desactivado correctamente';
+        }
+        
         file_put_contents(__DIR__ . '/debug_log.txt', "Resultado: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
         echo json_encode($resultado);
         exit;
