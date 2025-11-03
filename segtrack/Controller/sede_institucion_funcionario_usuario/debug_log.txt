@@ -174,3 +174,23 @@ Modelo cargado
 Acción: actualizar
 actualizarFuncionario llamado con ID: 21
 Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
+2025-11-03 20:00:46 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "1024578",
+    "DocumentoFuncionario": "321321321321",
+    "CorreoFuncionario": "camila@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 22
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\sede_institucion_funcionario_usuario/../../qr/QR-FUNC-22-6908fbde924cc.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 22","data":{"IdFuncionario":"22","QrCodigoFuncionario":"qr_funcionario\/QR-FUNC-22-6908fbde924cc.png"}}
