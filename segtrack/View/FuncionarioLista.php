@@ -91,7 +91,7 @@
                                 <tr>
                                     <td><?= $f['IdFuncionario'] ?></td>
                                     <td><?= $f['NombreFuncionario'] ?></td>
-                                    <td><?= $f['CargoFuncionaro'] ?></td>
+                                    <td><?= $f['CargoFuncionario'] ?></td>
                                     <td><?= $f['DocumentoFuncionario'] ?></td>
                                     <td><?= $f['TelefonoFuncionario'] ?></td>
                                     <td><?= $f['CorreoFuncionario'] ?></td>

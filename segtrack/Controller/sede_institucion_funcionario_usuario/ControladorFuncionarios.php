@@ -14,6 +14,7 @@ file_put_contents(__DIR__ . '/debug_log.txt', date('Y-m-d H:i:s') . " === INICIO
 try {
     file_put_contents(__DIR__ . '/debug_log.txt', "POST recibido:\n" . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
 
+    // ✅ Cargar archivo de conexión
     $ruta_conexion = __DIR__ . '/../../Core/conexion.php';
     if (!file_exists($ruta_conexion)) {
         throw new Exception("Archivo de conexión no encontrado: $ruta_conexion");
@@ -22,16 +23,20 @@ try {
     require_once $ruta_conexion;
     file_put_contents(__DIR__ . '/debug_log.txt', "Conexión cargada\n", FILE_APPEND);
 
-    if (!isset($conexion)) {
-        throw new Exception("Variable \$conexion no inicializada");
+    // ✅ Crear instancia de la clase Conexion y obtener el PDO
+    $conexion = (new Conexion())->getConexion();
+
+    if (!$conexion) {
+        throw new Exception("No se pudo obtener la conexión PDO desde la clase Conexion");
     }
 
     if (!($conexion instanceof PDO)) {
         throw new Exception("La conexión no es una instancia de PDO");
     }
 
-    file_put_contents(__DIR__ . '/debug_log.txt', "Conexión verificada como PDO\n", FILE_APPEND);
+    file_put_contents(__DIR__ . '/debug_log.txt', "Conexión verificada como instancia de PDO\n", FILE_APPEND);
 
+    // ✅ Verificar librería QR
     $ruta_qrlib = __DIR__ . '/../../libs/phpqrcode/qrlib.php';
     if (!file_exists($ruta_qrlib)) {
         throw new Exception("Librería phpqrcode no encontrada: $ruta_qrlib");
@@ -39,12 +44,16 @@ try {
     require_once $ruta_qrlib;
     file_put_contents(__DIR__ . '/debug_log.txt', "Librería QR cargada\n", FILE_APPEND);
 
+    // ✅ Verificar modelo
     $ruta_modelo = __DIR__ . "/../../model/sede_institucion_funcionario_usuario/ModeloFuncionarios.php";
     if (!file_exists($ruta_modelo)) {
         throw new Exception("Modelo no encontrado: $ruta_modelo");
     }
     require_once $ruta_modelo;
     file_put_contents(__DIR__ . '/debug_log.txt', "Modelo cargado\n", FILE_APPEND);
+
+    // 🔹 Aquí continuaría tu clase ControladorFuncionarios y demás lógica...
+
 
     class ControladorFuncionario {
         private $modelo;
@@ -166,7 +175,7 @@ try {
             $datos = [
                 'CargoFuncionario' => $_POST['CargoFuncionario'],
                 'NombreFuncionario' => $_POST['NombreFuncionario'],
-                'IdSede' => $_POST['IdSede'] ?? null,
+                'IdSede' => $_POST['IdSede'],
                 'TelefonoFuncionario' => $_POST['TelefonoFuncionario'],
                 'DocumentoFuncionario' => $_POST['DocumentoFuncionario'],
                 'CorreoFuncionario' => $_POST['CorreoFuncionario']
