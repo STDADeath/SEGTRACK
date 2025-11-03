@@ -52,9 +52,6 @@ try {
     require_once $ruta_modelo;
     file_put_contents(__DIR__ . '/debug_log.txt', "Modelo cargado\n", FILE_APPEND);
 
-    // 🔹 Aquí continuaría tu clase ControladorFuncionarios y demás lógica...
-
-
     class ControladorFuncionario {
         private $modelo;
 
@@ -70,24 +67,35 @@ try {
             try {
                 file_put_contents(__DIR__ . '/debug_log.txt', "Generando QR para funcionario ID: $idFuncionario\n", FILE_APPEND);
 
-                $rutaCarpeta = __DIR__ . '/../../qr';
+                // 🔥 RUTA CORREGIDA: Desde Controller/sede_institucion_funcionario_usuario/ hacia raíz
+                // __DIR__ está en: SEGTRACK/Controller/sede_institucion_funcionario_usuario/
+                // Necesitamos ir a: SEGTRACK/qr/
+                $rutaCarpeta = realpath(__DIR__ . '/../../') . '/qr';
+                
+                file_put_contents(__DIR__ . '/debug_log.txt', "Ruta carpeta QR: $rutaCarpeta\n", FILE_APPEND);
+                
                 if (!file_exists($rutaCarpeta)) {
                     mkdir($rutaCarpeta, 0777, true);
                     file_put_contents(__DIR__ . '/debug_log.txt', "Carpeta QR creada: $rutaCarpeta\n", FILE_APPEND);
+                } else {
+                    file_put_contents(__DIR__ . '/debug_log.txt', "Carpeta QR ya existe\n", FILE_APPEND);
                 }
 
                 $nombreArchivo = "QR-FUNC-" . $idFuncionario . "-" . uniqid() . ".png";
                 $rutaCompleta = $rutaCarpeta . '/' . $nombreArchivo;
                 $contenidoQR = "ID: $idFuncionario\nNombre: $nombre\nDocumento: $documento";
 
+                file_put_contents(__DIR__ . '/debug_log.txt', "Intentando crear QR en: $rutaCompleta\n", FILE_APPEND);
+
                 QRcode::png($contenidoQR, $rutaCompleta, QR_ECLEVEL_H, 10);
 
                 if (!file_exists($rutaCompleta)) {
-                    throw new Exception("El archivo QR no se creó correctamente");
+                    throw new Exception("El archivo QR no se creó correctamente en: $rutaCompleta");
                 }
 
                 file_put_contents(__DIR__ . '/debug_log.txt', "QR generado exitosamente: $rutaCompleta\n", FILE_APPEND);
-                return 'qr_funcionario/' . $nombreArchivo;
+                // Guardar solo el nombre del archivo, sin ruta
+                return $nombreArchivo;
 
             } catch (Exception $e) {
                 file_put_contents(__DIR__ . '/debug_log.txt', "ERROR al generar QR: " . $e->getMessage() . "\n", FILE_APPEND);
@@ -98,12 +106,18 @@ try {
         public function registrarFuncionario(array $datos): array {
             file_put_contents(__DIR__ . '/debug_log.txt', "registrarFuncionario llamado\n", FILE_APPEND);
 
-            $cargo = $datos['CargoFuncionario'];
-            $nombre = $datos['NombreFuncionario'];
+            // 🔥 Limpiar y validar longitud de campos
+            $cargo = trim($datos['CargoFuncionario']);
+            $nombre = trim($datos['NombreFuncionario']);
             $sede = $datos['IdSede'];
             $telefono = $datos['TelefonoFuncionario'];
             $documento = $datos['DocumentoFuncionario'];
-            $correo = $datos['CorreoFuncionario'];
+            $correo = trim($datos['CorreoFuncionario']);
+
+            // 🔥 Limitar longitud según tu BD (ajusta estos valores según tu tabla)
+            $cargo = substr($cargo, 0, 100);
+            $nombre = substr($nombre, 0, 150);
+            $correo = substr($correo, 0, 100);
 
             if ($this->campoVacio($cargo)) {
                 return ['success' => false, 'message' => 'Falta el campo: Cargo del funcionario'];
@@ -122,10 +136,17 @@ try {
             }
 
             try {
+                file_put_contents(__DIR__ . '/debug_log.txt', "Llamando a RegistrarFuncionario en el modelo\n", FILE_APPEND);
+                
                 $resultado = $this->modelo->RegistrarFuncionario($cargo, $nombre, (int)$sede, (int)$telefono, (int)$documento, $correo);
+                
+                // 🔥 CAMBIO CRÍTICO: Registrar el resultado completo
+                file_put_contents(__DIR__ . '/debug_log.txt', "Resultado del modelo: " . json_encode($resultado) . "\n", FILE_APPEND);
 
                 if ($resultado['success']) {
                     $idFuncionario = $resultado['id'];
+                    file_put_contents(__DIR__ . '/debug_log.txt', "Registro exitoso, ID: $idFuncionario\n", FILE_APPEND);
+                    
                     $rutaQR = $this->generarQR($idFuncionario, $nombre, $documento);
 
                     if ($rutaQR) {
@@ -138,9 +159,13 @@ try {
                         "data" => ["IdFuncionario" => $idFuncionario, "QrCodigoFuncionario" => $rutaQR]
                     ];
                 } else {
-                    return ['success' => false, 'message' => 'Error al registrar en la base de datos'];
+                    // 🔥 CAMBIO CRÍTICO: Mostrar el error real de la base de datos
+                    $errorMsg = $resultado['error'] ?? 'Error desconocido al registrar';
+                    file_put_contents(__DIR__ . '/debug_log.txt', "ERROR en BD: $errorMsg\n", FILE_APPEND);
+                    return ['success' => false, 'message' => 'Error en BD: ' . $errorMsg];
                 }
             } catch (Exception $e) {
+                file_put_contents(__DIR__ . '/debug_log.txt', "EXCEPCIÓN: " . $e->getMessage() . "\n", FILE_APPEND);
                 return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
         }
@@ -154,7 +179,8 @@ try {
                 if ($resultado['success']) {
                     return ['success' => true, 'message' => 'Funcionario actualizado correctamente'];
                 } else {
-                    return ['success' => false, 'message' => 'Error al actualizar funcionario'];
+                    $errorMsg = $resultado['error'] ?? 'Error desconocido al actualizar';
+                    return ['success' => false, 'message' => 'Error en BD: ' . $errorMsg];
                 }
             } catch (Exception $e) {
                 return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];

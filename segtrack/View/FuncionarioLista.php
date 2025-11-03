@@ -95,7 +95,7 @@
                                 <tr id="fila-<?php echo $row['IdFuncionario']; ?>">
                                     <td><?php echo $row['IdFuncionario']; ?></td>
                                     <td class="text-center">
-                                        <?php if ($row['QrCodigoFuncionario']) : ?>
+                                        <?php if (!empty($row['QrCodigoFuncionario'])) : ?>
                                             <button type="button" class="btn btn-sm btn-outline-success"
                                                     onclick="verQR('<?php echo htmlspecialchars($row['QrCodigoFuncionario']); ?>', <?php echo $row['IdFuncionario']; ?>)"
                                                     title="Ver código QR">
@@ -158,6 +158,7 @@
             <div class="modal-body text-center">
                 <img id="qrImagen" src="" alt="Código QR" class="img-fluid" style="max-width: 300px; border: 2px solid #ddd; padding: 10px; border-radius: 5px;">
                 <p class="text-muted mt-3">Escanea este código con tu dispositivo móvil</p>
+                <small class="text-muted d-block mt-2" id="rutaDebug"></small>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -228,12 +229,30 @@
 <script>
 let funcionarioIdEditar = null;
 
-
+// 🔥 FUNCIÓN CORREGIDA PARA VER QR
 function verQR(nombreArchivo, idFuncionario) {
+    console.log("Nombre archivo recibido:", nombreArchivo);
+    
+    // Construir la ruta correcta desde View hacia qr
     const rutaCompleta = '../qr/' + nombreArchivo;
+    
+    console.log("Ruta completa construida:", rutaCompleta);
+    
     $('#qrFuncionarioId').text(idFuncionario);
     $('#qrImagen').attr('src', rutaCompleta);
+    $('#rutaDebug').text('Ruta: ' + rutaCompleta);
     $('#btnDescargarQR').attr('href', rutaCompleta).attr('download', 'QR-Funcionario-' + idFuncionario + '.png');
+    
+    // Verificar si la imagen se carga correctamente
+    $('#qrImagen').on('error', function() {
+        console.error("Error al cargar la imagen desde:", rutaCompleta);
+        alert("No se pudo cargar la imagen QR. Verifica la ruta: " + rutaCompleta);
+    });
+    
+    $('#qrImagen').on('load', function() {
+        console.log("Imagen cargada exitosamente");
+    });
+    
     $('#modalVerQR').modal('show');
 }
 

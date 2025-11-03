@@ -3,7 +3,7 @@ class Conexion {
     private $host = "localhost";
     private $usuario = "root";
     private $clave = "";
-    private $db = "dbsegtrack";
+    private $db = "dbsegtrack1";
     private $conexion;
 
     public function __construct() {
