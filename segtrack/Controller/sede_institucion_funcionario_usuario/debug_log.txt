@@ -116,3 +116,61 @@ registrarFuncionario llamado
 Generando QR para funcionario ID: 20
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\sede_institucion_funcionario_usuario/../../qr/QR-FUNC-20-6908dc0ab6529.png
 Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 20","data":{"IdFuncionario":"20","QrCodigoFuncionario":"qr_funcionario\/QR-FUNC-20-6908dc0ab6529.png"}}
+2025-11-03 17:57:10 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "20",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "camila",
+    "IdSede": "18",
+    "TelefonoFuncionario": "21312412",
+    "DocumentoFuncionario": "421421421",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: actualizar
+actualizarFuncionario llamado con ID: 20
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
+2025-11-03 17:57:40 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "camila jaimes",
+    "IdSede": "18",
+    "TelefonoFuncionario": "2312312321",
+    "DocumentoFuncionario": "321321321321",
+    "CorreoFuncionario": "camila@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 21
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\sede_institucion_funcionario_usuario/../../qr/QR-FUNC-21-6908df04caedb.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 21","data":{"IdFuncionario":"21","QrCodigoFuncionario":"qr_funcionario\/QR-FUNC-21-6908df04caedb.png"}}
+2025-11-03 18:05:56 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "21",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "camila jaimes",
+    "IdSede": "18",
+    "TelefonoFuncionario": "1024578",
+    "DocumentoFuncionario": "321321321321",
+    "CorreoFuncionario": "camila@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: actualizar
+actualizarFuncionario llamado con ID: 21
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
