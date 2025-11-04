@@ -21,7 +21,6 @@ class IngresoController {
         $this->modelo = new ModeloIngreso();
     }
 
-    // ✅ Registrar ingreso por código QR
     public function registrarIngreso() {
         $input = json_decode(file_get_contents('php://input'), true);
         $qrCodigo = $input['qr_codigo'] ?? '';
