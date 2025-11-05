@@ -44,16 +44,18 @@
 <script src="https://unpkg.com/html5-qrcode"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const tablaIngresos = document.getElementById("tablaIngresos");
-    const mensajeExito = document.getElementById("mensajeExito");
-    const mensajeError = document.getElementById("mensajeError");
-    const mensajeVacio = document.getElementById("mensajeVacio");
-    const resultadoQR = document.getElementById("qr-reader-results");
+// ajax.js
 
-    // 🔁 Cargar lista inicial de ingresos
+document.addEventListener("DOMContentLoaded", () => {
+    const tablaIngresos = document.getElementById("tabla-ingresos");
+    const mensajeError = document.getElementById("mensaje-error");
+    const mensajeExito = document.getElementById("mensaje-exito");
+    const mensajeVacio = document.getElementById("mensaje-vacio");
+    const resultadoQR = document.getElementById("resultado-qr");
+
+    // 📦 Cargar ingresos al iniciar
     function cargarIngresos() {
-        fetch("../controller/Ingreso_Visitante/ControladorIngreso.php")
+        fetch("segtrack/Controller/Ingreso_Visitante/ControladorIngreso.php")
             .then(res => res.json())
             .then(data => {
                 tablaIngresos.innerHTML = "";
@@ -83,14 +85,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             })
             .catch(error => {
-                console.error("Error:", error);
+                console.error("Error en fetch:", error);
                 tablaIngresos.innerHTML = "";
                 mensajeError.textContent = "No se pudo conectar con el servidor.";
                 mensajeError.classList.remove("d-none");
             });
     }
 
-    cargarIngresos(); // inicial
+    cargarIngresos(); // Llamada inicial al cargar la vista
 
     // 🎥 Configurar lector QR
     function onScanSuccess(decodedText, decodedResult) {
@@ -100,8 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         resultadoQR.innerHTML = `<p class="text-success fw-bold">Código detectado: ${decodedText}</p>`;
 
-        // Enviar al backend
-        fetch("../controller/Ingreso_Visitante/ControladorIngreso.php", {
+        // 📡 Enviar el código QR al backend
+        fetch("/segtrack/Controller/Ingreso_Visitante/ControladorIngreso.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ qr_codigo: decodedText })
@@ -120,31 +122,34 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
         .catch(err => {
-            console.error(err);
+            console.error("Error al enviar el código:", err);
             mensajeError.textContent = "Error al enviar el código al servidor.";
             mensajeError.classList.remove("d-none");
         });
 
-        // Limpiar el último escaneo tras unos segundos
+        // 🕒 Limpiar el último escaneo tras unos segundos
         setTimeout(() => { window.lastScanned = null; }, 3000);
     }
 
-    // 🚀 Iniciar lector
+    // 🚀 Iniciar el lector de QR
     const html5QrCode = new Html5Qrcode("qr-reader");
     const config = { fps: 10, qrbox: 250 };
 
-    Html5Qrcode.getCameras().then(devices => {
-        if (devices && devices.length) {
-            const cameraId = devices[0].id;
-            html5QrCode.start(cameraId, config, onScanSuccess);
-        } else {
-            resultadoQR.innerHTML = `<p class="text-danger">No se encontró cámara.</p>`;
-        }
-    }).catch(err => {
-        console.error("Error al iniciar cámara:", err);
-        resultadoQR.innerHTML = `<p class="text-danger">Error al acceder a la cámara.</p>`;
-    });
+    Html5Qrcode.getCameras()
+        .then(devices => {
+            if (devices && devices.length) {
+                const cameraId = devices[0].id;
+                html5QrCode.start(cameraId, config, onScanSuccess);
+            } else {
+                resultadoQR.innerHTML = `<p class="text-danger">No se encontró cámara.</p>`;
+            }
+        })
+        .catch(err => {
+            console.error("Error al iniciar cámara:", err);
+            resultadoQR.innerHTML = `<p class="text-danger">Error al acceder a la cámara.</p>`;
+        });
 });
+
 </script>
 
 <?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
