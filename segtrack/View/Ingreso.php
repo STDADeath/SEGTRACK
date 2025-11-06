@@ -9,7 +9,12 @@
             <div class="text-center mb-4">
                 <h5 class="fw-semibold mb-3">Escanear Código QR</h5>
                 <div id="qr-reader" style="width: 320px; margin: 0 auto;"></div>
-                <div id="qr-reader-results" class="mt-3"></div>
+                <div id="resultado-qr" class="mt-3"></div>
+
+                <!-- 📸 Botón para activar el lector -->
+                <button id="btnCapturar" class="btn btn-success mt-3 px-4 py-2">
+                    <i class="fas fa-camera"></i> Capturar Código QR
+                </button>
             </div>
 
             <!-- Mensajes -->
@@ -45,17 +50,17 @@
 
 <script>
 // ajax.js
-
 document.addEventListener("DOMContentLoaded", () => {
-    const tablaIngresos = document.getElementById("tabla-ingresos");
-    const mensajeError = document.getElementById("mensaje-error");
-    const mensajeExito = document.getElementById("mensaje-exito");
-    const mensajeVacio = document.getElementById("mensaje-vacio");
+    const tablaIngresos = document.getElementById("tablaIngresos");
+    const mensajeError = document.getElementById("mensajeError");
+    const mensajeExito = document.getElementById("mensajeExito");
+    const mensajeVacio = document.getElementById("mensajeVacio");
     const resultadoQR = document.getElementById("resultado-qr");
+    const btnCapturar = document.getElementById("btnCapturar");
 
     // 📦 Cargar ingresos al iniciar
     function cargarIngresos() {
-        fetch("segtrack/Controller/Ingreso_Visitante/ControladorIngreso.php")
+        fetch("/SEGTRACK/segtrack/Controller/Ingreso_Visitante/ControladorIngreso.php")
             .then(res => res.json())
             .then(data => {
                 tablaIngresos.innerHTML = "";
@@ -94,16 +99,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cargarIngresos(); // Llamada inicial al cargar la vista
 
-    // 🎥 Configurar lector QR
+    // 🎥 Acción al escanear un código QR correctamente
     function onScanSuccess(decodedText, decodedResult) {
-        // Evitar lecturas duplicadas seguidas
         if (window.lastScanned === decodedText) return;
         window.lastScanned = decodedText;
 
         resultadoQR.innerHTML = `<p class="text-success fw-bold">Código detectado: ${decodedText}</p>`;
 
         // 📡 Enviar el código QR al backend
-        fetch("/segtrack/Controller/Ingreso_Visitante/ControladorIngreso.php", {
+        fetch("/SEGTRACK/segtrack/Controller/Ingreso_Visitante/ControladorIngreso.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ qr_codigo: decodedText })
@@ -114,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 mensajeExito.textContent = `✅ ${data.message} (${data.data.nombre} - ${data.data.cargo})`;
                 mensajeExito.classList.remove("d-none");
                 mensajeError.classList.add("d-none");
-                cargarIngresos(); // actualizar lista
+                cargarIngresos();
             } else {
                 mensajeError.textContent = "❌ " + data.message;
                 mensajeError.classList.remove("d-none");
@@ -127,29 +131,32 @@ document.addEventListener("DOMContentLoaded", () => {
             mensajeError.classList.remove("d-none");
         });
 
-        // 🕒 Limpiar el último escaneo tras unos segundos
         setTimeout(() => { window.lastScanned = null; }, 3000);
     }
 
-    // 🚀 Iniciar el lector de QR
+    // 🚀 Configurar el lector QR (solo al presionar el botón)
     const html5QrCode = new Html5Qrcode("qr-reader");
-    const config = { fps: 10, qrbox: 250 };
 
-    Html5Qrcode.getCameras()
-        .then(devices => {
+    btnCapturar.addEventListener("click", async () => {
+        resultadoQR.innerHTML = `<p class="text-info">📷 Activando cámara...</p>`;
+
+        try {
+            const devices = await Html5Qrcode.getCameras();
             if (devices && devices.length) {
                 const cameraId = devices[0].id;
-                html5QrCode.start(cameraId, config, onScanSuccess);
+                await html5QrCode.start(cameraId, { fps: 10, qrbox: 250 }, (decodedText, decodedResult) => {
+                    html5QrCode.stop();
+                    onScanSuccess(decodedText, decodedResult);
+                });
             } else {
-                resultadoQR.innerHTML = `<p class="text-danger">No se encontró cámara.</p>`;
+                resultadoQR.innerHTML = `<p class="text-danger">No se encontró cámara disponible.</p>`;
             }
-        })
-        .catch(err => {
+        } catch (err) {
             console.error("Error al iniciar cámara:", err);
             resultadoQR.innerHTML = `<p class="text-danger">Error al acceder a la cámara.</p>`;
-        });
+        }
+    });
 });
-
 </script>
 
 <?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>

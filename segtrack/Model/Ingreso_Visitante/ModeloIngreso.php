@@ -16,11 +16,21 @@ class ModeloIngreso {
 
     //  Buscar funcionario por código QR
     public function buscarFuncionarioPorQr($qrCodigo) {
-        $sql = "SELECT * FROM funcionario WHERE QrCodigoFuncionario = ?";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$qrCodigo]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    // 🧠 Extraer el número de ID del texto del QR
+    if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $matches)) {
+        $id = $matches[1];
+    } else {
+        // Si no encuentra el ID, retorna falso
+        return false;
     }
+
+    // 🔍 Buscar por IdFuncionario en lugar del campo de texto QR
+    $sql = "SELECT * FROM funcionario WHERE IdFuncionario = ?";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
     //  Registrar ingreso
     public function registrarIngreso($idFuncionario, $idSede, $idParqueadero = null) {
