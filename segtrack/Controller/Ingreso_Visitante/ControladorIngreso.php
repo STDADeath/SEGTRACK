@@ -1,91 +1,95 @@
 <?php
 
-header('Content-Type: application/json');
+// Indicamos que la respuesta será en formato JSON
+header('Content-Type: application/json; charset=utf-8');
+// Permitimos peticiones desde cualquier origen (para evitar problemas de CORS)
 header('Access-Control-Allow-Origin: *');
+// Permitimos métodos GET y POST
 header('Access-Control-Allow-Methods: GET, POST');
+// Permitimos enviar datos en el encabezado tipo JSON
 header('Access-Control-Allow-Headers: Content-Type');
 
-$ruta_conexion = __DIR__ . '/../../Core/conexion.php';
-
-if (!file_exists($ruta_conexion)) {
-    header('Content-Type: application/json; charset=utf-8');
-    die(json_encode(['success' => false, 'message' => 'Archivo de conexión no encontrado']));
-}
-
-require_once $ruta_conexion;
-require_once __DIR__ . "/../../Model/Ingreso_Visitante/ModeloIngreso.php";
+// Se incluyen los archivos necesarios: conexión a BD y el modelo
+require_once __DIR__ . '/../../Core/conexion.php';
+require_once __DIR__ . '/../../Model/Ingreso_Visitante/ModeloIngreso.php';
 
 class ControladorIngreso {
     private $modelo;
 
+    // Constructor: crea una instancia del modelo para usar sus funciones
     public function __construct() {
         $this->modelo = new ModeloIngreso();
     }
 
+    // Función para registrar entrada o salida
     public function registrarIngreso() {
+        // Se obtienen los datos enviados desde el fetch en JSON
         $input = json_decode(file_get_contents('php://input'), true);
-        $qrCodigo = $input['qr_codigo'] ?? '';
+        $qrCodigo = $input['qr_codigo'] ?? null;
 
-        if (empty($qrCodigo)) {
-            $this->responder(false, 'Código QR no proporcionado');
-            return;
+        // Se recibe si es Entrada o Salida (por defecto Entrada)
+        $tipoMovimiento = $input['tipoMovimiento'] ?? 'Entrada';
+
+        // Validación básica: verificar si llegó un código
+        if (!$qrCodigo) {
+            return $this->responder(false, 'Código QR no recibido');
         }
 
-        // 🔍 El modelo ya extrae el ID desde el texto del QR
+        // Buscar si el QR pertenece a un funcionario valido
         $funcionario = $this->modelo->buscarFuncionarioPorQr($qrCodigo);
 
+        // Si no existe en BD, no se registra nada
         if (!$funcionario) {
-            $this->responder(false, 'Funcionario no encontrado');
-            return;
+            return $this->responder(false, 'Funcionario no encontrado');
         }
 
-        // 📝 Registrar ingreso
+        // Registrar el movimiento (Entrada o Salida)
         $exito = $this->modelo->registrarIngreso(
             $funcionario['IdFuncionario'],
             $funcionario['IdSede'],
-            $funcionario['IdParqueadero']
+            $funcionario['IdParqueadero'] ?? null,
+            $tipoMovimiento // Movimiento enviado al modelo
         );
 
-        if ($exito) {
-            $this->responder(true, 'Funcionario ingresado exitosamente', [
-                'nombre' => $funcionario['NombreFuncionario'],
-                'cargo'  => $funcionario['CargoFuncionario'],
-                'fecha'  => date('Y-m-d H:i:s')
-            ]);
-        } else {
-            $this->responder(false, 'Error al registrar el ingreso');
+        // Si hubo un problema al guardar en base de datos
+        if (!$exito) {
+            return $this->responder(false, 'No se pudo registrar el movimiento');
         }
+
+        // Si todo salió bien se devuelve una respuesta de éxito
+        return $this->responder(true, "$tipoMovimiento registrada correctamente ✅", [
+            'nombre' => $funcionario['NombreFuncionario'],
+            'cargo' => $funcionario['CargoFuncionario'],
+            'fecha' => date('Y-m-d H:i:s'),
+            'tipo' => $tipoMovimiento
+        ]);
     }
 
-    // ✅ Listar ingresos registrados
+    // Función para listar los ingresos más recientes
     public function listarIngresos() {
         $lista = $this->modelo->listarIngresos();
-        $this->responder(true, 'Lista de ingresos obtenida', $lista);
+        return $this->responder(true, 'Lista cargada', $lista);
     }
 
-    // 🔧 Método auxiliar para devolver JSON
+    // Función que unifica el formato JSON de respuesta
     private function responder($success, $message, $data = null) {
         echo json_encode([
             'success' => $success,
             'message' => $message,
-            'data' => $data
-        ]);
+            'data'    => $data
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
     }
 }
 
+// Se crea una instancia del controlador
 $controlador = new ControladorIngreso();
 
-switch ($_SERVER['REQUEST_METHOD']) {
-    case 'POST':
-        $controlador->registrarIngreso();
-        break;
-
-    case 'GET':
-        $controlador->listarIngresos();
-        break;
-
-    default:
-        echo json_encode(['success' => false, 'message' => 'Método no permitido']);
-        break;
+// Si la petición es POST → registrar ingreso
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $controlador->registrarIngreso();
+} 
+// Si es GET → listar
+else {
+    $controlador->listarIngresos();
 }
-?>
