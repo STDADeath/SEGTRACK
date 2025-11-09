@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_superior_supervisor.php'; ?>
 <?php require_once(__DIR__ . "/../Core/conexion.php");?>
 
 <?php
@@ -393,4 +393,4 @@ $('#btnGuardarCambiosVehiculo').click(function() {
 
 <script src="../js/javascript/js/ValidacionParqueadero.js"></script>
 
-<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../Plantilla/parte_inferior_supervisor.php'; ?>
