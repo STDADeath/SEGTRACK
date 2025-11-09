@@ -81,7 +81,7 @@ body {
 }
 
 .hero-section {
-  background: linear-gradient(rgba(30, 60, 114, 0.8), rgba(42, 82, 152, 0.8)), url('../img/edificio-segtrack.jpg') center/cover no-repeat;
+  background: linear-gradient(rgba(30, 59, 113, 0.8), rgba(42, 82, 152, 0.8)), url('../img/edificio-segtrack.jpg') center/cover no-repeat;
   color: white;
   padding: 100px 0;
   margin-top: 76px;
@@ -97,70 +97,137 @@ body {
   line-height: 1.7;
 }
 
+/* targeta de personal de seguridad */
+/* Logo normal (pantallas grandes) */
+#logo {
+    content: url("../img/LOGO_SEGTRACK-con.ico");
+    width: 180px;
+    /* Ajusta el tamaño */
+}
+
+/* Logo reducido (pantallas pequeñas) */
+@media (max-width: 768px) {
+    #logo {
+        content: url("../img/LOGO_SEGTRACK-re-con.ico");
+        width: 90px;
+        /* Más pequeño */
+    }
+}
+
+/* carta personal de seguridad inicio  */ 
 .card {
-  border: none;
-  border-radius: 15px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  height: 100%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-.card-title {
-  color: var(--primary);
-  font-weight: 700;
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-}
-
-.section-title {
+  width: min(300px, 90%);
+  margin: auto;
+  background-color: #f4f5f2;
+  text-align: center;
+  border-top-left-radius: 4rem;
+  border: 2px solid #fff;
   position: relative;
-  margin-bottom: 40px;
-  font-weight: 700;
-  color: var(--primary);
 }
 
-.section-title::after {
-  content: '';
+.card::before {
+  content: "";
   position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 3px;
-  background: var(--accent);
+  height: 30px;
+  width: 110px;
+  background-color: #2c3e90;
+  top: 32px;
+  right: -2.5px;
+  -webkit-clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
 }
 
-.features-section {
-  background-color: #f8f9fa;
-  padding: 80px 0;
+.card__body {
+  padding: 2rem 1.5rem;
+  max-width: 25ch;
+  margin: auto;
 }
 
-.feature-icon {
-  font-size: 2.5rem;
-  color: var(--accent);
-  margin-bottom: 20px;
+.card__title {
+  font-weight: 800;
+  color: #121513;
+  font-size: 1.25rem;
 }
 
-.scope-section {
-  padding: 80px 0;
+.card__paragraph {
+  color: #303830;
+  font-size: 0.765rem;
 }
 
-.img-hover {
-  transition: transform 0.3s, box-shadow 0.3s;
-  border-radius: 10px;
-  overflow: hidden;
+.card__ribbon {
+  margin-top: 1.5rem;
+  display: grid;
+  place-items: center;
+  height: 50px;
+  background-color: #2c3e90;
+  position: relative;
+  width: 110%;
+  left: -5%;
+  top: 10px;
+  position: relative;
+  border-radius: 0 0 2rem 2rem;
 }
 
-.img-hover:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+.card__ribbon::after,
+.card__ribbon::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  aspect-ratio: 1/1;
+  bottom: 100%;
+  z-index: -2;
+  background-color: #2c3e90;
 }
+
+.card__ribbon::before {
+  left: 0;
+  transform-origin: left bottom;
+  transform: rotate(45deg);
+}
+
+.card__ribbon::after {
+  right: 0;
+  transform-origin: right bottom;
+  transform: rotate(-45deg);
+}
+
+.card__ribbon-label {
+  display: block;
+  width: 84px;
+  aspect-ratio: 1/1;
+  background-color: #fff;
+  position: relative;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  border: 8px solid #2c3e90;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  line-height: 1;
+  font-size: 1.5rem;
+}
+
+.card__ribbon-label::before,
+.card__ribbon-label::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  bottom: 25%;
+}
+
+.card__ribbon-label::before {
+  right: calc(100% + 4px);
+  border-bottom-right-radius: 20px;
+  box-shadow: 5px 5px 0 #2c3e90;
+}
+
+.card__ribbon-label::after {
+  left: calc(100% + 4px);
+  border-bottom-left-radius: 20px;
+  box-shadow: -5px 5px 0 #2c3e90;
+}
+/* final targeta de personal de seguridad */
 
 footer {
   background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
@@ -442,4 +509,90 @@ footer {
     .login-nav-links a {
         margin: 0;
     }
+}
+
+/* zona del alcanse */
+.scope-section {
+  padding: 90px 0;
+  background: linear-gradient(180deg,#ffffff 0%, #2c3e90 98%, #2575fc 160%);
+  color: rgb(0, 0, 0);
+}
+
+@keyframes glow {
+  to {
+    text-shadow: 0 0 30px rgba(37, 117, 252, 1),
+              0 0 60px rgba(37, 117, 252, 0.8);
+  }
+}
+
+.img-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(37, 117, 252, 0.4);
+  transition: all 0.4s ease;
+  height: 250px; /* Tamaño base */
+}
+
+/* Tablets */
+@media (min-width: 768px) {
+  .img-hover {
+    height: 400px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+  .img-hover {
+    height: 450px;
+  }
+}
+
+/* Pantallas grandes */
+@media (min-width: 1200px) {
+  .img-hover {
+    height: 500px;
+  }
+}
+
+.img-hover img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 20px;
+  transition: all 0.4s ease;
+  object-fit: cover;
+  object-position: center;
+}
+
+.img-hover::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #2575fc, #1e3c72, #2575fc);
+  border-radius: 20px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.img-hover:hover::before {
+  opacity: 1;
+}
+
+.img-hover:hover {
+  box-shadow: 0 0 50px rgba(37, 117, 252, 0.8),
+              0 0 100px rgba(37, 117, 252, 0.5);
+  transform: scale(1.03);
+}
+
+.img-hover img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 20px;
+  transition: all 0.4s ease;
 }
