@@ -1,131 +1,101 @@
 <?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
 
 <div class="container-fluid px-4 py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-user-tie me-2"></i>Registrar Funcionario</h1>
+        <a href="FuncionarioLista.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-list me-1"></i> Ver Funcionarios
+        </a>
+    </div>
 
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-user-tie me-2"></i>Registrar Funcionario</h1>
-                <a href="../Models/FuncionarioLista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
-                    <i class="fas fa-list me-1"></i> Ver Funcionarios
-                </a>
-            </div>
-            
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-primary">
-                    <h6 class="m-0 font-weight-bold text-white">Información del Funcionario</h6>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="../Controller/sede_institucion_funcionario_usuario/ControladorFuncionario.php" id="formFuncionario" class="needs-validation" novalidate>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-light">
+            <h6 class="m-0 font-weight-bold text-primary">Formulario de Registro</h6>
+        </div>
+        <div class="card-body">
+            <form id="formRegistrarFuncionario">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="CargoFuncionario" class="form-label">Cargo</label>
+                        <input type="text" id="CargoFuncionario" name="CargoFuncionario" class="form-control border-primary shadow-sm" placeholder="Ej: Supervisor, Guarda, etc." required>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Nombre Completo</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input type="text" class="form-control" name="NombreFuncionario" required placeholder="Ingrese el nombre completo">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Documento</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                    <input type="number" class="form-control" name="DocumentoFuncionario" required placeholder="Ingrese número de documento">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Teléfono</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                    <input type="number" class="form-control" name="TelefonoFuncionario" required placeholder="Ingrese el teléfono">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Correo Electrónico</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                    <input type="email" class="form-control" name="CorreoFuncionario" required placeholder="correo@ejemplo.com">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Cargo</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
-                                    <select class="form-select" name="CargoFuncionario" required>
-                                        <option value="">Seleccione cargo...</option>
-                                        <option value="Supervisor">Supervisor</option>
-                                        <option value="Personal_Seguridad">Personal de Seguridad</option>
-                                        <option value="Administrador">Administrador</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Sede</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                    <input type="text" class="form-control" name="SedeFuncionario" required placeholder="Ejemplo: Sede Norte">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Campo QR deshabilitado -->
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label fw-semibold">Código QR</label>
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-secondary w-100" disabled>Se generará automáticamente</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='../Models/FuncionarioLista.php'">
-                                <i class="fas fa-arrow-left me-1"></i> Volver
-                            </button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-1"></i> Guardar Funcionario
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-light">
-                    <h6 class="m-0 font-weight-bold text-primary">Información Adicional</h6>
-                </div>
-                <div class="card-body">
-                    <div class="alert alert-info mb-0">
-                        <i class="fas fa-info-circle me-2"></i> El código QR se generará automáticamente después de guardar los datos del funcionario.
+                    <div class="col-md-6 mb-3">
+                        <label for="NombreFuncionario" class="form-label">Nombre Completo</label>
+                        <input type="text" id="NombreFuncionario" name="NombreFuncionario" class="form-control border-primary shadow-sm" placeholder="Ej: Juan Pérez" required>
                     </div>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="IdSede" class="form-label">Sede</label>
+                        <input type="number" id="IdSede" name="IdSede" class="form-control border-primary shadow-sm" placeholder="Ej: 1" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="TelefonoFuncionario" class="form-label">Teléfono</label>
+                        <input type="number" id="TelefonoFuncionario" name="TelefonoFuncionario" class="form-control border-primary shadow-sm" placeholder="Ej: 3001234567" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="DocumentoFuncionario" class="form-label">Documento</label>
+                        <input type="number" id="DocumentoFuncionario" name="DocumentoFuncionario" class="form-control border-primary shadow-sm" placeholder="Ej: 1002456789" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="CorreoFuncionario" class="form-label">Correo Electrónico</label>
+                    <input type="email" id="CorreoFuncionario" name="CorreoFuncionario" class="form-control border-primary shadow-sm" placeholder="Ej: correo@empresa.com" required>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-1"></i> Registrar Funcionario
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Librería SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Librerías del template -->
 <script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="../js/sb-admin-2.min.js"></script>
+<script>
+$(document).ready(function () {
+    $("#formRegistrarFuncionario").submit(function (e) {
+        e.preventDefault();
 
-<!-- Archivo JS de validación -->
-<script src="../js/javascript/js/ValidacionFuncionario.js"></script>
+        const btn = $(this).find('button[type="submit"]');
+        const originalText = btn.html();
+        btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
+        btn.prop('disabled', true);
 
-</body>
-</html>
+        $.ajax({
+            url: "../controller/sede_institucion_funcionario_usuario/controladorFuncionarios.php",
+            type: "POST",
+            data: $(this).serialize() + "&accion=registrar",
+            dataType: "json",
+            success: function (response) {  
+                console.log("Respuesta del servidor:", response);
+
+                if (response.success) {
+                    alert("✅ " + response.message);
+                    $("#formRegistrarFuncionario")[0].reset();
+                } else {
+                    alert("❌ " + (response.message || "Error al registrar funcionario"));
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error AJAX:", error);
+                console.log("Respuesta completa:", xhr.responseText);
+                alert("⚠️ Error de conexión con el servidor");
+            },
+            complete: function () {
+                btn.html(originalText);
+                btn.prop('disabled', false);
+            }
+        });
+    });
+});
+</script>
 
 <?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>

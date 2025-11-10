@@ -1,0 +1,270 @@
+2025-11-03 17:23:16 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "32154654612",
+    "DocumentoFuncionario": "32169685",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm",
+    "accion": "registrar"
+}
+Conexión cargada
+ERROR FINAL: Variable $conexion no inicializada
+2025-11-03 17:23:59 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "32154654612",
+    "DocumentoFuncionario": "32169685",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm",
+    "accion": "registrar"
+}
+Conexión cargada
+ERROR FINAL: Variable $conexion no inicializada
+2025-11-03 17:35:42 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "32154654612",
+    "DocumentoFuncionario": "32169685",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Respuesta final: {"success":false,"message":"Error al registrar en la base de datos"}
+2025-11-03 17:35:53 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "32154654612",
+    "DocumentoFuncionario": "32169685",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Respuesta final: {"success":false,"message":"Error al registrar en la base de datos"}
+2025-11-03 17:36:03 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "21321321",
+    "DocumentoFuncionario": "321321321312",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Respuesta final: {"success":false,"message":"Error al registrar en la base de datos"}
+2025-11-03 17:41:04 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "321421421",
+    "DocumentoFuncionario": "2141221421",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Respuesta final: {"success":false,"message":"Error al registrar en la base de datos"}
+2025-11-03 17:44:58 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "21312412",
+    "DocumentoFuncionario": "421421421",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 20
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\sede_institucion_funcionario_usuario/../../qr/QR-FUNC-20-6908dc0ab6529.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 20","data":{"IdFuncionario":"20","QrCodigoFuncionario":"qr_funcionario\/QR-FUNC-20-6908dc0ab6529.png"}}
+2025-11-03 17:57:10 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "20",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "camila",
+    "IdSede": "18",
+    "TelefonoFuncionario": "21312412",
+    "DocumentoFuncionario": "421421421",
+    "CorreoFuncionario": "julianrodriguez@gmail.copm"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: actualizar
+actualizarFuncionario llamado con ID: 20
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
+2025-11-03 17:57:40 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "camila jaimes",
+    "IdSede": "18",
+    "TelefonoFuncionario": "2312312321",
+    "DocumentoFuncionario": "321321321321",
+    "CorreoFuncionario": "camila@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 21
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\sede_institucion_funcionario_usuario/../../qr/QR-FUNC-21-6908df04caedb.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 21","data":{"IdFuncionario":"21","QrCodigoFuncionario":"qr_funcionario\/QR-FUNC-21-6908df04caedb.png"}}
+2025-11-03 18:05:56 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "21",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "camila jaimes",
+    "IdSede": "18",
+    "TelefonoFuncionario": "1024578",
+    "DocumentoFuncionario": "321321321321",
+    "CorreoFuncionario": "camila@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: actualizar
+actualizarFuncionario llamado con ID: 21
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
+2025-11-03 20:00:46 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Julianrodriguez ",
+    "IdSede": "18",
+    "TelefonoFuncionario": "1024578",
+    "DocumentoFuncionario": "321321321321",
+    "CorreoFuncionario": "camila@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 22
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\sede_institucion_funcionario_usuario/../../qr/QR-FUNC-22-6908fbde924cc.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 22","data":{"IdFuncionario":"22","QrCodigoFuncionario":"qr_funcionario\/QR-FUNC-22-6908fbde924cc.png"}}
+2025-11-04 00:15:11 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "tecnico",
+    "NombreFuncionario": "JUAN PEREZ",
+    "IdSede": "17",
+    "TelefonoFuncionario": "32000224547",
+    "DocumentoFuncionario": "10022145410",
+    "CorreoFuncionario": "JUANPEREZ@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"57"}
+Registro exitoso, ID: 57
+Generando QR para funcionario ID: 57
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-57-6909377f58cfe.png
+2025-11-04 00:15:56 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Supervisor",
+    "NombreFuncionario": "JUAN PEREZ lina",
+    "IdSede": "18",
+    "TelefonoFuncionario": "320002200000",
+    "DocumentoFuncionario": "10022140000",
+    "CorreoFuncionario": "JUANPEREZAS@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"58"}
+Registro exitoso, ID: 58
+Generando QR para funcionario ID: 58
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-58-690937ac2b292.png
+2025-11-04 00:18:41 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "tecnico",
+    "NombreFuncionario": "JUAN PEREZ",
+    "IdSede": "17",
+    "TelefonoFuncionario": "32000224547",
+    "DocumentoFuncionario": "10022145410",
+    "CorreoFuncionario": "JUANPEREZ@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"59"}
+Registro exitoso, ID: 59
+Generando QR para funcionario ID: 59
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-59-690938515e7d4.png
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-59-690938515e7d4.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 59","data":{"IdFuncionario":"59","QrCodigoFuncionario":"QR-FUNC-59-690938515e7d4.png"}}
