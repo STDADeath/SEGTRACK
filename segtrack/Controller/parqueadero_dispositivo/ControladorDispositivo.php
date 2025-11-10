@@ -11,16 +11,20 @@ header('Access-Control-Allow-Origin: *');
 
 file_put_contents(__DIR__ . '/debug_log.txt', date('Y-m-d H:i:s') . " === INICIO ===\n", FILE_APPEND);
 
-try {
-    file_put_contents(__DIR__ . '/debug_log.txt', "POST recibido:\n" . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+    try {
+        file_put_contents(__DIR__ . '/debug_log.txt', "POST recibido:\n" . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
 
-    $ruta_conexion = __DIR__ . '/../../Core/conexion.php';
+        $ruta_conexion = __DIR__ . '/../../Core/conexion.php';
     if (!file_exists($ruta_conexion)) {
         throw new Exception("Archivo de conexión no encontrado: $ruta_conexion");
     }
 
     require_once $ruta_conexion;
     file_put_contents(__DIR__ . '/debug_log.txt', "Conexión cargada\n", FILE_APPEND);
+
+    // ⭐ Crear instancia de la clase Conexion y obtener el objeto PDO
+    $conexionObj = new Conexion();
+    $conexion = $conexionObj->getConexion();
 
     if (!isset($conexion)) {
         throw new Exception("Variable \$conexion no inicializada");

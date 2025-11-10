@@ -96,9 +96,6 @@ body {
   font-size: 1.2rem;
   line-height: 1.7;
 }
-
-<<<<<<< HEAD
-/* targeta de personal de seguridad */
 /* Logo normal (pantallas grandes) */
 #logo {
     content: url("../img/LOGO_SEGTRACK-con.ico");
@@ -131,7 +128,7 @@ body {
   position: absolute;
   height: 30px;
   width: 110px;
-  background-color: #2c3e90;
+  background-color: #2a5298;
   top: 32px;
   right: -2.5px;
   -webkit-clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
@@ -142,95 +139,6 @@ body {
   padding: 2rem 1.5rem;
   max-width: 25ch;
   margin: auto;
-=======
-/* === ESTILOS GENERALES DE LA SECCIÓN === */
-.features-section {
-  padding: 4rem 0;
-  background-color: #f9fafb;
-}
-
-.features-section .section-title {
-  font-weight: 800;
-  color: #121513;
-  margin-bottom: 3rem;
-}
-
-/* === CARD PERSONALIZADA === */
-.features-section .card {
-  width: 100%;
-  background-color: #f4f5f2;
-  border: 2px solid #fff;
-  border-top-left-radius: 4rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.features-section .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
-
-/* Cinta superior decorativa */
-.features-section .card::before {
-  content: "";
-  position: absolute;
-  height: 30px;
-  width: 120px;
-  background-color: #2a5298;
-  top: 32px;
-  right: -2.5px;
-  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
-}
-
-/* === CUERPO DE LA TARJETA === */
-.features-section .card-body {
-  padding: 2rem 1.5rem;
-}
-
-.features-section .card-title {
-  font-weight: 800;
-  color: #121513;
-  font-size: 1.25rem;
-  margin-block: 1.5rem 0.75rem;
-}
-
-.features-section .card-text {
-  color: #303830;
-  font-size: 0.9rem;
-}
-
-/* === ICONO SUPERIOR === */
-.features-section .feature-icon {
-  font-size: 2.5rem;
-  color: #2a5298;
-  margin-bottom: 1rem;
-}
-
-/* === CINTA INFERIOR DECORATIVA === */
-.features-section .card::after {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: -5%;
-  width: 110%;
-  height: 50px;
-  background-color: #2a5298;
-  border-radius: 0 0 2rem 2rem;
-  z-index: 1;
-}
-
-.features-section .card:hover::after {
-  background-color: #4b52a2;
-}
-
-
-.features-section {
-  background-color: #f8f9fa;
-  padding: 80px 0;
->>>>>>> origin/feature/parqueadero-dispositivo
 }
 
 .card__title {
@@ -249,7 +157,7 @@ body {
   display: grid;
   place-items: center;
   height: 50px;
-  background-color: #2c3e90;
+  background-color: #2a5298;
   position: relative;
   width: 110%;
   left: -5%;
@@ -266,7 +174,7 @@ body {
   aspect-ratio: 1/1;
   bottom: 100%;
   z-index: -2;
-  background-color: #2c3e90;
+  background-color: #191c39;
 }
 
 .card__ribbon::before {
@@ -289,7 +197,7 @@ body {
   position: relative;
   transform: translateY(-50%);
   border-radius: 50%;
-  border: 8px solid #2c3e90;
+  border: 8px solid #2a5298;
   display: grid;
   place-items: center;
   font-weight: 900;
@@ -309,13 +217,13 @@ body {
 .card__ribbon-label::before {
   right: calc(100% + 4px);
   border-bottom-right-radius: 20px;
-  box-shadow: 5px 5px 0 #2c3e90;
+  box-shadow: 5px 5px 0 #2a5298;
 }
 
 .card__ribbon-label::after {
   left: calc(100% + 4px);
   border-bottom-left-radius: 20px;
-  box-shadow: -5px 5px 0 #2c3e90;
+  box-shadow: -5px 5px 0 #2a5298;
 }
 /* final targeta de personal de seguridad */
 
