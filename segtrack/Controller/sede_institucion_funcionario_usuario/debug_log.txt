@@ -268,3 +268,159 @@ Carpeta QR ya existe
 Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-59-690938515e7d4.png
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-59-690938515e7d4.png
 Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 59","data":{"IdFuncionario":"59","QrCodigoFuncionario":"QR-FUNC-59-690938515e7d4.png"}}
+2025-11-10 04:33:32 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Camilo Carrillo",
+    "IdSede": "25",
+    "TelefonoFuncionario": "3246608793",
+    "DocumentoFuncionario": "1024787936",
+    "CorreoFuncionario": "camilo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"23"}
+Registro exitoso, ID: 23
+Generando QR para funcionario ID: 23
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-23-69115d0caa06a.png
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-23-69115d0caa06a.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 23","data":{"IdFuncionario":"23","QrCodigoFuncionario":"QR-FUNC-23-69115d0caa06a.png"}}
+2025-11-10 04:35:41 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Supervisor ",
+    "NombreFuncionario": "Maicol Montoya ",
+    "IdSede": "27",
+    "TelefonoFuncionario": "3012584798",
+    "DocumentoFuncionario": "1089546523",
+    "CorreoFuncionario": "maicol@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"24"}
+Registro exitoso, ID: 24
+Generando QR para funcionario ID: 24
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-24-69115d8d6d39a.png
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-24-69115d8d6d39a.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 24","data":{"IdFuncionario":"24","QrCodigoFuncionario":"QR-FUNC-24-69115d8d6d39a.png"}}
+2025-11-10 04:38:03 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Wendy Rodriguez ",
+    "IdSede": "28",
+    "TelefonoFuncionario": "3017749821",
+    "DocumentoFuncionario": "1032458796",
+    "CorreoFuncionario": "Wendy@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"25"}
+Registro exitoso, ID: 25
+Generando QR para funcionario ID: 25
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-25-69115e1b196b8.png
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-25-69115e1b196b8.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 25","data":{"IdFuncionario":"25","QrCodigoFuncionario":"QR-FUNC-25-69115e1b196b8.png"}}
+2025-11-10 04:39:37 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Laura Gómez Rincón",
+    "IdSede": "30",
+    "TelefonoFuncionario": "3124589076",
+    "DocumentoFuncionario": "3124589076",
+    "CorreoFuncionario": "aura.gomez@udistrital.edu.co",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"26"}
+Registro exitoso, ID: 26
+Generando QR para funcionario ID: 26
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-26-69115e7929831.png
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-26-69115e7929831.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 26","data":{"IdFuncionario":"26","QrCodigoFuncionario":"QR-FUNC-26-69115e7929831.png"}}
+2025-11-10 04:40:47 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Daniela Herrera Morales",
+    "IdSede": "26",
+    "TelefonoFuncionario": "3156694421",
+    "DocumentoFuncionario": "1004983721",
+    "CorreoFuncionario": "daniela.herrera@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"27"}
+Registro exitoso, ID: 27
+Generando QR para funcionario ID: 27
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-27-69115ebf23b56.png
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-27-69115ebf23b56.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 27","data":{"IdFuncionario":"27","QrCodigoFuncionario":"QR-FUNC-27-69115ebf23b56.png"}}
+2025-11-10 04:41:37 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Carlos Medina",
+    "IdSede": "28",
+    "TelefonoFuncionario": "3225574910",
+    "DocumentoFuncionario": "1145632298",
+    "CorreoFuncionario": "carlos.medina@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"28"}
+Registro exitoso, ID: 28
+Generando QR para funcionario ID: 28
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-28-69115ef11a339.png
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-28-69115ef11a339.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 28","data":{"IdFuncionario":"28","QrCodigoFuncionario":"QR-FUNC-28-69115ef11a339.png"}}
