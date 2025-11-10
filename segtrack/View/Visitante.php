@@ -18,7 +18,7 @@
                     <div class="col-md-6 mb-3">
                         <label for="IdentificacionVisitante" class="form-label">Identificación</label>
                         <input type="number" id="IdentificacionVisitante" name="IdentificacionVisitante" 
-                               class="form-control" required>
+                            class="form-control" required>
                     </div>
 
                     <div class="col-md-6 mb-3">
