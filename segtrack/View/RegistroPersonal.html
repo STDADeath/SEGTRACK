@@ -33,50 +33,30 @@
 
                     <!-- FORMULARIO -->
                     <form id="formFuncionario" action="../Controller/sede_institucion_funcionario_usuario/ControladorFuncionario.php" method="POST" novalidate>
-                    <input type="hidden" name="accion" value="insertar">    
+                        <input type="hidden" name="accion" value="insertar">    
+
                         <!-- Nombre -->
                         <div class="input-box">
                             <i class='bx bxs-user'></i>
-                            <input
-                                type="text"
-                                name="NombreFuncionario"
-                                id="NombreFuncionario"
-                                placeholder="Nombre completo"
-                                maxlength="30"
-                                >
+                            <input type="text" name="NombreFuncionario" id="NombreFuncionario" placeholder="Nombre completo" maxlength="30">
                         </div>
 
                         <!-- Documento -->
                         <div class="input-box">
                             <i class='bx bxs-id-card'></i>
-                            <input
-                                type="text"
-                                name="DocumentoFuncionario"
-                                id="DocumentoFuncionario"
-                                placeholder="Documento"
-                                maxlength="12">
+                            <input type="text" name="DocumentoFuncionario" id="DocumentoFuncionario" placeholder="Documento" maxlength="12">
                         </div>
 
                         <!-- Correo -->
                         <div class="input-box">
                             <i class='bx bxs-envelope'></i>
-                            <input
-                                type="email"
-                                name="CorreoFuncionario"
-                                id="CorreoFuncionario"
-                                placeholder="Correo electrónico"
-                                maxlength="80">
+                            <input type="email" name="CorreoFuncionario" id="CorreoFuncionario" placeholder="Correo electrónico" maxlength="80">
                         </div>
 
                         <!-- Teléfono -->
                         <div class="input-box">
                             <i class='bx bxs-phone'></i>
-                            <input
-                                type="text"
-                                name="TelefonoFuncionario"
-                                id="TelefonoFuncionario"
-                                placeholder="Teléfono"
-                                maxlength="10">
+                            <input type="text" name="TelefonoFuncionario" id="TelefonoFuncionario" placeholder="Teléfono" maxlength="10">
                         </div>
 
                         <!-- Cargo -->
@@ -121,11 +101,9 @@
 
     <!-- Librería SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- 
-    <!-- Script externo para manejar AJAX y alertas -->
-    <script src="../js/javascript/js/registro-funcionario.js" defer></script>
- 
 
+    <!-- Script externo -->
+    <script src="../js/javascript/js/registro-funcionario.js" defer></script>
 
 </body>
 </html>
