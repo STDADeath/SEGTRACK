@@ -6,7 +6,7 @@
             <!-- Header -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-car me-2"></i>Registrar Vehículo</h1>
-                <a href="../view/Vehiculolista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+                <a href="Vehiculolista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
                     <i class="fas fa-list me-1"></i> Ver Vehículos
                 </a>
             </div>
