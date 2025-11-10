@@ -159,6 +159,30 @@ try {
                 return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
         }
+
+        public function cambiarEstadoDispositivo(int $id, string $nuevoEstado): array {
+            file_put_contents(__DIR__ . '/debug_log.txt', "cambiarEstadoDispositivo llamado con ID: $id, Estado: $nuevoEstado\n", FILE_APPEND);
+
+            try {
+                $resultado = $this->modelo->cambiarEstado($id, $nuevoEstado);
+                
+                if ($resultado['success']) {
+                    $mensaje = $nuevoEstado === 'Activo' ? 'activado' : 'desactivado';
+                    file_put_contents(__DIR__ . '/debug_log.txt', "Dispositivo $mensaje exitosamente\n", FILE_APPEND);
+                    return [
+                        'success' => true, 
+                        'message' => "Dispositivo $mensaje correctamente",
+                        'nuevoEstado' => $nuevoEstado
+                    ];
+                } else {
+                    file_put_contents(__DIR__ . '/debug_log.txt', "Error al cambiar estado: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
+                    return ['success' => false, 'message' => 'Error al cambiar el estado del dispositivo'];
+                }
+            } catch (Exception $e) {
+                file_put_contents(__DIR__ . '/debug_log.txt', "EXCEPCIÓN en cambiar estado: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
+            }
+        }
     }
 
     $controlador = new ControladorDispositivo($conexion);
@@ -180,6 +204,15 @@ try {
             $resultado = $controlador->actualizarDispositivo($id, $datos);
         } else {
             $resultado = ['success' => false, 'message' => 'ID de dispositivo no válido'];
+        }
+    } elseif ($accion === 'cambiar_estado') {
+        $id = (int)($_POST['id'] ?? 0);
+        $nuevoEstado = $_POST['estado'] ?? '';
+        
+        if ($id > 0 && in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
+            $resultado = $controlador->cambiarEstadoDispositivo($id, $nuevoEstado);
+        } else {
+            $resultado = ['success' => false, 'message' => 'Datos no válidos para cambiar estado'];
         }
     } else {
         $resultado = ['success' => false, 'message' => 'Acción no reconocida'];
