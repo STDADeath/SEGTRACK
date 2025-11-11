@@ -6,7 +6,6 @@ class ModeloParqueadero {
     private $logPath;
 
     public function __construct() {
-        // ⭐ Definir ruta de log una sola vez apuntando al controlador
         $this->logPath = __DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt';
         
         try {
@@ -20,14 +19,14 @@ class ModeloParqueadero {
         }
     }
 
-    // ✅ Registrar vehículo (ahora con Estado = 'Activo' por defecto)
+    // ✅ Registrar vehículo (con campo QrVehiculo)
     public function registrarVehiculo($TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo, $TarjetaPropiedad, $FechaParqueadero, $IdSede): array {
         try {
             file_put_contents($this->logPath, "Punto 1: Preparando SQL INSERT\n", FILE_APPEND);
             
             $sql = "INSERT INTO parqueadero 
-                    (TipoVehiculo, PlacaVehiculo, DescripcionVehiculo, TarjetaPropiedad, FechaParqueadero, IdSede, Estado)
-                    VALUES (:TipoVehiculo, :PlacaVehiculo, :DescripcionVehiculo, :TarjetaPropiedad, :FechaParqueadero, :IdSede, 'Activo')";
+                    (TipoVehiculo, PlacaVehiculo, DescripcionVehiculo, TarjetaPropiedad, FechaParqueadero, IdSede, Estado, QrVehiculo)
+                    VALUES (:TipoVehiculo, :PlacaVehiculo, :DescripcionVehiculo, :TarjetaPropiedad, :FechaParqueadero, :IdSede, 'Activo', '')";
             
             file_put_contents($this->logPath, "Punto 2: Preparando statement\n", FILE_APPEND);
             $stmt = $this->conexion->prepare($sql);
@@ -52,7 +51,55 @@ class ModeloParqueadero {
         }
     }
 
-    // ✅ Actualizar vehículo (sin tocar el Estado)
+    // ✅ Actualizar QR del vehículo
+    public function actualizarQR(int $idVehiculo, string $rutaQR): array {
+        try {
+            if (!$this->conexion) {
+                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
+            }
+
+            $sql = "UPDATE parqueadero SET QrVehiculo = :qr WHERE IdParqueadero = :id";
+            $stmt = $this->conexion->prepare($sql);
+            $resultado = $stmt->execute([
+                ':qr' => $rutaQR,
+                ':id' => $idVehiculo
+            ]);
+
+            file_put_contents($this->logPath, "✅ QR actualizado para vehículo ID: $idVehiculo\n", FILE_APPEND);
+
+            return [
+                'success' => $resultado,
+                'rows' => $stmt->rowCount()
+            ];
+
+        } catch (PDOException $e) {
+            $msg = "❌ Error en actualizarQR: " . $e->getMessage();
+            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    // ✅ Obtener la ruta del QR de un vehículo
+    public function obtenerQR(int $idVehiculo): ?string {
+        try {
+            if (!$this->conexion) {
+                return null;
+            }
+
+            $sql = "SELECT QrVehiculo FROM parqueadero WHERE IdParqueadero = :id";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idVehiculo]);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            return $resultado['QrVehiculo'] ?? null;
+
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerQR: " . $e->getMessage() . "\n", FILE_APPEND);
+            return null;
+        }
+    }
+
+    // ✅ Actualizar vehículo (sin tocar el Estado ni QR)
     public function actualizarVehiculo($id, $tipo, $descripcion, $idsede): array {
         try {
             $sql = "UPDATE parqueadero 
@@ -77,7 +124,6 @@ class ModeloParqueadero {
     // 🆕 Cambiar estado del vehículo (Activo <-> Inactivo) - SOFT DELETE
     public function cambiarEstado(int $idParqueadero, string $nuevoEstado): array {
         try {
-            // Validar que el estado sea válido
             if (!in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
                 return ['success' => false, 'error' => 'Estado no válido'];
             }
@@ -103,13 +149,11 @@ class ModeloParqueadero {
         }
     }
 
-    // ⚠️ DEPRECADO: Mantener por compatibilidad pero registrar advertencia
-    // Se recomienda usar cambiarEstado() en su lugar
+    // ⚠️ DEPRECADO: Mantener por compatibilidad
     public function eliminarVehiculo($id): array {
         file_put_contents($this->logPath, "⚠️ ADVERTENCIA: Se llamó a eliminarVehiculo() (método deprecado). Use cambiarEstado() en su lugar.\n", FILE_APPEND);
         
         try {
-            // En lugar de eliminar, cambiar a Inactivo
             return $this->cambiarEstado((int)$id, 'Inactivo');
         } catch (Exception $e) {
             $msg = "❌ Error en eliminarVehiculo: " . $e->getMessage();

@@ -1,94 +1,85 @@
-2025-11-10 19:32:31 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "23",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-ERROR FINAL: Variable $conexion no inicializada
-2025-11-10 19:33:45 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "23",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
+
+2025-11-11 20:54:06 === INICIO CONTROLADOR PARQUEADERO ===
 Librería QR cargada
-Modelo cargado
+Modelo cargado correctamente
+✅ Conexión establecida correctamente
+Instancia de ControladorParqueadero creada
 Acción: registrar
-registrarDispositivo llamado
-Respuesta final: {"success":false,"message":"Error al registrar en BD"}
-2025-11-10 19:35:44 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "23",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
+registrarVehiculo llamado
+Punto 1: Preparando SQL INSERT
+Punto 2: Preparando statement
+Punto 3: Ejecutando con parámetros
+❌ Error en registrarVehiculo: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'QrVehiculo' in 'field list'
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'QrVehiculo' in 'field list'"}
+
+2025-11-11 20:54:21 === INICIO CONTROLADOR PARQUEADERO ===
 Librería QR cargada
-Modelo cargado
+Modelo cargado correctamente
+✅ Conexión establecida correctamente
+Instancia de ControladorParqueadero creada
 Acción: registrar
-registrarDispositivo llamado
-Respuesta final: {"success":false,"message":"Error al registrar en BD"}
-2025-11-10 19:39:16 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "23",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
+registrarVehiculo llamado
+Punto 1: Preparando SQL INSERT
+Punto 2: Preparando statement
+Punto 3: Ejecutando con parámetros
+❌ Error en registrarVehiculo: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'QrVehiculo' in 'field list'
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'QrVehiculo' in 'field list'"}
+
+2025-11-11 20:54:43 === INICIO CONTROLADOR PARQUEADERO ===
 Librería QR cargada
-Modelo cargado
+Modelo cargado correctamente
+✅ Conexión establecida correctamente
+Instancia de ControladorParqueadero creada
 Acción: registrar
-registrarDispositivo llamado
-=== MODELO: registrarDispositivo ===
-Tipo: Portatil, Marca: Dell, IdFunc: 23, IdVis: 
-Conexión OK, preparando SQL
-SQL preparado: INSERT INTO dispositivo 
-                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, Estado)
-                    VALUES (:tipo, :marca, :funcionario, :visitante, 'Activo')
-Parámetros: {":tipo":"Portatil",":marca":"Dell",":funcionario":23,":visitante":null}
-EXCEPCIÓN PDO: SQLSTATE[HY000]: General error: 1364 Field 'QrDispositivo' doesn't have a default value
-Respuesta final: {"success":false,"message":"Error al registrar en BD"}
-2025-11-10 19:45:08 === INICIO ===
-POST recibido:
-{
-    "TipoDispositivo": "Portatil",
-    "MarcaDispositivo": "Dell",
-    "IdFuncionario": "23",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Conexión cargada
-Conexión verificada como PDO
+registrarVehiculo llamado
+Punto 1: Preparando SQL INSERT
+Punto 2: Preparando statement
+Punto 3: Ejecutando con parámetros
+❌ Error en registrarVehiculo: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'QrVehiculo' in 'field list'
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'QrVehiculo' in 'field list'"}
+
+2025-11-11 20:56:04 === INICIO CONTROLADOR PARQUEADERO ===
 Librería QR cargada
-Modelo cargado
+Modelo cargado correctamente
+✅ Conexión establecida correctamente
+Instancia de ControladorParqueadero creada
 Acción: registrar
-registrarDispositivo llamado
-=== MODELO: registrarDispositivo ===
-Tipo: Portatil, Marca: Dell, IdFunc: 23, IdVis: 
-Conexión OK, preparando SQL
-SQL preparado: INSERT INTO dispositivo 
-                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
-                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
-Parámetros: {":tipo":"Portatil",":marca":"Dell",":funcionario":23,":visitante":null}
-Resultado execute: true
-INSERT exitoso, ID generado: 19
-Generando QR para dispositivo ID: 19
-QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-DISP-19-691232b4b526c.png
-Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 19","data":{"IdDispositivo":"19","QrDispositivo":"qr\/QR-DISP-19-691232b4b526c.png"}}
+registrarVehiculo llamado
+Punto 1: Preparando SQL INSERT
+Punto 2: Preparando statement
+Punto 3: Ejecutando con parámetros
+✅ Vehículo insertado ID: 20 con Estado: Activo
+Generando QR para vehículo ID: 20
+Carpeta QR vehículos creada: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr_vehiculos
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr_vehiculos/QR-VEHICULO-20-691394d4ce031.png
+✅ QR actualizado para vehículo ID: 20
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 20","data":{"IdParqueadero":"20","QrVehiculo":"qr_vehiculos\/QR-VEHICULO-20-691394d4ce031.png"}}
+
+2025-11-11 22:39:02 === INICIO CONTROLADOR PARQUEADERO ===
+Librería QR cargada
+Modelo cargado correctamente
+✅ Conexión establecida correctamente
+Instancia de ControladorParqueadero creada
+Acción: registrar
+registrarVehiculo llamado
+Punto 1: Preparando SQL INSERT
+Punto 2: Preparando statement
+Punto 3: Ejecutando con parámetros
+❌ Error en registrarVehiculo: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '' for column `dbsegtrack`.`parqueadero`.`FechaParqueadero` at row 1
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '' for column `dbsegtrack`.`parqueadero`.`FechaParqueadero` at row 1"}
+
+2025-11-11 22:39:08 === INICIO CONTROLADOR PARQUEADERO ===
+Librería QR cargada
+Modelo cargado correctamente
+✅ Conexión establecida correctamente
+Instancia de ControladorParqueadero creada
+Acción: registrar
+registrarVehiculo llamado
+Punto 1: Preparando SQL INSERT
+Punto 2: Preparando statement
+Punto 3: Ejecutando con parámetros
+✅ Vehículo insertado ID: 21 con Estado: Activo
+Generando QR para vehículo ID: 21
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack\Controller\parqueadero_dispositivo/../../qr/QR-VEHICULO-21-6913acfcb3855.png
+✅ QR actualizado para vehículo ID: 21
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 21","data":{"IdParqueadero":"21","QrVehiculo":"\/qr\/QR-VEHICULO-21-6913acfcb3855.png"}}

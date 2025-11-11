@@ -7,9 +7,17 @@ ini_set('error_log', __DIR__ . '/error_log.txt');
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-file_put_contents(__DIR__ . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO ===\n", FILE_APPEND);
+file_put_contents(__DIR__ . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO CONTROLADOR PARQUEADERO ===\n", FILE_APPEND);
 
 try {
+    // Cargar librería QR
+    $ruta_qrlib = __DIR__ . '/../../libs/phpqrcode/qrlib.php';
+    if (!file_exists($ruta_qrlib)) {
+        throw new Exception("Librería phpqrcode no encontrada: $ruta_qrlib");
+    }
+    require_once $ruta_qrlib;
+    file_put_contents(__DIR__ . '/debug_log.txt', "Librería QR cargada\n", FILE_APPEND);
+
     $ruta_modelo = __DIR__ . '/../../model/parqueadero_dispositivo/ModeloParqueadero.php';
     if (!file_exists($ruta_modelo)) {
         throw new Exception("Modelo no encontrado: $ruta_modelo");
@@ -18,134 +26,208 @@ try {
     require_once $ruta_modelo;
     file_put_contents(__DIR__ . '/debug_log.txt', "Modelo cargado correctamente\n", FILE_APPEND);
 
-    $modelo = new ModeloParqueadero();
-    file_put_contents(__DIR__ . '/debug_log.txt', "Instancia de ModeloParqueadero creada\n", FILE_APPEND);
+    class ControladorParqueadero {
+        private $modelo;
+        private $logPath;
 
-    // Captura acción
-    $accion = $_POST['accion'] ?? '';
-    file_put_contents(__DIR__ . '/debug_log.txt', "Acción: $accion | Método: " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
-    file_put_contents(__DIR__ . '/debug_log.txt', "POST: " . json_encode($_POST, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
-
-    // =============================
-    // 📌 REGISTRAR VEHÍCULO
-    // =============================
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'registrar') {
-        file_put_contents(__DIR__ . '/debug_log.txt', "Iniciando registro de vehículo\n", FILE_APPEND);
-
-        $TipoVehiculo = trim($_POST['TipoVehiculo'] ?? '');
-        $PlacaVehiculo = trim($_POST['PlacaVehiculo'] ?? '');
-        $DescripcionVehiculo = trim($_POST['DescripcionVehiculo'] ?? '');
-        $TarjetaPropiedad = trim($_POST['TarjetaPropiedad'] ?? '');
-        $FechaParqueadero = trim($_POST['FechaParqueadero'] ?? date('Y-m-d H:i:s'));
-        $IdSede = trim($_POST['IdSede'] ?? '');
-
-        if (empty($TipoVehiculo) || empty($PlacaVehiculo) || empty($IdSede)) {
-            $error = "Campos obligatorios faltantes";
-            file_put_contents(__DIR__ . '/debug_log.txt', "❌ $error\n", FILE_APPEND);
-            echo json_encode(['success' => false, 'message' => $error]);
-            exit;
+        public function __construct() {
+            $this->logPath = __DIR__ . '/debug_log.txt';
+            $this->modelo = new ModeloParqueadero();
+            file_put_contents($this->logPath, "Instancia de ControladorParqueadero creada\n", FILE_APPEND);
         }
 
-        $resultado = $modelo->registrarVehiculo($TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo, $TarjetaPropiedad, $FechaParqueadero, $IdSede);
-        echo json_encode($resultado);
-        exit;
-    }
-
-    // =============================
-    // 📌 ACTUALIZAR VEHÍCULO
-    // =============================
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'actualizar') {
-        file_put_contents(__DIR__ . '/debug_log.txt', "Iniciando actualización de vehículo\n", FILE_APPEND);
-
-        $id = trim($_POST['id'] ?? '');
-        $tipo = trim($_POST['tipo'] ?? '');
-        $descripcion = trim($_POST['descripcion'] ?? '');
-        $idsede = trim($_POST['idsede'] ?? '');
-
-        file_put_contents(__DIR__ . '/debug_log.txt', "Datos actualizar - ID: $id | Tipo: $tipo | Descripción: $descripcion | IdSede: $idsede\n", FILE_APPEND);
-
-        if (empty($id) || empty($tipo) || empty($idsede)) {
-            $error = "Campos requeridos: id, tipo, idsede";
-            file_put_contents(__DIR__ . '/debug_log.txt', "❌ $error\n", FILE_APPEND);
-            echo json_encode(['success' => false, 'message' => $error]);
-            exit;
+        private function campoVacio($campo): bool {
+            return !isset($campo) || $campo === '' || trim($campo) === '';
         }
 
-        $resultado = $modelo->actualizarVehiculo($id, $tipo, $descripcion, $idsede);
-        file_put_contents(__DIR__ . '/debug_log.txt', "Resultado: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
-        echo json_encode($resultado);
-        exit;
+        private function generarQR(int $idVehiculo, string $tipo, string $placa, string $descripcion): ?string {
+            try {
+                file_put_contents($this->logPath, "Generando QR para vehículo ID: $idVehiculo\n", FILE_APPEND);
+
+                $rutaCarpeta = __DIR__ . '/../../qr';
+                if (!file_exists($rutaCarpeta)) {
+                    mkdir($rutaCarpeta, 0777, true);
+                    file_put_contents($this->logPath, "Carpeta QR vehículos creada: $rutaCarpeta\n", FILE_APPEND);
+                }
+
+                $nombreArchivo = "QR-VEHICULO-" . $idVehiculo . "-" . uniqid() . ".png";
+                $rutaCompleta = $rutaCarpeta . '/' . $nombreArchivo;
+                
+                // Contenido más detallado para el QR del vehículo
+                $contenidoQR = "VEHÍCULO \n";
+                $contenidoQR .= "ID: $idVehiculo\n";
+                $contenidoQR .= "Tipo: $tipo\n";
+                $contenidoQR .= "Placa: $placa\n";
+                $contenidoQR .= "Descripción: $descripcion\n";
+                $contenidoQR .= "Fecha: " . date('Y-m-d H:i:s');
+
+                QRcode::png($contenidoQR, $rutaCompleta, QR_ECLEVEL_H, 8);
+
+                if (!file_exists($rutaCompleta)) {
+                    throw new Exception("El archivo QR no se creó correctamente");
+                }
+
+                file_put_contents($this->logPath, "QR generado exitosamente: $rutaCompleta\n", FILE_APPEND);
+                return '/qr/' . $nombreArchivo;
+
+            } catch (Exception $e) {
+                file_put_contents($this->logPath, "ERROR al generar QR vehículo: " . $e->getMessage() . "\n", FILE_APPEND);
+                return null;
+            }
+        }
+
+        public function registrarVehiculo(array $datos): array {
+            file_put_contents($this->logPath, "registrarVehiculo llamado\n", FILE_APPEND);
+
+            $TipoVehiculo = $datos['TipoVehiculo'] ?? null;
+            $PlacaVehiculo = $datos['PlacaVehiculo'] ?? null;
+            $DescripcionVehiculo = $datos['DescripcionVehiculo'] ?? '';
+            $TarjetaPropiedad = $datos['TarjetaPropiedad'] ?? '';
+            $FechaParqueadero = $datos['FechaParqueadero'] ?? date('Y-m-d H:i:s');
+            $IdSede = $datos['IdSede'] ?? null;
+
+            // Validaciones
+            if ($this->campoVacio($TipoVehiculo)) {
+                return ['success' => false, 'message' => 'Falta el campo: Tipo de vehículo'];
+            }
+            if ($this->campoVacio($PlacaVehiculo)) {
+                return ['success' => false, 'message' => 'Falta el campo: Placa del vehículo'];
+            }
+            if ($this->campoVacio($IdSede)) {
+                return ['success' => false, 'message' => 'Falta el campo: Sede'];
+            }
+
+            try {
+                $resultado = $this->modelo->registrarVehiculo(
+                    $TipoVehiculo, 
+                    $PlacaVehiculo, 
+                    $DescripcionVehiculo, 
+                    $TarjetaPropiedad, 
+                    $FechaParqueadero, 
+                    $IdSede
+                );
+
+                if ($resultado['success']) {
+                    $idVehiculo = $resultado['id'];
+                    
+                    // Generar QR después del registro exitoso
+                    $rutaQR = $this->generarQR($idVehiculo, $TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo);
+
+                    if ($rutaQR) {
+                        // Actualizar el registro con la ruta del QR
+                        $this->modelo->actualizarQR($idVehiculo, $rutaQR);
+                    }
+
+                    return [
+                        "success" => true,
+                        "message" => "Vehículo registrado correctamente con ID: " . $idVehiculo,
+                        "data" => [
+                            "IdParqueadero" => $idVehiculo, 
+                            "QrVehiculo" => $rutaQR
+                        ]
+                    ];
+                } else {
+                    return ['success' => false, 'message' => 'Error al registrar en BD: ' . ($resultado['error'] ?? 'Desconocido')];
+                }
+            } catch (Exception $e) {
+                file_put_contents($this->logPath, "EXCEPCIÓN en registrarVehiculo: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
+            }
+        }
+
+        public function actualizarVehiculo(int $id, array $datos): array {
+            file_put_contents($this->logPath, "actualizarVehiculo llamado con ID: $id\n", FILE_APPEND);
+
+            try {
+                $resultado = $this->modelo->actualizarVehiculo(
+                    $id,
+                    $datos['tipo'] ?? null,
+                    $datos['descripcion'] ?? null,
+                    $datos['idsede'] ?? null
+                );
+                
+                if ($resultado['success']) {
+                    file_put_contents($this->logPath, "Vehículo actualizado exitosamente\n", FILE_APPEND);
+                    return ['success' => true, 'message' => 'Vehículo actualizado correctamente'];
+                } else {
+                    file_put_contents($this->logPath, "Error al actualizar: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
+                    return ['success' => false, 'message' => 'Error al actualizar vehículo'];
+                }
+            } catch (Exception $e) {
+                file_put_contents($this->logPath, "EXCEPCIÓN en actualizarVehiculo: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
+            }
+        }
+
+        public function cambiarEstadoVehiculo(int $id, string $nuevoEstado): array {
+            file_put_contents($this->logPath, "cambiarEstadoVehiculo llamado con ID: $id, Estado: $nuevoEstado\n", FILE_APPEND);
+
+            try {
+                $resultado = $this->modelo->cambiarEstado($id, $nuevoEstado);
+                
+                if ($resultado['success']) {
+                    $mensaje = $nuevoEstado === 'Activo' ? 'activado' : 'desactivado';
+                    file_put_contents($this->logPath, "Vehículo $mensaje exitosamente\n", FILE_APPEND);
+                    return [
+                        'success' => true, 
+                        'message' => "Vehículo $mensaje correctamente",
+                        'nuevoEstado' => $nuevoEstado
+                    ];
+                } else {
+                    file_put_contents($this->logPath, "Error al cambiar estado: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
+                    return ['success' => false, 'message' => 'Error al cambiar el estado del vehículo'];
+                }
+            } catch (Exception $e) {
+                file_put_contents($this->logPath, "EXCEPCIÓN en cambiar estado: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
+            }
+        }
     }
 
-    // =============================
-    // 🆕 CAMBIAR ESTADO (Soft Delete)
-    // =============================
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'cambiar_estado') {
-        file_put_contents(__DIR__ . '/debug_log.txt', "Iniciando cambio de estado de vehículo\n", FILE_APPEND);
+    $controlador = new ControladorParqueadero();
+    $accion = $_POST['accion'] ?? 'registrar';
 
+    file_put_contents(__DIR__ . '/debug_log.txt', "Acción: $accion\n", FILE_APPEND);
+
+    if ($accion === 'registrar') {
+        $resultado = $controlador->registrarVehiculo($_POST);
+    } elseif ($accion === 'actualizar') {
         $id = (int)($_POST['id'] ?? 0);
-        $nuevoEstado = trim($_POST['estado'] ?? '');
-
-        file_put_contents(__DIR__ . '/debug_log.txt', "ID: $id | Nuevo Estado: $nuevoEstado\n", FILE_APPEND);
-
-        if ($id <= 0 || !in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
-            $error = "Datos no válidos para cambiar estado";
-            file_put_contents(__DIR__ . '/debug_log.txt', "❌ $error\n", FILE_APPEND);
-            echo json_encode(['success' => false, 'message' => $error]);
-            exit;
+        if ($id > 0) {
+            $datos = [
+                'tipo' => $_POST['tipo'] ?? null,
+                'descripcion' => $_POST['descripcion'] ?? null,
+                'idsede' => $_POST['idsede'] ?? null
+            ];
+            $resultado = $controlador->actualizarVehiculo($id, $datos);
+        } else {
+            $resultado = ['success' => false, 'message' => 'ID de vehículo no válido'];
         }
-
-        $resultado = $modelo->cambiarEstado($id, $nuevoEstado);
+    } elseif ($accion === 'cambiar_estado') {
+        $id = (int)($_POST['id'] ?? 0);
+        $nuevoEstado = $_POST['estado'] ?? '';
         
-        if ($resultado['success']) {
-            $mensaje = $nuevoEstado === 'Activo' ? 'activado' : 'desactivado';
-            $resultado['message'] = "Vehículo $mensaje correctamente";
-            file_put_contents(__DIR__ . '/debug_log.txt', "✅ Vehículo $mensaje exitosamente\n", FILE_APPEND);
+        if ($id > 0 && in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
+            $resultado = $controlador->cambiarEstadoVehiculo($id, $nuevoEstado);
+        } else {
+            $resultado = ['success' => false, 'message' => 'Datos no válidos para cambiar estado'];
         }
-        
-        file_put_contents(__DIR__ . '/debug_log.txt', "Resultado: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
-        echo json_encode($resultado);
-        exit;
+    } else {
+        $resultado = ['success' => false, 'message' => 'Acción no reconocida'];
     }
 
-    // ============================
-    // ⚠️ ELIMINAR VEHÍCULO (DEPRECADO - ahora usa soft delete)
-    // =============================
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'eliminar') {
-        file_put_contents(__DIR__ . '/debug_log.txt', "⚠️ Acción 'eliminar' llamada (deprecada). Se cambiará a Inactivo en su lugar.\n", FILE_APPEND);
-
-        $id = trim($_POST['id'] ?? '');
-
-        file_put_contents(__DIR__ . '/debug_log.txt', "ID a desactivar: $id\n", FILE_APPEND);
-
-        if (empty($id)) {
-            $error = "ID de vehículo requerido";
-            file_put_contents(__DIR__ . '/debug_log.txt', "❌ $error\n", FILE_APPEND);
-            echo json_encode(['success' => false, 'message' => $error]);
-            exit;
-        }
-
-        // Usar soft delete en lugar de eliminar
-        $resultado = $modelo->cambiarEstado((int)$id, 'Inactivo');
-        
-        if ($resultado['success']) {
-            $resultado['message'] = 'Vehículo desactivado correctamente';
-        }
-        
-        file_put_contents(__DIR__ . '/debug_log.txt', "Resultado: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
-        echo json_encode($resultado);
-        exit;
-    }
-
-    // No hay acción válida
-    file_put_contents(__DIR__ . '/debug_log.txt', "⚠️ No se especificó acción válida\n", FILE_APPEND);
-    echo json_encode(['success' => false, 'message' => 'Acción no especificada']);
-    exit;
+    file_put_contents(__DIR__ . '/debug_log.txt', "Respuesta final: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+    echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
 
 } catch (Exception $e) {
     $error = $e->getMessage();
-    file_put_contents(__DIR__ . '/debug_log.txt', "❌ EXCEPCIÓN: $error\n", FILE_APPEND);
-    echo json_encode(['success' => false, 'message' => "Error: $error"]);
+    file_put_contents(__DIR__ . '/debug_log.txt', "ERROR FINAL: $error\n", FILE_APPEND);
+    
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error del servidor: ' . $error,
+        'error' => $error
+    ], JSON_UNESCAPED_UNICODE);
 }
 exit;
 ?>

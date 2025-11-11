@@ -35,7 +35,8 @@ if (count($filtros) > 0) {
     $where = "WHERE " . implode(" AND ", $filtros);
 }
 
-$sql = "SELECT * FROM Parqueadero $where ORDER BY IdParqueadero DESC";
+// Incluir el campo QrVehiculo en la consulta
+$sql = "SELECT *, QrVehiculo FROM Parqueadero $where ORDER BY IdParqueadero DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -99,6 +100,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
+                        <th>QR</th>
                         <th>Tipo Vehículo</th>
                         <th>Placa</th>
                         <th>Descripción</th>
@@ -113,6 +115,17 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdParqueadero']; ?>">
                                 <td><?php echo $row['IdParqueadero']; ?></td>
+                                <td class="text-center">
+                                    <?php if (!empty($row['QrVehiculo'])) : ?>
+                                        <button type="button" class="btn btn-sm btn-outline-success" 
+                                                onclick="verQRVehiculo('<?php echo htmlspecialchars($row['QrVehiculo']); ?>', <?php echo $row['IdParqueadero']; ?>)"
+                                                title="Ver código QR">
+                                            <i class="fas fa-qrcode me-1"></i> Ver QR
+                                        </button>
+                                    <?php else : ?>
+                                        <span class="badge badge-warning">Sin QR</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?php echo $row['TipoVehiculo']; ?></td>
                                 <td><?php echo $row['PlacaVehiculo']; ?></td>
                                 <td><?php echo $row['DescripcionVehiculo']; ?></td>
@@ -137,7 +150,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="8" class="text-center py-4">
+                            <td colspan="9" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay vehículos registrados con los filtros seleccionados</p>
                             </td>
@@ -145,6 +158,32 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para visualizar QR de Vehículo -->
+<div class="modal fade" id="modalVerQRVehiculo" tabindex="-1" role="dialog" aria-labelledby="modalVerQRVehiculoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalVerQRVehiculoLabel">
+                    <i class="fas fa-qrcode me-2"></i>Código QR - Vehículo #<span id="qrVehiculoId"></span>
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="qrImagenVehiculo" src="" alt="Código QR Vehículo" class="img-fluid" style="max-width: 300px; border: 2px solid #ddd; padding: 10px; border-radius: 5px;">
+                <p class="text-muted mt-3">Escanea este código con tu dispositivo móvil</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a id="btnDescargarQRVehiculo" href="#" class="btn btn-success" download>
+                    <i class="fas fa-download me-1"></i> Descargar QR
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -237,6 +276,17 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script>
 let vehiculoIdAEliminar = null;
 
+// ✅ Función para mostrar QR del vehículo
+function verQRVehiculo(rutaQR, idVehiculo) {
+    const rutaCompleta = '../qr' + rutaQR;
+    
+    $('#qrVehiculoId').text(idVehiculo);
+    $('#qrImagenVehiculo').attr('src', rutaCompleta);
+    $('#btnDescargarQRVehiculo').attr('href', rutaCompleta).attr('download', 'QR-Vehiculo-' + idVehiculo + '.png');
+    
+    $('#modalVerQRVehiculo').modal('show');
+}
+
 // Cargar datos en el modal de edición
 function cargarDatosEdicionVehiculo(row) {
     $('#editIdVehiculo').val(row.IdParqueadero);
@@ -300,10 +350,7 @@ $('#btnGuardarCambiosVehiculo').click(function() {
         accion: 'actualizar',
         id: $('#editIdVehiculo').val(),
         tipo: $('#editTipoVehiculo').val(),
-        placa: $('#editPlacaVehiculo').val(),
         descripcion: $('#editDescripcionVehiculo').val(),
-        tarjeta: $('#editTarjetaPropiedad').val(),
-        fecha: $('#editFechaParqueadero').val(),
         idsede: $('#editIdSede').val()
     };
 
@@ -334,8 +381,5 @@ $('#btnGuardarCambiosVehiculo').click(function() {
     });
 });
 </script>
-
-<script src="../js/javascript/js/ValidacionParqueadero.js"></script>
-
 
 <?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
