@@ -63,3 +63,5 @@ class ModeloIngreso {
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los registros en arreglo
     }
 }
+
+?>
