@@ -512,7 +512,7 @@ footer {
 /* zona del alcanse */
 .scope-section {
   padding: 90px 0;
-  background: linear-gradient(180deg,#ffffff 0%, #2c3e90 98%, #2575fc 160%);
+  background: linear-gradient(180deg,#fafcfb 0%, #2c3e90 98%, #2575fc 160%);
   color: rgb(0, 0, 0);
 }
 

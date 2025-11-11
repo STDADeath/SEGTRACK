@@ -52,10 +52,14 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Funcionarios</h6>
-                        <a class="collapse-item" href="">Lista De los Funcionarios</a>
-                        <h6 class="collapse-header">Parqueadero</h6>
-                        <a class="collapse-item" href="">Lista Del Parqueadero</a>
-                        <h6 class="collapse-header"> Dipositivo:</h6>
+                        <a class="collapse-item" href="../View/Funcionario.php">Registro Funcionarios</a>
+                        <a class="collapse-item" href="../View/FuncionarioLista.php">Lista De los Funcionarios</a>
+                          <a class="collapse-item" href="../View/Usuario.php">credenciales Usuario</a>
+                           <a class="collapse-item" href="../View/UsuarioLista.php">Lista Usuario</a>
+                        <h6 class="collapse-header">Areas de trabajo</h6>
+                        <a class="collapse-item" href="../View/Sede2.php">Registro de sede</a>
+                        <a class="collapse-item" href="../View/Instituto.php">Registro Instituto</a>
+                        <h6 class="collapse-header"> Registro de Parqueadero</h6>
                         <a class="collapse-item" href="">Lista De los Dipositivos</a>
                     </div>
                 </div>

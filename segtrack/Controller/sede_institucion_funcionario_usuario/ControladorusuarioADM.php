@@ -1,3 +1,6 @@
+ControladorusuarioADM.php
+
+
 <?php
 require_once __DIR__ . '/../../Model/sede_institucion_funcionario_usuario/modelousuarioAdm.php';
 
@@ -17,6 +20,15 @@ class ControladorUsuario {
 
             if (!empty($tipoRol) && !empty($contrasena) && !empty($idFuncionario)) {
                 try {
+                    // ✅ VALIDAR SI EL FUNCIONARIO YA TIENE UN USUARIO REGISTRADO
+                    if ($this->modelo->usuarioExiste($idFuncionario)) {
+                        echo "<script>
+                                alert('❌ Usuario ya existente');
+                                window.history.back();
+                              </script>";
+                        exit;
+                    }
+
                     $resultado = $this->modelo->registrarUsuario($tipoRol, $contrasena, $idFuncionario);
 
                     if ($resultado) {

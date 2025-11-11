@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../model/sede_institucion_funcionario_usuario/modeloinstituto.php';
+require_once __DIR__ . '/../../Model/sede_institucion_funcionario_usuario/modeloinstituto.php';
 
 class ControladorInstituto {
     private $modelo;
@@ -11,31 +11,32 @@ class ControladorInstituto {
     public function manejarSolicitud() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombre = trim($_POST['NombreInstitucion'] ?? '');
+            $nit    = trim($_POST['Nit_Codigo'] ?? '');
             $tipo   = trim($_POST['TipoInstitucion'] ?? '');
             $estado = trim($_POST['EstadoInstitucion'] ?? '');
 
-            if ($nombre === '' || $tipo === '' || $estado === '') {
-                echo "Error: Todos los campos son obligatorios.";
+            if ($nombre === '' || $nit === '' || $tipo === '' || $estado === '') {
+                echo "❌ Error: Todos los campos son obligatorios.";
+                return;
+            }
+
+            // Enviar los datos al modelo
+            $datos = [
+                'NombreInstitucion' => $nombre,
+                'Nit_Codigo'        => $nit,
+                'TipoInstitucion'   => $tipo,
+                'EstadoInstitucion' => $estado
+            ];
+
+            $resultado = $this->modelo->insertarInstituto($datos);
+
+            if ($resultado['error']) {
+                echo $resultado['mensaje'];
             } else {
-                // Generar el NIT en el controlador
-                $nit = $this->modelo->generarNit();
-
-                $datos = [
-                    'NombreInstitucion' => $nombre,
-                    'TipoInstitucion'   => $tipo,
-                    'EstadoInstitucion' => $estado,
-                    'Nit_Codigo' => $nit // Agregar el NIT a los datos
-                ];
-                $resultado = $this->modelo->insertarInstituto($datos);
-
-                if ($resultado['error']) {
-                    echo "Error al registrar: " . $resultado['mensaje'];
-                } else {
-                    echo "Institución registrada correctamente. NIT: " . $nit; // Mostrar el NIT
-                }
+                echo $resultado['mensaje'];
             }
         } else {
-            echo "Error: Solicitud no válida.";
+            echo "⚠️ Error: Solicitud no válida.";
         }
     }
 }
