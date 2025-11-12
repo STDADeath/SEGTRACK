@@ -58,8 +58,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Funcionarios:</h6>
-                        <a class="collapse-item" href="FuncionarioDash.php">Registrar Funcionario</a>
-                        <a class="collapse-item" href="/../">Lista De los Funcionarios</a>
+                        <a class="collapse-item" href="Funcionario.php">Registrar Funcionario</a>
+                        <a class="collapse-item" href="FuncionarioLista.php">Lista De los Funcionarios</a>
                         <h6 class="collapse-header">Parqueadero</h6>
                         <a class="collapse-item" href="parqueadero.php">Ingreso Parqueadero</a>
                         <a class="collapse-item" href="Vehiculolista.php">Lista Del Parqueadero</a>
@@ -102,9 +102,8 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Escanear </h6>
-                        <a class="collapse-item" href="">Funcionario</a>
-                        <a class="collapse-item" href="">Historial Funcionario</a>
+                        <h6 class="collapse-header">Escanear Qr</h6>
+                        <a class="collapse-item" href="Ingreso.php">Registrar Entrada/salida </a>
                     </div>
                 </div>
             </li>
