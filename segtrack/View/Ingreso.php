@@ -1,56 +1,82 @@
 <?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
 
-<div class="container mt-5">
-    <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-body">
-            <h4 class="text-center fw-bold text-primary mb-4">Control de Ingreso de Funcionarios</h4>
+<div class="container py-5">
+    <div class="card border-0 shadow-lg rounded-4 bg-light">
+        <div class="card-body px-4 py-5">
+            
+            <!-- Título principal -->
+            <h4 class="text-center fw-bold text-primary mb-5">
+                <i class="fas fa-id-card-alt me-2"></i>Control de Ingreso de Funcionarios
+            </h4>
 
-            <!-- **Sección del lector QR-->
-            <div class="text-center mb-4">
-                <h5 class="fw-semibold mb-3">Escanear Código QR</h5>
+            <!-- Sección del lector QR -->
+            <div class="text-center mb-5">
+                <h5 class="fw-semibold mb-4 text-secondary">
+                    <i class="fas fa-qrcode me-2"></i>Escanear Código QR
+                </h5>
 
-                <!-- Contenedor donde se mostrará la cámara -->
-                <div id="qr-reader" style="width: 320px; margin: 0 auto;"></div>
+                <!-- Cámara -->
+                <div class="d-flex justify-content-center mb-3">
+                    <div id="qr-reader" class="shadow-sm rounded-3 bg-white" style="width: 300px;"></div>
+                </div>
 
-                <div id="resultado-qr" class="mt-3"></div>
+                <!-- Resultado -->
+                <div id="resultado-qr" class="mt-3 text-muted small fst-italic"></div>
 
-                <!-- Selector para elegir si el registro será Entrada o Salida -->
-                <select id="tipoMovimiento" class="form-select w-50 mx-auto mt-3">
-                    <option value="Entrada">Entrada</option>
-                    <option value="Salida">Salida</option>
-                </select>
+                <!-- Tipo de movimiento -->
+                <div class="mt-4 w-50 mx-auto">
+                    <label for="tipoMovimiento" class="form-label fw-semibold text-secondary">
+                        Tipo de movimiento
+                    </label>
+                    <select id="tipoMovimiento" class="form-select text-center border-primary shadow-sm">
+                        <option value="Entrada">Entrada</option>
+                        <option value="Salida">Salida</option>
+                    </select>
+                </div>
 
-                <!-- Botón para activar la cámara -->
-                <button id="btnCapturar" class="btn btn-success mt-3 px-4 py-2">
-                    <i class="fas fa-camera"></i> Capturar Código QR
+                <!-- Botón capturar -->
+                <button id="btnCapturar" 
+                        class="btn btn-success mt-4 px-4 py-2 shadow-sm fw-semibold">
+                    <i class="fas fa-camera me-2"></i>Capturar Código QR
                 </button>
             </div>
 
-            <!-- Mensajes dinámicos (se muestran según las acciones) -->
-            <div id="mensajeExito" class="alert alert-success text-center d-none"></div>
-            <div id="mensajeError" class="alert alert-danger text-center d-none"></div>
-            <div id="mensajeVacio" class="alert alert-warning text-center d-none">No hay ingresos registrados todavía.</div>
-
-            <!-- Tabla de ingresos -->
-            <h5 class="mb-3 fw-semibold mt-5">Lista de Ingresos Recientes</h5>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle text-center">
-                    <thead class="table-primary">
-                        <tr>
-                            <th>Funcionario</th>
-                            <th>Cargo</th>
-                            <th>Tipo Movimiento</th>
-                            <th>Fecha Ingreso</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaIngresos">
-                        <!-- Se carga dinámicamente -->
-                        <tr>
-                            <td colspan="4">Cargando...</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Mensajes -->
+            <div class="mb-4">
+                <div id="mensajeExito" class="alert alert-success text-center d-none mb-3 shadow-sm"></div>
+                <div id="mensajeError" class="alert alert-danger text-center d-none mb-3 shadow-sm"></div>
+                <div id="mensajeVacio" class="alert alert-warning text-center d-none mb-3 shadow-sm">
+                    <i class="fas fa-exclamation-circle me-2"></i>No hay ingresos registrados todavía.
+                </div>
             </div>
+
+            <!-- Tabla -->
+            <div class="bg-white p-4 rounded-4 shadow-sm">
+                <h5 class="fw-semibold mb-3 text-secondary">
+                    <i class="fas fa-list me-2"></i>Lista de Ingresos Recientes
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle text-center mb-0">
+                        <thead class="bg-primary text-white">
+                            <tr>
+                                <th>Funcionario</th>
+                                <th>Cargo</th>
+                                <th>Tipo Movimiento</th>
+                                <th>Fecha Ingreso</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaIngresos">
+                            <tr>
+                                <td colspan="4" class="text-muted py-4">
+                                    <div class="spinner-border text-primary me-2" role="status"></div>
+                                    Cargando información...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
