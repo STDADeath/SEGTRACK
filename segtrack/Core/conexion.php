@@ -24,4 +24,7 @@ class Conexion {
     }
 }
 
+// Crear objeto y obtener conexión
+$conexionObj = new Conexion();
+$conexion = $conexionObj->getConexion();
 ?>
