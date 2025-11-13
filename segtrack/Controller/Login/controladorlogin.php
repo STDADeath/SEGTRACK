@@ -34,14 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Redirección según rol
         switch ($resultado['usuario']['TipoRol']) {
-            case 'Administrador':
+            case '#':
                 $ruta = '../../View/Instituto.php';
                 break;
             case 'Supervisor':
-                $ruta = '../../View/Sede.php';
+                $ruta = '../../View/DasboardSupervisor.php';
                 break;
             case 'Personal Seguridad':
-                $ruta = '../../View/Instituto.php';
+                $ruta = '../../View/DasboardPersonalSeguridad.php';
                 break;
             default:
                 $ruta = '../../View/login.html'; // por defecto
