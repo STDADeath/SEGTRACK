@@ -57,7 +57,7 @@
                           <a class="collapse-item" href="../View/Usuario.php">credenciales Usuario</a>
                            <a class="collapse-item" href="../View/UsuarioLista.php">Lista Usuario</a>
                         <h6 class="collapse-header">Areas de trabajo</h6>
-                        <a class="collapse-item" href="../View/Sede2.php">Registro de sede</a>
+                        <a class="collapse-item" href="../View/Sede.php">Registro de sede</a>
                         <a class="collapse-item" href="../View/Instituto.php">Registro Instituto</a>
                         <h6 class="collapse-header"> Registro de Parqueadero</h6>
                         <a class="collapse-item" href="">Lista De los Dipositivos</a>

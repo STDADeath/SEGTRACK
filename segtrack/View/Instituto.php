@@ -143,7 +143,7 @@ require_once __DIR__ . '/../Plantilla/parte_superior_supervisor.php';
 <div class="container-fluid px-4 pb-4">
     <div class="form-card">
         <div class="form-card-header">
-            Formulario de Registro
+            Recuerda estos campos son obligatorios con la regla de que verde es aprobado y rojo reprobado.
         </div>
         
         <form id="formInstituto" method="POST" action="../Controller/sede_institucion_funcionario_usuario/ControladorInstituto.php">
@@ -193,42 +193,7 @@ require_once __DIR__ . '/../Plantilla/parte_superior_supervisor.php';
 
 <!-- Dependencias JS -->
 <script src="../vendor/jquery/jquery.min.js"></script>
-<script>
-$(document).ready(function () {
-    $("#formInstituto").submit(function (e) {
-        e.preventDefault();
-
-        const btn = $(this).find('button[type="submit"]');
-        const originalText = btn.html();
-        btn.html('<i class="fas fa-spinner fa-spin"></i> Procesando...');
-        btn.prop('disabled', true);
-
-        $.ajax({
-            url: $(this).attr('action'),
-            type: "POST",
-            data: $(this).serialize(),
-            success: function (data) {
-                console.log("Respuesta del servidor:", data);
-
-                if (data.includes("✅") || data.includes("correctamente")) {
-                    alert("✅ " + data);
-                    $("#formInstituto")[0].reset();
-                } else {
-                    alert("❌ " + data);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error AJAX:", error);
-                console.log("Respuesta completa:", xhr.responseText);
-                alert("⚠️ Error de conexión con el servidor");
-            },
-            complete: function () {
-                btn.html(originalText);
-                btn.prop('disabled', false);
-            }
-        });
-    });
-});
-</script>
+<script src="../js/javascript/js/Instituto.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <?php require_once __DIR__ . '/../Plantilla/parte_inferior_supervisor.php'; ?>

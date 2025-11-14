@@ -3,7 +3,7 @@ class Conexion {
     private $host = "localhost";
     private $usuario = "root";
     private $clave = "";
-    private $db = "dbsegtrack";
+    private $db = "segtrackdb";
     private $conexion;
 
     public function __construct() {
@@ -24,7 +24,4 @@ class Conexion {
     }
 }
 
-// Crear objeto y obtener conexión
-$conexionObj = new Conexion();
-$conexion = $conexionObj->getConexion();
 ?>

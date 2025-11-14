@@ -450,3 +450,120 @@ Carpeta QR ya existe
 Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-29-69127ab726ae4.png
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-29-69127ab726ae4.png
 Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 29","data":{"IdFuncionario":"29","QrCodigoFuncionario":"QR-FUNC-29-69127ab726ae4.png"}}
+2025-11-14 01:26:45 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "guarda de segurudad ",
+    "NombreFuncionario": "lalallalas",
+    "IdSede": "17",
+    "TelefonoFuncionario": "4635646452",
+    "DocumentoFuncionario": "54654621331",
+    "CorreoFuncionario": "lola2002@123.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"29"}
+Registro exitoso, ID: 29
+Generando QR para funcionario ID: 29
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-29-6916774603bac.png
+2025-11-14 01:27:20 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "guarda de segurudad ",
+    "NombreFuncionario": "lalallalas",
+    "IdSede": "17",
+    "TelefonoFuncionario": "1234234000",
+    "DocumentoFuncionario": "17",
+    "CorreoFuncionario": "lolarealparis@123.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"30"}
+Registro exitoso, ID: 30
+Generando QR para funcionario ID: 30
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-30-691677687daa6.png
+2025-11-14 01:28:56 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "guarda de segurudad ",
+    "NombreFuncionario": "lalallalas",
+    "IdSede": "17",
+    "TelefonoFuncionario": "8798797897897",
+    "DocumentoFuncionario": "987778978978",
+    "CorreoFuncionario": "lol8987@123.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Llamando a RegistrarFuncionario en el modelo
+Resultado del modelo: {"success":true,"id":"31"}
+Registro exitoso, ID: 31
+Generando QR para funcionario ID: 31
+Ruta carpeta QR: C:\xampp\htdocs\SEGTRACK\segtrack/qr
+Carpeta QR ya existe
+Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\segtrack/qr/QR-FUNC-31-691677c82f8c1.png
+2025-11-14 01:39:29 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "guarda de segurudad ",
+    "NombreFuncionario": "lalallalas",
+    "IdSede": "17",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "1231234543",
+    "CorreoFuncionario": "lola21@123.com",
+    "accion": "registrar"
+}
+Conexión y PDO listos.
+Llamada a registrarFuncionario.
+Respuesta final enviada: {"success":false,"message":"El Cargo es inv\u00e1lido o no se seleccion\u00f3."}
+=== FIN ===
+2025-11-14 01:40:34 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "lalallalas",
+    "IdSede": "17",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "1231234543",
+    "CorreoFuncionario": "lola21@123.com",
+    "accion": "registrar"
+}
+Conexión y PDO listos.
+Llamada a registrarFuncionario.
+Respuesta final enviada: {"success":false,"message":"El Cargo es inv\u00e1lido o no se seleccion\u00f3."}
+=== FIN ===
+2025-11-14 01:41:02 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "lalallalas",
+    "IdSede": "17",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "1231234543",
+    "CorreoFuncionario": "lolarealparis@123.com",
+    "accion": "registrar"
+}
+Conexión y PDO listos.
+Llamada a registrarFuncionario.
+Respuesta final enviada: {"success":false,"message":"El Cargo es inv\u00e1lido o no se seleccion\u00f3."}
+=== FIN ===
