@@ -36,11 +36,11 @@
 
                 <!-- Botón capturar -->
                 <button id="btnCapturar" 
-<<<<<<< HEAD:segtrack/View/Ingreso.php
+
                         class="btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
-=======
-                        class="btn btn-success mt-4 px-4 py-2 shadow-sm fw-semibold">
->>>>>>> main:App/View/PersonalSeguridad/Ingreso.php
+
+                        <class="btn btn-success mt-4 px-4 py-2 shadow-sm fw-semibold>
+
                     <i class="fas fa-camera me-2"></i>Capturar Código QR
                 </button>
             </div>
@@ -105,14 +105,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Función para obtener registros de ingreso desde el servidor
     function cargarIngresos() {
-        fetch("/SEGTRACK/segtrack/Controller/Ingreso_Visitante/ControladorIngreso.php")
+        fetch("/SEGTRACK/App/Controller/ControladorIngreso.php")
             .then(res => res.json())
             .then(data => {
                 tablaIngresos.innerHTML = "";
                 mensajeVacio.classList.add("d-none");
 
                 // Si no hay datos, mostramos mensaje de lista vacía
-                if (!data.data || data.data.length === 0) {
+                if (!data.data || data.data.length === 0) { 
                     mensajeVacio.classList.remove("d-none");
                     return;
                 }
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => { ultimaLectura = null; }, 2000);
 
         // Envío del código QR al servidor mediante POST
-        fetch("/SEGTRACK/segtrack/Controller/Ingreso_Visitante/ControladorIngreso.php", {
+        fetch("/SEGTRACK/App/Controller/ControladorIngreso.php", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({

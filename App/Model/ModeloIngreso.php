@@ -3,11 +3,17 @@
 class ModeloIngreso {
     private $pdo;
 
-    public function __construct() {
-        // Se obtiene la conexión global a la base de datos
-        global $conexion;
-        $this->pdo = $conexion;
+public function __construct() {
+    require_once __DIR__ . '/../Core/conexion.php';
+
+    $conexionObj = new Conexion();      
+    $this->pdo = $conexionObj->getConexion();  
+
+    if (!$this->pdo) {
+        die(" ERROR: La conexión no se inicializó correctamente.");
     }
+}
+
 
     // Busca un funcionario usando el código QR escaneado
     public function buscarFuncionarioPorQr($qrCodigo) {

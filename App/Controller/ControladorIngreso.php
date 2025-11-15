@@ -9,8 +9,8 @@ header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // Se incluyen los archivos necesarios: conexión a BD y el modelo
-require_once __DIR__ . '/../../Core/conexion.php';
-require_once __DIR__ . '/../../Model/Ingreso_Visitante/ModeloIngreso.php';
+require_once __DIR__ . "/../Core/conexion.php";
+require_once __DIR__ . "/../Model/ModeloIngreso.php";
 
 class ControladorIngreso {
     private $modelo;
@@ -56,7 +56,7 @@ class ControladorIngreso {
         }
 
         // Si todo salió bien se devuelve una respuesta de éxito
-        return $this->responder(true, "$tipoMovimiento registrada correctamente ✅", [
+        return $this->responder(true, "$tipoMovimiento registrada correctamente ", [
             'nombre' => $funcionario['NombreFuncionario'],
             'cargo' => $funcionario['CargoFuncionario'],
             'fecha' => date('Y-m-d H:i:s'),
