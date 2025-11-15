@@ -1,0 +1,241 @@
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1f46f3, #ffffffd8);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 900px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg,#2c3e90, #2c3e90);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff7e14;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: row;
+            min-height: 500px;
+        }
+
+        .welcome-section {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3078, #2c3e90);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .welcome-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .form-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-box {
+            width: 100%;
+        }
+
+        .form-box h2 {
+            color: #1e3078;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-box input,
+        .input-box select {
+            width: 100%;
+            padding: 10px 10px 10px 45px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .input-box input:focus,
+        .input-box select:focus {
+            border-color: #1e3078;
+        }
+
+        .input-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1e3078;
+            font-size: 15px;
+            z-index: 1;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .btn-register {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(254, 180, 123, 0.3);
+        }
+
+        .btn-register:hover {
+            background: linear-gradient(90deg, #feb47b, #ff7e5f);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(254, 180, 123, 0.4);
+        }
+
+        .btn-register:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .links a {
+            color: #1e3078;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .links a:hover {
+            color: #2c3e90;
+            text-decoration: underline;
+        }
+
+        /* ===== ESTADOS DE VALIDACIÓN ===== */
+        .input-box input.valido,
+        .input-box select.valido {
+            border: 2px solid #4CAF50 !important;
+            background: rgba(76, 175, 80, 0.05);
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.6) !important;
+        }
+
+        .input-box input.invalido,
+        .input-box select.invalido {
+            border: 2px solid #F44336 !important;
+            background: rgba(244, 67, 54, 0.05);
+            box-shadow: 0 0 8px rgba(244, 67, 54, 0.6) !important;
+        }
+
+        /* Indicadores visuales adicionales */
+        .input-box::after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'boxicons';
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .input-box.valid::after {
+            content: '✓';
+            color: #4CAF50;
+            opacity: 1;
+        }
+
+        .input-box.invalid::after {
+            content: '✗';
+            color: #F44336;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .welcome-section {
+                order: 2;
+                padding: 30px;
+            }
+            
+            .form-section {
+                order: 1;
+                padding: 30px;
+            }
+        }
