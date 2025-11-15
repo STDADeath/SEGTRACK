@@ -1,6 +1,5 @@
 <?php
-
-$ruta_conexion = __DIR__ . '/../../core/conexion.php';
+$ruta_conexion = __DIR__ . "../../Core/conexion.php";
 
 if (file_exists($ruta_conexion)) {
     require_once $ruta_conexion;
@@ -13,7 +12,7 @@ if (file_exists($ruta_conexion)) {
     ]));
 }
 
-require_once __DIR__ . "/../../Model/bitacora_dotacion/ModeloBitacora.php";
+require_once __DIR__ . "../Model/ModeloBitacora.php";
 
 class ControladorBitacora {
     private BitacoraModelo $modelo;

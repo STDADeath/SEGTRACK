@@ -124,7 +124,7 @@ $("#formRegistrarBitacora").submit(function (e) {
     btn.prop('disabled', true);
 
     $.ajax({
-        url: "../controller/bitacora_dotacion/controladorBitacora.php",
+       url: "../../Controller/ControladorBitacora.php",
         type: "POST",
         data: $(this).serialize() + "&accion=registrar",
         dataType: "json",

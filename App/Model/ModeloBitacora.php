@@ -4,7 +4,7 @@ class BitacoraModelo {
 
     public function __construct($conexion) {
         $this->conexion = $conexion;
-    }
+    }   
 
     public function insertar(array $datos): array {
         try {
