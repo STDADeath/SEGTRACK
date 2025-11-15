@@ -33,10 +33,10 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Logo del sistema -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../PersonalSeguridad/DasboardPersonalSeguridad.php">
                 <div class="sidebar-brand-icon">
                     <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" alt="Logo" id="logo">
-                </div>
+                </div>  
             </a>
 
             <hr class="sidebar-divider">

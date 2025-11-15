@@ -3,7 +3,7 @@
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-user me-2"></i>Registrar Visitante</h1>
-        <a href="../View/VisitanteLista.php" class="btn btn-primary btn-sm shadow-sm">
+        <a href="./VisitanteLista.php" class="btn btn-primary btn-sm shadow-sm">
             <i class="fas fa-list me-1"></i> Ver Visitantes
         </a>
     </div>

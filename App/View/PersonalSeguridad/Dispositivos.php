@@ -6,7 +6,7 @@
 
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Registrar Dispositivo</h1>
-                <a href="../view/DispositivoLista.php" class="btn btn-sm btn-secondary shadow-sm">
+                <a href="./DispositivoLista.php" class="btn btn-sm btn-secondary shadow-sm">
                     <i class="fas fa-list me-1"></i> Ver Dispositivos 
                 </a>
             </div>

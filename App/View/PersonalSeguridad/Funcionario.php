@@ -3,7 +3,7 @@
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-user-tie me-2"></i>Registrar Funcionario</h1>
-        <a href="FuncionarioLista.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="./FuncionarioLista.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-list me-1"></i> Ver Funcionarios
         </a>
     </div>

@@ -3,7 +3,7 @@
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-list me-2"></i>Lista de Bitácoras</h1>
-        <a href="../view/Bitacora.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="./Bitacora.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus me-1"></i> Nueva Bitácora
         </a>
     </div>
