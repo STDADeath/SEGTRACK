@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_superior_supervisor.php'; ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -9,7 +9,7 @@
     </div>
 
     <?php
-    require_once __DIR__ . "/../Core/conexion.php";
+    require_once __DIR__ . "/../../Core/conexion.php";
     $conexionObj = new Conexion();
     $conn = $conexionObj->getConexion();
 
@@ -401,4 +401,4 @@ $('#btnGuardarCambios').click(function() {
 });
 </script>
 
-<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
