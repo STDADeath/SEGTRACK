@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
 
 <div class="container py-5">
     <div class="card border-0 shadow-lg rounded-4 bg-light">
@@ -182,4 +182,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

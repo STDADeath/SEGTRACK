@@ -96,7 +96,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-    const BASE_URL = "/SEGTRACK/segtrack/Controller/Graficas/ControladorDashboard.php";
+    const BASE_URL = "../../../app/Controller/ControladorDashboard.php";
 
     try {
         const resDispositivos = await fetch(`${BASE_URL}?accion=tipos_dispositivos`);

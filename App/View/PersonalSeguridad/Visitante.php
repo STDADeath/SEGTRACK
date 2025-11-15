@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -75,4 +75,4 @@ $(document).ready(function () {
 });
 </script>
 
-<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

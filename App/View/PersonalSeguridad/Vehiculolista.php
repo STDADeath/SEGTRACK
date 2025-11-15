@@ -1,5 +1,5 @@
-<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
-<?php require_once(__DIR__ . "/../Core/conexion.php");?>
+<?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
+<?php require_once(__DIR__ . "/../../Core/conexion.php");?>
 
 <?php
 $conexion = new Conexion();
@@ -382,4 +382,4 @@ $('#btnGuardarCambiosVehiculo').click(function() {
 });
 </script>
 
-<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

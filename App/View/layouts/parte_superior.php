@@ -56,20 +56,20 @@
                         <!-- Subtítulo -->
                         <h6 class="collapse-header">Funcionarios:</h6>
                         <!-- Opciones -->
-                        <a class="collapse-item" href="Funcionario.php">Registrar Funcionario</a>
-                        <a class="collapse-item" href="FuncionarioLista.php">Lista de Funcionarios</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Funcionario.php">Registrar Funcionario</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/FuncionarioLista.php">Lista de Funcionarios</a>
 
                         <div class="collapse-divider"></div>
 
                         <h6 class="collapse-header">Parqueadero:</h6>
-                        <a class="collapse-item" href="parqueadero.php">Ingreso Parqueadero</a>
-                        <a class="collapse-item" href="Vehiculolista.php">Lista Parqueadero</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Parqueadero.php">Ingreso Parqueadero</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Vehiculolista.php">Lista Parqueadero</a>
 
                         <div class="collapse-divider"></div>
 
                         <h6 class="collapse-header">Dispositivos:</h6>
-                        <a class="collapse-item" href="Dispositivos.php">Registrar Dispositivo</a>
-                        <a class="collapse-item" href="DispositivoLista.php">Lista de Dispositivos</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Dispositivos.php">Registrar Dispositivo</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/DispositivoLista.php">Lista de Dispositivos</a>
                     </div>
                 </div>
             </li>
@@ -87,20 +87,20 @@
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <h6 class="collapse-header">Bitácora</h6>
-                        <a class="collapse-item" href="../view/bitacoraLista.php">Registro de Bitácora</a>
-                        <a class="collapse-item" href="../view/bitacora.php">Ingreso Bitácora</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Bitacora.php">Registro de Bitácora</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/BitacoraLista.php">Ingreso Bitácora</a>
 
                         <div class="collapse-divider"></div>
 
                         <h6 class="collapse-header">Dotación</h6>
-                        <a class="collapse-item" href="../view/dotaciones.php">Ingresar Dotación</a>
-                        <a class="collapse-item" href="../view/dotacionLista.php">Registro de Dotación</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Dotaciones.php">Ingresar Dotación</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/DotacionLista.php">Registro de Dotación</a>
 
                         <div class="collapse-divider"></div>
 
                         <h6 class="collapse-header">Visitantes</h6>
-                        <a class="collapse-item" href="../view/visitante.php">Registro Visitante</a>
-                        <a class="collapse-item" href="../view/visitanteLista.php">Lista de Visitantes</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Visitante.php">Registro Visitante</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/VisitanteLista.php">Lista de Visitantes</a>
 
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <h6 class="collapse-header">Escanear QR</h6>
-                        <a class="collapse-item" href="Ingreso.php">Registrar Entrada/Salida</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Ingreso.php">Registrar Entrada/Salida</a>
 
                     </div>
                 </div>

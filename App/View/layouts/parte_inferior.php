@@ -1,10 +1,9 @@
                 </div>
-                <!-- Fin del contenido específico (aquí terminan las páginas internas) -->
+                <!-- Fin del contenido específico -->
             </div>
-            <!-- End Main Content (fin del área principal donde se muestra la información) -->
+            <!-- Fin del contenido principal -->
 
-            <!-- Footer: barra inferior fija -->
-            <!-- Esta sección muestra un pie de página pegado abajo con el fondo azul -->
+            <!-- Footer inferior fijo -->
             <footer class="sticky-footer bg-primary">
                 <div class="container my-auto">
                     <div class="copyright text-center text-white">
@@ -12,22 +11,21 @@
                     </div>
                 </div>
             </footer>
-            <!-- End Footer -->
+            <!-- Fin del footer -->
 
         </div>
-        <!-- End Content Wrapper (envoltorio del contenido y el footer) -->
+        <!-- Fin del contenedor del contenido -->
 
     </div>
-    <!-- End Page Wrapper (envoltorio de TODO el diseño, sidebar + contenido) -->
+    <!-- Fin del wrapper general -->
 
-    <!-- Botón para volver arriba -->
-    <!-- Es el botón flotante circular con la flecha que aparece al bajar scroll -->
+
+    <!-- Botón "volver arriba" -->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Modal para cerrar sesión -->
-    <!-- Esta ventana emergente aparece cuando el usuario quiere cerrar sesión -->
+    <!-- Modal de cierre de sesión -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -40,34 +38,28 @@
                     </button>
                 </div>
 
-                <!-- Cuerpo del modal (mensaje principal) -->
+                <!-- Mensaje del modal -->
                 <div class="modal-body">¿Seguro que deseas cerrar sesión?</div>
 
-                <!-- Footer del modal (botones Cancelar / Salir) -->
+                <!-- Botones del modal -->
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="login.html">Salir</a>
+                    <a class="btn btn-primary" href="../../../Public/index.html">Salir</a>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- Scripts principales del proyecto -->
-    <!-- jQuery: necesario para el funcionamiento de Bootstrap y SB Admin -->
+    <!-- Scripts principales -->
     <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap (versión bundle para que funcionen los modales y menús desplegables) -->
     <script src="../../../Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- jQuery Easing: animaciones suaves usadas por SB Admin -->
     <script src="../../../Public/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Chart.js: librería para gráficos -->
+    <!-- Gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- JS principal del tema SB Admin 2 -->
-    <!-- Controla el sidebar, las transiciones y componentes del template -->
+    <!-- Script del template SB Admin 2 -->
     <script src="../../../Public/js/sb-admin-2.min.js"></script>
 
 </body>
