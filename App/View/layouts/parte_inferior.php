@@ -1,61 +1,74 @@
-
+                </div>
+                <!-- Fin del contenido específico (aquí terminan las páginas internas) -->
             </div>
-            <!-- End of Main Content -->
+            <!-- End Main Content (fin del área principal donde se muestra la información) -->
 
-    <!-- Footer -->
-<footer class="sticky-footer bg-primary">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto text-white">
-            <span>© 2025 SEGTRACK | Innovación y Seguridad Inteligente.
-</span>
+            <!-- Footer: barra inferior fija -->
+            <!-- Esta sección muestra un pie de página pegado abajo con el fondo azul -->
+            <footer class="sticky-footer bg-primary">
+                <div class="container my-auto">
+                    <div class="copyright text-center text-white">
+                        <span>© 2025 SEGTRACK | Innovación y Seguridad Inteligente.</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer -->
+
         </div>
-    </div>
-</footer>
-
-
-        </div>
-
+        <!-- End Content Wrapper (envoltorio del contenido y el footer) -->
 
     </div>
+    <!-- End Page Wrapper (envoltorio de TODO el diseño, sidebar + contenido) -->
 
+    <!-- Botón para volver arriba -->
+    <!-- Es el botón flotante circular con la flecha que aparece al bajar scroll -->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <!-- Modal para cerrar sesión -->
+    <!-- Esta ventana emergente aparece cuando el usuario quiere cerrar sesión -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+
+                <!-- Encabezado del modal -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                    <h5 class="modal-title">Cerrar sesión</h5>
+                    <button class="close" data-dismiss="modal">
+                        <span>×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+
+                <!-- Cuerpo del modal (mensaje principal) -->
+                <div class="modal-body">¿Seguro que deseas cerrar sesión?</div>
+
+                <!-- Footer del modal (botones Cancelar / Salir) -->
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="login.html">Salir</a>
                 </div>
+
             </div>
         </div>
     </div>
 
+    <!-- Scripts principales del proyecto -->
+    <!-- jQuery: necesario para el funcionamiento de Bootstrap y SB Admin -->
+    <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap (versión bundle para que funcionen los modales y menús desplegables) -->
+    <script src="../../../Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- jQuery Easing: animaciones suaves usadas por SB Admin -->
+    <script src="../../../Public/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Chart.js: librería para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-    <script src="../js/javascript/demo/sb-admin-2.min.js"></script>
+    <!-- JS principal del tema SB Admin 2 -->
+    <!-- Controla el sidebar, las transiciones y componentes del template -->
+    <script src="../../../Public/js/sb-admin-2.min.js"></script>
 
 </body>
-</html>
-
-
-
-</body>
-
 </html>

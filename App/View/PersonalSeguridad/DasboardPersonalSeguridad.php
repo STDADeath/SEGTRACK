@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
 
 <div class="container-fluid">
     <!-- Encabezado -->
@@ -236,4 +236,4 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 </script>
 
-<?php require_once __DIR__ . '/../Plantilla/parte_inferior_supervisor.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

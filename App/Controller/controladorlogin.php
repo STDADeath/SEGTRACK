@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
-require_once __DIR__ . '/../../Model/Login/modulousuario.php';
+require_once __DIR__ . '/../Model/modulousuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -33,20 +33,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario'] = $resultado['usuario'];
 
         // Redirección según rol
-        switch ($resultado['usuario']['TipoRol']) {
-            case '#':
-                $ruta = '../../View/Instituto.php';
-                break;
-            case 'Supervisor':
-                $ruta = '../../View/DasboardSupervisor.php';
-                break;
-            case 'Personal Seguridad':
-                $ruta = '../../View/DasboardPersonalSeguridad.php';
-                break;
-            default:
-                $ruta = '../../View/login.html'; // por defecto
-                break;
-        }
+switch ($resultado['usuario']['TipoRol']) {
+
+    case 'Administrador':
+        $ruta = '../View/Administrador/DasboardAdministrador.php';
+        break;
+
+    case 'Supervisor':
+        $ruta = '../View/Supervisor/DasboardSupervisor.php';
+        break;
+
+    case 'Personal Seguridad':
+        $ruta = '../View/PersonalSeguridad/DasboardPersonalSeguridad.php';
+        break;
+
+    default:
+        $ruta = '../View/login/Login.php';
+        break;
+}
 
         // Alerta de éxito y redirección
         echo "<!DOCTYPE html>
@@ -86,7 +90,7 @@ Swal.fire({
     text:'{$e->getMessage()}',
     allowOutsideClick: false
 }).then(() => {
-    window.location.href = '../../View/login.html';
+    window.location.href = '../Views/Login/Login.php';
 });
 </script>
 </body>

@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">     
     <title>Segtrack - Login y Registro</title>     
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>     
-    <link rel="stylesheet" href="../View/css/loginn.css"> 
+    <link rel="stylesheet" href="../../../public/css/loginn.css">
+
+
+
 </head> 
 <body>     
     <div class="container">         
@@ -20,18 +23,17 @@
 
         <div class="content">             
             <div class="welcome-section">                        
-                <img src="../View/img/LOGO_SEGTRACK-con.ico" alt="Segtrack Logo">                 
+                <img src="../../../public/img/LOGO_SEGTRACK-re-con.ico" alt="Segtrack Logo">                 
                 <h2>BIENVENIDO</h2>                 
                 <p>Estamos para ayudarte. Sé parte de nuestro grupo.</p>             
             </div>                          
-
             <div class="form-section">                 
                 <div class="form-box">                     
                     <h2>Login</h2>
                     
 
                     <!-- FORMULARIO -->
-                 <form id="loginForm" action="../Controller/Login/controladorlogin.php" method="POST">
+            <form id="loginForm" action="../../../App/Controller/controladorlogin.php" method="POST">
 
                         
                         <div class="input-box">                         
@@ -57,9 +59,8 @@
                     </form>
                     <!-- FIN FORMULARIO -->
                                     
-                    <div class="links">                         
-                        <a href="RegistroPersonal.html">¿No estás registrado? Registrar Datos</a>                         
-                        <a href="Recuperar.html">¿Olvidaste tu contraseña?</a>                     
+                    <div class="links">                                                
+                        <a href="">¿Olvidaste tu contraseña?</a>                     
                     </div>                 
                 </div>             
             </div>         
@@ -67,6 +68,6 @@
     </div>   
 
     <!-- VALIDACIÓN CON JAVASCRIPT -->
-<script src="../js/javascript/js/login.js"></script>
+<script src="../../../Public/js/javascript//js/login.js"></script>
 </body> 
 </html>
