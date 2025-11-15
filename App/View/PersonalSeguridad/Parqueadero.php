@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
+=======
+<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
@@ -6,17 +10,26 @@
             <!-- Header -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-car me-2"></i>Registrar Vehículo</h1>
+<<<<<<< HEAD
                 <a href="./Vehiculolista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
                     <i class="fas fa-list me-1"></i> Ver Vehículos
                 </a>
             </div>
 
+=======
+                <a href="Vehiculolista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+                    <i class="fas fa-list me-1"></i> Ver Vehículos
+                </a>
+            </div>
+            
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             <!-- Form Card -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-primary">
                     <h6 class="m-0 font-weight-bold text-white">Información del Vehículo</h6>
                 </div>
                 <div class="card-body">
+<<<<<<< HEAD
                     <!-- ⚠️ IMPORTANTE: Eliminamos novalidate para que funcione la validación HTML5 -->
                     <form method="POST" action="../../Controller/ControladorParqueadero.php" class="needs-validation">
                         <div class="row">
@@ -25,6 +38,13 @@
                                 <label class="form-label fw-semibold">
                                     Tipo de Vehículo <span class="text-danger">*</span>
                                 </label>
+=======
+                    <form method="POST" action="../controller/parqueadero_dispositivo/ControladorParqueadero.php" class="needs-validation" novalidate>
+                        <div class="row">
+                            <!-- Tipo de vehículo -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Tipo de Vehículo</label>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-car-side"></i></span>
                                     <select class="form-select" name="TipoVehiculo" id="TipoVehiculo" required>
@@ -37,6 +57,7 @@
                                 </div>
                             </div>
 
+<<<<<<< HEAD
                             <!-- Placa - ✅ MÁXIMO 9 CARACTERES, MÍNIMO 3, OBLIGATORIO -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
@@ -101,10 +122,40 @@
                                 <small class="form-text text-muted">
                                     <i class="fas fa-info-circle"></i> Número de la tarjeta de propiedad del vehículo
                                 </small>
+=======
+                            <!-- Placa -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Placa</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                    <input type="text" class="form-control" name="PlacaVehiculo" id="PlacaVehiculo" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Descripción</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-align-left"></i></span>
+                                <textarea class="form-control" name="DescripcionVehiculo" rows="3" placeholder="Color, modelo, características..." id="DescripcionVehiculo"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Tarjeta de Propiedad -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Tarjeta de Propiedad</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                                    <input type="text" class="form-control" name="TarjetaPropiedad" placeholder="Número de tarjeta" id="TarjetaPropiedad">
+                                </div>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                             </div>
 
                             <!-- Fecha -->
                             <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                                 <label class="form-label fw-semibold">
                                     Fecha y Hora <span class="badge bg-info">Automática</span>
                                 </label>
@@ -120,11 +171,19 @@
                                 <small class="text-muted">
                                     <i class="fas fa-calendar-check"></i> La fecha y hora se registran automáticamente
                                 </small>
+=======
+                                <label class="form-label fw-semibold">Fecha</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                    <input type="datetime-local" class="form-control" name="FechaParqueadero" id="FechaParqueadero">
+                                </div>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                             </div>
                         </div>
 
                         <!-- ID de Sede -->
                         <div class="mb-3">
+<<<<<<< HEAD
                             <label class="form-label fw-semibold">
                                 ID de Sede <span class="text-danger">*</span>
                             </label>
@@ -141,6 +200,18 @@
                         <!-- Botones -->
                         <div class="d-flex justify-content-between mt-4">
                             <button type="button" class="btn btn-secondary" onclick="window.location.href='./Parqueadero.php'">
+=======
+                            <label class="form-label fw-semibold">Nombre de Sede</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                <input type="text" class="form-control" name="IdSede" id="IdSede" required>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='../view/Vehiculolista.php'">
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                                 <i class="fas fa-arrow-left me-1"></i> Volver
                             </button>
                             <button type="submit" class="btn btn-primary">
@@ -150,6 +221,7 @@
                     </form>
                 </div>
             </div>
+<<<<<<< HEAD
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-light">
@@ -161,11 +233,25 @@
                     </div>
                 </div>
             </div>
+=======
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
         </div>
     </div>
 </div>
 
+<<<<<<< HEAD
 <script src="../../../Public/js/javascript/js/ValidacionParqueadero.js"></script>
 
 <!---fin del contenido principal--->
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+=======
+<!-- Librería SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Validación de formulario -->
+<script src="../js/javascript/js/ValidacionParqueadero.js"></script>
+</body>
+</html>
+
+<!---fin del contenido principal--->
+<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)

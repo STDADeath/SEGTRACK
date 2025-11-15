@@ -1,6 +1,7 @@
 <?php
 class ModeloDispositivo {
     private $conexion;
+<<<<<<< HEAD
     private $debugPath;
 
     public function __construct($conexion) {
@@ -29,11 +30,39 @@ class ModeloDispositivo {
 
             file_put_contents($this->debugPath, "Conexión OK, preparando SQL\n", FILE_APPEND);
 
+=======
+
+    public function __construct($conexion) {
+        $this->conexion = $conexion;
+    }
+
+    /**
+     * ✅ Registra un nuevo dispositivo en la base de datos
+     */
+    public function registrarDispositivo(string $tipo, string $marca, ?int $idFuncionario, ?int $idVisitante): array {
+        try {
+            // Log de inicio
+            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "=== MODELO: registrarDispositivo ===\n", FILE_APPEND);
+            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "Tipo: $tipo, Marca: $marca, IdFunc: $idFuncionario, IdVis: $idVisitante\n", FILE_APPEND);
+
+            if (!$this->conexion) {
+                file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "ERROR: Conexión no disponible\n", FILE_APPEND);
+                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
+            }
+
+            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "Conexión OK, preparando SQL\n", FILE_APPEND);
+
+            // ⭐ CAMBIO: Agregamos QrDispositivo con valor vacío temporal
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             $sql = "INSERT INTO dispositivo 
                     (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
                     VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')";
 
+<<<<<<< HEAD
             file_put_contents($this->debugPath, "SQL preparado: $sql\n", FILE_APPEND);
+=======
+            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "SQL preparado: $sql\n", FILE_APPEND);
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
 
             $stmt = $this->conexion->prepare($sql);
             
@@ -44,6 +73,7 @@ class ModeloDispositivo {
                 ':visitante' => $idVisitante ?: null
             ];
             
+<<<<<<< HEAD
             file_put_contents($this->debugPath, "Parámetros: " . json_encode($params) . "\n", FILE_APPEND);
             
             $resultado = $stmt->execute($params);
@@ -57,18 +87,41 @@ class ModeloDispositivo {
             } else {
                 $errorInfo = $stmt->errorInfo();
                 file_put_contents($this->debugPath, "ERROR en execute: " . json_encode($errorInfo) . "\n", FILE_APPEND);
+=======
+            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "Parámetros: " . json_encode($params) . "\n", FILE_APPEND);
+            
+            $resultado = $stmt->execute($params);
+
+            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "Resultado execute: " . ($resultado ? 'true' : 'false') . "\n", FILE_APPEND);
+
+            if ($resultado) {
+                $lastId = $this->conexion->lastInsertId();
+                file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "INSERT exitoso, ID generado: $lastId\n", FILE_APPEND);
+                return ['success' => true, 'id' => $lastId];
+            } else {
+                $errorInfo = $stmt->errorInfo();
+                file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "ERROR en execute: " . json_encode($errorInfo) . "\n", FILE_APPEND);
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                 return ['success' => false, 'error' => $errorInfo[2] ?? 'Error desconocido al insertar'];
             }
 
         } catch (PDOException $e) {
             $errorMsg = $e->getMessage();
+<<<<<<< HEAD
             file_put_contents($this->debugPath, "EXCEPCIÓN PDO: $errorMsg\n", FILE_APPEND);
+=======
+            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "EXCEPCIÓN PDO: $errorMsg\n", FILE_APPEND);
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             return ['success' => false, 'error' => $errorMsg];
         }
     }
 
     /**
+<<<<<<< HEAD
      * Actualiza la ruta del código QR generado
+=======
+     * ✅ Actualiza la ruta del código QR generado
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
      */
     public function actualizarQR(int $idDispositivo, string $rutaQR): array {
         try {
@@ -94,7 +147,11 @@ class ModeloDispositivo {
     }
 
     /**
+<<<<<<< HEAD
      * Obtiene todos los dispositivos ACTIVOS con nombres de funcionarios y visitantes
+=======
+     * ✅ Obtiene todos los dispositivos ACTIVOS
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
      */
     public function obtenerTodos(): array {
         try {
@@ -102,6 +159,7 @@ class ModeloDispositivo {
                 return [];
             }
 
+<<<<<<< HEAD
             $sql = "SELECT 
                         d.*,
                         f.NombreFuncionario,
@@ -112,18 +170,28 @@ class ModeloDispositivo {
                     WHERE d.Estado = 'Activo' 
                     ORDER BY d.IdDispositivo DESC";
             
+=======
+            $sql = "SELECT * FROM dispositivo WHERE Estado = 'Activo' ORDER BY IdDispositivo DESC";
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
+<<<<<<< HEAD
             file_put_contents($this->debugPath, "ERROR en obtenerTodos: " . $e->getMessage() . "\n", FILE_APPEND);
+=======
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             return [];
         }
     }
 
     /**
+<<<<<<< HEAD
      * Obtiene todos los dispositivos (incluye activos e inactivos) con nombres
+=======
+     * ✅ Obtiene todos los dispositivos (incluye activos e inactivos)
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
      */
     public function obtenerTodosConEstado(): array {
         try {
@@ -131,6 +199,7 @@ class ModeloDispositivo {
                 return [];
             }
 
+<<<<<<< HEAD
             $sql = "SELECT 
                         d.*,
                         f.NombreFuncionario,
@@ -146,18 +215,34 @@ class ModeloDispositivo {
                         END, 
                         d.IdDispositivo DESC";
             
+=======
+            $sql = "SELECT * FROM dispositivo ORDER BY 
+                    CASE 
+                        WHEN Estado = 'Activo' THEN 1 
+                        WHEN Estado = 'Inactivo' THEN 2 
+                        ELSE 3 
+                    END, 
+                    IdDispositivo DESC";
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
+<<<<<<< HEAD
             file_put_contents($this->debugPath, "ERROR en obtenerTodosConEstado: " . $e->getMessage() . "\n", FILE_APPEND);
+=======
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             return [];
         }
     }
 
     /**
+<<<<<<< HEAD
      * Obtiene un dispositivo por su ID (incluye QR y nombres)
+=======
+     * ✅ Obtiene un dispositivo por su ID (incluye QR)
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
      */
     public function obtenerPorId(int $idDispositivo): ?array {
         try {
@@ -165,6 +250,7 @@ class ModeloDispositivo {
                 return null;
             }
 
+<<<<<<< HEAD
             $sql = "SELECT 
                         d.*,
                         f.NombreFuncionario,
@@ -174,6 +260,9 @@ class ModeloDispositivo {
                     LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
                     WHERE d.IdDispositivo = :id";
             
+=======
+            $sql = "SELECT * FROM dispositivo WHERE IdDispositivo = :id";
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':id' => $idDispositivo]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
@@ -184,7 +273,11 @@ class ModeloDispositivo {
     }
 
     /**
+<<<<<<< HEAD
      * Obtiene solo la ruta del QR de un dispositivo
+=======
+     * ✅ Obtiene solo la ruta del QR de un dispositivo
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
      */
     public function obtenerQR(int $idDispositivo): ?string {
         try {
@@ -205,6 +298,7 @@ class ModeloDispositivo {
     }
 
     /**
+<<<<<<< HEAD
      * Obtiene todos los funcionarios activos para el select
      */
     public function obtenerFuncionarios(): array {
@@ -262,6 +356,13 @@ class ModeloDispositivo {
             
             if (!$this->conexion) {
                 file_put_contents($this->debugPath, "ERROR: Conexión no disponible\n", FILE_APPEND);
+=======
+     * ✅ Actualiza los datos del dispositivo (sin tocar el QR ni el Estado)
+     */
+    public function actualizar(int $idDispositivo, array $datos): array {
+        try {
+            if (!$this->conexion) {
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
             }
 
@@ -272,6 +373,7 @@ class ModeloDispositivo {
                         IdVisitante = :visitante
                     WHERE IdDispositivo = :id";
 
+<<<<<<< HEAD
             file_put_contents($this->debugPath, "SQL: $sql\n", FILE_APPEND);
 
             $stmt = $this->conexion->prepare($sql);
@@ -310,17 +412,37 @@ class ModeloDispositivo {
 
             return [
                 'success' => true,
+=======
+            $stmt = $this->conexion->prepare($sql);
+            $resultado = $stmt->execute([
+                ':tipo' => $datos['TipoDispositivo'] ?? null,
+                ':marca' => $datos['MarcaDispositivo'] ?? null,
+                ':funcionario' => $datos['IdFuncionario'] ?? null,
+                ':visitante' => $datos['IdVisitante'] ?? null,
+                ':id' => $idDispositivo
+            ]);
+
+            return [
+                'success' => $resultado,
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                 'rows' => $stmt->rowCount()
             ];
 
         } catch (PDOException $e) {
+<<<<<<< HEAD
             file_put_contents($this->debugPath, "EXCEPCIÓN PDO: " . $e->getMessage() . "\n", FILE_APPEND);
+=======
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
     /**
+<<<<<<< HEAD
      * Cambia el estado del dispositivo (Activo <-> Inactivo)
+=======
+     * 🆕 Cambia el estado del dispositivo (Activo <-> Inactivo)
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
      */
     public function cambiarEstado(int $idDispositivo, string $nuevoEstado): array {
         try {
@@ -328,6 +450,10 @@ class ModeloDispositivo {
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
             }
 
+<<<<<<< HEAD
+=======
+            // Validar que el estado sea válido
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             if (!in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
                 return ['success' => false, 'error' => 'Estado no válido'];
             }
@@ -351,7 +477,11 @@ class ModeloDispositivo {
     }
 
     /**
+<<<<<<< HEAD
      * Verifica si existe un dispositivo
+=======
+     * ✅ Verifica si existe un dispositivo
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
      */
     public function existe(int $idDispositivo): bool {
         try {

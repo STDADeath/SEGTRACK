@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 <?php require_once __DIR__ . '/../layouts/parte_superior_supervisor.php'; ?>
 <?php require_once(__DIR__ . "/../../Core/conexion.php");?>
 
 <?php
 $conexionObj = new Conexion();
 $conn = $conexionObj->getConexion();
+=======
+<?php require_once __DIR__ . '/../Plantilla/parte_superior.php'; ?>
+<?php require_once(__DIR__ . "/../Core/conexion.php");?>
+
+<?php
+$conexion = new Conexion();
+$conn = $conexion->getConexion();
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
 
 // Construcción de filtros dinámicos
 $filtros = [];
@@ -50,7 +59,11 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-car me-2"></i>Vehículos Registrados</h1>
+<<<<<<< HEAD
         <a href="./Parqueadero.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+=======
+        <a href="../models/Parqueadero.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             <i class="fas fa-plus me-1"></i> Nuevo Vehículo
         </a>
     </div>
@@ -85,7 +98,11 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="col-md-1">
                     <label for="sede" class="form-label">ID Sede</label>
+<<<<<<< HEAD
                     <input type="text" name="sede" id="sede" class="form-control" value="<?= $_GET['sede'] ?? '' ?>" placeholder="ID">
+=======
+                    <input type="text" name="sede" id="sede" class="form-control" value="<?= $_GET['sede'] ?? '' ?>" placeholder="Sede">
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                 </div>
                 <div class="col-md-1">
                     <label for="estado" class="form-label">Estado</label>
@@ -97,7 +114,11 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
+<<<<<<< HEAD
                     <a href="VehiculoSupervisor.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+=======
+                    <a href="VehiculoLista.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                 </div>
             </form>
         </div>
@@ -113,7 +134,10 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
+<<<<<<< HEAD
                         <th>QR</th>
+=======
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                         <th>Tipo Vehículo</th>
                         <th>Placa</th>
                         <th>Descripción</th>
@@ -129,6 +153,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdParqueadero']; ?>" class="<?php echo $row['Estado'] === 'Inactivo' ? 'fila-inactiva' : ''; ?>">
                                 <td><?php echo $row['IdParqueadero']; ?></td>
+<<<<<<< HEAD
                                 <td class="text-center">
                                     <?php if (!empty($row['QrVehiculo'])) : ?>
                                         <button type="button" class="btn btn-sm btn-outline-success" 
@@ -140,6 +165,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge badge-warning">Sin QR</span>
                                     <?php endif; ?>
                                 </td>
+=======
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                                 <td><?php echo $row['TipoVehiculo']; ?></td>
                                 <td><?php echo $row['PlacaVehiculo']; ?></td>
                                 <td><?php echo $row['DescripcionVehiculo']; ?></td>
@@ -154,6 +181,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center">
+<<<<<<< HEAD
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-sm btn-outline-primary"
                                             onclick='cargarDatosEdicionVehiculo(<?php echo json_encode($row); ?>)'
@@ -167,12 +195,29 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <i class="fas <?php echo $row['Estado'] === 'Activo' ? 'fa-lock' : 'fa-lock-open'; ?>"></i>
                                         </button>
                                     </div>
+=======
+                                    <button type="button" class="btn btn-sm btn-outline-primary me-1"
+                                        onclick='cargarDatosEdicionVehiculo(<?php echo json_encode($row); ?>)'
+                                        title="Editar vehículo" data-toggle="modal" data-target="#modalEditarVehiculo">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" 
+                                            class="btn btn-sm <?php echo $row['Estado'] === 'Activo' ? 'btn-outline-warning' : 'btn-outline-success'; ?>" 
+                                            onclick="confirmarCambioEstadoVehiculo(<?php echo $row['IdParqueadero']; ?>, '<?php echo $row['Estado']; ?>')"
+                                            title="<?php echo $row['Estado'] === 'Activo' ? 'Desactivar' : 'Activar'; ?> vehículo">
+                                        <i class="fas <?php echo $row['Estado'] === 'Activo' ? 'fa-lock' : 'fa-lock-open'; ?>"></i>
+                                    </button>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
+<<<<<<< HEAD
                             <td colspan="10" class="text-center py-4">
+=======
+                            <td colspan="9" class="text-center py-4">
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay vehículos registrados con los filtros seleccionados</p>
                             </td>
@@ -184,6 +229,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<<<<<<< HEAD
 <!-- Modal para visualizar QR de Vehículo -->
 <div class="modal fade" id="modalVerQRVehiculo" tabindex="-1" role="dialog" aria-labelledby="modalVerQRVehiculoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -210,6 +256,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+=======
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
 <!-- Modal Editar Vehículo -->
 <div class="modal fade" id="modalEditarVehiculo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -221,6 +269,10 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="modal-body">
                 <form id="formEditarVehiculo">
                     <input type="hidden" id="editIdVehiculo" name="id">
+<<<<<<< HEAD
+=======
+                    <input type="hidden" id="editAccion" name="accion" value="actualizar">
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -233,8 +285,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                             <label class="form-label">Placa (No editable)</label>
                             <input type="text" id="editPlacaVehiculoDisabled" class="form-control" disabled>
+=======
+                            <label class="form-label">Placa</label>
+                            <input type="text" id="editPlacaVehiculoDisabled" class="form-control" disabled>
+                            <input type="hidden" id="editPlacaVehiculo" name="placa">
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                         </div>
                     </div>
 
@@ -245,12 +303,23 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                             <label class="form-label">Tarjeta Propiedad (No editable)</label>
                             <input type="text" id="editTarjetaPropiedadDisabled" class="form-control" disabled>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Fecha Parqueadero (No editable)</label>
                             <input type="datetime-local" id="editFechaParqueaderoDisabled" class="form-control" disabled>
+=======
+                            <label class="form-label">Tarjeta Propiedad</label>
+                            <input type="text" id="editTarjetaPropiedadDisabled" class="form-control" disabled>
+                            <input type="hidden" id="editTarjetaPropiedad" name="tarjeta">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fecha Parqueadero</label>
+                            <input type="datetime-local" id="editFechaParqueaderoDisabled" class="form-control" disabled>
+                            <input type="hidden" id="editFechaParqueadero" name="fecha">
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
                         </div>
                     </div>
 
@@ -290,7 +359,11 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </svg>
                     </label>
                 </div>
+<<<<<<< HEAD
                 <p id="mensajeCambioEstadoVehiculo" class="mb-3 mt-2" style="font-size: 1.1rem;"></p>
+=======
+                <p id="mensajeCambioEstadoVehiculo"></p>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -300,6 +373,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<<<<<<< HEAD
 <!-- Scripts de jQuery y Bootstrap (ANTES de cerrar el layout) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -550,3 +624,135 @@ $(document).ready(function() {
 </script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
+=======
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script>
+let vehiculoIdAEditar = null;
+let vehiculoACambiarEstado = null;
+let estadoActualVehiculo = null;
+
+// Cargar datos en el modal de edición
+function cargarDatosEdicionVehiculo(row) {
+    vehiculoIdAEditar = row.IdParqueadero;
+    $('#editIdVehiculo').val(row.IdParqueadero);
+    $('#editTipoVehiculo').val(row.TipoVehiculo);
+    $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
+    $('#editIdSede').val(row.IdSede);
+
+    $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
+    $('#editPlacaVehiculo').val(row.PlacaVehiculo);
+
+    $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
+    $('#editTarjetaPropiedad').val(row.TarjetaPropiedad);
+
+    let fechaHora = row.FechaParqueadero;
+    if (fechaHora) {
+        fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
+    }
+    $('#editFechaParqueaderoDisabled').val(fechaHora);
+    $('#editFechaParqueadero').val(fechaHora);
+}
+
+// Confirmar cambio de estado
+function confirmarCambioEstadoVehiculo(id, estado) {
+    vehiculoACambiarEstado = id;
+    estadoActualVehiculo = estado;
+    
+    const nuevoEstado = estado === 'Activo' ? 'Inactivo' : 'Activo';
+    const accion = nuevoEstado === 'Activo' ? 'activar' : 'desactivar';
+    const colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
+    
+    // Configurar el toggle visual
+    const toggleLabel = document.getElementById('toggleEstadoVisualVehiculo');
+    
+    if (nuevoEstado === 'Activo') {
+        toggleLabel.classList.add('activo');
+    } else {
+        toggleLabel.classList.remove('activo');
+    }
+    
+    $('#headerCambioEstadoVehiculo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
+    $('#tituloCambioEstadoVehiculo').html(`<i class="fas fa-${nuevoEstado === 'Activo' ? 'lock-open' : 'lock'} me-2"></i>${accion.charAt(0).toUpperCase() + accion.slice(1)} Vehículo`);
+    $('#mensajeCambioEstadoVehiculo').html(`¿Está seguro que desea <strong>${accion}</strong> este vehículo?`);
+    
+    $('#modalCambiarEstadoVehiculo').modal('show');
+}
+
+// Confirmar cambio de estado
+$('#btnConfirmarCambioEstadoVehiculo').click(function() {
+    if (!vehiculoACambiarEstado) return;
+    
+    const nuevoEstado = estadoActualVehiculo === 'Activo' ? 'Inactivo' : 'Activo';
+    
+    $.ajax({
+        url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
+        type: 'POST',
+        data: {
+            accion: 'cambiar_estado',
+            id: vehiculoACambiarEstado,
+            estado: nuevoEstado
+        },
+        dataType: 'json',
+        success: function(response) {
+            $('#modalCambiarEstadoVehiculo').modal('hide');
+            if (response.success) {
+                alert(response.message);
+                location.reload();
+            } else {
+                alert('Error: ' + response.message);
+            }
+        },
+        error: function() {
+            $('#modalCambiarEstadoVehiculo').modal('hide');
+            alert('Error al intentar cambiar el estado del vehículo');
+        }
+    });
+});
+
+// Botón guardar cambios
+$('#btnGuardarCambiosVehiculo').click(function() {
+    const formData = {
+        accion: 'actualizar',
+        id: $('#editIdVehiculo').val(),
+        tipo: $('#editTipoVehiculo').val(),
+        placa: $('#editPlacaVehiculo').val(),
+        descripcion: $('#editDescripcionVehiculo').val(),
+        tarjeta: $('#editTarjetaPropiedad').val(),
+        fecha: $('#editFechaParqueadero').val(),
+        idsede: $('#editIdSede').val()
+    };
+
+    // Validar campos
+    if (!formData.tipo || !formData.descripcion || !formData.idsede) {
+        alert('Complete todos los campos obligatorios');
+        return;
+    }
+
+    $.ajax({
+        url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            $('#modalEditarVehiculo').modal('hide');
+            if (response.success) {
+                alert('Vehículo actualizado correctamente');
+                location.reload();
+            } else {
+                alert('Error: ' + response.message);
+            }
+        },
+        error: function() {
+            $('#modalEditarVehiculo').modal('hide');
+            alert('Error al intentar actualizar el vehículo');
+        }
+    });
+});
+</script>
+
+<script src="../js/javascript/js/ValidacionParqueadero.js"></script>
+
+<?php require_once __DIR__ . '/../Plantilla/parte_inferior.php'; ?>
+>>>>>>> f5d2cb7 (Modificación de la estructura de carpetas del proyecto)
