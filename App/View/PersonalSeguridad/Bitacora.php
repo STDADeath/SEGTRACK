@@ -89,78 +89,39 @@
     </div>
 </div>
 
-<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script>
-$(document).ready(function () {
+$(function () {
 
-    $("#TieneVisitante").change(function () {
-        if ($(this).val() === "si") {
-            $("#VisitanteContainer").slideDown();
-        } else {
-            $("#VisitanteContainer, #DispositivoContainer").slideUp();
-            $("#IdVisitante, #IdDispositivo").val("");
-            $("#TraeDispositivo").val("");
-        }
+    $("#TieneVisitante, #TraeDispositivo").change(function () {
+        $("#VisitanteContainer").toggle($("#TieneVisitante").val() === "si");
+        $("#DispositivoContainer").toggle($("#TraeDispositivo").val() === "si");
     });
 
 
-    $("#TraeDispositivo").change(function () {
-        if ($(this).val() === "si") {
-            $("#DispositivoContainer").slideDown();
-        } else {
-            $("#DispositivoContainer").slideUp();
-            $("#IdDispositivo").val("");
-        }
-    });
+    $("#formRegistrarBitacora").submit(function (e) {
+        e.preventDefault();
 
+        const btn = $(this).find('button[type=submit]');
+        const original = btn.html();
+        btn.html('<i class="fas fa-spinner fa-spin"></i> Procesando...').prop("disabled", true);
 
-$("#formRegistrarBitacora").submit(function (e) {
-    e.preventDefault();
-
-
-    const btn = $(this).find('button[type="submit"]');
-    const originalText = btn.html();
-    btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
-    btn.prop('disabled', true);
-
-    $.ajax({
-       url: "../../Controller/ControladorBitacora.php",
-        type: "POST",
-        data: $(this).serialize() + "&accion=registrar",
-        dataType: "json",
-        success: function (response) {
-            console.log("Respuesta del servidor:", response);
-
-            if (response.success) {
-                alert("✅ " + response.message);
+        $.post("../../Controller/ControladorBitacora.php", $(this).serialize() + "&accion=registrar", function (res) {
+            console.log("Respuesta:", res);
+            if (res.success) {
+                alert("Bitácora registrada con éxito");
                 $("#formRegistrarBitacora")[0].reset();
                 $("#VisitanteContainer, #DispositivoContainer").hide();
             } else {
-                let errorMsg = " " + (response.message || "Error al registrar la bitácora");
-                if (response.error) {
-                    errorMsg += "\nDetalles: " + response.error;
-                }
-                alert(errorMsg);
+                alert(res.message || "Error al registrar");
             }
-        },
-        error: function (xhr, status, error) {
-            console.error("Error AJAX:", error);
-            console.log("Estado:", status);
-            console.log("Respuesta completa del servidor:", xhr.responseText);
-            
-            let errorMsg = " Error de conexión con el servidor";
-            if (xhr.responseText && xhr.responseText.includes('conexión')) {
-                errorMsg += "\nVerifica la configuración de la base de datos";
-            }
-            alert(errorMsg);
-        },
-        complete: function() {
-            btn.html(originalText);
-            btn.prop('disabled', false);
-        }
+        }, "json")
+        .fail(() => alert("Error de conexión con el servidor"))
+        .always(() => btn.html(original).prop("disabled", false));
     });
-});
+
 });
 </script>
+
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

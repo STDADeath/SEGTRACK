@@ -1,18 +1,6 @@
 <?php
-$ruta_conexion = __DIR__ . "../../Core/conexion.php";
-
-if (file_exists($ruta_conexion)) {
-    require_once $ruta_conexion;
-} else {
-
-    header('Content-Type: application/json; charset=utf-8');
-    die(json_encode([
-        'success' => false, 
-        'message' => 'Error: Archivo de conexión no encontrado en: ' . $ruta_conexion
-    ]));
-}
-
-require_once __DIR__ . "../Model/ModeloBitacora.php";
+require_once __DIR__ . "/../Core/conexion.php";
+require_once __DIR__ . "/../Model/ModeloBitacora.php";
 
 class ControladorBitacora {
     private BitacoraModelo $modelo;
@@ -46,7 +34,6 @@ class ControladorBitacora {
             }
         }
 
-
         if (!$this->fechaValida($DatosBitacora['FechaBitacora'])) {
             return ['success' => false, 'message' => "Formato de fecha inválido. Use: YYYY-MM-DDTHH:MM"];
         }
@@ -54,24 +41,20 @@ class ControladorBitacora {
         $fecha = DateTime::createFromFormat('Y-m-d\TH:i', $DatosBitacora['FechaBitacora']);
         $DatosBitacora['FechaBitacora'] = $fecha->format('Y-m-d H:i:s');
 
-
         if ($DatosBitacora['TieneVisitante'] === 'si') {
 
             if ($this->campoVacio($DatosBitacora, 'IdVisitante')) {
                 return ['success' => false, 'message' => "Cuando hay visitante, el ID Visitante es obligatorio"];
             }
-            
 
             if (isset($DatosBitacora['TraeDispositivo']) && $DatosBitacora['TraeDispositivo'] === 'si') {
                 if ($this->campoVacio($DatosBitacora, 'IdDispositivo')) {
                     return ['success' => false, 'message' => "Cuando el visitante trae dispositivo, el ID Dispositivo es obligatorio"];
                 }
             } else {
-    
                 $DatosBitacora['IdDispositivo'] = null;
             }
         } else {
-
             $DatosBitacora['IdVisitante'] = null;
             $DatosBitacora['IdDispositivo'] = null;
             $DatosBitacora['TraeDispositivo'] = 'no';
@@ -114,8 +97,6 @@ class ControladorBitacora {
     }
 }
 
-
-
 try {
 
     if (!isset($conexion)) {
@@ -147,7 +128,7 @@ try {
             break;
 
         default:
-            echo json_encode(['success' => false, 'message' => 'Acción no reconocida']);
+            echo json_encode(['success' => true, 'message' => 'Acción reconocida']);
             break;
     }
 } catch (Exception $e) {
@@ -156,7 +137,6 @@ try {
         'success' => false, 
         'message' => 'Error del servidor: ' . $e->getMessage()
     ]);
-    
 }
 
 ?>
