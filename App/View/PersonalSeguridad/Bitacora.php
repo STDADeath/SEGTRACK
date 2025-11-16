@@ -111,7 +111,7 @@ $(function () {
         const btn = $(this).find('button[type=submit]');
         const original = btn.html();
         btn.html('<i class="fas fa-spinner fa-spin"></i> Procesando...')
-         .prop("disabled", true);
+    .prop("disabled", true);
 
         // Envío de datos al controlador usando POST
         $.post(
