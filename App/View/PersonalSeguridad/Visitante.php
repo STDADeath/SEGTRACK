@@ -38,25 +38,30 @@
     </div>
 </div>
 
-<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script>
 $(document).ready(function () {
+    // Captura el submit del formulario de visitantes
     $("#formRegistrarVisitante").submit(function (e) {
-        e.preventDefault();
+        e.preventDefault(); // Evita que la página recargue
 
+        // Cambia el texto del botón mientras se procesa la solicitud
         const btn = $(this).find('button[type="submit"]');
         const original = btn.html();
-        btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
-        btn.prop('disabled', true);
+        btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...').prop("disabled", true);
 
+        // Envía los datos al controlador usando AJAX
         $.ajax({
-            url: "../controller/ingreso_Visitante/controladorVisitante.php",
+            url: "../../Controller/ControladorVisitante.php",
             type: "POST",
             data: $(this).serialize() + "&accion=registrar",
             dataType: "json",
             success: function (res) {
+                console.log("Respuesta del servidor:", res);
+
                 if (res.success) {
                     alert("✅ " + res.message);
+                    // Limpia el formulario después de registrar
                     $("#formRegistrarVisitante")[0].reset();
                 } else {
                     alert("❌ " + (res.message || "Error al registrar visitante"));
@@ -64,11 +69,13 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error("Error AJAX:", error);
-                alert("Error de conexión con el servidor");
+                console.log("Estado:", status);
+                console.log("Respuesta completa del servidor:", xhr.responseText);
+                alert("❌ Error de conexión con el servidor");
             },
             complete: function () {
-                btn.html(original);
-                btn.prop('disabled', false);
+                // Restaura el botón
+                btn.html(original).prop("disabled", false);
             }
         });
     });
