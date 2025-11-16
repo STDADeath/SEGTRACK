@@ -4,12 +4,12 @@
     <div class="card border-0 shadow-lg rounded-4 bg-light">
         <div class="card-body px-4 py-5">
             
-            <!-- Título principal -->
+            <!-- Título -->
             <h4 class="text-center fw-bold text-primary mb-5">
                 <i class="fas fa-id-card-alt me-2"></i>Control de Ingreso de Funcionarios
             </h4>
 
-            <!-- Sección del lector QR -->
+            <!-- Lector QR -->
             <div class="text-center mb-5">
                 <h5 class="fw-semibold mb-4 text-secondary">
                     <i class="fas fa-qrcode me-2"></i>Escanear Código QR
@@ -19,9 +19,6 @@
                 <div class="d-flex justify-content-center mb-3">
                     <div id="qr-reader" class="shadow-sm rounded-3 bg-white" style="width: 300px;"></div>
                 </div>
-
-                <!-- Resultado -->
-                <div id="resultado-qr" class="mt-3 text-muted small fst-italic"></div>
 
                 <!-- Tipo de movimiento -->
                 <div class="mt-4 w-50 mx-auto">
@@ -34,13 +31,9 @@
                     </select>
                 </div>
 
-                <!-- Botón capturar -->
+                <!-- Botón capturar (CORREGIDO) -->
                 <button id="btnCapturar" 
-
-                        class="btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
-
-                        <class="btn btn-success mt-4 px-4 py-2 shadow-sm fw-semibold>
-
+                        class="btn btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
                     <i class="fas fa-camera me-2"></i>Capturar Código QR
                 </button>
             </div>
@@ -88,102 +81,120 @@
 <!-- Librería para la lectura de QR -->
 <script src="https://unpkg.com/html5-qrcode"></script>
 
+<!-- JavaScript compactado y limpio -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // Referencias a los elementos del DOM
-    const tablaIngresos = document.getElementById("tablaIngresos");
-    const mensajeError = document.getElementById("mensajeError");
-    const mensajeExito = document.getElementById("mensajeExito");
-    const mensajeVacio = document.getElementById("mensajeVacio");
-    const btnCapturar = document.getElementById("btnCapturar");
+
+
+    // REFERENCIAS A ELEMENTOS DEL DOM
+
+    const tabla = document.getElementById("tablaIngresos");
+    const msgErr = document.getElementById("mensajeError");
+    const msgOk = document.getElementById("mensajeExito");
+    const msgVacio = document.getElementById("mensajeVacio");
     const tipoMovimiento = document.getElementById("tipoMovimiento");
+    const btn = document.getElementById("btnCapturar");
 
     // Instancia del lector QR
     const qrReader = new Html5Qrcode("qr-reader");
 
-    let ultimaLectura = null; // Evita registrar el mismo QR varias veces seguidas
+    // Evita que el mismo QR se lea varias veces seguidas
+    let ultimaLectura = null;
 
-    // Función para obtener registros de ingreso desde el servidor
+
+
+
+    // Muestra alerta según si es éxito o error
+
+    const mostrarMensaje = (ok, texto) => {
+        msgOk.classList.toggle("d-none", !ok); // Oculta o muestra éxito
+        msgErr.classList.toggle("d-none", ok); // Oculta o muestra error
+        (ok ? msgOk : msgErr).textContent = texto; // Inserta el texto
+    };
+
+
+
+    // Obtiene los últimos ingresos desde el servidor y actualiza la tabla
+
     function cargarIngresos() {
         fetch("/SEGTRACK/App/Controller/ControladorIngreso.php")
-            .then(res => res.json())
+            .then(r => r.json())
             .then(data => {
-                tablaIngresos.innerHTML = "";
-                mensajeVacio.classList.add("d-none");
 
-                // Si no hay datos, mostramos mensaje de lista vacía
-                if (!data.data || data.data.length === 0) { 
-                    mensajeVacio.classList.remove("d-none");
-                    return;
-                }
+                tabla.innerHTML = ""; 
 
-                // Se recorren los registros para mostrarlos en la tabla
-                data.data.forEach(ingreso => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${ingreso.NombreFuncionario}</td>
-                        <td>${ingreso.CargoFuncionario}</td>
-                        <td>${ingreso.TipoMovimiento}</td>
-                        <td>${new Date(ingreso.FechaIngreso).toLocaleString()}</td>
-                    `;
-                    tablaIngresos.appendChild(row);
+                const registros = data.data || []; // Si no hay data → arreglo vacío
+
+                // Mostrar mensaje "no hay registros"
+                msgVacio.classList.toggle("d-none", registros.length !== 0);
+
+                // Inserta cada registro en la tabla
+                registros.forEach(item => {
+                    tabla.innerHTML += `
+                        <tr>
+                            <td>${item.NombreFuncionario}</td>
+                            <td>${item.CargoFuncionario}</td>
+                            <td>${item.TipoMovimiento}</td>
+                            <td>${new Date(item.FechaIngreso).toLocaleString()}</td>
+                        </tr>`;
                 });
             });
     }
 
-    // Llamamos a la función para cargar la tabla inicialmente
+    // Carga inicial de los ingresos al abrir la vista
     cargarIngresos();
 
-    // Función que se ejecuta cuando se detecta un QR correctamente
+
+    // FUNCIÓN: onScanSuccess(qr)
+    // Se activa cuando el lector QR detecta un código válido
+    // Envía el QR al servidor y recibe confirmación
+
     function onScanSuccess(qr) {
 
-        // Evita registrar repetido si el lector sigue activo
+        // Evita duplicados si el lector está activo
         if (qr === ultimaLectura) return;
         ultimaLectura = qr;
-        setTimeout(() => { ultimaLectura = null; }, 2000);
+        setTimeout(() => ultimaLectura = null, 2000);
 
-        // Envío del código QR al servidor mediante POST
+        // Envío del QR al controlador mediante POST
         fetch("/SEGTRACK/App/Controller/ControladorIngreso.php", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 qr_codigo: qr,
-                tipoMovimiento: tipoMovimiento.value // Entrada o Salida
+                tipoMovimiento: tipoMovimiento.value
             })
         })
-        .then(res => res.json())
+        .then(r => r.json())
         .then(data => {
-            // Si el servidor respondió con éxito
-            if (data.success) {
-                mensajeExito.textContent = data.message;
-                mensajeExito.classList.remove("d-none");
-                mensajeError.classList.add("d-none");
-                cargarIngresos(); // Recargo la tabla
-            } else {
-                // Si hubo un error (ej: QR no registrado)
-                mensajeError.textContent = data.message;
-                mensajeError.classList.remove("d-none");
-                mensajeExito.classList.add("d-none");
-            }
-        })
-        .catch(() => {
-            mensajeError.textContent = "Error al enviar el código al servidor.";
-            mensajeError.classList.remove("d-none");
-        });
 
-        // Luego de leer, se detiene la cámara
+            // Muestra el mensaje devuelto por el controlador
+            mostrarMensaje(data.success, data.message);
+
+            // Si se registró bien → recargar tabla
+            if (data.success) cargarIngresos();
+        })
+        .catch(() => 
+            mostrarMensaje(false, "Error al enviar el código al servidor.")
+        );
+
+        // Detiene la cámara después de leer
         qrReader.stop();
     }
 
-    // Al hacer clic en Capturar, iniciamos la cámara y el lector QR
-    btnCapturar.addEventListener("click", async () => {
+
+    // BOTÓN: Iniciar cámara y lector QR
+
+    btn.addEventListener("click", () => {
         qrReader.start(
-            { facingMode: "environment" }, // Usa cámara trasera si está disponible
-            { fps: 10, qrbox: 250 },
-            onScanSuccess // Callback cuando se detecta un QR
+            { facingMode: "environment" }, // Cámara trasera
+            { fps: 10, qrbox: 250 },       // Configuración del lector
+            onScanSuccess                  // Función callback
         );
     });
+
 });
 </script>
+
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
