@@ -9,78 +9,71 @@ class ControladorBitacora {
         $this->modelo = new BitacoraModelo($conexion);
     }
 
-    private function campoVacio(array $array, string $campo): bool {
-        return !isset($array[$campo]) || trim($array[$campo]) === "";
+    private function campoVacio($data, $campo): bool {
+        return empty(trim($data[$campo] ?? ""));
     }
 
-    private function fechaValida(string $fecha): bool {
+    private function fechaValida($fecha): bool {
         $d = DateTime::createFromFormat('Y-m-d\TH:i', $fecha);
         return $d && $d->format('Y-m-d\TH:i') === $fecha;
     }
 
-    public function registrarBitacora(array $DatosBitacora): array {
-        $camposObligatorios = [
-            'TurnoBitacora', 
-            'NovedadesBitacora', 
-            'FechaBitacora', 
-            'IdFuncionario', 
-            'IdIngreso', 
-            'TieneVisitante'
+    public function registrarBitacora($data): array {
+
+        // ✔ campos obligatorios
+        $obligatorios = [
+            'TurnoBitacora', 'NovedadesBitacora', 'FechaBitacora',
+            'IdFuncionario', 'IdIngreso', 'TieneVisitante'
         ];
 
-        foreach ($camposObligatorios as $campo) {
-            if ($this->campoVacio($DatosBitacora, $campo)) {
-                return ['success' => false, 'message' => "Falta el campo obligatorio: $campo"];
+        foreach ($obligatorios as $c) {
+            if ($this->campoVacio($data, $c)) {
+                return ['success' => false, 'message' => "Falta el campo: $c"];
             }
         }
 
-        if (!$this->fechaValida($DatosBitacora['FechaBitacora'])) {
-            return ['success' => false, 'message' => "Formato de fecha inválido. Use: YYYY-MM-DDTHH:MM"];
+        // ✔ validar fecha
+        if (!$this->fechaValida($data['FechaBitacora'])) {
+            return ['success' => false, 'message' => "Fecha inválida (YYYY-MM-DDTHH:MM)"];
         }
 
-        $fecha = DateTime::createFromFormat('Y-m-d\TH:i', $DatosBitacora['FechaBitacora']);
-        $DatosBitacora['FechaBitacora'] = $fecha->format('Y-m-d H:i:s');
+        // convertir fecha
+        $data['FechaBitacora'] = DateTime::createFromFormat(
+            'Y-m-d\TH:i', $data['FechaBitacora']
+        )->format('Y-m-d H:i:s');
 
-        if ($DatosBitacora['TieneVisitante'] === 'si') {
+        // ✔ validaciones de visitante
+        if ($data['TieneVisitante'] === 'si') {
 
-            if ($this->campoVacio($DatosBitacora, 'IdVisitante')) {
-                return ['success' => false, 'message' => "Cuando hay visitante, el ID Visitante es obligatorio"];
+            if ($this->campoVacio($data, 'IdVisitante')) {
+                return ['success' => false, 'message' => "ID Visitante obligatorio"];
             }
 
-            if (isset($DatosBitacora['TraeDispositivo']) && $DatosBitacora['TraeDispositivo'] === 'si') {
-                if ($this->campoVacio($DatosBitacora, 'IdDispositivo')) {
-                    return ['success' => false, 'message' => "Cuando el visitante trae dispositivo, el ID Dispositivo es obligatorio"];
+            if (($data['TraeDispositivo'] ?? 'no') === 'si') {
+                if ($this->campoVacio($data, 'IdDispositivo')) {
+                    return ['success' => false, 'message' => "ID Dispositivo obligatorio"];
                 }
             } else {
-                $DatosBitacora['IdDispositivo'] = null;
+                $data['IdDispositivo'] = null;
             }
-        } else {
-            $DatosBitacora['IdVisitante'] = null;
-            $DatosBitacora['IdDispositivo'] = null;
-            $DatosBitacora['TraeDispositivo'] = 'no';
+        } 
+        else {
+            // sin visitante
+            $data['IdVisitante'] = null;
+            $data['IdDispositivo'] = null;
+            $data['TraeDispositivo'] = 'no';
         }
 
+        // ✔ guardar
         try {
-            $resultado = $this->modelo->insertar($DatosBitacora);
+            $res = $this->modelo->insertar($data);
 
-            if ($resultado['success']) {
-                return [
-                    'success' => true, 
-                    'message' => 'Bitácora registrada correctamente', 
-                    'data' => ['IdBitacora' => $resultado['id']]
-                ];
-            } else {
-                return [
-                    'success' => false, 
-                    'message' => 'No se pudo registrar la bitácora', 
-                    'error' => $resultado['error'] ?? 'Error desconocido en la base de datos'
-                ];
-            }
+            return $res['success']
+                ? ['success' => true, 'message' => 'Bitácora registrada', 'data' => ['IdBitacora' => $res['id']]]
+                : ['success' => false, 'message' => 'No se pudo registrar', 'error' => $res['error'] ?? 'Error BD'];
+
         } catch (Exception $e) {
-            return [
-                'success' => false, 
-                'message' => 'Error en el servidor: ' . $e->getMessage()
-            ];
+            return ['success' => false, 'message' => "Error: " . $e->getMessage()];
         }
     }
 
@@ -88,19 +81,18 @@ class ControladorBitacora {
         return $this->modelo->obtenerTodos();
     }
 
-    public function obtenerPorId(int $IdBitacora): ?array {
-        return $this->modelo->obtenerPorId($IdBitacora);
+    public function obtenerPorId($id): ?array {
+        return $this->modelo->obtenerPorId($id);
     }
 
-    public function actualizar(int $IdBitacora, array $DatosBitacora): array {
-        return $this->modelo->actualizar($IdBitacora, $DatosBitacora);
+    public function actualizar($id, $data): array {
+        return $this->modelo->actualizar($id, $data);
     }
 }
 
 try {
-
     if (!isset($conexion)) {
-        throw new Exception("Conexión a la base de datos no disponible");
+        throw new Exception("No hay conexión a la base de datos");
     }
 
     $controlador = new ControladorBitacora($conexion);
@@ -109,34 +101,16 @@ try {
     header('Content-Type: application/json; charset=utf-8');
 
     switch ($accion) {
-        case 'registrar':
-            echo json_encode($controlador->registrarBitacora($_POST));
-            break;
-
-        case 'mostrar':
-            echo json_encode($controlador->mostrarBitacora());
-            break;
-
-        case 'obtener':
-            $id = isset($_POST['IdBitacora']) ? (int)$_POST['IdBitacora'] : 0;
-            echo json_encode($controlador->obtenerPorId($id));
-            break;
-
-        case 'actualizar':
-            $id = isset($_POST['IdBitacora']) ? (int)$_POST['IdBitacora'] : 0;
-            echo json_encode($controlador->actualizar($id, $_POST));
-            break;
+        case 'registrar': echo json_encode($controlador->registrarBitacora($_POST)); break;
+        case 'mostrar':   echo json_encode($controlador->mostrarBitacora()); break;
+        case 'obtener':   echo json_encode($controlador->obtenerPorId((int)($_POST['IdBitacora'] ?? 0))); break;
+        case 'actualizar':echo json_encode($controlador->actualizar((int)($_POST['IdBitacora'] ?? 0), $_POST)); break;
 
         default:
-            echo json_encode(['success' => true, 'message' => 'Acción reconocida']);
+            echo json_encode(['success' => false, 'message' => 'Acción no reconocida']);
             break;
     }
-} catch (Exception $e) {
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Error del servidor: ' . $e->getMessage()
-    ]);
-}
 
-?>
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'message' => "Error servidor: " . $e->getMessage()]);
+}
