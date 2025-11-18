@@ -9,7 +9,8 @@
     </div>
 
     <?php
-    require_once __DIR__ . "../../../Core/conexion.php";
+    // ✅ Ruta corregida a conexion.php
+    require_once __DIR__ . "/../../Core/conexion.php";
     $conexionObj = new Conexion();
     $conn = $conexionObj->getConexion();
 
@@ -220,14 +221,14 @@
     </div>
 </div>
 
-
-
 <script>
 let dispositivoIdAEditar = null;
 
-// ✅ Función para mostrar QR
+// ✅ Función para mostrar QR - CORREGIDA para buscar en qr_dipo
 function verQR(rutaQR, idDispositivo) {
-    const rutaCompleta = '../' + rutaQR;
+    const rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
+    
+    console.log('Ruta QR completa:', rutaCompleta);
     
     $('#qrDispositivoId').text(idDispositivo);
     $('#qrImagen').attr('src', rutaCompleta);
@@ -254,12 +255,14 @@ $('#btnGuardarCambios').click(function() {
         id_funcionario: $('#editFuncionario').val(),
         id_visitante: $('#editVisitante').val()
     };
+    
     if (!formData.tipo || !formData.marca) {
         alert('Por favor, complete todos los campos obligatorios');
         return;
     }
+    
     $.ajax({
-        url: '../Controller/parqueadero_dispositivo/ControladorDispositivo.php',
+        url: '../../Controller/ControladorDispositivo.php',
         type: 'POST',
         data: formData,
         dataType: 'json',

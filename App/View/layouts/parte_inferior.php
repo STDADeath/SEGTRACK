@@ -60,7 +60,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Script del template SB Admin 2 -->
-    <script src="../../../Public/js/sb-admin-2.min.js"></script>
+    <script src="../../Public/js/javascript/demo/sb-admin-2.min"></script>
+    
+    <!-- alertas -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>

@@ -11,23 +11,30 @@ class ModeloDispositivo {
      */
     public function registrarDispositivo(string $tipo, string $marca, ?int $idFuncionario, ?int $idVisitante): array {
         try {
-            // Log de inicio
-            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "=== MODELO: registrarDispositivo ===\n", FILE_APPEND);
-            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "Tipo: $tipo, Marca: $marca, IdFunc: $idFuncionario, IdVis: $idVisitante\n", FILE_APPEND);
+            // ✅ Ruta corregida al debug
+            $debugPath = __DIR__ . '/../Controller/Debug_Disp/debug_log.txt';
+            
+            // Crear carpeta Debug_Disp si no existe
+            $carpetaDebug = dirname($debugPath);
+            if (!file_exists($carpetaDebug)) {
+                mkdir($carpetaDebug, 0777, true);
+            }
+
+            file_put_contents($debugPath, "=== MODELO: registrarDispositivo ===\n", FILE_APPEND);
+            file_put_contents($debugPath, "Tipo: $tipo, Marca: $marca, IdFunc: $idFuncionario, IdVis: $idVisitante\n", FILE_APPEND);
 
             if (!$this->conexion) {
-                file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "ERROR: Conexión no disponible\n", FILE_APPEND);
+                file_put_contents($debugPath, "ERROR: Conexión no disponible\n", FILE_APPEND);
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
             }
 
-            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "Conexión OK, preparando SQL\n", FILE_APPEND);
+            file_put_contents($debugPath, "Conexión OK, preparando SQL\n", FILE_APPEND);
 
-            // ⭐ CAMBIO: Agregamos QrDispositivo con valor vacío temporal
             $sql = "INSERT INTO dispositivo 
                     (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
                     VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')";
 
-            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "SQL preparado: $sql\n", FILE_APPEND);
+            file_put_contents($debugPath, "SQL preparado: $sql\n", FILE_APPEND);
 
             $stmt = $this->conexion->prepare($sql);
             
@@ -38,25 +45,27 @@ class ModeloDispositivo {
                 ':visitante' => $idVisitante ?: null
             ];
             
-            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "Parámetros: " . json_encode($params) . "\n", FILE_APPEND);
+            file_put_contents($debugPath, "Parámetros: " . json_encode($params) . "\n", FILE_APPEND);
             
             $resultado = $stmt->execute($params);
 
-            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "Resultado execute: " . ($resultado ? 'true' : 'false') . "\n", FILE_APPEND);
+            file_put_contents($debugPath, "Resultado execute: " . ($resultado ? 'true' : 'false') . "\n", FILE_APPEND);
 
             if ($resultado) {
                 $lastId = $this->conexion->lastInsertId();
-                file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "INSERT exitoso, ID generado: $lastId\n", FILE_APPEND);
+                file_put_contents($debugPath, "INSERT exitoso, ID generado: $lastId\n", FILE_APPEND);
                 return ['success' => true, 'id' => $lastId];
             } else {
                 $errorInfo = $stmt->errorInfo();
-                file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "ERROR en execute: " . json_encode($errorInfo) . "\n", FILE_APPEND);
+                file_put_contents($debugPath, "ERROR en execute: " . json_encode($errorInfo) . "\n", FILE_APPEND);
                 return ['success' => false, 'error' => $errorInfo[2] ?? 'Error desconocido al insertar'];
             }
 
         } catch (PDOException $e) {
             $errorMsg = $e->getMessage();
-            file_put_contents(__DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt', "EXCEPCIÓN PDO: $errorMsg\n", FILE_APPEND);
+            if (isset($debugPath)) {
+                file_put_contents($debugPath, "EXCEPCIÓN PDO: $errorMsg\n", FILE_APPEND);
+            }
             return ['success' => false, 'error' => $errorMsg];
         }
     }

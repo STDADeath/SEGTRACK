@@ -1,0 +1,111 @@
+2025-11-18 01:09:48 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Dell, IdFunc: 25, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Portatil",":marca":"Dell",":funcionario":25,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 20
+Generando QR para dispositivo ID: 20
+Carpeta QR creada: C:\xampp\htdocs\SEGTRACK\App\Controller/../Public/Qr_Dipo
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../Public/Qr_Dipo/QR-DISP-20-691bb94d05795.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 20","data":{"IdDispositivo":"20","QrDispositivo":"Qr_Dipo\/QR-DISP-20-691bb94d05795.png"}}
+2025-11-18 02:38:33 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Computador",
+    "MarcaDispositivo": "lenovo",
+    "IdFuncionario": "26",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Computador, Marca: lenovo, IdFunc: 26, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Computador",":marca":"lenovo",":funcionario":26,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 21
+Generando QR para dispositivo ID: 21
+Carpeta QR creada: C:\xampp\htdocs\SEGTRACK\App\Controller/../Public/qr/Qr_Dipo
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../Public/qr/Qr_Dipo/QR-DISP-21-691bce19b9b8e.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 21","data":{"IdDispositivo":"21","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-21-691bce19b9b8e.png"}}
+2025-11-18 05:06:59 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Asuss",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Asuss, IdFunc: 25, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Portatil",":marca":"Asuss",":funcionario":25,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 22
+Generando QR para dispositivo ID: 22
+Carpeta QR creada: C:\xampp\htdocs\SEGTRACK\App\Controller/../Public/qr/Qr_Dipo
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../Public/qr/Qr_Dipo/QR-DISP-22-691bf0e31b2d4.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 22","data":{"IdDispositivo":"22","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-22-691bf0e31b2d4.png"}}
+2025-11-18 05:09:02 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "23",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Huawei, IdFunc: 23, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Portatil",":marca":"Huawei",":funcionario":23,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 23
+Generando QR para dispositivo ID: 23
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-23-691bf15ebd2cd.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 23","data":{"IdDispositivo":"23","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-23-691bf15ebd2cd.png"}}
