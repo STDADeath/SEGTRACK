@@ -17,7 +17,7 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Vehículo</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="../controller/parqueadero_dispositivo/ControladorParqueadero.php" class="needs-validation" novalidate>
+                    <form method="POST" action="../../Controller/ControladorParqueadero.php" class="needs-validation" novalidate>
                         <div class="row">
                             <!-- Tipo de vehículo -->
                             <div class="col-md-6 mb-3">
@@ -101,7 +101,7 @@
 <!-- Librería SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Validación de formulario -->
-<script src="../js/javascript/js/ValidacionParqueadero.js"></script>
+<script src="../../../Public/js/javascript/js/ValidacionParqueadero.js"></script>
 </body>
 </html>
 

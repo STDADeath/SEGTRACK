@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Si pasa validaciones, enviar con fetch
             const formData = new FormData(form);
             formData.append('accion', 'registrar');
-            const url = "../Controller/parqueadero_dispositivo/ControladorParqueadero.php";
+            const url = "../../Controller/ControladorParqueadero.php";
 
             fetch(url, {
                 method: "POST",
@@ -143,7 +143,7 @@ $(document).ready(function() {
         console.log('Eliminando vehículo ID:', vehiculoIdAEliminar);
 
         $.ajax({
-            url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
+            url: '../../Controller/ControladorParqueadero.php',
             type: 'POST',
             data: {
                 accion: 'eliminar',
@@ -216,7 +216,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
+            url: '../../Controller/ControladorParqueadero.php',
             type: 'POST',
             data: {
                 accion: 'actualizar',

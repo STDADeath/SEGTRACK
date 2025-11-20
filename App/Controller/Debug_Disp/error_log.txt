@@ -348,3 +348,38 @@
 [18-Nov-2025 05:09:02 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 21.25 to int loses precision in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php on line 144
 [18-Nov-2025 05:09:02 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 21.5 to int loses precision in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php on line 144
 [18-Nov-2025 05:09:02 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 21.75 to int loses precision in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php on line 144
+[20-Nov-2025 01:02:12 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php:67
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php(206): ControladorDispositivo->__construct(Object(PDO))
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php on line 67
+[20-Nov-2025 01:05:43 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php:67
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php(206): ControladorDispositivo->__construct(Object(PDO))
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php on line 67
+[20-Nov-2025 01:11:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php:67
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php(206): ControladorDispositivo->__construct(Object(PDO))
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php on line 67
+[20-Nov-2025 01:13:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php:67
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php(206): ControladorDispositivo->__construct(Object(PDO))
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php on line 67
+[20-Nov-2025 01:20:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php:67
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php(206): ControladorDispositivo->__construct(Object(PDO))
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php on line 67
+[20-Nov-2025 01:22:53 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php:67
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php(206): ControladorDispositivo->__construct(Object(PDO))
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php on line 67
+[20-Nov-2025 01:23:14 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "ModeloDispositivo" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php:67
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php(206): ControladorDispositivo->__construct(Object(PDO))
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorDispositivo.php on line 67

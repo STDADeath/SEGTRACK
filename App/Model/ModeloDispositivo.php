@@ -1,90 +1,78 @@
 <?php
-class ModeloDispositivo {
+require_once __DIR__ . '/../Core/conexion.php';
+
+class ModeloParqueadero {
     private $conexion;
+    private $logPath;
 
-    public function __construct($conexion) {
-        $this->conexion = $conexion;
-    }
-
-    /**
-     * ✅ Registra un nuevo dispositivo en la base de datos
-     */
-    public function registrarDispositivo(string $tipo, string $marca, ?int $idFuncionario, ?int $idVisitante): array {
+    public function __construct() {
+        // ✅ Debug en Controller/Debug_Parq
+        $this->logPath = __DIR__ . '/../Controller/Debug_Parq/debug_log.txt';
+        
+        // Crear carpeta si no existe
+        $carpetaDebug = dirname($this->logPath);
+        if (!file_exists($carpetaDebug)) {
+            mkdir($carpetaDebug, 0777, true);
+        }
+        
         try {
-            // ✅ Ruta corregida al debug
-            $debugPath = __DIR__ . '/../Controller/Debug_Disp/debug_log.txt';
-            
-            // Crear carpeta Debug_Disp si no existe
-            $carpetaDebug = dirname($debugPath);
-            if (!file_exists($carpetaDebug)) {
-                mkdir($carpetaDebug, 0777, true);
-            }
-
-            file_put_contents($debugPath, "=== MODELO: registrarDispositivo ===\n", FILE_APPEND);
-            file_put_contents($debugPath, "Tipo: $tipo, Marca: $marca, IdFunc: $idFuncionario, IdVis: $idVisitante\n", FILE_APPEND);
-
-            if (!$this->conexion) {
-                file_put_contents($debugPath, "ERROR: Conexión no disponible\n", FILE_APPEND);
-                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
-            }
-
-            file_put_contents($debugPath, "Conexión OK, preparando SQL\n", FILE_APPEND);
-
-            $sql = "INSERT INTO dispositivo 
-                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
-                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')";
-
-            file_put_contents($debugPath, "SQL preparado: $sql\n", FILE_APPEND);
-
-            $stmt = $this->conexion->prepare($sql);
-            
-            $params = [
-                ':tipo' => $tipo,
-                ':marca' => $marca,
-                ':funcionario' => $idFuncionario ?: null,
-                ':visitante' => $idVisitante ?: null
-            ];
-            
-            file_put_contents($debugPath, "Parámetros: " . json_encode($params) . "\n", FILE_APPEND);
-            
-            $resultado = $stmt->execute($params);
-
-            file_put_contents($debugPath, "Resultado execute: " . ($resultado ? 'true' : 'false') . "\n", FILE_APPEND);
-
-            if ($resultado) {
-                $lastId = $this->conexion->lastInsertId();
-                file_put_contents($debugPath, "INSERT exitoso, ID generado: $lastId\n", FILE_APPEND);
-                return ['success' => true, 'id' => $lastId];
-            } else {
-                $errorInfo = $stmt->errorInfo();
-                file_put_contents($debugPath, "ERROR en execute: " . json_encode($errorInfo) . "\n", FILE_APPEND);
-                return ['success' => false, 'error' => $errorInfo[2] ?? 'Error desconocido al insertar'];
-            }
-
+            $conexionObj = new Conexion();
+            $this->conexion = $conexionObj->getConexion();
+            file_put_contents($this->logPath, "✅ Conexión establecida correctamente\n", FILE_APPEND);
         } catch (PDOException $e) {
-            $errorMsg = $e->getMessage();
-            if (isset($debugPath)) {
-                file_put_contents($debugPath, "EXCEPCIÓN PDO: $errorMsg\n", FILE_APPEND);
-            }
-            return ['success' => false, 'error' => $errorMsg];
+            $msg = "❌ Error de conexión: " . $e->getMessage();
+            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
+            throw new Exception($msg);
         }
     }
 
-    /**
-     * ✅ Actualiza la ruta del código QR generado
-     */
-    public function actualizarQR(int $idDispositivo, string $rutaQR): array {
+    // ✅ Registrar vehículo (con campo QrVehiculo)
+    public function registrarVehiculo($TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo, $TarjetaPropiedad, $FechaParqueadero, $IdSede): array {
+        try {
+            file_put_contents($this->logPath, "Punto 1: Preparando SQL INSERT\n", FILE_APPEND);
+            
+            $sql = "INSERT INTO parqueadero 
+                    (TipoVehiculo, PlacaVehiculo, DescripcionVehiculo, TarjetaPropiedad, FechaParqueadero, IdSede, Estado, QrVehiculo)
+                    VALUES (:TipoVehiculo, :PlacaVehiculo, :DescripcionVehiculo, :TarjetaPropiedad, :FechaParqueadero, :IdSede, 'Activo', '')";
+            
+            file_put_contents($this->logPath, "Punto 2: Preparando statement\n", FILE_APPEND);
+            $stmt = $this->conexion->prepare($sql);
+
+            file_put_contents($this->logPath, "Punto 3: Ejecutando con parámetros\n", FILE_APPEND);
+            $stmt->execute([
+                ':TipoVehiculo' => $TipoVehiculo,
+                ':PlacaVehiculo' => $PlacaVehiculo,
+                ':DescripcionVehiculo' => $DescripcionVehiculo,
+                ':TarjetaPropiedad' => $TarjetaPropiedad,
+                ':FechaParqueadero' => $FechaParqueadero,
+                ':IdSede' => $IdSede
+            ]);
+
+            $id = $this->conexion->lastInsertId();
+            file_put_contents($this->logPath, "✅ Vehículo insertado ID: $id con Estado: Activo\n", FILE_APPEND);
+            return ['success' => true, 'id' => $id, 'message' => 'Vehículo registrado correctamente'];
+        } catch (PDOException $e) {
+            $msg = "❌ Error en registrarVehiculo: " . $e->getMessage();
+            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
+            return ['success' => false, 'error' => $msg];
+        }
+    }
+
+    // ✅ Actualizar QR del vehículo
+    public function actualizarQR(int $idVehiculo, string $rutaQR): array {
         try {
             if (!$this->conexion) {
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
             }
 
-            $sql = "UPDATE dispositivo SET QrDispositivo = :qr WHERE IdDispositivo = :id";
+            $sql = "UPDATE parqueadero SET QrVehiculo = :qr WHERE IdParqueadero = :id";
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 ':qr' => $rutaQR,
-                ':id' => $idDispositivo
+                ':id' => $idVehiculo
             ]);
+
+            file_put_contents($this->logPath, "✅ QR actualizado para vehículo ID: $idVehiculo\n", FILE_APPEND);
 
             return [
                 'success' => $resultado,
@@ -92,175 +80,147 @@ class ModeloDispositivo {
             ];
 
         } catch (PDOException $e) {
+            $msg = "❌ Error en actualizarQR: " . $e->getMessage();
+            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
-    /**
-     * ✅ Obtiene todos los dispositivos ACTIVOS
-     */
-    public function obtenerTodos(): array {
-        try {
-            if (!$this->conexion) {
-                return [];
-            }
-
-            $sql = "SELECT * FROM dispositivo WHERE Estado = 'Activo' ORDER BY IdDispositivo DESC";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-            return [];
-        }
-    }
-
-    /**
-     * ✅ Obtiene todos los dispositivos (incluye activos e inactivos)
-     */
-    public function obtenerTodosConEstado(): array {
-        try {
-            if (!$this->conexion) {
-                return [];
-            }
-
-            $sql = "SELECT * FROM dispositivo ORDER BY 
-                    CASE 
-                        WHEN Estado = 'Activo' THEN 1 
-                        WHEN Estado = 'Inactivo' THEN 2 
-                        ELSE 3 
-                    END, 
-                    IdDispositivo DESC";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-            return [];
-        }
-    }
-
-    /**
-     * ✅ Obtiene un dispositivo por su ID (incluye QR)
-     */
-    public function obtenerPorId(int $idDispositivo): ?array {
+    // ✅ Obtener la ruta del QR de un vehículo
+    public function obtenerQR(int $idVehiculo): ?string {
         try {
             if (!$this->conexion) {
                 return null;
             }
 
-            $sql = "SELECT * FROM dispositivo WHERE IdDispositivo = :id";
+            $sql = "SELECT QrVehiculo FROM parqueadero WHERE IdParqueadero = :id";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idDispositivo]);
-            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-
-        } catch (PDOException $e) {
-            return null;
-        }
-    }
-
-    /**
-     * ✅ Obtiene solo la ruta del QR de un dispositivo
-     */
-    public function obtenerQR(int $idDispositivo): ?string {
-        try {
-            if (!$this->conexion) {
-                return null;
-            }
-
-            $sql = "SELECT QrDispositivo FROM dispositivo WHERE IdDispositivo = :id";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idDispositivo]);
+            $stmt->execute([':id' => $idVehiculo]);
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            return $resultado['QrDispositivo'] ?? null;
+            return $resultado['QrVehiculo'] ?? null;
 
         } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerQR: " . $e->getMessage() . "\n", FILE_APPEND);
             return null;
         }
     }
 
-    /**
-     * ✅ Actualiza los datos del dispositivo (sin tocar el QR ni el Estado)
-     */
-    public function actualizar(int $idDispositivo, array $datos): array {
+    // ✅ Actualizar vehículo (sin tocar el Estado ni QR)
+    public function actualizarVehiculo($id, $tipo, $descripcion, $idsede): array {
         try {
-            if (!$this->conexion) {
-                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
-            }
-
-            $sql = "UPDATE dispositivo SET 
-                        TipoDispositivo = :tipo, 
-                        MarcaDispositivo = :marca, 
-                        IdFuncionario = :funcionario, 
-                        IdVisitante = :visitante
-                    WHERE IdDispositivo = :id";
-
+            $sql = "UPDATE parqueadero 
+                    SET TipoVehiculo = :tipo, DescripcionVehiculo = :descripcion, IdSede = :idsede
+                    WHERE IdParqueadero = :id";
             $stmt = $this->conexion->prepare($sql);
-            $resultado = $stmt->execute([
-                ':tipo' => $datos['TipoDispositivo'] ?? null,
-                ':marca' => $datos['MarcaDispositivo'] ?? null,
-                ':funcionario' => $datos['IdFuncionario'] ?? null,
-                ':visitante' => $datos['IdVisitante'] ?? null,
-                ':id' => $idDispositivo
+            $stmt->execute([
+                ':tipo' => $tipo,
+                ':descripcion' => $descripcion,
+                ':idsede' => $idsede,
+                ':id' => $id
             ]);
-
-            return [
-                'success' => $resultado,
-                'rows' => $stmt->rowCount()
-            ];
-
+            file_put_contents($this->logPath, "✅ Vehículo actualizado ID: $id\n", FILE_APPEND);
+            return ['success' => true, 'message' => 'Vehículo actualizado correctamente'];
         } catch (PDOException $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+            $msg = "❌ Error al actualizar: " . $e->getMessage();
+            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
+            return ['success' => false, 'error' => $msg];
         }
     }
 
-    /**
-     * 🆕 Cambia el estado del dispositivo (Activo <-> Inactivo)
-     */
-    public function cambiarEstado(int $idDispositivo, string $nuevoEstado): array {
+    // 🆕 Cambiar estado del vehículo (Activo <-> Inactivo) - SOFT DELETE
+    public function cambiarEstado(int $idParqueadero, string $nuevoEstado): array {
         try {
-            if (!$this->conexion) {
-                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
-            }
-
-            // Validar que el estado sea válido
             if (!in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
                 return ['success' => false, 'error' => 'Estado no válido'];
             }
 
-            $sql = "UPDATE dispositivo SET Estado = :estado WHERE IdDispositivo = :id";
+            $sql = "UPDATE parqueadero SET Estado = :estado WHERE IdParqueadero = :id";
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 ':estado' => $nuevoEstado,
-                ':id' => $idDispositivo
+                ':id' => $idParqueadero
             ]);
+
+            file_put_contents($this->logPath, "✅ Estado cambiado a '$nuevoEstado' para vehículo ID: $idParqueadero\n", FILE_APPEND);
 
             return [
                 'success' => $resultado,
                 'rows' => $stmt->rowCount(),
                 'nuevoEstado' => $nuevoEstado
             ];
-
         } catch (PDOException $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+            $msg = "❌ Error al cambiar estado: " . $e->getMessage();
+            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
+            return ['success' => false, 'error' => $msg];
         }
     }
 
-    /**
-     * ✅ Verifica si existe un dispositivo
-     */
-    public function existe(int $idDispositivo): bool {
+    // ⚠️ DEPRECADO: Mantener por compatibilidad
+    public function eliminarVehiculo($id): array {
+        file_put_contents($this->logPath, "⚠️ ADVERTENCIA: Se llamó a eliminarVehiculo() (método deprecado). Use cambiarEstado() en su lugar.\n", FILE_APPEND);
+        
         try {
-            if (!$this->conexion) {
-                return false;
-            }
+            return $this->cambiarEstado((int)$id, 'Inactivo');
+        } catch (Exception $e) {
+            $msg = "❌ Error en eliminarVehiculo: " . $e->getMessage();
+            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
+            return ['success' => false, 'error' => $msg];
+        }
+    }
 
-            $sql = "SELECT 1 FROM dispositivo WHERE IdDispositivo = :id LIMIT 1";
+    // ✅ Obtener todos los vehículos ACTIVOS
+    public function obtenerTodos(): array {
+        try {
+            $sql = "SELECT * FROM parqueadero WHERE Estado = 'Activo' ORDER BY IdParqueadero DESC";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idDispositivo]);
-            return $stmt->rowCount() > 0;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerTodos: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
+        }
+    }
 
+    // ✅ Obtener todos los vehículos (incluye activos e inactivos)
+    public function obtenerTodosConEstado(): array {
+        try {
+            $sql = "SELECT * FROM parqueadero ORDER BY 
+                    CASE 
+                        WHEN Estado = 'Activo' THEN 1 
+                        WHEN Estado = 'Inactivo' THEN 2 
+                        ELSE 3 
+                    END, 
+                    IdParqueadero DESC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerTodosConEstado: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
+        }
+    }
+
+    // ✅ Obtener un vehículo por su ID
+    public function obtenerPorId(int $idParqueadero): ?array {
+        try {
+            $sql = "SELECT * FROM parqueadero WHERE IdParqueadero = :id";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idParqueadero]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerPorId: " . $e->getMessage() . "\n", FILE_APPEND);
+            return null;
+        }
+    }
+
+    // ✅ Verifica si existe un vehículo
+    public function existe(int $idParqueadero): bool {
+        try {
+            $sql = "SELECT 1 FROM parqueadero WHERE IdParqueadero = :id LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idParqueadero]);
+            return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
             return false;
         }

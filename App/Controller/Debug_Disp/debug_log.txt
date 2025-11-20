@@ -109,3 +109,88 @@ INSERT exitoso, ID generado: 23
 Generando QR para dispositivo ID: 23
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-23-691bf15ebd2cd.png
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 23","data":{"IdDispositivo":"23","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-23-691bf15ebd2cd.png"}}
+2025-11-20 01:02:12 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+2025-11-20 01:05:43 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+2025-11-20 01:11:42 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+2025-11-20 01:13:42 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+2025-11-20 01:20:34 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "lenovo",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+2025-11-20 01:22:53 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+2025-11-20 01:23:14 === INICIO ===
+POST recibido:
+[]
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado

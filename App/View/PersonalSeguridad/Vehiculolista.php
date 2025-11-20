@@ -278,7 +278,10 @@ let vehiculoIdAEliminar = null;
 
 // ✅ Función para mostrar QR del vehículo
 function verQRVehiculo(rutaQR, idVehiculo) {
-    const rutaCompleta = '../qr' + rutaQR;
+    // La ruta viene como 'qr/Qr_Parq/nombre.png'
+    const rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
+    
+    console.log('Ruta QR completa:', rutaCompleta);
     
     $('#qrVehiculoId').text(idVehiculo);
     $('#qrImagenVehiculo').attr('src', rutaCompleta);
@@ -319,7 +322,7 @@ $('#btnConfirmarEliminarVehiculo').click(function() {
     if (!vehiculoIdAEliminar) return;
 
     $.ajax({
-        url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
+        url: '../../Controller/ControladorParqueadero.php',
         type: 'POST',
         data: {
             accion: 'eliminar',
@@ -361,7 +364,7 @@ $('#btnGuardarCambiosVehiculo').click(function() {
     }
 
     $.ajax({
-        url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
+        url: '../../Controller/ControladorParqueadero.php',
         type: 'POST',
         data: formData,
         dataType: 'json',
