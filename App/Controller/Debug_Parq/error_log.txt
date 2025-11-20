@@ -1,0 +1,6 @@
+[20-Nov-2025 19:18:08 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 2
+[20-Nov-2025 19:18:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorParqueadero.php(33): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 2
