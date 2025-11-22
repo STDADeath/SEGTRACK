@@ -9,18 +9,18 @@ ob_start();
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-// ✅ Crear carpeta Debug_Disp si no existe
+// Crear carpeta Debug_Disp si no existe
 $carpetaDebug = __DIR__ . '/Debug_Disp';
 if (!file_exists($carpetaDebug)) {
     mkdir($carpetaDebug, 0777, true);
 }
 
-file_put_contents($carpetaDebug . '/debug_log.txt', date('Y-m-d H:i:s') . " === INICIO ===\n", FILE_APPEND);
+file_put_contents($carpetaDebug . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO ===\n", FILE_APPEND);
 
 try {
     file_put_contents($carpetaDebug . '/debug_log.txt', "POST recibido:\n" . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
 
-    // ✅ Ruta corregida a conexion.php
+    // Ruta a conexion.php
     $ruta_conexion = __DIR__ . '/../Core/conexion.php';
     if (!file_exists($ruta_conexion)) {
         throw new Exception("Archivo de conexión no encontrado: $ruta_conexion");
@@ -43,7 +43,7 @@ try {
 
     file_put_contents($carpetaDebug . '/debug_log.txt', "Conexión verificada como PDO\n", FILE_APPEND);
 
-    // ✅ Ruta corregida a phpqrcode
+    // Ruta a phpqrcode
     $ruta_qrlib = __DIR__ . '/../Libs/phpqrcode/qrlib.php';
     if (!file_exists($ruta_qrlib)) {
         throw new Exception("Librería phpqrcode no encontrada: $ruta_qrlib");
@@ -51,7 +51,7 @@ try {
     require_once $ruta_qrlib;
     file_put_contents($carpetaDebug . '/debug_log.txt', "Librería QR cargada\n", FILE_APPEND);
 
-    // ✅ Ruta corregida al modelo
+    // Ruta al modelo
     $ruta_modelo = __DIR__ . "/../Model/ModeloDispositivo.php";
     if (!file_exists($ruta_modelo)) {
         throw new Exception("Modelo no encontrado: $ruta_modelo");
@@ -76,7 +76,7 @@ try {
             try {
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "Generando QR para dispositivo ID: $idDispositivo\n", FILE_APPEND);
 
-                // ✅ Carpeta qr_dipo en Public
+                // Carpeta qr_dipo en Public
                 $rutaCarpeta = __DIR__ . '/../../Public/qr/Qr_Dipo';
                 if (!file_exists($rutaCarpeta)) {
                     mkdir($rutaCarpeta, 0777, true);
@@ -95,7 +95,7 @@ try {
 
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "QR generado exitosamente: $rutaCompleta\n", FILE_APPEND);
                 
-                // ✅ Retornar ruta relativa para la BD
+                // Retornar ruta relativa para la BD
                 return 'qr/Qr_Dipo/' . $nombreArchivo;
 
             } catch (Exception $e) {
@@ -150,7 +150,7 @@ try {
                         "data" => ["IdDispositivo" => $idDispositivo, "QrDispositivo" => $rutaQR]
                     ];
                 } else {
-                    return ['success' => false, 'message' => 'Error al registrar en BD'];
+                    return ['success' => false, 'message' => 'Error al registrar en BD: ' . ($resultado['error'] ?? 'desconocido')];
                 }
             } catch (Exception $e) {
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN: " . $e->getMessage() . "\n", FILE_APPEND);
@@ -159,18 +159,66 @@ try {
         }
 
         public function actualizarDispositivo(int $id, array $datos): array {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "actualizarDispositivo llamado con ID: $id\n", FILE_APPEND);
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "Datos a actualizar: " . json_encode($datos) . "\n", FILE_APPEND);
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== actualizarDispositivo llamado ===\n", FILE_APPEND);
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "ID: $id\n", FILE_APPEND);
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "Datos recibidos: " . json_encode($datos, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+
+            // Validaciones
+            if ($this->campoVacio($datos['TipoDispositivo'] ?? null)) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Tipo vacío en actualización\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'El tipo de dispositivo es obligatorio'];
+            }
+
+            if ($this->campoVacio($datos['MarcaDispositivo'] ?? null)) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Marca vacía en actualización\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'La marca del dispositivo es obligatoria'];
+            }
 
             try {
+                // Obtener el QR anterior para eliminarlo después
+                $dispositivoAnterior = $this->modelo->obtenerPorId($id);
+                $qrAnterior = $dispositivoAnterior['QrDispositivo'] ?? null;
+                
                 $resultado = $this->modelo->actualizar($id, $datos);
                 
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "Resultado del modelo: " . json_encode($resultado) . "\n", FILE_APPEND);
+                
                 if ($resultado['success']) {
+                    // Regenerar el QR con los nuevos datos
+                    $tipo = $datos['TipoDispositivo'];
+                    $marca = $datos['MarcaDispositivo'];
+                    
+                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Regenerando QR para ID: $id\n", FILE_APPEND);
+                    
+                    $nuevoQR = $this->generarQR($id, $tipo, $marca);
+                    
+                    if ($nuevoQR) {
+                        // Actualizar la ruta del QR en la BD
+                        $this->modelo->actualizarQR($id, $nuevoQR);
+                        
+                        // Eliminar el QR anterior si existe
+                        if ($qrAnterior) {
+                            $rutaQrAnterior = __DIR__ . '/../../Public/' . $qrAnterior;
+                            if (file_exists($rutaQrAnterior)) {
+                                unlink($rutaQrAnterior);
+                                file_put_contents($this->carpetaDebug . '/debug_log.txt', "QR anterior eliminado: $rutaQrAnterior\n", FILE_APPEND);
+                            }
+                        }
+                        
+                        file_put_contents($this->carpetaDebug . '/debug_log.txt', "Nuevo QR generado: $nuevoQR\n", FILE_APPEND);
+                    }
+                    
                     file_put_contents($this->carpetaDebug . '/debug_log.txt', "Dispositivo actualizado exitosamente\n", FILE_APPEND);
-                    return ['success' => true, 'message' => 'Dispositivo actualizado correctamente'];
+                    return [
+                        'success' => true, 
+                        'message' => 'Dispositivo actualizado correctamente',
+                        'rows' => $resultado['rows'] ?? 0,
+                        'qr' => $nuevoQR
+                    ];
                 } else {
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Error al actualizar: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
-                    return ['success' => false, 'message' => 'Error al actualizar dispositivo'];
+                    $errorMsg = $resultado['error'] ?? 'Error desconocido al actualizar';
+                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Error al actualizar: $errorMsg\n", FILE_APPEND);
+                    return ['success' => false, 'message' => $errorMsg];
                 }
             } catch (Exception $e) {
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN en actualizar: " . $e->getMessage() . "\n", FILE_APPEND);
@@ -206,25 +254,34 @@ try {
     $controlador = new ControladorDispositivo($conexion);
     $accion = $_POST['accion'] ?? 'registrar';
 
-    file_put_contents($carpetaDebug . '/debug_log.txt', "Acción: $accion\n", FILE_APPEND);
+    file_put_contents($carpetaDebug . '/debug_log.txt', "Acción detectada: $accion\n", FILE_APPEND);
 
     if ($accion === 'registrar') {
         $resultado = $controlador->registrarDispositivo($_POST);
+        
     } elseif ($accion === 'actualizar') {
-        $id = (int)($_POST['id'] ?? 0);
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        
+        file_put_contents($carpetaDebug . '/debug_log.txt', "Procesando actualización para ID: $id\n", FILE_APPEND);
+        
         if ($id > 0) {
+            // Construir array de datos con los nombres correctos
             $datos = [
                 'TipoDispositivo' => $_POST['tipo'] ?? null,
                 'MarcaDispositivo' => $_POST['marca'] ?? null,
-                'IdFuncionario' => !empty($_POST['id_funcionario']) ? (int)$_POST['id_funcionario'] : null,
-                'IdVisitante' => !empty($_POST['id_visitante']) ? (int)$_POST['id_visitante'] : null
+                'IdFuncionario' => $_POST['id_funcionario'] ?? null,
+                'IdVisitante' => $_POST['id_visitante'] ?? null
             ];
+            
+            file_put_contents($carpetaDebug . '/debug_log.txt', "Datos preparados para actualizar: " . json_encode($datos) . "\n", FILE_APPEND);
+            
             $resultado = $controlador->actualizarDispositivo($id, $datos);
         } else {
             $resultado = ['success' => false, 'message' => 'ID de dispositivo no válido'];
         }
+        
     } elseif ($accion === 'cambiar_estado') {
-        $id = (int)($_POST['id'] ?? 0);
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         $nuevoEstado = $_POST['estado'] ?? '';
         
         if ($id > 0 && in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
@@ -232,11 +289,13 @@ try {
         } else {
             $resultado = ['success' => false, 'message' => 'Datos no válidos para cambiar estado'];
         }
+        
     } else {
-        $resultado = ['success' => false, 'message' => 'Acción no reconocida'];
+        $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];
     }
 
     file_put_contents($carpetaDebug . '/debug_log.txt', "Respuesta final: " . json_encode($resultado) . "\n", FILE_APPEND);
+    file_put_contents($carpetaDebug . '/debug_log.txt', "=== FIN ===\n\n", FILE_APPEND);
 
     ob_end_clean();
     echo json_encode($resultado, JSON_UNESCAPED_UNICODE);

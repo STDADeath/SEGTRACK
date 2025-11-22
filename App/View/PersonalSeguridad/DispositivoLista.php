@@ -1,5 +1,22 @@
 <?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
 
+<style>
+/* Fondo oscuro del modal */
+.modal-backdrop-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+.modal.show {
+    z-index: 1050;
+}
+</style>
+
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Dispositivos Registrados</h1>
@@ -9,12 +26,10 @@
     </div>
 
     <?php
-    // ✅ Ruta corregida a conexion.php
     require_once __DIR__ . "/../../Core/conexion.php";
     $conexionObj = new Conexion();
     $conn = $conexionObj->getConexion();
 
-    // Construcción de filtros dinámicos
     $filtros = [];
     $params = [];
 
@@ -109,8 +124,9 @@
                                     <td><?php echo $row['IdDispositivo']; ?></td>
                                     <td class="text-center">
                                         <?php if ($row['QrDispositivo']) : ?>
-                                            <button type="button" class="btn btn-sm btn-outline-success" 
-                                                    onclick="verQR('<?php echo htmlspecialchars($row['QrDispositivo']); ?>', <?php echo $row['IdDispositivo']; ?>)"
+                                            <button type="button" class="btn btn-sm btn-outline-success btn-ver-qr"
+                                                    data-ruta="<?php echo htmlspecialchars($row['QrDispositivo']); ?>"
+                                                    data-id="<?php echo $row['IdDispositivo']; ?>"
                                                     title="Ver código QR">
                                                 <i class="fas fa-qrcode me-1"></i> Ver QR
                                             </button>
@@ -123,9 +139,13 @@
                                     <td><?php echo $row['IdFuncionario'] ?? '-'; ?></td>
                                     <td><?php echo $row['IdVisitante'] ?? '-'; ?></td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" 
-                                                onclick="cargarDatosEdicion(<?php echo $row['IdDispositivo']; ?>, '<?php echo htmlspecialchars($row['QrDispositivo'] ?? ''); ?>', '<?php echo htmlspecialchars($row['TipoDispositivo']); ?>', '<?php echo htmlspecialchars($row['MarcaDispositivo']); ?>', <?php echo $row['IdFuncionario'] ?? 'null'; ?>, <?php echo $row['IdVisitante'] ?? 'null'; ?>)"
-                                                title="Editar dispositivo" data-toggle="modal" data-target="#modalEditar">
+                                        <button type="button" class="btn btn-sm btn-outline-primary btn-editar"
+                                                data-id="<?php echo $row['IdDispositivo']; ?>"
+                                                data-tipo="<?php echo htmlspecialchars($row['TipoDispositivo']); ?>"
+                                                data-marca="<?php echo htmlspecialchars($row['MarcaDispositivo']); ?>"
+                                                data-funcionario="<?php echo $row['IdFuncionario'] ?? ''; ?>"
+                                                data-visitante="<?php echo $row['IdVisitante'] ?? ''; ?>"
+                                                title="Editar dispositivo">
                                             <i class="fas fa-edit"></i> Editar
                                         </button>
                                     </td>
@@ -135,7 +155,7 @@
                             <tr>
                                 <td colspan="7" class="text-center py-4">
                                     <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
-                                    <p class="text-muted">No hay dispositivos registrados con los filtros seleccionados</p>
+                                    <p class="text-muted">No hay dispositivos registrados</p>
                                 </td>
                             </tr>
                         <?php endif; ?>
@@ -146,26 +166,25 @@
     </div>
 </div>
 
-<!-- ✅ Modal para visualizar QR -->
-<div class="modal fade" id="modalVerQR" tabindex="-1" role="dialog" aria-labelledby="modalVerQRLabel" aria-hidden="true">
+<!-- Modal para visualizar QR -->
+<div class="modal fade" id="modalVerQR" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="modalVerQRLabel">
+                <h5 class="modal-title">
                     <i class="fas fa-qrcode me-2"></i>Código QR - Dispositivo #<span id="qrDispositivoId"></span>
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close text-white" data-dismiss="modal">
+                    <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img id="qrImagen" src="" alt="Código QR" class="img-fluid" style="max-width: 300px; border: 2px solid #ddd; padding: 10px; border-radius: 5px;">
-                <p class="text-muted mt-3">Escanea este código con tu dispositivo móvil</p>
+                <img id="qrImagen" src="" alt="Código QR" class="img-fluid" style="max-width: 300px;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <a id="btnDescargarQR" href="#" class="btn btn-success" download>
-                    <i class="fas fa-download me-1"></i> Descargar QR
+                    <i class="fas fa-download me-1"></i> Descargar
                 </a>
             </div>
         </div>
@@ -173,114 +192,220 @@
 </div>
 
 <!-- Modal Editar Dispositivo -->
-<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalEditarLabel">Editar Dispositivo</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <h5 class="modal-title">Editar Dispositivo #<span id="editIdDisplay"></span></h5>
+                <button type="button" class="close text-white" data-dismiss="modal">
+                    <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formEditar">
-                    <input type="hidden" id="editId" name="id">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="editTipo" class="form-label">Tipo de Dispositivo</label>
-                            <select id="editTipo" class="form-control" name="tipo" required>
-                                <option value="">-- Seleccione un tipo --</option>
-                                <option value="Portatil">Portátil</option>
-                                <option value="Tablet">Tablet</option>
-                                <option value="Computador">Computador</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="editMarca" class="form-label">Marca</label>
-                            <input type="text" id="editMarca" class="form-control" name="marca" required>
-                        </div>
+                <input type="hidden" id="editId">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="editTipo" class="form-label">Tipo de Dispositivo</label>
+                        <select id="editTipo" class="form-control" required>
+                            <option value="">-- Seleccione --</option>
+                            <option value="Portatil">Portátil</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Computador">Computador</option>
+                            <option value="Otro">Otro</option>
+                        </select>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="editFuncionario" class="form-label">ID Funcionario</label>
-                            <input type="number" id="editFuncionario" class="form-control" name="IdFuncionario">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="editVisitante" class="form-label">ID Visitante</label>
-                            <input type="number" id="editVisitante" class="form-control" name="IdVisitante">
-                        </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="editMarca" class="form-label">Marca</label>
+                        <input type="text" id="editMarca" class="form-control" required>
                     </div>
-                </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="editFuncionario" class="form-label">ID Funcionario</label>
+                        <input type="number" id="editFuncionario" class="form-control" min="1">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="editVisitante" class="form-label">ID Visitante</label>
+                        <input type="number" id="editVisitante" class="form-control" min="1">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="btnGuardarCambios">Guardar Cambios</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarCambios">
+                    <i class="fas fa-save me-1"></i> Guardar Cambios
+                </button>
             </div>
         </div>
     </div>
 </div>
 
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+
+<!-- SCRIPT AL FINAL, DESPUÉS DE CARGAR jQuery y Bootstrap -->
 <script>
-let dispositivoIdAEditar = null;
-
-// ✅ Función para mostrar QR - CORREGIDA para buscar en qr_dipo
-function verQR(rutaQR, idDispositivo) {
-    const rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
+(function() {
+    'use strict';
     
-    console.log('Ruta QR completa:', rutaCompleta);
-    
-    $('#qrDispositivoId').text(idDispositivo);
-    $('#qrImagen').attr('src', rutaCompleta);
-    $('#btnDescargarQR').attr('href', rutaCompleta).attr('download', 'QR-Dispositivo-' + idDispositivo + '.png');
-    
-    $('#modalVerQR').modal('show');
-}
-
-function cargarDatosEdicion(id, qr, tipo, marca, idFuncionario, idVisitante) {
-    dispositivoIdAEditar = id;
-    $('#editId').val(id);
-    $('#editTipo').val(tipo);
-    $('#editMarca').val(marca);
-    $('#editFuncionario').val(idFuncionario);
-    $('#editVisitante').val(idVisitante);
-}
-
-$('#btnGuardarCambios').click(function() {
-    const formData = {
-        accion: 'actualizar',
-        id: $('#editId').val(),
-        tipo: $('#editTipo').val(),
-        marca: $('#editMarca').val(),
-        id_funcionario: $('#editFuncionario').val(),
-        id_visitante: $('#editVisitante').val()
-    };
-    
-    if (!formData.tipo || !formData.marca) {
-        alert('Por favor, complete todos los campos obligatorios');
-        return;
-    }
-    
-    $.ajax({
-        url: '../../Controller/ControladorDispositivo.php',
-        type: 'POST',
-        data: formData,
-        dataType: 'json',
-        success: function(response) {
-            $('#modalEditar').modal('hide');
-            if (response.success) {
-                alert('Dispositivo actualizado correctamente');
-                location.reload();
-            } else {
-                alert('Error: ' + response.message);
+    // Esperar a que todo esté cargado
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM cargado');
+        
+        // Función para abrir modal con fondo
+        function abrirModal(modalId) {
+            var modal = document.getElementById(modalId);
+            
+            // Crear backdrop
+            var backdrop = document.createElement('div');
+            backdrop.className = 'modal-backdrop-custom';
+            backdrop.id = 'backdrop-' + modalId;
+            document.body.appendChild(backdrop);
+            
+            // Mostrar modal
+            modal.classList.add('show');
+            modal.style.display = 'block';
+            document.body.classList.add('modal-open');
+        }
+        
+        // Función para cerrar modal
+        function cerrarModal(modalId) {
+            var modal = document.getElementById(modalId);
+            var backdrop = document.getElementById('backdrop-' + modalId);
+            
+            modal.classList.remove('show');
+            modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+            
+            if (backdrop) {
+                backdrop.remove();
             }
-        },
-        error: function() {
-            $('#modalEditar').modal('hide');
-            alert('Error al intentar actualizar el dispositivo');
+        }
+        
+        // ========== VER QR ==========
+        var botonesQR = document.querySelectorAll('.btn-ver-qr');
+        botonesQR.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var ruta = this.getAttribute('data-ruta');
+                var id = this.getAttribute('data-id');
+                var rutaCompleta = '/SEGTRACK/Public/' + ruta;
+                
+                document.getElementById('qrDispositivoId').textContent = id;
+                document.getElementById('qrImagen').src = rutaCompleta;
+                document.getElementById('btnDescargarQR').href = rutaCompleta;
+                
+                abrirModal('modalVerQR');
+            });
+        });
+        
+        // ========== EDITAR ==========
+        var botonesEditar = document.querySelectorAll('.btn-editar');
+        console.log('Botones editar encontrados:', botonesEditar.length);
+        
+        botonesEditar.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var id = this.getAttribute('data-id');
+                var tipo = this.getAttribute('data-tipo');
+                var marca = this.getAttribute('data-marca');
+                var funcionario = this.getAttribute('data-funcionario');
+                var visitante = this.getAttribute('data-visitante');
+                
+                console.log('=== Editando dispositivo ===');
+                console.log('ID:', id);
+                console.log('Tipo:', tipo);
+                console.log('Marca:', marca);
+                
+                document.getElementById('editId').value = id;
+                document.getElementById('editIdDisplay').textContent = id;
+                document.getElementById('editTipo').value = tipo;
+                document.getElementById('editMarca').value = marca;
+                document.getElementById('editFuncionario').value = funcionario || '';
+                document.getElementById('editVisitante').value = visitante || '';
+                
+                abrirModal('modalEditar');
+            });
+        });
+        
+        // ========== CERRAR MODALES ==========
+        var botonesCerrar = document.querySelectorAll('[data-dismiss="modal"]');
+        botonesCerrar.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var modal = this.closest('.modal');
+                cerrarModal(modal.id);
+            });
+        });
+        
+        // ========== GUARDAR CAMBIOS ==========
+        var btnGuardar = document.getElementById('btnGuardarCambios');
+        if (btnGuardar) {
+            btnGuardar.addEventListener('click', function() {
+                var id = document.getElementById('editId').value;
+                var tipo = document.getElementById('editTipo').value;
+                var marca = document.getElementById('editMarca').value;
+                var funcionario = document.getElementById('editFuncionario').value;
+                var visitante = document.getElementById('editVisitante').value;
+                
+                console.log('=== Guardando ===');
+                console.log('ID:', id);
+                console.log('Tipo:', tipo);
+                console.log('Marca:', marca);
+                console.log('Funcionario:', funcionario);
+                console.log('Visitante:', visitante);
+                
+                if (!id) {
+                    alert('Error: ID no válido');
+                    return;
+                }
+                if (!tipo) {
+                    alert('Seleccione un tipo de dispositivo');
+                    return;
+                }
+                if (!marca || marca.trim() === '') {
+                    alert('Ingrese la marca del dispositivo');
+                    return;
+                }
+                
+                // Deshabilitar botón
+                btnGuardar.disabled = true;
+                btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+                
+                // Crear FormData
+                var formData = new FormData();
+                formData.append('accion', 'actualizar');
+                formData.append('id', id);
+                formData.append('tipo', tipo);
+                formData.append('marca', marca);
+                formData.append('id_funcionario', funcionario);
+                formData.append('id_visitante', visitante);
+                
+                // Enviar
+                fetch('../../Controller/ControladorDispositivo.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    console.log('Respuesta:', data);
+                    
+                    btnGuardar.disabled = false;
+                    btnGuardar.innerHTML = '<i class="fas fa-save me-1"></i> Guardar Cambios';
+                    
+                    if (data.success) {
+                        alert('Dispositivo actualizado correctamente');
+                        location.reload();
+                    } else {
+                        alert('Error: ' + (data.message || 'Error desconocido'));
+                    }
+                })
+                .catch(function(error) {
+                    console.log('Error:', error);
+                    btnGuardar.disabled = false;
+                    btnGuardar.innerHTML = '<i class="fas fa-save me-1"></i> Guardar Cambios';
+                    alert('Error de conexión');
+                });
+            });
         }
     });
-});
+})();
 </script>
-
-<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

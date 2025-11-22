@@ -1,3 +1,37 @@
 
 2025-11-20 19:18:08 === INICIO CONTROLADOR PARQUEADERO ===
 Librería QR cargada
+
+2025-11-21 18:53:45 === INICIO CONTROLADOR PARQUEADERO ===
+Librería QR cargada
+
+2025-11-21 19:39:20 === INICIO CONTROLADOR PARQUEADERO ===
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción: registrar
+registrarVehiculo llamado
+Generando QR para vehículo ID: 22
+Carpeta QR vehículos creada: C:\xampp\htdocs\SEGTRACK\App\Controller/../Public/qr/Qr_Parq
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../Public/qr/Qr_Parq/QR-VEHICULO-22-6920b1d8cd21f.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 22","data":{"IdParqueadero":"22","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-22-6920b1d8cd21f.png"}}
+
+2025-11-21 19:40:20 === INICIO CONTROLADOR PARQUEADERO ===
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción: registrar
+registrarVehiculo llamado
+Generando QR para vehículo ID: 23
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-23-6920b2145dbda.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 23","data":{"IdParqueadero":"23","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-23-6920b2145dbda.png"}}
+
+2025-11-22 01:13:31 === INICIO CONTROLADOR PARQUEADERO ===
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción: registrar
+registrarVehiculo llamado
+Generando QR para vehículo ID: 24
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-24-6921002b4e013.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 24","data":{"IdParqueadero":"24","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-24-6921002b4e013.png"}}

@@ -1,12 +1,12 @@
 <?php
-require_once __DIR__ . '/../../Core/conexion.php';
+require_once __DIR__ . '/../Core/conexion.php';
 
 class ModeloParqueadero {
     private $conexion;
     private $logPath;
 
     public function __construct() {
-        $this->logPath = __DIR__ . '/../../controller/parqueadero_dispositivo/debug_log.txt';
+        $this->logPath = __DIR__ . '/../controller/parqueadero_dispositivo/debug_log.txt';
         
         try {
             $conexionObj = new Conexion();

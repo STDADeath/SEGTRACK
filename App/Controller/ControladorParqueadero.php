@@ -52,7 +52,7 @@ try {
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "Generando QR para vehículo ID: $idVehiculo\n", FILE_APPEND);
 
                 // ✅ Carpeta en Public/qr/Qr_Parq
-                $rutaCarpeta = __DIR__ . '/../Public/qr/Qr_Parq';
+                $rutaCarpeta = __DIR__ . '/../../Public/qr/Qr_Parq';
                 if (!file_exists($rutaCarpeta)) {
                     mkdir($rutaCarpeta, 0777, true);
                     file_put_contents($this->carpetaDebug . '/debug_log.txt', "Carpeta QR vehículos creada: $rutaCarpeta\n", FILE_APPEND);

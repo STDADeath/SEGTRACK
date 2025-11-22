@@ -194,3 +194,284 @@ Conexión cargada
 Conexión verificada como PDO
 Librería QR cargada
 Modelo cargado
+2025-11-21 18:53:17 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Huawei",
+    "IdFuncionario": "23",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Huawei, IdFunc: 23, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Portatil",":marca":"Huawei",":funcionario":23,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 25
+Generando QR para dispositivo ID: 25
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-25-6920a70dd895d.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 25","data":{"IdDispositivo":"25","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-25-6920a70dd895d.png"}}
+
+2025-11-22 00:38:28 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "id_funcionario": "23",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 0
+Respuesta final: {"success":false,"message":"ID de dispositivo no v\u00e1lido"}
+=== FIN ===
+
+
+2025-11-22 00:38:37 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "id_funcionario": "",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 0
+Respuesta final: {"success":false,"message":"ID de dispositivo no v\u00e1lido"}
+=== FIN ===
+
+
+2025-11-22 00:38:58 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "id_funcionario": "25",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 0
+Respuesta final: {"success":false,"message":"ID de dispositivo no v\u00e1lido"}
+=== FIN ===
+
+
+2025-11-22 00:39:12 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "id_funcionario": "25",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 0
+Respuesta final: {"success":false,"message":"ID de dispositivo no v\u00e1lido"}
+=== FIN ===
+
+
+2025-11-22 00:40:04 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "",
+    "tipo": "Tablet",
+    "marca": "Huawei",
+    "id_funcionario": "23",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 0
+Respuesta final: {"success":false,"message":"ID de dispositivo no v\u00e1lido"}
+=== FIN ===
+
+
+2025-11-22 00:40:16 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "",
+    "tipo": "Tablet",
+    "marca": "Huawei",
+    "id_funcionario": "23",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 0
+Respuesta final: {"success":false,"message":"ID de dispositivo no v\u00e1lido"}
+=== FIN ===
+
+
+2025-11-22 00:54:19 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "25",
+    "tipo": "Portatil",
+    "marca": "Huawei",
+    "id_funcionario": "23",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 25
+Datos preparados para actualizar: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Huawei","IdFuncionario":"23","IdVisitante":""}
+=== actualizarDispositivo llamado ===
+ID: 25
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Huawei","IdFuncionario":"23","IdVisitante":""}
+=== MODELO: actualizar ID: 25 ===
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Huawei","IdFuncionario":"23","IdVisitante":""}
+SQL: UPDATE dispositivo SET 
+                        TipoDispositivo = :tipo, 
+                        MarcaDispositivo = :marca, 
+                        IdFuncionario = :funcionario, 
+                        IdVisitante = :visitante
+                    WHERE IdDispositivo = :id
+Parámetros SQL: {":tipo":"Portatil",":marca":"Huawei",":funcionario":23,":visitante":null,":id":25}
+Resultado execute: true
+Filas afectadas: 0
+Resultado del modelo: {"success":true,"rows":0}
+Dispositivo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":0}
+=== FIN ===
+
+
+2025-11-22 00:54:38 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "25",
+    "tipo": "Tablet",
+    "marca": "Huawei",
+    "id_funcionario": "23",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 25
+Datos preparados para actualizar: {"TipoDispositivo":"Tablet","MarcaDispositivo":"Huawei","IdFuncionario":"23","IdVisitante":""}
+=== actualizarDispositivo llamado ===
+ID: 25
+Datos recibidos: {"TipoDispositivo":"Tablet","MarcaDispositivo":"Huawei","IdFuncionario":"23","IdVisitante":""}
+=== MODELO: actualizar ID: 25 ===
+Datos recibidos: {"TipoDispositivo":"Tablet","MarcaDispositivo":"Huawei","IdFuncionario":"23","IdVisitante":""}
+SQL: UPDATE dispositivo SET 
+                        TipoDispositivo = :tipo, 
+                        MarcaDispositivo = :marca, 
+                        IdFuncionario = :funcionario, 
+                        IdVisitante = :visitante
+                    WHERE IdDispositivo = :id
+Parámetros SQL: {":tipo":"Tablet",":marca":"Huawei",":funcionario":23,":visitante":null,":id":25}
+Resultado execute: true
+Filas afectadas: 1
+Resultado del modelo: {"success":true,"rows":1}
+Dispositivo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1}
+=== FIN ===
+
+
+2025-11-22 00:55:41 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Computador",
+    "MarcaDispositivo": "Dell",
+    "IdFuncionario": "26",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Computador, Marca: Dell, IdFunc: 26, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Computador",":marca":"Dell",":funcionario":26,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 26
+Generando QR para dispositivo ID: 26
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-26-6920fbfd42dd9.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 26","data":{"IdDispositivo":"26","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-26-6920fbfd42dd9.png"}}
+=== FIN ===
+
+
+2025-11-22 01:12:49 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "IdFuncionario": "26",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Dell, IdFunc: 26, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Portatil",":marca":"Dell",":funcionario":26,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 27
+Generando QR para dispositivo ID: 27
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-27-69210001606f1.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 27","data":{"IdDispositivo":"27","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-27-69210001606f1.png"}}
+=== FIN ===
+
