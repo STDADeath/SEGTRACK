@@ -35,3 +35,30 @@ registrarVehiculo llamado
 Generando QR para vehículo ID: 24
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-24-6921002b4e013.png
 Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 24","data":{"IdParqueadero":"24","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-24-6921002b4e013.png"}}
+
+2025-11-23 00:28:21 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "24",
+    "tipo": "Moto",
+    "descripcion": "kawasaki z Ninja 1200 edicion evangelion",
+    "idsede": "26"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 24
+Datos preparados: {"tipo":"Moto","descripcion":"kawasaki z Ninja 1200 edicion evangelion","idsede":"26"}
+=== actualizarVehiculo llamado ===
+ID: 24
+Datos: {"tipo":"Moto","descripcion":"kawasaki z Ninja 1200 edicion evangelion","idsede":"26"}
+Regenerando QR para ID: 24
+Generando QR para vehículo ID: 24
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-24-69224715bdb42.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-24-6921002b4e013.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-24-69224715bdb42.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-24-69224715bdb42.png"}
+=== FIN ===
+

@@ -7,16 +7,17 @@ ini_set('error_log', __DIR__ . '/Debug_Parq/error_log.txt');
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-// ✅ Crear carpeta Debug_Parq si no existe
+// Crear carpeta Debug_Parq si no existe
 $carpetaDebug = __DIR__ . '/Debug_Parq';
 if (!file_exists($carpetaDebug)) {
     mkdir($carpetaDebug, 0777, true);
 }
 
 file_put_contents($carpetaDebug . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO CONTROLADOR PARQUEADERO ===\n", FILE_APPEND);
+file_put_contents($carpetaDebug . '/debug_log.txt', "POST recibido: " . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
 
 try {
-    // ✅ Ruta corregida a phpqrcode
+    // Ruta a phpqrcode
     $ruta_qrlib = __DIR__ . '/../Libs/phpqrcode/qrlib.php';
     if (!file_exists($ruta_qrlib)) {
         throw new Exception("Librería phpqrcode no encontrada: $ruta_qrlib");
@@ -24,12 +25,11 @@ try {
     require_once $ruta_qrlib;
     file_put_contents($carpetaDebug . '/debug_log.txt', "Librería QR cargada\n", FILE_APPEND);
 
-    // ✅ Ruta corregida al modelo
+    // Ruta al modelo
     $ruta_modelo = __DIR__ . '/../Model/ModeloParqueadero.php';
     if (!file_exists($ruta_modelo)) {
         throw new Exception("Modelo no encontrado: $ruta_modelo");
     }
-
     require_once $ruta_modelo;
     file_put_contents($carpetaDebug . '/debug_log.txt', "Modelo cargado correctamente\n", FILE_APPEND);
 
@@ -51,7 +51,7 @@ try {
             try {
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "Generando QR para vehículo ID: $idVehiculo\n", FILE_APPEND);
 
-                // ✅ Carpeta en Public/qr/Qr_Parq
+                // Carpeta en Public/qr/Qr_Parq
                 $rutaCarpeta = __DIR__ . '/../../Public/qr/Qr_Parq';
                 if (!file_exists($rutaCarpeta)) {
                     mkdir($rutaCarpeta, 0777, true);
@@ -61,8 +61,7 @@ try {
                 $nombreArchivo = "QR-VEHICULO-" . $idVehiculo . "-" . uniqid() . ".png";
                 $rutaCompleta = $rutaCarpeta . '/' . $nombreArchivo;
                 
-                // Contenido más detallado para el QR del vehículo
-                $contenidoQR = "VEHÍCULO \n";
+                $contenidoQR = "VEHÍCULO\n";
                 $contenidoQR .= "ID: $idVehiculo\n";
                 $contenidoQR .= "Tipo: $tipo\n";
                 $contenidoQR .= "Placa: $placa\n";
@@ -77,7 +76,6 @@ try {
 
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "QR generado exitosamente: $rutaCompleta\n", FILE_APPEND);
                 
-                // ✅ Retornar ruta relativa para la BD
                 return 'qr/Qr_Parq/' . $nombreArchivo;
 
             } catch (Exception $e) {
@@ -96,7 +94,6 @@ try {
             $FechaParqueadero = $datos['FechaParqueadero'] ?? date('Y-m-d H:i:s');
             $IdSede = $datos['IdSede'] ?? null;
 
-            // Validaciones
             if ($this->campoVacio($TipoVehiculo)) {
                 return ['success' => false, 'message' => 'Falta el campo: Tipo de vehículo'];
             }
@@ -119,12 +116,9 @@ try {
 
                 if ($resultado['success']) {
                     $idVehiculo = $resultado['id'];
-                    
-                    // Generar QR después del registro exitoso
                     $rutaQR = $this->generarQR($idVehiculo, $TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo);
 
                     if ($rutaQR) {
-                        // Actualizar el registro con la ruta del QR
                         $this->modelo->actualizarQR($idVehiculo, $rutaQR);
                     }
 
@@ -146,9 +140,16 @@ try {
         }
 
         public function actualizarVehiculo(int $id, array $datos): array {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "actualizarVehiculo llamado con ID: $id\n", FILE_APPEND);
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== actualizarVehiculo llamado ===\n", FILE_APPEND);
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "ID: $id\n", FILE_APPEND);
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "Datos: " . json_encode($datos, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
 
             try {
+                // Obtener datos actuales para el QR
+                $vehiculoAnterior = $this->modelo->obtenerPorId($id);
+                $qrAnterior = $vehiculoAnterior['QrVehiculo'] ?? null;
+                $placa = $vehiculoAnterior['PlacaVehiculo'] ?? '';
+                
                 $resultado = $this->modelo->actualizarVehiculo(
                     $id,
                     $datos['tipo'] ?? null,
@@ -157,8 +158,35 @@ try {
                 );
                 
                 if ($resultado['success']) {
+                    // Regenerar QR con los nuevos datos
+                    $tipo = $datos['tipo'] ?? '';
+                    $descripcion = $datos['descripcion'] ?? '';
+                    
+                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Regenerando QR para ID: $id\n", FILE_APPEND);
+                    
+                    $nuevoQR = $this->generarQR($id, $tipo, $placa, $descripcion);
+                    
+                    if ($nuevoQR) {
+                        $this->modelo->actualizarQR($id, $nuevoQR);
+                        
+                        // Eliminar QR anterior
+                        if ($qrAnterior) {
+                            $rutaQrAnterior = __DIR__ . '/../../Public/' . $qrAnterior;
+                            if (file_exists($rutaQrAnterior)) {
+                                unlink($rutaQrAnterior);
+                                file_put_contents($this->carpetaDebug . '/debug_log.txt', "QR anterior eliminado: $rutaQrAnterior\n", FILE_APPEND);
+                            }
+                        }
+                        
+                        file_put_contents($this->carpetaDebug . '/debug_log.txt', "Nuevo QR generado: $nuevoQR\n", FILE_APPEND);
+                    }
+                    
                     file_put_contents($this->carpetaDebug . '/debug_log.txt', "Vehículo actualizado exitosamente\n", FILE_APPEND);
-                    return ['success' => true, 'message' => 'Vehículo actualizado correctamente'];
+                    return [
+                        'success' => true, 
+                        'message' => 'Vehículo actualizado correctamente',
+                        'qr' => $nuevoQR
+                    ];
                 } else {
                     file_put_contents($this->carpetaDebug . '/debug_log.txt', "Error al actualizar: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
                     return ['success' => false, 'message' => 'Error al actualizar vehículo'];
@@ -197,24 +225,32 @@ try {
     $controlador = new ControladorParqueadero();
     $accion = $_POST['accion'] ?? 'registrar';
 
-    file_put_contents($carpetaDebug . '/debug_log.txt', "Acción: $accion\n", FILE_APPEND);
+    file_put_contents($carpetaDebug . '/debug_log.txt', "Acción detectada: $accion\n", FILE_APPEND);
 
     if ($accion === 'registrar') {
         $resultado = $controlador->registrarVehiculo($_POST);
+        
     } elseif ($accion === 'actualizar') {
-        $id = (int)($_POST['id'] ?? 0);
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        
+        file_put_contents($carpetaDebug . '/debug_log.txt', "Procesando actualización para ID: $id\n", FILE_APPEND);
+        
         if ($id > 0) {
             $datos = [
                 'tipo' => $_POST['tipo'] ?? null,
                 'descripcion' => $_POST['descripcion'] ?? null,
                 'idsede' => $_POST['idsede'] ?? null
             ];
+            
+            file_put_contents($carpetaDebug . '/debug_log.txt', "Datos preparados: " . json_encode($datos) . "\n", FILE_APPEND);
+            
             $resultado = $controlador->actualizarVehiculo($id, $datos);
         } else {
             $resultado = ['success' => false, 'message' => 'ID de vehículo no válido'];
         }
+        
     } elseif ($accion === 'cambiar_estado') {
-        $id = (int)($_POST['id'] ?? 0);
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         $nuevoEstado = $_POST['estado'] ?? '';
         
         if ($id > 0 && in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
@@ -222,11 +258,23 @@ try {
         } else {
             $resultado = ['success' => false, 'message' => 'Datos no válidos para cambiar estado'];
         }
+        
+    } elseif ($accion === 'eliminar') {
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        
+        if ($id > 0) {
+            $resultado = $controlador->cambiarEstadoVehiculo($id, 'Inactivo');
+        } else {
+            $resultado = ['success' => false, 'message' => 'ID de vehículo no válido'];
+        }
+        
     } else {
-        $resultado = ['success' => false, 'message' => 'Acción no reconocida'];
+        $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];
     }
 
     file_put_contents($carpetaDebug . '/debug_log.txt', "Respuesta final: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+    file_put_contents($carpetaDebug . '/debug_log.txt', "=== FIN ===\n\n", FILE_APPEND);
+    
     echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
 
 } catch (Exception $e) {

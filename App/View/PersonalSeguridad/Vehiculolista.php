@@ -35,7 +35,6 @@ if (count($filtros) > 0) {
     $where = "WHERE " . implode(" AND ", $filtros);
 }
 
-// Incluir el campo QrVehiculo en la consulta
 $sql = "SELECT *, QrVehiculo FROM Parqueadero $where ORDER BY IdParqueadero DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
@@ -136,7 +135,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-sm btn-outline-primary"
                                             onclick='cargarDatosEdicionVehiculo(<?php echo json_encode($row); ?>)'
-                                            title="Editar vehículo" data-toggle="modal" data-target="#modalEditarVehiculo">
+                                            title="Editar vehículo">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" class="btn btn-sm btn-outline-danger"
@@ -199,7 +198,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="modal-body">
                 <form id="formEditarVehiculo">
                     <input type="hidden" id="editIdVehiculo" name="id">
-                    <input type="hidden" id="editAccion" name="accion" value="actualizar">
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -212,9 +210,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Placa</label>
+                            <label class="form-label">Placa (No editable)</label>
                             <input type="text" id="editPlacaVehiculoDisabled" class="form-control" disabled>
-                            <input type="hidden" id="editPlacaVehiculo" name="placa">
                         </div>
                     </div>
 
@@ -225,14 +222,12 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Tarjeta Propiedad</label>
+                            <label class="form-label">Tarjeta Propiedad (No editable)</label>
                             <input type="text" id="editTarjetaPropiedadDisabled" class="form-control" disabled>
-                            <input type="hidden" id="editTarjetaPropiedad" name="tarjeta">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Fecha Parqueadero</label>
+                            <label class="form-label">Fecha Parqueadero (No editable)</label>
                             <input type="datetime-local" id="editFechaParqueaderoDisabled" class="form-control" disabled>
-                            <input type="hidden" id="editFechaParqueadero" name="fecha">
                         </div>
                     </div>
 
@@ -250,36 +245,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- Modal Confirmar Eliminación -->
-<div class="modal fade" id="confirmarEliminarModalVehiculo" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmar Eliminación</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea eliminar este vehículo? Esta acción no se puede deshacer.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="btnConfirmarEliminarVehiculo">Eliminar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../js/javascript/js/ValidacionParqueadero.js"></script>
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
 <script>
 let vehiculoIdAEliminar = null;
 
-// ✅ Función para mostrar QR del vehículo
+// Función para mostrar QR del vehículo
 function verQRVehiculo(rutaQR, idVehiculo) {
-    // La ruta viene como 'qr/Qr_Parq/nombre.png'
-    const rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
+    var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
     
     console.log('Ruta QR completa:', rutaCompleta);
     
@@ -292,97 +265,166 @@ function verQRVehiculo(rutaQR, idVehiculo) {
 
 // Cargar datos en el modal de edición
 function cargarDatosEdicionVehiculo(row) {
+    console.log('Cargando datos para editar:', row);
+    
     $('#editIdVehiculo').val(row.IdParqueadero);
     $('#editTipoVehiculo').val(row.TipoVehiculo);
     $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
     $('#editIdSede').val(row.IdSede);
 
     $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
-    $('#editPlacaVehiculo').val(row.PlacaVehiculo);
-
     $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
-    $('#editTarjetaPropiedad').val(row.TarjetaPropiedad);
 
-    let fechaHora = row.FechaParqueadero;
+    var fechaHora = row.FechaParqueadero;
     if (fechaHora) {
         fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
     }
     $('#editFechaParqueaderoDisabled').val(fechaHora);
-    $('#editFechaParqueadero').val(fechaHora);
+    
+    $('#modalEditarVehiculo').modal('show');
 }
 
 // Confirmar eliminación
 function confirmarEliminacionVehiculo(id) {
-    vehiculoIdAEliminar = id;
-    $('#confirmarEliminarModalVehiculo').modal('show');
+    Swal.fire({
+        title: '¿Está seguro?',
+        text: "Esta acción desactivará el vehículo",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            eliminarVehiculo(id);
+        }
+    });
 }
 
-// Botón confirmar eliminación
-$('#btnConfirmarEliminarVehiculo').click(function() {
-    if (!vehiculoIdAEliminar) return;
-
+// Eliminar vehículo
+function eliminarVehiculo(id) {
+    Swal.fire({
+        title: 'Eliminando...',
+        text: 'Por favor espere',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    
     $.ajax({
         url: '../../Controller/ControladorParqueadero.php',
         type: 'POST',
         data: {
             accion: 'eliminar',
-            id: vehiculoIdAEliminar
+            id: id
         },
         dataType: 'json',
         success: function(response) {
-            $('#confirmarEliminarModalVehiculo').modal('hide');
+            console.log('Respuesta eliminación:', response);
+            
             if (response.success) {
-                alert('Vehículo eliminado correctamente');
-                $('#fila-' + vehiculoIdAEliminar).fadeOut(400, function() {
-                    $(this).remove();
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Eliminado!',
+                    text: 'Vehículo eliminado correctamente',
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    $('#fila-' + id).fadeOut(400, function() {
+                        $(this).remove();
+                    });
                 });
             } else {
-                alert('Error: ' + response.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.message || 'Error al eliminar el vehículo'
+                });
             }
         },
-        error: function() {
-            $('#confirmarEliminarModalVehiculo').modal('hide');
-            alert('Error al intentar eliminar el vehículo');
+        error: function(xhr, status, error) {
+            console.log('Error:', xhr.responseText);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor'
+            });
         }
     });
-});
+}
 
 // Botón guardar cambios
-$('#btnGuardarCambiosVehiculo').click(function() {
-    const formData = {
-        accion: 'actualizar',
-        id: $('#editIdVehiculo').val(),
-        tipo: $('#editTipoVehiculo').val(),
-        descripcion: $('#editDescripcionVehiculo').val(),
-        idsede: $('#editIdSede').val()
-    };
+$(document).ready(function() {
+    $('#btnGuardarCambiosVehiculo').click(function() {
+        var formData = {
+            accion: 'actualizar',
+            id: $('#editIdVehiculo').val(),
+            tipo: $('#editTipoVehiculo').val(),
+            descripcion: $('#editDescripcionVehiculo').val(),
+            idsede: $('#editIdSede').val()
+        };
 
-    // Validar campos
-    if (!formData.tipo || !formData.descripcion || !formData.idsede) {
-        alert('Complete todos los campos obligatorios');
-        return;
-    }
+        console.log('Enviando datos:', formData);
 
-    $.ajax({
-        url: '../../Controller/ControladorParqueadero.php',
-        type: 'POST',
-        data: formData,
-        dataType: 'json',
-        success: function(response) {
-            $('#modalEditarVehiculo').modal('hide');
-            if (response.success) {
-                alert('Vehículo actualizado correctamente');
-                location.reload();
-            } else {
-                alert('Error: ' + response.message);
-            }
-        },
-        error: function() {
-            $('#modalEditarVehiculo').modal('hide');
-            alert('Error al intentar actualizar el vehículo');
+        // Validar campos obligatorios
+        if (!formData.tipo || !formData.idsede) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Complete todos los campos obligatorios (Tipo e ID Sede)'
+            });
+            return;
         }
+
+        // Mostrar loading
+        Swal.fire({
+            title: 'Guardando...',
+            text: 'Por favor espere',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        $.ajax({
+            url: '../../Controller/ControladorParqueadero.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                console.log('Respuesta:', response);
+                $('#modalEditarVehiculo').modal('hide');
+                
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'Vehículo actualizado correctamente',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message || 'Error al actualizar el vehículo'
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', xhr.responseText);
+                $('#modalEditarVehiculo').modal('hide');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor'
+                });
+            }
+        });
     });
 });
 </script>
-
-<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
