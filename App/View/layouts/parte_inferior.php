@@ -1,24 +1,24 @@
-                </div>
+</div>
                 <!-- Fin del contenido específico -->
+
             </div>
             <!-- Fin del contenido principal -->
 
-            <!-- Footer inferior fijo -->
-            <footer class="sticky-footer bg-primary">
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
-                    <div class="copyright text-center text-white">
-                        <span>© 2025 SEGTRACK | Innovación y Seguridad Inteligente.</span>
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; SEGTRACK 2025 | Innovación y Seguridad Inteligente</span>
                     </div>
                 </div>
             </footer>
-            <!-- Fin del footer -->
+            <!-- End Footer -->
 
         </div>
-        <!-- Fin del contenedor del contenido -->
+        <!-- End Content Wrapper -->
 
     </div>
-    <!-- Fin del wrapper general -->
-
+    <!-- End Wrapper -->
 
     <!-- Botón "volver arriba" -->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -26,25 +26,22 @@
     </a>
 
     <!-- Modal de cierre de sesión -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
-                <!-- Encabezado del modal -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Cerrar sesión</h5>
-                    <button class="close" data-dismiss="modal">
-                        <span>×</span>
+                    <h5 class="modal-title" id="exampleModalLabel">¿Desea cerrar sesión?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
 
-                <!-- Mensaje del modal -->
-                <div class="modal-body">¿Seguro que deseas cerrar sesión?</div>
+                <div class="modal-body">Seleccione "Cerrar sesión" si está listo para finalizar su sesión actual.</div>
 
-                <!-- Botones del modal -->
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="../../../Public/index.html">Salir</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="../../../Public/index.html">Cerrar sesión</a>
                 </div>
 
             </div>
@@ -56,11 +53,11 @@
     <script src="../../../Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../../Public/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Gráficos -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <!-- Script del template SB Admin 2 -->
     <script src="../../../Public/js/sb-admin-2.min.js"></script>
+
+    <!-- Gráficos Chart.js (si se necesita) -->
+    <script src="../../../Public/vendor/chart.js/Chart.min.js"></script>
 
 </body>
 </html>
