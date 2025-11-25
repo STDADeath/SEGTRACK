@@ -62,3 +62,29 @@ Vehículo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-24-69224715bdb42.png"}
 === FIN ===
 
+
+2025-11-25 01:33:27 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "22",
+    "tipo": "Bicicleta",
+    "descripcion": "Naranja",
+    "idsede": "28"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 22
+Datos preparados: {"tipo":"Bicicleta","descripcion":"Naranja","idsede":"28"}
+=== actualizarVehiculo llamado ===
+ID: 22
+Datos: {"tipo":"Bicicleta","descripcion":"Naranja","idsede":"28"}
+Regenerando QR para ID: 22
+Generando QR para vehículo ID: 22
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-22-6924f9576780d.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-22-6924f9576780d.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-22-6924f9576780d.png"}
+=== FIN ===
+

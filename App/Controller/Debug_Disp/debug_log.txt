@@ -715,3 +715,80 @@ Dispositivo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-28-69222f5ec1c7a.png"}
 === FIN ===
 
+
+2025-11-25 02:36:57 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "30",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 30, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-11-25 02:38:01 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Tablet",
+    "marca": "HUAWEI",
+    "id_funcionario": "",
+    "id_visitante": "8"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 29
+Datos preparados para actualizar: {"TipoDispositivo":"Tablet","MarcaDispositivo":"HUAWEI","IdFuncionario":"","IdVisitante":"8"}
+=== actualizarDispositivo llamado ===
+ID: 29
+Datos recibidos: {"TipoDispositivo":"Tablet","MarcaDispositivo":"HUAWEI","IdFuncionario":"","IdVisitante":"8"}
+=== MODELO: actualizar ID: 29 ===
+Datos recibidos: {"TipoDispositivo":"Tablet","MarcaDispositivo":"HUAWEI","IdFuncionario":"","IdVisitante":"8"}
+SQL: UPDATE dispositivo SET 
+                        TipoDispositivo = :tipo, 
+                        MarcaDispositivo = :marca, 
+                        IdFuncionario = :funcionario, 
+                        IdVisitante = :visitante
+                    WHERE IdDispositivo = :id
+Parámetros SQL: {":tipo":"Tablet",":marca":"HUAWEI",":funcionario":null,":visitante":8,":id":29}
+Resultado execute: true
+Filas afectadas: 1
+Resultado del modelo: {"success":true,"rows":1}
+Regenerando QR para ID: 29
+Generando QR para dispositivo ID: 29
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-29-692508792fc53.png
+Nuevo QR generado: qr/Qr_Dipo/QR-DISP-29-692508792fc53.png
+Dispositivo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-29-692508792fc53.png"}
+=== FIN ===
+
+
+2025-11-25 02:38:08 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "29",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 29, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
