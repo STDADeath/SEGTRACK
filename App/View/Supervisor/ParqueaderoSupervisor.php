@@ -1,10 +1,9 @@
-
 <?php require_once __DIR__ . '/../layouts/parte_superior_supervisor.php'; ?>
 <?php require_once(__DIR__ . "/../../Core/conexion.php");?>
 
 <?php
-$conexion = new Conexion();
-$conn = $conexion->getConexion();
+$conexionObj = new Conexion();
+$conn = $conexionObj->getConexion();
 
 // Construcción de filtros dinámicos
 $filtros = [];
@@ -51,7 +50,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-car me-2"></i>Vehículos Registrados</h1>
-        <a href="../models/Parqueadero.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="./Parqueadero.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus me-1"></i> Nuevo Vehículo
         </a>
     </div>
@@ -86,7 +85,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="col-md-1">
                     <label for="sede" class="form-label">ID Sede</label>
-                    <input type="text" name="sede" id="sede" class="form-control" value="<?= $_GET['sede'] ?? '' ?>" placeholder="Sede">
+                    <input type="text" name="sede" id="sede" class="form-control" value="<?= $_GET['sede'] ?? '' ?>" placeholder="ID">
                 </div>
                 <div class="col-md-1">
                     <label for="estado" class="form-label">Estado</label>
@@ -98,7 +97,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
-                    <a href="VehiculoLista.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+                    <a href="VehiculoSupervisor.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
                 </div>
             </form>
         </div>
@@ -114,6 +113,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
+                        <th>QR</th>
                         <th>Tipo Vehículo</th>
                         <th>Placa</th>
                         <th>Descripción</th>
@@ -129,6 +129,17 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdParqueadero']; ?>" class="<?php echo $row['Estado'] === 'Inactivo' ? 'fila-inactiva' : ''; ?>">
                                 <td><?php echo $row['IdParqueadero']; ?></td>
+                                <td class="text-center">
+                                    <?php if (!empty($row['QrVehiculo'])) : ?>
+                                        <button type="button" class="btn btn-sm btn-outline-success" 
+                                                onclick="verQRVehiculo('<?php echo htmlspecialchars($row['QrVehiculo']); ?>', <?php echo $row['IdParqueadero']; ?>)"
+                                                title="Ver código QR">
+                                            <i class="fas fa-qrcode me-1"></i> Ver QR
+                                        </button>
+                                    <?php else : ?>
+                                        <span class="badge badge-warning">Sin QR</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?php echo $row['TipoVehiculo']; ?></td>
                                 <td><?php echo $row['PlacaVehiculo']; ?></td>
                                 <td><?php echo $row['DescripcionVehiculo']; ?></td>
@@ -143,23 +154,25 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-outline-primary me-1"
-                                        onclick='cargarDatosEdicionVehiculo(<?php echo json_encode($row); ?>)'
-                                        title="Editar vehículo" data-toggle="modal" data-target="#modalEditarVehiculo">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button" 
-                                            class="btn btn-sm <?php echo $row['Estado'] === 'Activo' ? 'btn-outline-warning' : 'btn-outline-success'; ?>" 
-                                            onclick="confirmarCambioEstadoVehiculo(<?php echo $row['IdParqueadero']; ?>, '<?php echo $row['Estado']; ?>')"
-                                            title="<?php echo $row['Estado'] === 'Activo' ? 'Desactivar' : 'Activar'; ?> vehículo">
-                                        <i class="fas <?php echo $row['Estado'] === 'Activo' ? 'fa-lock' : 'fa-lock-open'; ?>"></i>
-                                    </button>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                            onclick='cargarDatosEdicionVehiculo(<?php echo json_encode($row); ?>)'
+                                            title="Editar vehículo">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" 
+                                                class="btn btn-sm <?php echo $row['Estado'] === 'Activo' ? 'btn-outline-warning' : 'btn-outline-success'; ?>" 
+                                                onclick="confirmarCambioEstadoVehiculo(<?php echo $row['IdParqueadero']; ?>, '<?php echo $row['Estado']; ?>')"
+                                                title="<?php echo $row['Estado'] === 'Activo' ? 'Desactivar' : 'Activar'; ?> vehículo">
+                                            <i class="fas <?php echo $row['Estado'] === 'Activo' ? 'fa-lock' : 'fa-lock-open'; ?>"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="9" class="text-center py-4">
+                            <td colspan="10" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay vehículos registrados con los filtros seleccionados</p>
                             </td>
@@ -167,6 +180,32 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para visualizar QR de Vehículo -->
+<div class="modal fade" id="modalVerQRVehiculo" tabindex="-1" role="dialog" aria-labelledby="modalVerQRVehiculoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalVerQRVehiculoLabel">
+                    <i class="fas fa-qrcode me-2"></i>Código QR - Vehículo #<span id="qrVehiculoId"></span>
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="qrImagenVehiculo" src="" alt="Código QR Vehículo" class="img-fluid" style="max-width: 300px; border: 2px solid #ddd; padding: 10px; border-radius: 5px;">
+                <p class="text-muted mt-3">Escanea este código con tu dispositivo móvil</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a id="btnDescargarQRVehiculo" href="#" class="btn btn-success" download>
+                    <i class="fas fa-download me-1"></i> Descargar QR
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -182,7 +221,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="modal-body">
                 <form id="formEditarVehiculo">
                     <input type="hidden" id="editIdVehiculo" name="id">
-                    <input type="hidden" id="editAccion" name="accion" value="actualizar">
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -195,9 +233,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Placa</label>
+                            <label class="form-label">Placa (No editable)</label>
                             <input type="text" id="editPlacaVehiculoDisabled" class="form-control" disabled>
-                            <input type="hidden" id="editPlacaVehiculo" name="placa">
                         </div>
                     </div>
 
@@ -208,14 +245,12 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Tarjeta Propiedad</label>
+                            <label class="form-label">Tarjeta Propiedad (No editable)</label>
                             <input type="text" id="editTarjetaPropiedadDisabled" class="form-control" disabled>
-                            <input type="hidden" id="editTarjetaPropiedad" name="tarjeta">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Fecha Parqueadero</label>
+                            <label class="form-label">Fecha Parqueadero (No editable)</label>
                             <input type="datetime-local" id="editFechaParqueaderoDisabled" class="form-control" disabled>
-                            <input type="hidden" id="editFechaParqueadero" name="fecha">
                         </div>
                     </div>
 
@@ -255,7 +290,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </svg>
                     </label>
                 </div>
-                <p id="mensajeCambioEstadoVehiculo"></p>
+                <p id="mensajeCambioEstadoVehiculo" class="mb-3 mt-2" style="font-size: 1.1rem;"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -265,133 +300,198 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Scripts de jQuery y Bootstrap (ANTES de cerrar el layout) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-let vehiculoIdAEditar = null;
-let vehiculoACambiarEstado = null;
-let estadoActualVehiculo = null;
-
-// Cargar datos en el modal de edición
-function cargarDatosEdicionVehiculo(row) {
-    vehiculoIdAEditar = row.IdParqueadero;
-    $('#editIdVehiculo').val(row.IdParqueadero);
-    $('#editTipoVehiculo').val(row.TipoVehiculo);
-    $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
-    $('#editIdSede').val(row.IdSede);
-
-    $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
-    $('#editPlacaVehiculo').val(row.PlacaVehiculo);
-
-    $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
-    $('#editTarjetaPropiedad').val(row.TarjetaPropiedad);
-
-    let fechaHora = row.FechaParqueadero;
-    if (fechaHora) {
-        fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
-    }
-    $('#editFechaParqueaderoDisabled').val(fechaHora);
-    $('#editFechaParqueadero').val(fechaHora);
-}
-
-// Confirmar cambio de estado
-function confirmarCambioEstadoVehiculo(id, estado) {
-    vehiculoACambiarEstado = id;
-    estadoActualVehiculo = estado;
+// Esperar a que jQuery esté completamente cargado
+$(document).ready(function() {
+    console.log('jQuery cargado - VehiculoSupervisor');
     
-    const nuevoEstado = estado === 'Activo' ? 'Inactivo' : 'Activo';
-    const accion = nuevoEstado === 'Activo' ? 'activar' : 'desactivar';
-    const colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
-    
-    // Configurar el toggle visual
-    const toggleLabel = document.getElementById('toggleEstadoVisualVehiculo');
-    
-    if (nuevoEstado === 'Activo') {
-        toggleLabel.classList.add('activo');
-    } else {
-        toggleLabel.classList.remove('activo');
-    }
-    
-    $('#headerCambioEstadoVehiculo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
-    $('#tituloCambioEstadoVehiculo').html(`<i class="fas fa-${nuevoEstado === 'Activo' ? 'lock-open' : 'lock'} me-2"></i>${accion.charAt(0).toUpperCase() + accion.slice(1)} Vehículo`);
-    $('#mensajeCambioEstadoVehiculo').html(`¿Está seguro que desea <strong>${accion}</strong> este vehículo?`);
-    
-    $('#modalCambiarEstadoVehiculo').modal('show');
-}
+    let vehiculoIdAEditar = null;
+    let vehiculoACambiarEstado = null;
+    let estadoActualVehiculo = null;
 
-// Confirmar cambio de estado
-$('#btnConfirmarCambioEstadoVehiculo').click(function() {
-    if (!vehiculoACambiarEstado) return;
-    
-    const nuevoEstado = estadoActualVehiculo === 'Activo' ? 'Inactivo' : 'Activo';
-    
-    $.ajax({
-        url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
-        type: 'POST',
-        data: {
-            accion: 'cambiar_estado',
-            id: vehiculoACambiarEstado,
-            estado: nuevoEstado
-        },
-        dataType: 'json',
-        success: function(response) {
-            $('#modalCambiarEstadoVehiculo').modal('hide');
-            if (response.success) {
-                alert(response.message);
-                location.reload();
-            } else {
-                alert('Error: ' + response.message);
-            }
-        },
-        error: function() {
-            $('#modalCambiarEstadoVehiculo').modal('hide');
-            alert('Error al intentar cambiar el estado del vehículo');
-        }
-    });
-});
-
-// Botón guardar cambios
-$('#btnGuardarCambiosVehiculo').click(function() {
-    const formData = {
-        accion: 'actualizar',
-        id: $('#editIdVehiculo').val(),
-        tipo: $('#editTipoVehiculo').val(),
-        placa: $('#editPlacaVehiculo').val(),
-        descripcion: $('#editDescripcionVehiculo').val(),
-        tarjeta: $('#editTarjetaPropiedad').val(),
-        fecha: $('#editFechaParqueadero').val(),
-        idsede: $('#editIdSede').val()
+    // Función para mostrar QR del vehículo
+    window.verQRVehiculo = function(rutaQR, idVehiculo) {
+        var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
+        
+        console.log('Ruta QR completa:', rutaCompleta);
+        
+        $('#qrVehiculoId').text(idVehiculo);
+        $('#qrImagenVehiculo').attr('src', rutaCompleta);
+        $('#btnDescargarQRVehiculo').attr('href', rutaCompleta).attr('download', 'QR-Vehiculo-' + idVehiculo + '.png');
+        
+        $('#modalVerQRVehiculo').modal('show');
     };
 
-    // Validar campos
-    if (!formData.tipo || !formData.descripcion || !formData.idsede) {
-        alert('Complete todos los campos obligatorios');
-        return;
-    }
+    // Cargar datos en el modal de edición
+    window.cargarDatosEdicionVehiculo = function(row) {
+        console.log('Cargando datos para editar:', row);
+        
+        vehiculoIdAEditar = row.IdParqueadero;
+        
+        $('#editIdVehiculo').val(row.IdParqueadero);
+        $('#editTipoVehiculo').val(row.TipoVehiculo);
+        $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
+        $('#editIdSede').val(row.IdSede);
 
-    $.ajax({
-        url: '../Controller/parqueadero_dispositivo/ControladorParqueadero.php',
-        type: 'POST',
-        data: formData,
-        dataType: 'json',
-        success: function(response) {
-            $('#modalEditarVehiculo').modal('hide');
-            if (response.success) {
-                alert('Vehículo actualizado correctamente');
-                location.reload();
-            } else {
-                alert('Error: ' + response.message);
-            }
-        },
-        error: function() {
-            $('#modalEditarVehiculo').modal('hide');
-            alert('Error al intentar actualizar el vehículo');
+        $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
+        $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
+
+        var fechaHora = row.FechaParqueadero;
+        if (fechaHora) {
+            fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
         }
+        $('#editFechaParqueaderoDisabled').val(fechaHora);
+        
+        $('#modalEditarVehiculo').modal('show');
+    };
+
+    // Confirmar cambio de estado
+    window.confirmarCambioEstadoVehiculo = function(id, estado) {
+        console.log('confirmarCambioEstado llamado:', {id, estado});
+        
+        vehiculoACambiarEstado = id;
+        estadoActualVehiculo = estado;
+        
+        const nuevoEstado = estado === 'Activo' ? 'Inactivo' : 'Activo';
+        const accion = nuevoEstado === 'Activo' ? 'activar' : 'desactivar';
+        const colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
+        
+        // Configurar el header del modal
+        $('#headerCambioEstadoVehiculo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
+        $('#tituloCambioEstadoVehiculo').html('<i class="fas fa-' + (nuevoEstado === 'Activo' ? 'lock-open' : 'lock') + ' me-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Vehículo');
+        $('#mensajeCambioEstadoVehiculo').html('¿Está seguro que desea <strong>' + accion + '</strong> este vehículo?');
+        
+        // Mostrar modal
+        $('#modalCambiarEstadoVehiculo').modal('show');
+        
+        // Configurar el toggle visual después de mostrar el modal
+        setTimeout(function() {
+            const toggleLabel = document.getElementById('toggleEstadoVisualVehiculo');
+            if (toggleLabel) {
+                if (nuevoEstado === 'Activo') {
+                    toggleLabel.classList.add('activo');
+                } else {
+                    toggleLabel.classList.remove('activo');
+                }
+            }
+        }, 100);
+    };
+
+    // Botón confirmar cambio de estado
+    $('#btnConfirmarCambioEstadoVehiculo').on('click', function() {
+        console.log('Confirmar cambio de estado clickeado');
+        
+        if (!vehiculoACambiarEstado) {
+            alert('Error: No se ha seleccionado ningún vehículo');
+            return;
+        }
+        
+        const nuevoEstado = estadoActualVehiculo === 'Activo' ? 'Inactivo' : 'Activo';
+        
+        console.log('Enviando petición AJAX:', {
+            id: vehiculoACambiarEstado,
+            estado: nuevoEstado
+        });
+        
+        // Deshabilitar el botón
+        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Procesando...');
+        
+        $.ajax({
+            url: '../../Controller/ControladorParqueadero.php',
+            type: 'POST',
+            data: {
+                accion: 'cambiar_estado',
+                id: vehiculoACambiarEstado,
+                estado: nuevoEstado
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log('Respuesta recibida:', response);
+                $('#modalCambiarEstadoVehiculo').modal('hide');
+                
+                if (response.success) {
+                    alert(response.message || 'Vehículo ' + (nuevoEstado === 'Activo' ? 'activado' : 'desactivado') + ' correctamente');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (response.message || 'No se pudo cambiar el estado del vehículo'));
+                    $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error AJAX:', {
+                    xhr: xhr,
+                    status: status,
+                    error: error,
+                    responseText: xhr.responseText
+                });
+                $('#modalCambiarEstadoVehiculo').modal('hide');
+                alert('Error de conexión: No se pudo cambiar el estado del vehículo');
+                $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
+            }
+        });
     });
+
+    // Rehabilitar botón al cerrar modal sin confirmar
+    $('#modalCambiarEstadoVehiculo').on('hidden.bs.modal', function () {
+        $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
+    });
+
+    // Botón guardar cambios de edición
+    $('#btnGuardarCambiosVehiculo').on('click', function() {
+        var formData = {
+            accion: 'actualizar',
+            id: $('#editIdVehiculo').val(),
+            tipo: $('#editTipoVehiculo').val(),
+            descripcion: $('#editDescripcionVehiculo').val(),
+            idsede: $('#editIdSede').val()
+        };
+
+        console.log('Enviando datos:', formData);
+
+        // Validar campos obligatorios
+        if (!formData.tipo || !formData.idsede) {
+            alert('Por favor, complete todos los campos obligatorios (Tipo e ID Sede)');
+            return;
+        }
+
+        // Deshabilitar el botón
+        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+
+        $.ajax({
+            url: '../../Controller/ControladorParqueadero.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                console.log('Respuesta:', response);
+                $('#modalEditarVehiculo').modal('hide');
+                
+                if (response.success) {
+                    alert('Vehículo actualizado correctamente');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (response.message || 'No se pudo actualizar el vehículo'));
+                    $('#btnGuardarCambiosVehiculo').prop('disabled', false).html('Guardar Cambios');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', xhr.responseText);
+                $('#modalEditarVehiculo').modal('hide');
+                alert('Error de conexión: No se pudo conectar con el servidor');
+                $('#btnGuardarCambiosVehiculo').prop('disabled', false).html('Guardar Cambios');
+            }
+        });
+    });
+
+    // Rehabilitar botón al cerrar modal de edición
+    $('#modalEditarVehiculo').on('hidden.bs.modal', function () {
+        $('#btnGuardarCambiosVehiculo').prop('disabled', false).html('Guardar Cambios');
+    });
+
+    console.log('Todos los event listeners configurados correctamente');
 });
 </script>
-
-<script src="../js/javascript/js/ValidacionParqueadero.js"></script>
-
-<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
