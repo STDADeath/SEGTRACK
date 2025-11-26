@@ -281,11 +281,10 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
-
-<!-- Scripts de jQuery y Bootstrap -->
+<!-- Scripts de jQuery y Bootstrap (ANTES de cerrar el layout) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 // Esperar a que jQuery esté completamente cargado
@@ -361,7 +360,11 @@ $(document).ready(function() {
         console.log('Confirmar cambio de estado clickeado');
         
         if (!dispositivoACambiarEstado) {
-            alert('Error: No se ha seleccionado ningún dispositivo');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se ha seleccionado ningún dispositivo'
+            });
             return;
         }
         
@@ -372,8 +375,18 @@ $(document).ready(function() {
             estado: nuevoEstado
         });
         
-        // Deshabilitar el botón
-        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Procesando...');
+        // Cerrar el modal personalizado
+        $('#modalCambiarEstadoDispositivo').modal('hide');
+        
+        // Mostrar loading de SweetAlert2
+        Swal.fire({
+            title: 'Procesando...',
+            text: 'Por favor espere',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
         
         $.ajax({
             url: '../../Controller/ControladorDispositivo.php',
@@ -386,14 +399,23 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta recibida:', response);
-                $('#modalCambiarEstadoDispositivo').modal('hide');
                 
                 if (response.success) {
-                    alert(response.message || 'Dispositivo ' + (nuevoEstado === 'Activo' ? 'activado' : 'desactivado') + ' correctamente');
-                    location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: response.message || 'Dispositivo ' + (nuevoEstado === 'Activo' ? 'activado' : 'desactivado') + ' correctamente',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
                 } else {
-                    alert('Error: ' + (response.message || 'No se pudo cambiar el estado del dispositivo'));
-                    $('#btnConfirmarCambioEstadoDispositivo').prop('disabled', false).html('Confirmar');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message || 'No se pudo cambiar el estado del dispositivo'
+                    });
                 }
             },
             error: function(xhr, status, error) {
@@ -403,16 +425,14 @@ $(document).ready(function() {
                     error: error,
                     responseText: xhr.responseText
                 });
-                $('#modalCambiarEstadoDispositivo').modal('hide');
-                alert('Error de conexión: No se pudo cambiar el estado del dispositivo');
-                $('#btnConfirmarCambioEstadoDispositivo').prop('disabled', false).html('Confirmar');
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo cambiar el estado del dispositivo'
+                });
             }
         });
-    });
-
-    // Rehabilitar botón al cerrar modal sin confirmar
-    $('#modalCambiarEstadoDispositivo').on('hidden.bs.modal', function () {
-        $('#btnConfirmarCambioEstadoDispositivo').prop('disabled', false).html('Confirmar');
     });
 
     // Botón guardar cambios de edición
@@ -430,12 +450,26 @@ $(document).ready(function() {
 
         // Validar campos obligatorios
         if (!formData.tipo || !formData.marca) {
-            alert('Por favor, complete todos los campos obligatorios (Tipo y Marca)');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor, complete todos los campos obligatorios (Tipo y Marca)'
+            });
             return;
         }
 
-        // Deshabilitar el botón
-        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+        // Cerrar modal de edición
+        $('#modalEditarDispositivo').modal('hide');
+        
+        // Mostrar loading de SweetAlert2
+        Swal.fire({
+            title: 'Guardando...',
+            text: 'Por favor espere',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
 
         $.ajax({
             url: '../../Controller/ControladorDispositivo.php',
@@ -444,30 +478,39 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta:', response);
-                $('#modalEditarDispositivo').modal('hide');
                 
                 if (response.success) {
-                    alert('Dispositivo actualizado correctamente');
-                    location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'Dispositivo actualizado correctamente',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
                 } else {
-                    alert('Error: ' + (response.message || 'No se pudo actualizar el dispositivo'));
-                    $('#btnGuardarCambiosDispositivo').prop('disabled', false).html('Guardar Cambios');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message || 'No se pudo actualizar el dispositivo'
+                    });
                 }
             },
             error: function(xhr, status, error) {
                 console.log('Error:', xhr.responseText);
-                $('#modalEditarDispositivo').modal('hide');
-                alert('Error de conexión: No se pudo conectar con el servidor');
-                $('#btnGuardarCambiosDispositivo').prop('disabled', false).html('Guardar Cambios');
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor'
+                });
             }
         });
-    });
-
-    // Rehabilitar botón al cerrar modal de edición
-    $('#modalEditarDispositivo').on('hidden.bs.modal', function () {
-        $('#btnGuardarCambiosDispositivo').prop('disabled', false).html('Guardar Cambios');
     });
 
     console.log('Todos los event listeners configurados correctamente');
 });
 </script>
+
+<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>

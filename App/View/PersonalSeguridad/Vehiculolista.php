@@ -9,6 +9,10 @@ $conn = $conexion->getConexion();
 $filtros = [];
 $params = [];
 
+// FILTRO OBLIGATORIO: Solo mostrar vehículos activos
+$filtros[] = "Estado = :estado";
+$params[':estado'] = 'Activo';
+
 if (!empty($_GET['tipo'])) {
     $filtros[] = "TipoVehiculo = :tipo";
     $params[':tipo'] = $_GET['tipo'];
@@ -30,12 +34,9 @@ if (!empty($_GET['sede'])) {
     $params[':sede'] = $_GET['sede'];
 }
 
-$where = "";
-if (count($filtros) > 0) {
-    $where = "WHERE " . implode(" AND ", $filtros);
-}
+$where = "WHERE " . implode(" AND ", $filtros);
 
-$sql = "SELECT *, QrVehiculo FROM Parqueadero $where ORDER BY IdParqueadero DESC";
+$sql = "SELECT * FROM Parqueadero $where ORDER BY IdParqueadero DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -92,7 +93,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Tabla -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
-            <h6 class="m-0 font-weight-bold text-primary">Lista de Vehículos</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Lista de Vehículos Activos</h6>
         </div>
         <div class="card-body table-responsive">
             <table class="table table-bordered table-hover table-striped align-middle text-center">
@@ -138,11 +139,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             title="Editar vehículo">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-outline-danger"
-                                            onclick="confirmarEliminacionVehiculo(<?php echo $row['IdParqueadero']; ?>)"
-                                            title="Eliminar vehículo">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -151,7 +147,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <tr>
                             <td colspan="9" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
-                                <p class="text-muted">No hay vehículos registrados con los filtros seleccionados</p>
+                                <p class="text-muted">No hay vehículos activos registrados con los filtros seleccionados</p>
                             </td>
                         </tr>
                     <?php endif; ?>
@@ -248,8 +244,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
 <script>
-let vehiculoIdAEliminar = null;
-
 // Función para mostrar QR del vehículo
 function verQRVehiculo(rutaQR, idVehiculo) {
     var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
@@ -284,77 +278,6 @@ function cargarDatosEdicionVehiculo(row) {
     $('#modalEditarVehiculo').modal('show');
 }
 
-// Confirmar eliminación
-function confirmarEliminacionVehiculo(id) {
-    Swal.fire({
-        title: '¿Está seguro?',
-        text: "Esta acción desactivará el vehículo",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            eliminarVehiculo(id);
-        }
-    });
-}
-
-// Eliminar vehículo
-function eliminarVehiculo(id) {
-    Swal.fire({
-        title: 'Eliminando...',
-        text: 'Por favor espere',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
-    
-    $.ajax({
-        url: '../../Controller/ControladorParqueadero.php',
-        type: 'POST',
-        data: {
-            accion: 'eliminar',
-            id: id
-        },
-        dataType: 'json',
-        success: function(response) {
-            console.log('Respuesta eliminación:', response);
-            
-            if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Eliminado!',
-                    text: 'Vehículo eliminado correctamente',
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => {
-                    $('#fila-' + id).fadeOut(400, function() {
-                        $(this).remove();
-                    });
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: response.message || 'Error al eliminar el vehículo'
-                });
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log('Error:', xhr.responseText);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error de conexión',
-                text: 'No se pudo conectar con el servidor'
-            });
-        }
-    });
-}
-
 // Botón guardar cambios
 $(document).ready(function() {
     $('#btnGuardarCambiosVehiculo').click(function() {
@@ -378,6 +301,9 @@ $(document).ready(function() {
             return;
         }
 
+        // Cerrar modal
+        $('#modalEditarVehiculo').modal('hide');
+
         // Mostrar loading
         Swal.fire({
             title: 'Guardando...',
@@ -395,7 +321,6 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta:', response);
-                $('#modalEditarVehiculo').modal('hide');
                 
                 if (response.success) {
                     Swal.fire({
@@ -417,7 +342,6 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.log('Error:', xhr.responseText);
-                $('#modalEditarVehiculo').modal('hide');
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',

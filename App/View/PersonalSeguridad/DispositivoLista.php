@@ -9,6 +9,10 @@ $conn = $conexion->getConexion();
 $filtros = [];
 $params = [];
 
+// FILTRO OBLIGATORIO: Solo mostrar dispositivos activos
+$filtros[] = "Estado = :estado";
+$params[':estado'] = 'Activo';
+
 if (!empty($_GET['tipo'])) {
     $filtros[] = "TipoDispositivo = :tipo";
     $params[':tipo'] = $_GET['tipo'];
@@ -26,10 +30,7 @@ if (!empty($_GET['visitante'])) {
     $params[':visitante'] = $_GET['visitante'];
 }
 
-$where = "";
-if (count($filtros) > 0) {
-    $where = "WHERE " . implode(" AND ", $filtros);
-}
+$where = "WHERE " . implode(" AND ", $filtros);
 
 $sql = "SELECT * FROM dispositivo $where ORDER BY IdDispositivo DESC";
 $stmt = $conn->prepare($sql);
@@ -85,7 +86,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Tabla -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
-            <h6 class="m-0 font-weight-bold text-primary">Lista de Dispositivos</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Lista de Dispositivos Activos</h6>
         </div>
         <div class="card-body table-responsive">
             <table class="table table-bordered table-hover table-striped align-middle text-center">
@@ -135,7 +136,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <tr>
                             <td colspan="7" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
-                                <p class="text-muted">No hay dispositivos registrados con los filtros seleccionados</p>
+                                <p class="text-muted">No hay dispositivos activos registrados con los filtros seleccionados</p>
                             </td>
                         </tr>
                     <?php endif; ?>
@@ -274,6 +275,9 @@ $(document).ready(function() {
             return;
         }
 
+        // Cerrar modal
+        $('#modalEditarDispositivo').modal('hide');
+
         // Mostrar loading
         Swal.fire({
             title: 'Guardando...',
@@ -291,7 +295,6 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta:', response);
-                $('#modalEditarDispositivo').modal('hide');
                 
                 if (response.success) {
                     Swal.fire({
@@ -313,7 +316,6 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.log('Error:', xhr.responseText);
-                $('#modalEditarDispositivo').modal('hide');
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',

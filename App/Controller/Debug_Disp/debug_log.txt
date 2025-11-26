@@ -792,3 +792,219 @@ Dispositivo desactivado exitosamente
 Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
 === FIN ===
 
+
+2025-11-26 01:55:50 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "30",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 30, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2025-11-26 01:56:46 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "30",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 30, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-11-26 01:56:52 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "30",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 30, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2025-11-26 02:11:25 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "27",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 27, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-11-26 02:11:27 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "27",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 27, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2025-11-26 02:11:44 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "29",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 29, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2025-11-26 02:12:00 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "30",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 30, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-11-26 02:12:03 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "28",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 28, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-11-26 02:12:07 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "27",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 27, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-11-26 02:12:09 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "29",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 29, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-11-26 02:14:10 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "29",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 29, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2025-11-26 02:14:12 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "28",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 28, Estado: Activo
+Dispositivo activado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+

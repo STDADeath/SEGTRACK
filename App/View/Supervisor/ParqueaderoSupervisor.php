@@ -303,6 +303,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Scripts de jQuery y Bootstrap (ANTES de cerrar el layout) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 // Esperar a que jQuery esté completamente cargado
@@ -386,7 +387,11 @@ $(document).ready(function() {
         console.log('Confirmar cambio de estado clickeado');
         
         if (!vehiculoACambiarEstado) {
-            alert('Error: No se ha seleccionado ningún vehículo');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se ha seleccionado ningún vehículo'
+            });
             return;
         }
         
@@ -397,8 +402,18 @@ $(document).ready(function() {
             estado: nuevoEstado
         });
         
-        // Deshabilitar el botón
-        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Procesando...');
+        // Cerrar el modal personalizado
+        $('#modalCambiarEstadoVehiculo').modal('hide');
+        
+        // Mostrar loading de SweetAlert2
+        Swal.fire({
+            title: 'Procesando...',
+            text: 'Por favor espere',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
         
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
@@ -411,14 +426,23 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta recibida:', response);
-                $('#modalCambiarEstadoVehiculo').modal('hide');
                 
                 if (response.success) {
-                    alert(response.message || 'Vehículo ' + (nuevoEstado === 'Activo' ? 'activado' : 'desactivado') + ' correctamente');
-                    location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: response.message || 'Vehículo ' + (nuevoEstado === 'Activo' ? 'activado' : 'desactivado') + ' correctamente',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
                 } else {
-                    alert('Error: ' + (response.message || 'No se pudo cambiar el estado del vehículo'));
-                    $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message || 'No se pudo cambiar el estado del vehículo'
+                    });
                 }
             },
             error: function(xhr, status, error) {
@@ -428,9 +452,12 @@ $(document).ready(function() {
                     error: error,
                     responseText: xhr.responseText
                 });
-                $('#modalCambiarEstadoVehiculo').modal('hide');
-                alert('Error de conexión: No se pudo cambiar el estado del vehículo');
-                $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo cambiar el estado del vehículo'
+                });
             }
         });
     });
@@ -454,12 +481,26 @@ $(document).ready(function() {
 
         // Validar campos obligatorios
         if (!formData.tipo || !formData.idsede) {
-            alert('Por favor, complete todos los campos obligatorios (Tipo e ID Sede)');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor, complete todos los campos obligatorios (Tipo e ID Sede)'
+            });
             return;
         }
 
-        // Deshabilitar el botón
-        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+        // Cerrar modal de edición
+        $('#modalEditarVehiculo').modal('hide');
+        
+        // Mostrar loading de SweetAlert2
+        Swal.fire({
+            title: 'Guardando...',
+            text: 'Por favor espere',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
 
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
@@ -468,21 +509,33 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta:', response);
-                $('#modalEditarVehiculo').modal('hide');
                 
                 if (response.success) {
-                    alert('Vehículo actualizado correctamente');
-                    location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'Vehículo actualizado correctamente',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
                 } else {
-                    alert('Error: ' + (response.message || 'No se pudo actualizar el vehículo'));
-                    $('#btnGuardarCambiosVehiculo').prop('disabled', false).html('Guardar Cambios');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message || 'No se pudo actualizar el vehículo'
+                    });
                 }
             },
             error: function(xhr, status, error) {
                 console.log('Error:', xhr.responseText);
-                $('#modalEditarVehiculo').modal('hide');
-                alert('Error de conexión: No se pudo conectar con el servidor');
-                $('#btnGuardarCambiosVehiculo').prop('disabled', false).html('Guardar Cambios');
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor'
+                });
             }
         });
     });
@@ -495,3 +548,5 @@ $(document).ready(function() {
     console.log('Todos los event listeners configurados correctamente');
 });
 </script>
+
+<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
