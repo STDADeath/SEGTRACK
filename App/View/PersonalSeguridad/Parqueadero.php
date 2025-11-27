@@ -63,13 +63,16 @@
                                 </div>
                             </div>
 
-                            <!-- Fecha -->
+                            <!-- Fecha (SOLO LECTURA - se establece automáticamente) -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Fecha</label>
+                                <label class="form-label fw-semibold">Fecha y Hora de Registro</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                    <input type="datetime-local" class="form-control" name="FechaParqueadero" id="FechaParqueadero">
+                                    <input type="text" class="form-control bg-light" id="FechaParqueaderoDisplay" readonly>
                                 </div>
+                                <small class="text-muted">
+                                    <i class="fas fa-info-circle"></i> La fecha y hora se registran automáticamente
+                                </small>
                             </div>
                         </div>
 
@@ -84,7 +87,7 @@
 
                         <!-- Botones -->
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='../view/Vehiculolista.php'">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='./Vehiculolista.php'">
                                 <i class="fas fa-arrow-left me-1"></i> Volver
                             </button>
                             <button type="submit" class="btn btn-primary">
@@ -102,8 +105,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Validación de formulario -->
 <script src="../../../Public/js/javascript/js/ValidacionParqueadero.js"></script>
-</body>
-</html>
 
 <!---fin del contenido principal--->
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

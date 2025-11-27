@@ -423,3 +423,83 @@ Vehículo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-20-692654d30bb74.png"}
 === FIN ===
 
+
+2025-11-26 19:01:06 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "no aplica",
+    "DescripcionVehiculo": "Morada",
+    "TarjetaPropiedad": "tj324444",
+    "FechaParqueadero": "2025-11-26T13:00",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Generando QR para vehículo ID: 25
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-25-69274062de45a.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 25","data":{"IdParqueadero":"25","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-25-69274062de45a.png"}}
+=== FIN ===
+
+
+2025-11-26 19:01:21 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "no aplica",
+    "DescripcionVehiculo": "Morada",
+    "TarjetaPropiedad": "tj324444",
+    "FechaParqueadero": "2025-11-26T13:00",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Generando QR para vehículo ID: 26
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-26-6927407136287.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 26","data":{"IdParqueadero":"26","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-26-6927407136287.png"}}
+=== FIN ===
+
+
+2025-11-26 19:01:56 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "no aplica",
+    "DescripcionVehiculo": "jnibnji",
+    "TarjetaPropiedad": "tj324444",
+    "FechaParqueadero": "2025-11-25T13:01",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Generando QR para vehículo ID: 27
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-27-692740946e925.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 27","data":{"IdParqueadero":"27","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-27-692740946e925.png"}}
+=== FIN ===
+
+
+2025-11-26 19:03:02 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "EHO-34G",
+    "DescripcionVehiculo": "Honda azul",
+    "TarjetaPropiedad": "tj324551",
+    "IdSede": "23"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`dbsegtrack`.`parqueadero`, CONSTRAINT `parqueadero_ibfk_1` FOREIGN KEY (`IdSede`) REFERENCES `sede` (`IdSede`))"}
+=== FIN ===
+

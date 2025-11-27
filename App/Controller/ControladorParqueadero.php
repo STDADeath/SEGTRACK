@@ -83,7 +83,6 @@ try {
                 return null;
             }
         }
-
         public function registrarVehiculo(array $datos): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "registrarVehiculo llamado\n", FILE_APPEND);
 
