@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         try {
-            const response = await fetch('../Controller/parqueadero_dispositivo/ControladorDispositivo.php', {
+            const response = await fetch('../../Controller/ControladorDispositivo.php', {
                 method: 'POST',
                 body: formData
             });

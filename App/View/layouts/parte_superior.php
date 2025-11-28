@@ -17,10 +17,16 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Hojas de estilo del tema y personalizadas -->
+<<<<<<< HEAD
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../../../Public/css/styles.css" rel="stylesheet">
     <link href="../../../Public/css/graficas.css" rel="stylesheet">
     <link href="../../../Public/css/icono.css" rel="stylesheet">
+=======
+    <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet"> <!-- Plantilla base -->
+    <link href="../../../Public/css/graficas.css" rel="stylesheet"> <!-- Estilos para gráficos -->
+    <link href="../../../Public/css/icono.css" rel="stylesheet"> <!-- Estilos para íconos personalizados -->
+>>>>>>> feature/parqueadero-dispositivo
 
 </head>
 
@@ -223,12 +229,12 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Personal de Seguridad</span>
 
                                 <img class="img-profile rounded-circle"
-                                     src="../../../Public/img/undraw_profile.svg">
+                                    src="../../../Public/img/undraw_profile.svg">
                             </a>
 
                             <!-- Dropdown usuario -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
+                                aria-labelledby="userDropdown">
 
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
