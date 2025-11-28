@@ -4,28 +4,50 @@
 let vehiculoIdAEliminar = null;
 
 // ============================================
-// 📌 VERIFICACIÓN DE JQUERY
+// 📌 CONFIGURAR CAMPO DE FECHA
 // ============================================
-if (typeof jQuery === 'undefined') {
-    console.error('jQuery no está cargado. Cargando dinámicamente...');
+document.addEventListener('DOMContentLoaded', function () {
+    const campoFecha = document.getElementById('FechaParqueadero');
     
-    // Cargar jQuery dinámicamente
-    const script = document.createElement('script');
-    script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
-    script.onload = function() {
-        console.log('jQuery cargado dinámicamente');
-        // Re-ejecutar funciones que dependen de jQuery
-        inicializarEventosJQuery();
-    };
-    document.head.appendChild(script);
-} else {
-    // jQuery ya está cargado, ejecutar normalmente
-    $(document).ready(inicializarEventosJQuery);
-}
+    if (campoFecha) {
+        // Obtener fecha y hora actual
+        const ahora = new Date();
+        
+        // Formatear a YYYY-MM-DDTHH:MM (formato requerido por datetime-local)
+        const year = ahora.getFullYear();
+        const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+        const dia = String(ahora.getDate()).padStart(2, '0');
+        const horas = String(ahora.getHours()).padStart(2, '0');
+        const minutos = String(ahora.getMinutes()).padStart(2, '0');
+        
+        const fechaHoraActual = `${year}-${mes}-${dia}T${horas}:${minutos}`;
+        
+        // Establecer valor por defecto (hora actual)
+        campoFecha.value = fechaHoraActual;
+        
+        // Establecer fecha mínima (inicio del día actual)
+        const fechaMinima = `${year}-${mes}-${dia}T00:00`;
+        campoFecha.min = fechaMinima;
+        
+        // Establecer fecha máxima (fin del día actual)
+        const fechaMaxima = `${year}-${mes}-${dia}T23:59`;
+        campoFecha.max = fechaMaxima;
+        
+        // Hacer el campo de solo lectura para evitar edición manual
+        campoFecha.readOnly = true;
+        
+        // Agregar evento para actualizar la hora automáticamente cada minuto
+        setInterval(function() {
+            const nuevaHora = new Date();
+            const nuevaHoraFormateada = `${year}-${mes}-${dia}T${String(nuevaHora.getHours()).padStart(2, '0')}:${String(nuevaHora.getMinutes()).padStart(2, '0')}`;
+            campoFecha.value = nuevaHoraFormateada;
+        }, 60000); // Actualizar cada 60 segundos
+    }
+});
 
 // ===========================================
 // 📌 VALIDACIÓN Y REGISTRO DE VEHÍCULO
-// ===========================================
+// ============================================
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
 
@@ -33,12 +55,12 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            // Obtener valores
-            const tipo = document.getElementById('TipoVehiculo').value.trim();
+            // Obtenemos los valores
             const placa = document.getElementById('PlacaVehiculo').value.trim();
             const descripcion = document.getElementById('DescripcionVehiculo').value.trim();
             const tarjeta = document.getElementById('TarjetaPropiedad').value.trim();
             const idSede = document.getElementById('IdSede').value.trim();
+            const fechaParqueadero = document.getElementById('FechaParqueadero').value;
 
             // Expresiones regulares
             const regexPlacaTarjeta = /^[a-zA-Z0-9\s-]*$/;
@@ -46,24 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const regexIdSede = /^\d+$/;
 
             // Validaciones
-            if (!tipo) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campo obligatorio',
-                    text: 'Por favor seleccione el tipo de vehículo.'
-                });
-                return;
-            }
-
-            if (!placa) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campo obligatorio',
-                    text: 'Por favor ingrese la placa del vehículo.'
-                });
-                return;
-            }
-
             if (!regexPlacaTarjeta.test(placa)) {
                 Swal.fire({
                     icon: 'error',
@@ -73,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            if (descripcion.length > 0 && !regexDescripcion.test(descripcion)) {
+            if (!regexDescripcion.test(descripcion)) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -91,15 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            if (!idSede) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campo obligatorio',
-                    text: 'Por favor ingrese el ID de Sede.'
-                });
-                return;
-            }
-
             if (!regexIdSede.test(idSede)) {
                 Swal.fire({
                     icon: 'error',
@@ -109,57 +104,56 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Mostrar loading
-            Swal.fire({
-                title: 'Registrando vehículo...',
-                text: 'Por favor espere',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            // Preparar datos
-            const formData = new FormData(form);
-            formData.append('accion', 'registrar');
+            // Validar que la fecha sea del día actual
+            const fechaSeleccionada = new Date(fechaParqueadero);
+            const hoy = new Date();
             
+            if (fechaSeleccionada.getDate() !== hoy.getDate() || 
+                fechaSeleccionada.getMonth() !== hoy.getMonth() || 
+                fechaSeleccionada.getFullYear() !== hoy.getFullYear()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Solo puede registrar vehículos con la fecha actual.'
+                });
+                return;
+            }
+
+            // Si pasa validaciones, actualizar la hora al momento actual antes de enviar
+            const ahoraExacto = new Date();
+            const year = ahoraExacto.getFullYear();
+            const mes = String(ahoraExacto.getMonth() + 1).padStart(2, '0');
+            const dia = String(ahoraExacto.getDate()).padStart(2, '0');
+            const horas = String(ahoraExacto.getHours()).padStart(2, '0');
+            const minutos = String(ahoraExacto.getMinutes()).padStart(2, '0');
+            const segundos = String(ahoraExacto.getSeconds()).padStart(2, '0');
+            
+            const fechaHoraFinal = `${year}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
+
+            // Preparar FormData con la hora actualizada
+            const formData = new FormData(form);
+            formData.set('FechaParqueadero', fechaHoraFinal); // Sobrescribir con hora exacta
+            formData.append('accion', 'registrar');
             const url = "../../Controller/ControladorParqueadero.php";
 
-            // Enviar con fetch
             fetch(url, {
                 method: "POST",
                 body: formData
             })
-            .then(response => {
-                // Primero verificar el estado HTTP
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                // Verificar que la respuesta sea JSON válido
-                const contentType = response.headers.get("content-type");
-                if (contentType && contentType.includes("application/json")) {
-                    return response.json();
-                } else {
-                    // Si no es JSON, leer como texto para debug
-                    return response.text().then(text => {
-                        console.error('Respuesta no JSON recibida:', text);
-                        throw new Error('El servidor respondió con formato incorrecto');
-                    });
-                }
-            })
+            .then(response => response.json())
             .then(data => {
                 console.log("Respuesta del servidor:", data);
 
                 if (data.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: '¡Éxito!',
-                        text: data.message || 'Vehículo registrado correctamente.',
-                        timer: 2000,
-                        showConfirmButton: false
+                        title: 'Vehículo registrado',
+                        text: data.message || 'El vehículo fue agregado correctamente.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Aceptar'
                     }).then(() => {
-                        window.location.href = './Vehiculolista.php';
+                        form.reset();
+                        location.reload();
                     });
                 } else {
                     Swal.fire({
@@ -170,11 +164,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                console.error("Error completo en la solicitud:", error);
+                console.error("Error en la solicitud:", error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
-                    text: 'Error: ' + error.message
+                    text: 'Ocurrió un problema al enviar los datos al servidor.'
                 });
             });
         });
@@ -182,38 +176,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
-// 📌 FUNCIÓN PARA ACTUALIZAR FECHA/HORA
-// ============================================
-function actualizarFechaHora() {
-    const campoFecha = document.getElementById('FechaParqueadero');
-    
-    if (campoFecha) {
-        const ahora = new Date();
-        
-        const opciones = { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric', 
-            hour: '2-digit', 
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        };
-        
-        const fechaFormateada = ahora.toLocaleString('es-CO', opciones);
-        campoFecha.value = fechaFormateada;
-    }
-}
-
-// Iniciar actualización si existe el campo
-if (document.getElementById('FechaParqueadero')) {
-    setInterval(actualizarFechaHora, 1000);
-    actualizarFechaHora();
-}
-
-// ============================================
 // 📌 FUNCIONES GLOBALES
 // ============================================
+
+// Cargar datos en el modal de edición
 function cargarDatosEdicionVehiculo(row) {
     $('#editIdVehiculo').val(row.IdParqueadero);
     $('#editTipoVehiculo').val(row.TipoVehiculo);
@@ -230,6 +196,7 @@ function cargarDatosEdicionVehiculo(row) {
     $('#editFechaParqueaderoDisabled').val(fechaHora);
 }
 
+// Confirmar eliminación
 function confirmarEliminacionVehiculo(id) {
     vehiculoIdAEliminar = id;
     $('#confirmarEliminarModalVehiculo').modal('show');
@@ -238,25 +205,14 @@ function confirmarEliminacionVehiculo(id) {
 // ============================================
 // 📌 EVENTOS CON JQUERY
 // ============================================
-function inicializarEventosJQuery() {
-    console.log('Inicializando eventos jQuery...');
 
+$(document).ready(function() {
+
+    // Botón confirmar eliminación
     $('#btnConfirmarEliminarVehiculo').click(function() {
-        if (!vehiculoIdAEliminar) {
-            console.error('No hay ID de vehículo para eliminar');
-            return;
-        }
+        if (!vehiculoIdAEliminar) return;
 
         console.log('Eliminando vehículo ID:', vehiculoIdAEliminar);
-
-        Swal.fire({
-            title: 'Eliminando...',
-            text: 'Por favor espere',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
 
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
@@ -273,10 +229,8 @@ function inicializarEventosJQuery() {
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: '¡Eliminado!',
-                        text: 'Vehículo eliminado correctamente',
-                        timer: 2000,
-                        showConfirmButton: false
+                        title: 'Eliminado',
+                        text: '✅ Vehículo eliminado correctamente'
                     }).then(() => {
                         $('#fila-' + vehiculoIdAEliminar).fadeOut(400, function() {
                             $(this).remove();
@@ -286,7 +240,7 @@ function inicializarEventosJQuery() {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: response.message || 'Error al eliminar el vehículo'
+                        text: '❌ Error: ' + response.message
                     });
                 }
             },
@@ -297,12 +251,13 @@ function inicializarEventosJQuery() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
-                    text: 'Error al intentar eliminar el vehículo'
+                    text: '❌ Error al intentar eliminar el vehículo'
                 });
             }
         });
     });
 
+    // Botón guardar cambios
     $('#btnGuardarCambiosVehiculo').click(function() {
         const id = $('#editIdVehiculo').val();
         const tipo = $('#editTipoVehiculo').val();
@@ -311,15 +266,17 @@ function inicializarEventosJQuery() {
 
         console.log('Actualizando - ID:', id, 'Tipo:', tipo, 'Descripción:', descripcion, 'Sede:', idsede);
 
+        // Validar campos
         if (!id || !tipo || !idsede) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Campos incompletos',
-                text: 'Complete todos los campos obligatorios: Tipo de Vehículo e ID Sede'
+                text: '⚠️ Complete todos los campos obligatorios: Tipo de Vehículo e ID Sede'
             });
             return;
         }
 
+        // Validar que la descripción sea válida
         const regexDescripcion = /^[a-zA-Z0-9\s.,-]*$/;
         if (descripcion && !regexDescripcion.test(descripcion)) {
             Swal.fire({
@@ -329,17 +286,6 @@ function inicializarEventosJQuery() {
             });
             return;
         }
-
-        $('#modalEditarVehiculo').modal('hide');
-
-        Swal.fire({
-            title: 'Guardando...',
-            text: 'Por favor espere',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
 
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
@@ -354,14 +300,13 @@ function inicializarEventosJQuery() {
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta actualización:', response);
+                $('#modalEditarVehiculo').modal('hide');
                 
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: '¡Éxito!',
-                        text: 'Vehículo actualizado correctamente',
-                        timer: 2000,
-                        showConfirmButton: false
+                        title: 'Actualizado',
+                        text: '✅ Vehículo actualizado correctamente'
                     }).then(() => {
                         location.reload();
                     });
@@ -369,19 +314,21 @@ function inicializarEventosJQuery() {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: response.message || 'Error al actualizar el vehículo'
+                        text: '❌ Error: ' + response.message
                     });
                 }
             },
             error: function(xhr, status, error) {
                 console.error('Error en AJAX:', status, error);
                 console.error('Respuesta:', xhr.responseText);
+                $('#modalEditarVehiculo').modal('hide');
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
-                    text: 'Error al intentar actualizar el vehículo'
+                    text: '❌ Error al intentar actualizar el vehículo'
                 });
             }
         });
     });
-}
+
+}); // Fin de $(document).ready()

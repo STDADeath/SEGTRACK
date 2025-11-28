@@ -62,17 +62,14 @@
                                     <input type="text" class="form-control" name="TarjetaPropiedad" placeholder="Número de tarjeta" id="TarjetaPropiedad">
                                 </div>
                             </div>
-
-                            <!-- Fecha (SOLO LECTURA - se establece automáticamente) -->
+                            <!-- Fecha -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Fecha y Hora de Registro</label>
+                                <label class="form-label fw-semibold">Fecha y Hora <span class="badge bg-info">Automática</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                    <input type="text" class="form-control bg-light" id="FechaParqueadero" name="FechaParqueadero" readonly>
+                                    <input type="datetime-local" class="form-control bg-light" name="FechaParqueadero" id="FechaParqueadero" readonly style="cursor: not-allowed;">
                                 </div>
-                                <small class="text-muted">
-                                    <i class="fas fa-info-circle"></i> La fecha y hora se registran automáticamente
-                                </small>
+                                <small class="text-muted">📅 La fecha y hora se registran automáticamente</small>
                             </div>
                         </div>
 

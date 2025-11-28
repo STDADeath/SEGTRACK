@@ -672,3 +672,53 @@ Acción detectada: registrar
 registrarVehiculo llamado
 Fecha del servidor: 2025-11-28 02:39:52
 Generando QR para vehículo ID: 30
+
+2025-11-28 18:13:28 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "no aplica",
+    "DescripcionVehiculo": "Morada con cillin naranja",
+    "TarjetaPropiedad": "tj3244456",
+    "FechaParqueadero": "2025-11-28 12:13:28",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-11-28 | Hoy: 2025-11-28
+✅ Validación de fecha exitosa
+Generando QR para vehículo ID: 29
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-29-6929d838d7aba.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdParqueadero":"29","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-29-6929d838d7aba.png"}}
+=== FIN ===
+
+
+2025-11-28 18:14:05 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Bicicleta",
+    "descripcion": "Morada ",
+    "idsede": "26"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 29
+Datos preparados: {"tipo":"Bicicleta","descripcion":"Morada ","idsede":"26"}
+=== actualizarVehiculo llamado ===
+ID: 29
+Datos: {"tipo":"Bicicleta","descripcion":"Morada ","idsede":"26"}
+Regenerando QR para ID: 29
+Generando QR para vehículo ID: 29
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-29-6929d85dd7860.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-29-6929d838d7aba.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-29-6929d85dd7860.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-29-6929d85dd7860.png"}
+=== FIN ===
+
