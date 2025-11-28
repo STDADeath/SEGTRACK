@@ -1,5 +1,5 @@
 // ============================================
-// 📌 VARIABLE GLOBAL PARA ELIMINAR VEHÍCULOS
+// 📌 VARIABLE GLOBAL
 // ============================================
 let vehiculoIdAEliminar = null;
 
@@ -7,49 +7,34 @@ let vehiculoIdAEliminar = null;
 // 📌 VALIDACIÓN Y REGISTRO DE VEHÍCULO
 // ===========================================
 document.addEventListener('DOMContentLoaded', function () {
-    // Buscar el formulario en la página
     const form = document.querySelector('form');
 
-    // Si existe el formulario, agregar evento submit
     if (form) {
         form.addEventListener('submit', function (event) {
-            // Prevenir el envío normal del formulario
             event.preventDefault();
 
-            // ========================================
-            // 📌 OBTENER VALORES DE LOS CAMPOS
-            // ========================================
+            // Obtener valores
             const tipo = document.getElementById('TipoVehiculo').value.trim();
             const placa = document.getElementById('PlacaVehiculo').value.trim();
             const descripcion = document.getElementById('DescripcionVehiculo').value.trim();
             const tarjeta = document.getElementById('TarjetaPropiedad').value.trim();
             const idSede = document.getElementById('IdSede').value.trim();
 
-            // ========================================
-            // 📌 EXPRESIONES REGULARES PARA VALIDACIÓN
-            // ========================================
-            // Solo letras, números, espacios y guiones
+            // Expresiones regulares
             const regexPlacaTarjeta = /^[a-zA-Z0-9\s-]*$/;
-            // Letras, números, espacios, puntos, comas y guiones
             const regexDescripcion = /^[a-zA-Z0-9\s.,-]*$/;
-            // Solo números
             const regexIdSede = /^\d+$/;
 
-            // ========================================
-            // 📌 VALIDACIONES DE CAMPOS
-            // ========================================
-            
-            // Validar que se haya seleccionado un tipo de vehículo
+            // Validaciones
             if (!tipo) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Campo obligatorio',
                     text: 'Por favor seleccione el tipo de vehículo.'
                 });
-                return; // Detener ejecución
+                return;
             }
 
-            // Validar que se haya ingresado una placa
             if (!placa) {
                 Swal.fire({
                     icon: 'warning',
@@ -59,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Validar formato de la placa
             if (!regexPlacaTarjeta.test(placa)) {
                 Swal.fire({
                     icon: 'error',
@@ -69,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Validar formato de descripción (si tiene contenido)
             if (descripcion.length > 0 && !regexDescripcion.test(descripcion)) {
                 Swal.fire({
                     icon: 'error',
@@ -79,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Validar formato de tarjeta de propiedad (si tiene contenido)
             if (tarjeta.length > 0 && !regexPlacaTarjeta.test(tarjeta)) {
                 Swal.fire({
                     icon: 'error',
@@ -89,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Validar que se haya ingresado ID de Sede
             if (!idSede) {
                 Swal.fire({
                     icon: 'warning',
@@ -99,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Validar que ID de Sede sea numérico
             if (!regexIdSede.test(idSede)) {
                 Swal.fire({
                     icon: 'error',
@@ -109,58 +89,54 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // ========================================
-            // 📌 MOSTRAR LOADING MIENTRAS SE PROCESA
-            // ========================================
+            // Mostrar loading
             Swal.fire({
                 title: 'Registrando vehículo...',
                 text: 'Por favor espere',
-                allowOutsideClick: false, // No permitir cerrar haciendo clic afuera
+                allowOutsideClick: false,
                 didOpen: () => {
-                    Swal.showLoading(); // Mostrar spinner de carga
+                    Swal.showLoading();
                 }
             });
 
-            // ========================================
-            // 📌 PREPARAR Y ENVIAR DATOS AL SERVIDOR
-            // ========================================
-            // Crear FormData con todos los datos del formulario
+            // Preparar datos
             const formData = new FormData(form);
-            // Agregar la acción que debe ejecutar el controlador
             formData.append('accion', 'registrar');
-            // ⚠️ IMPORTANTE: NO enviamos FechaParqueadero
-            // La fecha se establece automáticamente en el servidor
             
-            // URL del controlador PHP
             const url = "../../Controller/ControladorParqueadero.php";
 
-            // Enviar datos usando Fetch API
+            // Enviar con fetch
             fetch(url, {
                 method: "POST",
                 body: formData
             })
-            .then(response => response.json()) // Convertir respuesta a JSON
+            .then(response => {
+                // Verificar que la respuesta sea JSON válido
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    return response.json();
+                } else {
+                    // Si no es JSON, leer como texto para ver el error
+                    return response.text().then(text => {
+                        console.error('Respuesta no JSON:', text);
+                        throw new Error('La respuesta del servidor no es JSON válida. Ver consola para más detalles.');
+                    });
+                }
+            })
             .then(data => {
-                // Mostrar respuesta en consola para debugging
                 console.log("Respuesta del servidor:", data);
 
-                // ========================================
-                // 📌 PROCESAR RESPUESTA DEL SERVIDOR
-                // ========================================
                 if (data.success) {
-                    // Si el registro fue exitoso
                     Swal.fire({
                         icon: 'success',
                         title: '¡Éxito!',
                         text: data.message || 'Vehículo registrado correctamente.',
-                        timer: 2000, // Auto-cerrar después de 2 segundos
+                        timer: 2000,
                         showConfirmButton: false
                     }).then(() => {
-                        // Redirigir a la lista de vehículos
                         window.location.href = './Vehiculolista.php';
                     });
                 } else {
-                    // Si hubo un error en el registro
                     Swal.fire({
                         icon: 'error',
                         title: 'Error al registrar',
@@ -169,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                // Manejar errores de red o del servidor
                 console.error("Error en la solicitud:", error);
                 Swal.fire({
                     icon: 'error',
@@ -182,101 +157,69 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
-// 📌 FUNCIÓN PARA ACTUALIZAR FECHA/HORA EN TIEMPO REAL
+// 📌 FUNCIÓN PARA ACTUALIZAR FECHA/HORA
 // ============================================
 function actualizarFechaHora() {
-    // Buscar el campo donde se muestra la fecha
-    const campoFecha = document.getElementById('FechaParqueaderoDisplay');
+    const campoFecha = document.getElementById('FechaParqueadero');
     
-    // Si el campo existe en la página
     if (campoFecha) {
-        // Obtener fecha y hora actual
         const ahora = new Date();
         
-        // Opciones de formato para la fecha
         const opciones = { 
-            year: 'numeric',      // Año completo (2025)
-            month: 'long',        // Mes completo (noviembre)
-            day: 'numeric',       // Día (27)
-            hour: '2-digit',      // Hora con 2 dígitos (14)
-            minute: '2-digit',    // Minutos con 2 dígitos (30)
-            second: '2-digit',    // Segundos con 2 dígitos (45)
-            hour12: false         // Formato 24 horas
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
         };
         
-        // Formatear fecha según opciones y configuración regional de Colombia
         const fechaFormateada = ahora.toLocaleString('es-CO', opciones);
-        
-        // Actualizar el valor del campo con la fecha formateada
         campoFecha.value = fechaFormateada;
     }
 }
 
-// ========================================
-// 📌 INICIAR ACTUALIZACIÓN AUTOMÁTICA DE FECHA
-// ========================================
-// Si existe el campo de fecha en la página
-if (document.getElementById('FechaParqueaderoDisplay')) {
-    // Actualizar cada 1000ms (1 segundo)
+// Iniciar actualización si existe el campo
+if (document.getElementById('FechaParqueadero')) {
     setInterval(actualizarFechaHora, 1000);
-    // Llamar inmediatamente para no esperar 1 segundo
     actualizarFechaHora();
 }
 
 // ============================================
-// 📌 FUNCIONES GLOBALES PARA EDICIÓN
+// 📌 FUNCIONES GLOBALES
 // ============================================
-
-/**
- * Cargar datos en el modal de edición
- * @param {Object} row - Objeto con los datos del vehículo
- */
 function cargarDatosEdicionVehiculo(row) {
-    // Campos editables
     $('#editIdVehiculo').val(row.IdParqueadero);
     $('#editTipoVehiculo').val(row.TipoVehiculo);
     $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
     $('#editIdSede').val(row.IdSede);
 
-    // Campos de solo lectura (disabled)
     $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
     $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
 
-    // Formatear fecha para input datetime-local
     let fechaHora = row.FechaParqueadero;
     if (fechaHora) {
-        // Convertir "2025-11-27 14:30:00" a "2025-11-27T14:30"
         fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
     }
     $('#editFechaParqueaderoDisabled').val(fechaHora);
 }
 
-/**
- * Confirmar eliminación de vehículo
- * @param {number} id - ID del vehículo a eliminar
- */
 function confirmarEliminacionVehiculo(id) {
-    // Guardar ID del vehículo a eliminar
     vehiculoIdAEliminar = id;
-    // Mostrar modal de confirmación
     $('#confirmarEliminarModalVehiculo').modal('show');
 }
 
 // ============================================
-// 📌 EVENTOS CON JQUERY (Edición y Eliminación)
+// 📌 EVENTOS CON JQUERY
 // ============================================
 $(document).ready(function() {
 
-    // ========================================
-    // 📌 EVENTO: Confirmar eliminación
-    // ========================================
     $('#btnConfirmarEliminarVehiculo').click(function() {
-        // Validar que hay un ID seleccionado
         if (!vehiculoIdAEliminar) return;
 
         console.log('Eliminando vehículo ID:', vehiculoIdAEliminar);
 
-        // Mostrar loading
         Swal.fire({
             title: 'Eliminando...',
             text: 'Por favor espere',
@@ -286,22 +229,18 @@ $(document).ready(function() {
             }
         });
 
-        // Enviar petición AJAX para eliminar (cambiar estado a Inactivo)
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
             type: 'POST',
             data: {
-                accion: 'eliminar',  // Acción en el controlador
+                accion: 'eliminar',
                 id: vehiculoIdAEliminar
             },
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta eliminación:', response);
-                
-                // Cerrar modal de confirmación
                 $('#confirmarEliminarModalVehiculo').modal('hide');
                 
-                // Verificar si la eliminación fue exitosa
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
@@ -310,13 +249,11 @@ $(document).ready(function() {
                         timer: 2000,
                         showConfirmButton: false
                     }).then(() => {
-                        // Ocultar y eliminar la fila de la tabla con animación
                         $('#fila-' + vehiculoIdAEliminar).fadeOut(400, function() {
                             $(this).remove();
                         });
                     });
                 } else {
-                    // Mostrar error
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -325,12 +262,9 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                // Manejar errores de conexión
                 console.error('Error en AJAX:', status, error);
                 console.error('Respuesta:', xhr.responseText);
-                
                 $('#confirmarEliminarModalVehiculo').modal('hide');
-                
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
@@ -340,11 +274,7 @@ $(document).ready(function() {
         });
     });
 
-    // ========================================
-    // 📌 EVENTO: Guardar cambios de edición
-    // ========================================
     $('#btnGuardarCambiosVehiculo').click(function() {
-        // Obtener valores de los campos del modal
         const id = $('#editIdVehiculo').val();
         const tipo = $('#editTipoVehiculo').val();
         const descripcion = $('#editDescripcionVehiculo').val();
@@ -352,9 +282,6 @@ $(document).ready(function() {
 
         console.log('Actualizando - ID:', id, 'Tipo:', tipo, 'Descripción:', descripcion, 'Sede:', idsede);
 
-        // ========================================
-        // 📌 VALIDAR CAMPOS OBLIGATORIOS
-        // ========================================
         if (!id || !tipo || !idsede) {
             Swal.fire({
                 icon: 'warning',
@@ -364,7 +291,6 @@ $(document).ready(function() {
             return;
         }
 
-        // Validar formato de descripción
         const regexDescripcion = /^[a-zA-Z0-9\s.,-]*$/;
         if (descripcion && !regexDescripcion.test(descripcion)) {
             Swal.fire({
@@ -375,10 +301,8 @@ $(document).ready(function() {
             return;
         }
 
-        // Cerrar modal de edición
         $('#modalEditarVehiculo').modal('hide');
 
-        // Mostrar loading
         Swal.fire({
             title: 'Guardando...',
             text: 'Por favor espere',
@@ -388,14 +312,11 @@ $(document).ready(function() {
             }
         });
 
-        // ========================================
-        // 📌 ENVIAR DATOS DE ACTUALIZACIÓN
-        // ========================================
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
             type: 'POST',
             data: {
-                accion: 'actualizar',  // Acción en el controlador
+                accion: 'actualizar',
                 id: id,
                 tipo: tipo,
                 descripcion: descripcion,
@@ -405,7 +326,6 @@ $(document).ready(function() {
             success: function(response) {
                 console.log('Respuesta actualización:', response);
                 
-                // Verificar si la actualización fue exitosa
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
@@ -414,11 +334,9 @@ $(document).ready(function() {
                         timer: 2000,
                         showConfirmButton: false
                     }).then(() => {
-                        // Recargar la página para mostrar cambios
                         location.reload();
                     });
                 } else {
-                    // Mostrar error
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -427,10 +345,8 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                // Manejar errores de conexión
                 console.error('Error en AJAX:', status, error);
                 console.error('Respuesta:', xhr.responseText);
-                
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
@@ -440,4 +356,4 @@ $(document).ready(function() {
         });
     });
 
-}); // Fin de $(document).ready()
+});

@@ -1008,3 +1008,21 @@ Dispositivo activado exitosamente
 Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
 === FIN ===
 
+
+2025-11-28 01:30:17 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "29",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: cambiar_estado
+cambiarEstadoDispositivo llamado con ID: 29, Estado: Inactivo
+Dispositivo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+

@@ -503,3 +503,138 @@ registrarVehiculo llamado
 Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`dbsegtrack`.`parqueadero`, CONSTRAINT `parqueadero_ibfk_1` FOREIGN KEY (`IdSede`) REFERENCES `sede` (`IdSede`))"}
 === FIN ===
 
+
+2025-11-28 01:01:31 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "No aplica",
+    "DescripcionVehiculo": "morada",
+    "TarjetaPropiedad": "tj 544548",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 01:01:31
+Generando QR para vehículo ID: 23
+
+2025-11-28 01:06:26 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "654-65j",
+    "DescripcionVehiculo": "kawasaki z ninja",
+    "TarjetaPropiedad": "tj 9858665",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 01:06:26
+Generando QR para vehículo ID: 24
+
+2025-11-28 01:09:15 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: []
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 01:09:15
+Respuesta final: {"success":false,"message":"Falta el campo: Tipo de vehículo"}
+=== FIN ===
+
+
+2025-11-28 01:12:33 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "654-65j",
+    "DescripcionVehiculo": "kawasaki z ninja",
+    "TarjetaPropiedad": "tj 9858665",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 01:12:33
+Generando QR para vehículo ID: 25
+
+2025-11-28 01:20:31 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO-3655",
+    "DescripcionVehiculo": "Camaro rojo con franjas Negras",
+    "TarjetaPropiedad": "tj 8456561",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 01:20:31
+Generando QR para vehículo ID: 26
+
+2025-11-28 01:20:33 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO-3655",
+    "DescripcionVehiculo": "Camaro rojo con franjas Negras",
+    "TarjetaPropiedad": "tj 8456561",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 01:20:33
+Generando QR para vehículo ID: 27
+
+2025-11-28 01:29:21 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "25",
+    "tipo": "Moto",
+    "descripcion": "kawasaki z ninja Color morada",
+    "idsede": "26"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 25
+Datos preparados: {"tipo":"Moto","descripcion":"kawasaki z ninja Color morada","idsede":"26"}
+=== actualizarVehiculo llamado ===
+ID: 25
+Datos: {"tipo":"Moto","descripcion":"kawasaki z ninja Color morada","idsede":"26"}
+Regenerando QR para ID: 25
+Generando QR para vehículo ID: 25
+
+2025-11-28 01:33:37 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO-3655",
+    "DescripcionVehiculo": "Camaro rojo con franjas Negras",
+    "TarjetaPropiedad": "tj 8456561",
+    "FechaParqueadero": "27 de noviembre de 2025, 19:33:29",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 01:33:37
+Generando QR para vehículo ID: 28

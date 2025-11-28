@@ -19,12 +19,6 @@
                 <div class="card-body">
                     <form id="formDispositivo" method="POST">
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">QR del Dispositivo</label>
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-secondary w-100" disabled>Próximamente</button>
-                                </div>
-                            </div>
 
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">Tipo de Dispositivo <span class="text-danger">*</span></label>

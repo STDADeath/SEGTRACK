@@ -68,7 +68,7 @@
                                 <label class="form-label fw-semibold">Fecha y Hora de Registro</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                    <input type="text" class="form-control bg-light" id="FechaParqueaderoDisplay" readonly>
+                                    <input type="text" class="form-control bg-light" id="FechaParqueadero" name="FechaParqueadero">
                                 </div>
                                 <small class="text-muted">
                                     <i class="fas fa-info-circle"></i> La fecha y hora se registran automáticamente
@@ -97,9 +97,20 @@
                     </form>
                 </div>
             </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 bg-light">
+                    <h6 class="m-0 font-weight-bold text-primary">Información Adicional</h6>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle me-2"></i> El código QR se generará automáticamente después de guardar los datos del dispositivo.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 <!-- Librería SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
