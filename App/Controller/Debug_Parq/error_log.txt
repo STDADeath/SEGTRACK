@@ -4312,3 +4312,33 @@ Stack trace:
 #5 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorParqueadero.php(246): ControladorParqueadero->registrarVehiculo(Array)
 #6 {main}
   thrown in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php on line 74
+[28-Nov-2025 02:38:41 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 14
+[28-Nov-2025 02:38:41 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 25
+[28-Nov-2025 02:38:41 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 31
+[28-Nov-2025 02:38:41 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 34
+[28-Nov-2025 02:38:41 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 45
+[28-Nov-2025 02:38:41 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 8, 4)
+#1 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(494): QRimage::png(Array, 'C:\\xampp\\htdocs...', 8, 4, false)
+#2 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('VEH\xC3\x8DCULO\nID: 2...', 'C:\\xampp\\htdocs...', false)
+#3 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorParqueadero.php(83): QRcode::png('VEH\xC3\x8DCULO\nID: 2...', 'C:\\xampp\\htdocs...', 3, 8)
+#4 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorParqueadero.php(136): ControladorParqueadero->generarQR(29, 'Carro', 'EHO-3655', 'Camaro rojo con...')
+#5 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorParqueadero.php(246): ControladorParqueadero->registrarVehiculo(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php on line 74
+[28-Nov-2025 02:39:52 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 14
+[28-Nov-2025 02:39:52 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 25
+[28-Nov-2025 02:39:52 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 31
+[28-Nov-2025 02:39:52 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 34
+[28-Nov-2025 02:39:52 Europe/Berlin] PHP Warning:  file_put_contents(C:\xampp\htdocs\SEGTRACK\App\Model/../controller/parqueadero_dispositivo/debug_log.txt): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloParqueadero.php on line 45
+[28-Nov-2025 02:39:52 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 8, 4)
+#1 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(494): QRimage::png(Array, 'C:\\xampp\\htdocs...', 8, 4, false)
+#2 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('VEH\xC3\x8DCULO\nID: 3...', 'C:\\xampp\\htdocs...', false)
+#3 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorParqueadero.php(83): QRcode::png('VEH\xC3\x8DCULO\nID: 3...', 'C:\\xampp\\htdocs...', 3, 8)
+#4 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorParqueadero.php(136): ControladorParqueadero->generarQR(30, 'Carro', 'EHO-3655', 'Camaro rojo con...')
+#5 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorParqueadero.php(246): ControladorParqueadero->registrarVehiculo(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php on line 74

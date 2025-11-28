@@ -290,21 +290,34 @@ try {
     file_put_contents($carpetaDebug . '/debug_log.txt', "Respuesta final: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
     file_put_contents($carpetaDebug . '/debug_log.txt', "=== FIN ===\n\n", FILE_APPEND);
     
-    // Limpiar buffer y enviar JSON
-    ob_end_clean();
+    // Limpiar buffer y asegurar que solo se envía JSON
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    // Headers nuevamente para asegurar
+    header('Content-Type: application/json; charset=utf-8');
+    http_response_code(200);
+    
     echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
+    exit;
 
 } catch (Exception $e) {
     $error = $e->getMessage();
     file_put_contents($carpetaDebug . '/debug_log.txt', "ERROR FINAL: $error\n", FILE_APPEND);
     
-    ob_end_clean();
+    // Limpiar cualquier salida
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    header('Content-Type: application/json; charset=utf-8');
+    http_response_code(500);
+    
     echo json_encode([
         'success' => false,
-        'message' => 'Error del servidor: ' . $error,
-        'error' => $error
+        'message' => 'Error del servidor: ' . $error
     ], JSON_UNESCAPED_UNICODE);
+    exit;
 }
-
-exit;
 ?>

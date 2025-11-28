@@ -638,3 +638,37 @@ Acción detectada: registrar
 registrarVehiculo llamado
 Fecha del servidor: 2025-11-28 01:33:37
 Generando QR para vehículo ID: 28
+
+2025-11-28 02:38:41 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO-3655",
+    "DescripcionVehiculo": "Camaro rojo con franjas Negras",
+    "TarjetaPropiedad": "tj 8456561",
+    "FechaParqueadero": "27 de noviembre de 2025, 19:33:29",
+    "IdSede": "26"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 02:38:41
+Generando QR para vehículo ID: 29
+
+2025-11-28 02:39:52 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO-3655",
+    "DescripcionVehiculo": "Camaro rojo con franjas Negras",
+    "TarjetaPropiedad": "tj 8456561",
+    "FechaParqueadero": "27 de noviembre de 2025, 19:33:29",
+    "IdSede": "26"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha del servidor: 2025-11-28 02:39:52
+Generando QR para vehículo ID: 30

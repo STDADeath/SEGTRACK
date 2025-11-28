@@ -68,7 +68,7 @@
                                 <label class="form-label fw-semibold">Fecha y Hora de Registro</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                    <input type="text" class="form-control bg-light" id="FechaParqueadero" name="FechaParqueadero">
+                                    <input type="text" class="form-control bg-light" id="FechaParqueadero" name="FechaParqueadero" readonly>
                                 </div>
                                 <small class="text-muted">
                                     <i class="fas fa-info-circle"></i> La fecha y hora se registran automáticamente
@@ -87,7 +87,7 @@
 
                         <!-- Botones -->
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='./Vehiculolista.php'">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='./Parqueadero.php'">
                                 <i class="fas fa-arrow-left me-1"></i> Volver
                             </button>
                             <button type="submit" class="btn btn-primary">
@@ -111,9 +111,14 @@
     </div>
 </div>
 
-
+<!-- jQuery primero -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap Bundle con Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Librería SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- SB Admin 2 -->
+<script src="../../../Public/js/javascript/sb-admin-2.min.js"></script>
 <!-- Validación de formulario -->
 <script src="../../../Public/js/javascript/js/ValidacionParqueadero.js"></script>
 

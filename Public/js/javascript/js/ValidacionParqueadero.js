@@ -3,6 +3,26 @@
 // ============================================
 let vehiculoIdAEliminar = null;
 
+// ============================================
+// 📌 VERIFICACIÓN DE JQUERY
+// ============================================
+if (typeof jQuery === 'undefined') {
+    console.error('jQuery no está cargado. Cargando dinámicamente...');
+    
+    // Cargar jQuery dinámicamente
+    const script = document.createElement('script');
+    script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+    script.onload = function() {
+        console.log('jQuery cargado dinámicamente');
+        // Re-ejecutar funciones que dependen de jQuery
+        inicializarEventosJQuery();
+    };
+    document.head.appendChild(script);
+} else {
+    // jQuery ya está cargado, ejecutar normalmente
+    $(document).ready(inicializarEventosJQuery);
+}
+
 // ===========================================
 // 📌 VALIDACIÓN Y REGISTRO DE VEHÍCULO
 // ===========================================
@@ -111,15 +131,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: formData
             })
             .then(response => {
+                // Primero verificar el estado HTTP
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 // Verificar que la respuesta sea JSON válido
                 const contentType = response.headers.get("content-type");
                 if (contentType && contentType.includes("application/json")) {
                     return response.json();
                 } else {
-                    // Si no es JSON, leer como texto para ver el error
+                    // Si no es JSON, leer como texto para debug
                     return response.text().then(text => {
-                        console.error('Respuesta no JSON:', text);
-                        throw new Error('La respuesta del servidor no es JSON válida. Ver consola para más detalles.');
+                        console.error('Respuesta no JSON recibida:', text);
+                        throw new Error('El servidor respondió con formato incorrecto');
                     });
                 }
             })
@@ -145,11 +170,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                console.error("Error en la solicitud:", error);
+                console.error("Error completo en la solicitud:", error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
-                    text: 'Ocurrió un problema al enviar los datos al servidor.'
+                    text: 'Error: ' + error.message
                 });
             });
         });
@@ -213,10 +238,14 @@ function confirmarEliminacionVehiculo(id) {
 // ============================================
 // 📌 EVENTOS CON JQUERY
 // ============================================
-$(document).ready(function() {
+function inicializarEventosJQuery() {
+    console.log('Inicializando eventos jQuery...');
 
     $('#btnConfirmarEliminarVehiculo').click(function() {
-        if (!vehiculoIdAEliminar) return;
+        if (!vehiculoIdAEliminar) {
+            console.error('No hay ID de vehículo para eliminar');
+            return;
+        }
 
         console.log('Eliminando vehículo ID:', vehiculoIdAEliminar);
 
@@ -355,5 +384,4 @@ $(document).ready(function() {
             }
         });
     });
-
-});
+}
