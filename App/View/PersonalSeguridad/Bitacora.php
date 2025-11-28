@@ -89,78 +89,59 @@
     </div>
 </div>
 
-<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script>
-$(document).ready(function () {
+$(function () {
 
-    $("#TieneVisitante").change(function () {
-        if ($(this).val() === "si") {
-            $("#VisitanteContainer").slideDown();
-        } else {
-            $("#VisitanteContainer, #DispositivoContainer").slideUp();
-            $("#IdVisitante, #IdDispositivo").val("");
-            $("#TraeDispositivo").val("");
-        }
+    // Cuando cambia "Tiene Visitante" o "Trae Dispositivo" se muestra/oculta la sección correspondiente
+    $("#TieneVisitante, #TraeDispositivo").change(function () {
+        // Si el usuario selecciona "si", se muestra el contenedor de visitante
+        $("#VisitanteContainer").toggle($("#TieneVisitante").val() === "si");
+
+        // Si selecciona "si", se muestra el contenedor de dispositivo
+        $("#DispositivoContainer").toggle($("#TraeDispositivo").val() === "si");
     });
 
 
-    $("#TraeDispositivo").change(function () {
-        if ($(this).val() === "si") {
-            $("#DispositivoContainer").slideDown();
-        } else {
-            $("#DispositivoContainer").slideUp();
-            $("#IdDispositivo").val("");
-        }
-    });
+    // Captura el envío del formulario de bitácora
+    $("#formRegistrarBitacora").submit(function (e) {
+        e.preventDefault(); // Evita que la página recargue
 
+        // Cambia el texto del botón mientras se procesa la solicitud
+        const btn = $(this).find('button[type=submit]');
+        const original = btn.html();
+        btn.html('<i class="fas fa-spinner fa-spin"></i> Procesando...')
+    .prop("disabled", true);
 
-$("#formRegistrarBitacora").submit(function (e) {
-    e.preventDefault();
+        // Envío de datos al controlador usando POST
+        $.post(
+            "../../Controller/ControladorBitacora.php",
+            $(this).serialize() + "&accion=registrar", // Datos del formulario
+            function (res) { // Respuesta del servidor
+                console.log("Respuesta:", res);
 
+                if (res.success) {
+                    alert("Bitácora registrada con éxito");
 
-    const btn = $(this).find('button[type="submit"]');
-    const originalText = btn.html();
-    btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
-    btn.prop('disabled', true);
-
-    $.ajax({
-        url: "../controller/bitacora_dotacion/controladorBitacora.php",
-        type: "POST",
-        data: $(this).serialize() + "&accion=registrar",
-        dataType: "json",
-        success: function (response) {
-            console.log("Respuesta del servidor:", response);
-
-            if (response.success) {
-                alert("✅ " + response.message);
-                $("#formRegistrarBitacora")[0].reset();
-                $("#VisitanteContainer, #DispositivoContainer").hide();
-            } else {
-                let errorMsg = " " + (response.message || "Error al registrar la bitácora");
-                if (response.error) {
-                    errorMsg += "\nDetalles: " + response.error;
+                    // Limpia el formulario y oculta secciones
+                    $("#formRegistrarBitacora")[0].reset();
+                    $("#VisitanteContainer, #DispositivoContainer").hide();
+                } else {
+                    // Mensaje de error recibido desde PHP
+                    alert(res.message || "Error al registrar");
                 }
-                alert(errorMsg);
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error("Error AJAX:", error);
-            console.log("Estado:", status);
-            console.log("Respuesta completa del servidor:", xhr.responseText);
-            
-            let errorMsg = " Error de conexión con el servidor";
-            if (xhr.responseText && xhr.responseText.includes('conexión')) {
-                errorMsg += "\nVerifica la configuración de la base de datos";
-            }
-            alert(errorMsg);
-        },
-        complete: function() {
-            btn.html(originalText);
-            btn.prop('disabled', false);
-        }
+            },
+            "json" // Indica que la respuesta debe ser JSON
+        )
+        .fail(() => alert("Error de conexión con el servidor")) // Error de red
+        .always(() => {
+            // Se restaura el botón sin importar si falló o funcionó
+            btn.html(original).prop("disabled", false);
+        });
     });
-});
+
 });
 </script>
+
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

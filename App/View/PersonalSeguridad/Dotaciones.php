@@ -70,28 +70,33 @@
     </div>
 </div>
 
-<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../../../Public/vendor/jquery/jquery.min.js"></script>
+<script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script>
 $(document).ready(function () {
+
+    // Captura el submit del formulario de dotación
     $("#formIngresarDotacion").submit(function (e) {
-        e.preventDefault();
+        e.preventDefault(); // Evita que la página recargue
 
         const btn = $(this).find('button[type="submit"]');
         const originalText = btn.html();
         btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
         btn.prop('disabled', true);
 
-      
+        // Envía los datos al controlador usando AJAX
         $.ajax({
-            url: "../controller/bitacora_dotacion/ControladorDotacion.php", 
+            url: "../../Controller/ControladorDotacion.php",
             type: "POST",
-            data: $(this).serialize() + "&accion=registrar", 
+            data: $(this).serialize() + "&accion=registrar",
             dataType: "json",
             success: function (response) {
                 console.log("Respuesta del servidor:", response);
 
                 if (response.success) {
                     alert("✓ " + response.message);
+
+                    // Limpia el formulario después de registrar
                     $("#formIngresarDotacion")[0].reset();
                 } else {
                     let errorMsg = "✗ " + (response.message || "Error al registrar la dotación");
@@ -105,7 +110,7 @@ $(document).ready(function () {
                 console.error("Error AJAX:", error);
                 console.log("Estado:", status);
                 console.log("Respuesta completa del servidor:", xhr.responseText);
-                
+
                 let errorMessage = "Error de conexión con el servidor";
                 try {
                     const response = JSON.parse(xhr.responseText);
@@ -113,16 +118,20 @@ $(document).ready(function () {
                         errorMessage = response.message;
                     }
                 } catch (e) {
+                    // Ignora errores de parseo
                 }
                 alert("✗ " + errorMessage);
             },
-            complete: function() {
+            complete: function () {
+                // Restaura el botón
                 btn.html(originalText);
                 btn.prop('disabled', false);
             }
         });
     });
+
 });
 </script>
+
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
