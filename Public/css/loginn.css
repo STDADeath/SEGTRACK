@@ -245,3 +245,68 @@ small.error {
         padding: 30px;
     }
 }
+* Estilos para errores de validación */
+.error {
+    color: #ff4444;
+    font-size: 0.85rem;
+    display: block;
+    margin-top: 5px;
+    margin-left: 35px;
+    min-height: 18px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-box.error-border input {
+    border: 2px solid #ff4444 !important;
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.input-box input {
+    transition: border-color 0.3s ease;
+}
+
+.input-box input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+/* Estilos para los botones */
+.btn-login, .btn-register {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-login:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.btn-register:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+.btn-login:disabled,
+.btn-register:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

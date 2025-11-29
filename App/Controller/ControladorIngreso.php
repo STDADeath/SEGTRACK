@@ -102,7 +102,7 @@ class ControladorIngreso {
             'data'    => $data
         ], JSON_UNESCAPED_UNICODE);
 
-        // Se evita que siga corriendo código después de responder
+ 
         exit;
     }
 }

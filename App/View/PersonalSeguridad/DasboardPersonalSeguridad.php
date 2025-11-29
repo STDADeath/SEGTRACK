@@ -1,10 +1,24 @@
+<?php
+session_start();
+
+// ❌ Bloquear acceso si no hay sesión activa
+if (!isset($_SESSION['usuario'])) {
+    header("Location: ../../View/login.html");
+    exit;
+}
+
+// ❌ Evitar que el navegador almacene la página en caché
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
+
 <?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
 
 <div class="container-fluid">
     <!-- Encabezado -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard de Seguridad</h1>
-
     </div>
 
     <!-- Tarjetas de resumen -->
@@ -88,8 +102,7 @@
             </div>
         </div>
     </div>
-
-
+</div>
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -98,141 +111,91 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const BASE_URL = "../../../app/Controller/ControladorDashboard.php";
 
-    try {
-        const resDispositivos = await fetch(`${BASE_URL}?accion=tipos_dispositivos`);
-        const datosDispositivos = await resDispositivos.json();
+    // === Función para cargar gráficos y totales ===
+    async function cargarDashboard() {
+        try {
+            const resDispositivos = await fetch(`${BASE_URL}?accion=tipos_dispositivos`);
+            const datosDispositivos = await resDispositivos.json();
 
-        const labelsD = datosDispositivos.map(d => d.tipo_dispositivos);
-        const cantidadesD = datosDispositivos.map(d => d.cantidad_Dispositivos);
+            const labelsD = datosDispositivos.map(d => d.tipo_dispositivos);
+            const cantidadesD = datosDispositivos.map(d => d.cantidad_Dispositivos);
 
-        new Chart(document.getElementById('graficoTipoDispositivos'), {
-            type: 'bar',
-            data: {
-                labels: labelsD,
-                datasets: [{
-                    label: 'Cantidad de Dispositivos',
-                    data: cantidadesD,
-                    backgroundColor: [
-                        'rgba(78, 115, 223, 0.8)',
-                        'rgba(28, 200, 138, 0.8)',
-                        'rgba(246, 194, 62, 0.8)',
-                        'rgba(231, 74, 59, 0.8)'
-                    ],
-                    borderColor: 'rgba(0,0,0,0.1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: { y: { beginAtZero: true } },
-                plugins: { legend: { display: false } }
-            }
-        });
-    } catch (error) {
-        console.error("Error gráfico dispositivos:", error);
-    }
-
-    // === 🚗 Gráfico de Vehículos por Tipo ===
-    try {
-        const resVehiculos = await fetch(`${BASE_URL}?accion=vehiculos_por_tipo`);
-        const datosVehiculos = await resVehiculos.json();
-
-        const labelsV = datosVehiculos.map(v => v.tipo_vehiculos);
-        const cantidadesV = datosVehiculos.map(v => v.cantidad_Vehiculos);
-
-        new Chart(document.getElementById('graficoTipoVehiculo'), {
-            type: 'doughnut',
-            data: {
-                labels: labelsV,
-                datasets: [{
-                    label: 'Vehículos',
-                    data: cantidadesV,
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(255, 99, 132, 0.8)'
-                    ],
-                    borderColor: '#fff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom' } },
-                cutout: '70%'
-            }
-        });
-    } catch (error) {
-        console.error("Error gráfico vehículos:", error);
-    }
-
-    // === 🏢 Gráfico de Vehículos por Sede ===
-    try {
-        const resSede = await fetch(`${BASE_URL}?accion=vehiculos_por_sede`);
-        const datosSede = await resSede.json();
-
-        const sedes = [...new Set(datosSede.map(d => d.sede))];
-        const tipos = [...new Set(datosSede.map(d => d.tipo_vehiculo))];
-
-        const datasets = tipos.map((tipo, index) => {
-            const colores = [
-                'rgba(78, 115, 223, 0.8)',
-                'rgba(28, 200, 138, 0.8)',
-                'rgba(246, 194, 62, 0.8)',
-                'rgba(231, 74, 59, 0.8)'
-            ];
-            return {
-                label: tipo,
-                data: sedes.map(s => {
-                    const fila = datosSede.find(d => d.sede === s && d.tipo_vehiculo === tipo);
-                    return fila ? fila.cantidad : 0;
-                }),
-                backgroundColor: colores[index % colores.length]
-            };
-        });
-
-        new Chart(document.getElementById('graficoVehiculosPorSede'), {
-            type: 'bar',
-            data: {
-                labels: sedes,
-                datasets: datasets
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom' },
-                    title: { display: true, text: 'Cantidad de Vehículos por Sede y Tipo' }
+            new Chart(document.getElementById('graficoTipoDispositivos'), {
+                type: 'bar',
+                data: {
+                    labels: labelsD,
+                    datasets: [{
+                        label: 'Cantidad de Dispositivos',
+                        data: cantidadesD,
+                        backgroundColor: [
+                            'rgba(78, 115, 223, 0.8)',
+                            'rgba(28, 200, 138, 0.8)',
+                            'rgba(246, 194, 62, 0.8)',
+                            'rgba(231, 74, 59, 0.8)'
+                        ],
+                        borderColor: 'rgba(0,0,0,0.1)',
+                        borderWidth: 1
+                    }]
                 },
-                scales: {
-                    x: { stacked: true },
-                    y: { beginAtZero: true, stacked: true }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
                 }
-            }
-        });
-    } catch (error) {
-        console.error("Error gráfico vehículos por sede:", error);
+            });
+        } catch (error) { console.error("Error gráfico dispositivos:", error); }
+
+        try {
+            const resVehiculos = await fetch(`${BASE_URL}?accion=vehiculos_por_tipo`);
+            const datosVehiculos = await resVehiculos.json();
+
+            const labelsV = datosVehiculos.map(v => v.tipo_vehiculos);
+            const cantidadesV = datosVehiculos.map(v => v.cantidad_Vehiculos);
+
+            new Chart(document.getElementById('graficoTipoVehiculo'), {
+                type: 'doughnut',
+                data: {
+                    labels: labelsV,
+                    datasets: [{
+                        label: 'Vehículos',
+                        data: cantidadesV,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(255, 99, 132, 0.8)'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    cutout: '70%'
+                }
+            });
+        } catch (error) { console.error("Error gráfico vehículos:", error); }
+
+        // Totales
+        try {
+            const [dis, func, vis, veh] = await Promise.all([
+                fetch(`${BASE_URL}?accion=total_dispositivos`).then(r => r.json()),
+                fetch(`${BASE_URL}?accion=total_funcionarios`).then(r => r.json()),
+                fetch(`${BASE_URL}?accion=total_visitantes`).then(r => r.json()),
+                fetch(`${BASE_URL}?accion=total_vehiculos`).then(r => r.json())
+            ]);
+
+            document.getElementById("totalDispositivos").textContent = dis.total_dispositivos ?? 0;
+            document.getElementById("totalFuncionarios").textContent = func.total_funcionarios ?? 0;
+            document.getElementById("totalVisitantes").textContent = vis.total_visitantes ?? 0;
+            document.getElementById("totalVehiculos").textContent = veh.total_vehiculos ?? 0;
+        } catch (error) { console.error("Error al cargar totales:", error); }
     }
 
-    // === 📈 Totales ===
-    try {
-        const [dis, func, vis, veh] = await Promise.all([
-            fetch(`${BASE_URL}?accion=total_dispositivos`).then(r => r.json()),
-            fetch(`${BASE_URL}?accion=total_funcionarios`).then(r => r.json()),
-            fetch(`${BASE_URL}?accion=total_visitantes`).then(r => r.json()),
-            fetch(`${BASE_URL}?accion=total_vehiculos`).then(r => r.json())
-        ]);
-
-        document.getElementById("totalDispositivos").textContent = dis.total_dispositivos ?? 0;
-        document.getElementById("totalFuncionarios").textContent = func.total_funcionarios ?? 0;
-        document.getElementById("totalVisitantes").textContent = vis.total_visitantes ?? 0;
-        document.getElementById("totalVehiculos").textContent = veh.total_vehiculos ?? 0;
-    } catch (error) {
-        console.error("Error al cargar totales:", error);
-    }
+    cargarDashboard();
 });
 </script>
 

@@ -40,8 +40,10 @@
                 <div class="modal-body">Seleccione "Cerrar sesión" si está listo para finalizar su sesión actual.</div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="../../../Public/index.html">Cerrar sesión</a>
+
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="../../../index.html">Salir</a>
+
                 </div>
 
             </div>

@@ -1,0 +1,104 @@
+2025-11-28 00:54:14 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "carlos morris",
+    "IdSede": "27",
+    "TelefonoFuncionario": "3221456844",
+    "DocumentoFuncionario": "22222222548",
+    "CorreoFuncionario": "luisferia@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 30
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-30-6928e4a6c5dd5.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 30","data":{"IdFuncionario":"30","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-30-6928e4a6c5dd5.png"}}
+2025-11-28 01:22:46 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "30",
+    "cargo": "Visitante",
+    "nombre": "carlos morris",
+    "sede": "27",
+    "telefono": "2147483647",
+    "documento": "22222222548",
+    "correo": "luisferia@gmail.com"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: actualizar
+actualizarFuncionario llamado con ID: 30
+Datos a actualizar: {"CargoFuncionario":"Visitante","NombreFuncionario":"carlos morris","IdSede":27,"TelefonoFuncionario":2147483647,"DocumentoFuncionario":22222222548,"CorreoFuncionario":"luisferia@gmail.com"}
+Funcionario actualizado exitosamente
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
+2025-11-28 01:22:56 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "30",
+    "cargo": "Funcionario Institucion",
+    "nombre": "carlos morris",
+    "sede": "27",
+    "telefono": "2147483647",
+    "documento": "22222222548",
+    "correo": "luisferia@gmail.com"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: actualizar
+actualizarFuncionario llamado con ID: 30
+Datos a actualizar: {"CargoFuncionario":"Funcionario Institucion","NombreFuncionario":"carlos morris","IdSede":27,"TelefonoFuncionario":2147483647,"DocumentoFuncionario":22222222548,"CorreoFuncionario":"luisferia@gmail.com"}
+Funcionario actualizado exitosamente
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
+2025-11-28 01:23:03 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "30",
+    "cargo": "Personal Seguridad",
+    "nombre": "carlos morris",
+    "sede": "27",
+    "telefono": "2147483647",
+    "documento": "22222222548",
+    "correo": "luisferia@gmail.com"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: actualizar
+actualizarFuncionario llamado con ID: 30
+Datos a actualizar: {"CargoFuncionario":"Personal Seguridad","NombreFuncionario":"carlos morris","IdSede":27,"TelefonoFuncionario":2147483647,"DocumentoFuncionario":22222222548,"CorreoFuncionario":"luisferia@gmail.com"}
+Funcionario actualizado exitosamente
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
+2025-11-28 01:23:20 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "30",
+    "cargo": "Personal Seguridad",
+    "nombre": "Luis feria",
+    "sede": "27",
+    "telefono": "2147483647",
+    "documento": "22222222548",
+    "correo": "luisferia@gmail.com"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: actualizar
+actualizarFuncionario llamado con ID: 30
+Datos a actualizar: {"CargoFuncionario":"Personal Seguridad","NombreFuncionario":"Luis feria","IdSede":27,"TelefonoFuncionario":2147483647,"DocumentoFuncionario":22222222548,"CorreoFuncionario":"luisferia@gmail.com"}
+Funcionario actualizado exitosamente
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}

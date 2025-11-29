@@ -7,14 +7,14 @@ class ControladorDotacion {
 
     private DotacionModelo $modelo; 
 
-    // Constructor que recibe la conexión y crea una instancia del modelo
+
     public function __construct($conexion) {
         $this->modelo = new DotacionModelo($conexion);
     }
 
-    // Función privada para verificar si un campo está vacío
+   
     private function campoVacio(array $array, string $campo): bool {
-        // Retorna true si el campo no existe o su valor es solo espacios
+        
         return !isset($array[$campo]) || trim($array[$campo]) === "";
     }
 
@@ -22,7 +22,7 @@ class ControladorDotacion {
     private function fechaValida(?string $fecha): bool {
         if (empty($fecha)) return true; 
         $d = DateTime::createFromFormat('Y-m-d\TH:i', $fecha); 
-        // Compara el valor original con el formato esperado
+   
         return $d && $d->format('Y-m-d\TH:i') === $fecha;
     }
 
@@ -44,7 +44,7 @@ class ControladorDotacion {
 
         // Validación y conversión de fechas si existen
         foreach (['FechaDevolucion', 'FechaEntrega'] as $campoFecha) {
-            // Validar el formato de fecha
+        
             if (isset($Datos[$campoFecha]) && !$this->fechaValida($Datos[$campoFecha])) {
                 return ['success' => false, 'message' => "Formato de fecha inválido en $campoFecha. Use: YYYY-MM-DDTHH:MM"];
             }
@@ -76,7 +76,7 @@ class ControladorDotacion {
                 ];
             }
         } catch (Exception $e) {
-            // Captura cualquier excepción y devuelve un mensaje de error
+       
             return [
                 'success' => false,
                 'message' => 'Error en el servidor: ' . $e->getMessage()

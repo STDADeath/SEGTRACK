@@ -18,10 +18,10 @@ provided comments and project wiki page (links in README file)
 
 Notice: probably you should'nt use all of this in same script :)
 
-<?phpb
+<?php
 
 //include only that one, rest required files will be included from it
-include "qrlib.php"
+include "qrlib.php";
 
 //write code into file, Error corection lecer is lowest, L (one form: L,M,Q,H)
 //each code square will be 4x4 pixels (4x zoom)
@@ -46,15 +46,6 @@ QRtools::buildCache();
 $tab = $qr->encode('PHP QR Code :)');
 QRspec::debug($tab, true);
 
-== TCPDF INTEGRATION ==
-
-Inside bindings/tcpdf you will find slightly modified 2dbarcodes.php.
-Instal phpqrcode liblaty inside tcpdf folder, then overwrite (or merge)
-2dbarcodes.php 
-
-Then use similar as example #50 from TCPDF examples:
-
-<?php
 
 $style = array(
     'border' => true,

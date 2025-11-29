@@ -1,3 +1,21 @@
+<?php
+// ✅ Iniciar sesión solo si no hay ninguna activa
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// ✅ Verificar si hay usuario logueado
+if (!isset($_SESSION['usuario'])) {
+    echo "<script>
+        alert('⚠️ Debes iniciar sesión primero.');
+        window.location.href = '../Login/Login.php';
+    </script>";
+    exit;
+}
+
+// ✅ Capturar el nombre del usuario, siempre que exista
+$nombreUsuario = htmlspecialchars($_SESSION['usuario']['NombreFuncionario'] ?? 'Usuario');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -17,16 +35,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Hojas de estilo del tema y personalizadas -->
-<<<<<<< HEAD
-    <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../../../Public/css/styles.css" rel="stylesheet">
-    <link href="../../../Public/css/graficas.css" rel="stylesheet">
-    <link href="../../../Public/css/icono.css" rel="stylesheet">
-=======
+
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet"> <!-- Plantilla base -->
     <link href="../../../Public/css/graficas.css" rel="stylesheet"> <!-- Estilos para gráficos -->
     <link href="../../../Public/css/icono.css" rel="stylesheet"> <!-- Estilos para íconos personalizados -->
->>>>>>> feature/parqueadero-dispositivo
+
 
 </head>
 
@@ -49,14 +62,15 @@
 
             <!-- Sección de Funcionario -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-id-card"></i>
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
                     <span>Funcionario</span>
                 </a>
 
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        
+
                         <h6 class="collapse-header">Funcionarios:</h6>
                         <a class="collapse-item" href="../PersonalSeguridad/Funcionario.php">Registrar Funcionario</a>
                         <a class="collapse-item" href="../PersonalSeguridad/FuncionarioLista.php">Lista de Funcionarios</a>
@@ -78,15 +92,16 @@
 
             <!-- Control de Bitácora -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-clipboard-list"></i>
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
                     <span>Control Bitácora</span>
                 </a>
 
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div id="collapseUtilities" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Bitácora</h6>
 
-                        <h6 class="collapse-header">Bitácora:</h6>
                         <a class="collapse-item" href="../PersonalSeguridad/Bitacora.php">Registro de Bitácora</a>
                         <a class="collapse-item" href="../PersonalSeguridad/BitacoraLista.php">Ingreso Bitácora</a>
 
@@ -101,7 +116,6 @@
                         <h6 class="collapse-header">Visitantes:</h6>
                         <a class="collapse-item" href="../PersonalSeguridad/Visitante.php">Registro Visitante</a>
                         <a class="collapse-item" href="../PersonalSeguridad/VisitanteLista.php">Lista de Visitantes</a>
-
                     </div>
                 </div>
             </li>
@@ -113,17 +127,17 @@
                     <span>Tabla de Ingreso</span>
                 </a>
 
+
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <h6 class="collapse-header">Escanear QR:</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/Ingreso.php">Registrar Entrada/Salida</a>
 
+                        <a class="collapse-item" href="../PersonalSeguridad/Ingreso.php">Registrar Entrada/Salida</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Separador -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Botón minimizar sidebar -->
@@ -137,25 +151,25 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Área principal de contenido -->
+            <!-- Main Content -->
             <div id="content">
 
                 <!-- Topbar -->
+
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Botón para abrir el sidebar en móvil -->
+
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Navegación a la derecha -->
+
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Notificaciones -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <span class="badge badge-danger badge-counter">5+</span>
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" data-toggle="dropdown">
+                                <i class="fas fa-search fa-fw"></i>
+
                             </a>
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
@@ -225,14 +239,15 @@
                         <!-- Usuario -->
                         <li class="nav-item dropdown no-arrow">
 
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Personal de Seguridad</span>
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
+                                <!-- Aquí se muestra el nombre dinámico del usuario -->
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= isset($nombreUsuario) ? $nombreUsuario : 'Usuario' ?></span>
+
 
                                 <img class="img-profile rounded-circle"
                                     src="../../../Public/img/undraw_profile.svg">
                             </a>
 
-                            <!-- Dropdown usuario -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
 
