@@ -102,3 +102,105 @@ actualizarFuncionario llamado con ID: 30
 Datos a actualizar: {"CargoFuncionario":"Personal Seguridad","NombreFuncionario":"Luis feria","IdSede":27,"TelefonoFuncionario":2147483647,"DocumentoFuncionario":22222222548,"CorreoFuncionario":"luisferia@gmail.com"}
 Funcionario actualizado exitosamente
 Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente"}
+2025-11-29 14:53:17 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "Andres carrillo ",
+    "IdSede": "30",
+    "TelefonoFuncionario": "3245687104",
+    "DocumentoFuncionario": "10244746564",
+    "CorreoFuncionario": "carrillo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+ERROR FINAL: Librería phpqrcode no encontrada: C:\xampp\htdocs\SEGTRACK\App\Controller/../Libraries/phpqrcode/qrlib.php
+2025-11-29 14:53:25 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Andres carrillo ",
+    "IdSede": "30",
+    "TelefonoFuncionario": "3245687104",
+    "DocumentoFuncionario": "10244746564",
+    "CorreoFuncionario": "carrillo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+ERROR FINAL: Librería phpqrcode no encontrada: C:\xampp\htdocs\SEGTRACK\App\Controller/../Libraries/phpqrcode/qrlib.php
+2025-11-29 14:53:30 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Andres carrillo ",
+    "IdSede": "30",
+    "TelefonoFuncionario": "3245687104",
+    "DocumentoFuncionario": "10244746564",
+    "CorreoFuncionario": "carrillo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+ERROR FINAL: Librería phpqrcode no encontrada: C:\xampp\htdocs\SEGTRACK\App\Controller/../Libraries/phpqrcode/qrlib.php
+2025-11-29 14:54:40 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Andres carrillo ",
+    "IdSede": "30",
+    "TelefonoFuncionario": "3245687104",
+    "DocumentoFuncionario": "10244746564",
+    "CorreoFuncionario": "carrillo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 29
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-29-692afb20e2bb3.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 29","data":{"IdFuncionario":"29","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-29-692afb20e2bb3.png"}}
+2025-11-29 14:56:21 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario Institucion",
+    "NombreFuncionario": "Andres carrillo ",
+    "IdSede": "30",
+    "TelefonoFuncionario": "3245687104",
+    "DocumentoFuncionario": "10244746564",
+    "CorreoFuncionario": "carrillo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 30
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-30-692afb8551cd1.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 30","data":{"IdFuncionario":"30","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-30-692afb8551cd1.png"}}
+2025-11-29 15:08:39 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "Santiago arias",
+    "IdSede": "27",
+    "TelefonoFuncionario": "3245687104",
+    "DocumentoFuncionario": "10244746564",
+    "CorreoFuncionario": "carrillo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+registrarFuncionario llamado
+Generando QR para funcionario ID: 31
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-31-692afe67cea50.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 31","data":{"IdFuncionario":"31","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-31-692afe67cea50.png"}}

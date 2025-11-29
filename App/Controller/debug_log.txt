@@ -1,0 +1,27 @@
+=== MODELO: registrarFuncionario ===
+Cargo: Personal Seguridad, Nombre: Andres carrillo , Sede: 30, Tel: 3245687104, Doc: 10244746564
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO funcionario 
+                    (CargoFuncionario, NombreFuncionario, IdSede, TelefonoFuncionario, DocumentoFuncionario, CorreoFuncionario, QrCodigoFuncionario)
+                    VALUES (:cargo, :nombre, :sede, :telefono, :documento, :correo, '')
+Parámetros: {":cargo":"Personal Seguridad",":nombre":"Andres carrillo ",":sede":30,":telefono":3245687104,":documento":10244746564,":correo":"carrillo@gmail.com"}
+Resultado execute: true
+INSERT exitoso, ID generado: 29
+=== MODELO: registrarFuncionario ===
+Cargo: Funcionario Institucion, Nombre: Andres carrillo , Sede: 30, Tel: 3245687104, Doc: 10244746564
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO funcionario 
+                    (CargoFuncionario, NombreFuncionario, IdSede, TelefonoFuncionario, DocumentoFuncionario, CorreoFuncionario, QrCodigoFuncionario)
+                    VALUES (:cargo, :nombre, :sede, :telefono, :documento, :correo, '')
+Parámetros: {":cargo":"Funcionario Institucion",":nombre":"Andres carrillo ",":sede":30,":telefono":3245687104,":documento":10244746564,":correo":"carrillo@gmail.com"}
+Resultado execute: true
+INSERT exitoso, ID generado: 30
+=== MODELO: registrarFuncionario ===
+Cargo: Visitante, Nombre: Santiago arias, Sede: 27, Tel: 3245687104, Doc: 10244746564
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO funcionario 
+                    (CargoFuncionario, NombreFuncionario, IdSede, TelefonoFuncionario, DocumentoFuncionario, CorreoFuncionario, QrCodigoFuncionario)
+                    VALUES (:cargo, :nombre, :sede, :telefono, :documento, :correo, '')
+Parámetros: {":cargo":"Visitante",":nombre":"Santiago arias",":sede":27,":telefono":3245687104,":documento":10244746564,":correo":"carrillo@gmail.com"}
+Resultado execute: true
+INSERT exitoso, ID generado: 31

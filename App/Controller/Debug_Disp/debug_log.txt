@@ -1026,3 +1026,153 @@ Dispositivo desactivado exitosamente
 Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
 === FIN ===
 
+
+2025-11-29 15:11:54 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lENOVO",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lENOVO, IdFunc: 25, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Portatil",":marca":"lENOVO",":funcionario":25,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 31
+Generando QR para dispositivo ID: 31
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-31-692aff2a3bdb9.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 31","data":{"IdDispositivo":"31","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-31-692aff2a3bdb9.png"}}
+=== FIN ===
+
+
+2025-11-29 16:39:00 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Sasumg",
+    "IdFuncionario": "23",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Sasumg, IdFunc: 23, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Portatil",":marca":"Sasumg",":funcionario":23,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 32
+Generando QR para dispositivo ID: 32
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-32-692b13945ede3.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 32","data":{"IdDispositivo":"32","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-32-692b13945ede3.png"}}
+=== FIN ===
+
+
+2025-11-29 16:41:04 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "24",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: LENOVO, IdFunc: 24, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Tablet",":marca":"LENOVO",":funcionario":24,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 33
+Generando QR para dispositivo ID: 33
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-33-692b141081040.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 33","data":{"IdDispositivo":"33","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-33-692b141081040.png"}}
+=== FIN ===
+
+
+2025-11-29 16:41:22 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Computador",
+    "MarcaDispositivo": "logig tech",
+    "IdFuncionario": "25",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Computador, Marca: logig tech, IdFunc: 25, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Computador",":marca":"logig tech",":funcionario":25,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 34
+Generando QR para dispositivo ID: 34
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-34-692b1422d4dc5.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 34","data":{"IdDispositivo":"34","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-34-692b1422d4dc5.png"}}
+=== FIN ===
+
+
+2025-11-29 16:41:54 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Guitarra",
+    "MarcaDispositivo": "MUSICA GENIAL",
+    "IdFuncionario": "26",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Guitarra, Marca: MUSICA GENIAL, IdFunc: 26, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Guitarra",":marca":"MUSICA GENIAL",":funcionario":26,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 35
+Generando QR para dispositivo ID: 35
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-35-692b14428fe2e.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 35","data":{"IdDispositivo":"35","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-35-692b14428fe2e.png"}}
+=== FIN ===
+

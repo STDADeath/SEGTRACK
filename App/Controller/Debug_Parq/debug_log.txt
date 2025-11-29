@@ -638,3 +638,66 @@ Acción detectada: registrar
 registrarVehiculo llamado
 Fecha del servidor: 2025-11-28 01:33:37
 Generando QR para vehículo ID: 28
+
+2025-11-29 15:49:48 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "",
+    "DescripcionVehiculo": "",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-11-29 09:49:48",
+    "IdSede": "18",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Respuesta final: {"success":false,"message":"Falta el campo: Placa del vehículo"}
+=== FIN ===
+
+
+2025-11-29 15:49:53 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "21412421",
+    "DescripcionVehiculo": "",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-11-29 09:49:53",
+    "IdSede": "18",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-11-29 | Hoy: 2025-11-29
+✅ Validación de fecha exitosa
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`dbsegtrack`.`parqueadero`, CONSTRAINT `parqueadero_ibfk_1` FOREIGN KEY (`IdSede`) REFERENCES `sede` (`IdSede`))"}
+=== FIN ===
+
+
+2025-11-29 15:49:59 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "21412421",
+    "DescripcionVehiculo": "",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-11-29 09:49:59",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-11-29 | Hoy: 2025-11-29
+✅ Validación de fecha exitosa
+Generando QR para vehículo ID: 24
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-24-692b081771e37.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 24","data":{"IdParqueadero":"24","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-24-692b081771e37.png"}}
+=== FIN ===
+

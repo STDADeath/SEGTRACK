@@ -76,7 +76,7 @@ try {
     file_put_contents($debugFile, "Conexión verificada como PDO\n", FILE_APPEND);
 
     // Carga la librería que genera los códigos QR.
-    $ruta_qrlib = __DIR__ . '/../Libraries/phpqrcode/qrlib.php';
+    $ruta_qrlib = __DIR__ . '/../Libs/phpqrcode/qrlib.php';
 
     if (!file_exists($ruta_qrlib)) {
         throw new Exception("Librería phpqrcode no encontrada: $ruta_qrlib");
