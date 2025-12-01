@@ -51,16 +51,21 @@
         </div>
     </div>
 
-    <!-- Scripts principales -->
-    <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
-    <script src="../../../Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../../../Public/vendor/jquery-easing/jquery.easing.min.js"></script>
+   <!-- Scripts principales -->
+<script src="../../../Public/vendor/jquery/jquery.min.js"></script>
+<script src="../../../Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../../Public/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Gráficos -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Gráficos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Script del template SB Admin 2 -->
-    <script src="../../../Public/js/sb-admin-2.min.js"></script>
+<!-- Script del template SB Admin 2 -->
+<script src="../../../Public/js/sb-admin-2.min.js"></script>
+
+<!-- 🔥 DataTables JS (AGREGADO) -->
+<script src="../../../Public/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../Public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
 
 </body>
 </html>

@@ -13,15 +13,14 @@ class ControladorBitacora {
 
     // Función privada que verifica si un campo está vacío
     private function campoVacio($data, $campo): bool {
-        // Retorna true si no existe o está vacío después de eliminar espacios
         return empty(trim($data[$campo] ?? ""));
     }
 
     // Convierte una fecha de formato HTML datetime-local a formato MySQL
     private function convertirFecha(?string $fecha): ?string {
-        if (empty($fecha)) return null; // Si no hay fecha, retorna null
-        $obj = DateTime::createFromFormat('Y-m-d\TH:i', $fecha); 
-        return $obj ? $obj->format('Y-m-d H:i:s') : null; // Retornar formato MySQL o null si falla
+        if (empty($fecha)) return null;
+        $obj = DateTime::createFromFormat('Y-m-d\TH:i', $fecha);
+        return $obj ? $obj->format('Y-m-d H:i:s') : null;
     }
 
     // Valida y convierte varias fechas a formato MySQL
@@ -40,7 +39,6 @@ class ControladorBitacora {
 
     // Función para registrar una nueva bitácora
     public function registrarBitacora(array $data): array {
- 
         $obligatorios = ['TurnoBitacora', 'NovedadesBitacora', 'FechaBitacora', 'IdFuncionario', 'IdIngreso', 'TieneVisitante'];
 
         // Verificación de campos obligatorios
@@ -64,7 +62,6 @@ class ControladorBitacora {
             }
             $data['IdDispositivo'] = $data['IdDispositivo'] ?? null;
         } else {
-            // Si no hay visitante, se limpian los campos relacionados
             $data['IdVisitante'] = null;
             $data['IdDispositivo'] = null;
             $data['TraeDispositivo'] = 'no';
@@ -77,14 +74,13 @@ class ControladorBitacora {
                 ? ['success' => true, 'message' => 'Bitácora registrada', 'data' => ['IdBitacora' => $res['id']]]
                 : ['success' => false, 'message' => 'No se pudo registrar', 'error' => $res['error'] ?? 'Error BD'];
         } catch (Exception $e) {
-    
             return ['success' => false, 'message' => "Error: " . $e->getMessage()];
         }
     }
 
-    // Obtiene todas las bitácoras
-    public function mostrarBitacora(): array {
-        return $this->modelo->obtenerTodos();
+    // Obtiene todas las bitácoras con filtros opcionales
+    public function obtenerBitacoras($filtros = [], $params = []) {
+        return $this->modelo->obtenerBitacoras($filtros, $params);
     }
 
     // Obtiene una bitácora por su ID
@@ -120,7 +116,7 @@ try {
             echo json_encode($controlador->registrarBitacora($_POST)); 
             break;
         case 'mostrar': 
-            echo json_encode($controlador->mostrarBitacora()); 
+            echo json_encode($controlador->obtenerBitacoras($_POST)); 
             break;
         case 'obtener': 
             echo json_encode($controlador->obtenerPorId($id)); 
@@ -134,7 +130,5 @@ try {
     }
 
 } catch (Exception $e) {
-
     echo json_encode(['success' => false, 'message' => "Error servidor: " . $e->getMessage()]);
 }
-?>

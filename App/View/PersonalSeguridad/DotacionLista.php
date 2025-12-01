@@ -40,7 +40,6 @@
     $dotaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
-
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Filtrar Dotaciones</h6>
@@ -81,14 +80,13 @@
         </div>
     </div>
 
-
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Dotaciones</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                <table id="tablaDotacionesDT" class="table table-bordered table-hover" width="100%" cellspacing="0">
                     <thead class="thead-dark">
                         <tr>
                             <th>ID</th>
@@ -127,4 +125,19 @@
         </div>
     </div>
 </div>
+
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+
+<!-- Script para activar DataTable -->
+<script>
+    $(document).ready(function () {
+        $('#tablaDotacionesDT').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+            },
+            pageLength: 10,
+            responsive: true,
+            order: [[0, "desc"]]
+        });
+    });
+</script>

@@ -16,7 +16,6 @@
     $filtros = [];
     $params = [];
 
-
     if (!empty($_GET['identificacion'])) {
         $filtros[] = "IdentificacionVisitante LIKE :identificacion";
         $params[':identificacion'] = "%" . $_GET['identificacion'] . "%";
@@ -37,7 +36,6 @@
     $stmt->execute($params);
     $visitantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-
 
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
@@ -73,7 +71,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                <table id="tablaVisitantesDT" class="table table-bordered table-hover" width="100%" cellspacing="0">
                     <thead class="thead-dark">
                         <tr>
                             <th>ID</th>
@@ -106,3 +104,17 @@
 </div>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+
+<!-- Script para activar DataTable -->
+<script>
+    $(document).ready(function () {
+        $('#tablaVisitantesDT').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+            },
+            pageLength: 10,
+            responsive: true,
+            order: [[0, "desc"]] // Ordenar por ID de visitante de manera descendente
+        });
+    });
+</script>

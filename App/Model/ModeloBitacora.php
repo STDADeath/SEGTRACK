@@ -5,14 +5,11 @@ class BitacoraModelo {
     public function __construct($conexion) {
         // Guarda la conexión a la base de datos para usarla en todas las consultas
         $this->conexion = $conexion;
-    }   
+    }
 
- 
     // INSERTAR UNA NUEVA BITÁCORA
- 
     public function insertar(array $datos): array {
         try {
-
             // Verifica si existe la conexión
             if (!$this->conexion) {
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
@@ -24,7 +21,7 @@ class BitacoraModelo {
                     VALUES (:turno, :novedades, :fecha, :funcionario, :ingreso, :dispositivo, :visitante)";
 
             $stmt = $this->conexion->prepare($sql);
-            
+
             // Se envían los parámetros del registro
             $resultado = $stmt->execute([
                 ':turno'       => $datos['TurnoBitacora'],
@@ -44,22 +41,23 @@ class BitacoraModelo {
                 $errorInfo = $stmt->errorInfo();
                 return ['success' => false, 'error' => $errorInfo[2] ?? 'Error desconocido al insertar'];
             }
-            
+
         } catch (PDOException $e) {
             // Manejo de errores por excepción
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
-    
 
-    //  OBTENER TODAS LAS BITÁCORAS
- 
-
-    public function obtenerTodos(): array {
+    // OBTENER TODAS LAS BITÁCORAS
+    public function obtenerBitacoras($filtros = [], $params = []) {
         try {
-            $sql = "SELECT * FROM bitacora ORDER BY FechaBitacora DESC";
+            // Construcción de la consulta con los filtros
+            $where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
+
+            // Consulta SQL
+            $sql = "SELECT * FROM bitacora $where ORDER BY IdBitacora DESC";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute();
+            $stmt->execute($params);
 
             // Retorna todas las filas como arreglo asociativo
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -69,10 +67,7 @@ class BitacoraModelo {
         }
     }
 
-
     // OBTENER UNA BITÁCORA POR ID
-    //     Devuelve una sola fila o null si no existe
-
     public function obtenerPorId(int $IdBitacora): ?array {
         try {
             $sql = "SELECT * FROM bitacora WHERE IdBitacora = ?";
@@ -87,10 +82,7 @@ class BitacoraModelo {
         }
     }
 
-
-    //  ACTUALIZAR UNA BITÁCORA EXISTENTE
-    //    -Modifica los campos enviados al método
-
+    // ACTUALIZAR UNA BITÁCORA EXISTENTE
     public function actualizar(int $IdBitacora, array $datos): array {
         try {
             $sql = "UPDATE bitacora SET 
@@ -121,7 +113,7 @@ class BitacoraModelo {
                 'success' => $resultado, 
                 'rows' => $stmt->rowCount() // Cantidad de filas modificadas
             ];
-            
+
         } catch (PDOException $e) {
             return ['success' => false, 'error' => $e->getMessage()];
         }
