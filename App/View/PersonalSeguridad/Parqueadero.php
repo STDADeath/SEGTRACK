@@ -10,18 +10,21 @@
                     <i class="fas fa-list me-1"></i> Ver Vehículos
                 </a>
             </div>
-            
+
             <!-- Form Card -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-primary">
                     <h6 class="m-0 font-weight-bold text-white">Información del Vehículo</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="../../Controller/ControladorParqueadero.php" class="needs-validation" novalidate>
+                    <!-- ⚠️ IMPORTANTE: Eliminamos novalidate para que funcione la validación HTML5 -->
+                    <form method="POST" action="../../Controller/ControladorParqueadero.php" class="needs-validation">
                         <div class="row">
                             <!-- Tipo de vehículo -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Tipo de Vehículo</label>
+                                <label class="form-label fw-semibold">
+                                    Tipo de Vehículo <span class="text-danger">*</span>
+                                </label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-car-side"></i></span>
                                     <select class="form-select" name="TipoVehiculo" id="TipoVehiculo" required>
@@ -34,54 +37,107 @@
                                 </div>
                             </div>
 
-                            <!-- Placa -->
+                            <!-- Placa - ✅ MÁXIMO 9 CARACTERES, MÍNIMO 3, OBLIGATORIO -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Placa</label>
+                                <label class="form-label fw-semibold">
+                                    Placa <span class="text-danger">*</span>
+                                </label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                    <input type="text" class="form-control" name="PlacaVehiculo" id="PlacaVehiculo" required>
+                                    <input type="text"
+                                        class="form-control"
+                                        name="PlacaVehiculo"
+                                        id="PlacaVehiculo"
+                                        maxlength="9"
+                                        minlength="3"
+                                        required
+                                        placeholder="Ej: ABC123"
+                                        pattern="[a-zA-Z0-9\s-]+"
+                                        title="Solo letras, números, espacios y guiones">
                                 </div>
+                                <small class="form-text text-muted">
+                                    <i class="fas fa-info-circle"></i> Mínimo 6 caracteres, máximo 9
+                                </small>
                             </div>
                         </div>
 
-                        <!-- Descripción -->
+                        <!-- Descripción - ✅ OBLIGATORIO -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Descripción</label>
+                            <label class="form-label fw-semibold">
+                                Descripción <span class="text-danger">*</span>
+                            </label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-align-left"></i></span>
-                                <textarea class="form-control" name="DescripcionVehiculo" rows="3" placeholder="Color, modelo, características..." id="DescripcionVehiculo"></textarea>
+                                <textarea class="form-control"
+                                    name="DescripcionVehiculo"
+                                    id="DescripcionVehiculo"
+                                    rows="3"
+                                    required
+                                    minlength="5"
+                                    placeholder="Ej: Chevrolet Spark rojo modelo 2020"></textarea>
                             </div>
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i> Describa el color, modelo y características del vehículo
+                            </small>
                         </div>
 
                         <div class="row">
-                            <!-- Tarjeta de Propiedad -->
+                            <!-- Tarjeta de Propiedad - ✅ OBLIGATORIO -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Tarjeta de Propiedad</label>
+                                <label class="form-label fw-semibold">
+                                    Tarjeta de Propiedad <span class="text-danger">*</span>
+                                </label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                    <input type="text" class="form-control" name="TarjetaPropiedad" placeholder="Número de tarjeta" id="TarjetaPropiedad">
+                                    <input type="text"
+                                        class="form-control"
+                                        name="TarjetaPropiedad"
+                                        id="TarjetaPropiedad"
+                                        required
+                                        placeholder="Número de tarjeta"
+                                        pattern="[a-zA-Z0-9\s-]+"
+                                        title="Solo letras, números, espacios y guiones">
                                 </div>
+                                <small class="form-text text-muted">
+                                    <i class="fas fa-info-circle"></i> Número de la tarjeta de propiedad del vehículo
+                                </small>
                             </div>
+
                             <!-- Fecha -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Fecha y Hora <span class="badge bg-info">Automática</span></label>
+                                <label class="form-label fw-semibold">
+                                    Fecha y Hora <span class="badge bg-info">Automática</span>
+                                </label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                    <input type="datetime-local" class="form-control bg-light" name="FechaParqueadero" id="FechaParqueadero" readonly style="cursor: not-allowed;">
+                                    <input type="datetime-local"
+                                        class="form-control bg-light"
+                                        name="FechaParqueadero"
+                                        id="FechaParqueadero"
+                                        readonly
+                                        style="cursor: not-allowed;">
                                 </div>
-                                <small class="text-muted">📅 La fecha y hora se registran automáticamente</small>
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar-check"></i> La fecha y hora se registran automáticamente
+                                </small>
                             </div>
                         </div>
 
                         <!-- ID de Sede -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Nombre de Sede</label>
+                            <label class="form-label fw-semibold">
+                                ID de Sede <span class="text-danger">*</span>
+                            </label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                <input type="text" class="form-control" name="IdSede" id="IdSede" required>
+                                <input type="text"
+                                    class="form-control"
+                                    name="IdSede" id="IdSede" required pattern="[0-9]+"title="Solo números" placeholder="Ej: 27">
                             </div>
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i> Solo números de momento, luego se usara un selector
+                            </small>
                         </div>
-
                         <!-- Botones -->
                         <div class="d-flex justify-content-between mt-4">
                             <button type="button" class="btn btn-secondary" onclick="window.location.href='./Parqueadero.php'">
@@ -94,13 +150,14 @@
                     </form>
                 </div>
             </div>
+
             <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-light">
                     <h6 class="m-0 font-weight-bold text-primary">Información Adicional</h6>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-info mb-0">
-                        <i class="fas fa-info-circle me-2"></i> El código QR se generará automáticamente después de guardar los datos del dispositivo.
+                        <i class="fas fa-info-circle me-2"></i> El código QR se generará automáticamente después de guardar los datos del vehículo.
                     </div>
                 </div>
             </div>
@@ -108,15 +165,6 @@
     </div>
 </div>
 
-<!-- jQuery primero -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap Bundle con Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Librería SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- SB Admin 2 -->
-<script src="../../../Public/js/javascript/sb-admin-2.min.js"></script>
-<!-- Validación de formulario -->
 <script src="../../../Public/js/javascript/js/ValidacionParqueadero.js"></script>
 
 <!---fin del contenido principal--->

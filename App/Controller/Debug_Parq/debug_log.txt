@@ -722,3 +722,154 @@ Vehículo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-29-6929d85dd7860.png"}
 === FIN ===
 
+
+2025-12-01 19:18:00 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "",
+    "PlacaVehiculo": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "DescripcionVehiculo": "kjbjbhjbhjbhjbhjbhj\r\n",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-12-01 13:18:00",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Respuesta final: {"success":false,"message":"Falta el campo: Tipo de vehículo"}
+=== FIN ===
+
+
+2025-12-01 19:18:08 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "DescripcionVehiculo": "kjbjbhjbhjbhjbhjbhj\r\n",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-12-01 13:18:08",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-12-01 | Hoy: 2025-12-01
+✅ Validación de fecha exitosa
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'PlacaVehiculo' at row 1"}
+=== FIN ===
+
+
+2025-12-01 19:18:38 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "huh-23j",
+    "DescripcionVehiculo": "kjbjbhjbhjbhjbhjbhj\r\n",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-12-01 13:18:38",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-12-01 | Hoy: 2025-12-01
+✅ Validación de fecha exitosa
+Generando QR para vehículo ID: 30
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-30-692ddbfecdad5.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 30","data":{"IdParqueadero":"30","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-30-692ddbfecdad5.png"}}
+=== FIN ===
+
+
+2025-12-01 19:43:04 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "no aplica",
+    "DescripcionVehiculo": "Negra con rojo",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-12-01 13:43:04",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-12-01 | Hoy: 2025-12-01
+✅ Validación de fecha exitosa
+Generando QR para vehículo ID: 31
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-31-692de1b923170.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 31","data":{"IdParqueadero":"31","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-31-692de1b923170.png"}}
+=== FIN ===
+
+
+2025-12-01 19:44:21 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "",
+    "DescripcionVehiculo": "",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-12-01 13:44:21",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Respuesta final: {"success":false,"message":"Falta el campo: Placa del vehículo"}
+=== FIN ===
+
+
+2025-12-01 19:44:38 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "no aplica",
+    "DescripcionVehiculo": "",
+    "TarjetaPropiedad": "",
+    "FechaParqueadero": "2025-12-01 13:44:38",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-12-01 | Hoy: 2025-12-01
+✅ Validación de fecha exitosa
+Generando QR para vehículo ID: 32
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-32-692de2160df72.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 32","data":{"IdParqueadero":"32","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-32-692de2160df72.png"}}
+=== FIN ===
+
+
+2025-12-01 20:03:12 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "HYD-675",
+    "DescripcionVehiculo": "Camaro del 95 color negro",
+    "TarjetaPropiedad": "tj324541",
+    "FechaParqueadero": "2025-12-01 14:03:12",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-12-01 | Hoy: 2025-12-01
+✅ Validación de fecha exitosa
+Generando QR para vehículo ID: 33
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-33-692de670d7cff.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 33","data":{"IdParqueadero":"33","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-33-692de670d7cff.png"}}
+=== FIN ===
+

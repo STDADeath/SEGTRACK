@@ -1,10 +1,10 @@
 // ============================================
-// 📌 VARIABLE GLOBAL
+// 🔌 VARIABLE GLOBAL
 // ============================================
 let vehiculoIdAEliminar = null;
 
 // ============================================
-// 📌 CONFIGURAR CAMPO DE FECHA
+// 🔌 CONFIGURAR CAMPO DE FECHA
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
     const campoFecha = document.getElementById('FechaParqueadero');
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ===========================================
-// 📌 VALIDACIÓN Y REGISTRO DE VEHÍCULO
+// 🔌 VALIDACIÓN Y REGISTRO DE VEHÍCULO
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
@@ -55,19 +55,74 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            // Obtenemos los valores
-            const placa = document.getElementById('PlacaVehiculo').value.trim();
-            const descripcion = document.getElementById('DescripcionVehiculo').value.trim();
-            const tarjeta = document.getElementById('TarjetaPropiedad').value.trim();
+            // Obtenemos los valores SIN TRIM INICIAL para validar espacios vacíos correctamente
+            const placaRaw = document.getElementById('PlacaVehiculo').value;
+            const descripcionRaw = document.getElementById('DescripcionVehiculo').value;
+            const tarjetaRaw = document.getElementById('TarjetaPropiedad').value;
             const idSede = document.getElementById('IdSede').value.trim();
             const fechaParqueadero = document.getElementById('FechaParqueadero').value;
+
+            // Aplicar trim después de validar que existan
+            const placa = placaRaw.trim();
+            const descripcion = descripcionRaw.trim();
+            const tarjeta = tarjetaRaw.trim();
+
+            // ⚠️ VALIDACIÓN 1: CAMPOS OBLIGATORIOS
+            // Verificar que todos los campos requeridos tengan datos
+            if (!placa || placa === '' || placa.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campo obligatorio',
+                    text: '⚠️ El campo Placa del Vehículo es obligatorio y no puede estar vacío.'
+                });
+                return;
+            }
+
+            if (!descripcion || descripcion === '' || descripcion.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campo obligatorio',
+                    text: '⚠️ El campo Descripción del Vehículo es obligatorio y no puede estar vacío.'
+                });
+                return;
+            }
+
+            if (!tarjeta || tarjeta === '' || tarjeta.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campo obligatorio',
+                    text: '⚠️ El campo Tarjeta de Propiedad es obligatorio y no puede estar vacío.'
+                });
+                return;
+            }
+
+            // ⚠️ VALIDACIÓN 2: LONGITUD DE PLACA (máximo 9 caracteres)
+            // Validación tanto mínima como máxima para placas
+            if (placa.length < 3) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '❌ El campo Placa debe tener al menos 3 caracteres.'
+                });
+                return;
+            }
+
+            if (placa.length > 9) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '❌ El campo Placa no puede tener más de 9 caracteres.'
+                });
+                return;
+            }
 
             // Expresiones regulares
             const regexPlacaTarjeta = /^[a-zA-Z0-9\s-]*$/;
             const regexDescripcion = /^[a-zA-Z0-9\s.,-]*$/;
             const regexIdSede = /^\d+$/;
 
-            // Validaciones
+            // ⚠️ VALIDACIÓN 3: FORMATO DE PLACA
+            // Solo letras, números, espacios y guiones
             if (!regexPlacaTarjeta.test(placa)) {
                 Swal.fire({
                     icon: 'error',
@@ -77,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            // ⚠️ VALIDACIÓN 4: FORMATO DE DESCRIPCIÓN
+            // Permitir letras, números, espacios, puntos, comas y guiones
             if (!regexDescripcion.test(descripcion)) {
                 Swal.fire({
                     icon: 'error',
@@ -86,7 +143,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            if (tarjeta.length > 0 && !regexPlacaTarjeta.test(tarjeta)) {
+            // ⚠️ VALIDACIÓN 5: FORMATO DE TARJETA DE PROPIEDAD
+            // Ya validamos que no esté vacío, ahora validamos el formato
+            if (!regexPlacaTarjeta.test(tarjeta)) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -95,6 +154,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            // ⚠️ VALIDACIÓN 6: ID DE SEDE
+            // Debe ser solo números
             if (!regexIdSede.test(idSede)) {
                 Swal.fire({
                     icon: 'error',
@@ -104,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            // ⚠️ VALIDACIÓN 7: FECHA ACTUAL
             // Validar que la fecha sea del día actual
             const fechaSeleccionada = new Date(fechaParqueadero);
             const hoy = new Date();
@@ -176,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ============================================
-// 📌 FUNCIONES GLOBALES
+// 🔌 FUNCIONES GLOBALES
 // ============================================
 
 // Cargar datos en el modal de edición
@@ -203,7 +265,7 @@ function confirmarEliminacionVehiculo(id) {
 }
 
 // ============================================
-// 📌 EVENTOS CON JQUERY
+// 🔌 EVENTOS CON JQUERY
 // ============================================
 
 $(document).ready(function() {
@@ -266,7 +328,7 @@ $(document).ready(function() {
 
         console.log('Actualizando - ID:', id, 'Tipo:', tipo, 'Descripción:', descripcion, 'Sede:', idsede);
 
-        // Validar campos
+        // ⚠️ VALIDACIÓN EN EDICIÓN: CAMPOS OBLIGATORIOS
         if (!id || !tipo || !idsede) {
             Swal.fire({
                 icon: 'warning',
@@ -276,9 +338,19 @@ $(document).ready(function() {
             return;
         }
 
-        // Validar que la descripción sea válida
+        // ⚠️ VALIDACIÓN EN EDICIÓN: DESCRIPCIÓN OBLIGATORIA
+        if (!descripcion || descripcion.trim().length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campo obligatorio',
+                text: '⚠️ El campo Descripción es obligatorio'
+            });
+            return;
+        }
+
+        // ⚠️ VALIDACIÓN EN EDICIÓN: FORMATO DE DESCRIPCIÓN
         const regexDescripcion = /^[a-zA-Z0-9\s.,-]*$/;
-        if (descripcion && !regexDescripcion.test(descripcion)) {
+        if (!regexDescripcion.test(descripcion)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
