@@ -89,7 +89,6 @@
                 <table id="tablaDotacionesDT" class="table table-bordered table-hover" width="100%" cellspacing="0">
                     <thead class="thead-dark">
                         <tr>
-                            <th>ID</th>
                             <th>Estado</th>
                             <th>Tipo</th>
                             <th>Novedad</th>
@@ -102,7 +101,7 @@
                         <?php if ($dotaciones && count($dotaciones) > 0): ?>
                             <?php foreach ($dotaciones as $row): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($row['IdDotacion']) ?></td>
+                               
                                     <td><?= htmlspecialchars($row['EstadoDotacion']) ?></td>
                                     <td><?= htmlspecialchars($row['TipoDotacion']) ?></td>
                                     <td><?= htmlspecialchars($row['NovedadDotacion']) ?></td>
@@ -130,14 +129,12 @@
 
 <!-- Script para activar DataTable -->
 <script>
-    $(document).ready(function () {
-        $('#tablaDotacionesDT').DataTable({
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-            },
-            pageLength: 10,
-            responsive: true,
-            order: [[0, "desc"]]
-        });
-    });
+$('#tablaDotacionesDT').DataTable({
+    language: {
+        url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+    },
+    pageLength: 10,
+    responsive: true,
+    order: [[0, "desc"]]
+});  
 </script>
