@@ -84,10 +84,16 @@ class ControladorIngreso {
     //LISTAR INGRESOS
     //Obtiene todos los ingresos recientes desde el modelo.
       //Este método responde cuando el navegador hace GET al controlador
-    public function listarIngresos() {
-        $lista = $this->modelo->listarIngresos();
-        return $this->responder(true, 'Lista cargada', $lista);
-    }
+   public function listarIngresos() {
+    $lista = $this->modelo->listarIngresos();
+
+    echo json_encode([
+        "data" => $lista
+    ], JSON_UNESCAPED_UNICODE);
+
+    exit;
+}
+
 
 
     

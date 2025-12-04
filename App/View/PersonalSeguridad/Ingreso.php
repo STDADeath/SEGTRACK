@@ -45,15 +45,22 @@
 
             <!-- TABLA DE INGRESOS RECIENTES -->
             <div class="bg-white p-4 rounded-4 shadow-sm">
-                <h5 class="fw-semibold mb-3 text-secondary">
-                    <i class="fas fa-list me-2"></i>Lista de Ingresos Recientes
-                </h5>
-                <div class="d-flex justify-content-end mb-3">
-                    <button id="btnDescargarPDF" class="btn btn-danger">
+                
+                <!-- Encabezado + Botón PDF alineado -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-semibold text-secondary mb-0">
+                        <i class="fas fa-list me-2"></i>Lista de Ingresos Recientes
+                    </h5>
+
+                    <!-- BOTÓN PDF -->
+                    <a href="../../../Controllers/IngresoPDFController.php?accion=pdf" 
+                       target="_blank" 
+                       class="btn btn-danger shadow-sm fw-semibold">
                         <i class="fas fa-file-pdf me-2"></i>Descargar PDF
-                    </button>
+                    </a>
                 </div>
 
+                <!-- TABLA -->
                 <div class="table-responsive">
                     <table id="tablaIngresosDT" class="table table-hover align-middle text-center mb-0">
                         <thead class="bg-primary text-white">
