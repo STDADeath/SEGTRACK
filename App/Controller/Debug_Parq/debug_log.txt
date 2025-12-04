@@ -873,3 +873,53 @@ QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/q
 Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 33","data":{"IdParqueadero":"33","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-33-692de670d7cff.png"}}
 === FIN ===
 
+
+2025-12-02 19:02:09 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "BHH-77F",
+    "DescripcionVehiculo": "Kawasaki ninja z",
+    "TarjetaPropiedad": "tj324444",
+    "FechaParqueadero": "2025-12-02 13:02:09",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Validando fecha - Recibida: 2025-12-02 | Hoy: 2025-12-02
+✅ Validación de fecha exitosa
+Generando QR para vehículo ID: 34
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-34-692f29a1dff36.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 34","data":{"IdParqueadero":"34","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-34-692f29a1dff36.png"}}
+=== FIN ===
+
+
+2025-12-02 19:02:55 === INICIO CONTROLADOR PARQUEADERO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "34",
+    "tipo": "Moto",
+    "descripcion": "Kawasaki ninja z 1000",
+    "idsede": "26"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 34
+Datos preparados: {"tipo":"Moto","descripcion":"Kawasaki ninja z 1000","idsede":"26"}
+=== actualizarVehiculo llamado ===
+ID: 34
+Datos: {"tipo":"Moto","descripcion":"Kawasaki ninja z 1000","idsede":"26"}
+Regenerando QR para ID: 34
+Generando QR para vehículo ID: 34
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-34-692f29cf3ea9b.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-34-692f29a1dff36.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-34-692f29cf3ea9b.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-34-692f29cf3ea9b.png"}
+=== FIN ===
+

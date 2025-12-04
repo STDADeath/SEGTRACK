@@ -65,5 +65,11 @@
     <!-- alertas -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- 🔥 DataTables JS (AGREGADO) -->
+    <script src="../../../Public/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../../Public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
+
 </body>
 </html>

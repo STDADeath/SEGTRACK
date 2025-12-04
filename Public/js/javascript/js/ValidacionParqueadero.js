@@ -165,36 +165,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // ⚠️ VALIDACIÓN 7: FECHA ACTUAL
-            // Validar que la fecha sea del día actual
-            const fechaSeleccionada = new Date(fechaParqueadero);
-            const hoy = new Date();
-            
-            if (fechaSeleccionada.getDate() !== hoy.getDate() || 
-                fechaSeleccionada.getMonth() !== hoy.getMonth() || 
-                fechaSeleccionada.getFullYear() !== hoy.getFullYear()) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Solo puede registrar vehículos con la fecha actual.'
-                });
-                return;
-            }
+            // ⚠️ VALIDACIÓN 7: YA NO VALIDAMOS FECHA EN CLIENTE
+            // La validación de fecha la hará el servidor con su propia zona horaria
+            // Esto evita problemas de diferencia de zonas horarias entre cliente y servidor
 
-            // Si pasa validaciones, actualizar la hora al momento actual antes de enviar
+            // ⚠️ CORRECCIÓN: Enviar fecha en formato que el servidor pueda validar correctamente
+            // En lugar de enviar la fecha formateada, enviamos solo la acción
+            // y dejamos que el servidor genere la fecha con su zona horaria
             const ahoraExacto = new Date();
-            const year = ahoraExacto.getFullYear();
-            const mes = String(ahoraExacto.getMonth() + 1).padStart(2, '0');
-            const dia = String(ahoraExacto.getDate()).padStart(2, '0');
-            const horas = String(ahoraExacto.getHours()).padStart(2, '0');
-            const minutos = String(ahoraExacto.getMinutes()).padStart(2, '0');
-            const segundos = String(ahoraExacto.getSeconds()).padStart(2, '0');
             
-            const fechaHoraFinal = `${year}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
+            // NO enviamos la fecha, el servidor la generará automáticamente
+            const fechaHoraFinal = null;
 
-            // Preparar FormData con la hora actualizada
+            // Preparar FormData SIN fecha (el servidor la generará)
             const formData = new FormData(form);
-            formData.set('FechaParqueadero', fechaHoraFinal); // Sobrescribir con hora exacta
+            formData.delete('FechaParqueadero'); // Eliminar la fecha del cliente
             formData.append('accion', 'registrar');
             const url = "../../Controller/ControladorParqueadero.php";
 

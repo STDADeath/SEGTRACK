@@ -4,6 +4,9 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/Debug_Parq/error_log.txt');
 
+// ⚠️ CONFIGURACIÓN DE ZONA HORARIA - Ajustar según tu ubicación
+date_default_timezone_set('America/Bogota'); // Colombia
+
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
@@ -14,6 +17,7 @@ if (!file_exists($carpetaDebug)) {
 }
 
 file_put_contents($carpetaDebug . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO CONTROLADOR PARQUEADERO ===\n", FILE_APPEND);
+file_put_contents($carpetaDebug . '/debug_log.txt', "Zona horaria del servidor: " . date_default_timezone_get() . "\n", FILE_APPEND);
 file_put_contents($carpetaDebug . '/debug_log.txt', "POST recibido: " . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
 
 try {
@@ -91,8 +95,13 @@ try {
             $PlacaVehiculo = $datos['PlacaVehiculo'] ?? null;
             $DescripcionVehiculo = $datos['DescripcionVehiculo'] ?? '';
             $TarjetaPropiedad = $datos['TarjetaPropiedad'] ?? '';
-            $FechaParqueadero = $datos['FechaParqueadero'] ?? date('Y-m-d H:i:s');
             $IdSede = $datos['IdSede'] ?? null;
+            
+            // ⭐ CAMBIO CRÍTICO: Generar la fecha SIEMPRE en el servidor
+            // Ignorar cualquier fecha que venga del cliente
+            $FechaParqueadero = date('Y-m-d H:i:s');
+            
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "Fecha generada en servidor: $FechaParqueadero\n", FILE_APPEND);
 
             // Validaciones de campos obligatorios
             if ($this->campoVacio($TipoVehiculo)) {
@@ -101,44 +110,18 @@ try {
             if ($this->campoVacio($PlacaVehiculo)) {
                 return ['success' => false, 'message' => 'Falta el campo: Placa del vehículo'];
             }
+            if ($this->campoVacio($DescripcionVehiculo)) {
+                return ['success' => false, 'message' => 'Falta el campo: Descripción del vehículo'];
+            }
+            if ($this->campoVacio($TarjetaPropiedad)) {
+                return ['success' => false, 'message' => 'Falta el campo: Tarjeta de propiedad'];
+            }
             if ($this->campoVacio($IdSede)) {
                 return ['success' => false, 'message' => 'Falta el campo: Sede'];
             }
 
-            // ⭐ VALIDACIÓN DE FECHA: Verificar que la fecha sea del día actual
-            try {
-                $fechaRegistro = new DateTime($FechaParqueadero);
-                $fechaHoy = new DateTime();
-                
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "Validando fecha - Recibida: " . $fechaRegistro->format('Y-m-d') . " | Hoy: " . $fechaHoy->format('Y-m-d') . "\n", FILE_APPEND);
-                
-                if ($fechaRegistro->format('Y-m-d') !== $fechaHoy->format('Y-m-d')) {
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "⚠️ ALERTA: Intento de registro con fecha inválida: $FechaParqueadero\n", FILE_APPEND);
-                    return [
-                        'success' => false, 
-                        'message' => 'Error de seguridad: Solo se pueden registrar vehículos con la fecha actual. Fecha recibida: ' . $fechaRegistro->format('Y-m-d')
-                    ];
-                }
-                
-                // Validar que la fecha no sea futura (más de 5 minutos adelante para considerar diferencias de reloj)
-                $diferenciaSegundos = $fechaRegistro->getTimestamp() - $fechaHoy->getTimestamp();
-                if ($diferenciaSegundos > 300) { // 5 minutos = 300 segundos
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "⚠️ ALERTA: Fecha futura detectada. Diferencia: $diferenciaSegundos segundos\n", FILE_APPEND);
-                    return [
-                        'success' => false, 
-                        'message' => 'Error: La fecha y hora no pueden ser futuras'
-                    ];
-                }
-                
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "✅ Validación de fecha exitosa\n", FILE_APPEND);
-                
-            } catch (Exception $e) {
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR al validar fecha: " . $e->getMessage() . "\n", FILE_APPEND);
-                return [
-                    'success' => false, 
-                    'message' => 'Error al procesar la fecha: ' . $e->getMessage()
-                ];
-            }
+            // ✅ Ya no necesitamos validar la fecha porque la generamos aquí
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "✅ Usando fecha del servidor (sin validación de cliente)\n", FILE_APPEND);
 
             try {
                 $resultado = $this->modelo->registrarVehiculo(
@@ -163,7 +146,8 @@ try {
                         "message" => "Vehículo registrado correctamente con ID: " . $idVehiculo,
                         "data" => [
                             "IdParqueadero" => $idVehiculo, 
-                            "QrVehiculo" => $rutaQR
+                            "QrVehiculo" => $rutaQR,
+                            "FechaRegistro" => $FechaParqueadero
                         ]
                     ];
                 } else {
