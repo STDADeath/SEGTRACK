@@ -94,7 +94,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * Obtiene todos los dispositivos ACTIVOS
+     * Obtiene todos los dispositivos ACTIVOS con nombres de funcionarios y visitantes
      */
     public function obtenerTodos(): array {
         try {
@@ -102,18 +102,28 @@ class ModeloDispositivo {
                 return [];
             }
 
-            $sql = "SELECT * FROM dispositivo WHERE Estado = 'Activo' ORDER BY IdDispositivo DESC";
+            $sql = "SELECT 
+                        d.*,
+                        f.NombreFuncionario,
+                        v.NombreVisitante
+                    FROM dispositivo d
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
+                    LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
+                    WHERE d.Estado = 'Activo' 
+                    ORDER BY d.IdDispositivo DESC";
+            
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en obtenerTodos: " . $e->getMessage() . "\n", FILE_APPEND);
             return [];
         }
     }
 
     /**
-     * Obtiene todos los dispositivos (incluye activos e inactivos)
+     * Obtiene todos los dispositivos (incluye activos e inactivos) con nombres
      */
     public function obtenerTodosConEstado(): array {
         try {
@@ -121,24 +131,33 @@ class ModeloDispositivo {
                 return [];
             }
 
-            $sql = "SELECT * FROM dispositivo ORDER BY 
-                    CASE 
-                        WHEN Estado = 'Activo' THEN 1 
-                        WHEN Estado = 'Inactivo' THEN 2 
-                        ELSE 3 
-                    END, 
-                    IdDispositivo DESC";
+            $sql = "SELECT 
+                        d.*,
+                        f.NombreFuncionario,
+                        v.NombreVisitante
+                    FROM dispositivo d
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
+                    LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
+                    ORDER BY 
+                        CASE 
+                            WHEN d.Estado = 'Activo' THEN 1 
+                            WHEN d.Estado = 'Inactivo' THEN 2 
+                            ELSE 3 
+                        END, 
+                        d.IdDispositivo DESC";
+            
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en obtenerTodosConEstado: " . $e->getMessage() . "\n", FILE_APPEND);
             return [];
         }
     }
 
     /**
-     * Obtiene un dispositivo por su ID (incluye QR)
+     * Obtiene un dispositivo por su ID (incluye QR y nombres)
      */
     public function obtenerPorId(int $idDispositivo): ?array {
         try {
@@ -146,7 +165,15 @@ class ModeloDispositivo {
                 return null;
             }
 
-            $sql = "SELECT * FROM dispositivo WHERE IdDispositivo = :id";
+            $sql = "SELECT 
+                        d.*,
+                        f.NombreFuncionario,
+                        v.NombreVisitante
+                    FROM dispositivo d
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
+                    LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
+                    WHERE d.IdDispositivo = :id";
+            
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':id' => $idDispositivo]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
@@ -174,6 +201,54 @@ class ModeloDispositivo {
 
         } catch (PDOException $e) {
             return null;
+        }
+    }
+
+    /**
+     * Obtiene todos los funcionarios activos para el select
+     */
+    public function obtenerFuncionarios(): array {
+        try {
+            if (!$this->conexion) {
+                return [];
+            }
+
+            $sql = "SELECT IdFuncionario, NombreFuncionario 
+                    FROM funcionario 
+                    WHERE Estado = 'Activo' 
+                    ORDER BY NombreFuncionario ASC";
+            
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en obtenerFuncionarios: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
+        }
+    }
+
+    /**
+     * Obtiene todos los visitantes activos para el select
+     */
+    public function obtenerVisitantes(): array {
+        try {
+            if (!$this->conexion) {
+                return [];
+            }
+
+            $sql = "SELECT IdVisitante, NombreVisitante 
+                    FROM visitante 
+                    WHERE Estado = 'Activo' 
+                    ORDER BY NombreVisitante ASC";
+            
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en obtenerVisitantes: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
         }
     }
 

@@ -1,4 +1,23 @@
 <?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
+<?php require_once(__DIR__ . "/../../Core/conexion.php");?>
+
+<?php
+// Obtener funcionarios y visitantes activos
+$conexion = new Conexion();
+$conn = $conexion->getConexion();
+
+// Obtener funcionarios activos
+$sqlFuncionarios = "SELECT IdFuncionario, NombreFuncionario FROM funcionario WHERE Estado = 'Activo' ORDER BY NombreFuncionario ASC";
+$stmtFunc = $conn->prepare($sqlFuncionarios);
+$stmtFunc->execute();
+$funcionarios = $stmtFunc->fetchAll(PDO::FETCH_ASSOC);
+
+// Obtener visitantes activos
+$sqlVisitantes = "SELECT IdVisitante, NombreVisitante FROM visitante WHERE Estado = 'Activo' ORDER BY NombreVisitante ASC";
+$stmtVis = $conn->prepare($sqlVisitantes);
+$stmtVis->execute();
+$visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
@@ -37,22 +56,12 @@
                                     <input type="text" class="form-control" name="OtroTipoDispositivo" placeholder="Especifique el tipo">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">Marca <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                     <input type="text" class="form-control" name="MarcaDispositivo" id="MarcaDispositivo" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">ID Funcionario</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-                                    <input type="number" class="form-control" name="IdFuncionario" id="IdFuncionario" placeholder="Ej: 101">
                                 </div>
                             </div>
                         </div>
@@ -62,19 +71,44 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">¿El dispositivo pertenece a un visitante?</label>
                                 <select id="TieneVisitante" name="TieneVisitante" class="form-select border-primary shadow-sm">
-                                    <option value="no" selected>No</option>
-                                    <option value="si">Sí</option>
+                                    <option value="no" selected>No (Funcionario)</option>
+                                    <option value="si">Sí (Visitante)</option>
                                 </select>
                             </div>
                         </div>
 
-                        <!-- 🔹 Campo ID Visitante (oculto por defecto) -->
+                        <!-- 🔹 Campo Funcionario (visible por defecto) -->
+                        <div class="row" id="FuncionarioContainer">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Funcionario <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                                    <select class="form-select" name="IdFuncionario" id="IdFuncionario">
+                                        <option value="">Seleccione un funcionario...</option>
+                                        <?php foreach ($funcionarios as $func) : ?>
+                                            <option value="<?php echo $func['IdFuncionario']; ?>">
+                                                <?php echo $func['NombreFuncionario']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 🔹 Campo Visitante (oculto por defecto) -->
                         <div class="row" id="VisitanteContainer" style="display: none;">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">ID Visitante <span class="text-danger">*</span></label>
+                                <label class="form-label fw-semibold">Visitante <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input type="number" class="form-control" name="IdVisitante" id="IdVisitante" placeholder="Ej: 303">
+                                    <select class="form-select" name="IdVisitante" id="IdVisitante">
+                                        <option value="">Seleccione un visitante...</option>
+                                        <?php foreach ($visitantes as $vis) : ?>
+                                            <option value="<?php echo $vis['IdVisitante']; ?>">
+                                                <?php echo $vis['NombreVisitante']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>

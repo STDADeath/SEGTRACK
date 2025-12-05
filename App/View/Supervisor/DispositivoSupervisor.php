@@ -10,23 +10,23 @@ $filtros = [];
 $params = [];
 
 if (!empty($_GET['tipo'])) {
-    $filtros[] = "TipoDispositivo = :tipo";
+    $filtros[] = "d.TipoDispositivo = :tipo";
     $params[':tipo'] = $_GET['tipo'];
 }
 if (!empty($_GET['marca'])) {
-    $filtros[] = "MarcaDispositivo LIKE :marca";
+    $filtros[] = "d.MarcaDispositivo LIKE :marca";
     $params[':marca'] = '%' . $_GET['marca'] . '%';
 }
 if (!empty($_GET['funcionario'])) {
-    $filtros[] = "IdFuncionario = :funcionario";
+    $filtros[] = "d.IdFuncionario = :funcionario";
     $params[':funcionario'] = $_GET['funcionario'];
 }
 if (!empty($_GET['visitante'])) {
-    $filtros[] = "IdVisitante = :visitante";
+    $filtros[] = "d.IdVisitante = :visitante";
     $params[':visitante'] = $_GET['visitante'];
 }
 if (!empty($_GET['estado'])) {
-    $filtros[] = "Estado = :estado";
+    $filtros[] = "d.Estado = :estado";
     $params[':estado'] = $_GET['estado'];
 }
 
@@ -35,9 +35,18 @@ if (count($filtros) > 0) {
     $where = "WHERE " . implode(" AND ", $filtros);
 }
 
-$sql = "SELECT * FROM dispositivo $where ORDER BY 
-        CASE WHEN Estado = 'Activo' THEN 1 ELSE 2 END, 
-        IdDispositivo DESC";
+$sql = "SELECT 
+            d.*,
+            f.NombreFuncionario,
+            v.NombreVisitante
+        FROM dispositivo d
+        LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
+        LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
+        $where 
+        ORDER BY 
+            CASE WHEN d.Estado = 'Activo' THEN 1 ELSE 2 END, 
+            d.IdDispositivo DESC";
+
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -102,15 +111,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h6 class="m-0 font-weight-bold text-primary">Lista de Dispositivos</h6>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover table-striped align-middle text-center">
+            <table class="table table-bordered table-hover table-striped align-middle text-center" id="TablaDispositivoSupervisor">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
                         <th>QR</th>
                         <th>Tipo</th>
                         <th>Marca</th>
-                        <th>ID Funcionario</th>
-                        <th>ID Visitante</th>
+                        <th>Funcionario</th>
+                        <th>Visitante</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -119,7 +127,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdDispositivo']; ?>" class="<?php echo $row['Estado'] === 'Inactivo' ? 'fila-inactiva' : ''; ?>">
-                                <td><?php echo $row['IdDispositivo']; ?></td>
                                 <td class="text-center">
                                     <?php if (!empty($row['QrDispositivo'])) : ?>
                                         <button type="button" class="btn btn-sm btn-outline-success" 
@@ -133,8 +140,22 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </td>
                                 <td><?php echo $row['TipoDispositivo']; ?></td>
                                 <td><?php echo $row['MarcaDispositivo']; ?></td>
-                                <td><?php echo $row['IdFuncionario'] ?? '-'; ?></td>
-                                <td><?php echo $row['IdVisitante'] ?? '-'; ?></td>
+                                <td>
+                                    <?php if (!empty($row['NombreFuncionario'])) : ?>
+                                            <?php echo $row['NombreFuncionario']; ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <span class="badge bg-info text-white">No aplica</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if (!empty($row['NombreVisitante'])) : ?>
+                                            <?php echo $row['NombreVisitante']; ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <span class="badge bg-info text-white">No aplica</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="text-center">
                                     <?php if ($row['Estado'] === 'Activo') : ?>
                                         <span class="badge badge-success badge-estado">Activo</span>
@@ -224,19 +245,21 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Marca</label>
-                            <input type="text" id="editMarcaDispositivo" class="form-control" name="marca" required>
+                            <label class="form-label">Marca <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editMarcaDispositivo" class="form-control bg-light" name="marca" readonly>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">ID Funcionario</label>
-                            <input type="number" id="editIdFuncionario" class="form-control" name="id_funcionario" min="1">
+                            <label class="form-label">Funcionario <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editNombreFuncionario" class="form-control bg-light" readonly>
+                            <input type="hidden" id="editIdFuncionario" name="id_funcionario">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">ID Visitante</label>
-                            <input type="number" id="editIdVisitante" class="form-control" name="id_visitante" min="1">
+                            <label class="form-label">Visitante <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editNombreVisitante" class="form-control bg-light" readonly>
+                            <input type="hidden" id="editIdVisitante" name="id_visitante">
                         </div>
                     </div>
                 </form>
@@ -287,15 +310,29 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-// Esperar a que jQuery esté completamente cargado
+// ============================================
+// 🔥 ZONA DATATABLES - Activación de DataTable
+// ============================================
 $(document).ready(function() {
-    console.log('jQuery cargado - DispositivoSupervisor');
+    // Inicializar DataTable
+    $('#TablaDispositivoSupervisor').DataTable({
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+        },
+        pageLength: 10,
+        responsive: true,
+        order: [[0, "desc"]]
+    });
+    
+    console.log('jQuery cargado - DispositivoSupervisor con DataTables');
     
     let dispositivoIdAEditar = null;
     let dispositivoACambiarEstado = null;
     let estadoActualDispositivo = null;
 
+    // ============================================
     // Función para mostrar QR del dispositivo
+    // ============================================
     window.verQRDispositivo = function(rutaQR, idDispositivo) {
         var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
         
@@ -308,7 +345,9 @@ $(document).ready(function() {
         $('#modalVerQRDispositivo').modal('show');
     };
 
+    // ============================================
     // Cargar datos en el modal de edición
+    // ============================================
     window.cargarDatosEdicionDispositivo = function(row) {
         console.log('Cargando datos para editar:', row);
         
@@ -317,13 +356,21 @@ $(document).ready(function() {
         $('#editIdDispositivo').val(row.IdDispositivo);
         $('#editTipoDispositivo').val(row.TipoDispositivo);
         $('#editMarcaDispositivo').val(row.MarcaDispositivo);
+        
+        // IDs ocultos
         $('#editIdFuncionario').val(row.IdFuncionario || '');
         $('#editIdVisitante').val(row.IdVisitante || '');
+        
+        // Mostrar nombres en campos de texto de solo lectura
+        $('#editNombreFuncionario').val(row.NombreFuncionario || '-');
+        $('#editNombreVisitante').val(row.NombreVisitante || '-');
         
         $('#modalEditarDispositivo').modal('show');
     };
 
+    // ============================================
     // Confirmar cambio de estado
+    // ============================================
     window.confirmarCambioEstadoDispositivo = function(id, estado) {
         console.log('confirmarCambioEstado llamado:', {id, estado});
         
@@ -355,7 +402,9 @@ $(document).ready(function() {
         }, 100);
     };
 
+    // ============================================
     // Botón confirmar cambio de estado
+    // ============================================
     $('#btnConfirmarCambioEstadoDispositivo').on('click', function() {
         console.log('Confirmar cambio de estado clickeado');
         
@@ -435,25 +484,27 @@ $(document).ready(function() {
         });
     });
 
+    // ============================================
     // Botón guardar cambios de edición
+    // ============================================
     $('#btnGuardarCambiosDispositivo').on('click', function() {
         var formData = {
             accion: 'actualizar',
             id: $('#editIdDispositivo').val(),
             tipo: $('#editTipoDispositivo').val(),
             marca: $('#editMarcaDispositivo').val(),
-            id_funcionario: $('#editIdFuncionario').val() || null,
-            id_visitante: $('#editIdVisitante').val() || null
+            id_funcionario: $('#editIdFuncionario').val(),
+            id_visitante: $('#editIdVisitante').val()
         };
 
         console.log('Enviando datos:', formData);
 
-        // Validar campos obligatorios
-        if (!formData.tipo || !formData.marca) {
+        // Validar campo obligatorio (solo Tipo)
+        if (!formData.tipo) {
             Swal.fire({
                 icon: 'warning',
-                title: 'Campos incompletos',
-                text: 'Por favor, complete todos los campos obligatorios (Tipo y Marca)'
+                title: 'Campo incompleto',
+                text: 'Debe seleccionar un tipo de dispositivo'
             });
             return;
         }
