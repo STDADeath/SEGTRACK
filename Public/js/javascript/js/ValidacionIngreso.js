@@ -14,7 +14,7 @@
         mensajeExito: null,
         mensajeError: null,
         config: {
-     urlControlador: "",
+        urlControlador: "/SEGTRACK/App/Controller/ControladorIngreso.php",
 
 
             fps: 10,
@@ -98,31 +98,27 @@
     }
 
     // Descargar PDF de ingresos
-    async function descargarPDF() {
-        try {
-            const res = await fetch(`${App.config.urlControlador}?action=pdf`);
-            if (!res.ok) throw new Error();
+  async function descargarPDF() {
+    try {
+        const res = await fetch('/SEGTRACK/App/Controller/IngresoPDFController.php?accion=pdf');
+        if (!res.ok) throw new Error('Error al generar PDF');
 
-            const blob = await res.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `Ingresos_${new Date().toISOString().slice(0, 10)}.pdf`;
-            a.click();
-            window.URL.revokeObjectURL(url);
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Ingresos_${new Date().toISOString().slice(0, 10)}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
 
-            const resLimpiar = await fetch(`${App.config.urlControlador}?action=limpiar`, {
-                method: "POST"
-            });
-            const data = await resLimpiar.json();
-
-            if (App.table) App.table.ajax.reload(null, false);
-            mostrarMensaje(true, data.message || "PDF descargado correctamente.");
-        } catch (e) {
-            mostrarMensaje(false, "No se pudo descargar el PDF.");
-        }
+        mostrarMensaje(true, "PDF descargado correctamente.");
+    } catch (e) {
+        console.error('Error:', e);
+        mostrarMensaje(false, "No se pudo descargar el PDF.");
     }
-
+}
     // Inicialización al cargar la página
     document.addEventListener("DOMContentLoaded", () => {
         App.tipoMovimiento = document.getElementById("tipoMovimiento");

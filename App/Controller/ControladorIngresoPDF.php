@@ -1,19 +1,18 @@
 <?php
-
-require_once __DIR__ . '/../../Libs/fpdf186/fpdf.php';
+require_once __DIR__ . '/../Libs/fpdf186/fpdf.php';
 require_once __DIR__ . '/../Model/ModeloIngreso.php';
 
 class IngresoPDFController {
 
     public function generarPDF() {
-
         // Modelo
         $modelo = new ModeloIngreso();
         $ingresos = $modelo->listarIngresos();
 
-        // Crear PDF
+        // Crear PDF (sin argumentos nombrados para compatibilidad)
         $pdf = new FPDF('P', 'mm', 'A4');
         $pdf->AddPage();
+        
 
         // Título
         $pdf->SetFont('Arial', 'B', 16);
@@ -44,7 +43,7 @@ class IngresoPDFController {
     }
 }
 
-// EJECUCIÓN DIRECTA DESDE EL ENLACE
+// EJECUCIÓN DIRECTA
 if (isset($_GET['accion']) && $_GET['accion'] === 'pdf') {
     $controller = new IngresoPDFController();
     $controller->generarPDF();
