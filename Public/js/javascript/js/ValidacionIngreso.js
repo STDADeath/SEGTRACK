@@ -14,7 +14,7 @@
         mensajeExito: null,
         mensajeError: null,
         config: {
-        urlControlador: "/SEGTRACK/App/Controller/ControladorIngreso.php",
+        urlControlador: "/SEGTRACK/App/Controller/ControladorIngresoDispositivo.php",
 
 
             fps: 10,
