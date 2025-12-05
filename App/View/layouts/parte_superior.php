@@ -18,7 +18,6 @@
 
     <!-- Hojas de estilo del tema y personalizadas -->
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet"> <!-- Plantilla base -->
-    <link href="../../../Public/css/styles.css" rel="stylesheet"> <!-- Tus estilos -->
     <link href="../../../Public/css/graficas.css" rel="stylesheet"> <!-- Estilos para gráficos -->
     <link href="../../../Public/css/icono.css" rel="stylesheet"> <!-- Estilos para íconos personalizados -->
 
@@ -164,12 +163,12 @@
 
                                 <!-- Imagen del perfil -->
                                 <img class="img-profile rounded-circle"
-                                     src="../../../Public/img/undraw_profile.svg">
+                                    src="../../../Public/img/undraw_profile.svg">
                             </a>
 
                             <!-- Menú desplegable del usuario -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
+                                aria-labelledby="userDropdown">
 
                                 <!-- Opción Perfil -->
                                 <a class="dropdown-item" href="#">
