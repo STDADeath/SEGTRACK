@@ -118,8 +118,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <h6 class="collapse-header">Escanear QR</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/Ingreso.php">Registrar Entrada/Salida</a>
-
+                        <a class="collapse-item" href="../PersonalSeguridad/Ingreso.php">Ingreso Funcionario</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/IngresoParquedero.php">Ingreso Parqueadero</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/IngresoDispositivo.php">Ingreso Dispositivo</a>
                     </div>
                 </div>
             </li>
