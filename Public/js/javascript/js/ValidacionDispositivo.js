@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Expresiones regulares
         const regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]+$/;
+        const regexNumero = /^\d+$/;
 
         // 1. Validar Tipo de Dispositivo
         if (!tipo) {
@@ -55,12 +56,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // Si dice "no" a visitante, entonces DEBE tener funcionario
         if (tieneVisitante === 'no') {
             if (!tieneIdFuncionario) {
-                Swal.fire('Error', 'Si el dispositivo pertenece a un funcionario, debe seleccionar uno de la lista', 'error');
+                Swal.fire('Error', 'Si el dispositivo pertenece a un funcionario, debe ingresar su ID', 'error');
                 return;
             }
             
             if (tieneIdVisitante) {
-                Swal.fire('Error', 'No puede seleccionar un visitante si indica que pertenece a un funcionario', 'error');
+                Swal.fire('Error', 'No puede ingresar ID de visitante si selecciona que NO pertenece a un visitante', 'error');
+                return;
+            }
+
+            if (!regexNumero.test(idFuncionario)) {
+                Swal.fire('Error', 'El ID del funcionario solo debe contener números', 'error');
                 return;
             }
         }
@@ -68,12 +74,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // Si dice "sí" a visitante, entonces DEBE tener visitante
         if (tieneVisitante === 'si') {
             if (!tieneIdVisitante) {
-                Swal.fire('Error', 'Si el dispositivo pertenece a un visitante, debe seleccionar uno de la lista', 'error');
+                Swal.fire('Error', 'Si el dispositivo pertenece a un visitante, debe ingresar su ID', 'error');
                 return;
             }
 
             if (tieneIdFuncionario) {
-                Swal.fire('Error', 'No puede seleccionar un funcionario si indica que pertenece a un visitante', 'error');
+                Swal.fire('Error', 'No puede ingresar ID de funcionario si selecciona que pertenece a un visitante', 'error');
+                return;
+            }
+
+            if (!regexNumero.test(idVisitante)) {
+                Swal.fire('Error', 'El ID del visitante solo debe contener números', 'error');
                 return;
             }
         }
@@ -94,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         try {
-            const response = await fetch('../../Controller/ControladorDispositivo.php', {
+            const response = await fetch('../Controller/parqueadero_dispositivo/ControladorDispositivo.php', {
                 method: 'POST',
                 body: formData
             });
@@ -106,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire('Éxito', data.message, 'success').then(() => {
                     form.reset();
                     document.getElementById('campoOtro').style.display = 'none';
-                    document.getElementById('FuncionarioContainer').style.display = 'block';
                     document.getElementById('VisitanteContainer').style.display = 'none';
                     location.reload();
                 });
@@ -131,30 +141,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Mostrar/Ocultar campos de Funcionario o Visitante
+    // Mostrar/Ocultar campo "ID Visitante"
     const tieneVisitante = document.getElementById('TieneVisitante');
-    const funcionarioContainer = document.getElementById('FuncionarioContainer');
     const visitanteContainer = document.getElementById('VisitanteContainer');
-    const selectFuncionario = document.getElementById('IdFuncionario');
-    const selectVisitante = document.getElementById('IdVisitante');
     
-    if (tieneVisitante && funcionarioContainer && visitanteContainer) {
+    if (tieneVisitante && visitanteContainer) {
         tieneVisitante.addEventListener('change', function() {
-            if (this.value === 'si') {
-                // Mostrar visitante, ocultar funcionario
-                funcionarioContainer.style.display = 'none';
-                visitanteContainer.style.display = 'block';
-                
-                // Limpiar selección de funcionario
-                selectFuncionario.value = '';
-            } else {
-                // Mostrar funcionario, ocultar visitante
-                funcionarioContainer.style.display = 'block';
-                visitanteContainer.style.display = 'none';
-                
-                // Limpiar selección de visitante
-                selectVisitante.value = '';
-            }
+            visitanteContainer.style.display = this.value === 'si' ? 'block' : 'none';
         });
     }
 });

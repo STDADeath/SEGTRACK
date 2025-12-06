@@ -1,84 +1,82 @@
 <?php
-require_once __DIR__ . "/../../Model/sede_institucion_funcionario_usuario/modelosede.php";
+// App/Controller/ControladorSede.php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require_once __DIR__ . '/../Model/ModeloSede.php';
 
 class ControladorSede {
 
     private $modelo;
 
     public function __construct() {
-        $this->modelo = new Modelo_Sede();
+        $this->modelo = new ModeloSede(); 
     }
 
-    // ================================
-    // ✔ MÉTODOS GET
-    // ================================
     public function obtenerInstituciones() {
         return $this->modelo->obtenerInstituciones();
     }
 
-    public function obtenerTodasLasSedes() {
-        return $this->modelo->obtenerTodasLasSedes();
-    }
-
-    public function obtenerSedePorId($id) {
-        return $this->modelo->obtenerSedePorId($id);
-    }
-
-    // ================================
-    // ✔ MÉTODOS POST (Devuelven un array para JSON)
-    // ================================
     /**
-     * Registra una nueva sede y retorna el resultado para la respuesta JSON.
+     * Obtener todas las sedes para llenar select
      * @return array
      */
-    public function registrarSede($tipo, $ciudad, $idInstitucion) {
-        
-        // 1. Validación de datos
-        if (empty($tipo) || empty($ciudad) || empty($idInstitucion)) {
-            return ['success' => false, 'message' => 'Faltan datos obligatorios para el registro.'];
+    public function obtenerSedes() {
+        return $this->modelo->obtenerSedes();
+    }
+
+    public function registrarSede($datos) {
+
+        $tipoSede = trim($datos['TipoSede'] ?? '');
+        $ciudad = trim($datos['Ciudad'] ?? '');
+        $institucion = intval($datos['IdInstitucion'] ?? 0); 
+
+        $regexTexto = '/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$/';
+
+        // VALIDACIÓN PHP
+        if ($tipoSede === '' || $ciudad === '' || $institucion === 0) {
+            return ['success' => false, 'message' => 'Todos los campos son obligatorios o el ID de la institución es inválido.'];
         }
 
-        // 2. Inserción en el modelo
-        if ($this->modelo->insertarSede($tipo, $ciudad, $idInstitucion)) {
-            return ['success' => true, 'message' => 'Sede registrada correctamente.'];
-        } else {
-            // Error de base de datos
-            return ['success' => false, 'message' => 'Error al intentar registrar la sede en la base de datos.'];
+        if (!preg_match($regexTexto, $tipoSede)) {
+            return ['success' => false, 'message' => 'El nombre/tipo de sede contiene caracteres inválidos.'];
         }
+
+        if (!preg_match($regexTexto, $ciudad)) {
+            return ['success' => false, 'message' => 'La ciudad contiene caracteres inválidos.'];
+        }
+
+        $resultado = $this->modelo->registrarSede($tipoSede, $ciudad, $institucion);
+
+        if ($resultado['success'] === false) {
+             // Retorna el error específico (ej. de llave foránea)
+            return $resultado; 
+        }
+        
+        return ['success' => true, 'message' => 'Sede registrada correctamente.'];
     }
 }
 
+// ===============================
+// PETICIÓN AJAX (Punto de Entrada)
+// ===============================
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
 
-// ===============================================
-// BLOQUE DE PROCESAMIENTO AJAX
-// Este código maneja todas las peticiones POST de la vista.
-// ===============================================
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['accion'])) {
-    
-    // Crear la instancia del controlador
-    $controlador = new ControladorSede();
-    
-    // Configurar la cabecera para devolver JSON
     header('Content-Type: application/json');
 
-    // Inicializar la respuesta por defecto
-    $response = ['success' => false, 'message' => 'Acción no reconocida en el controlador.'];
+    $controlador = new ControladorSede();
+    $respuesta = [];
 
-    // Ejecutar la acción
     if ($_POST['accion'] === 'registrar') {
-        
-        // Se capturan los datos usando los nombres 'name' del formulario HTML
-        $tipo = $_POST['TipoSede'] ?? null;
-        $ciudad = $_POST['Ciudad'] ?? null;
-        $institucion = $_POST['IdInstitucion'] ?? null;
+        $respuesta = $controlador->registrarSede($_POST);
+    }
 
-        $response = $controlador->registrarSede($tipo, $ciudad, $institucion);
-        
-    } 
+    // SI LA RESPUESTA ES FALLIDA, ENVIAMOS CÓDIGO 400
+    if (isset($respuesta['success']) && $respuesta['success'] === false) {
+        http_response_code(400); // Bad Request / Error de Cliente
+    }
     
-    // Responder y detener la ejecución del script
-    echo json_encode($response);
-    exit; 
+    echo json_encode($respuesta);
+    exit;
 }
-?>

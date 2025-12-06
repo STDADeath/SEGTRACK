@@ -1,8 +1,7 @@
 /* Logo normal (pantallas grandes) */
 #logo {
     content: url("../img/LOGO_SEGTRACK-con.ico");
-    width: 130px;     
-    height: 130px;
+    width: 180px;
     /* Ajusta el tamaño */
 }
 
@@ -10,11 +9,11 @@
 @media (max-width: 768px) {
     #logo {
         content: url("../img/LOGO_SEGTRACK-re-con.ico");
-        width: 85px;
-        height: 85px;
+        width: 90px;
         /* Más pequeño */
     }
 }
+
 
 /* Contenedor del toggle en el modal */
 .toggle-container {
