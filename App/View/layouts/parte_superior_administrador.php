@@ -1,3 +1,10 @@
+<?php
+// Iniciar sesión si no está iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -35,14 +42,14 @@
             <!-- Logo -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../Administrador/DashboardAdministrador.php">
                 <div class="sidebar-brand-icon">
-                    <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" alt="Logo" id="logo">
+                    <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" alt="Logo" id="logo" style="width:130px; margin-top:1px;">
                 </div>
             </a>
 
             <hr class="sidebar-divider">
 
             <!-- Menú del Administrador -->
-            
+
             <!-- Gestión de Instituciones -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdmin1" aria-expanded="true" aria-controls="collapseAdmin1">
@@ -76,7 +83,6 @@
                         <h6 class="collapse-header">Sedes:</h6>
                         <a class="collapse-item" href="../Administrador/sede.php">Agregar Sedes</a>
                         <a class="collapse-item" href="../Administrador/SedeLista.php">Ver Sede</a>
-                        
 
                         <div class="collapse-divider"></div>
 
@@ -149,7 +155,7 @@
             <!-- Separador -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Botón minimizar sidebar (opcional) -->
+            <!-- Botón minimizar sidebar -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
@@ -166,7 +172,7 @@
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Botón para abrir el menú lateral en móvil -->
+                    <!-- Botón para menú móvil -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
@@ -179,45 +185,6 @@
                                 <i class="fas fa-bell fa-fw"></i>
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Centro de Notificaciones
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-user text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">Hace 2 horas</div>
-                                        <span class="font-weight-bold">Nuevo usuario registrado</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-building text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">Hace 5 horas</div>
-                                        Nueva institución agregada
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">Hace 1 día</div>
-                                        Actualización de sistema disponible
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Ver todas las notificaciones</a>
-                            </div>
                         </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -226,10 +193,14 @@
                         <li class="nav-item dropdown no-arrow">
 
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
+
+                                <!-- ⭐ CAMBIO SOLICITADO: nombre + cargo -->
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['usuario_nombre']; ?> | <?php echo $_SESSION['usuario_rol']; ?>
+                                </span>
 
                                 <img class="img-profile rounded-circle"
-                                    src="../../../Public/img/undraw_profile.svg">
+                                     src="../../../Public/img/undraw_profile.svg">
                             </a>
 
                             <!-- Dropdown usuario -->
@@ -264,7 +235,6 @@
                     </ul>
 
                 </nav>
-                <!-- End Topbar -->
 
                 <!-- Inicio del contenido dinámico -->
-                <div class="container-fluid"></div>
+                <div class="container-fluid">

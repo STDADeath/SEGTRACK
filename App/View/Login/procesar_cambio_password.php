@@ -47,12 +47,13 @@ try {
         exit;
     }
 
-    // Verificar token y que no haya expirado
+    // Verificar token y que no haya expirado (CONSULTA CORREGIDA CON JOIN)
     $stmt = $conexion->prepare("
-    SELECT id_usuario, token_expiracion 
-    FROM usuario 
-    WHERE correo = ? AND token_recuperacion = ?
-");
+        SELECT u.IdUsuario, u.TokenExpiracion 
+        FROM usuario u
+        INNER JOIN funcionario f ON u.IdFuncionario = f.IdFuncionario
+        WHERE f.CorreoFuncionario = ? AND u.TokenRecuperacion = ? AND u.Estado = 'Activo'
+    ");
     $stmt->execute([$correo, $token]);
 
     if ($stmt->rowCount() === 0) {
@@ -66,7 +67,7 @@ try {
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Verificar si el token ha expirado
-    if (strtotime($usuario['token_expiracion']) < time()) {
+    if (strtotime($usuario['TokenExpiracion']) < time()) {
         echo json_encode([
             'success' => false,
             'message' => 'El token ha expirado. Solicita uno nuevo.'
@@ -77,16 +78,16 @@ try {
     // Encriptar nueva contraseña
     $password_hash = password_hash($nueva_password, PASSWORD_DEFAULT);
 
-    // Actualizar contraseña y limpiar token
+    // Actualizar contraseña y limpiar token (NOMBRES DE COLUMNAS CORREGIDOS)
     $stmt = $conexion->prepare("
-    UPDATE usuario 
-    SET contrasena = ?, 
-        token_recuperacion = NULL, 
-        token_expiracion = NULL 
-    WHERE id_usuario = ?
-");
+        UPDATE usuario 
+        SET Contrasena = ?, 
+            TokenRecuperacion = NULL, 
+            TokenExpiracion = NULL 
+        WHERE IdUsuario = ?
+    ");
 
-    if ($stmt->execute([$password_hash, $usuario['id_usuario']])) {
+    if ($stmt->execute([$password_hash, $usuario['IdUsuario']])) {
         echo json_encode([
             'success' => true,
             'message' => 'Contraseña cambiada exitosamente. Ya puedes iniciar sesión.'

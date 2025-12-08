@@ -4,9 +4,9 @@ header('Content-Type: application/json');
 // Incluir PHPMailer
 // NOTA: Verifica que estas rutas sean correctas. Basado en tu imagen,
 // la ruta relativa parece ser correcta: ../../../PHPMailer/src/
-require '../../../PHPMailer/src/Exception.php';
-require '../../../PHPMailer/src/PHPMailer.php';
-require '../../../PHPMailer/src/SMTP.php';
+require '../../libs/PHPMailer/src/Exception.php';
+require '../../libs/PHPMailer/src/PHPMailer.php';
+require '../../libs/PHPMailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

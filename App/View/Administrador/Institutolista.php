@@ -3,7 +3,7 @@
 // InstitutoLista.php
 // ============================================================
 
-require_once __DIR__ . '/../layouts/parte_superior.php';
+require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -94,7 +94,7 @@ require_once __DIR__ . '/../layouts/parte_superior.php';
 </div>
 
 <?php
-require_once __DIR__ . '/../layouts/parte_inferior.php';
+require_once __DIR__ . '/../layouts/parte_inferior_administrador.php';
 ?>
 
 <link rel="stylesheet" href="../../../Public/vendor/datatables/dataTables.bootstrap4.css">

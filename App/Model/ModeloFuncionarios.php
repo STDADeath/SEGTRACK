@@ -20,9 +20,9 @@ class ModeloFuncionario {
             }
 
             $sql = "INSERT INTO funcionario 
-                        (CargoFuncionario, NombreFuncionario, IdSede, TelefonoFuncionario, DocumentoFuncionario, CorreoFuncionario)
+                         (CargoFuncionario, NombreFuncionario, IdSede, TelefonoFuncionario, DocumentoFuncionario, CorreoFuncionario)
                     VALUES 
-                        (:cargo, :nombre, :sede, :telefono, :documento, :correo)";
+                         (:cargo, :nombre, :sede, :telefono, :documento, :correo)";
 
             $stmt = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
@@ -77,6 +77,48 @@ class ModeloFuncionario {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
+
+    // =======================================================
+    // ✅ MÉTODO AÑADIDO: Implementación de la firma esperada por el controlador
+    // =======================================================
+    public function ActualizarFuncionario(
+        int $idFuncionario,
+        string $Cargo,
+        string $nombre,
+        int $sede,
+        int $telefono,
+        int $documento,
+        string $correo
+    ): array {
+        // Mapeamos los argumentos individuales al formato de array que necesita
+        // el método 'actualizar' que ya estaba definido.
+        $datos = [
+            'CargoFuncionario'    => $Cargo,
+            'NombreFuncionario'   => $nombre,
+            'IdSede'              => $sede,
+            'TelefonoFuncionario' => $telefono,
+            'DocumentoFuncionario'=> $documento,
+            'CorreoFuncionario'   => $correo
+        ];
+        
+        // Llamamos al método que ya contiene la lógica SQL de UPDATE
+        $resultado = $this->actualizar($idFuncionario, $datos);
+        
+        // Adaptamos la respuesta para el controlador que espera 'success' y 'rows_affected'
+        if ($resultado['success'] === true) {
+            return [
+                'success' => true,
+                'rows_affected' => $resultado['rows'] // Devolvemos las filas afectadas
+            ];
+        } else {
+            return [
+                'success' => false,
+                'error' => $resultado['error'] ?? 'Error desconocido al actualizar'
+            ];
+        }
+    }
+    // =======================================================
+
 
     public function obtenerTodos(): array {
         try {
@@ -180,6 +222,56 @@ class ModeloFuncionario {
 
         } catch (PDOException $e) {
             return false;
+        }
+    }
+
+    // ========================================
+    // ✨ NUEVO MÉTODO: CAMBIAR ESTADO DEL FUNCIONARIO
+    // ========================================
+    /**
+     * Cambia el estado de un funcionario en la base de datos
+     * @param int $idFuncionario - ID del funcionario a modificar
+     * @param string $nuevoEstado - Nuevo estado ('Activo' o 'Inactivo')
+     * @return array - Array con 'success' (bool) y 'rows' (int) o 'error' (string)
+     */
+    public function cambiarEstado(int $idFuncionario, string $nuevoEstado): array {
+        try {
+            // Verifica que la conexión PDO esté establecida
+            if (!$this->conexion) {
+                return [
+                    'success' => false,
+                    'error' => 'Conexión a la base de datos no establecida'
+                ];
+            }
+
+            // Prepara la consulta SQL para actualizar solo el campo Estado
+            // WHERE asegura que solo se actualice el funcionario con el ID especificado
+            $sql = "UPDATE funcionario 
+                    SET Estado = :estado 
+                    WHERE IdFuncionario = :id";
+
+            // Prepara la sentencia SQL para prevenir inyección SQL
+            $stmt = $this->conexion->prepare($sql);
+            
+            // Ejecuta la consulta pasando los parámetros de forma segura
+            $resultado = $stmt->execute([
+                ':estado' => $nuevoEstado,      // Nuevo estado a establecer
+                ':id'     => $idFuncionario     // ID del funcionario a actualizar
+            ]);
+
+            // Retorna un array indicando si la operación fue exitosa
+            // y cuántas filas fueron afectadas (debería ser 1 si el ID existe)
+            return [
+                'success' => $resultado,           // true si la ejecución fue exitosa
+                'rows'    => $stmt->rowCount()    // Número de filas afectadas
+            ];
+
+        } catch (PDOException $e) {
+            // Captura cualquier error de PDO y lo retorna en el array
+            return [
+                'success' => false,
+                'error'   => $e->getMessage()    // Mensaje de error detallado
+            ];
         }
     }
 }

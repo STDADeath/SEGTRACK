@@ -27,32 +27,33 @@ try {
 $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 ?>
 <style>
-.input-valid {
-    border: 2px solid #28a745 !important;
-    background: #eaffea !important;
-}
+    .input-valid {
+        border: 2px solid #28a745 !important;
+        background: #eaffea !important;
+    }
 
-.input-invalid {
-    border: 2px solid #dc3545 !important;
-    background: #ffeaea !important;
-}
+    .input-invalid {
+        border: 2px solid #dc3545 !important;
+        background: #ffeaea !important;
+    }
 
-.label-valid {
-    color: #28a745 !important;
-    font-weight: bold;
-}
+    .label-valid {
+        color: #28a745 !important;
+        font-weight: bold;
+    }
 
-.label-invalid {
-    color: #dc3545 !important;
-    font-weight: bold;
-}
+    .label-invalid {
+        color: #dc3545 !important;
+        font-weight: bold;
+    }
 </style>
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-user-circle me-2"></i>Registrar Usuario</h1>
-        <a href="UsuarioLista.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="UsuariosLista.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-list me-1"></i> Ver Usuarios
         </a>
+
     </div>
 
     <div class="card shadow mb-4">
@@ -62,7 +63,7 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
         <div class="card-body">
             <form id="formUsuario" action="../../Controller/ControladorusuarioADM.php" method="POST">
                 <div class="row">
-                    
+
                     <!-- Tipo de Rol -->
                     <div class="col-md-6 mb-3">
                         <label for="tipo_rol" class="form-label" id="label_tipo_rol">Tipo de Rol</label>

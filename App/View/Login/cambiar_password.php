@@ -19,7 +19,7 @@
 
         <div class="content">
             <div class="welcome-section">
-                <img src="../../Public/img/LOGO_SEGTRACK-re-con.ico" alt="Segtrack Logo">
+                <img src="../../../public/img/LOGO_SEGTRACK-re-con.ico" alt="Segtrack Logo">
                 <h2>BIENVENIDO</h2>
                 <p>Ingresa el token que recibiste por correo y tu nueva contraseña.</p>
             </div>

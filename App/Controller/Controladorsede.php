@@ -14,18 +14,23 @@ class ControladorSede {
         $this->modelo = new ModeloSede(); 
     }
 
+    // ============================================================
+    // 🔹 OBTENER LISTA DE INSTITUCIONES
+    // ============================================================
     public function obtenerInstituciones() {
         return $this->modelo->obtenerInstituciones();
     }
 
-    /**
-     * Obtener todas las sedes para llenar select
-     * @return array
-     */
+    // ============================================================
+    // 🔹 OBTENER LISTA DE SEDES PARA SELECT
+    // ============================================================
     public function obtenerSedes() {
         return $this->modelo->obtenerSedes();
     }
 
+    // ============================================================
+    // 🔹 REGISTRAR UNA NUEVA SEDE
+    // ============================================================
     public function registrarSede($datos) {
 
         $tipoSede = trim($datos['TipoSede'] ?? '');
@@ -34,49 +39,73 @@ class ControladorSede {
 
         $regexTexto = '/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$/';
 
-        // VALIDACIÓN PHP
         if ($tipoSede === '' || $ciudad === '' || $institucion === 0) {
-            return ['success' => false, 'message' => 'Todos los campos son obligatorios o el ID de la institución es inválido.'];
+            return ['success' => false, 'message' => 'Todos los campos son obligatorios'];
         }
 
         if (!preg_match($regexTexto, $tipoSede)) {
-            return ['success' => false, 'message' => 'El nombre/tipo de sede contiene caracteres inválidos.'];
+            return ['success' => false, 'message' => 'El tipo de sede contiene caracteres inválidos.'];
         }
 
         if (!preg_match($regexTexto, $ciudad)) {
             return ['success' => false, 'message' => 'La ciudad contiene caracteres inválidos.'];
         }
 
-        $resultado = $this->modelo->registrarSede($tipoSede, $ciudad, $institucion);
+        return $this->modelo->registrarSede($tipoSede, $ciudad, $institucion);
+    }
 
-        if ($resultado['success'] === false) {
-             // Retorna el error específico (ej. de llave foránea)
-            return $resultado; 
+    // ============================================================
+    // 🔹 EDITAR UNA SEDE EXISTENTE
+    // ============================================================
+    public function editarSede($datos) {
+
+        $idSede = intval($datos['IdSede'] ?? 0);
+        $tipoSede = trim($datos['TipoSede'] ?? '');
+        $ciudad = trim($datos['Ciudad'] ?? '');
+        $institucion = intval($datos['IdInstitucion'] ?? 0);
+
+        $regexTexto = '/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$/';
+
+        if ($idSede === 0 || $tipoSede === '' || $ciudad === '' || $institucion === 0) {
+            return ['success' => false, 'message' => 'Todos los campos son obligatorios.'];
         }
-        
-        return ['success' => true, 'message' => 'Sede registrada correctamente.'];
+
+        if (!preg_match($regexTexto, $tipoSede)) {
+            return ['success' => false, 'message' => 'El tipo de sede contiene caracteres inválidos.'];
+        }
+
+        if (!preg_match($regexTexto, $ciudad)) {
+            return ['success' => false, 'message' => 'La ciudad contiene caracteres inválidos.'];
+        }
+
+        return $this->modelo->editarSede($idSede, $tipoSede, $ciudad, $institucion);
     }
 }
 
-// ===============================
-// PETICIÓN AJAX (Punto de Entrada)
-// ===============================
+// ============================================================
+// 🔹 PETICIÓN AJAX
+// ============================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
 
     header('Content-Type: application/json');
-
     $controlador = new ControladorSede();
     $respuesta = [];
 
-    if ($_POST['accion'] === 'registrar') {
-        $respuesta = $controlador->registrarSede($_POST);
+    switch ($_POST['accion']) {
+
+        case 'registrar':
+            $respuesta = $controlador->registrarSede($_POST);
+            break;
+
+        case 'editar':
+            $respuesta = $controlador->editarSede($_POST);
+            break;
     }
 
-    // SI LA RESPUESTA ES FALLIDA, ENVIAMOS CÓDIGO 400
     if (isset($respuesta['success']) && $respuesta['success'] === false) {
-        http_response_code(400); // Bad Request / Error de Cliente
+        http_response_code(400);
     }
-    
+
     echo json_encode($respuesta);
     exit;
 }

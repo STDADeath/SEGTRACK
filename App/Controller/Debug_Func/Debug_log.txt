@@ -1,0 +1,1044 @@
+2025-11-26 21:35:51 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "jonathan",
+    "IdSede": "35",
+    "TelefonoFuncionario": "3242343242",
+    "DocumentoFuncionario": "32423423432",
+    "CorreoFuncionario": "jonathan@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 21:35:51 - registrarFuncionario llamado
+2025-11-26 21:35:51 - Generando QR para funcionario ID: 59
+2025-11-26 21:35:51 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-59-692764a74dcc4.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 59","data":{"IdFuncionario":"59","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-59-692764a74dcc4.png"}}
+2025-11-26 21:37:24 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "ratatoe",
+    "IdSede": "35",
+    "TelefonoFuncionario": "3213698509",
+    "DocumentoFuncionario": "90790708797",
+    "CorreoFuncionario": "ratatue@aaagmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 21:37:24 - registrarFuncionario llamado
+2025-11-26 21:37:24 - Generando QR para funcionario ID: 60
+2025-11-26 21:37:24 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-60-6927650462585.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 60","data":{"IdFuncionario":"60","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-60-6927650462585.png"}}
+2025-11-26 21:38:07 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "jonathan clein",
+    "IdSede": "17",
+    "TelefonoFuncionario": "4234324234",
+    "DocumentoFuncionario": "32423423423",
+    "CorreoFuncionario": "personal@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 21:38:07 - registrarFuncionario llamado
+2025-11-26 21:38:07 - Generando QR para funcionario ID: 61
+2025-11-26 21:38:07 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-61-6927652f2885f.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 61","data":{"IdFuncionario":"61","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-61-6927652f2885f.png"}}
+2025-11-26 21:43:52 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "winnie pooh",
+    "IdSede": "18",
+    "TelefonoFuncionario": "3213455656",
+    "DocumentoFuncionario": "12232344513",
+    "CorreoFuncionario": "winniepooh@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 21:43:52 - registrarFuncionario llamado
+2025-11-26 21:43:52 - Generando QR para funcionario ID: 62
+2025-11-26 21:43:53 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-62-69276688ef126.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 62","data":{"IdFuncionario":"62","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-62-69276688ef126.png"}}
+2025-11-26 21:45:59 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario Institucion",
+    "NombreFuncionario": "juliana lopez",
+    "IdSede": "17",
+    "TelefonoFuncionario": "3214456677",
+    "DocumentoFuncionario": "10007834654",
+    "CorreoFuncionario": "julianalopez@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 21:45:59 - registrarFuncionario llamado
+2025-11-26 21:45:59 - Generando QR para funcionario ID: 63
+2025-11-26 21:45:59 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-63-69276707e31d1.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 63","data":{"IdFuncionario":"63","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-63-69276707e31d1.png"}}
+2025-11-26 22:00:25 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "winnie pooh",
+    "IdSede": "17",
+    "TelefonoFuncionario": "3213455656",
+    "DocumentoFuncionario": "12232344513",
+    "CorreoFuncionario": "winniepooh@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 22:00:26 - registrarFuncionario llamado
+2025-11-26 22:00:26 - Generando QR para funcionario ID: 64
+2025-11-26 22:00:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-64-69276a6a184b2.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 64","data":{"IdFuncionario":"64","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-64-69276a6a184b2.png"}}
+2025-11-26 22:02:55 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "lola",
+    "IdSede": "34",
+    "TelefonoFuncionario": "3213455656",
+    "DocumentoFuncionario": "12232344513",
+    "CorreoFuncionario": "winniepooh@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 22:02:55 - registrarFuncionario llamado
+2025-11-26 22:02:55 - Generando QR para funcionario ID: 65
+2025-11-26 22:02:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-65-69276aff3e00a.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 65","data":{"IdFuncionario":"65","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-65-69276aff3e00a.png"}}
+2025-11-26 22:05:35 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario Institucion",
+    "NombreFuncionario": "carmen",
+    "IdSede": "35",
+    "TelefonoFuncionario": "3242342342",
+    "DocumentoFuncionario": "23433333333",
+    "CorreoFuncionario": "carmen@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 22:05:35 - registrarFuncionario llamado
+2025-11-26 22:05:35 - Generando QR para funcionario ID: 66
+2025-11-26 22:05:35 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-66-69276b9fd6374.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 66","data":{"IdFuncionario":"66","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-66-69276b9fd6374.png"}}
+2025-11-26 22:06:02 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "carmen",
+    "IdSede": "34",
+    "TelefonoFuncionario": "3242342342",
+    "DocumentoFuncionario": "23433333333",
+    "CorreoFuncionario": "carmen@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-26 22:06:02 - registrarFuncionario llamado
+2025-11-26 22:06:02 - Generando QR para funcionario ID: 67
+2025-11-26 22:06:02 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-67-69276bbad6fb8.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 67","data":{"IdFuncionario":"67","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-67-69276bbad6fb8.png"}}
+2025-11-27 05:01:28 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "juan muñoz",
+    "IdSede": "17",
+    "TelefonoFuncionario": "3242342342",
+    "DocumentoFuncionario": "23433333333",
+    "CorreoFuncionario": "carmen@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-27 05:01:28 - registrarFuncionario llamado
+2025-11-27 05:01:28 - Generando QR para funcionario ID: 68
+2025-11-27 05:01:28 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-68-6927cd186c6ce.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 68","data":{"IdFuncionario":"68","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-68-6927cd186c6ce.png"}}
+2025-11-27 05:01:54 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "juan muñoz",
+    "IdSede": "17",
+    "TelefonoFuncionario": "3242342342",
+    "DocumentoFuncionario": "23433333333",
+    "CorreoFuncionario": "carmen@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-27 05:01:54 - registrarFuncionario llamado
+2025-11-27 05:01:54 - Generando QR para funcionario ID: 69
+2025-11-27 05:01:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-69-6927cd32d9007.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 69","data":{"IdFuncionario":"69","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-69-6927cd32d9007.png"}}
+2025-11-27 05:11:24 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan muñoz",
+    "IdSede": "34",
+    "TelefonoFuncionario": "3242342342",
+    "DocumentoFuncionario": "23433333333",
+    "CorreoFuncionario": "carmen@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-27 05:11:24 - registrarFuncionario llamado
+2025-11-27 05:11:24 - Generando QR para funcionario ID: 70
+2025-11-27 05:11:24 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-70-6927cf6c96327.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 70","data":{"IdFuncionario":"70","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-70-6927cf6c96327.png"}}
+2025-11-30 22:56:06 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "pedrooo",
+    "IdSede": "29",
+    "TelefonoFuncionario": "3242342000",
+    "DocumentoFuncionario": "23433338998",
+    "CorreoFuncionario": "pedro@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción: registrar
+2025-11-30 22:56:06 - registrarFuncionario llamado
+2025-11-30 22:56:06 - Generando QR para funcionario ID: 29
+2025-11-30 22:56:07 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-29-692cbd76f3e68.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 29","data":{"IdFuncionario":"29","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-29-692cbd76f3e68.png"}}
+2025-12-06 16:26:03 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "luis garcia",
+    "IdSede": "26",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "12312332423",
+    "CorreoFuncionario": "Luisagarcia@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada correctamente
+Conexión validada como PDO
+
+2025-12-07 03:17:09 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "luisa pineda",
+    "IdSede": "28",
+    "TelefonoFuncionario": "3243243243",
+    "DocumentoFuncionario": "42342343243",
+    "CorreoFuncionario": "Luisapineda@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-07 03:17:09 - registrarFuncionario llamado
+2025-12-07 03:17:09 - Llamando a RegistrarFuncionario en el modelo
+2025-12-07 03:17:09 - Resultado del modelo (BD): {"success":true,"id":"38"}
+2025-12-07 03:17:09 - Registro exitoso, ID: 38. Generando QR...
+2025-12-07 03:17:09 - Generando QR para funcionario ID: 38
+2025-12-07 03:17:09 - Ruta física carpeta QR: C:\xampp\htdocs\SEGTRACK\Public/qr/QR_Func
+2025-12-07 03:17:09 - Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\Public/qr/QR_Func/QR-FUNC-38-6934e3a5645ce.png
+2025-12-07 03:17:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\Public/qr/QR_Func/QR-FUNC-38-6934e3a5645ce.png
+2025-12-07 03:17:09 - QR actualizado en BD.
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 38. QR generado y guardado.","data":{"IdFuncionario":"38","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-38-6934e3a5645ce.png"}}
+
+2025-12-07 03:18:10 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "Santiago perez",
+    "IdSede": "28",
+    "TelefonoFuncionario": "3243243324",
+    "DocumentoFuncionario": "23432432432",
+    "CorreoFuncionario": "Santiago@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-07 03:18:10 - registrarFuncionario llamado
+2025-12-07 03:18:10 - Llamando a RegistrarFuncionario en el modelo
+2025-12-07 03:18:10 - Resultado del modelo (BD): {"success":true,"id":"39"}
+2025-12-07 03:18:10 - Registro exitoso, ID: 39. Generando QR...
+2025-12-07 03:18:10 - Generando QR para funcionario ID: 39
+2025-12-07 03:18:10 - Ruta física carpeta QR: C:\xampp\htdocs\SEGTRACK\Public/qr/QR_Func
+2025-12-07 03:18:10 - Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\Public/qr/QR_Func/QR-FUNC-39-6934e3e2f0aa4.png
+2025-12-07 03:18:11 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\Public/qr/QR_Func/QR-FUNC-39-6934e3e2f0aa4.png
+2025-12-07 03:18:11 - QR actualizado en BD.
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 39. QR generado y guardado.","data":{"IdFuncionario":"39","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-39-6934e3e2f0aa4.png"}}
+
+2025-12-07 03:20:57 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "luz meri",
+    "IdSede": "26",
+    "TelefonoFuncionario": "3243243243",
+    "DocumentoFuncionario": "42342343243",
+    "CorreoFuncionario": "Luzmeri@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-07 03:20:57 - registrarFuncionario llamado
+2025-12-07 03:20:57 - Llamando a RegistrarFuncionario en el modelo
+2025-12-07 03:20:57 - Resultado del modelo (BD): {"success":true,"id":"40"}
+2025-12-07 03:20:57 - Registro exitoso, ID: 40. Generando QR...
+2025-12-07 03:20:57 - Generando QR para funcionario ID: 40
+2025-12-07 03:20:57 - Ruta física carpeta QR: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func
+2025-12-07 03:20:57 - Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func/QR-FUNC-40-6934e4894c2bd.png
+2025-12-07 03:20:57 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func/QR-FUNC-40-6934e4894c2bd.png
+2025-12-07 03:20:57 - QR actualizado en BD.
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 40. QR generado y guardado.","data":{"IdFuncionario":"40","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-40-6934e4894c2bd.png"}}
+
+2025-12-07 03:22:33 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "anderson arevalo",
+    "IdSede": "25",
+    "TelefonoFuncionario": "3213698564",
+    "DocumentoFuncionario": "32432432432",
+    "CorreoFuncionario": "Andersonarevalo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-07 03:22:33 - registrarFuncionario llamado
+2025-12-07 03:22:33 - Llamando a RegistrarFuncionario en el modelo
+2025-12-07 03:22:33 - Resultado del modelo (BD): {"success":true,"id":"41"}
+2025-12-07 03:22:33 - Registro exitoso, ID: 41. Generando QR...
+2025-12-07 03:22:33 - Generando QR para funcionario ID: 41
+2025-12-07 03:22:33 - Ruta física carpeta QR: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func
+2025-12-07 03:22:33 - Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func/QR-FUNC-41-6934e4e991349.png
+2025-12-07 03:22:33 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func/QR-FUNC-41-6934e4e991349.png
+2025-12-07 03:22:33 - QR actualizado en BD.
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 41. QR generado y guardado.","data":{"IdFuncionario":"41","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-41-6934e4e991349.png"}}
+
+2025-12-07 03:23:08 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "24",
+    "cargo": "Personal Seguridad",
+    "nombre": "Maicol Montoya",
+    "sede": "27",
+    "telefono": "2147483647",
+    "documento": "1089546523",
+    "correo": "Pasachoa2002@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-07 03:23:08 - actualizarFuncionario llamado para ID: 24
+2025-12-07 03:23:08 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-07 03:23:27 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "37",
+    "cargo": "Personal Seguridad",
+    "nombre": "DOÑA MARIA",
+    "sede": "28",
+    "telefono": "2147483647",
+    "documento": "32432432423",
+    "correo": "Maria@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-07 03:23:27 - actualizarFuncionario llamado para ID: 37
+2025-12-07 03:23:27 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-07 03:27:14 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "judas",
+    "IdSede": "28",
+    "TelefonoFuncionario": "3243243242",
+    "DocumentoFuncionario": "23423424324",
+    "CorreoFuncionario": "judas@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-07 03:27:14 - registrarFuncionario llamado
+2025-12-07 03:27:14 - Llamando a RegistrarFuncionario en el modelo
+2025-12-07 03:27:14 - Resultado del modelo (BD): {"success":true,"id":"42"}
+2025-12-07 03:27:14 - Registro exitoso, ID: 42. Generando QR...
+2025-12-07 03:27:14 - Generando QR para funcionario ID: 42
+2025-12-07 03:27:14 - Ruta física carpeta QR: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func
+2025-12-07 03:27:14 - Intentando crear QR en: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func/QR-FUNC-42-6934e602a5ff2.png
+2025-12-07 03:27:14 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\Public\qr\Qr_Func/QR-FUNC-42-6934e602a5ff2.png
+2025-12-07 03:27:14 - QR actualizado en BD.
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 42. QR generado y guardado.","data":{"IdFuncionario":"42","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-42-6934e602a5ff2.png"}}
+
+2025-12-07 03:33:02 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "Carol Dayana lorena",
+    "IdSede": "26",
+    "TelefonoFuncionario": "3242343242",
+    "DocumentoFuncionario": "43243242342",
+    "CorreoFuncionario": "DayanaCarol@gamil.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-07 03:33:02 - registrarFuncionario llamado
+2025-12-07 03:33:02 - Llamando a RegistrarFuncionario en el modelo
+2025-12-07 03:33:02 - Resultado del modelo (BD): {"success":true,"id":"43"}
+2025-12-07 03:33:02 - Registro exitoso, ID: 43. Generando QR...
+2025-12-07 03:33:02 - Generando QR para funcionario ID: 43
+2025-12-07 03:33:02 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-07 03:33:02 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-07 03:33:02 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-07 03:33:02 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-43-6934e75e9eeba.png
+2025-12-07 03:33:02 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-43-6934e75e9eeba.png
+2025-12-07 03:33:02 - ✓ Tamaño del archivo: 885 bytes
+2025-12-07 03:33:02 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-43-6934e75e9eeba.png
+2025-12-07 03:33:02 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-43-6934e75e9eeba.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 43. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"43","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-43-6934e75e9eeba.png"}}
+
+2025-12-07 03:38:31 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Visitante",
+    "NombreFuncionario": "Dayana ester",
+    "IdSede": "25",
+    "TelefonoFuncionario": "3213698564",
+    "DocumentoFuncionario": "32423432432",
+    "CorreoFuncionario": "ester@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada desde: C:\xampp\htdocs\SEGTRACK\App\Controller/../Libs/phpqrcode/qrlib.php
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-07 03:38:31 - registrarFuncionario llamado
+2025-12-07 03:38:31 - Llamando a RegistrarFuncionario en el modelo
+2025-12-07 03:38:31 - Resultado del modelo (BD): {"success":true,"id":"44"}
+2025-12-07 03:38:31 - Registro exitoso, ID: 44. Generando QR...
+2025-12-07 03:38:31 - === INICIO GENERACIÓN QR ===
+2025-12-07 03:38:31 - Generando QR para funcionario ID: 44
+2025-12-07 03:38:31 - Nombre: Dayana ester
+2025-12-07 03:38:31 - Documento: 32423432432
+2025-12-07 03:38:31 - Ruta raíz del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-07 03:38:31 - Ruta física destino QR: C:\xampp\htdocs\SEGTRACK\Public\qr\QR_Func
+2025-12-07 03:38:31 - ✓ Carpeta QR ya existe
+2025-12-07 03:38:31 - ✓ Carpeta tiene permisos de escritura
+2025-12-07 03:38:31 - Nombre del archivo: QR-FUNC-44-6934e8a7c7084.png
+2025-12-07 03:38:31 - Ruta completa del archivo: C:\xampp\htdocs\SEGTRACK\Public\qr\QR_Func\QR-FUNC-44-6934e8a7c7084.png
+2025-12-07 03:38:31 - Contenido del QR: ID: 44 | Nombre: Dayana ester | Documento: 32423432432
+2025-12-07 03:38:31 - Llamando a QRcode::png()...
+2025-12-07 03:38:32 - ✓✓✓ QR GENERADO EXITOSAMENTE ✓✓✓
+2025-12-07 03:38:32 - ✓ Archivo creado en: C:\xampp\htdocs\SEGTRACK\Public\qr\QR_Func\QR-FUNC-44-6934e8a7c7084.png
+2025-12-07 03:38:32 - ✓ Tamaño del archivo: 880 bytes
+2025-12-07 03:38:32 - ✓ Verificado: NO hay archivos PNG en la carpeta de la librería
+2025-12-07 03:38:32 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-44-6934e8a7c7084.png
+2025-12-07 03:38:32 - === FIN GENERACIÓN QR ===
+
+2025-12-07 03:38:32 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-44-6934e8a7c7084.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 44. QR generado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"44","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-44-6934e8a7c7084.png"}}
+
+2025-12-07 04:21:48 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "sadasdas",
+    "IdSede": "26",
+    "TelefonoFuncionario": "2323424234",
+    "DocumentoFuncionario": "23423423423",
+    "CorreoFuncionario": "prueba@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-07 04:21:48 - registrarFuncionario llamado
+2025-12-07 04:21:48 - Llamando a RegistrarFuncionario en el modelo
+2025-12-07 04:21:48 - Resultado del modelo (BD): {"success":true,"id":"45"}
+2025-12-07 04:21:48 - Registro exitoso, ID: 45. Generando QR...
+2025-12-07 04:21:48 - Generando QR para funcionario ID: 45
+2025-12-07 04:21:48 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-07 04:21:48 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-07 04:21:48 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-07 04:21:48 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-45-6934f2cc4cc9a.png
+2025-12-07 04:21:48 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-45-6934f2cc4cc9a.png
+2025-12-07 04:21:48 - ✓ Tamaño del archivo: 733 bytes
+2025-12-07 04:21:48 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-45-6934f2cc4cc9a.png
+2025-12-07 04:21:48 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-45-6934f2cc4cc9a.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 45. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"45","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-45-6934f2cc4cc9a.png"}}
+
+2025-12-08 18:46:26 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "45",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 18:46:26 - Cambiando estado del funcionario ID: 45 a: Inactivo
+2025-12-08 18:46:26 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-08 18:46:37 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "45",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 18:46:37 - Cambiando estado del funcionario ID: 45 a: Activo
+2025-12-08 18:46:37 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Activo' correctamente","nuevo_estado":"Activo"}
+
+2025-12-08 18:47:03 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "45",
+    "cargo": "Visitante",
+    "nombre": "juanpis",
+    "sede": "26",
+    "telefono": "21474324324",
+    "documento": "23423423423",
+    "correo": "prueba@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 18:47:03 - actualizarFuncionario llamado para ID: 45
+2025-12-08 18:47:03 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-08 18:47:20 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "45",
+    "cargo": "Personal Seguridad",
+    "nombre": "juanpis",
+    "sede": "26",
+    "telefono": "2147483647",
+    "documento": "23423423423",
+    "correo": "prueba@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 18:47:20 - actualizarFuncionario llamado para ID: 45
+2025-12-08 18:47:20 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-08 18:47:30 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "44",
+    "cargo": "Visitante",
+    "nombre": "Dayana ester",
+    "sede": "25",
+    "telefono": "2147483647",
+    "documento": "32423432432",
+    "correo": "ester@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 18:47:30 - actualizarFuncionario llamado para ID: 44
+2025-12-08 18:47:30 - Resultado actualización: {"success":true,"rows":0}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":0}
+
+2025-12-08 18:47:42 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "44",
+    "cargo": "Personal Seguridad",
+    "nombre": "Dayana ester",
+    "sede": "25",
+    "telefono": "2147483647",
+    "documento": "32423432432",
+    "correo": "ester@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 18:47:42 - actualizarFuncionario llamado para ID: 44
+2025-12-08 18:47:42 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-08 18:47:53 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "43",
+    "cargo": "Funcionario Institucion",
+    "nombre": "Carol Dayana lorena",
+    "sede": "26",
+    "telefono": "2147483647",
+    "documento": "43243242342",
+    "correo": "DayanaCarol@gamil.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 18:47:53 - actualizarFuncionario llamado para ID: 43
+2025-12-08 18:47:53 - Resultado actualización: {"success":true,"rows":0}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":0}
+
+2025-12-08 18:54:19 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario.",
+    "NombreFuncionario": "Luisa ferias",
+    "IdSede": "28",
+    "TelefonoFuncionario": "2131231231",
+    "DocumentoFuncionario": "31231231231",
+    "CorreoFuncionario": "Luisaferias@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-08 18:54:19 - registrarFuncionario llamado
+2025-12-08 18:54:19 - Llamando a RegistrarFuncionario en el modelo
+2025-12-08 18:54:19 - Resultado del modelo (BD): {"success":true,"id":"46"}
+2025-12-08 18:54:19 - Registro exitoso, ID: 46. Generando QR...
+2025-12-08 18:54:19 - Generando QR para funcionario ID: 46
+2025-12-08 18:54:19 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-08 18:54:19 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-08 18:54:19 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-08 18:54:19 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-46-693710cbcafa4.png
+2025-12-08 18:54:19 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-46-693710cbcafa4.png
+2025-12-08 18:54:19 - ✓ Tamaño del archivo: 871 bytes
+2025-12-08 18:54:19 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-46-693710cbcafa4.png
+2025-12-08 18:54:19 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-46-693710cbcafa4.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 46. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"46","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-46-693710cbcafa4.png"}}
+
+2025-12-08 19:05:51 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "46",
+    "cargo": "Personal Seguridad",
+    "nombre": "Luisa ferias",
+    "sede": "28",
+    "telefono": "2131231231",
+    "documento": "31231231231",
+    "correo": "Luisaferias@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 19:05:51 - actualizarFuncionario llamado para ID: 46
+2025-12-08 19:05:51 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-08 19:06:07 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "46",
+    "cargo": "Funcionario Institucion",
+    "nombre": "Luisa ferias",
+    "sede": "28",
+    "telefono": "2131231231",
+    "documento": "31231231231",
+    "correo": "Luisaferias@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 19:06:07 - actualizarFuncionario llamado para ID: 46
+2025-12-08 19:06:07 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-08 19:07:58 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "46",
+    "cargo": "Funcionario",
+    "nombre": "Luisa ferias",
+    "sede": "28",
+    "telefono": "2131231231",
+    "documento": "31231231231",
+    "correo": "Luisaferias@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 19:07:58 - actualizarFuncionario llamado para ID: 46
+2025-12-08 19:07:58 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-08 19:08:43 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "25",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:08:43 - Cambiando estado del funcionario ID: 25 a: Inactivo
+2025-12-08 19:08:43 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-08 19:08:47 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "26",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:08:47 - Cambiando estado del funcionario ID: 26 a: Inactivo
+2025-12-08 19:08:47 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-08 19:09:07 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "23",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:09:08 - Cambiando estado del funcionario ID: 23 a: Inactivo
+2025-12-08 19:09:08 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-08 19:09:15 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "24",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:09:15 - Cambiando estado del funcionario ID: 24 a: Inactivo
+2025-12-08 19:09:15 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-08 19:09:23 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "27",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:09:23 - Cambiando estado del funcionario ID: 27 a: Activo
+2025-12-08 19:09:23 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Activo' correctamente","nuevo_estado":"Activo"}
+
+2025-12-08 19:09:28 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "27",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:09:28 - Cambiando estado del funcionario ID: 27 a: Inactivo
+2025-12-08 19:09:28 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-08 19:09:32 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "28",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:09:32 - Cambiando estado del funcionario ID: 28 a: Inactivo
+2025-12-08 19:09:32 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-08 19:09:44 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "31",
+    "estado": "Inactivo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:09:44 - Cambiando estado del funcionario ID: 31 a: Inactivo
+2025-12-08 19:09:44 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-08 19:09:51 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "32",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:09:51 - Cambiando estado del funcionario ID: 32 a: Activo
+2025-12-08 19:09:51 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Activo' correctamente","nuevo_estado":"Activo"}
+
+2025-12-08 19:10:01 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "35",
+    "estado": "Activo"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: cambiar_estado
+2025-12-08 19:10:01 - Cambiando estado del funcionario ID: 35 a: Activo
+2025-12-08 19:10:01 - Resultado cambio de estado: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Estado cambiado a 'Activo' correctamente","nuevo_estado":"Activo"}
+
+2025-12-08 20:18:03 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "46",
+    "cargo": "Funcionario",
+    "nombre": "Luisa ferias",
+    "sede": "33",
+    "telefono": "2131231231",
+    "documento": "31231231231",
+    "correo": "Luisaferias@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 20:18:03 - actualizarFuncionario llamado para ID: 46
+2025-12-08 20:18:03 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-08 20:18:03 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar_qr",
+    "id": "46"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar_qr
+Respuesta final: {"success":false,"message":"Acción no reconocida"}
+
+2025-12-08 20:18:28 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "43",
+    "cargo": "Funcionario",
+    "nombre": "Carol Dayana",
+    "sede": "30",
+    "telefono": "2147483647",
+    "documento": "43243242342",
+    "correo": "DayanaCarol@gamil.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-08 20:18:28 - actualizarFuncionario llamado para ID: 43
+2025-12-08 20:18:28 - Resultado actualización: {"success":true,"rows":1}
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente","rows_affected":1}
+
+2025-12-08 20:18:29 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar_qr",
+    "id": "43"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar_qr
+Respuesta final: {"success":false,"message":"Acción no reconocida"}
+
+2025-12-08 20:19:19 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario.",
+    "NombreFuncionario": "nicolle perez",
+    "IdSede": "29",
+    "TelefonoFuncionario": "1231231231",
+    "DocumentoFuncionario": "31231231231",
+    "CorreoFuncionario": "personal@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-08 20:19:19 - registrarFuncionario llamado
+2025-12-08 20:19:19 - Llamando a RegistrarFuncionario en el modelo
+2025-12-08 20:19:19 - Resultado del modelo (BD): {"success":true,"id":"47"}
+2025-12-08 20:19:19 - Registro exitoso, ID: 47. Generando QR...
+2025-12-08 20:19:19 - Generando QR para funcionario ID: 47
+2025-12-08 20:19:19 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-08 20:19:19 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-08 20:19:19 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-08 20:19:19 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-47-693724b77689c.png
+2025-12-08 20:19:19 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-47-693724b77689c.png
+2025-12-08 20:19:19 - ✓ Tamaño del archivo: 873 bytes
+2025-12-08 20:19:19 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-47-693724b77689c.png
+2025-12-08 20:19:19 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-47-693724b77689c.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 47. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"47","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-47-693724b77689c.png"}}

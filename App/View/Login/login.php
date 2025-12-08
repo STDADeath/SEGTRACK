@@ -49,10 +49,7 @@
                                 Iniciar Sesión
                             </button>
 
-                            <button type="button" class="btn-register" onclick="location.href='RegistroFun.html'">
-                                <i class='bx bx-user-plus'></i>
-                                Crear Cuenta
-                            </button>
+                           
                         </div>
                     </div>
 
