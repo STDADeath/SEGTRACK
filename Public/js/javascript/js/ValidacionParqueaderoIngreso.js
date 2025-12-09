@@ -1,8 +1,3 @@
-// ========================================
-// CONTROL DE PARQUEADERO - SISTEMA SEGTRACK
-// RÉPLICA EXACTA DEL CÓDIGO DE DISPOSITIVOS
-// ========================================
-
 const App = {
     table: null,
     qrReader: null,
@@ -10,7 +5,6 @@ const App = {
     escaneando: false,
     tipoMovimiento: null,
     btnCapturar: null,
-    btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
     config: {
@@ -21,11 +15,8 @@ const App = {
     }
 };
 
-// Mostrar mensaje en pantalla
 function mostrarMensaje(esExito, texto) {
     const { mensajeExito, mensajeError } = App;
-    if (!mensajeExito || !mensajeError) return;
-
     mensajeExito.classList.toggle("d-none", !esExito);
     mensajeError.classList.toggle("d-none", esExito);
     (esExito ? mensajeExito : mensajeError).textContent = texto;
@@ -36,9 +27,8 @@ function mostrarMensaje(esExito, texto) {
     }, 5000);
 }
 
-// Enviar QR al servidor
 async function enviarQr(qr, tipo) {
-    if (App.btnCapturar) App.btnCapturar.disabled = true;
+    App.btnCapturar.disabled = true;
 
     try {
         const res = await fetch(App.config.urlControlador, {
@@ -50,17 +40,15 @@ async function enviarQr(qr, tipo) {
         const data = await res.json();
         mostrarMensaje(data.success, data.message);
 
-        if (data.success && App.table) {
-            App.table.ajax.reload(null, false);
-        }
+        if (data.success) App.table.ajax.reload(null, false);
+
     } catch (e) {
-        mostrarMensaje(false, "Error de conexión.");
-    } finally {
-        if (App.btnCapturar) App.btnCapturar.disabled = false;
+        mostrarMensaje(false, "Error de conexión");
     }
+
+    App.btnCapturar.disabled = false;
 }
 
-// Lectura de QR continua
 function onScanQR(qr) {
     qr = qr.trim();
     if (!qr || App.escaneando || qr === App.ultimaLectura) return;
@@ -76,7 +64,6 @@ function onScanQR(qr) {
     });
 }
 
-// Iniciar cámara para escanear QR
 async function iniciarCamara() {
     if (App.qrReader) return;
 
@@ -89,63 +76,36 @@ async function iniciarCamara() {
             onScanQR
         );
     } catch (e) {
-        console.error("Error al iniciar cámara:", e);
-        mostrarMensaje(false, "No se pudo iniciar la cámara.");
+        mostrarMensaje(false, "No se pudo iniciar la cámara");
     }
 }
 
-// Descargar PDF de movimientos de parqueadero
-async function descargarPDF() {
-    try {
-        const res = await fetch('/SEGTRACK/App/Controller/ParqueaderoPDFController.php?accion=pdf');
-        if (!res.ok) throw new Error('Error al generar PDF');
-
-        const blob = await res.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Parqueadero_${new Date().toISOString().slice(0, 10)}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-
-        mostrarMensaje(true, "PDF descargado correctamente.");
-    } catch (e) {
-        console.error('Error:', e);
-        mostrarMensaje(false, "No se pudo descargar el PDF.");
-    }
-}
-
-// Inicialización al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
+
     App.tipoMovimiento = document.getElementById("tipoMovimiento");
     App.btnCapturar = document.getElementById("btnCapturar");
-    App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
     App.mensajeExito = document.getElementById("mensajeExito");
     App.mensajeError = document.getElementById("mensajeError");
 
-    // Inicializa tabla
     App.table = $("#tablaParqueaderoDT").DataTable({
         ajax: {
             url: App.config.urlControlador,
-            dataSrc: function (json) {
-                return json.data || [];
-            }
+            dataSrc: json => json.data || []
         },
         columns: [
+            { data: "QrVehiculo" },
             { data: "PlacaVehiculo" },
             { data: "TipoVehiculo" },
             { data: "DescripcionVehiculo" },
-            { data: "NombreSede" },
-            { data: "Estado" },
             { data: "TipoMovimiento" },
-            { data: "FechaParqueadero", render: d => new Date(d).toLocaleString('es-ES') }
+            {
+                data: "FechaIngreso",
+                render: d => new Date(d).toLocaleString("es-ES")
+            }
         ],
-        language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
-        order: [[6, 'desc']]
+        order: [[5, "desc"]],
+        language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" }
     });
 
-    if (App.btnCapturar) App.btnCapturar.addEventListener("click", iniciarCamara);
-    if (App.btnDescargarPDF) App.btnDescargarPDF.addEventListener("click", descargarPDF);
+    App.btnCapturar.addEventListener("click", iniciarCamara);
 });

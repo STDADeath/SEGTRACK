@@ -6,7 +6,7 @@
             
             <!-- TÍTULO PRINCIPAL -->
             <h4 class="text-center fw-bold text-primary mb-5">
-                <i class="fas fa-car me-2"></i>Control de Parqueadero de Vehículos
+                <i class="fas fa-car me-2"></i>Control de Ingreso de Vehículos
             </h4>
 
             <!-- SECCIÓN DE ESCANEO QR -->
@@ -43,7 +43,7 @@
                 <div id="mensajeError" class="alert alert-danger text-center d-none mb-3 shadow-sm"></div>
             </div>
 
-            <!-- TABLA DE MOVIMIENTOS RECIENTES -->
+            <!-- TABLA DE INGRESOS RECIENTES -->
             <div class="bg-white p-4 rounded-4 shadow-sm">
                 
                 <!-- Encabezado + Botón PDF alineado -->
@@ -65,13 +65,12 @@
                     <table id="tablaParqueaderoDT" class="table table-hover align-middle text-center mb-0">
                         <thead class="bg-primary text-white">
                             <tr>
-                                <th>Placa Vehículo</th>
-                                <th>Tipo Vehículo</th>
+                                <th>Código QR</th>
+                                <th>Placa</th>
+                                <th>Tipo</th>
                                 <th>Descripción</th>
-                                <th>Sede</th>
-                                <th>Estado</th>
                                 <th>Tipo Movimiento</th>
-                                <th>Fecha</th>
+                                <th>Fecha Ingreso</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -85,6 +84,7 @@
 
 <!-- LIBRERÍAS EXTERNAS -->
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
