@@ -6,7 +6,7 @@ header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once __DIR__ . "/../Core/conexion.php";
-require_once __DIR__ . "/../Model/ModeloIngresoParqueadero.php";
+require_once __DIR__ . "/../Model/ModeloIngresParqueadero.php";
 
 class ControladorParqueadero {
     private $modelo;
@@ -16,10 +16,10 @@ class ControladorParqueadero {
     }
 
     /**
-     * REGISTRAR INGRESO O SALIDA DE VEHÍCULO AL PARQUEADERO
-     * IMPORTANTE: Usa la sede del parqueadero, no del vehículo
+     * REGISTRAR MOVIMIENTO DE VEHÍCULO
+     * EXACTAMENTE IGUAL QUE DISPOSITIVOS
      */
-    public function registrarIngreso() {
+    public function registrarMovimiento() {
         // Obtenemos el cuerpo del POST (JSON enviado desde fetch)
         $input = json_decode(file_get_contents('php://input'), true);
 
@@ -34,49 +34,44 @@ class ControladorParqueadero {
             return $this->responder(false, 'Código QR no recibido');
         }
 
-        // Se consulta si el QR pertenece a un parqueadero (vehículo)
-        $parqueadero = $this->modelo->buscarParqueaderoPorQr($qrCodigo);
+        // Se consulta si el QR pertenece a un vehículo
+        $vehiculo = $this->modelo->buscarVehiculoPorQr($qrCodigo);
 
-        // Si no coincide con ningún parqueadero → no se registra nada
-        if (!$parqueadero) {
-            return $this->responder(false, 'Vehículo no encontrado en el sistema');
-        }
-
-        // Verificar que el parqueadero tenga una sede asignada
-        if (empty($parqueadero['IdSede'])) {
-            return $this->responder(false, 'El vehículo no tiene sede asignada. Contacte al administrador.');
+        // Si no coincide con ningún vehículo → no se registra nada
+        if (!$vehiculo) {
+            return $this->responder(false, 'Vehículo no encontrado');
         }
 
         /**
-         * Registrar el movimiento en la tabla ingreso
-         * USANDO LA SEDE DEL PARQUEADERO (esto es clave)
+         * Registrar el movimiento actualizando el estado
          */
-        $exito = $this->modelo->registrarIngreso(
-            $parqueadero['IdParqueadero'],
-            $parqueadero['IdSede'],  // ← SEDE DEL PARQUEADERO
+        $exito = $this->modelo->registrarMovimiento(
+            $vehiculo['IdParqueadero'],
             $tipoMovimiento
         );
 
-        // Error al insertar en BD
+        // Error al actualizar en BD
         if (!$exito) {
             return $this->responder(false, 'No se pudo registrar el movimiento');
         }
 
         // Respuesta exitosa para la vista
         return $this->responder(true, "$tipoMovimiento registrada correctamente", [
-            'tipoVehiculo' => $parqueadero['TipoVehiculo'],
-            'placa' => $parqueadero['PlacaVehiculo'],
-            'descripcion' => $parqueadero['DescripcionVehiculo'] ?? 'N/A',
+            'placa' => $vehiculo['PlacaVehiculo'],
+            'tipo' => $vehiculo['TipoVehiculo'],
+            'descripcion' => $vehiculo['DescripcionVehiculo'],
+            'sede' => $vehiculo['NombreSede'] ?? 'Sin sede',
             'fecha' => date('Y-m-d H:i:s'),
             'movimiento' => $tipoMovimiento
         ]);
     }
 
     /**
-     * LISTAR INGRESOS DE PARQUEADERO
+     * LISTAR MOVIMIENTOS
+     * IGUAL QUE DISPOSITIVOS
      */
-    public function listarIngresos() {
-        $lista = $this->modelo->listarIngresos();
+    public function listarMovimientos() {
+        $lista = $this->modelo->listarMovimientos();
 
         echo json_encode([
             "data" => $lista
@@ -87,12 +82,13 @@ class ControladorParqueadero {
 
     /**
      * FUNCION DE RESPUESTA GLOBAL
+     * IGUAL QUE DISPOSITIVOS
      */
     private function responder($success, $message, $data = null) {
         echo json_encode([
             'success' => $success,
             'message' => $message,
-            'data'    => $data
+            'data' => $data
         ], JSON_UNESCAPED_UNICODE);
 
         exit;
@@ -100,14 +96,14 @@ class ControladorParqueadero {
 }
 
 // ----- RUTEO BÁSICO -----
-// POST → Registrar entrada o salida
-// GET  → Listar ingresos
+// POST → Registrar movimiento
+// GET  → Listar movimientos
 $controlador = new ControladorParqueadero();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controlador->registrarIngreso();
+    $controlador->registrarMovimiento();
 } else {
-    $controlador->listarIngresos();
+    $controlador->listarMovimientos();
 }
 
 ?>

@@ -6,7 +6,7 @@
             
             <!-- TÍTULO PRINCIPAL -->
             <h4 class="text-center fw-bold text-primary mb-5">
-                <i class="fas fa-car me-2"></i>Control de Ingreso al Parqueadero
+                <i class="fas fa-car me-2"></i>Control de Parqueadero de Vehículos
             </h4>
 
             <!-- SECCIÓN DE ESCANEO QR -->
@@ -43,13 +43,13 @@
                 <div id="mensajeError" class="alert alert-danger text-center d-none mb-3 shadow-sm"></div>
             </div>
 
-            <!-- TABLA DE INGRESOS RECIENTES -->
+            <!-- TABLA DE MOVIMIENTOS RECIENTES -->
             <div class="bg-white p-4 rounded-4 shadow-sm">
                 
                 <!-- Encabezado + Botón PDF alineado -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-semibold text-secondary mb-0">
-                        <i class="fas fa-list me-2"></i>Lista de Ingresos al Parqueadero
+                        <i class="fas fa-list me-2"></i>Lista de Movimientos de Vehículos
                     </h5>
 
                     <!-- BOTÓN PDF (OPCIONAL) -->
@@ -65,12 +65,13 @@
                     <table id="tablaParqueaderoDT" class="table table-hover align-middle text-center mb-0">
                         <thead class="bg-primary text-white">
                             <tr>
+                                <th>Placa Vehículo</th>
                                 <th>Tipo Vehículo</th>
-                                <th>Placa</th>
                                 <th>Descripción</th>
                                 <th>Sede</th>
+                                <th>Estado</th>
                                 <th>Tipo Movimiento</th>
-                                <th>Fecha Ingreso</th>
+                                <th>Fecha</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -89,6 +90,6 @@
 <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- SCRIPT PERSONALIZADO -->
-<script src="../../../Public/js/javascript/js/ValidacionIngresoParqueadero.js"></script>
+<script src="../../../Public/js/javascript/js/ValidacionParqueaderoIngreso.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

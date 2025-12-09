@@ -1,6 +1,6 @@
 // ========================================
 // CONTROL DE PARQUEADERO - SISTEMA SEGTRACK
-// Lectura continua de QR de vehículos
+// RÉPLICA EXACTA DEL CÓDIGO DE DISPOSITIVOS
 // ========================================
 
 const App = {
@@ -78,42 +78,23 @@ function onScanQR(qr) {
 
 // Iniciar cámara para escanear QR
 async function iniciarCamara() {
-    console.log("Función iniciarCamara llamada");
-    
-    if (App.qrReader) {
-        console.log("Cámara ya está activa");
-        return;
-    }
-
-    console.log("Creando instancia de Html5Qrcode...");
-    
-    // Verificar que el contenedor existe
-    const contenedor = document.getElementById("qr-reader");
-    if (!contenedor) {
-        console.error("❌ Contenedor 'qr-reader' NO encontrado");
-        mostrarMensaje(false, "Error: Contenedor de cámara no encontrado");
-        return;
-    }
-    
-    console.log("Contenedor qr-reader encontrado:", contenedor);
+    if (App.qrReader) return;
 
     App.qrReader = new Html5Qrcode("qr-reader");
 
     try {
-        console.log("Intentando iniciar cámara...");
         await App.qrReader.start(
             { facingMode: "environment" },
             { fps: App.config.fps, qrbox: App.config.qrboxSize },
             onScanQR
         );
-        console.log("✓ Cámara iniciada exitosamente");
     } catch (e) {
-        console.error("❌ Error al iniciar cámara:", e);
-        mostrarMensaje(false, "No se pudo iniciar la cámara: " + e.message);
+        console.error("Error al iniciar cámara:", e);
+        mostrarMensaje(false, "No se pudo iniciar la cámara.");
     }
 }
 
-// Descargar PDF de ingresos de parqueadero
+// Descargar PDF de movimientos de parqueadero
 async function descargarPDF() {
     try {
         const res = await fetch('/SEGTRACK/App/Controller/ParqueaderoPDFController.php?accion=pdf');
@@ -138,57 +119,33 @@ async function descargarPDF() {
 
 // Inicialización al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("=== INICIANDO SISTEMA PARQUEADERO ===");
-    
     App.tipoMovimiento = document.getElementById("tipoMovimiento");
     App.btnCapturar = document.getElementById("btnCapturar");
     App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
     App.mensajeExito = document.getElementById("mensajeExito");
     App.mensajeError = document.getElementById("mensajeError");
 
-    console.log("Elementos encontrados:", {
-        tipoMovimiento: App.tipoMovimiento ? "✓" : "✗",
-        btnCapturar: App.btnCapturar ? "✓" : "✗",
-        mensajeExito: App.mensajeExito ? "✓" : "✗",
-        mensajeError: App.mensajeError ? "✓" : "✗"
-    });
-
     // Inicializa tabla
     App.table = $("#tablaParqueaderoDT").DataTable({
         ajax: {
             url: App.config.urlControlador,
             dataSrc: function (json) {
-                console.log("Datos recibidos de servidor:", json);
                 return json.data || [];
             }
         },
         columns: [
-            { data: "TipoVehiculo" },
             { data: "PlacaVehiculo" },
+            { data: "TipoVehiculo" },
             { data: "DescripcionVehiculo" },
             { data: "NombreSede" },
+            { data: "Estado" },
             { data: "TipoMovimiento" },
-            { data: "FechaIngreso", render: d => new Date(d).toLocaleString('es-ES') }
+            { data: "FechaParqueadero", render: d => new Date(d).toLocaleString('es-ES') }
         ],
         language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
-        order: [[5, 'desc']]
+        order: [[6, 'desc']]
     });
 
-    console.log("DataTable inicializada");
-
-    if (App.btnCapturar) {
-        App.btnCapturar.addEventListener("click", () => {
-            console.log("Botón capturar clickeado");
-            iniciarCamara();
-        });
-        console.log("Event listener agregado al botón");
-    } else {
-        console.error("❌ Botón btnCapturar NO encontrado");
-    }
-
-    if (App.btnDescargarPDF) {
-        App.btnDescargarPDF.addEventListener("click", descargarPDF);
-    }
-
-    console.log("=== SISTEMA PARQUEADERO INICIALIZADO ===");
+    if (App.btnCapturar) App.btnCapturar.addEventListener("click", iniciarCamara);
+    if (App.btnDescargarPDF) App.btnDescargarPDF.addEventListener("click", descargarPDF);
 });

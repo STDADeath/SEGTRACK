@@ -9,66 +9,95 @@ class ModeloParqueadero {
         $this->pdo = $conexionObj->getConexion();
 
         if (!$this->pdo) {
-            die("ERROR: La conexión no se inicializó correctamente.");
+            throw new Exception("ERROR: La conexión a la base de datos falló");
         }
     }
 
     /**
-     * Busca un parqueadero usando el contenido del código QR.
+     * Busca un vehículo usando el contenido del código QR.
      * El QR debe traer un formato como: "ID: 12"
-     * IGUAL QUE FUNCIONARIOS
      */
-    public function buscarParqueaderoPorQr($qrCodigo) {
-        // Expresión regular que extrae el número después de "ID:"
-        if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $match)) {
-            $id = $match[1]; // Se obtiene el IdParqueadero
-        } else {
-            // Si el QR no tiene formato correcto, se retorna false
+    public function buscarVehiculoPorQr($qrCodigo) {
+        try {
+            // Expresión regular que extrae el número después de "ID:"
+            if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $match)) {
+                $id = $match[1];
+            } else {
+                return false;
+            }
+
+            // Consulta SQL para obtener los datos del vehículo con la sede vinculada
+            $sql = "SELECT p.*, 
+                           COALESCE(s.NombreSede, 'Sin sede') AS NombreSede, 
+                           s.DireccionSede 
+                    FROM parqueadero p
+                    LEFT JOIN sede s ON p.IdSede = s.IdSede
+                    WHERE p.IdParqueadero = ?";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$id]);
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error en buscarVehiculoPorQr: " . $e->getMessage());
             return false;
         }
-
-        // Consulta SQL para obtener los datos del parqueadero por su ID
-        // IMPORTANTE: Incluye la sede del parqueadero
-        $sql = "SELECT * FROM parqueadero WHERE IdParqueadero = ?";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$id]);
-
-        // Retorna un arreglo asociativo con los datos, o false si no existe
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
-     * Registra un ingreso o salida en la base de datos
-     * IMPORTANTE: Usa la IdSede del parqueadero
-     * Retorna true si se insertó correctamente, false en caso contrario
+     * Registra un movimiento actualizando el estado y la fecha
      */
-    public function registrarIngreso($idParqueadero, $idSede, $tipoMovimiento = 'Entrada') {
-        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdParqueadero, IdFuncionario, IdDispositivo)
-                VALUES (?, NOW(), ?, ?, NULL, NULL)";
-        
-        $stmt = $this->pdo->prepare($sql);
+    public function registrarMovimiento($idParqueadero, $tipoMovimiento = 'Entrada') {
+        try {
+            // Determinar el nuevo estado según el tipo de movimiento
+            $nuevoEstado = ($tipoMovimiento === 'Entrada') ? 'Activo' : 'Inactivo';
 
-        // Se ejecuta la consulta con los parámetros enviados
-        return $stmt->execute([$tipoMovimiento, $idSede, $idParqueadero]);
+            // Actualizar estado y fecha del vehículo
+            $sql = "UPDATE parqueadero 
+                    SET Estado = ?, FechaParqueadero = NOW() 
+                    WHERE IdParqueadero = ?";
+            
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$nuevoEstado, $idParqueadero]);
+        } catch (PDOException $e) {
+            error_log("Error en registrarMovimiento: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
-     * Lista todos los ingresos de parqueaderos registrados
+     * Lista todos los movimientos de vehículos registrados
      */
-    public function listarIngresos() {
-        $sql = "SELECT i.IdIngreso, i.TipoMovimiento, i.FechaIngreso, 
-                p.TipoVehiculo, p.PlacaVehiculo, p.DescripcionVehiculo,
-                s.NombreSede
-                FROM ingreso i
-                INNER JOIN parqueadero p ON i.IdParqueadero = p.IdParqueadero
-                LEFT JOIN sede s ON i.IdSede = s.IdSede
-                ORDER BY i.IdIngreso DESC";
-        
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+    public function listarMovimientos() {
+        try {
+            $sql = "SELECT p.IdParqueadero, 
+                           COALESCE(p.PlacaVehiculo, 'Sin placa') AS PlacaVehiculo, 
+                           COALESCE(p.TipoVehiculo, 'N/A') AS TipoVehiculo, 
+                           COALESCE(p.DescripcionVehiculo, 'Sin descripción') AS DescripcionVehiculo,
+                           COALESCE(p.Estado, 'Inactivo') AS Estado, 
+                           COALESCE(p.FechaParqueadero, NOW()) AS FechaParqueadero,
+                           COALESCE(s.NombreSede, 'Sin sede') AS NombreSede,
+                           CASE 
+                               WHEN p.Estado = 'Activo' THEN 'Entrada'
+                               ELSE 'Salida'
+                           END AS TipoMovimiento
+                    FROM parqueadero p
+                    LEFT JOIN sede s ON p.IdSede = s.IdSede
+                    ORDER BY p.FechaParqueadero DESC";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
 
-        // Se retorna un arreglo con todos los registros
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Retornar array vacío si no hay resultados
+            return $resultado ? $resultado : [];
+            
+        } catch (PDOException $e) {
+            error_log("Error en listarMovimientos: " . $e->getMessage());
+            // Retornar array vacío en caso de error
+            return [];
+        }
     }
 }
 
