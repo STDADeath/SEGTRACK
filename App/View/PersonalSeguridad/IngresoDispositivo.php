@@ -43,14 +43,21 @@
                 <div id="mensajeError" class="alert alert-danger text-center d-none mb-3 shadow-sm"></div>
             </div>
 
-            <!-- TABLA DE MOVIMIENTOS RECIENTES -->
+            <!-- TABLA DE INGRESOS RECIENTES -->
             <div class="bg-white p-4 rounded-4 shadow-sm">
                 
-                <!-- Encabezado -->
+                <!-- Encabezado + Botón PDF alineado -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-semibold text-secondary mb-0">
                         <i class="fas fa-list me-2"></i>Lista de Movimientos de Dispositivos
                     </h5>
+
+                    <!-- BOTÓN PDF (OPCIONAL) -->
+                    <a href="/SEGTRACK/App/Controller/ControladorDispositivoPDF.php?accion=pdf" 
+                       target="_blank" 
+                       class="btn btn-danger shadow-sm fw-semibold">
+                        <i class="fas fa-file-pdf me-2"></i>Descargar PDF
+                    </a>
                 </div>
 
                 <!-- TABLA -->
@@ -59,10 +66,10 @@
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>Código QR</th>
-                                <th>Tipo Dispositivo</th>
+                                <th>Tipo</th>
                                 <th>Marca</th>
-                                <th>Movimiento</th>
-                                <th>Fecha</th>
+                                <th>Tipo Movimiento</th>
+                                <th>Fecha Ingreso</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

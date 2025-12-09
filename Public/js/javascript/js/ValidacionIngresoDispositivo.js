@@ -1,5 +1,6 @@
 // ========================================
 // CONTROL DE DISPOSITIVOS - SISTEMA SEGTRACK
+// RÉPLICA EXACTA DEL CÓDIGO DE FUNCIONARIOS
 // ========================================
 
 const App = {
@@ -9,6 +10,7 @@ const App = {
     escaneando: false,
     tipoMovimiento: null,
     btnCapturar: null,
+    btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
     config: {
@@ -42,26 +44,17 @@ async function enviarQr(qr, tipo) {
         const res = await fetch(App.config.urlControlador, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-                qr_codigo: qr, 
-                tipoMovimiento: tipo
-                // NO enviar idSede, se obtiene automáticamente
-            })
+            body: JSON.stringify({ qr_codigo: qr, tipoMovimiento: tipo })
         });
 
         const data = await res.json();
-        
-        // Log para debug
-        console.log('Respuesta del servidor:', data);
-        
         mostrarMensaje(data.success, data.message);
 
         if (data.success && App.table) {
             App.table.ajax.reload(null, false);
         }
     } catch (e) {
-        console.error('Error de conexión:', e);
-        mostrarMensaje(false, "Error de conexión con el servidor.");
+        mostrarMensaje(false, "Error de conexión.");
     } finally {
         if (App.btnCapturar) App.btnCapturar.disabled = false;
     }
@@ -69,12 +62,7 @@ async function enviarQr(qr, tipo) {
 
 // Lectura de QR continua
 function onScanQR(qr) {
-    // Limpieza agresiva del QR
-    qr = qr.trim().replace(/\s+/g, '');
-    
-    // Log para debug
-    console.log('QR escaneado:', qr, '| Length:', qr.length);
-    
+    qr = qr.trim();
     if (!qr || App.escaneando || qr === App.ultimaLectura) return;
 
     App.escaneando = true;
@@ -90,10 +78,7 @@ function onScanQR(qr) {
 
 // Iniciar cámara para escanear QR
 async function iniciarCamara() {
-    if (App.qrReader) {
-        console.log('Cámara ya está activa');
-        return;
-    }
+    if (App.qrReader) return;
 
     App.qrReader = new Html5Qrcode("qr-reader");
 
@@ -103,28 +88,48 @@ async function iniciarCamara() {
             { fps: App.config.fps, qrbox: App.config.qrboxSize },
             onScanQR
         );
-        console.log('Cámara iniciada correctamente');
     } catch (e) {
         console.error("Error al iniciar cámara:", e);
-        mostrarMensaje(false, "No se pudo iniciar la cámara. Verifica los permisos.");
+        mostrarMensaje(false, "No se pudo iniciar la cámara.");
+    }
+}
+
+// Descargar PDF de ingresos de dispositivos
+async function descargarPDF() {
+    try {
+        const res = await fetch('/SEGTRACK/App/Controller/DispositivoPDFController.php?accion=pdf');
+        if (!res.ok) throw new Error('Error al generar PDF');
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Dispositivos_${new Date().toISOString().slice(0, 10)}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+
+        mostrarMensaje(true, "PDF descargado correctamente.");
+    } catch (e) {
+        console.error('Error:', e);
+        mostrarMensaje(false, "No se pudo descargar el PDF.");
     }
 }
 
 // Inicialización al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-    console.log('Inicializando sistema de dispositivos...');
-    
     App.tipoMovimiento = document.getElementById("tipoMovimiento");
     App.btnCapturar = document.getElementById("btnCapturar");
+    App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
     App.mensajeExito = document.getElementById("mensajeExito");
     App.mensajeError = document.getElementById("mensajeError");
 
-    // Inicializa tabla DataTables
+    // Inicializa tabla
     App.table = $("#tablaDispositivosDT").DataTable({
         ajax: {
             url: App.config.urlControlador,
             dataSrc: function (json) {
-                console.log('Datos recibidos:', json);
                 return json.data || [];
             }
         },
@@ -135,17 +140,10 @@ document.addEventListener("DOMContentLoaded", () => {
             { data: "TipoMovimiento" },
             { data: "FechaIngreso", render: d => new Date(d).toLocaleString('es-ES') }
         ],
-        language: { 
-            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" 
-        },
+        language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
         order: [[4, 'desc']]
     });
 
-    // Evento para botón de captura
-    if (App.btnCapturar) {
-        App.btnCapturar.addEventListener("click", iniciarCamara);
-        console.log('Botón de captura configurado');
-    }
-
-    console.log('Sistema inicializado correctamente');
+    if (App.btnCapturar) App.btnCapturar.addEventListener("click", iniciarCamara);
+    if (App.btnDescargarPDF) App.btnDescargarPDF.addEventListener("click", descargarPDF);
 });

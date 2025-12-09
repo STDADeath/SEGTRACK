@@ -14,62 +14,58 @@ class ModeloDispositivo {
     }
 
     /**
-     * Buscar dispositivo por código QR y obtener la sede asociada
+     * Busca un dispositivo usando el contenido del código QR.
+     * El QR debe traer un formato como: "ID: 12"
+     * IGUAL QUE FUNCIONARIOS
      */
     public function buscarDispositivoPorQr($qrCodigo) {
-        // Limpiar espacios en blanco
-        $qrCodigo = trim($qrCodigo);
-        
-        // Intentar extraer ID si tiene formato "ID: X"
+        // Expresión regular que extrae el número después de "ID:"
         if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $match)) {
-            $id = $match[1];
-            $sql = "SELECT d.*, 
-                           COALESCE(f.IdSede, v.IdSede) as IdSedeAsociada
-                    FROM dispositivo d
-                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                    LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
-                    WHERE d.IdDispositivo = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $id = $match[1]; // Se obtiene el IdDispositivo
+        } else {
+            // Si el QR no tiene formato correcto, se retorna false
+            return false;
         }
-        
-        // Si no tiene formato ID, buscar directamente por el QR
-        $sql = "SELECT d.*, 
-                       COALESCE(f.IdSede, v.IdSede) as IdSedeAsociada
-                FROM dispositivo d
-                LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
-                WHERE TRIM(d.QrDispositivo) = ? 
-                OR TRIM(LOWER(d.QrDispositivo)) = LOWER(?)";
+
+        // Consulta SQL para obtener los datos del dispositivo por su ID
+        $sql = "SELECT * FROM dispositivo WHERE IdDispositivo = ?";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$qrCodigo, $qrCodigo]);
+        $stmt->execute([$id]);
+
+        // Retorna un arreglo asociativo con los datos, o false si no existe
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
-     * Registrar movimiento de dispositivo en la tabla ingreso
-     * IdSede puede ser NULL si no se proporciona
+     * Registra un ingreso o salida en la base de datos
+     * IGUAL QUE FUNCIONARIOS
+     * Retorna true si se insertó correctamente, false en caso contrario
      */
-    public function registrarMovimiento($idDispositivo, $idSede = null, $tipoMovimiento = 'Entrada') {
-        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdDispositivo, IdFuncionario)
-                VALUES (?, NOW(), ?, ?, NULL)";
+    public function registrarIngreso($idDispositivo, $idSede, $idParqueadero = null, $tipoMovimiento = 'Entrada') {
+        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdParqueadero, IdDispositivo)
+                VALUES (?, NOW(), ?, ?, ?)";
+        
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$tipoMovimiento, $idSede, $idDispositivo]);
+
+        // Se ejecuta la consulta con los parámetros enviados
+        return $stmt->execute([$tipoMovimiento, $idSede, $idParqueadero, $idDispositivo]);
     }
 
     /**
-     * Listar movimientos de dispositivos
+     * Lista todos los ingresos de dispositivos registrados
+     * IGUAL QUE FUNCIONARIOS pero adaptado a dispositivo
      */
-    public function listarMovimientos() {
-        $sql = "SELECT i.IdIngreso, i.TipoMovimiento, i.FechaIngreso,
-                       d.QrDispositivo, d.TipoDispositivo, d.MarcaDispositivo
+    public function listarIngresos() {
+        $sql = "SELECT i.IdIngreso, i.TipoMovimiento, i.FechaIngreso, 
+                d.QrDispositivo, d.TipoDispositivo, d.MarcaDispositivo
                 FROM ingreso i
                 INNER JOIN dispositivo d ON i.IdDispositivo = d.IdDispositivo
-                WHERE i.IdDispositivo IS NOT NULL
                 ORDER BY i.IdIngreso DESC";
+        
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
+
+        // Se retorna un arreglo con todos los registros
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
