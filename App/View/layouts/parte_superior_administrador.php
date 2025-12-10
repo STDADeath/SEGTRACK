@@ -42,7 +42,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <!-- Logo -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../Administrador/DashboardAdministrador.php">
                 <div class="sidebar-brand-icon">
-                    <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" alt="Logo" id="logo" style="width:130px; margin-top:1px;">
+                    <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" alt="Logo" id="logo" style="width:140px; margin-top:2px;">
                 </div>
             </a>
 

@@ -80,7 +80,28 @@ class ControladorSede {
 
         return $this->modelo->editarSede($idSede, $tipoSede, $ciudad, $institucion);
     }
+
+
+    // ============================================================
+    // 🔹 NUEVAS FUNCIONES ANEXADAS (NO MODIFIQUÉ NADA TUYO)
+    // ============================================================
+
+    // 📌 Obtener sede por ID
+    public function obtenerSedePorId($idSede) {
+        return $this->modelo->obtenerSedePorId($idSede);
+    }
+
+    // 📌 Filtrar por ciudad
+    public function obtenerSedePorCiudad($ciudad) {
+        return $this->modelo->obtenerSedePorCiudad($ciudad);
+    }
+
+    // 📌 Filtrar por tipo
+    public function obtenerSedePorTipo($tipo) {
+        return $this->modelo->obtenerSedePorTipo($tipo);
+    }
 }
+
 
 // ============================================================
 // 🔹 PETICIÓN AJAX
@@ -99,6 +120,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
 
         case 'editar':
             $respuesta = $controlador->editarSede($_POST);
+            break;
+
+        // 🔹 NUEVO: obtener una sede por ID para cargar en modal
+        case 'obtener_sede':
+            if (!isset($_POST['IdSede'])) {
+                $respuesta = ['success' => false, 'message' => 'ID de sede no enviado'];
+            } else {
+                $respuesta = $controlador->obtenerSedePorId($_POST['IdSede']);
+            }
             break;
     }
 
