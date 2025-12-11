@@ -1,9 +1,20 @@
 <?php
 // ============================================================
 // SedeLista.php
+// Vista para el listado y gestión de Sedes.
 // ============================================================
 
+// Se incluye la parte superior de la plantilla del administrador.
 require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
+// Se incluye el archivo de conexión a la base de datos (Core).
+require_once __DIR__ . '/../../Core/Conexion.php';
+// Se incluye el modelo para interactuar con la tabla de Sedes.
+require_once __DIR__ . '/../../Model/modelosede.php';
+
+// Se instancia el modelo de Sede.
+$modeloSede = new ModeloSede();
+// Se obtienen todas las sedes registradas para mostrarlas en la tabla.
+$sedes = $modeloSede->obtenerSedes();
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -33,69 +44,40 @@ require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        require_once __DIR__ . '/../../Core/Conexion.php';
+                        <?php foreach ($sedes as $fila): ?>
+                        <tr data-id="<?= $fila['IdSede']; ?>">
 
-                        try {
-                            $conexion = new Conexion();
-                            $db = $conexion->getConexion();
+                            <td>
+                                <?php if ($fila['Estado'] == 'Activo'): ?>
+                                    <span class="badge badge-success">Activo</span>
+                                <?php else: ?>
+                                    <span class="badge badge-secondary">Inactivo</span>
+                                <?php endif; ?>
+                            </td>
 
-                            // Traer también el nombre de la institución
-                            $sql = "SELECT s.IdSede, s.TipoSede, s.Ciudad, s.Estado, 
-                                           i.NombreInstitucion 
-                                    FROM sede s
-                                    INNER JOIN institucion i ON i.IdInstitucion = s.IdInstitucion
-                                    ORDER BY IdSede DESC";
-                            $stmt = $db->prepare($sql);
-                            $stmt->execute();
+                            <td><?= htmlspecialchars($fila['TipoSede']); ?></td>
+                            <td><?= htmlspecialchars($fila['Ciudad']); ?></td>
+                            <td><?= htmlspecialchars($fila['NombreInstitucion']); ?></td>
 
-                            while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)):
-                        ?>
-                                <tr data-id="<?php echo $fila['IdSede']; ?>">
+                            <td class="text-center">
+                                <a href="Sede.php?IdSede=<?= urlencode($fila['IdSede']); ?>" 
+                                   class="btn btn-warning btn-sm me-1 btn-editar" 
+                                   title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
 
-                                    <!-- Estado -->
-                                    <td>
-                                        <?php if ($fila['Estado'] == 'Activo'): ?>
-                                            <span class="badge badge-success">Activo</span>
-                                        <?php else: ?>
-                                            <span class="badge badge-secondary">Inactivo</span>
-                                        <?php endif; ?>
-                                    </td>
+                                <button class="btn btn-sm btn-toggle-estado 
+                                        <?= ($fila['Estado'] == 'Activo') ? 'btn-secondary' : 'btn-success'; ?>"
+                                        data-id="<?= $fila['IdSede']; ?>"
+                                        data-estado-actual="<?= $fila['Estado']; ?>"
+                                        data-nombre="<?= htmlspecialchars($fila['TipoSede']); ?>"
+                                        title="<?= ($fila['Estado'] == 'Activo') ? 'Desactivar' : 'Activar'; ?>">
+                                    <i class="fas fa-<?= ($fila['Estado'] == 'Activo') ? 'ban' : 'check'; ?>"></i>
+                                </button>
+                            </td>
 
-                                    <td><?php echo htmlspecialchars($fila['TipoSede']); ?></td>
-                                    <td><?php echo htmlspecialchars($fila['Ciudad']); ?></td>
-                                    <td><?php echo htmlspecialchars($fila['NombreInstitucion']); ?></td>
-
-                                    <!-- Acciones -->
-                                    <td class="text-center">
-
-                                        <!-- Botón Editar -->
-                                        <a href="Sede.php?IdSede=<?php echo urlencode($fila['IdSede']); ?>" 
-                                           class="btn btn-warning btn-sm me-1" 
-                                           title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-
-                                        <!-- Botón Cambiar Estado -->
-                                        <button class="btn btn-sm btn-toggle-estado 
-                                                <?php echo ($fila['Estado'] == 'Activo') ? 'btn-secondary' : 'btn-success'; ?>"
-                                                data-id="<?php echo htmlspecialchars($fila['IdSede']); ?>"
-                                                data-estado-actual="<?php echo htmlspecialchars($fila['Estado']); ?>"
-                                                data-nombre="<?php echo htmlspecialchars($fila['TipoSede']); ?>"
-                                                title="<?php echo ($fila['Estado'] == 'Activo') ? 'Desactivar' : 'Activar'; ?>">
-                                            <i class="fas fa-<?php echo ($fila['Estado'] == 'Activo') ? 'ban' : 'check'; ?>"></i>
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-                        <?php
-                            endwhile;
-                        } catch (PDOException $e) {
-                            echo '<tr><td colspan="5" class="text-center text-danger">Error al cargar datos: ' 
-                                 . htmlspecialchars($e->getMessage()) . '</td></tr>';
-                        }
-                        ?>
+                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
 
@@ -105,14 +87,10 @@ require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
 
 </div>
 
-<?php
-require_once __DIR__ . '/../layouts/parte_inferior_administrador.php';
-?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
 
-<!-- DATATABLES -->
 <link rel="stylesheet" href="../../../Public/vendor/datatables/dataTables.bootstrap4.css">
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="../../../Public/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="../../../Public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="../../../Public/js/javascript/js/ValidacionesSedeLista.js"></script>
-
+<script src="../../../Public/js/javascript/js/ValidacionSedeLista.js"></script>

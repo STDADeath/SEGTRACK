@@ -1,4 +1,6 @@
 <?php
+// App/View/Administrador/UsuariosLista.php
+
 require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
 require_once __DIR__ . '/../../Core/conexion.php';
 
@@ -43,10 +45,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover" id="tablaUsuarios">
+                <table class="table table-bordered table-hover" id="tablaUsuarios" width="100%" cellspacing="0">
                     <thead class="table-primary text-center">
                         <tr>
-                            <th>ID</th>
+                            <th>ID</th> 
                             <th>Funcionario</th>
                             <th>Rol</th>
                             <th>Estado</th>
@@ -57,27 +59,35 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php foreach ($usuarios as $user): ?>
                         <tr class="text-center">
                             <td><?php echo $user['IdUsuario']; ?></td>
-
                             <td><?php echo htmlspecialchars($user['NombreFuncionario']); ?></td>
-
                             <td><?php echo htmlspecialchars($user['TipoRol']); ?></td>
 
                             <td>
-                                <?php if ($user['Estado'] == "Activo"): ?>
-                                    <span class="badge bg-success px-2 py-1">Activo</span>
-                                <?php else: ?>
-                                    <span class="badge bg-danger px-2 py-1">Inactivo</span>
-                                <?php endif; ?>
+                                <?php 
+                                $badgeClass = ($user['Estado'] == "Activo") ? 'bg-success' : 'bg-danger';
+                                ?>
+                                <span class="badge <?php echo $badgeClass; ?> px-2 py-1 estado-badge">
+                                    <?php echo htmlspecialchars($user['Estado']); ?>
+                                </span>
                             </td>
 
                             <td>
                                 <a href="UsuarioEditar.php?id=<?php echo $user['IdUsuario']; ?>" 
-                                   class="btn btn-warning btn-sm">
-                                   <i class="fas fa-edit"></i>
+                                    class="btn btn-warning btn-sm btn-editar"
+                                    title="Editar Usuario">
+                                    <i class="fas fa-edit"></i>
                                 </a>
 
-                                <a href="../../Controller/ControladorusuarioADM.php?cambiar_estado=<?php echo $user['IdUsuario']; ?>"
-                                   class="btn btn-secondary btn-sm">
+                                <?php 
+                                $btnClass = ($user['Estado'] == "Activo") ? 'btn-secondary' : 'btn-success';
+                                $btnTitle = ($user['Estado'] == "Activo") ? 'Desactivar' : 'Activar';
+                                ?>
+                                <a href="#"
+                                    class="btn <?php echo $btnClass; ?> btn-sm btn-toggle-estado"
+                                    title="<?php echo $btnTitle; ?>"
+                                    data-id="<?php echo $user['IdUsuario']; ?>" 
+                                    data-estado-actual="<?php echo htmlspecialchars($user['Estado']); ?>" 
+                                    data-funcionario="<?php echo htmlspecialchars($user['NombreFuncionario']); ?>">
                                     <i class="fas fa-sync-alt"></i>
                                 </a>
                             </td>
@@ -91,4 +101,9 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
+<?php 
+// Asegúrese de que estas dependencias se incluyan en el inferior de la plantilla
+require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; 
+?>
+
+<script src="../../Public/js/javascript/js/ValidacionesUsuarioLista.js"></script>

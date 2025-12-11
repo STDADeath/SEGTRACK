@@ -1,202 +1,155 @@
- $(document).ready(function () {
-        
-        // ====================================================================
-        // 🔥 CORRECCIÓN 2: Lógica de validación para empezar DESPUÉS del primer carácter
-        // ====================================================================
-        
-        // Esta clase auxiliar ayuda a saber si el usuario ya interactuó
-        $('.form-control, .form-select').addClass('no-interactuado');
+// ========================================
+// FUNCIÓN PARA VER EL CÓDIGO QR
+// ========================================
+function verQR(rutaQR, idFuncionario) {
+    const rutaCompleta = '../../../Public/' + rutaQR;
+    $('#qrFuncionarioId').text(idFuncionario);
+    $('#qrImagen').attr('src', rutaCompleta);
+    $('#btnDescargarQR').attr('href', rutaCompleta);
+    $('#modalVerQR').modal('show');
+}
 
-        // Función genérica para aplicar el estilo de validación (verde/rojo)
-        function aplicarEstiloValidacion(elementId, isValid) {
-            const input = $(elementId);
-            // Si no ha interactuado, no aplicamos clases de validación (no-interactuado es la clave)
-            if (input.hasClass('no-interactuado')) {
-                return; 
-            }
-            
-            // Quitar clases previas (incluyendo el border-primary)
-            input.removeClass('is-valid is-invalid border-primary'); 
-            
-            if (isValid) {
-                input.addClass('is-valid'); 
-            } else {
-                input.addClass('is-invalid'); 
-            }
-        }
+// ========================================
+// FUNCIÓN PARA CARGAR DATOS EN EL MODAL DE EDICIÓN
+// ========================================
+function cargarDatosEdicion(id, cargo, nombre, sede, telefono, documento, correo) {
+    $('#editId').val(id);
+    $('#editCargo').val(cargo);
+    $('#editNombre').val(nombre);
+    // Sede es el IdSede: seteamos el select y forzamos .change() para que se aplique
+    $('#editSede').val(sede).change();
+    $('#editTelefono').val(telefono);
+    $('#editDocumento').val(documento);
+    $('#editCorreo').val(correo);
+    // Abrir modal (por si se llama sin data-toggle)
+    $('#modalEditar').modal('show');
+}
 
-        // Función para manejar la interacción inicial (se ejecuta con la primera tecla)
-        function handleInteraction(element) {
-            $(element).removeClass('no-interactuado');
-            // Luego de quitar la clase, forzamos la validación para que aplique el estilo
-            $(element).trigger('validate'); 
-        }
+// ========================================
+// FUNCIÓN: CAMBIAR ESTADO DEL FUNCIONARIO
+// ========================================
+function cambiarEstado(idFuncionario, estadoActual) {
+    const nuevoEstado = estadoActual === 'Activo' ? 'Inactivo' : 'Activo';
 
-        // Manejador de eventos para inputs (Nombre, Teléfono, Documento, Correo)
-        $(".form-control").on('input', function () {
-            // Si es la primera interacción, quitamos la clase 'no-interactuado'
-            if ($(this).hasClass('no-interactuado')) {
-                handleInteraction(this);
-            } else {
-                // Si ya interactuó, simplemente disparamos el evento de validación
-                $(this).trigger('validate');
-            }
-        });
-        
-        // Manejador de eventos para selects (Cargo, Sede)
-        $(".form-select").on('change', function () {
-            if ($(this).hasClass('no-interactuado')) {
-                handleInteraction(this);
-            } else {
-                $(this).trigger('validate');
-            }
-        });
+    if (!confirm(`¿Está seguro que desea cambiar el estado a "${nuevoEstado}"?`)) {
+        return;
+    }
 
-
-        // --------------------------------------------------------------------------
-        // DEFINICIÓN DE LAS VALIDACIONES REALES (Usando un evento personalizado 'validate')
-        // --------------------------------------------------------------------------
-        
-        // 1. Validar Nombre
-        $("#NombreFuncionario").on('validate', function () {
-            const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,}$/;
-            const nombre = $(this).val().trim();
-            const isValid = nombre !== '' && regexNombre.test(nombre); // Debe ser no vacío y cumplir regex
-            aplicarEstiloValidacion(this, isValid);
-        });
-
-        // 2. Validar Teléfono
-        $("#TelefonoFuncionario").on('validate', function () {
-            // Asegurar solo números y el max length
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); 
-            const telefono = $(this).val();
-            const isValid = telefono.length === 10;
-            aplicarEstiloValidacion(this, isValid);
-        });
-
-        // 3. Validar Documento
-        $("#DocumentoFuncionario").on('validate', function () {
-            // Asegurar solo números y el max length
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11); 
-            const documento = $(this).val();
-            const isValid = documento.length === 11;
-            aplicarEstiloValidacion(this, isValid);
-        });
-
-        // 4. Validar Correo Electrónico
-        $("#CorreoFuncionario").on('validate', function () {
-            const correo = $(this).val().trim();
-            const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            // Debe ser no vacío y cumplir regex
-            const isValid = correo !== '' && regexCorreo.test(correo); 
-            aplicarEstiloValidacion(this, isValid);
-        });
-        
-        // 5. Validar Selects
-        $("#CargoFuncionario, #IdSede").on('validate', function () {
-            const isValid = $(this).val() !== ''; // Debe tener un valor seleccionado
-            aplicarEstiloValidacion(this, isValid);
-        });
-
-
-        // --------------------------------------------------------------------------
-        // LÓGICA DE ENVÍO (Submit) - Fuerza todas las validaciones
-        // --------------------------------------------------------------------------
-        $("#formRegistrarFuncionario").on("submit", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const inputsAValidar = [
-                '#NombreFuncionario',
-                '#TelefonoFuncionario',
-                '#DocumentoFuncionario',
-                '#CorreoFuncionario',
-                '#CargoFuncionario',
-                '#IdSede'
-            ];
-            
-            let hayInvalidos = false;
-
-            // Al hacer submit, forzamos la interacción para que todos los campos muestren su estado
-            inputsAValidar.forEach(id => {
-                const input = $(id);
-                // Quitamos la clase de no-interactuado y forzamos la validación
-                input.removeClass('no-interactuado');
-                input.trigger('validate');
-
-                if (input.hasClass('is-invalid')) {
-                    hayInvalidos = true;
+    $.ajax({
+        url: '../../Controller/ControladorFuncionarios.php',
+        type: 'POST',
+        data: {
+            accion: 'cambiar_estado',
+            id: idFuncionario,
+            estado: nuevoEstado
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                alert('Estado cambiado correctamente');
+                const badgeEstado = $('#badge-estado-' + idFuncionario);
+                if (nuevoEstado === 'Activo') {
+                    badgeEstado.removeClass('bg-danger').addClass('bg-success').text('Activo');
+                } else {
+                    badgeEstado.removeClass('bg-success').addClass('bg-danger').text('Inactivo');
                 }
-            });
-
-            if (hayInvalidos) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Validación Pendiente',
-                    text: 'Por favor, corrija todos los campos marcados en rojo antes de continuar.',
-                    confirmButtonColor: '#dc3545'
-                });
-                return false;
+                const botonCambiar = badgeEstado.siblings('button');
+                botonCambiar.attr('onclick', `cambiarEstado(${idFuncionario}, '${nuevoEstado}')`);
+            } else {
+                alert('Error: ' + (response.message || 'No se pudo cambiar el estado'));
             }
-
-            // ... (El código AJAX para el registro sigue aquí) ...
-            const btn = $("#btnRegistrar");
-            const originalText = btn.html();
-
-            btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...');
-            btn.prop('disabled', true);
-
-            const formData = $(this).serialize() + "&accion=registrar";
-
-            $.ajax({
-                url: "../../Controller/ControladorFuncionarios.php",
-                type: "POST",
-                data: formData,
-                dataType: "json",
-                success: function (response) {
-                    // ... (Manejo de la respuesta y SweetAlert se mantiene igual) ...
-                    if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '¡Registro Exitoso!',
-                            text: response.message,
-                            confirmButtonColor: '#28a745',
-                            confirmButtonText: 'Aceptar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $("#formRegistrarFuncionario")[0].reset();
-                                // Al resetear, volvemos a aplicar la clase 'no-interactuado' y quitamos estilos
-                                $('.form-control, .form-select').removeClass('is-valid is-invalid').addClass('no-interactuado');
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error al Registrar',
-                            text: response.message || response.error || "Error desconocido",
-                            confirmButtonColor: '#dc3545',
-                            confirmButtonText: 'Aceptar'
-                        });
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error AJAX:", error);
-                    console.log("Respuesta completa:", xhr.responseText);
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error de Conexión',
-                        html: '<p>No se pudo conectar con el servidor</p><small>Revisa la consola para más detalles</small>',
-                        confirmButtonColor: '#dc3545',
-                        confirmButtonText: 'Aceptar'
-                    });
-                },
-                complete: function () {
-                    btn.html(originalText);
-                    btn.prop('disabled', false);
-                }
-            });
-
-            return false;
-        });
+        },
+        error: function(xhr, status, error) {
+            alert('Error al cambiar el estado. Por favor, intente nuevamente.');
+            console.error('Error AJAX:', error);
+        }
     });
+}
+
+// ========================================
+// EVENTO: GUARDAR CAMBIOS DE EDICIÓN CON VALIDACIÓN
+// ========================================
+$('#btnGuardarCambios').click(function () {
+
+    const id = $('#editId').val();
+    const cargo = $('#editCargo').val().trim();
+    const nombre = $('#editNombre').val().trim();
+    const sede = $('#editSede').val().trim();
+    const telefono = $('#editTelefono').val().trim();
+    const documento = $('#editDocumento').val().trim();
+    const correo = $('#editCorreo').val().trim();
+
+    if (!cargo) { alert('Por favor seleccione un cargo'); $('#editCargo').focus(); return; }
+    if (!nombre) { alert('Por favor ingrese el nombre del funcionario'); $('#editNombre').focus(); return; }
+    if (!sede) { alert('Por favor ingrese la sede'); $('#editSede').focus(); return; }
+    if (!telefono) { alert('Por favor ingrese el teléfono'); $('#editTelefono').focus(); return; }
+    if (!documento) { alert('Por favor ingrese el documento'); $('#editDocumento').focus(); return; }
+    if (!correo) { alert('Por favor ingrese el correo electrónico'); $('#editCorreo').focus(); return; }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) { alert('Por favor ingrese un correo electrónico válido'); $('#editCorreo').focus(); return; }
+
+    if (!confirm('¿Está seguro que desea actualizar los datos de este funcionario?')) { return; }
+
+    const formData = {
+        accion: "actualizar",
+        id: id,
+        cargo: cargo,
+        nombre: nombre,
+        sede: sede,
+        telefono: telefono,
+        documento: documento,
+        correo: correo
+    };
+
+    const btnGuardar = $('#btnGuardarCambios');
+    const textoOriginal = btnGuardar.html();
+    btnGuardar.prop('disabled', true);
+    btnGuardar.html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+
+    $.ajax({
+        url: '../../Controller/ControladorFuncionarios.php',
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+
+        success: function(response) {
+            btnGuardar.prop('disabled', false);
+            btnGuardar.html(textoOriginal);
+            $('#modalEditar').modal('hide');
+
+            if (response.success) {
+                // Si la actualización fue exitosa, intentamos solicitar regenerar el QR
+                // Si tu controlador implementó la acción 'actualizar_qr', esto regenerará el QR y devolverá la ruta.
+                $.post('../../Controller/ControladorFuncionarios.php', { accion: 'actualizar_qr', id: id }, function(resQR) {
+                    // resQR puede no existir si no implementaste la acción; por eso validamos.
+                    if (resQR && resQR.success) {
+                        // opcional: mostrar mensaje o actualizar vista del QR
+                        console.log('QR regenerado:', resQR.ruta_qr);
+                        alert('Funcionario actualizado correctamente y QR regenerado.');
+                        location.reload();
+                    } else {
+                        // La actualización principal ya fue exitosa; QR no regenerado (o acción no disponible)
+                        alert('Funcionario actualizado correctamente.');
+                        location.reload();
+                    }
+                }, 'json').fail(function() {
+                    // Si falla el request de actualizar_qr (acción no encontrada u otro error)
+                    alert('Funcionario actualizado correctamente.');
+                    location.reload();
+                });
+
+            } else {
+                alert('Error al actualizar: ' + (response.message || 'Error desconocido'));
+            }
+        },
+
+        error: function(xhr, status, error) {
+            btnGuardar.prop('disabled', false);
+            btnGuardar.html(textoOriginal);
+            alert("Error al actualizar. Por favor, intente nuevamente.");
+            console.error('Error AJAX:', error);
+            console.error('Respuesta del servidor:', xhr.responseText);
+        }
+    });
+});

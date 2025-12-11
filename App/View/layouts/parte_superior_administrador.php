@@ -101,10 +101,10 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <h6 class="collapse-header">Usuarios del Sistema:</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/Funcionario.php">Registrar funcionarios</a>
-                        <a class="collapse-item" href="../PersonalSeguridad/FuncionarioLista.php">Lista funcionarios</a>
+                        <!--<a class="collapse-item" href="../PersonalSeguridad/Funcionario.php">Registrar funcionarios</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/FuncionarioLista.php">Lista funcionarios</a>-->
                         <a class="collapse-item" href="../Login/Usuario.php">Contraseña Usuario</a>
-                        <a class="collapse-item" href="../Administrador/AsignarPermisos.php">Lista de Usuarios</a>
+                        <a class="collapse-item" href="../Login/UsuariosLista.php">Lista de Usuarios</a>
 
                         <div class="collapse-divider"></div>
 

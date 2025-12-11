@@ -2,10 +2,10 @@
 
 $(document).ready(function () {
 
-    console.log("=== SISTEMA DE REGISTRO DE SEDE INICIADO ===");
+    console.log("=== SISTEMA DE REGISTRO/EDICIÓN DE SEDE INICIADO ===");
 
     // ============================
-    // FUNCIONES VISUALES (CON !important PARA QUE BOOTSTRAP NO DAÑE ESTILOS)
+    // FUNCIONES VISUALES
     // ============================
 
     function marcarInvalido(campo) {
@@ -29,12 +29,20 @@ $(document).ready(function () {
         );
     }
 
+    // Inicializa la validación al cargar la página (útil para el modo Edición)
     function inicializarValidacion() {
+        // Ejecutar las validaciones en modo 'change' para marcar los campos precargados
+        $("#TipoSede").trigger('input');
+        $("#Ciudad").trigger('input');
+        $("#IdInstitucion").trigger('change');
+        
+        // Si no hay valor o la validación es incompleta, dejarlos neutrales por defecto
         marcarNeutral($("#TipoSede"));
         marcarNeutral($("#Ciudad"));
         marcarNeutral($("#IdInstitucion"));
     }
 
+    // Se ejecuta al inicio para limpiar y validar los campos cargados en modo edición
     inicializarValidacion();
 
 
@@ -84,7 +92,7 @@ $(document).ready(function () {
 
 
     // ============================
-    // ENVÍO AJAX
+    // ENVÍO AJAX (REGISTRO Y EDICIÓN)
     // ============================
 
     $("#formRegistrarSede").submit(function (e) {
@@ -96,7 +104,9 @@ $(document).ready(function () {
         const ciudad = $("#Ciudad");
         const institucion = $("#IdInstitucion");
 
-        // Validaciones finales
+        // --- VALIDACIONES FINALES ---
+        
+        // Tipo de Sede
         if (tipo.val().length < 3 || !soloTexto(tipo.val())) {
             errores.push("• El tipo de sede debe contener solo letras (mínimo 3 caracteres).");
             marcarInvalido(tipo);
@@ -104,6 +114,7 @@ $(document).ready(function () {
             marcarValido(tipo);
         }
 
+        // Ciudad
         if (ciudad.val().length < 3 || !soloTexto(ciudad.val())) {
             errores.push("• La ciudad debe contener solo letras (mínimo 3 caracteres).");
             marcarInvalido(ciudad);
@@ -111,6 +122,7 @@ $(document).ready(function () {
             marcarValido(ciudad);
         }
 
+        // Institución
         if (institucion.val() === "") {
             errores.push("• Debe seleccionar una institución.");
             marcarInvalido(institucion);
@@ -128,10 +140,19 @@ $(document).ready(function () {
             });
             return;
         }
+        
+        // --- LÓGICA DE ENVÍO Y EDICIÓN ---
 
+        // 🚩 Obtener la acción del campo oculto
+        const accion = $("#accion").val();
+        
+        // Personalizar mensajes y redirección según la acción
+        let titleLoading = accion === 'editar' ? 'Actualizando sede...' : 'Registrando sede...';
+        let titleSuccess = accion === 'editar' ? '¡Actualización Exitosa!' : '¡Registro Exitoso!';
+        
         // Loading
         Swal.fire({
-            title: 'Registrando sede...',
+            title: titleLoading,
             html: 'Por favor espere',
             allowOutsideClick: false,
             didOpen: () => Swal.showLoading()
@@ -140,11 +161,18 @@ $(document).ready(function () {
         const btn = $(this).find("button[type='submit']");
         const originalText = btn.html();
         btn.prop("disabled", true);
+        
+        // Serializar todos los datos del formulario, incluyendo 'accion' e 'IdSede'
+        // NOTA: Ya no necesita concatenar "&accion=registrar" al final, ya que el campo oculto
+        // <input type="hidden" name="accion" id="accion" value="registrar/editar">
+        // ya se incluye con $(this).serialize()
+        const formData = $(this).serialize();
+
 
         $.ajax({
             url: '../../Controller/ControladorSede.php',
             type: "POST",
-            data: $(this).serialize() + "&accion=registrar",
+            data: formData, // Envía 'accion=registrar' O 'accion=editar&IdSede=X...'
             dataType: "json",
 
             success: function (response) {
@@ -153,17 +181,23 @@ $(document).ready(function () {
                 if (response.success) {
                     Swal.fire({
                         icon: "success",
-                        title: "¡Registro Exitoso!",
+                        title: titleSuccess,
                         text: response.message,
                         confirmButtonColor: "#10b981"
                     }).then(() => {
-                        $("#formRegistrarSede")[0].reset();
-                        inicializarValidacion();
+                        if (accion === 'editar') {
+                            // Si es edición, redirigir a la lista
+                            window.location.href = 'SedeLista.php';
+                        } else {
+                            // Si es registro, limpiar formulario y resetear
+                            $("#formRegistrarSede")[0].reset();
+                            inicializarValidacion();
+                        }
                     });
                 } else {
                     Swal.fire({
                         icon: "error",
-                        title: "Error en el Registro",
+                        title: "Error de " + (accion === 'editar' ? 'Actualización' : 'Registro'),
                         text: response.message,
                         confirmButtonColor: "#ef4444"
                     });
@@ -172,12 +206,13 @@ $(document).ready(function () {
 
             error: function () {
                 Swal.close();
-                inicializarValidacion();
+                // No es necesario inicializarValidacion en error de conexión
+                // inicializarValidacion(); 
 
                 Swal.fire({
                     icon: "error",
                     title: "Error",
-                    text: "Error de conexión con el servidor.",
+                    text: "Error de conexión con el servidor. Revise la ruta del controlador.",
                     confirmButtonColor: "#ef4444"
                 });
             },
