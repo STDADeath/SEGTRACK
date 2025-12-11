@@ -35,10 +35,13 @@ if (count($filtros) > 0) {
     $where = "WHERE " . implode(" AND ", $filtros);
 }
 
+// Query actualizado con JOINs para obtener nombres
 $sql = "SELECT 
             d.*,
             f.NombreFuncionario,
-            v.NombreVisitante
+            f.CargoFuncionario,
+            v.NombreVisitante,
+            v.IdentificacionVisitante
         FROM dispositivo d
         LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
         LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
@@ -114,6 +117,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <table class="table table-bordered table-hover table-striped align-middle text-center" id="TablaDispositivoSupervisor">
                 <thead class="table-dark">
                     <tr>
+                        <th>ID</th>
                         <th>QR</th>
                         <th>Tipo</th>
                         <th>Marca</th>
@@ -127,6 +131,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdDispositivo']; ?>" class="<?php echo $row['Estado'] === 'Inactivo' ? 'fila-inactiva' : ''; ?>">
+                                <td><?php echo $row['IdDispositivo']; ?></td>
                                 <td class="text-center">
                                     <?php if (!empty($row['QrDispositivo'])) : ?>
                                         <button type="button" class="btn btn-sm btn-outline-success" 
@@ -142,16 +147,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $row['MarcaDispositivo']; ?></td>
                                 <td>
                                     <?php if (!empty($row['NombreFuncionario'])) : ?>
-                                            <?php echo $row['NombreFuncionario']; ?>
-                                        </span>
+                                        <?php echo $row['NombreFuncionario']; ?>
                                     <?php else : ?>
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
                                     <?php if (!empty($row['NombreVisitante'])) : ?>
-                                            <?php echo $row['NombreVisitante']; ?>
-                                        </span>
+                                        <?php echo $row['NombreVisitante']; ?>
                                     <?php else : ?>
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
@@ -304,17 +307,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- Scripts de jQuery y Bootstrap (ANTES de cerrar el layout) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
 
 <script>
 // ============================================
 // 🔥 ZONA DATATABLES - Activación de DataTable
 // ============================================
 $(document).ready(function() {
-    // Inicializar DataTable
     $('#TablaDispositivoSupervisor').DataTable({
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
@@ -323,92 +322,87 @@ $(document).ready(function() {
         responsive: true,
         order: [[0, "desc"]]
     });
+});
+
+// ============================================
+// Función para mostrar QR del dispositivo
+// ============================================
+function verQRDispositivo(rutaQR, idDispositivo) {
+    var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
     
-    console.log('jQuery cargado - DispositivoSupervisor con DataTables');
+    console.log('Ruta QR completa:', rutaCompleta);
     
-    let dispositivoIdAEditar = null;
-    let dispositivoACambiarEstado = null;
-    let estadoActualDispositivo = null;
+    $('#qrDispositivoId').text(idDispositivo);
+    $('#qrImagenDispositivo').attr('src', rutaCompleta);
+    $('#btnDescargarQRDispositivo').attr('href', rutaCompleta).attr('download', 'QR-Dispositivo-' + idDispositivo + '.png');
+    
+    $('#modalVerQRDispositivo').modal('show');
+}
 
-    // ============================================
-    // Función para mostrar QR del dispositivo
-    // ============================================
-    window.verQRDispositivo = function(rutaQR, idDispositivo) {
-        var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
-        
-        console.log('Ruta QR completa:', rutaCompleta);
-        
-        $('#qrDispositivoId').text(idDispositivo);
-        $('#qrImagenDispositivo').attr('src', rutaCompleta);
-        $('#btnDescargarQRDispositivo').attr('href', rutaCompleta).attr('download', 'QR-Dispositivo-' + idDispositivo + '.png');
-        
-        $('#modalVerQRDispositivo').modal('show');
-    };
+// ============================================
+// Cargar datos en el modal de edición
+// ============================================
+function cargarDatosEdicionDispositivo(row) {
+    console.log('Cargando datos para editar:', row);
+    
+    $('#editIdDispositivo').val(row.IdDispositivo);
+    $('#editTipoDispositivo').val(row.TipoDispositivo);
+    $('#editMarcaDispositivo').val(row.MarcaDispositivo);
+    
+    // IDs ocultos
+    $('#editIdFuncionario').val(row.IdFuncionario || '');
+    $('#editIdVisitante').val(row.IdVisitante || '');
+    
+    // Mostrar nombres en campos de texto
+    $('#editNombreFuncionario').val(row.NombreFuncionario || '-');
+    $('#editNombreVisitante').val(row.NombreVisitante || '-');
+    
+    $('#modalEditarDispositivo').modal('show');
+}
 
-    // ============================================
-    // Cargar datos en el modal de edición
-    // ============================================
-    window.cargarDatosEdicionDispositivo = function(row) {
-        console.log('Cargando datos para editar:', row);
-        
-        dispositivoIdAEditar = row.IdDispositivo;
-        
-        $('#editIdDispositivo').val(row.IdDispositivo);
-        $('#editTipoDispositivo').val(row.TipoDispositivo);
-        $('#editMarcaDispositivo').val(row.MarcaDispositivo);
-        
-        // IDs ocultos
-        $('#editIdFuncionario').val(row.IdFuncionario || '');
-        $('#editIdVisitante').val(row.IdVisitante || '');
-        
-        // Mostrar nombres en campos de texto de solo lectura
-        $('#editNombreFuncionario').val(row.NombreFuncionario || '-');
-        $('#editNombreVisitante').val(row.NombreVisitante || '-');
-        
-        $('#modalEditarDispositivo').modal('show');
-    };
-
-    // ============================================
-    // Confirmar cambio de estado
-    // ============================================
-    window.confirmarCambioEstadoDispositivo = function(id, estado) {
-        console.log('confirmarCambioEstado llamado:', {id, estado});
-        
-        dispositivoACambiarEstado = id;
-        estadoActualDispositivo = estado;
-        
-        const nuevoEstado = estado === 'Activo' ? 'Inactivo' : 'Activo';
-        const accion = nuevoEstado === 'Activo' ? 'activar' : 'desactivar';
-        const colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
-        
-        // Configurar el header del modal
-        $('#headerCambioEstadoDispositivo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
-        $('#tituloCambioEstadoDispositivo').html('<i class="fas fa-' + (nuevoEstado === 'Activo' ? 'lock-open' : 'lock') + ' me-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Dispositivo');
-        $('#mensajeCambioEstadoDispositivo').html('¿Está seguro que desea <strong>' + accion + '</strong> este dispositivo?');
-        
-        // Mostrar modal
-        $('#modalCambiarEstadoDispositivo').modal('show');
-        
-        // Configurar el toggle visual después de mostrar el modal
-        setTimeout(function() {
-            const toggleLabel = document.getElementById('toggleEstadoVisualDispositivo');
-            if (toggleLabel) {
-                if (nuevoEstado === 'Activo') {
-                    toggleLabel.classList.add('activo');
-                } else {
-                    toggleLabel.classList.remove('activo');
-                }
+// ============================================
+// Confirmar cambio de estado
+// ============================================
+function confirmarCambioEstadoDispositivo(id, estado) {
+    console.log('confirmarCambioEstado llamado:', {id, estado});
+    
+    window.dispositivoACambiarEstado = id;
+    window.estadoActualDispositivo = estado;
+    
+    const nuevoEstado = estado === 'Activo' ? 'Inactivo' : 'Activo';
+    const accion = nuevoEstado === 'Activo' ? 'activar' : 'desactivar';
+    const colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
+    
+    // Configurar el header del modal
+    $('#headerCambioEstadoDispositivo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
+    $('#tituloCambioEstadoDispositivo').html('<i class="fas fa-' + (nuevoEstado === 'Activo' ? 'lock-open' : 'lock') + ' me-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Dispositivo');
+    $('#mensajeCambioEstadoDispositivo').html('¿Está seguro que desea <strong>' + accion + '</strong> este dispositivo?');
+    
+    // Mostrar modal
+    $('#modalCambiarEstadoDispositivo').modal('show');
+    
+    // Configurar el toggle visual después de mostrar el modal
+    setTimeout(function() {
+        const toggleLabel = document.getElementById('toggleEstadoVisualDispositivo');
+        if (toggleLabel) {
+            if (nuevoEstado === 'Activo') {
+                toggleLabel.classList.add('activo');
+            } else {
+                toggleLabel.classList.remove('activo');
             }
-        }, 100);
-    };
+        }
+    }, 100);
+}
 
-    // ============================================
+// ============================================
+// Event Listeners
+// ============================================
+$(document).ready(function() {
     // Botón confirmar cambio de estado
-    // ============================================
     $('#btnConfirmarCambioEstadoDispositivo').on('click', function() {
         console.log('Confirmar cambio de estado clickeado');
         
-        if (!dispositivoACambiarEstado) {
+        if (!window.dispositivoACambiarEstado) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -417,10 +411,10 @@ $(document).ready(function() {
             return;
         }
         
-        const nuevoEstado = estadoActualDispositivo === 'Activo' ? 'Inactivo' : 'Activo';
+        const nuevoEstado = window.estadoActualDispositivo === 'Activo' ? 'Inactivo' : 'Activo';
         
         console.log('Enviando petición AJAX:', {
-            id: dispositivoACambiarEstado,
+            id: window.dispositivoACambiarEstado,
             estado: nuevoEstado
         });
         
@@ -442,7 +436,7 @@ $(document).ready(function() {
             type: 'POST',
             data: {
                 accion: 'cambiar_estado',
-                id: dispositivoACambiarEstado,
+                id: window.dispositivoACambiarEstado,
                 estado: nuevoEstado
             },
             dataType: 'json',
@@ -484,9 +478,7 @@ $(document).ready(function() {
         });
     });
 
-    // ============================================
     // Botón guardar cambios de edición
-    // ============================================
     $('#btnGuardarCambiosDispositivo').on('click', function() {
         var formData = {
             accion: 'actualizar',
@@ -563,5 +555,3 @@ $(document).ready(function() {
     console.log('Todos los event listeners configurados correctamente');
 });
 </script>
-
-<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>

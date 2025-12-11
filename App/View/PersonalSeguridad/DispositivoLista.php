@@ -220,8 +220,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Marca <small class="text-muted">(Solo lectura)</small></label>
-                            <input type="text" id="editMarcaDispositivo" class="form-control bg-light" name="marca" readonly>
+                            <label class="form-label">Marca </label>
+                            <input type="text" id="editMarcaDispositivo" class="form-control bg-light" name="marca" >
                         </div>
                     </div>
 

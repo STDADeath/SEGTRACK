@@ -974,3 +974,206 @@ Vehículo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-23-69323969de434.png"}
 === FIN ===
 
+
+2025-12-10 19:53:03 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "MJH-65L",
+    "DescripcionVehiculo": "Kawuasaki z Ninja color verde",
+    "TarjetaPropiedad": "tj 9855648",
+    "IdSede": "26",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2025-12-10 19:53:04
+✅ Usando fecha del servidor (sin validación de cliente)
+Generando QR para vehículo ID: 23
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-23-693a15f00cbc7.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 23","data":{"IdParqueadero":"23","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-23-693a15f00cbc7.png","FechaRegistro":"2025-12-10 19:53:04"}}
+=== FIN ===
+
+
+2025-12-10 19:54:54 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "11",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 11, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-12-10 19:54:58 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "23",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 23, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-12-10 19:55:01 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "22",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 22, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-12-10 19:55:04 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "21",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 21, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-12-10 19:55:07 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "20",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 20, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-12-10 19:55:41 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "19",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 19, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-12-10 20:30:27 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "18",
+    "tipo": "Carro",
+    "descripcion": "Sandero verde",
+    "idsede": "28"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 18
+Datos preparados: {"tipo":"Carro","descripcion":"Sandero verde","idsede":"28"}
+=== actualizarVehiculo llamado ===
+ID: 18
+Datos: {"tipo":"Carro","descripcion":"Sandero verde","idsede":"28"}
+Regenerando QR para ID: 18
+Generando QR para vehículo ID: 18
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-18-693a1eb323752.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-18-693a1eb323752.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-18-693a1eb323752.png"}
+=== FIN ===
+
+
+2025-12-10 20:31:47 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "18",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 18, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-12-10 20:31:56 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "23",
+    "estado": "Activo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 23, Estado: Activo
+Vehículo activado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2025-12-10 20:31:58 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "21",
+    "estado": "Activo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 21, Estado: Activo
+Vehículo activado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+

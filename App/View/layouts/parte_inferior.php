@@ -44,7 +44,7 @@
                 <!-- Botones del modal -->
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="../../../index.html">Salir</a>
+                    <a class="btn btn-primary" href="../../../Public/index.html">Salir</a>
                 </div>
 
             </div>
@@ -60,7 +60,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Script del template SB Admin 2 -->
-    <script src="../../../Public/js/sb-admin-2.min.js"></script>
+    <script src="../../Public/js/javascript/sb_admin-2.min.js"></script>
+    
+    <!-- alertas -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- 🔥 DataTables JS (AGREGADO) -->
+    <script src="../../../Public/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../../Public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
 
 </body>
 </html>

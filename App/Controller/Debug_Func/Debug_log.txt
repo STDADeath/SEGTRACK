@@ -1141,3 +1141,34 @@ Librería QR cargada
 Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
 Acción a ejecutar: actualizar_qr
 Respuesta final: {"success":false,"message":"Acción no reconocida"}
+
+2025-12-11 01:39:00 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Anderson Estiben Moreno Pinzon ",
+    "IdSede": "30",
+    "TelefonoFuncionario": "7895445566",
+    "DocumentoFuncionario": "12233354454",
+    "CorreoFuncionario": "andersoarebalo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-11 01:39:01 - registrarFuncionario llamado
+2025-12-11 01:39:01 - Llamando a RegistrarFuncionario en el modelo
+2025-12-11 01:39:01 - Resultado del modelo (BD): {"success":true,"id":"48"}
+2025-12-11 01:39:01 - Registro exitoso, ID: 48. Generando QR...
+2025-12-11 01:39:01 - Generando QR para funcionario ID: 48
+2025-12-11 01:39:01 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-11 01:39:01 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 01:39:01 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 01:39:01 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-48-693a12a517f83.png
+2025-12-11 01:39:01 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-48-693a12a517f83.png
+2025-12-11 01:39:01 - ✓ Tamaño del archivo: 1000 bytes
+2025-12-11 01:39:01 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-48-693a12a517f83.png
+2025-12-11 01:39:01 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-48-693a12a517f83.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 48. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"48","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-48-693a12a517f83.png"}}

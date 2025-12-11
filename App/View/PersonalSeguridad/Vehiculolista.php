@@ -96,7 +96,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h6 class="m-0 font-weight-bold text-primary">Lista de Vehículos Activos</h6>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover table-striped align-middle text-center">
+            <table class="table table-bordered table-hover table-striped align-middle text-center" id="TablaVehiculos">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
@@ -351,4 +351,19 @@ $(document).ready(function() {
         });
     });
 });
+
+// ============================================
+// 🔥 ZONA DATATABLES - Activación de DataTable
+// ============================================
+$(document).ready(function() {
+    $('#TablaVehiculos').DataTable({  // O el ID que tenga tu tabla
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+        },
+        pageLength: 10,
+        responsive: true,
+        order: [[0, "desc"]]
+    });
+});
+
 </script>
