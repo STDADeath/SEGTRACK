@@ -53,7 +53,7 @@
                     </h5>
 
                     <!-- BOTÓN PDF (OPCIONAL) -->
-                    <a href="/SEGTRACK/App/Controller/ControladorParqueaderoPDF.php?accion=pdf" 
+                    <a href="/SEGTRACK/App/Controller/ParqueaderoIngresoPDF.php?accion=pdf" 
                        target="_blank" 
                        class="btn btn-danger shadow-sm fw-semibold">
                         <i class="fas fa-file-pdf me-2"></i>Descargar PDF

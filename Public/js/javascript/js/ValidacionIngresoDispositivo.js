@@ -97,7 +97,7 @@ async function iniciarCamara() {
 // Descargar PDF de ingresos de dispositivos
 async function descargarPDF() {
     try {
-        const res = await fetch('/SEGTRACK/App/Controller/DispositivoPDFController.php?accion=pdf');
+        const res = await fetch('/SEGTRACK/App/Controller/DispositivoIngresoPDF.php.php?accion=pdf');
         if (!res.ok) throw new Error('Error al generar PDF');
 
         const blob = await res.blob();

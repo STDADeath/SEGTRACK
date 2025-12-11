@@ -5,6 +5,7 @@ const App = {
     escaneando: false,
     tipoMovimiento: null,
     btnCapturar: null,
+    btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
     config: {
@@ -17,6 +18,8 @@ const App = {
 
 function mostrarMensaje(esExito, texto) {
     const { mensajeExito, mensajeError } = App;
+    if (!mensajeExito || !mensajeError) return;
+
     mensajeExito.classList.toggle("d-none", !esExito);
     mensajeError.classList.toggle("d-none", esExito);
     (esExito ? mensajeExito : mensajeError).textContent = texto;
@@ -28,7 +31,7 @@ function mostrarMensaje(esExito, texto) {
 }
 
 async function enviarQr(qr, tipo) {
-    App.btnCapturar.disabled = true;
+    if (App.btnCapturar) App.btnCapturar.disabled = true;
 
     try {
         const res = await fetch(App.config.urlControlador, {
@@ -40,13 +43,15 @@ async function enviarQr(qr, tipo) {
         const data = await res.json();
         mostrarMensaje(data.success, data.message);
 
-        if (data.success) App.table.ajax.reload(null, false);
+        if (data.success && App.table) {
+            App.table.ajax.reload(null, false);
+        }
 
     } catch (e) {
-        mostrarMensaje(false, "Error de conexión");
+        mostrarMensaje(false, "Error de conexión.");
+    } finally {
+        if (App.btnCapturar) App.btnCapturar.disabled = false;
     }
-
-    App.btnCapturar.disabled = false;
 }
 
 function onScanQR(qr) {
@@ -76,7 +81,31 @@ async function iniciarCamara() {
             onScanQR
         );
     } catch (e) {
-        mostrarMensaje(false, "No se pudo iniciar la cámara");
+        console.error("Error al iniciar cámara:", e);
+        mostrarMensaje(false, "No se pudo iniciar la cámara.");
+    }
+}
+
+// Descargar PDF de vehículos
+async function descargarPDF() {
+    try {
+        const res = await fetch('/SEGTRACK/App/Controller/ParqueaderoIngresoPDF.php?accion=pdf');
+        if (!res.ok) throw new Error('Error al generar PDF');
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Vehiculos_${new Date().toISOString().slice(0, 10)}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+
+        mostrarMensaje(true, "PDF descargado correctamente.");
+    } catch (e) {
+        console.error('Error:', e);
+        mostrarMensaje(false, "No se pudo descargar el PDF.");
     }
 }
 
@@ -84,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     App.tipoMovimiento = document.getElementById("tipoMovimiento");
     App.btnCapturar = document.getElementById("btnCapturar");
+    App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
     App.mensajeExito = document.getElementById("mensajeExito");
     App.mensajeError = document.getElementById("mensajeError");
 
@@ -107,5 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
         language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" }
     });
 
-    App.btnCapturar.addEventListener("click", iniciarCamara);
+    if (App.btnCapturar) App.btnCapturar.addEventListener("click", iniciarCamara);
+    if (App.btnDescargarPDF) App.btnDescargarPDF.addEventListener("click", descargarPDF);
 });
