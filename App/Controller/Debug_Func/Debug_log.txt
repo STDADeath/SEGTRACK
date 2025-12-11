@@ -2235,3 +2235,157 @@ Acción a ejecutar: cambiar_estado
 2025-12-11 16:07:13 - Cambiando estado del funcionario ID: 52 a: Inactivo
 2025-12-11 16:07:13 - Resultado cambio de estado: {"success":true,"rows":1}
 Respuesta final: {"success":true,"message":"Estado cambiado a 'Inactivo' correctamente","nuevo_estado":"Inactivo"}
+
+2025-12-11 16:09:27 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "daniela mora",
+    "IdSede": "28",
+    "TelefonoFuncionario": "1231321321",
+    "DocumentoFuncionario": "12321321313",
+    "CorreoFuncionario": "danielamora@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-11 16:09:27 - registrarFuncionario llamado
+2025-12-11 16:09:27 - Llamando a RegistrarFuncionario en el modelo
+2025-12-11 16:09:27 - Resultado del modelo (BD): {"success":true,"id":"53"}
+2025-12-11 16:09:27 - Registro exitoso, ID: 53. Generando QR...
+2025-12-11 16:09:27 - Generando QR para funcionario ID: 53
+2025-12-11 16:09:27 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-11 16:09:27 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 16:09:27 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 16:09:27 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-53-693adea770a95.png
+2025-12-11 16:09:27 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-53-693adea770a95.png
+2025-12-11 16:09:27 - ✓ Tamaño del archivo: 875 bytes
+2025-12-11 16:09:27 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-53-693adea770a95.png
+2025-12-11 16:09:27 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-53-693adea770a95.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 53. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"53","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-53-693adea770a95.png"}}
+
+2025-12-11 16:42:59 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Luisa Maria",
+    "IdSede": "26",
+    "TelefonoFuncionario": "2334443333",
+    "DocumentoFuncionario": "65465465465",
+    "CorreoFuncionario": "Luisa@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-11 16:42:59 - registrarFuncionario llamado
+2025-12-11 16:42:59 - Llamando a RegistrarFuncionario en el modelo
+2025-12-11 16:42:59 - Resultado del modelo (BD): {"success":true,"id":"54"}
+2025-12-11 16:42:59 - Registro exitoso, ID: 54. Generando QR...
+2025-12-11 16:42:59 - Generando QR para funcionario ID: 54
+2025-12-11 16:42:59 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/QR_Func
+2025-12-11 16:42:59 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/QR_Func
+2025-12-11 16:42:59 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/QR_Func\QR-FUNC-54-693ae683dfcf9.png
+2025-12-11 16:43:00 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/QR_Func\QR-FUNC-54-693ae683dfcf9.png
+2025-12-11 16:43:00 - ✓ Tamaño del archivo: 888 bytes
+2025-12-11 16:43:00 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-54-693ae683dfcf9.png
+2025-12-11 16:43:00 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-54-693ae683dfcf9.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 54. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"54","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-54-693ae683dfcf9.png"}}
+
+2025-12-11 16:46:52 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "lulo",
+    "IdSede": "26",
+    "TelefonoFuncionario": "2342342342",
+    "DocumentoFuncionario": "32423423423",
+    "CorreoFuncionario": "lulo@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-11 16:46:52 - registrarFuncionario llamado
+2025-12-11 16:46:52 - Llamando a RegistrarFuncionario en el modelo
+2025-12-11 16:46:52 - Resultado del modelo (BD): {"success":true,"id":"55"}
+2025-12-11 16:46:52 - Registro exitoso, ID: 55. Generando QR...
+2025-12-11 16:46:52 - Generando QR para funcionario ID: 55
+2025-12-11 16:46:52 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-11 16:46:52 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 16:46:52 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 16:46:52 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-55-693ae76c9a51e.png
+2025-12-11 16:46:52 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-55-693ae76c9a51e.png
+2025-12-11 16:46:52 - ✓ Tamaño del archivo: 763 bytes
+2025-12-11 16:46:52 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-55-693ae76c9a51e.png
+2025-12-11 16:46:52 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-55-693ae76c9a51e.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 55. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"55","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-55-693ae76c9a51e.png"}}
+
+2025-12-11 16:48:42 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "luisa",
+    "IdSede": "26",
+    "TelefonoFuncionario": "2432424234",
+    "DocumentoFuncionario": "23423423423",
+    "CorreoFuncionario": "luisa@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-11 16:48:42 - registrarFuncionario llamado
+2025-12-11 16:48:42 - Llamando a RegistrarFuncionario en el modelo
+2025-12-11 16:48:42 - Resultado del modelo (BD): {"success":true,"id":"56"}
+2025-12-11 16:48:42 - Registro exitoso, ID: 56. Generando QR...
+2025-12-11 16:48:42 - Generando QR para funcionario ID: 56
+2025-12-11 16:48:42 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-11 16:48:42 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 16:48:42 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 16:48:42 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-56-693ae7da5c340.png
+2025-12-11 16:48:42 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-56-693ae7da5c340.png
+2025-12-11 16:48:42 - ✓ Tamaño del archivo: 732 bytes
+2025-12-11 16:48:42 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-56-693ae7da5c340.png
+2025-12-11 16:48:42 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-56-693ae7da5c340.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 56. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"56","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-56-693ae7da5c340.png"}}
+
+2025-12-11 17:07:17 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "itachi tamataro",
+    "IdSede": "25",
+    "TelefonoFuncionario": "2323232323",
+    "DocumentoFuncionario": "32323232323",
+    "CorreoFuncionario": "itachi@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-11 17:07:17 - registrarFuncionario llamado
+2025-12-11 17:07:17 - Llamando a RegistrarFuncionario en el modelo
+2025-12-11 17:07:17 - Resultado del modelo (BD): {"success":true,"id":"57"}
+2025-12-11 17:07:17 - Registro exitoso, ID: 57. Generando QR...
+2025-12-11 17:07:17 - Generando QR para funcionario ID: 57
+2025-12-11 17:07:17 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-11 17:07:17 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 17:07:17 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-11 17:07:17 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-57-693aec35ed1b4.png
+2025-12-11 17:07:18 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-57-693aec35ed1b4.png
+2025-12-11 17:07:18 - ✓ Tamaño del archivo: 885 bytes
+2025-12-11 17:07:18 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-57-693aec35ed1b4.png
+2025-12-11 17:07:18 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-57-693aec35ed1b4.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 57. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"57","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-57-693aec35ed1b4.png"}}
