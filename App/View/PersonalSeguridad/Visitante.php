@@ -12,20 +12,26 @@
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Formulario de Registro</h6>
         </div>
+
         <div class="card-body">
             <form id="formRegistrarVisitante">
+
                 <div class="row">
+
+                    <!-- IDENTIFICACIÓN -->
                     <div class="col-md-6 mb-3">
-                        <label for="IdentificacionVisitante" class="form-label">Identificación</label>
-                        <input type="number" id="IdentificacionVisitante" name="IdentificacionVisitante" 
-                            class="form-control" required>
+                        <label for="IdentificacionVisitante" class="form-label">Número de Identificación</label>
+                        <input type="Number" id="IdentificacionVisitante" name="IdentificacionVisitante"
+                               class="form-control"   required>
                     </div>
 
+                    <!-- NOMBRE -->
                     <div class="col-md-6 mb-3">
                         <label for="NombreVisitante" class="form-label">Nombre Completo</label>
-                        <input type="text" id="NombreVisitante" name="NombreVisitante" 
+                        <input type="text" id="NombreVisitante" name="NombreVisitante"
                                class="form-control" required>
                     </div>
+
                 </div>
 
                 <div class="text-end">
@@ -33,53 +39,13 @@
                         <i class="fas fa-save me-1"></i> Registrar
                     </button>
                 </div>
+
             </form>
         </div>
     </div>
 </div>
 
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
-<script>
-$(document).ready(function () {
-    // Captura el submit del formulario de visitantes
-    $("#formRegistrarVisitante").submit(function (e) {
-        e.preventDefault(); // Evita que la página recargue
-
-        // Cambia el texto del botón mientras se procesa la solicitud
-        const btn = $(this).find('button[type="submit"]');
-        const original = btn.html();
-        btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Procesando...').prop("disabled", true);
-
-        // Envía los datos al controlador usando AJAX
-        $.ajax({
-            url: "../../Controller/ControladorVisitante.php",
-            type: "POST",
-            data: $(this).serialize() + "&accion=registrar",
-            dataType: "json",
-            success: function (res) {
-                console.log("Respuesta del servidor:", res);
-
-                if (res.success) {
-                    alert("✅ " + res.message);
-                    // Limpia el formulario después de registrar
-                    $("#formRegistrarVisitante")[0].reset();
-                } else {
-                    alert("❌ " + (res.message || "Error al registrar visitante"));
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error AJAX:", error);
-                console.log("Estado:", status);
-                console.log("Respuesta completa del servidor:", xhr.responseText);
-                alert("❌ Error de conexión con el servidor");
-            },
-            complete: function () {
-                // Restaura el botón
-                btn.html(original).prop("disabled", false);
-            }
-        });
-    });
-});
-</script>
+<script src="../../../Public/js/javascript/js/validacionVisitante.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

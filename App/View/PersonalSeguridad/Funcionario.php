@@ -3,7 +3,7 @@
 session_start();
 
 // Importa la parte superior del layout (navbar, estilos, encabezado general)
-require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
+require_once __DIR__ . '/../layouts/parte_superior.php';
 
 // -------------------------------------------------------------
 // CARGA DE LAS SEDES PARA LLENAR EL SELECT DEL FORMULARIO

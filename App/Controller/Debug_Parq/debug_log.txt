@@ -1177,3 +1177,26 @@ Vehículo activado exitosamente
 Respuesta final: {"success":true,"message":"Vehículo activado correctamente","nuevoEstado":"Activo"}
 === FIN ===
 
+
+2025-12-11 16:11:04 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "No aplica",
+    "DescripcionVehiculo": "Bicicleta de color vERDE",
+    "TarjetaPropiedad": "TJ 2312421421421",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2025-12-11 16:11:04
+✅ Usando fecha del servidor (sin validación de cliente)
+Generando QR para vehículo ID: 13
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-13-693b336837a80.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 13","data":{"IdParqueadero":"13","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-13-693b336837a80.png","FechaRegistro":"2025-12-11 16:11:04"}}
+=== FIN ===
+

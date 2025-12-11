@@ -90,58 +90,6 @@
 </div>
 
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
-<script>
-$(function () {
-
-    // Cuando cambia "Tiene Visitante" o "Trae Dispositivo" se muestra/oculta la sección correspondiente
-    $("#TieneVisitante, #TraeDispositivo").change(function () {
-        // Si el usuario selecciona "si", se muestra el contenedor de visitante
-        $("#VisitanteContainer").toggle($("#TieneVisitante").val() === "si");
-
-        // Si selecciona "si", se muestra el contenedor de dispositivo
-        $("#DispositivoContainer").toggle($("#TraeDispositivo").val() === "si");
-    });
-
-
-    // Captura el envío del formulario de bitácora
-    $("#formRegistrarBitacora").submit(function (e) {
-        e.preventDefault(); // Evita que la página recargue
-
-        // Cambia el texto del botón mientras se procesa la solicitud
-        const btn = $(this).find('button[type=submit]');
-        const original = btn.html();
-        btn.html('<i class="fas fa-spinner fa-spin"></i> Procesando...')
-    .prop("disabled", true);
-
-        // Envío de datos al controlador usando POST
-        $.post(
-            "../../Controller/ControladorBitacora.php",
-            $(this).serialize() + "&accion=registrar", // Datos del formulario
-            function (res) { // Respuesta del servidor
-                console.log("Respuesta:", res);
-
-                if (res.success) {
-                    alert("Bitácora registrada con éxito");
-
-                    // Limpia el formulario y oculta secciones
-                    $("#formRegistrarBitacora")[0].reset();
-                    $("#VisitanteContainer, #DispositivoContainer").hide();
-                } else {
-                    // Mensaje de error recibido desde PHP
-                    alert(res.message || "Error al registrar");
-                }
-            },
-            "json" // Indica que la respuesta debe ser JSON
-        )
-        .fail(() => alert("Error de conexión con el servidor")) // Error de red
-        .always(() => {
-            // Se restaura el botón sin importar si falló o funcionó
-            btn.html(original).prop("disabled", false);
-        });
-    });
-
-});
-</script>
-
+<script src="../../../Public/js/javascript/js/validacionBitacora.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

@@ -1611,3 +1611,33 @@ Dispositivo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-32-693a1e21483a3.png"}
 === FIN ===
 
+
+2025-12-11 22:12:26 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "LENOVO",
+    "IdFuncionario": "27",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: LENOVO, IdFunc: 27, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Portatil",":marca":"LENOVO",":funcionario":27,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 24
+Generando QR para dispositivo ID: 24
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-24-693b33bacea82.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 24","data":{"IdDispositivo":"24","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-24-693b33bacea82.png"}}
+=== FIN ===
+
