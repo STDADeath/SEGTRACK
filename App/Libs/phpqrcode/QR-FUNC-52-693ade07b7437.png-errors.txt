@@ -1,4 +1,4 @@
-2025-12-11 06:37:35: <br />
+2025-12-11 16:06:47: <br />
 <b>Deprecated</b>:  Implicit conversion from float 0.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
 <br />
 <b>Deprecated</b>:  Implicit conversion from float 0.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
@@ -66,6 +66,28 @@
 <b>Deprecated</b>:  Implicit conversion from float 10.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
 <br />
 <b>Deprecated</b>:  Implicit conversion from float 11.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 11.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 11.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 12.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 12.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 12.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 13.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 13.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 13.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 14.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 14.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 14.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>140</b><br />
 <br />
 <b>Deprecated</b>:  Implicit conversion from float 0.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
 <br />
@@ -198,3 +220,39 @@
 <b>Deprecated</b>:  Implicit conversion from float 21.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
 <br />
 <b>Deprecated</b>:  Implicit conversion from float 21.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 22.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 22.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 22.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 23.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 23.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 23.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 24.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 24.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 24.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 25.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 25.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 25.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 26.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 26.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 26.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 27.25 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 27.5 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
+<br />
+<b>Deprecated</b>:  Implicit conversion from float 27.75 to int loses precision in <b>C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php</b> on line <b>144</b><br />
