@@ -48,9 +48,8 @@
                                 <i class='bx bx-log-in'></i>
                                 Iniciar Sesión
                             </button>
-
-
                         </div>
+                        
                     </div>
 
                     <div class="links">
