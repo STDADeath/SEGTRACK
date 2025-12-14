@@ -2636,3 +2636,243 @@ Acción a ejecutar: actualizar_qr
 2025-12-11 21:33:26 - ✓ Tamaño del archivo: 888 bytes
 2025-12-11 21:33:26 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-60-693b2a965d5a1.png
 Respuesta final: {"success":true,"ruta_qr":"qr\/QR_Func\/QR-FUNC-60-693b2a965d5a1.png"}
+
+2025-12-14 19:41:46 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan marques",
+    "IdSede": "27",
+    "TelefonoFuncionario": "1312312342",
+    "DocumentoFuncionario": "34324324324",
+    "CorreoFuncionario": "prueba@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-14 19:41:46 - registrarFuncionario llamado
+2025-12-14 19:41:46 - Llamando a RegistrarFuncionario en el modelo
+2025-12-14 19:41:46 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2025-12-14 19:41:46 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2025-12-14 19:42:08 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan marques",
+    "IdSede": "27",
+    "TelefonoFuncionario": "1312312342",
+    "DocumentoFuncionario": "34324324324",
+    "CorreoFuncionario": "prueba@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-14 19:42:08 - registrarFuncionario llamado
+2025-12-14 19:42:08 - Llamando a RegistrarFuncionario en el modelo
+2025-12-14 19:42:08 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2025-12-14 19:42:08 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2025-12-14 19:42:20 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan marques",
+    "IdSede": "27",
+    "TelefonoFuncionario": "1312312342",
+    "DocumentoFuncionario": "34324324358",
+    "CorreoFuncionario": "prueba@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-14 19:42:20 - registrarFuncionario llamado
+2025-12-14 19:42:20 - Llamando a RegistrarFuncionario en el modelo
+2025-12-14 19:42:20 - Resultado del modelo (BD): {"success":false,"error":"SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'"}
+2025-12-14 19:42:20 - ERROR en BD: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'
+Respuesta final: {"success":false,"message":"Error en BD: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'"}
+
+2025-12-14 19:42:48 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan marques",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1312312342",
+    "DocumentoFuncionario": "3432432432",
+    "CorreoFuncionario": "prueba@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-14 19:42:48 - registrarFuncionario llamado
+2025-12-14 19:42:48 - Llamando a RegistrarFuncionario en el modelo
+2025-12-14 19:42:48 - Resultado del modelo (BD): {"success":false,"error":"SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'"}
+2025-12-14 19:42:48 - ERROR en BD: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'
+Respuesta final: {"success":false,"message":"Error en BD: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'"}
+
+2025-12-14 19:43:25 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan marques",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1312312342",
+    "DocumentoFuncionario": "1004983721",
+    "CorreoFuncionario": "prueba2@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-14 19:43:25 - registrarFuncionario llamado
+2025-12-14 19:43:25 - Llamando a RegistrarFuncionario en el modelo
+2025-12-14 19:43:25 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2025-12-14 19:43:25 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2025-12-14 19:46:56 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan marques",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1312312342",
+    "DocumentoFuncionario": "1004983725",
+    "CorreoFuncionario": "prueba@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-14 19:46:56 - registrarFuncionario llamado
+2025-12-14 19:46:56 - Llamando a RegistrarFuncionario en el modelo
+2025-12-14 19:46:56 - Resultado del modelo (BD): {"success":false,"error":"SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'"}
+2025-12-14 19:46:56 - ERROR en BD: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'
+Respuesta final: {"success":false,"message":"Error en BD: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'prueba@gmail.com' for key 'uq_correo_funcionario'"}
+
+2025-12-14 19:47:47 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan marques",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1312312342",
+    "DocumentoFuncionario": "1004983000",
+    "CorreoFuncionario": "juanpice@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-14 19:47:47 - registrarFuncionario llamado
+2025-12-14 19:47:47 - Llamando a RegistrarFuncionario en el modelo
+2025-12-14 19:47:47 - Resultado del modelo (BD): {"success":true,"id":"64"}
+2025-12-14 19:47:47 - Registro exitoso, ID: 64. Generando QR...
+2025-12-14 19:47:47 - Generando QR para funcionario ID: 64
+2025-12-14 19:47:47 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-14 19:47:47 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-14 19:47:47 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-14 19:47:47 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-64-693f065364ded.png
+2025-12-14 19:47:47 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-64-693f065364ded.png
+2025-12-14 19:47:47 - ✓ Tamaño del archivo: 884 bytes
+2025-12-14 19:47:47 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-64-693f065364ded.png
+2025-12-14 19:47:47 - QR actualizado en BD con ruta: qr/QR_Func/QR-FUNC-64-693f065364ded.png
+Respuesta final: {"success":true,"message":"Funcionario registrado correctamente con ID: 64. QR generado y guardado en Public\/qr\/QR_Func\/","data":{"IdFuncionario":"64","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-64-693f065364ded.png"}}
+
+2025-12-14 20:10:29 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "64",
+    "cargo": "Funcionario",
+    "nombre": "juan marques",
+    "sede": "30",
+    "telefono": "1312312342",
+    "documento": "1004983000",
+    "correo": "juanpice@gmail.com"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar
+2025-12-14 20:10:29 - actualizarFuncionario llamado para ID: 64
+2025-12-14 20:10:29 - QR antiguo obtenido: qr/QR_Func/QR-FUNC-64-693f065364ded.png
+2025-12-14 20:10:29 - Resultado actualización (modelo): {"success":true,"rows":1}
+2025-12-14 20:10:29 - QR anterior eliminado: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-64-693f065364ded.png
+2025-12-14 20:10:29 - Generando QR para funcionario ID: 64
+2025-12-14 20:10:29 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-14 20:10:29 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-14 20:10:29 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-14 20:10:29 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-64-693f0ba5b1dcb.png
+2025-12-14 20:10:29 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-64-693f0ba5b1dcb.png
+2025-12-14 20:10:29 - ✓ Tamaño del archivo: 884 bytes
+2025-12-14 20:10:29 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-64-693f0ba5b1dcb.png
+2025-12-14 20:10:29 - QR nuevo guardado en BD: qr/QR_Func/QR-FUNC-64-693f0ba5b1dcb.png
+Respuesta final: {"success":true,"message":"Funcionario actualizado correctamente y QR regenerado","ruta_qr":"qr\/QR_Func\/QR-FUNC-64-693f0ba5b1dcb.png","rows_affected":1}
+
+2025-12-14 20:10:29 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "accion": "actualizar_qr",
+    "id": "64"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: actualizar_qr
+2025-12-14 20:10:29 - actualizarQrSolo llamado para ID: 64
+2025-12-14 20:10:29 - QR anterior eliminado: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-64-693f0ba5b1dcb.png
+2025-12-14 20:10:29 - Generando QR para funcionario ID: 64
+2025-12-14 20:10:29 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2025-12-14 20:10:29 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-14 20:10:29 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2025-12-14 20:10:29 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-64-693f0ba5de7a3.png
+2025-12-14 20:10:30 - ✓ QR generado exitosamente en: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-64-693f0ba5de7a3.png
+2025-12-14 20:10:30 - ✓ Tamaño del archivo: 884 bytes
+2025-12-14 20:10:30 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-64-693f0ba5de7a3.png
+Respuesta final: {"success":true,"ruta_qr":"qr\/QR_Func\/QR-FUNC-64-693f0ba5de7a3.png"}
+
+2025-12-14 21:05:09 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "lalallala",
+    "IdSede": "29",
+    "TelefonoFuncionario": "1234234121",
+    "DocumentoFuncionario": "1024787936",
+    "CorreoFuncionario": "lolarealparis@123.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2025-12-14 21:05:09 - registrarFuncionario llamado
+2025-12-14 21:05:09 - Llamando a RegistrarFuncionario en el modelo
+2025-12-14 21:05:09 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2025-12-14 21:05:09 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}

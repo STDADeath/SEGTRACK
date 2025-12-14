@@ -24,19 +24,19 @@ $(document).ready(function () {
      */
     function aplicarEstiloValidacion(elementId, isValid) {
         const input = $(elementId);
-        
+
         // Si no ha interactuado, NO aplicamos clases de validación.
         if (input.hasClass('no-interactuado')) {
-            return; 
+            return;
         }
-        
+
         // Quitar clases previas
-        input.removeClass('is-valid is-invalid border-primary'); 
-        
+        input.removeClass('is-valid is-invalid border-primary');
+
         if (isValid) {
-            input.addClass('is-valid'); 
+            input.addClass('is-valid');
         } else {
-            input.addClass('is-invalid'); 
+            input.addClass('is-invalid');
         }
     }
 
@@ -48,7 +48,7 @@ $(document).ready(function () {
         // Quitar la clase de "no-interactuado"
         $(element).removeClass('no-interactuado');
         // Luego de quitar la clase, forzamos la validación para que aplique el estilo
-        $(element).trigger('validate'); 
+        $(element).trigger('validate');
     }
 
     // Manejador de eventos para INPUTS (Nombre, Teléfono, Documento, Correo)
@@ -59,7 +59,7 @@ $(document).ready(function () {
             $(this).trigger('validate');
         }
     });
-    
+
     // Manejador de eventos para SELECTS (Cargo, Sede)
     $(".form-select").on('change', function () {
         if ($(this).hasClass('no-interactuado')) {
@@ -73,7 +73,7 @@ $(document).ready(function () {
     // ====================================================================
     // 2. DEFINICIÓN DE LAS VALIDACIONES REALES (Evento personalizado 'validate')
     // ====================================================================
-    
+
     // 1. Validar Nombre
     $("#NombreFuncionario").on('validate', function () {
         // Permite letras (incluyendo tildes y ñ/Ñ) y espacios. Mínimo 3 caracteres.
@@ -86,22 +86,22 @@ $(document).ready(function () {
     // 2. Validar Teléfono
     $("#TelefonoFuncionario").on('validate', function () {
         // 🚨 Pre-filtro: Asegurar solo números y máximo 10
-        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); 
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
         const telefono = $(this).val();
         // Validación: debe tener exactamente 10 dígitos
         const isValid = telefono.length === 10;
         aplicarEstiloValidacion(this, isValid);
     });
 
+
     // 3. Validar Documento
     $("#DocumentoFuncionario").on('validate', function () {
-        // 🚨 Pre-filtro: Asegurar solo números y máximo 11
-        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11); 
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
         const documento = $(this).val();
-        // Validación: debe tener exactamente 11 dígitos
-        const isValid = documento.length === 11;
+        const isValid = documento.length >= 8 && documento.length <= 10;
         aplicarEstiloValidacion(this, isValid);
     });
+
 
     // 4. Validar Correo Electrónico
     $("#CorreoFuncionario").on('validate', function () {
@@ -109,10 +109,10 @@ $(document).ready(function () {
         // Regex básica de correo: evita espacios, debe tener @ y al menos un punto después.
         const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         // Validación: debe ser no vacío y cumplir regex
-        const isValid = correo !== '' && regexCorreo.test(correo); 
+        const isValid = correo !== '' && regexCorreo.test(correo);
         aplicarEstiloValidacion(this, isValid);
     });
-    
+
     // 5. Validar Selects (Cargo y Sede)
     $("#CargoFuncionario, #IdSede").on('validate', function () {
         // Validación: debe tener un valor seleccionado (no la opción vacía o deshabilitada)
@@ -124,7 +124,7 @@ $(document).ready(function () {
     // ====================================================================
     // 3. LÓGICA DE ENVÍO (Submit)
     // ====================================================================
-    
+
     $("#formRegistrarFuncionario").on("submit", function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -137,7 +137,7 @@ $(document).ready(function () {
             '#CargoFuncionario',
             '#IdSede'
         ];
-        
+
         let hayInvalidos = false;
 
         // 🚨 Forzar validación en todos al hacer submit
@@ -164,9 +164,9 @@ $(document).ready(function () {
 
         // Determinar la acción (REGISTRAR o ACTUALIZAR)
         // Se asume que existe un <input type="hidden" name="IdFuncionario" id="IdFuncionario" value="0">
-        const idFuncionario = $("#IdFuncionario").val(); 
+        const idFuncionario = $("#IdFuncionario").val();
         const accion = (idFuncionario && parseInt(idFuncionario) > 0) ? "actualizar" : "registrar";
-        
+
         const btn = $("#btnRegistrar");
         const originalText = btn.html();
 
@@ -195,10 +195,10 @@ $(document).ready(function () {
                             // Limpiar formulario y estilos
                             $("#formRegistrarFuncionario")[0].reset();
                             $('.form-control, .form-select').removeClass('is-valid is-invalid').addClass('no-interactuado');
-                            
+
                             // Asegurar que el ID oculto vuelva a 0 para futuros registros
-                            $("#IdFuncionario").val(0); 
-                            
+                            $("#IdFuncionario").val(0);
+
                             // 💡 Nota: Aquí deberías recargar tu tabla de datos si aplica
                             // cargarTablaFuncionarios(); 
                         }
