@@ -1,9 +1,11 @@
 <?php
+
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
+require_once __DIR__ . "/../Core/conexion.php";
 require_once __DIR__ . "/../Model/ModeloIngresoDispositivo.php";
 
 class ControladorDispositivo {
@@ -13,27 +15,50 @@ class ControladorDispositivo {
         $this->modelo = new ModeloDispositivo();
     }
 
-    // Registrar movimiento de dispositivo
-    public function registrarMovimiento() {
+    /**
+     * REGISTRAR INGRESO O SALIDA DE DISPOSITIVO
+     * EXACTAMENTE IGUAL QUE FUNCIONARIOS
+     */
+    public function registrarIngreso() {
+        // Obtenemos el cuerpo del POST (JSON enviado desde fetch)
         $input = json_decode(file_get_contents('php://input'), true);
-        $qrCodigo = $input['qr_codigo'] ?? null;
-        $tipoMovimiento = $input['tipoMovimiento'] ?? 'Entrada';
-        $idSede = $input['idSede'] ?? null;
 
-        if (!$qrCodigo || !$idSede) {
-            return $this->responder(false, 'Faltan datos necesarios');
+        // QR enviado por la vista
+        $qrCodigo = $input['qr_codigo'] ?? null;
+
+        // Tipo de movimiento enviado ("Entrada" o "Salida")
+        $tipoMovimiento = $input['tipoMovimiento'] ?? 'Entrada';
+
+        // Si no llegó ningún QR → error inmediato
+        if (!$qrCodigo) {
+            return $this->responder(false, 'Código QR no recibido');
         }
 
+        // Se consulta si el QR pertenece a un dispositivo
         $dispositivo = $this->modelo->buscarDispositivoPorQr($qrCodigo);
+
+        // Si no coincide con ningún dispositivo → no se registra nada
         if (!$dispositivo) {
             return $this->responder(false, 'Dispositivo no encontrado');
         }
 
-        $exito = $this->modelo->registrarMovimiento($dispositivo['IdDispositivo'], $idSede, $tipoMovimiento);
+        /**
+         * Registrar el movimiento en la tabla ingreso
+         * USANDO LOS DATOS DEL DISPOSITIVO (igual que funcionario usa sus datos)
+         */
+        $exito = $this->modelo->registrarIngreso(
+            $dispositivo['IdDispositivo'],
+            $dispositivo['IdSede'] ?? null,
+            $dispositivo['IdParqueadero'] ?? null,
+            $tipoMovimiento
+        );
+
+        // Error al insertar en BD
         if (!$exito) {
             return $this->responder(false, 'No se pudo registrar el movimiento');
         }
 
+        // Respuesta exitosa para la vista
         return $this->responder(true, "$tipoMovimiento registrada correctamente", [
             'qr' => $dispositivo['QrDispositivo'],
             'tipo' => $dispositivo['TipoDispositivo'],
@@ -43,24 +68,44 @@ class ControladorDispositivo {
         ]);
     }
 
-    // Listar movimientos
-    public function listarMovimientos() {
-        $lista = $this->modelo->listarMovimientos();
-        echo json_encode(["data" => $lista], JSON_UNESCAPED_UNICODE);
+    /**
+     * LISTAR INGRESOS DE DISPOSITIVOS
+     * IGUAL QUE FUNCIONARIOS
+     */
+    public function listarIngresos() {
+        $lista = $this->modelo->listarIngresos();
+
+        echo json_encode([
+            "data" => $lista
+        ], JSON_UNESCAPED_UNICODE);
+
         exit;
     }
 
+    /**
+     * FUNCION DE RESPUESTA GLOBAL
+     * IGUAL QUE FUNCIONARIOS
+     */
     private function responder($success, $message, $data = null) {
-        echo json_encode(['success'=>$success, 'message'=>$message, 'data'=>$data], JSON_UNESCAPED_UNICODE);
+        echo json_encode([
+            'success' => $success,
+            'message' => $message,
+            'data'    => $data
+        ], JSON_UNESCAPED_UNICODE);
+
         exit;
     }
 }
 
-// Ruteo
+// ----- RUTEO BÁSICO -----
+// POST → Registrar entrada o salida
+// GET  → Listar ingresos
 $controlador = new ControladorDispositivo();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controlador->registrarMovimiento();
+    $controlador->registrarIngreso();
 } else {
-    $controlador->listarMovimientos();
+    $controlador->listarIngresos();
 }
+
 ?>

@@ -95,6 +95,7 @@ try {
 
         // -------------------------------------------------------
         // Generar QR (usa la librería phpqrcode) y devuelve la ruta relativa para BD
+        // ✅ SOLUCIÓN: Genera QR en memoria y guarda solo donde debe
         // -------------------------------------------------------
         private function generarQR(int $idFuncionario, string $nombre, string $documento): ?string {
             try {
@@ -132,8 +133,16 @@ try {
 
                 $this->log("Intentando crear QR en ruta absoluta: $rutaCompletaFisica");
 
-                // Generar el QR (archivo físico)
-                QRcode::png($contenidoQR, $rutaCompletaFisica, QR_ECLEVEL_H, 10);
+                // ⬇️ SOLUCIÓN: Generar QR en memoria y luego guardar manualmente ⬇️
+                ob_start();
+                QRcode::png($contenidoQR, false, QR_ECLEVEL_H, 10, 2);
+                $imageData = ob_get_contents();
+                ob_end_clean();
+                
+                // Guardar el contenido SOLO en la ubicación deseada
+                file_put_contents($rutaCompletaFisica, $imageData);
+                $this->log("QR guardado manualmente en: $rutaCompletaFisica");
+                // ⬆️ FIN DE LA SOLUCIÓN ⬆️
 
                 // Verificar creación del archivo
                 if (!file_exists($rutaCompletaFisica)) {
@@ -219,7 +228,7 @@ try {
                     return [
                         "success" => true,
                         "message" => "Funcionario registrado correctamente con ID: " . $idFuncionario .
-                                     ($rutaQR ? ". QR generado y guardado en Public/qr/QR_Func/" : ". ADVERTENCIA: No se pudo generar el QR."),
+                                    ($rutaQR ? ". QR generado y guardado en Public/qr/QR_Func/" : ". ADVERTENCIA: No se pudo generar el QR."),
                         "data" => ["IdFuncionario" => $idFuncionario, "QrCodigoFuncionario" => $rutaQR]
                     ];
                 } else {

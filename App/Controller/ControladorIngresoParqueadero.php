@@ -5,26 +5,32 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-require_once __DIR__ . "/../Model/ModeloIngresParqueadero.php";
+require_once __DIR__ . "/../Model/ModeloIngresoParqueadero.php";
 
 class ControladorParqueadero {
+
     private $modelo;
 
     public function __construct() {
         $this->modelo = new ModeloParqueadero();
     }
 
-    // REGISTRAR INGRESO/SALIDA
     public function registrarIngreso() {
-        $input = json_decode(file_get_contents('php://input'), true);
-        $qrCodigo = $input['qr_codigo'] ?? null;
-        $tipoMovimiento = $input['tipoMovimiento'] ?? 'Entrada';
 
-        if (!$qrCodigo) return $this->responder(false, 'Código QR no recibido');
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        $qrCodigo = $input['qr_codigo'] ?? null;
+        $tipoMovimiento = $input['tipoMovimiento'] ?? "Entrada";
+
+        if (!$qrCodigo) {
+            return $this->responder(false, "Código QR no recibido");
+        }
 
         $vehiculo = $this->modelo->buscarVehiculoPorQr($qrCodigo);
 
-        if (!$vehiculo) return $this->responder(false, 'Vehículo no encontrado');
+        if (!$vehiculo) {
+            return $this->responder(false, "Vehículo no encontrado");
+        }
 
         $exito = $this->modelo->registrarIngreso(
             $vehiculo['IdParqueadero'],
@@ -32,27 +38,36 @@ class ControladorParqueadero {
             $tipoMovimiento
         );
 
-        if (!$exito) return $this->responder(false, 'No se pudo registrar el movimiento');
+        if (!$exito) {
+            return $this->responder(false, "No se pudo registrar el movimiento");
+        }
 
-        return $this->responder(true, "$tipoMovimiento registrado correctamente", [
-            'descripcion' => $vehiculo['DescripcionVehiculo'],
-            'placa'       => $vehiculo['PlacaVehiculo'],
-            'tipo'        => $vehiculo['TipoVehiculo'],
-            'fecha'       => date('Y-m-d H:i:s'),
-            'movimiento'  => $tipoMovimiento
+        return $this->responder(true, "$tipoMovimiento registrada correctamente", [
+            "placa" => $vehiculo["PlacaVehiculo"],
+            "tipo" => $vehiculo["TipoVehiculo"],
+            "descripcion" => $vehiculo["DescripcionVehiculo"],
+            "qr" => $vehiculo["QrVehiculo"],
+            "fecha" => date("Y-m-d H:i:s"),
+            "movimiento" => $tipoMovimiento
         ]);
     }
 
-    // LISTAR INGRESOS
     public function listarIngresos() {
+
         $lista = $this->modelo->listarIngresos();
+
         echo json_encode(["data" => $lista], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
-    // RESPUESTA ESTÁNDAR
     private function responder($success, $message, $data = null) {
-        echo json_encode(['success'=>$success, 'message'=>$message, 'data'=>$data], JSON_UNESCAPED_UNICODE);
+
+        echo json_encode([
+            "success" => $success,
+            "message" => $message,
+            "data" => $data
+        ], JSON_UNESCAPED_UNICODE);
+
         exit;
     }
 }

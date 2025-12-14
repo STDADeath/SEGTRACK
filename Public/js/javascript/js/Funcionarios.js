@@ -1,3 +1,4 @@
+
 /**
  * Lógica JavaScript para el formulario de Funcionarios (Registro y Actualización)
  *
