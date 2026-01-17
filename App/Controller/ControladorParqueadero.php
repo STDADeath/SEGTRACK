@@ -98,7 +98,6 @@ try {
             $IdSede = $datos['IdSede'] ?? null;
             
             // ⭐ CAMBIO CRÍTICO: Generar la fecha SIEMPRE en el servidor
-            // Ignorar cualquier fecha que venga del cliente
             $FechaParqueadero = date('Y-m-d H:i:s');
             
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "Fecha generada en servidor: $FechaParqueadero\n", FILE_APPEND);
@@ -119,9 +118,6 @@ try {
             if ($this->campoVacio($IdSede)) {
                 return ['success' => false, 'message' => 'Falta el campo: Sede'];
             }
-
-            // ✅ Ya no necesitamos validar la fecha porque la generamos aquí
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "✅ Usando fecha del servidor (sin validación de cliente)\n", FILE_APPEND);
 
             try {
                 $resultado = $this->modelo->registrarVehiculo(
@@ -240,6 +236,154 @@ try {
                 return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
         }
+
+        // 🆕 NUEVA FUNCIÓN: ENVIAR QR POR CORREO
+        public function enviarQRPorCorreo(int $idVehiculo, string $correoDestinatario): array {
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== enviarQRPorCorreo llamado para vehículo ID: $idVehiculo ===\n", FILE_APPEND);
+
+            try {
+                // Validar correo
+                if (!filter_var($correoDestinatario, FILTER_VALIDATE_EMAIL)) {
+                    throw new Exception('El correo electrónico no es válido');
+                }
+
+                // Cargar PHPMailer
+                $rutaPHPMailer = __DIR__ . '/../Libs/PHPMailer-master/src/PHPMailer.php';
+                $rutaSMTP = __DIR__ . '/../Libs/PHPMailer-master/src/SMTP.php';
+                $rutaException = __DIR__ . '/../Libs/PHPMailer-master/src/Exception.php';
+
+                if (!file_exists($rutaPHPMailer) || !file_exists($rutaSMTP) || !file_exists($rutaException)) {
+                    throw new Exception('Librerías PHPMailer no encontradas en /Libs/PHPMailer-master/src/');
+                }
+
+                require_once $rutaException;
+                require_once $rutaSMTP;
+                require_once $rutaPHPMailer;
+
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "PHPMailer cargado\n", FILE_APPEND);
+
+                // Obtener información del vehículo
+                $vehiculo = $this->modelo->obtenerPorId($idVehiculo);
+
+                if (!$vehiculo) {
+                    throw new Exception('Vehículo no encontrado');
+                }
+
+                if ($vehiculo['Estado'] !== 'Activo') {
+                    throw new Exception('El vehículo no está activo');
+                }
+
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "Vehículo encontrado: " . json_encode($vehiculo) . "\n", FILE_APPEND);
+
+                if (empty($vehiculo['QrVehiculo'])) {
+                    throw new Exception('Este vehículo no tiene código QR generado');
+                }
+
+                // Ruta completa del QR
+                $rutaQR = __DIR__ . '/../../Public/' . $vehiculo['QrVehiculo'];
+
+                if (!file_exists($rutaQR)) {
+                    throw new Exception('El archivo QR no existe: ' . $rutaQR);
+                }
+
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "Preparando envío a: $correoDestinatario\n", FILE_APPEND);
+
+                // Configurar PHPMailer
+                $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'seguridad.integral.segtrack@gmail.com'; // ⚠️ Correo
+                $mail->Password = 'fhxj smlq jidt xnqs'; // ⚠️ app password
+                $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+                $mail->CharSet = 'UTF-8';
+
+                $mail->setFrom('TU_CORREO@gmail.com', 'Sistema SEGTRACK'); // ⚠️ CAMBIAR
+                $mail->addAddress($correoDestinatario);
+                $mail->addAttachment($rutaQR, 'QR-Vehiculo-' . $idVehiculo . '.png');
+
+                $mail->isHTML(true);
+                $mail->Subject = 'Código QR - Vehículo Registrado';
+                $mail->Body = "
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 8px 8px 0 0; }
+                        .content { background-color: #f8f9fc; padding: 30px; border: 1px solid #e3e6f0; }
+                        .info-box { background-color: white; padding: 20px; margin: 20px 0; border-left: 4px solid #1cc88a; }
+                        .footer { text-align: center; padding: 20px; color: #858796; font-size: 12px; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <h1>🚗 SEGTRACK - Parqueadero</h1>
+                            <p>Sistema de Gestión de Vehículos</p>
+                        </div>
+                        <div class='content'>
+                            <h3>Código QR de su Vehículo</h3>
+                            <p>Su vehículo ha sido registrado exitosamente en nuestro sistema de parqueadero.</p>
+                            <div class='info-box'>
+                                <strong>🚙 Información del Vehículo:</strong><br>
+                                <strong>ID:</strong> {$vehiculo['IdParqueadero']}<br>
+                                <strong>Tipo:</strong> {$vehiculo['TipoVehiculo']}<br>
+                                <strong>Placa:</strong> {$vehiculo['PlacaVehiculo']}<br>
+                                <strong>Descripción:</strong> {$vehiculo['DescripcionVehiculo']}<br>
+                                <strong>Tarjeta de Propiedad:</strong> {$vehiculo['TarjetaPropiedad']}<br>
+                                <strong>Fecha de Registro:</strong> {$vehiculo['FechaParqueadero']}
+                            </div>
+                            <p>Adjunto encontrarás el código QR de tu vehículo.</p>
+                            <ul>
+                                <li>✅ Presenta este código al ingresar al parqueadero</li>
+                                <li>✅ Mantén este código disponible en tu dispositivo móvil</li>
+                                <li>✅ Facilita el control de entrada y salida</li>
+                            </ul>
+                            <p><strong>⚠️ Importante:</strong> Guarda este código en un lugar seguro.</p>
+                        </div>
+                        <div class='footer'>
+                            <p>Este es un correo automático, por favor no responder.</p>
+                            <p>&copy; " . date('Y') . " SEGTRACK - Sistema de Gestión de Parqueadero</p>
+                        </div>
+                    </div>
+                </body>
+                </html>";
+
+                $mail->AltBody = "SEGTRACK - Sistema de Gestión de Parqueadero\n\n" .
+                                 "Código QR de su Vehículo\n\n" .
+                                 "INFORMACIÓN DEL VEHÍCULO:\n" .
+                                 "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" .
+                                 "ID: {$vehiculo['IdParqueadero']}\n" .
+                                 "Tipo: {$vehiculo['TipoVehiculo']}\n" .
+                                 "Placa: {$vehiculo['PlacaVehiculo']}\n" .
+                                 "Descripción: {$vehiculo['DescripcionVehiculo']}\n" .
+                                 "Tarjeta: {$vehiculo['TarjetaPropiedad']}\n" .
+                                 "Fecha: {$vehiculo['FechaParqueadero']}\n\n" .
+                                 "Adjunto encontrarás el código QR de tu vehículo.\n\n" .
+                                 "SEGTRACK - Sistema de Gestión de Parqueadero";
+
+                $mail->send();
+
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "✓ Correo enviado exitosamente a: $correoDestinatario\n", FILE_APPEND);
+
+                return [
+                    'success' => true,
+                    'message' => "Código QR enviado exitosamente a: {$correoDestinatario}"
+                ];
+
+            } catch (PHPMailer\PHPMailer\Exception $e) {
+                $error = "Error PHPMailer: " . $e->getMessage();
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', $error . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => $error];
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: $error\n", FILE_APPEND);
+                return ['success' => false, 'message' => $error];
+            }
+        }
     }
 
     $controlador = new ControladorParqueadero();
@@ -286,6 +430,17 @@ try {
             $resultado = $controlador->cambiarEstadoVehiculo($id, 'Inactivo');
         } else {
             $resultado = ['success' => false, 'message' => 'ID de vehículo no válido'];
+        }
+        
+    } elseif ($accion === 'enviar_qr') {
+        // 🆕 NUEVA ACCIÓN: ENVIAR QR POR CORREO
+        $id = isset($_POST['id_vehiculo']) ? (int)$_POST['id_vehiculo'] : 0;
+        $correo = $_POST['correo_destinatario'] ?? '';
+        
+        if ($id > 0 && !empty($correo)) {
+            $resultado = $controlador->enviarQRPorCorreo($id, $correo);
+        } else {
+            $resultado = ['success' => false, 'message' => 'ID de vehículo o correo no válido'];
         }
         
     } else {

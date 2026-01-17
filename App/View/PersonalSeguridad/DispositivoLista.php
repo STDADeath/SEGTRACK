@@ -30,11 +30,19 @@ if (!empty($_GET['visitante'])) {
     $params[':visitante'] = $_GET['visitante'];
 }
 
+// 🆕 FILTRO POR NÚMERO SERIAL
+if (!empty($_GET['serial'])) {
+    $filtros[] = "d.NumeroSerial LIKE :serial";
+    $params[':serial'] = '%' . $_GET['serial'] . '%';
+}
+
 $where = "WHERE " . implode(" AND ", $filtros);
 
+// Query CON NumeroSerial
 $sql = "SELECT 
             d.*,
             f.NombreFuncionario,
+            f.CorreoFuncionario,
             v.NombreVisitante
         FROM dispositivo d
         LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
@@ -72,10 +80,17 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <option value="Otro" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Otro') ? 'selected' : '' ?>>Otro</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="marca" class="form-label">Marca</label>
                     <input type="text" name="marca" id="marca" class="form-control" value="<?= $_GET['marca'] ?? '' ?>" placeholder="Buscar por marca">
                 </div>
+                
+                <!-- 🆕 FILTRO POR SERIAL -->
+                <div class="col-md-2">
+                    <label for="serial" class="form-label">Número Serial</label>
+                    <input type="text" name="serial" id="serial" class="form-control" value="<?= $_GET['serial'] ?? '' ?>" placeholder="Buscar por serial">
+                </div>
+                
                 <div class="col-md-2">
                     <label for="funcionario" class="form-label">ID Funcionario</label>
                     <input type="text" name="funcionario" id="funcionario" class="form-control" value="<?= $_GET['funcionario'] ?? '' ?>" placeholder="ID">
@@ -84,7 +99,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label for="visitante" class="form-label">ID Visitante</label>
                     <input type="text" name="visitante" id="visitante" class="form-control" value="<?= $_GET['visitante'] ?? '' ?>" placeholder="ID">
                 </div>
-                <div class="col-md-2 d-flex align-items-end">
+                <div class="col-md-1 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
                     <a href="Dispositivolista.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
                 </div>
@@ -104,6 +119,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>QR</th>
                         <th>Tipo</th>
                         <th>Marca</th>
+                        <th>Número Serial</th> <!-- 🆕 NUEVA COLUMNA -->
                         <th>Funcionario</th>
                         <th>Visitante</th>
                         <th>Acciones</th>
@@ -112,13 +128,26 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tbody>
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
+                            <?php 
+                            // Solo funcionarios tienen correo por ahora
+                            $correoDisponible = $row['CorreoFuncionario'] ?? '';
+                            $tieneCorreo = !empty($correoDisponible);
+                            ?>
                             <tr id="fila-<?php echo $row['IdDispositivo']; ?>">
                                 <td class="text-center">
                                     <?php if (!empty($row['QrDispositivo'])) : ?>
-                                        <button type="button" class="btn btn-sm btn-outline-success" 
+                                        <button type="button" class="btn btn-sm btn-outline-success mb-1" 
                                                 onclick="verQRDispositivo('<?php echo htmlspecialchars($row['QrDispositivo']); ?>', <?php echo $row['IdDispositivo']; ?>)"
                                                 title="Ver código QR">
-                                            <i class="fas fa-qrcode me-1"></i> Ver QR
+                                            <i class="fas fa-qrcode me-1"></i> Ver
+                                        </button>
+                                        <!-- 🆕 BOTÓN ENVIAR QR -->
+                                        <button type="button" 
+                                                class="btn btn-sm btn-outline-info <?php echo !$tieneCorreo ? 'disabled' : ''; ?>" 
+                                                onclick="enviarQRPorCorreo(<?php echo $row['IdDispositivo']; ?>, '<?php echo htmlspecialchars($correoDisponible); ?>')"
+                                                title="<?php echo $tieneCorreo ? 'Enviar QR por correo' : 'Solo funcionarios pueden recibir correo'; ?>"
+                                                <?php echo !$tieneCorreo ? 'disabled' : ''; ?>>
+                                            <i class="fas fa-envelope me-1"></i> Enviar
                                         </button>
                                     <?php else : ?>
                                         <span class="badge badge-warning">Sin QR</span>
@@ -126,20 +155,26 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </td>
                                 <td><?php echo $row['TipoDispositivo']; ?></td>
                                 <td><?php echo $row['MarcaDispositivo']; ?></td>
+                                
+                                <!-- 🆕 MOSTRAR NÚMERO SERIAL -->
+                                <td>
+                                    <?php if (!empty($row['NumeroSerial'])) : ?>
+                                        <span class="badge bg-dark"><?php echo $row['NumeroSerial']; ?></span>
+                                    <?php else : ?>
+                                        <span class="text-muted">-</span>
+                                    <?php endif; ?>
+                                </td>
+                                
                                 <td>
                                     <?php if (!empty($row['NombreFuncionario'])) : ?>
-                                            <?php echo $row['NombreFuncionario']; ?>
-                                        </span>
-                                        
+                                        <?php echo $row['NombreFuncionario']; ?>
                                     <?php else : ?>
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
                                     <?php if (!empty($row['NombreVisitante'])) : ?>
-                                            <?php echo $row['NombreVisitante']; ?>
-                                        </span>
-                                        
+                                        <?php echo $row['NombreVisitante']; ?>
                                     <?php else : ?>
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
@@ -210,7 +245,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Tipo Dispositivo</label>
+                            <label class="form-label">Tipo Dispositivo <span class="text-danger">*</span></label>
                             <select id="editTipoDispositivo" class="form-control" name="tipo" required>
                                 <option value="">-- Seleccione un tipo --</option>
                                 <option value="Portatil">Portátil</option>
@@ -220,8 +255,24 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Marca <small class="text-muted">(Solo lectura)</small></label>
-                            <input type="text" id="editMarcaDispositivo" class="form-control bg-light" name="marca" readonly>
+                            <label class="form-label">Marca <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                <input type="text" id="editMarcaDispositivo" class="form-control" name="marca" required placeholder="Ej: HP, Dell, Lenovo">
+                            </div>
+                            <small class="text-muted">Puede modificar la marca del dispositivo</small>
+                        </div>
+                    </div>
+
+                    <!-- 🆕 NÚMERO SERIAL EN MODAL EDITAR -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Número Serial</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                                <input type="text" id="editNumeroSerial" class="form-control" name="serial" placeholder="Ej: SN123456789" maxlength="50">
+                            </div>
+                            <small class="text-muted">Campo opcional - Solo letras, números, guiones (-) y guiones bajos (_)</small>
                         </div>
                     </div>
 
@@ -262,6 +313,53 @@ $(document).ready(function() {
         responsive: true,
         order: [[0, "desc"]]
     });
+
+    // 🆕 VALIDACIÓN EN TIEMPO REAL DEL SERIAL EN MODAL EDITAR
+    const editSerialInput = document.getElementById('editNumeroSerial');
+    const editMarcaInput = document.getElementById('editMarcaDispositivo');
+    
+    if (editSerialInput) {
+        editSerialInput.addEventListener('input', function(e) {
+            let valor = e.target.value;
+            // Remover caracteres no permitidos automáticamente
+            valor = valor.replace(/[^a-zA-Z0-9\-_]/g, '');
+            e.target.value = valor;
+            
+            // Validar longitud
+            if (valor.length > 50) {
+                e.target.value = valor.substring(0, 50);
+                e.target.classList.add('is-invalid');
+            } else if (valor.length > 0 && valor.length >= 3) {
+                e.target.classList.remove('is-invalid');
+                e.target.classList.add('is-valid');
+            } else if (valor.length > 0 && valor.length < 3) {
+                e.target.classList.add('is-invalid');
+                e.target.classList.remove('is-valid');
+            } else {
+                e.target.classList.remove('is-invalid', 'is-valid');
+            }
+        });
+    }
+
+    // 🆕 VALIDACIÓN EN TIEMPO REAL DE LA MARCA EN MODAL EDITAR
+    if (editMarcaInput) {
+        editMarcaInput.addEventListener('input', function(e) {
+            const regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]+$/;
+            let valor = e.target.value;
+            
+            if (valor.length > 0) {
+                if (regexTexto.test(valor)) {
+                    e.target.classList.remove('is-invalid');
+                    e.target.classList.add('is-valid');
+                } else {
+                    e.target.classList.add('is-invalid');
+                    e.target.classList.remove('is-valid');
+                }
+            } else {
+                e.target.classList.remove('is-invalid', 'is-valid');
+            }
+        });
+    }
 });
 
 // ============================================
@@ -280,6 +378,104 @@ function verQRDispositivo(rutaQR, idDispositivo) {
 }
 
 // ============================================
+// 🆕 FUNCIÓN PARA ENVIAR QR POR CORREO
+// ============================================
+function enviarQRPorCorreo(idDispositivo, correoDestinatario) {
+    console.log('📧 Enviando QR - ID:', idDispositivo, 'Correo:', correoDestinatario);
+    
+    // Validar que exista un correo
+    if (!correoDestinatario || correoDestinatario.trim() === '') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin correo registrado',
+            html: 'Este dispositivo no tiene un correo electrónico asociado.<br><small class="text-muted">Por ahora solo funcionarios pueden recibir correos.</small>',
+            confirmButtonColor: '#3085d6'
+        });
+        return;
+    }
+
+    // Confirmar el envío
+    Swal.fire({
+        title: '📧 ¿Enviar código QR?',
+        html: `Se enviará el código QR al correo:<br><br><strong class="text-primary">${correoDestinatario}</strong>`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<i class="fas fa-paper-plane"></i> Sí, enviar',
+        cancelButtonText: '<i class="fas fa-times"></i> Cancelar',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Mostrar loading
+            Swal.fire({
+                title: 'Enviando correo...',
+                html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false
+            });
+
+            // Realizar petición AJAX al MISMO controlador de dispositivos
+            $.ajax({
+                url: '../../Controller/ControladorDispositivo.php',
+                type: 'POST',
+                data: {
+                    accion: 'enviar_qr',
+                    id_dispositivo: idDispositivo
+                },
+                dataType: 'json',
+                timeout: 30000,
+                success: function(response) {
+                    console.log('✓ Respuesta:', response);
+                    
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Correo enviado!',
+                            html: `<p>${response.message}</p>`,
+                            timer: 4000,
+                            timerProgressBar: true,
+                            confirmButtonColor: '#1cc88a'
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error al enviar',
+                            text: response.message,
+                            confirmButtonColor: '#e74a3b'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('❌ Error AJAX:', {
+                        status: status,
+                        error: error,
+                        response: xhr.responseText
+                    });
+                    
+                    let errorMsg = 'No se pudo conectar con el servidor.';
+                    
+                    if (xhr.status === 404) {
+                        errorMsg = 'El archivo ControladorEnviarQR.php no existe. Verifica la ruta.';
+                    } else if (status === 'timeout') {
+                        errorMsg = 'La solicitud tardó demasiado tiempo.';
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error de conexión',
+                        text: errorMsg,
+                        confirmButtonColor: '#e74a3b',
+                        footer: '<small>Revisa la consola del navegador (F12) para más detalles</small>'
+                    });
+                }
+            });
+        }
+    });
+}
+
+// ============================================
 // Cargar datos en el modal de edición
 // ============================================
 function cargarDatosEdicionDispositivo(row) {
@@ -288,6 +484,7 @@ function cargarDatosEdicionDispositivo(row) {
     $('#editIdDispositivo').val(row.IdDispositivo);
     $('#editTipoDispositivo').val(row.TipoDispositivo);
     $('#editMarcaDispositivo').val(row.MarcaDispositivo);
+    $('#editNumeroSerial').val(row.NumeroSerial || ''); // 🆕 CARGAR SERIAL
     
     // IDs ocultos
     $('#editIdFuncionario').val(row.IdFuncionario || '');
@@ -305,38 +502,109 @@ function cargarDatosEdicionDispositivo(row) {
 // ============================================
 $(document).ready(function() {
     $('#btnGuardarCambiosDispositivo').click(function() {
+        // 🆕 VALIDACIONES MEJORADAS
+        const tipo = $('#editTipoDispositivo').val();
+        const marca = $('#editMarcaDispositivo').val().trim();
+        const serial = $('#editNumeroSerial').val().trim();
+        
+        // Expresiones regulares
+        const regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]+$/;
+        const regexSerial = /^[a-zA-Z0-9\-_]+$/;
+
+        // Validar tipo
+        if (!tipo) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campo incompleto',
+                text: 'Debe seleccionar un tipo de dispositivo',
+                confirmButtonColor: '#f6c23e'
+            });
+            return;
+        }
+
+        // Validar marca
+        if (!marca) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campo incompleto',
+                text: 'Debe ingresar la marca del dispositivo',
+                confirmButtonColor: '#f6c23e'
+            });
+            $('#editMarcaDispositivo').focus();
+            return;
+        }
+
+        if (!regexTexto.test(marca)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Caracteres inválidos',
+                text: 'La marca contiene caracteres inválidos. Solo se permiten letras, números y .-,',
+                confirmButtonColor: '#e74a3b'
+            });
+            $('#editMarcaDispositivo').focus();
+            return;
+        }
+
+        // 🆕 VALIDAR NÚMERO SERIAL
+        if (serial) {
+            if (!regexSerial.test(serial)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Serial inválido',
+                    html: 'El número serial solo puede contener:<br>' +
+                          '• Letras (A-Z, a-z)<br>' +
+                          '• Números (0-9)<br>' +
+                          '• Guiones (-)<br>' +
+                          '• Guiones bajos (_)',
+                    confirmButtonColor: '#e74a3b'
+                });
+                $('#editNumeroSerial').focus();
+                return;
+            }
+
+            if (serial.length < 3) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Serial muy corto',
+                    text: 'El número serial debe tener al menos 3 caracteres',
+                    confirmButtonColor: '#f6c23e'
+                });
+                $('#editNumeroSerial').focus();
+                return;
+            }
+
+            if (serial.length > 50) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Serial muy largo',
+                    text: 'El número serial no puede exceder 50 caracteres',
+                    confirmButtonColor: '#e74a3b'
+                });
+                $('#editNumeroSerial').focus();
+                return;
+            }
+        }
+
         var formData = {
             accion: 'actualizar',
             id: $('#editIdDispositivo').val(),
-            tipo: $('#editTipoDispositivo').val(),
-            marca: $('#editMarcaDispositivo').val(),
+            tipo: tipo,
+            marca: marca,
+            serial: serial,
             id_funcionario: $('#editIdFuncionario').val(),
             id_visitante: $('#editIdVisitante').val()
         };
 
         console.log('Enviando datos:', formData);
 
-        // Validar campo obligatorio (solo Tipo)
-        if (!formData.tipo) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campo incompleto',
-                text: 'Debe seleccionar un tipo de dispositivo'
-            });
-            return;
-        }
-
-        // Cerrar modal
         $('#modalEditarDispositivo').modal('hide');
 
-        // Mostrar loading
         Swal.fire({
-            title: 'Guardando...',
-            text: 'Por favor espere',
+            title: 'Guardando cambios...',
+            html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
             allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+            allowEscapeKey: false,
+            showConfirmButton: false
         });
 
         $.ajax({
@@ -351,17 +619,21 @@ $(document).ready(function() {
                     Swal.fire({
                         icon: 'success',
                         title: '¡Éxito!',
-                        text: 'Dispositivo actualizado correctamente',
-                        timer: 2000,
-                        showConfirmButton: false
+                        html: response.message || 'Dispositivo actualizado correctamente',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: true,
+                        confirmButtonColor: '#1cc88a'
                     }).then(() => {
                         location.reload();
                     });
                 } else {
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: response.message || 'Error al actualizar el dispositivo'
+                        icon: 'warning',
+                        title: 'No se pudo actualizar',
+                        html: response.message.replace(/\n/g, '<br>') || 'Error al actualizar el dispositivo',
+                        confirmButtonColor: '#f6c23e',
+                        footer: '<small class="text-muted">Revise la información e intente nuevamente</small>'
                     });
                 }
             },
@@ -370,7 +642,9 @@ $(document).ready(function() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
-                    text: 'No se pudo conectar con el servidor'
+                    text: 'No se pudo conectar con el servidor',
+                    confirmButtonColor: '#e74a3b',
+                    footer: '<small>Si el problema persiste, contacte al administrador</small>'
                 });
             }
         });

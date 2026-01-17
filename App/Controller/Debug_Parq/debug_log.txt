@@ -974,3 +974,107 @@ Vehículo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-23-69323969de434.png"}
 === FIN ===
 
+
+2025-12-13 16:13:12 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "22",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 22, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2025-12-13 22:09:28 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "21",
+    "tipo": "Carro",
+    "descripcion": "Renaul, Kia, de color rojo",
+    "idsede": "28"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 21
+Datos preparados: {"tipo":"Carro","descripcion":"Renaul, Kia, de color rojo","idsede":"28"}
+=== actualizarVehiculo llamado ===
+ID: 21
+Datos: {"tipo":"Carro","descripcion":"Renaul, Kia, de color rojo","idsede":"28"}
+Regenerando QR para ID: 21
+Generando QR para vehículo ID: 21
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-21-693e2a68a36dc.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-21-693e2a68a36dc.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-21-693e2a68a36dc.png"}
+=== FIN ===
+
+
+2026-01-07 19:05:01 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "21",
+    "correo_destinatario": "andersoarebalo@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 21 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":21,"TipoVehiculo":"Carro","PlacaVehiculo":"Eho-456","DescripcionVehiculo":"Renaul, Kia, de color rojo","TarjetaPropiedad":"tj 495564","FechaParqueadero":"2025-11-20 18:38:00","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-21-693e2a68a36dc.png","IdSede":28}
+Preparando envío a: andersoarebalo@gmail.com
+Error PHPMailer: SMTP Error: Could not authenticate.
+Respuesta final: {"success":false,"message":"Error PHPMailer: SMTP Error: Could not authenticate."}
+=== FIN ===
+
+
+2026-01-07 19:07:13 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "21",
+    "correo_destinatario": "andersoarebalo@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 21 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":21,"TipoVehiculo":"Carro","PlacaVehiculo":"Eho-456","DescripcionVehiculo":"Renaul, Kia, de color rojo","TarjetaPropiedad":"tj 495564","FechaParqueadero":"2025-11-20 18:38:00","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-21-693e2a68a36dc.png","IdSede":28}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-01-07 20:39:46 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "21",
+    "correo_destinatario": "brendamorenotu@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 21 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":21,"TipoVehiculo":"Carro","PlacaVehiculo":"Eho-456","DescripcionVehiculo":"Renaul, Kia, de color rojo","TarjetaPropiedad":"tj 495564","FechaParqueadero":"2025-11-20 18:38:00","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-21-693e2a68a36dc.png","IdSede":28}
+Preparando envío a: brendamorenotu@gmail.com
+✓ Correo enviado exitosamente a: brendamorenotu@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: brendamorenotu@gmail.com"}
+=== FIN ===
+

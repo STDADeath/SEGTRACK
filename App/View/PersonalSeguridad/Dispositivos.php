@@ -66,6 +66,18 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
 
+                        <!-- 🆕 NUEVO CAMPO: NÚMERO SERIAL -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Número Serial</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                                    <input type="text" class="form-control" name="NumeroSerial" id="NumeroSerial" placeholder="Ej: SN123456789">
+                                </div>
+                                <small class="text-muted">Campo opcional - Ingrese el serial del dispositivo</small>
+                            </div>
+                        </div>
+
                         <!-- 🔹 Selección de visitante -->
                         <div class="row">
                             <div class="col-md-6 mb-3">

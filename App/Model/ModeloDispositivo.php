@@ -17,10 +17,10 @@ class ModeloDispositivo {
     /**
      * Registra un nuevo dispositivo en la base de datos
      */
-    public function registrarDispositivo(string $tipo, string $marca, ?int $idFuncionario, ?int $idVisitante): array {
+    public function registrarDispositivo(string $tipo, string $marca, string $numeroSerial, ?int $idFuncionario, ?int $idVisitante): array {
         try {
             file_put_contents($this->debugPath, "=== MODELO: registrarDispositivo ===\n", FILE_APPEND);
-            file_put_contents($this->debugPath, "Tipo: $tipo, Marca: $marca, IdFunc: $idFuncionario, IdVis: $idVisitante\n", FILE_APPEND);
+            file_put_contents($this->debugPath, "Tipo: $tipo, Marca: $marca, Serial: $numeroSerial, IdFunc: $idFuncionario, IdVis: $idVisitante\n", FILE_APPEND);
 
             if (!$this->conexion) {
                 file_put_contents($this->debugPath, "ERROR: Conexión no disponible\n", FILE_APPEND);
@@ -30,8 +30,8 @@ class ModeloDispositivo {
             file_put_contents($this->debugPath, "Conexión OK, preparando SQL\n", FILE_APPEND);
 
             $sql = "INSERT INTO dispositivo 
-                    (TipoDispositivo, MarcaDispositivo, IdFuncionario, IdVisitante, QrDispositivo, Estado)
-                    VALUES (:tipo, :marca, :funcionario, :visitante, '', 'Activo')";
+                    (TipoDispositivo, MarcaDispositivo, NumeroSerial, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :serial, :funcionario, :visitante, '', 'Activo')";
 
             file_put_contents($this->debugPath, "SQL preparado: $sql\n", FILE_APPEND);
 
@@ -40,6 +40,7 @@ class ModeloDispositivo {
             $params = [
                 ':tipo' => $tipo,
                 ':marca' => $marca,
+                ':serial' => $numeroSerial,
                 ':funcionario' => $idFuncionario ?: null,
                 ':visitante' => $idVisitante ?: null
             ];
@@ -253,7 +254,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * Actualiza los datos del dispositivo (sin tocar el QR ni el Estado)
+     * Actualiza los datos del dispositivo (incluye NumeroSerial)
      */
     public function actualizar(int $idDispositivo, array $datos): array {
         try {
@@ -267,7 +268,8 @@ class ModeloDispositivo {
 
             $sql = "UPDATE dispositivo SET 
                         TipoDispositivo = :tipo, 
-                        MarcaDispositivo = :marca, 
+                        MarcaDispositivo = :marca,
+                        NumeroSerial = :serial,
                         IdFuncionario = :funcionario, 
                         IdVisitante = :visitante
                     WHERE IdDispositivo = :id";
@@ -290,6 +292,7 @@ class ModeloDispositivo {
             $params = [
                 ':tipo' => $datos['TipoDispositivo'] ?? null,
                 ':marca' => $datos['MarcaDispositivo'] ?? null,
+                ':serial' => $datos['NumeroSerial'] ?? null,
                 ':funcionario' => $idFunc,
                 ':visitante' => $idVis,
                 ':id' => $idDispositivo
@@ -366,6 +369,170 @@ class ModeloDispositivo {
 
         } catch (PDOException $e) {
             return false;
+        }
+    }
+
+    /**
+     * 🆕 Verifica si un número serial ya existe (excluyendo un ID específico para edición)
+     */
+    public function existeNumeroSerial(string $numeroSerial, ?int $excluirId = null): array {
+        try {
+            if (!$this->conexion) {
+                return ['existe' => false];
+            }
+
+            // Solo validar si el serial no está vacío
+            if (empty(trim($numeroSerial))) {
+                return ['existe' => false];
+            }
+
+            if ($excluirId !== null) {
+                // Para edición: excluir el ID actual
+                $sql = "SELECT IdDispositivo, TipoDispositivo, MarcaDispositivo 
+                        FROM dispositivo 
+                        WHERE NumeroSerial = :serial 
+                        AND IdDispositivo != :id 
+                        AND Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([':serial' => $numeroSerial, ':id' => $excluirId]);
+            } else {
+                // Para registro nuevo
+                $sql = "SELECT IdDispositivo, TipoDispositivo, MarcaDispositivo 
+                        FROM dispositivo 
+                        WHERE NumeroSerial = :serial 
+                        AND Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([':serial' => $numeroSerial]);
+            }
+
+            $dispositivo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($dispositivo) {
+                return [
+                    'existe' => true,
+                    'dispositivo' => $dispositivo
+                ];
+            }
+
+            return ['existe' => false];
+
+        } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en existeNumeroSerial: " . $e->getMessage() . "\n", FILE_APPEND);
+            return ['existe' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * 🆕 Verifica si un funcionario ya tiene un dispositivo activo del mismo tipo
+     */
+    public function funcionarioTieneDispositivo(int $idFuncionario, string $tipoDispositivo, ?int $excluirId = null): array {
+        try {
+            if (!$this->conexion) {
+                return ['existe' => false];
+            }
+
+            if ($excluirId !== null) {
+                // Para edición: excluir el ID actual
+                $sql = "SELECT d.IdDispositivo, d.TipoDispositivo, d.MarcaDispositivo, d.NumeroSerial
+                        FROM dispositivo d
+                        WHERE d.IdFuncionario = :idFunc 
+                        AND d.TipoDispositivo = :tipo
+                        AND d.IdDispositivo != :id
+                        AND d.Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([
+                    ':idFunc' => $idFuncionario,
+                    ':tipo' => $tipoDispositivo,
+                    ':id' => $excluirId
+                ]);
+            } else {
+                // Para registro nuevo
+                $sql = "SELECT d.IdDispositivo, d.TipoDispositivo, d.MarcaDispositivo, d.NumeroSerial
+                        FROM dispositivo d
+                        WHERE d.IdFuncionario = :idFunc 
+                        AND d.TipoDispositivo = :tipo
+                        AND d.Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([
+                    ':idFunc' => $idFuncionario,
+                    ':tipo' => $tipoDispositivo
+                ]);
+            }
+
+            $dispositivo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($dispositivo) {
+                return [
+                    'existe' => true,
+                    'dispositivo' => $dispositivo
+                ];
+            }
+
+            return ['existe' => false];
+
+        } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en funcionarioTieneDispositivo: " . $e->getMessage() . "\n", FILE_APPEND);
+            return ['existe' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * 🆕 Verifica si un visitante ya tiene un dispositivo activo del mismo tipo
+     */
+    public function visitanteTieneDispositivo(int $idVisitante, string $tipoDispositivo, ?int $excluirId = null): array {
+        try {
+            if (!$this->conexion) {
+                return ['existe' => false];
+            }
+
+            if ($excluirId !== null) {
+                // Para edición: excluir el ID actual
+                $sql = "SELECT d.IdDispositivo, d.TipoDispositivo, d.MarcaDispositivo, d.NumeroSerial
+                        FROM dispositivo d
+                        WHERE d.IdVisitante = :idVis 
+                        AND d.TipoDispositivo = :tipo
+                        AND d.IdDispositivo != :id
+                        AND d.Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([
+                    ':idVis' => $idVisitante,
+                    ':tipo' => $tipoDispositivo,
+                    ':id' => $excluirId
+                ]);
+            } else {
+                // Para registro nuevo
+                $sql = "SELECT d.IdDispositivo, d.TipoDispositivo, d.MarcaDispositivo, d.NumeroSerial
+                        FROM dispositivo d
+                        WHERE d.IdVisitante = :idVis 
+                        AND d.TipoDispositivo = :tipo
+                        AND d.Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([
+                    ':idVis' => $idVisitante,
+                    ':tipo' => $tipoDispositivo
+                ]);
+            }
+
+            $dispositivo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($dispositivo) {
+                return [
+                    'existe' => true,
+                    'dispositivo' => $dispositivo
+                ];
+            }
+
+            return ['existe' => false];
+
+        } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en visitanteTieneDispositivo: " . $e->getMessage() . "\n", FILE_APPEND);
+            return ['existe' => false, 'error' => $e->getMessage()];
         }
     }
 }

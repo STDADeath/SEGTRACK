@@ -10,33 +10,42 @@ $filtros = [];
 $params = [];
 
 // FILTRO OBLIGATORIO: Solo mostrar vehículos activos
-$filtros[] = "Estado = :estado";
+// 🔧 CORREGIDO: Especificar tabla con alias p.Estado
+$filtros[] = "p.Estado = :estado";
 $params[':estado'] = 'Activo';
 
 if (!empty($_GET['tipo'])) {
-    $filtros[] = "TipoVehiculo = :tipo";
+    $filtros[] = "p.TipoVehiculo = :tipo";
     $params[':tipo'] = $_GET['tipo'];
 }
 if (!empty($_GET['placa'])) {
-    $filtros[] = "PlacaVehiculo LIKE :placa";
+    $filtros[] = "p.PlacaVehiculo LIKE :placa";
     $params[':placa'] = '%' . $_GET['placa'] . '%';
 }
 if (!empty($_GET['tarjeta'])) {
-    $filtros[] = "TarjetaPropiedad LIKE :tarjeta";
+    $filtros[] = "p.TarjetaPropiedad LIKE :tarjeta";
     $params[':tarjeta'] = '%' . $_GET['tarjeta'] . '%';
 }
 if (!empty($_GET['fecha'])) {
-    $filtros[] = "DATE(FechaParqueadero) = :fecha";
+    $filtros[] = "DATE(p.FechaParqueadero) = :fecha";
     $params[':fecha'] = $_GET['fecha'];
 }
 if (!empty($_GET['sede'])) {
-    $filtros[] = "IdSede = :sede";
+    $filtros[] = "p.IdSede = :sede";
     $params[':sede'] = $_GET['sede'];
 }
 
 $where = "WHERE " . implode(" AND ", $filtros);
 
-$sql = "SELECT * FROM Parqueadero $where ORDER BY IdParqueadero DESC";
+// 🔧 MODIFICADO: JOIN con tabla sede para obtener TipoSede
+$sql = "SELECT 
+            p.*,
+            s.TipoSede
+        FROM Parqueadero p
+        LEFT JOIN sede s ON p.IdSede = s.IdSede
+        $where 
+        ORDER BY p.IdParqueadero DESC";
+
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -106,7 +115,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>Descripción</th>
                         <th>Tarjeta Propiedad</th>
                         <th>Fecha Parqueadero</th>
-                        <th>ID Sede</th>
+                        <th>Sede</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -122,6 +131,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                 title="Ver código QR">
                                             <i class="fas fa-qrcode me-1"></i> Ver QR
                                         </button>
+                                        <br>
+                                        <!-- 🆕 BOTÓN ENVIAR QR -->
+                                        <button type="button" class="btn btn-sm btn-outline-info mt-1"
+                                                onclick="solicitarCorreoYEnviarQR(<?php echo $row['IdParqueadero']; ?>, '<?php echo htmlspecialchars($row['PlacaVehiculo']); ?>')"
+                                                title="Enviar QR por correo">
+                                            <i class="fas fa-envelope me-1"></i> Enviar
+                                        </button>
                                     <?php else : ?>
                                         <span class="badge badge-warning">Sin QR</span>
                                     <?php endif; ?>
@@ -131,7 +147,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $row['DescripcionVehiculo']; ?></td>
                                 <td><?php echo $row['TarjetaPropiedad']; ?></td>
                                 <td><?php echo $row['FechaParqueadero']; ?></td>
-                                <td><?php echo $row['IdSede']; ?></td>
+                                <td>
+                                    <?php if (!empty($row['TipoSede'])) : ?>
+                                        <?php echo $row['TipoSede']; ?>
+                                    <?php else : ?>
+                                        <span class="badge bg-secondary">Sin sede</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-sm btn-outline-primary"
@@ -244,7 +266,23 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
 <script>
+// ============================================
+// 🔥 ZONA DATATABLES
+// ============================================
+$(document).ready(function() {
+    $('#TablaVehiculos').DataTable({
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+        },
+        pageLength: 10,
+        responsive: true,
+        order: [[0, "desc"]]
+    });
+});
+
+// ============================================
 // Función para mostrar QR del vehículo
+// ============================================
 function verQRVehiculo(rutaQR, idVehiculo) {
     var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
     
@@ -257,7 +295,127 @@ function verQRVehiculo(rutaQR, idVehiculo) {
     $('#modalVerQRVehiculo').modal('show');
 }
 
+// ============================================
+// 🆕 FUNCIÓN PARA SOLICITAR CORREO Y ENVIAR QR
+// ============================================
+function solicitarCorreoYEnviarQR(idVehiculo, placa) {
+    console.log('📧 Solicitando correo para vehículo ID:', idVehiculo, 'Placa:', placa);
+    
+    Swal.fire({
+        title: '📧 Enviar Código QR',
+        html: `
+            <p class="mb-3">Ingresa el correo electrónico donde deseas recibir el código QR del vehículo:</p>
+            <p class="text-primary"><strong>Placa: ${placa}</strong></p>
+            <input type="email" id="correoInput" class="swal2-input" placeholder="ejemplo@correo.com" style="width: 80%;">
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<i class="fas fa-paper-plane"></i> Enviar',
+        cancelButtonText: '<i class="fas fa-times"></i> Cancelar',
+        reverseButtons: true,
+        preConfirm: () => {
+            const correo = document.getElementById('correoInput').value;
+            
+            // Validar correo
+            if (!correo) {
+                Swal.showValidationMessage('Por favor ingresa un correo electrónico');
+                return false;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(correo)) {
+                Swal.showValidationMessage('Por favor ingresa un correo electrónico válido');
+                return false;
+            }
+            
+            return correo;
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            enviarQRVehiculo(idVehiculo, result.value, placa);
+        }
+    });
+}
+
+// ============================================
+// 🆕 FUNCIÓN PARA ENVIAR QR POR CORREO
+// ============================================
+function enviarQRVehiculo(idVehiculo, correoDestinatario, placa) {
+    console.log('Enviando QR a:', correoDestinatario);
+    
+    // Mostrar loading
+    Swal.fire({
+        title: 'Enviando correo...',
+        html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false
+    });
+
+    // Realizar petición AJAX
+    $.ajax({
+        url: '../../Controller/ControladorParqueadero.php',
+        type: 'POST',
+        data: {
+            accion: 'enviar_qr',
+            id_vehiculo: idVehiculo,
+            correo_destinatario: correoDestinatario
+        },
+        dataType: 'json',
+        timeout: 30000,
+        success: function(response) {
+            console.log('✓ Respuesta:', response);
+            
+            if (response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Correo enviado!',
+                    html: `<p>${response.message}</p>
+                           <small class="text-muted">El código QR del vehículo con placa <strong>${placa}</strong> ha sido enviado</small>`,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    confirmButtonColor: '#1cc88a'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al enviar',
+                    text: response.message,
+                    confirmButtonColor: '#e74a3b'
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('❌ Error AJAX:', {
+                status: status,
+                error: error,
+                response: xhr.responseText
+            });
+            
+            let errorMsg = 'No se pudo conectar con el servidor.';
+            
+            if (xhr.status === 404) {
+                errorMsg = 'El controlador no se encontró. Verifica la ruta.';
+            } else if (status === 'timeout') {
+                errorMsg = 'La solicitud tardó demasiado tiempo.';
+            }
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: errorMsg,
+                confirmButtonColor: '#e74a3b',
+                footer: '<small>Revisa la consola (F12) para más detalles</small>'
+            });
+        }
+    });
+}
+
+// ============================================
 // Cargar datos en el modal de edición
+// ============================================
 function cargarDatosEdicionVehiculo(row) {
     console.log('Cargando datos para editar:', row);
     
@@ -278,7 +436,9 @@ function cargarDatosEdicionVehiculo(row) {
     $('#modalEditarVehiculo').modal('show');
 }
 
+// ============================================
 // Botón guardar cambios
+// ============================================
 $(document).ready(function() {
     $('#btnGuardarCambiosVehiculo').click(function() {
         var formData = {
@@ -291,20 +451,17 @@ $(document).ready(function() {
 
         console.log('Enviando datos:', formData);
 
-        // Validar campos obligatorios
         if (!formData.tipo || !formData.idsede) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Campos incompletos',
-                text: 'Complete todos los campos obligatorios (Tipo e ID Sede)'
+                text: 'Complete todos los campos obligatorios'
             });
             return;
         }
 
-        // Cerrar modal
         $('#modalEditarVehiculo').modal('hide');
 
-        // Mostrar loading
         Swal.fire({
             title: 'Guardando...',
             text: 'Por favor espere',
@@ -351,19 +508,4 @@ $(document).ready(function() {
         });
     });
 });
-
-// ============================================
-// 🔥 ZONA DATATABLES - Activación de DataTable
-// ============================================
-$(document).ready(function() {
-    $('#TablaVehiculos').DataTable({  // O el ID que tenga tu tabla
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-        },
-        pageLength: 10,
-        responsive: true,
-        order: [[0, "desc"]]
-    });
-});
-
 </script>
