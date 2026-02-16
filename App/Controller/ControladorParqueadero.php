@@ -97,7 +97,7 @@ try {
             $TarjetaPropiedad = $datos['TarjetaPropiedad'] ?? '';
             $IdSede = $datos['IdSede'] ?? null;
             
-            // ⭐ CAMBIO CRÍTICO: Generar la fecha SIEMPRE en el servidor
+            // Generar la fecha SIEMPRE en el servidor
             $FechaParqueadero = date('Y-m-d H:i:s');
             
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "Fecha generada en servidor: $FechaParqueadero\n", FILE_APPEND);
@@ -120,6 +120,27 @@ try {
             }
 
             try {
+                // 🆕 VALIDACIÓN 1: VERIFICAR SI LA PLACA YA EXISTE
+                $placaExiste = $this->modelo->existePlaca($PlacaVehiculo);
+                if ($placaExiste['existe']) {
+                    $vehiculo = $placaExiste['vehiculo'];
+                    $mensaje = "⚠️ La placa '{$PlacaVehiculo}' ya está registrada para un vehículo tipo '{$vehiculo['TipoVehiculo']}'.";
+                    
+                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Placa duplicada - $PlacaVehiculo\n", FILE_APPEND);
+                    return ['success' => false, 'message' => $mensaje];
+                }
+
+                // 🆕 VALIDACIÓN 2: VERIFICAR SI LA TARJETA DE PROPIEDAD YA EXISTE
+                $tarjetaExiste = $this->modelo->existeTarjetaPropiedad($TarjetaPropiedad);
+                if ($tarjetaExiste['existe']) {
+                    $vehiculo = $tarjetaExiste['vehiculo'];
+                    $mensaje = "⚠️ La tarjeta de propiedad '{$TarjetaPropiedad}' ya está registrada para un vehículo tipo '{$vehiculo['TipoVehiculo']}'.";
+                    
+                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Tarjeta duplicada - $TarjetaPropiedad\n", FILE_APPEND);
+                    return ['success' => false, 'message' => $mensaje];
+                }
+
+                // Si todas las validaciones pasan, proceder con el registro
                 $resultado = $this->modelo->registrarVehiculo(
                     $TipoVehiculo, 
                     $PlacaVehiculo, 
@@ -237,7 +258,7 @@ try {
             }
         }
 
-        // 🆕 NUEVA FUNCIÓN: ENVIAR QR POR CORREO
+        // 🆕 FUNCIÓN: ENVIAR QR POR CORREO
         public function enviarQRPorCorreo(int $idVehiculo, string $correoDestinatario): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== enviarQRPorCorreo llamado para vehículo ID: $idVehiculo ===\n", FILE_APPEND);
 
@@ -294,15 +315,16 @@ try {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'seguridad.integral.segtrack@gmail.com'; // ⚠️ Correo
-                $mail->Password = 'fhxj smlq jidt xnqs'; // ⚠️ app password
+                $mail->Username = 'seguridad.integral.segtrack@gmail.com';
+                $mail->Password = 'fhxj smlq jidt xnqs';
                 $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
                 $mail->CharSet = 'UTF-8';
 
-                $mail->setFrom('TU_CORREO@gmail.com', 'Sistema SEGTRACK'); // ⚠️ CAMBIAR
+                $mail->setFrom('seguridad.integral.segtrack@gmail.com', 'Sistema SEGTRACK');
                 $mail->addAddress($correoDestinatario);
                 $mail->addAttachment($rutaQR, 'QR-Vehiculo-' . $idVehiculo . '.png');
+                $mail->addEmbeddedImage('../../Public/img/LOGO_SEGTRACK-re-con.ico', 'logo_segtrack');
 
                 $mail->isHTML(true);
                 $mail->Subject = 'Código QR - Vehículo Registrado';
@@ -312,16 +334,16 @@ try {
                     <style>
                         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
                         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                        .header { background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 8px 8px 0 0; }
+                        .header { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 8px 8px 0 0; }
                         .content { background-color: #f8f9fc; padding: 30px; border: 1px solid #e3e6f0; }
-                        .info-box { background-color: white; padding: 20px; margin: 20px 0; border-left: 4px solid #1cc88a; }
+                        .info-box { background-color: white; padding: 20px; margin: 20px 0; border-left: 4px solid #4e73df; }
                         .footer { text-align: center; padding: 20px; color: #858796; font-size: 12px; }
                     </style>
                 </head>
                 <body>
                     <div class='container'>
                         <div class='header'>
-                            <h1>🚗 SEGTRACK - Parqueadero</h1>
+                            <h1><img src='cid:logo_segtrack' alt='Logo SEGTRACK' class='logo' style='width:80px; vertical-align:middle;'> SEGTRACK</h1>
                             <p>Sistema de Gestión de Vehículos</p>
                         </div>
                         <div class='content'>
@@ -329,7 +351,6 @@ try {
                             <p>Su vehículo ha sido registrado exitosamente en nuestro sistema de parqueadero.</p>
                             <div class='info-box'>
                                 <strong>🚙 Información del Vehículo:</strong><br>
-                                <strong>ID:</strong> {$vehiculo['IdParqueadero']}<br>
                                 <strong>Tipo:</strong> {$vehiculo['TipoVehiculo']}<br>
                                 <strong>Placa:</strong> {$vehiculo['PlacaVehiculo']}<br>
                                 <strong>Descripción:</strong> {$vehiculo['DescripcionVehiculo']}<br>
@@ -351,19 +372,6 @@ try {
                     </div>
                 </body>
                 </html>";
-
-                $mail->AltBody = "SEGTRACK - Sistema de Gestión de Parqueadero\n\n" .
-                                 "Código QR de su Vehículo\n\n" .
-                                 "INFORMACIÓN DEL VEHÍCULO:\n" .
-                                 "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" .
-                                 "ID: {$vehiculo['IdParqueadero']}\n" .
-                                 "Tipo: {$vehiculo['TipoVehiculo']}\n" .
-                                 "Placa: {$vehiculo['PlacaVehiculo']}\n" .
-                                 "Descripción: {$vehiculo['DescripcionVehiculo']}\n" .
-                                 "Tarjeta: {$vehiculo['TarjetaPropiedad']}\n" .
-                                 "Fecha: {$vehiculo['FechaParqueadero']}\n\n" .
-                                 "Adjunto encontrarás el código QR de tu vehículo.\n\n" .
-                                 "SEGTRACK - Sistema de Gestión de Parqueadero";
 
                 $mail->send();
 
@@ -433,7 +441,6 @@ try {
         }
         
     } elseif ($accion === 'enviar_qr') {
-        // 🆕 NUEVA ACCIÓN: ENVIAR QR POR CORREO
         $id = isset($_POST['id_vehiculo']) ? (int)$_POST['id_vehiculo'] : 0;
         $correo = $_POST['correo_destinatario'] ?? '';
         

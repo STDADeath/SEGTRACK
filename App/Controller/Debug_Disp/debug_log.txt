@@ -2239,3 +2239,237 @@ Dispositivo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-36-696c1d9e86b00.png"}
 === FIN ===
 
+
+2026-02-15 22:49:11 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN164673473743",
+    "IdFuncionario": "58",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Funcionario ya tiene dispositivo tipo Portatil
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f Este funcionario ya tiene un dispositivo tipo 'Portatil' registradoNo se puede registrar otro dispositivo del mismo tipo para el mismo funcionario."}
+=== FIN ===
+
+
+2026-02-15 22:49:38 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN164673473743",
+    "IdFuncionario": "58",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: lenovo, Serial: SN164673473743, IdFunc: 58, IdVis: 
+Conexión OK, preparando SQL
+SQL preparado: INSERT INTO dispositivo 
+                    (TipoDispositivo, MarcaDispositivo, NumeroSerial, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                    VALUES (:tipo, :marca, :serial, :funcionario, :visitante, '', 'Activo')
+Parámetros: {":tipo":"Tablet",":marca":"lenovo",":serial":"SN164673473743",":funcionario":58,":visitante":null}
+Resultado execute: true
+INSERT exitoso, ID generado: 37
+Generando QR para dispositivo ID: 37
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-37-69923f72ba32f.png
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 37","data":{"IdDispositivo":"37","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-37-69923f72ba32f.png"}}
+=== FIN ===
+
+
+2026-02-15 22:50:20 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN164673473743",
+    "IdFuncionario": "",
+    "IdVisitante": "10",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Serial duplicado - SN164673473743
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'SN164673473743' ya est\u00e1 registrado"}
+=== FIN ===
+
+
+2026-02-15 22:51:00 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN164673473743",
+    "IdFuncionario": "",
+    "IdVisitante": "10",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Serial duplicado - SN164673473743
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'SN164673473743' ya est\u00e1 registrado"}
+=== FIN ===
+
+
+2026-02-15 22:51:45 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "37"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para ID: 37 ===
+PHPMailer cargado
+Dispositivo encontrado: {"IdDispositivo":37,"TipoDispositivo":"Tablet","MarcaDispositivo":"lenovo","NumeroSerial":"SN164673473743","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-37-69923f72ba32f.png","NombreFuncionario":"Anderson Estiben Moreno Pinzon","CorreoFuncionario":"andersoarebalo@gmail.com"}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-16 00:05:27 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "37"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para ID: 37 ===
+PHPMailer cargado
+Dispositivo encontrado: {"IdDispositivo":37,"TipoDispositivo":"Tablet","MarcaDispositivo":"lenovo","NumeroSerial":"SN164673473743","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-37-69923f72ba32f.png","NombreFuncionario":"Anderson Estiben Moreno Pinzon","CorreoFuncionario":"andersoarebalo@gmail.com"}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-16 00:14:35 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "37"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para ID: 37 ===
+PHPMailer cargado
+Dispositivo encontrado: {"IdDispositivo":37,"TipoDispositivo":"Tablet","MarcaDispositivo":"lenovo","NumeroSerial":"SN164673473743","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-37-69923f72ba32f.png","NombreFuncionario":"Anderson Estiben Moreno Pinzon","CorreoFuncionario":"andersoarebalo@gmail.com"}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-16 00:21:35 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "37"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para ID: 37 ===
+PHPMailer cargado
+Dispositivo encontrado: {"IdDispositivo":37,"TipoDispositivo":"Tablet","MarcaDispositivo":"lenovo","NumeroSerial":"SN164673473743","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-37-69923f72ba32f.png","NombreFuncionario":"Anderson Estiben Moreno Pinzon","CorreoFuncionario":"andersoarebalo@gmail.com"}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-16 00:25:27 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "37"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para ID: 37 ===
+PHPMailer cargado
+Dispositivo encontrado: {"IdDispositivo":37,"TipoDispositivo":"Tablet","MarcaDispositivo":"lenovo","NumeroSerial":"SN164673473743","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-37-69923f72ba32f.png","NombreFuncionario":"Anderson Estiben Moreno Pinzon","CorreoFuncionario":"andersoarebalo@gmail.com"}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-16 00:26:37 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "37"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para ID: 37 ===
+PHPMailer cargado
+Dispositivo encontrado: {"IdDispositivo":37,"TipoDispositivo":"Tablet","MarcaDispositivo":"lenovo","NumeroSerial":"SN164673473743","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-37-69923f72ba32f.png","NombreFuncionario":"Anderson Estiben Moreno Pinzon","CorreoFuncionario":"andersoarebalo@gmail.com"}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-16 00:38:24 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "37"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para ID: 37 ===
+PHPMailer cargado
+Dispositivo encontrado: {"IdDispositivo":37,"TipoDispositivo":"Tablet","MarcaDispositivo":"lenovo","NumeroSerial":"SN164673473743","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-37-69923f72ba32f.png","NombreFuncionario":"Anderson Estiben Moreno Pinzon","CorreoFuncionario":"andersoarebalo@gmail.com"}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+

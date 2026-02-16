@@ -159,7 +159,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <!-- 🆕 MOSTRAR NÚMERO SERIAL -->
                                 <td>
                                     <?php if (!empty($row['NumeroSerial'])) : ?>
-                                        <span class="badge bg-dark"><?php echo $row['NumeroSerial']; ?></span>
+                                        <?php echo $row['NumeroSerial']; ?>
                                     <?php else : ?>
                                         <span class="text-muted">-</span>
                                     <?php endif; ?>
@@ -552,10 +552,10 @@ $(document).ready(function() {
                     icon: 'error',
                     title: 'Serial inválido',
                     html: 'El número serial solo puede contener:<br>' +
-                          '• Letras (A-Z, a-z)<br>' +
-                          '• Números (0-9)<br>' +
-                          '• Guiones (-)<br>' +
-                          '• Guiones bajos (_)',
+                        '• Letras (A-Z, a-z)<br>' +
+                        '• Números (0-9)<br>' +
+                        '• Guiones (-)<br>' +
+                        '• Guiones bajos (_)',
                     confirmButtonColor: '#e74a3b'
                 });
                 $('#editNumeroSerial').focus();

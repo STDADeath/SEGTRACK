@@ -19,6 +19,108 @@ class ModeloParqueadero {
         }
     }
 
+    // 🆕 VALIDACIÓN: Verificar si una placa ya existe
+    public function existePlaca(string $placa, ?int $excluirId = null): array {
+        try {
+            if (!$this->conexion) {
+                return ['existe' => false];
+            }
+
+            // Solo validar si la placa no está vacía
+            if (empty(trim($placa))) {
+                return ['existe' => false];
+            }
+
+            if ($excluirId !== null) {
+                // Para edición: excluir el ID actual
+                $sql = "SELECT IdParqueadero, TipoVehiculo, PlacaVehiculo 
+                        FROM parqueadero 
+                        WHERE PlacaVehiculo = :placa 
+                        AND IdParqueadero != :id 
+                        AND Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([':placa' => $placa, ':id' => $excluirId]);
+            } else {
+                // Para registro nuevo
+                $sql = "SELECT IdParqueadero, TipoVehiculo, PlacaVehiculo 
+                        FROM parqueadero 
+                        WHERE PlacaVehiculo = :placa 
+                        AND Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([':placa' => $placa]);
+            }
+
+            $vehiculo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($vehiculo) {
+                file_put_contents($this->logPath, "⚠️ Placa duplicada encontrada: $placa\n", FILE_APPEND);
+                return [
+                    'existe' => true,
+                    'vehiculo' => $vehiculo
+                ];
+            }
+
+            return ['existe' => false];
+
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en existePlaca: " . $e->getMessage() . "\n", FILE_APPEND);
+            return ['existe' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    // 🆕 VALIDACIÓN: Verificar si una tarjeta de propiedad ya existe
+    public function existeTarjetaPropiedad(string $tarjeta, ?int $excluirId = null): array {
+        try {
+            if (!$this->conexion) {
+                return ['existe' => false];
+            }
+
+            // Solo validar si la tarjeta no está vacía
+            if (empty(trim($tarjeta))) {
+                return ['existe' => false];
+            }
+
+            if ($excluirId !== null) {
+                // Para edición: excluir el ID actual
+                $sql = "SELECT IdParqueadero, TipoVehiculo, PlacaVehiculo, TarjetaPropiedad 
+                        FROM parqueadero 
+                        WHERE TarjetaPropiedad = :tarjeta 
+                        AND IdParqueadero != :id 
+                        AND Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([':tarjeta' => $tarjeta, ':id' => $excluirId]);
+            } else {
+                // Para registro nuevo
+                $sql = "SELECT IdParqueadero, TipoVehiculo, PlacaVehiculo, TarjetaPropiedad 
+                        FROM parqueadero 
+                        WHERE TarjetaPropiedad = :tarjeta 
+                        AND Estado = 'Activo'
+                        LIMIT 1";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([':tarjeta' => $tarjeta]);
+            }
+
+            $vehiculo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($vehiculo) {
+                file_put_contents($this->logPath, "⚠️ Tarjeta de propiedad duplicada encontrada: $tarjeta\n", FILE_APPEND);
+                return [
+                    'existe' => true,
+                    'vehiculo' => $vehiculo
+                ];
+            }
+
+            return ['existe' => false];
+
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en existeTarjetaPropiedad: " . $e->getMessage() . "\n", FILE_APPEND);
+            return ['existe' => false, 'error' => $e->getMessage()];
+        }
+    }
+
     // ✅ Registrar vehículo (con campo QrVehiculo)
     public function registrarVehiculo($TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo, $TarjetaPropiedad, $FechaParqueadero, $IdSede): array {
         try {

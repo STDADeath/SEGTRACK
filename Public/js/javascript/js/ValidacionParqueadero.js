@@ -43,6 +43,49 @@ document.addEventListener('DOMContentLoaded', function () {
             campoFecha.value = nuevaHoraFormateada;
         }, 60000); // Actualizar cada 60 segundos
     }
+
+    // 🆕 VALIDACIÓN EN TIEMPO REAL DE PLACA
+    const inputPlaca = document.getElementById('PlacaVehiculo');
+    if (inputPlaca) {
+        inputPlaca.addEventListener('input', function(e) {
+            let valor = e.target.value;
+            // Convertir a mayúsculas y eliminar caracteres no permitidos
+            valor = valor.toUpperCase().replace(/[^A-Z0-9\s-]/g, '');
+            e.target.value = valor;
+            
+            // Validar longitud
+            if (valor.length > 9) {
+                e.target.value = valor.substring(0, 9);
+                e.target.classList.add('is-invalid');
+            } else if (valor.length >= 3 && valor.length <= 9) {
+                e.target.classList.remove('is-invalid');
+                e.target.classList.add('is-valid');
+            } else if (valor.length > 0 && valor.length < 3) {
+                e.target.classList.add('is-invalid');
+                e.target.classList.remove('is-valid');
+            } else {
+                e.target.classList.remove('is-invalid', 'is-valid');
+            }
+        });
+    }
+
+    // 🆕 VALIDACIÓN EN TIEMPO REAL DE TARJETA DE PROPIEDAD
+    const inputTarjeta = document.getElementById('TarjetaPropiedad');
+    if (inputTarjeta) {
+        inputTarjeta.addEventListener('input', function(e) {
+            let valor = e.target.value;
+            // Eliminar caracteres no permitidos
+            valor = valor.replace(/[^a-zA-Z0-9\s-]/g, '');
+            e.target.value = valor;
+            
+            if (valor.length > 0) {
+                e.target.classList.remove('is-invalid');
+                e.target.classList.add('is-valid');
+            } else {
+                e.target.classList.remove('is-valid', 'is-invalid');
+            }
+        });
+    }
 });
 
 // ===========================================
@@ -55,54 +98,51 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            // Obtenemos los valores SIN TRIM INICIAL para validar espacios vacíos correctamente
+            // Obtenemos los valores
+            const tipoVehiculo = document.getElementById('TipoVehiculo').value.trim();
             const placaRaw = document.getElementById('PlacaVehiculo').value;
             const descripcionRaw = document.getElementById('DescripcionVehiculo').value;
             const tarjetaRaw = document.getElementById('TarjetaPropiedad').value;
             const idSede = document.getElementById('IdSede').value.trim();
-            const fechaParqueadero = document.getElementById('FechaParqueadero').value;
 
-            // Aplicar trim después de validar que existan
-            const placa = placaRaw.trim();
+            // Aplicar trim
+            const placa = placaRaw.trim().toUpperCase();
             const descripcion = descripcionRaw.trim();
-            const tarjeta = tarjetaRaw.trim();
+            const tarjeta = tarjetaRaw.trim().toUpperCase();
 
-            // ⚠️ VALIDACIÓN 1: CAMPOS OBLIGATORIOS
-            // Verificar que todos los campos requeridos tengan datos
+            // Expresiones regulares
+            const regexPlacaTarjeta = /^[a-zA-Z0-9\s-]+$/;
+            const regexDescripcion = /^[a-zA-Z0-9\s.,-]+$/;
+            const regexIdSede = /^\d+$/;
+
+            // ⚠️ VALIDACIÓN 1: Tipo de vehículo
+            if (!tipoVehiculo || tipoVehiculo === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campo obligatorio',
+                    text: 'Debe seleccionar un tipo de vehículo',
+                    confirmButtonColor: '#e74a3b'
+                });
+                return;
+            }
+
+            // ⚠️ VALIDACIÓN 2: PLACA
             if (!placa || placa === '' || placa.length === 0) {
                 Swal.fire({
-                    icon: 'warning',
+                    icon: 'error',
                     title: 'Campo obligatorio',
-                    text: '⚠️ El campo Placa del Vehículo es obligatorio y no puede estar vacío.'
+                    text: 'La placa del vehículo es obligatoria',
+                    confirmButtonColor: '#e74a3b'
                 });
                 return;
             }
 
-            if (!descripcion || descripcion === '' || descripcion.length === 0) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campo obligatorio',
-                    text: '⚠️ El campo Descripción del Vehículo es obligatorio y no puede estar vacío.'
-                });
-                return;
-            }
-
-            if (!tarjeta || tarjeta === '' || tarjeta.length === 0) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campo obligatorio',
-                    text: '⚠️ El campo Tarjeta de Propiedad es obligatorio y no puede estar vacío.'
-                });
-                return;
-            }
-
-            // ⚠️ VALIDACIÓN 2: LONGITUD DE PLACA (máximo 9 caracteres)
-            // Validación tanto mínima como máxima para placas
             if (placa.length < 3) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: '❌ El campo Placa debe tener al menos 3 caracteres.'
+                    title: 'Placa muy corta',
+                    text: 'La placa debe tener al menos 3 caracteres',
+                    confirmButtonColor: '#e74a3b'
                 });
                 return;
             }
@@ -110,78 +150,100 @@ document.addEventListener('DOMContentLoaded', function () {
             if (placa.length > 9) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: '❌ El campo Placa no puede tener más de 9 caracteres.'
+                    title: 'Placa muy larga',
+                    text: 'La placa no puede tener más de 9 caracteres',
+                    confirmButtonColor: '#e74a3b'
                 });
                 return;
             }
 
-            // Expresiones regulares
-            const regexPlacaTarjeta = /^[a-zA-Z0-9\s-]*$/;
-            const regexDescripcion = /^[a-zA-Z0-9\s.,-]*$/;
-            const regexIdSede = /^\d+$/;
-
-            // ⚠️ VALIDACIÓN 3: FORMATO DE PLACA
-            // Solo letras, números, espacios y guiones
             if (!regexPlacaTarjeta.test(placa)) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: 'El campo Placa solo puede contener letras, números, espacios y guiones.'
+                    title: 'Caracteres inválidos',
+                    html: 'La placa solo puede contener:<br>• Letras (A-Z)<br>• Números (0-9)<br>• Espacios<br>• Guiones (-)',
+                    confirmButtonColor: '#e74a3b'
                 });
                 return;
             }
 
-            // ⚠️ VALIDACIÓN 4: FORMATO DE DESCRIPCIÓN
-            // Permitir letras, números, espacios, puntos, comas y guiones
+            // ⚠️ VALIDACIÓN 3: DESCRIPCIÓN
+            if (!descripcion || descripcion === '' || descripcion.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campo obligatorio',
+                    text: 'La descripción del vehículo es obligatoria',
+                    confirmButtonColor: '#e74a3b'
+                });
+                return;
+            }
+
+            if (descripcion.length < 5) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Descripción muy corta',
+                    text: 'La descripción debe tener al menos 5 caracteres',
+                    confirmButtonColor: '#f6c23e'
+                });
+                return;
+            }
+
             if (!regexDescripcion.test(descripcion)) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: 'El campo Descripción contiene caracteres no válidos.'
+                    title: 'Caracteres inválidos',
+                    text: 'La descripción contiene caracteres no válidos',
+                    confirmButtonColor: '#e74a3b'
                 });
                 return;
             }
 
-            // ⚠️ VALIDACIÓN 5: FORMATO DE TARJETA DE PROPIEDAD
-            // Ya validamos que no esté vacío, ahora validamos el formato
+            // ⚠️ VALIDACIÓN 4: TARJETA DE PROPIEDAD
+            if (!tarjeta || tarjeta === '' || tarjeta.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campo obligatorio',
+                    text: 'La tarjeta de propiedad es obligatoria',
+                    confirmButtonColor: '#e74a3b'
+                });
+                return;
+            }
+
             if (!regexPlacaTarjeta.test(tarjeta)) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: 'El campo Tarjeta de Propiedad solo puede contener letras, números, espacios y guiones.'
+                    title: 'Caracteres inválidos',
+                    html: 'La tarjeta de propiedad solo puede contener:<br>• Letras<br>• Números<br>• Espacios<br>• Guiones',
+                    confirmButtonColor: '#e74a3b'
                 });
                 return;
             }
 
-            // ⚠️ VALIDACIÓN 6: ID DE SEDE
-            // Debe ser solo números
+            // ⚠️ VALIDACIÓN 5: ID DE SEDE
             if (!regexIdSede.test(idSede)) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: 'El campo ID de Sede solo puede contener números.'
+                    title: 'ID de Sede inválido',
+                    text: 'El ID de Sede solo puede contener números',
+                    confirmButtonColor: '#e74a3b'
                 });
                 return;
             }
 
-            // ⚠️ VALIDACIÓN 7: YA NO VALIDAMOS FECHA EN CLIENTE
-            // La validación de fecha la hará el servidor con su propia zona horaria
-            // Esto evita problemas de diferencia de zonas horarias entre cliente y servidor
-
-            // ⚠️ CORRECCIÓN: Enviar fecha en formato que el servidor pueda validar correctamente
-            // En lugar de enviar la fecha formateada, enviamos solo la acción
-            // y dejamos que el servidor genere la fecha con su zona horaria
-            const ahoraExacto = new Date();
-            
-            // NO enviamos la fecha, el servidor la generará automáticamente
-            const fechaHoraFinal = null;
-
-            // Preparar FormData SIN fecha (el servidor la generará)
+            // Preparar FormData
             const formData = new FormData(form);
-            formData.delete('FechaParqueadero'); // Eliminar la fecha del cliente
+            formData.delete('FechaParqueadero'); // El servidor genera la fecha
             formData.append('accion', 'registrar');
             const url = "../../Controller/ControladorParqueadero.php";
+
+            // Mostrar loading
+            Swal.fire({
+                title: 'Registrando vehículo...',
+                html: '<i class="fas fa-spinner fa-spin fa-3x text-success mb-3"></i><br>Validando y guardando datos',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false
+            });
 
             fetch(url, {
                 method: "POST",
@@ -194,19 +256,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Vehículo registrado',
-                        text: data.message || 'El vehículo fue agregado correctamente.',
+                        title: '¡Vehículo registrado!',
+                        html: data.message || 'El vehículo fue agregado correctamente.',
+                        timer: 3000,
+                        timerProgressBar: true,
                         showConfirmButton: true,
-                        confirmButtonText: 'Aceptar'
+                        confirmButtonText: 'Entendido',
+                        confirmButtonColor: '#1cc88a'
                     }).then(() => {
                         form.reset();
+                        // Limpiar clases de validación
+                        if (inputPlaca) inputPlaca.classList.remove('is-valid', 'is-invalid');
+                        if (inputTarjeta) inputTarjeta.classList.remove('is-valid', 'is-invalid');
                         location.reload();
                     });
                 } else {
+                    // ⚠️ ERROR DEL SERVIDOR (duplicados, etc.)
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Error al registrar',
-                        text: data.message || 'No se pudo registrar el vehículo.'
+                        icon: 'warning',
+                        title: 'No se pudo registrar',
+                        html: data.message.replace(/\n/g, '<br>'),
+                        confirmButtonColor: '#f6c23e',
+                        confirmButtonText: 'Entendido',
+                        footer: '<small class="text-muted">Revise la información e intente nuevamente</small>'
                     });
                 }
             })
@@ -215,7 +287,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
-                    text: 'Ocurrió un problema al enviar los datos al servidor.'
+                    html: 'Ocurrió un problema al enviar los datos al servidor.<br>Por favor, intente nuevamente.',
+                    confirmButtonColor: '#e74a3b',
+                    footer: '<small>Si el problema persiste, contacte al administrador</small>'
                 });
             });
         });
@@ -308,41 +382,64 @@ $(document).ready(function() {
     $('#btnGuardarCambiosVehiculo').click(function() {
         const id = $('#editIdVehiculo').val();
         const tipo = $('#editTipoVehiculo').val();
-        const descripcion = $('#editDescripcionVehiculo').val();
-        const idsede = $('#editIdSede').val();
+        const descripcion = $('#editDescripcionVehiculo').val().trim();
+        const idsede = $('#editIdSede').val().trim();
 
         console.log('Actualizando - ID:', id, 'Tipo:', tipo, 'Descripción:', descripcion, 'Sede:', idsede);
 
-        // ⚠️ VALIDACIÓN EN EDICIÓN: CAMPOS OBLIGATORIOS
+        // Expresiones regulares
+        const regexDescripcion = /^[a-zA-Z0-9\s.,-]+$/;
+
+        // Validaciones
         if (!id || !tipo || !idsede) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Campos incompletos',
-                text: '⚠️ Complete todos los campos obligatorios: Tipo de Vehículo e ID Sede'
+                text: '⚠️ Complete todos los campos obligatorios: Tipo de Vehículo e ID Sede',
+                confirmButtonColor: '#f6c23e'
             });
             return;
         }
 
-        // ⚠️ VALIDACIÓN EN EDICIÓN: DESCRIPCIÓN OBLIGATORIA
-        if (!descripcion || descripcion.trim().length === 0) {
+        if (!descripcion || descripcion.length === 0) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Campo obligatorio',
-                text: '⚠️ El campo Descripción es obligatorio'
+                text: '⚠️ El campo Descripción es obligatorio',
+                confirmButtonColor: '#f6c23e'
             });
             return;
         }
 
-        // ⚠️ VALIDACIÓN EN EDICIÓN: FORMATO DE DESCRIPCIÓN
-        const regexDescripcion = /^[a-zA-Z0-9\s.,-]*$/;
-        if (!regexDescripcion.test(descripcion)) {
+        if (descripcion.length < 5) {
             Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'La descripción contiene caracteres no válidos'
+                icon: 'warning',
+                title: 'Descripción muy corta',
+                text: 'La descripción debe tener al menos 5 caracteres',
+                confirmButtonColor: '#f6c23e'
             });
             return;
         }
+
+        if (!regexDescripcion.test(descripcion)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Caracteres inválidos',
+                text: 'La descripción contiene caracteres no válidos',
+                confirmButtonColor: '#e74a3b'
+            });
+            return;
+        }
+
+        $('#modalEditarVehiculo').modal('hide');
+
+        Swal.fire({
+            title: 'Guardando cambios...',
+            html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false
+        });
 
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
@@ -357,13 +454,16 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 console.log('Respuesta actualización:', response);
-                $('#modalEditarVehiculo').modal('hide');
                 
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Actualizado',
-                        text: '✅ Vehículo actualizado correctamente'
+                        title: '¡Actualizado!',
+                        text: 'Vehículo actualizado correctamente',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: true,
+                        confirmButtonColor: '#1cc88a'
                     }).then(() => {
                         location.reload();
                     });
@@ -371,18 +471,19 @@ $(document).ready(function() {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: '❌ Error: ' + response.message
+                        html: response.message.replace(/\n/g, '<br>'),
+                        confirmButtonColor: '#e74a3b'
                     });
                 }
             },
             error: function(xhr, status, error) {
                 console.error('Error en AJAX:', status, error);
                 console.error('Respuesta:', xhr.responseText);
-                $('#modalEditarVehiculo').modal('hide');
                 Swal.fire({
                     icon: 'error',
                     title: 'Error de conexión',
-                    text: '❌ Error al intentar actualizar el vehículo'
+                    text: '❌ Error al intentar actualizar el vehículo',
+                    confirmButtonColor: '#e74a3b'
                 });
             }
         });

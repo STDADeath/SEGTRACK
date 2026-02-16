@@ -373,7 +373,7 @@ function enviarQRVehiculo(idVehiculo, correoDestinatario, placa) {
                     icon: 'success',
                     title: '¡Correo enviado!',
                     html: `<p>${response.message}</p>
-                           <small class="text-muted">El código QR del vehículo con placa <strong>${placa}</strong> ha sido enviado</small>`,
+                        <small class="text-muted">El código QR del vehículo con placa <strong>${placa}</strong> ha sido enviado</small>`,
                     timer: 4000,
                     timerProgressBar: true,
                     confirmButtonColor: '#1cc88a'

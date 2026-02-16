@@ -434,7 +434,8 @@ try {
                 $mail->setFrom('seguridad.integral.segtrack@gmail.com', 'Sistema SEGTRACK'); // ⚠️ TU CORREO
                 $mail->addAddress($correoDestinatario, $nombreDestinatario);
                 $mail->addAttachment($rutaQR, 'QR-Dispositivo-' . $idDispositivo . '.png');
-
+                $mail->addEmbeddedImage('../../Public/img/LOGO_SEGTRACK-re-con.ico', 'logo_segtrack');
+                
                 $mail->isHTML(true);
                 $mail->Subject = 'Código QR - Dispositivo Registrado';
                 
@@ -458,7 +459,7 @@ try {
                 <body>
                     <div class='container'>
                         <div class='header'>
-                            <h1>🔐 SEGTRACK</h1>
+                            <h1><img src='cid:logo_segtrack' alt='Logo SEGTRACK' class='logo' style='width:80px; vertical-align:middle;'> SEGTRACK</h1>
                             <p>Sistema de Gestión de Seguridad</p>
                         </div>
                         <div class='content'>
@@ -466,13 +467,17 @@ try {
                             <p>Tu dispositivo ha sido registrado exitosamente.</p>
                             <div class='info-box'>
                                 <strong>📱 Información del Dispositivo:</strong><br>
-                                <strong>ID:</strong> {$dispositivo['IdDispositivo']}<br>
                                 <strong>Tipo:</strong> {$dispositivo['TipoDispositivo']}<br>
                                 <strong>Marca:</strong> {$dispositivo['MarcaDispositivo']}<br>
                                 {$serialInfo}
                             </div>
                             <p>Adjunto encontrarás el código QR de tu dispositivo.</p>
                             <p><strong>⚠️ Importante:</strong> Guarda este código en un lugar seguro.</p>
+                            <ul>
+                                <li>✅ Presenta este código al ingresar al parqueadero</li>
+                                <li>✅ Mantén este código disponible en tu dispositivo móvil</li>
+                                <li>✅ Facilita el control de entrada y salida</li>
+                            </ul>
                         </div>
                         <div class='footer'>
                             <p>Este es un correo automático, por favor no responder.</p>
