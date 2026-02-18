@@ -1,142 +1,155 @@
 <?php
+
+/**
+ * ========================================
+ * CONTROLADOR USUARIO ADM - SEGTRACK
+ * ========================================
+ */
+
+ob_start();
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+
 require_once __DIR__ . '/../Model/modelousuarioAdm.php';
 
-class ControladorUsuario {
+// Roles permitidos en el sistema
+$ROLES_VALIDOS = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 
-    private $modelo;
-
-    // Roles permitidos según tu base de datos
-    private $roles_validos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
-
-    public function __construct() {
-        $this->modelo = new Modelo_Usuario();
-    }
-
-    // ================================================================
-    // 🔹 MÉTODO PRINCIPAL (recibe todas las peticiones por POST)
-    // ================================================================
-    public function procesar() {
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return $this->respuesta(false, "Método no permitido");
-        }
-
-        $accion = $_POST['accion'] ?? 'registrar';
-
-        switch ($accion) {
-
-            case "registrar":
-                return $this->registrarUsuario();
-
-            case "actualizar_qr":
-                return $this->actualizarQR();
-
-            case "listar":
-                return $this->listarUsuarios();
-
-            default:
-                return $this->respuesta(false, "Acción no válida");
-        }
-    }
-
-    // ================================================================
-    // ✔ REGISTRAR USUARIO
-    // ================================================================
-    private function registrarUsuario() {
-
-        $tipoRol = trim($_POST['tipo_rol'] ?? '');
-        $contrasena = trim($_POST['contrasena'] ?? '');
-        $idFuncionario = trim($_POST['id_funcionario'] ?? '');
-
-        if ($tipoRol === '' || $contrasena === '' || $idFuncionario === '') {
-            return $this->respuesta(false, "Todos los campos son obligatorios");
-        }
-
-        if (!in_array($tipoRol, $this->roles_validos)) {
-            return $this->respuesta(false, "Rol no válido");
-        }
-
-        if (strlen($contrasena) < 7) {
-            return $this->respuesta(false, "La contraseña debe tener mínimo 7 caracteres");
-        }
-
-        try {
-
-            // valida si el funcionario ya tiene usuario asignado
-            if ($this->modelo->usuarioExiste($idFuncionario)) {
-                return $this->respuesta(false, "El funcionario ya tiene un usuario asignado");
-            }
-
-            // registra usuario
-            $resultado = $this->modelo->registrarUsuario($tipoRol, $contrasena, $idFuncionario);
-
-            if ($resultado) {
-                return $this->respuesta(true, "Usuario registrado correctamente");
-            } else {
-                return $this->respuesta(false, "No se pudo registrar el usuario");
-            }
-
-        } catch (Exception $e) {
-            return $this->respuesta(false, "Error interno del servidor");
-        }
-    }
-
-    // ================================================================
-    // ✔ ACTUALIZAR QR + ESTADO (Activo/Inactivo)
-    // ================================================================
-    private function actualizarQR() {
-
-        $idFuncionario = $_POST['id_funcionario'] ?? '';
-        $nuevoQR = $_POST['qr'] ?? '';
-        $nuevoEstado = $_POST['estado'] ?? '';
-
-        if ($idFuncionario === '') {
-            return $this->respuesta(false, "ID de funcionario requerido");
-        }
-
-        // Llama al modelo
-        $ok = $this->modelo->actualizarQR($idFuncionario, $nuevoQR, $nuevoEstado);
-
-        if ($ok) {
-            return $this->respuesta(true, "QR y estado actualizados correctamente");
-        }
-
-        return $this->respuesta(false, "Error al actualizar QR");
-    }
-
-    // ================================================================
-    // ✔ LISTAR USUARIOS (para UsuariosLista.php)
-    // ================================================================
-    private function listarUsuarios() {
-
-        try {
-            $usuarios = $this->modelo->obtenerUsuarios(); // consulta preparada
-
-            return $this->respuesta(true, $usuarios);
-
-        } catch (Exception $e) {
-            return $this->respuesta(false, "Error al obtener lista de usuarios");
-        }
-    }
-
-    // ================================================================
-    // ✔ RESPUESTA JSON
-    // ================================================================
-    private function respuesta($ok, $data) {
-
-        if (ob_get_length()) { ob_clean(); }
-
-        header("Content-Type: application/json; charset=utf-8");
-
-        echo json_encode([
-            "ok" => $ok,
-            "data" => $data
-        ]);
-
-        exit;
-    }
+/**
+ * Envía respuesta JSON estandarizada y termina ejecución
+ */
+function responder(bool $success, string $message, array $extra = []): void {
+    ob_end_clean();
+    echo json_encode(
+        array_merge(['success' => $success, 'message' => $message], $extra),
+        JSON_UNESCAPED_UNICODE
+    );
+    exit;
 }
 
-// Ejecuta el controlador
-$controlador = new ControladorUsuario();
-$controlador->procesar();
+try {
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        responder(false, 'Método no permitido');
+    }
+
+    $modelo = new Modelo_Usuario();
+    $accion = trim($_POST['accion'] ?? '');
+
+    switch ($accion) {
+
+        // ============================================================
+        // REGISTRAR USUARIO
+        // ============================================================
+        case 'registrar':
+
+            $idFuncionario = (int)($_POST['id_funcionario'] ?? 0);
+            $tipoRol       = trim($_POST['tipo_rol']        ?? '');
+            $contrasena    = trim($_POST['contrasena']      ?? '');
+
+            if ($idFuncionario <= 0) {
+                responder(false, 'Debe seleccionar un funcionario');
+            }
+
+            if (empty($tipoRol)) {
+                responder(false, 'Debe seleccionar un rol');
+            }
+
+            global $ROLES_VALIDOS;
+            if (!in_array($tipoRol, $ROLES_VALIDOS)) {
+                responder(false, 'Rol no válido');
+            }
+
+            if (strlen($contrasena) < 7) {
+                responder(false, 'La contraseña debe tener mínimo 7 caracteres');
+            }
+
+            if ($modelo->usuarioExiste($idFuncionario)) {
+                responder(false, 'El funcionario ya tiene un usuario asignado');
+            }
+
+            $ok = $modelo->registrarUsuario($tipoRol, $contrasena, $idFuncionario);
+
+            if ($ok) {
+                responder(true, 'Usuario registrado correctamente');
+            }
+
+            responder(false, 'No se pudo registrar el usuario');
+            break;
+
+        // ============================================================
+        // ACTUALIZAR ROL
+        // ============================================================
+        case 'actualizar':
+
+            $idUsuario = (int)($_POST['IdUsuario'] ?? 0);
+            $nuevoRol  = trim($_POST['tipo_rol']   ?? '');
+
+            if ($idUsuario <= 0) {
+                responder(false, 'ID de usuario inválido');
+            }
+
+            if (empty($nuevoRol)) {
+                responder(false, 'Debe seleccionar un rol');
+            }
+
+            global $ROLES_VALIDOS;
+            if (!in_array($nuevoRol, $ROLES_VALIDOS)) {
+                responder(false, 'Rol no válido');
+            }
+
+            $ok = $modelo->actualizarRol($idUsuario, $nuevoRol);
+
+            if ($ok) {
+                responder(true, 'Rol actualizado correctamente');
+            }
+
+            responder(false, 'No se pudo actualizar el rol');
+            break;
+
+        // ============================================================
+        // CAMBIAR ESTADO (Activo / Inactivo)
+        // ============================================================
+        case 'cambiar_estado':
+
+            $idUsuario  = (int)($_POST['IdUsuario'] ?? 0);
+            $nuevoEstado = trim($_POST['Estado']    ?? '');
+
+            if ($idUsuario <= 0) {
+                responder(false, 'ID de usuario inválido');
+            }
+
+            if (!in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
+                responder(false, 'Estado inválido');
+            }
+
+            $ok = $modelo->cambiarEstado($idUsuario, $nuevoEstado);
+
+            if ($ok) {
+                responder(true, 'Estado actualizado correctamente');
+            }
+
+            responder(false, 'No se pudo cambiar el estado');
+            break;
+
+        // ============================================================
+        // LISTAR USUARIOS
+        // ============================================================
+        case 'listar':
+
+            $usuarios = $modelo->obtenerUsuarios();
+            responder(true, 'OK', ['data' => $usuarios]);
+            break;
+
+        default:
+            responder(false, 'Acción no válida: ' . $accion);
+    }
+
+} catch (Throwable $e) {
+    ob_end_clean();
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error interno: ' . $e->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}

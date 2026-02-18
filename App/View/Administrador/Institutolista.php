@@ -1,104 +1,151 @@
 <?php
-// ============================================================
-// InstitutoLista.php
-// ============================================================
+/**
+ * ==========================================================
+ * VISTA: LISTA DE INSTITUCIONES
+ * ==========================================================
+ * - Muestra todas las instituciones registradas
+ * - Estado en penúltima columna
+ * - Acciones en última columna
+ */
 
 require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
+require_once __DIR__ . '/../../Core/Conexion.php';
 ?>
 
 <div class="container-fluid px-4 py-4">
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-school me-2"></i>Instituciones Registradas</h1>
-        <a href="./Instituto.php" class="btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus fa-sm text-white-50"></i> Registrar Institución
+    <!-- TÍTULO -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold text-primary">
+            <i class="fas fa-school me-2"></i>Lista de Instituciones
+        </h4>
+
+        <a href="Instituto.php" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i> Registrar
         </a>
     </div>
 
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Listado de Instituciones</h6>
-        </div>
+    <!-- CARD CONTENEDOR -->
+    <div class="card shadow">
+
         <div class="card-body">
+
             <div class="table-responsive">
 
-                <table id="tablaInstitutos" class="table table-bordered table-hover" width="100%" cellspacing="0">
-                    <thead class="thead-light">
+                <table id="tablaInstitutos"
+                        class="table table-bordered table-hover table-striped align-middle text-center"
+                        width="100%">
+
+                    <!-- ENCABEZADO -->
+                    <thead class="table-dark">
                         <tr>
-                            <th>Estado</th>
                             <th>Nombre</th>
-                            <th>NIT / Código</th>
+                            <th>NIT</th>
                             <th>Tipo</th>
-                            <th style="width:140px">Acciones</th>
+                            <th>Estado</th> <!-- PENÚLTIMA -->
+                            <th>Acciones</th> <!-- ÚLTIMA -->
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php
-                        require_once __DIR__ . '/../../Core/Conexion.php';
 
+                    <tbody>
+
+                        <?php
                         try {
+
                             $conexion = new Conexion();
                             $db = $conexion->getConexion();
 
-                            $sql = "SELECT IdInstitucion, EstadoInstitucion, NombreInstitucion, Nit_Codigo, TipoInstitucion 
-                                    FROM institucion 
+                            // Consulta ordenada descendente
+                            $sql = "SELECT *
+                                    FROM institucion
                                     ORDER BY IdInstitucion DESC";
+
                             $stmt = $db->prepare($sql);
                             $stmt->execute();
 
                             while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)):
                         ?>
-                                <tr data-id="<?php echo $fila['IdInstitucion']; ?>">
-                                    <td>
-                                        <?php if ($fila['EstadoInstitucion'] == 'Activo'): ?>
-                                            <span class="badge badge-success">Activo</span>
-                                        <?php else: ?>
-                                            <span class="badge badge-secondary">Inactivo</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><?php echo htmlspecialchars($fila['NombreInstitucion']); ?></td>
-                                    <td><?php echo htmlspecialchars($fila['Nit_Codigo']); ?></td>
-                                    <td><?php echo htmlspecialchars($fila['TipoInstitucion']); ?></td>
 
-                                    <td class="text-center">
-                                        <!-- Botón Editar -->
-                                        <a href="Instituto.php?IdInstitucion=<?php echo urlencode($fila['IdInstitucion']); ?>" 
-                                           class="btn btn-warning btn-sm me-1" 
-                                           title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                            <tr>
 
-                                        <!-- Botón Cambiar Estado -->
-                                        <button class="btn btn-sm btn-toggle-estado <?php echo ($fila['EstadoInstitucion'] == 'Activo') ? 'btn-secondary' : 'btn-success'; ?>" 
-                                                data-id="<?php echo htmlspecialchars($fila['IdInstitucion']); ?>"
-                                                data-estado-actual="<?php echo htmlspecialchars($fila['EstadoInstitucion']); ?>"
-                                                data-nombre="<?php echo htmlspecialchars($fila['NombreInstitucion']); ?>" 
-                                                title="<?php echo ($fila['EstadoInstitucion'] == 'Activo') ? 'Desactivar' : 'Activar'; ?>">
-                                            <i class="fas fa-<?php echo ($fila['EstadoInstitucion'] == 'Activo') ? 'ban' : 'check'; ?>"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                <!-- NOMBRE -->
+                                <td><?= htmlspecialchars($fila['NombreInstitucion']); ?></td>
+
+                                <!-- NIT -->
+                                <td><?= htmlspecialchars($fila['Nit_Codigo']); ?></td>
+
+                                <!-- TIPO -->
+                                <td><?= htmlspecialchars($fila['TipoInstitucion']); ?></td>
+
+                                <!-- ESTADO (PENÚLTIMA COLUMNA) -->
+                                <td>
+                                    <?php if ($fila['EstadoInstitucion'] === 'Activo'): ?>
+
+                                        <!-- ACTIVO VERDE -->
+                                        <span class="badge bg-success px-3 py-2">
+                                            Activo
+                                        </span>
+
+                                    <?php else: ?>
+
+                                        <!-- INACTIVO AZUL CLARO -->
+                                        <span class="badge px-3 py-2"
+                                              style="background-color:#60a5fa;">
+                                            Inactivo
+                                        </span>
+
+                                    <?php endif; ?>
+                                </td>
+
+                                <!-- ACCIONES (ÚLTIMA COLUMNA) -->
+                                <td>
+
+                                    <!-- BOTÓN EDITAR CUADRADO AZUL -->
+                                    <a href="Instituto.php?IdInstitucion=<?= $fila['IdInstitucion']; ?>"
+                                       class="btn btn-outline-primary btn-sm rounded-3"
+                                       style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center;"
+                                       title="Editar">
+
+                                        <i class="fas fa-pen-to-square"></i>
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
                         <?php
                             endwhile;
+
                         } catch (PDOException $e) {
-                            echo '<tr><td colspan="5" class="text-center text-danger">Error al cargar datos: ' . htmlspecialchars($e->getMessage()) . '</td></tr>';
+
+                            echo '<tr>
+                                    <td colspan="5" class="text-danger text-center">
+                                        Error al cargar los datos
+                                    </td>
+                                  </tr>';
                         }
                         ?>
+
                     </tbody>
+
                 </table>
 
             </div>
         </div>
     </div>
-
 </div>
 
-<?php
-require_once __DIR__ . '/../layouts/parte_inferior_administrador.php';
-?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
 
+<!-- DATATABLES -->
 <link rel="stylesheet" href="../../../Public/vendor/datatables/dataTables.bootstrap4.css">
-<script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="../../../Public/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="../../../Public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="../../../Public/js/javascript/js/ValidacionInstitutoLista.js"></script>
+
+<!-- FONT AWESOME (ICONOS) -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- JS PERSONALIZADO -->
+<script src="../../../Public/js/javascript/js/ValidacionInstitutolista.js"></script>

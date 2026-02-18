@@ -1,19 +1,48 @@
 <?php
-require_once __DIR__ . '../../Core/conexion.php';
+
+/**
+ * Modelo encargado de gestionar operaciones del usuario
+ * incluyendo login y filtros de funcionarios.
+ */
+
+require_once __DIR__ . '/../Core/conexion.php';
 
 class ModuloUsuario {
+
+    /**
+     * @var PDO
+     */
     private $conexion;
 
+    /**
+     * Constructor
+     * Inicializa la conexión a la base de datos
+     */
     public function __construct() {
         $this->conexion = (new Conexion())->getConexion();
     }
 
-    public function validarLogin($correo, $contrasena) {
+    /**
+     * ==========================================
+     * 🔐 VALIDAR LOGIN
+     * ==========================================
+     * Permite iniciar sesión usando:
+     * - Correo electrónico
+     * - Documento
+     *
+     * @param string $correo
+     * @param string $contrasena
+     * @return array
+     */
+    public function validarLogin(string $correo, string $contrasena): array {
+
         try {
+
+            // Consulta preparada para evitar SQL Injection
             $sql = "SELECT 
                         u.IdUsuario,
                         u.TipoRol,
-                        u.Contrasena AS Contrasena,
+                        u.Contrasena,
                         f.IdFuncionario,
                         f.NombreFuncionario,
                         f.CorreoFuncionario,
@@ -22,73 +51,125 @@ class ModuloUsuario {
                     FROM usuario u
                     INNER JOIN funcionario f 
                         ON u.IdFuncionario = f.IdFuncionario
-                    WHERE f.CorreoFuncionario = :correo 
-                        OR f.DocumentoFuncionario = :correo
-                    LIMIT 1";
+                    WHERE (f.CorreoFuncionario = :correo 
+                        OR f.DocumentoFuncionario = :correo)
+                    AND u.Estado = 'Activo'
+                    LIMIT 1"; // ← CORREGIDO
 
             $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(':correo', $correo);
+
+            // Bind del parámetro
+            $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
+
             $stmt->execute();
 
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            // Si no existe el usuario
             if (!$usuario) {
-                return ['ok'=>false, 'message'=>'❌ No existe usuario con ese correo o documento.'];
+                return [
+                    'ok' => false,
+                    'message' => '❌ No existe usuario con ese correo o documento.'
+                ];
             }
 
+            // Obtener contraseña almacenada
             $hashBD = trim($usuario['Contrasena']);
             $loginValido = false;
 
-            // Verificar contraseña hash o texto plano
+            /**
+             * Verificación de contraseña:
+             * - Primero intenta password_verify (hash moderno)
+             * - Si no coincide, compara texto plano (para migración)
+             */
             if (password_verify($contrasena, $hashBD)) {
+
                 $loginValido = true;
+
             } elseif ($contrasena === $hashBD) {
+
+                // Migrar automáticamente a hash seguro
                 $loginValido = true;
-                // Actualizar a hash
+
                 $nuevoHash = password_hash($contrasena, PASSWORD_DEFAULT);
-                $update = $this->conexion->prepare("UPDATE usuario SET Contrasena = :newHash WHERE IdUsuario = :id");
-                $update->execute([':newHash'=>$nuevoHash, ':id'=>$usuario['IdUsuario']]);
+
+                $update = $this->conexion->prepare(
+                    "UPDATE usuario 
+                     SET Contrasena = :newHash 
+                     WHERE IdUsuario = :id"
+                );
+
+                $update->execute([
+                    ':newHash' => $nuevoHash,
+                    ':id'      => $usuario['IdUsuario']
+                ]);
             }
 
+            // Si contraseña incorrecta
             if (!$loginValido) {
-                return ['ok'=>false, 'message'=>'❌ Contraseña incorrecta.'];
+                return [
+                    'ok' => false,
+                    'message' => '❌ Contraseña incorrecta.'
+                ];
             }
 
-            return ['ok'=>true, 'usuario'=>[
-                'IdUsuario'=>$usuario['IdUsuario'],
-                'IdFuncionario'=>$usuario['IdFuncionario'],
-                'NombreFuncionario'=>$usuario['NombreFuncionario'],
-                'CorreoFuncionario'=>$usuario['CorreoFuncionario'],
-                'TipoRol'=>$usuario['TipoRol'],
-                'IdSede'=>$usuario['IdSede']
-            ]];
+            // Retornar datos del usuario
+            return [
+                'ok' => true,
+                'usuario' => [
+                    'IdUsuario'        => $usuario['IdUsuario'],
+                    'IdFuncionario'    => $usuario['IdFuncionario'],
+                    'NombreFuncionario'=> $usuario['NombreFuncionario'],
+                    'CorreoFuncionario'=> $usuario['CorreoFuncionario'],
+                    'TipoRol'          => $usuario['TipoRol'],
+                    'IdSede'           => $usuario['IdSede']
+                ]
+            ];
 
         } catch (PDOException $e) {
-            return ['ok'=>false, 'message'=>'Error en BD: '.$e->getMessage()];
+
+            // Error controlado de base de datos
+            return [
+                'ok' => false,
+                'message' => 'Error en BD: ' . $e->getMessage()
+            ];
         }
     }
 
-    public function actualizarRol($idFuncionario, $nuevoRol) {
+    /**
+     * ==========================================
+     * 🔄 ACTUALIZAR ROL
+     * ==========================================
+     */
+    public function actualizarRol(int $idFuncionario, string $nuevoRol): bool {
+
         try {
-            $update = $this->conexion->prepare("UPDATE usuario SET TipoRol = :rol WHERE IdFuncionario = :id");
-            $update->execute([':rol'=>$nuevoRol, ':id'=>$idFuncionario]);
-            return true;
+
+            $sql = "UPDATE usuario 
+                    SET TipoRol = :rol 
+                    WHERE IdFuncionario = :id";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            return $stmt->execute([
+                ':rol' => $nuevoRol,
+                ':id'  => $idFuncionario
+            ]);
+
         } catch (PDOException $e) {
             return false;
         }
     }
-    
-    // ------------------------------------------------------------------
-    // 🔍 NUEVAS FUNCIONES DE FILTRADO CON CONSULTAS PREPARADAS
-    // ------------------------------------------------------------------
 
     /**
-     * Filtra funcionarios por Cargo.
-     * @param string $cargo El cargo por el que se desea filtrar.
-     * @return array Un array de funcionarios que coinciden con el cargo.
+     * ==========================================
+     * 🔍 FILTRAR FUNCIONARIOS POR CARGO
+     * ==========================================
      */
     public function filtrarFuncionariosPorCargo(string $cargo): array {
+
         try {
+
             $sql = "SELECT 
                         f.IdFuncionario,
                         f.NombreFuncionario,
@@ -101,26 +182,25 @@ class ModuloUsuario {
                     ORDER BY f.NombreFuncionario ASC";
 
             $stmt = $this->conexion->prepare($sql);
-            
-            // Vinculación de parámetro de tipo STR (String)
             $stmt->bindParam(':cargo', $cargo, PDO::PARAM_STR);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
-            // Manejo de errores de BD
             return [];
         }
     }
 
     /**
-     * Obtiene un funcionario por su ID.
-     * @param int $idFuncionario El ID del funcionario.
-     * @return array|null El funcionario o null si no se encuentra o hay un error.
+     * ==========================================
+     * 🔎 FILTRAR FUNCIONARIO POR ID
+     * ==========================================
      */
     public function filtrarFuncionarioPorId(int $idFuncionario): ?array {
+
         try {
+
             $sql = "SELECT 
                         f.IdFuncionario,
                         f.NombreFuncionario,
@@ -133,27 +213,25 @@ class ModuloUsuario {
                     LIMIT 1";
 
             $stmt = $this->conexion->prepare($sql);
-            
-            // Vinculación de parámetro de tipo INT (Integer)
             $stmt->bindParam(':id', $idFuncionario, PDO::PARAM_INT);
             $stmt->execute();
 
-            // Retorna una sola fila
-            return $stmt->fetch(PDO::FETCH_ASSOC); 
+            return $stmt->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
-            // Manejo de errores de BD
             return null;
         }
     }
-    
+
     /**
-     * Obtiene un funcionario por su Correo Electrónico.
-     * @param string $correoFuncionario El correo electrónico del funcionario.
-     * @return array|null El funcionario o null si no se encuentra o hay un error.
+     * ==========================================
+     * 📧 FILTRAR FUNCIONARIO POR CORREO
+     * ==========================================
      */
     public function filtrarFuncionarioPorCorreo(string $correoFuncionario): ?array {
+
         try {
+
             $sql = "SELECT 
                         f.IdFuncionario,
                         f.NombreFuncionario,
@@ -166,15 +244,12 @@ class ModuloUsuario {
                     LIMIT 1";
 
             $stmt = $this->conexion->prepare($sql);
-            
-            // Vinculación de parámetro de tipo STR (String)
             $stmt->bindParam(':correo', $correoFuncionario, PDO::PARAM_STR);
             $stmt->execute();
 
-            // Retorna una sola fila
-            return $stmt->fetch(PDO::FETCH_ASSOC); 
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
-            // Manejo de errores de BD
             return null;
         }
     }

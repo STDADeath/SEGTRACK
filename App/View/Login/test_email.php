@@ -5,9 +5,9 @@ ini_set('display_errors', 1);
 echo "<h2>Prueba de Envío de Email</h2>";
 
 // Incluir PHPMailer
-require '../../../PHPMailer/src/Exception.php';
-require '../../../PHPMailer/src/PHPMailer.php';
-require '../../../PHPMailer/src/SMTP.php';
+require '../../libs/PHPMailer/src/Exception.php';
+require '../../libs/PHPMailer/src/PHPMailer.php';
+require '../../libs/PHPMailer/src/SMTP.php';
 
 
 
@@ -22,7 +22,7 @@ try {
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'seguridad.integral.segtrack@gmail.com';
-    $mail->Password = 'AQUI_TU_CONTRASEÑA_DE_16_CARACTERES'; // ⚠️ Cámbiala
+    $mail->Password = 'lwfc rpts gcog iysv'; // ⚠️ Cámbiala
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
     $mail->SMTPDebug = 2; // Ver detalles del error

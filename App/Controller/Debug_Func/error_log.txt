@@ -6465,3 +6465,294 @@ Stack trace:
 [14-Dec-2025 20:10:29 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 27.25 to int loses precision in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php on line 144
 [14-Dec-2025 20:10:29 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 27.5 to int loses precision in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php on line 144
 [14-Dec-2025 20:10:29 Europe/Berlin] PHP Deprecated:  Implicit conversion from float 27.75 to int loses precision in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php on line 144
+[05-Feb-2026 18:58:44 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 2)
+#1 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(494): QRimage::png(Array, false, 10, 2, false)
+#2 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 60\nNombre: ...', false, false)
+#3 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(138): QRcode::png('ID: 60\nNombre: ...', false, 3, 10, 2)
+#4 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(219): ControladorFuncionario->generarQR(60, 'juan lopez', '1000547892')
+#5 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(391): ControladorFuncionario->registrarFuncionario(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php on line 74
+[05-Feb-2026 18:59:38 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 2)
+#1 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(494): QRimage::png(Array, false, 10, 2, false)
+#2 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 61\nNombre: ...', false, false)
+#3 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(138): QRcode::png('ID: 61\nNombre: ...', false, 3, 10, 2)
+#4 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(219): ControladorFuncionario->generarQR(61, 'juan lopez', '1000567744')
+#5 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(391): ControladorFuncionario->registrarFuncionario(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php on line 74
+[05-Feb-2026 19:00:16 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 2)
+#1 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(494): QRimage::png(Array, false, 10, 2, false)
+#2 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 62\nNombre: ...', false, false)
+#3 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(138): QRcode::png('ID: 62\nNombre: ...', false, 3, 10, 2)
+#4 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(219): ControladorFuncionario->generarQR(62, 'juan rose', '1000222333')
+#5 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(391): ControladorFuncionario->registrarFuncionario(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php on line 74
+[05-Feb-2026 19:12:24 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 2)
+#1 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(494): QRimage::png(Array, false, 10, 2, false)
+#2 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 63\nNombre: ...', false, false)
+#3 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(83): QRcode::png('ID: 63\nNombre: ...', false, 3, 10, 2)
+#4 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(141): ControladorFuncionario->generarQR(63, 'juaquin marques', '1000000000')
+#5 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(225): ControladorFuncionario->registrar(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php on line 74
+[05-Feb-2026 19:21:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to undefined function ImageCreate() in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php:74
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php(32): QRimage::image(Array, 10, 2)
+#1 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(494): QRimage::png(Array, false, 10, 2, false)
+#2 C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrencode.php(286): QRencode->encodePNG('ID: 64\nNombre: ...', false, false)
+#3 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(141): QRcode::png('ID: 64\nNombre: ...', false, 3, 10, 2)
+#4 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(222): ControladorFuncionario->generarQR(64, 'rocio', '2423424465')
+#5 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(394): ControladorFuncionario->registrarFuncionario(Array)
+#6 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Libs\phpqrcode\qrimage.php on line 74
+[05-Feb-2026 19:27:14 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "QRcode" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php:141
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(222): ControladorFuncionario->generarQR(65, 'luis perez rodr...', '1231231231')
+#1 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(394): ControladorFuncionario->registrarFuncionario(Array)
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 141
+[05-Feb-2026 19:32:07 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "QRcode" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php:141
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(222): ControladorFuncionario->generarQR(66, 'luis perez rodr...', '50645')
+#1 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(394): ControladorFuncionario->registrarFuncionario(Array)
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 141
+[11-Feb-2026 02:44:51 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 02:44:51 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(74): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 17:36:27 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 17:36:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(74): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:04:41 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:04:41 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(43): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:10:31 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:10:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(43): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:16:29 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:16:29 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(46): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:22:10 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:22:10 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(46): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:29:37 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:29:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(74): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:33:54 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:33:54 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(84): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:42:24 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 18:42:24 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(59): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 19:02:12 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 19:02:12 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(46): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 19:05:27 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 19:05:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(46): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 19:07:20 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 19:07:20 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(46): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[11-Feb-2026 19:17:49 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "QRcode" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php:78
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(130): ControladorFuncionario->generarQR('67', 'Michael Montoya', '4234534534')
+#1 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(222): ControladorFuncionario->registrarFuncionario(Array)
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 78
+[11-Feb-2026 19:26:11 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "QRcode" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php:78
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(130): ControladorFuncionario->generarQR('68', 'Michael Montoya', '4543563436')
+#1 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(222): ControladorFuncionario->registrarFuncionario(Array)
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 78
+[11-Feb-2026 19:41:46 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "QRcode" not found in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php:78
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(130): ControladorFuncionario->generarQR('69', 'Michael Montoya...', '54675765765')
+#1 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(222): ControladorFuncionario->registrarFuncionario(Array)
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 78
+[12-Feb-2026 16:11:16 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[12-Feb-2026 16:11:16 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(89): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[12-Feb-2026 16:12:07 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[12-Feb-2026 16:12:07 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(89): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[12-Feb-2026 16:14:16 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[12-Feb-2026 16:14:16 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\SEGTRACK\App\Model/../../Core/conexion.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php:2
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(89): require_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Model\modelofuncionario.php on line 2
+[12-Feb-2026 16:43:55 Europe/Berlin] PHP Warning:  Undefined array key "CargoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 150
+[12-Feb-2026 16:43:55 Europe/Berlin] PHP Warning:  Undefined array key "NombreFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 151
+[12-Feb-2026 16:43:55 Europe/Berlin] PHP Warning:  Undefined array key "IdSede" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 152
+[12-Feb-2026 16:43:55 Europe/Berlin] PHP Warning:  Undefined array key "TelefonoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 153
+[12-Feb-2026 16:43:55 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 154
+[12-Feb-2026 16:43:55 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 155
+[12-Feb-2026 17:11:37 Europe/Berlin] PHP Warning:  Undefined array key "CargoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 150
+[12-Feb-2026 17:11:37 Europe/Berlin] PHP Warning:  Undefined array key "NombreFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 151
+[12-Feb-2026 17:11:37 Europe/Berlin] PHP Warning:  Undefined array key "IdSede" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 152
+[12-Feb-2026 17:11:37 Europe/Berlin] PHP Warning:  Undefined array key "TelefonoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 153
+[12-Feb-2026 17:11:37 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 154
+[12-Feb-2026 17:11:37 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 155
+[12-Feb-2026 17:19:09 Europe/Berlin] PHP Warning:  Undefined array key "CargoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 165
+[12-Feb-2026 17:19:09 Europe/Berlin] PHP Warning:  Undefined array key "NombreFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 166
+[12-Feb-2026 17:19:09 Europe/Berlin] PHP Warning:  Undefined array key "IdSede" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 167
+[12-Feb-2026 17:19:09 Europe/Berlin] PHP Warning:  Undefined array key "TelefonoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 168
+[12-Feb-2026 17:19:09 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 169
+[12-Feb-2026 17:19:09 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 170
+[12-Feb-2026 17:32:56 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 157
+[12-Feb-2026 17:32:56 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 158
+[12-Feb-2026 17:32:56 Europe/Berlin] PHP Warning:  Undefined array key "CargoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 176
+[12-Feb-2026 17:32:56 Europe/Berlin] PHP Warning:  Undefined array key "NombreFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 177
+[12-Feb-2026 17:32:56 Europe/Berlin] PHP Warning:  Undefined array key "IdSede" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 178
+[12-Feb-2026 17:32:56 Europe/Berlin] PHP Warning:  Undefined array key "TelefonoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 179
+[12-Feb-2026 17:32:56 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 180
+[12-Feb-2026 17:32:56 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 181
+[12-Feb-2026 17:33:10 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 157
+[12-Feb-2026 17:33:10 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 158
+[12-Feb-2026 17:33:10 Europe/Berlin] PHP Warning:  Undefined array key "CargoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 176
+[12-Feb-2026 17:33:10 Europe/Berlin] PHP Warning:  Undefined array key "NombreFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 177
+[12-Feb-2026 17:33:10 Europe/Berlin] PHP Warning:  Undefined array key "IdSede" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 178
+[12-Feb-2026 17:33:10 Europe/Berlin] PHP Warning:  Undefined array key "TelefonoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 179
+[12-Feb-2026 17:33:10 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 180
+[12-Feb-2026 17:33:10 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 181
+[12-Feb-2026 17:33:26 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 157
+[12-Feb-2026 17:33:26 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 158
+[12-Feb-2026 17:33:26 Europe/Berlin] PHP Warning:  Undefined array key "CargoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 176
+[12-Feb-2026 17:33:26 Europe/Berlin] PHP Warning:  Undefined array key "NombreFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 177
+[12-Feb-2026 17:33:26 Europe/Berlin] PHP Warning:  Undefined array key "IdSede" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 178
+[12-Feb-2026 17:33:26 Europe/Berlin] PHP Warning:  Undefined array key "TelefonoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 179
+[12-Feb-2026 17:33:26 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 180
+[12-Feb-2026 17:33:26 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 181
+[13-Feb-2026 07:31:41 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ControladorFuncionario::validarDuplicados(), 2 passed in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 127 and at least 3 expected in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php:103
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(127): ControladorFuncionario->validarDuplicados('54657567657', 'ptueba2@gmail.c...')
+#1 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(253): ControladorFuncionario->registrarFuncionario(Array)
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 103
+[13-Feb-2026 07:32:05 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ControladorFuncionario::validarDuplicados(), 2 passed in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 127 and at least 3 expected in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php:103
+Stack trace:
+#0 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(127): ControladorFuncionario->validarDuplicados('34534654564', 'pasachoa2002@gm...')
+#1 C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php(253): ControladorFuncionario->registrarFuncionario(Array)
+#2 {main}
+  thrown in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 103
+[14-Feb-2026 21:20:44 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\SEGTRACK1\App\Controller\ControladorFuncionarios.php on line 159
+[14-Feb-2026 21:21:17 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\SEGTRACK1\App\Controller\ControladorFuncionarios.php on line 159
+[14-Feb-2026 21:22:49 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\SEGTRACK1\App\Controller\ControladorFuncionarios.php on line 159
+[14-Feb-2026 21:27:49 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\SEGTRACK1\App\Controller\ControladorFuncionarios.php on line 159
+[14-Feb-2026 21:47:07 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\SEGTRACK1\App\Controller\ControladorFuncionarios.php on line 159
+[14-Feb-2026 21:50:09 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\SEGTRACK1\App\Controller\ControladorFuncionarios.php on line 159
+[15-Feb-2026 01:34:40 Europe/Berlin] PHP Parse error:  syntax error, unexpected token ";", expecting "function" or "const" in C:\xampp\htdocs\SEGTRACK1\App\Model\ModeloFuncionarios.php on line 260
+[15-Feb-2026 01:37:40 Europe/Berlin] PHP Parse error:  syntax error, unexpected token ";", expecting "function" or "const" in C:\xampp\htdocs\SEGTRACK1\App\Model\ModeloFuncionarios.php on line 294
+[15-Feb-2026 01:37:45 Europe/Berlin] PHP Parse error:  syntax error, unexpected token ";", expecting "function" or "const" in C:\xampp\htdocs\SEGTRACK1\App\Model\ModeloFuncionarios.php on line 294
+[17-Feb-2026 10:26:41 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 193
+[17-Feb-2026 10:26:41 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 197
+[17-Feb-2026 10:26:41 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 201
+[17-Feb-2026 10:37:07 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 193
+[17-Feb-2026 10:37:07 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 197
+[17-Feb-2026 10:37:07 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 201
+[17-Feb-2026 10:46:26 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 259
+[17-Feb-2026 10:46:26 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 260
+[17-Feb-2026 10:46:34 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 259
+[17-Feb-2026 10:46:34 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 260
+[17-Feb-2026 10:46:58 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 259
+[17-Feb-2026 10:46:58 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 260
+[17-Feb-2026 10:48:24 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 257
+[17-Feb-2026 10:48:24 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 257
+[17-Feb-2026 10:49:04 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 257
+[17-Feb-2026 10:49:04 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 257
+[17-Feb-2026 10:49:26 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 193
+[17-Feb-2026 10:49:26 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 197
+[17-Feb-2026 10:49:26 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 201
+[17-Feb-2026 10:54:43 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 284
+[17-Feb-2026 10:54:43 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 284
+[17-Feb-2026 10:54:59 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 284
+[17-Feb-2026 10:54:59 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 284
+[17-Feb-2026 13:00:14 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 193
+[17-Feb-2026 13:00:14 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 197
+[17-Feb-2026 13:00:14 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 201
+[17-Feb-2026 13:12:00 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 193
+[17-Feb-2026 13:12:00 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 197
+[17-Feb-2026 13:12:00 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 201
+[17-Feb-2026 13:20:05 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 193
+[17-Feb-2026 13:20:05 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 197
+[17-Feb-2026 13:20:05 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 201
+[17-Feb-2026 13:21:42 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 193
+[17-Feb-2026 13:21:42 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 197
+[17-Feb-2026 13:21:42 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 201
+[17-Feb-2026 14:28:41 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 193
+[17-Feb-2026 14:28:41 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 197
+[17-Feb-2026 14:28:41 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 201
+[17-Feb-2026 20:39:46 Europe/Berlin] PHP Warning:  Undefined variable $logoImg in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 130
+[17-Feb-2026 20:39:46 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 171
+[17-Feb-2026 20:39:46 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 174
+[17-Feb-2026 20:39:46 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 177
+[17-Feb-2026 20:58:03 Europe/Berlin] PHP Warning:  Undefined variable $logoImg in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 130
+[17-Feb-2026 20:58:03 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 171
+[17-Feb-2026 20:58:03 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 174
+[17-Feb-2026 20:58:03 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 177
+[17-Feb-2026 21:20:12 Europe/Berlin] PHP Warning:  Undefined variable $logoImg in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 130
+[17-Feb-2026 21:20:12 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 171
+[17-Feb-2026 21:20:12 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 174
+[17-Feb-2026 21:20:12 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 177
+[17-Feb-2026 21:24:00 Europe/Berlin] PHP Warning:  Undefined variable $logoImg in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 130
+[17-Feb-2026 21:24:00 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 171
+[17-Feb-2026 21:24:00 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 174
+[17-Feb-2026 21:24:00 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 177
+[17-Feb-2026 21:31:47 Europe/Berlin] PHP Warning:  Undefined variable $logoImg in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 130
+[17-Feb-2026 21:31:47 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 171
+[17-Feb-2026 21:31:47 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 174
+[17-Feb-2026 21:31:47 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 177

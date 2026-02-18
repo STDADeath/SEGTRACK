@@ -3,7 +3,7 @@ session_start();
 
 // ❌ Bloquear acceso si no hay sesión activa
 if (!isset($_SESSION['usuario'])) {
-    header("Location: ../../View/login.html");
+    header("Location: ../../View/Login/login.php");
     exit;
 }
 

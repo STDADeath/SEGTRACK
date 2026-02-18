@@ -3,7 +3,7 @@
 // IMPORTANTE: NO DEBE HABER NINGÚN ECHO ANTES
 // ==========================================
 error_reporting(E_ALL);
-ini_set('display_errors', 0); // Cambiar a 0 para producción
+ini_set('display_errors', 1); // Cambiar a 0 para producción
 
 // Limpiar cualquier salida previa
 ob_start();
@@ -88,17 +88,17 @@ try {
 // Determinar ruta
     $ruta = '';
     switch ($resultado['usuario']['TipoRol']) {
-        case 'Administrador':
-            // Correcto: Salir de /Login/ (../) y entrar a /Administrador/
-            $ruta = '../Administrador/DasboardAdministrador.php';
+        case 'Personal Seguridad':
+            // Correcto: Salir de /Login/ (../) y entrar a /PersonalSeguridad/
+            $ruta = '../PersonalSeguridad/DasboardPersonalSeguridad.php';
             break;
         case 'Supervisor':
             // Correcto: Salir de /Login/ (../) y entrar a /Supervisor/
             $ruta = '../Supervisor/DasboardSupervisor.php';
             break;
-        case 'Personal Seguridad':
-            // Correcto: Salir de /Login/ (../) y entrar a /PersonalSeguridad/
-            $ruta = '../PersonalSeguridad/DasboardPersonalSeguridad.php';
+        case 'Administrador':
+            // Correcto: Salir de /Login/ (../) y entrar a /Administrador/
+            $ruta = '../Administrador/DasboardAdministrador.php';
             break;
         default:
             // Si no tiene rol válido, se queda en la misma página de login

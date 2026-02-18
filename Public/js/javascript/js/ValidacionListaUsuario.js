@@ -1,136 +1,184 @@
-// Archivo: Public/js/javascript/js/ValidacionesUsuarioLista.js
+console.log("✅ UsuariosLista.js cargado");
 
-$(document).ready(function() {
+const urlControlador = "../../Controller/ControladorusuarioADM.php";
 
-    // ==========================================================
-    // 1. INICIALIZACIÓN DE DATATABLES
-    // ==========================================================
-    var tabla = $('#tablaUsuarios').DataTable({
-        "language": {
-            // Configuración en español para DataTables
-            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+// ============================================
+// INICIALIZAR DATATABLE (igual que DispositivoLista)
+// ============================================
+$(document).ready(function () {
+
+    $('#tablaUsuarios').DataTable({
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
         },
-        "order": [
-            [0, "desc"]
-        ], // Ordenar por ID descendente por defecto
-        "paging": true,
-        "lengthChange": true, // Control de cantidad de filas
-        "searching": true, // Barra de búsqueda (filtrado)
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true
+        pageLength: 10,
+        responsive: true,
+        order: [[3, "desc"]],           // Activos primero
+        columnDefs: [
+            { targets: [3, 4], orderable: false }
+        ]
     });
 
+    console.log("✅ DataTable inicializado");
 
-    // ==========================================================
-    // 2. LÓGICA DE CAMBIO DE ESTADO (Activar/Desactivar) - Vía AJAX
-    // ==========================================================
-    // Usamos la delegación de eventos sobre la tabla para asegurar que funciona 
-    // con la paginación y el filtro de DataTables.
-    $('#tablaUsuarios tbody').on('click', '.btn-toggle-estado', function(e) {
-        e.preventDefault(); // Impedir la acción por defecto del enlace
+    // ============================================
+    // GUARDAR CAMBIOS DE ROL
+    // ============================================
+    $('#btnGuardarRol').on('click', function () {
 
-        var $btn = $(this); // Capturar el botón clickeado
-        var idUsuario = $btn.data('id');
-        var estadoActual = $btn.data('estado-actual');
-        var nombreFuncionario = $btn.data('funcionario'); // Obtenemos el nombre
+        const idUsuario = $('#editIdUsuario').val();
+        const nuevoRol  = $('#editTipoRol').val();
 
-        // Determinar el nuevo estado y el texto del mensaje de confirmación
-        var nuevoEstado = (estadoActual === 'Activo') ? 'Inactivo' : 'Activo';
-        var mensaje = (estadoActual === 'Activo') ?
-            "¿Está seguro de **desactivar** el usuario de **" + nombreFuncionario + "**?" :
-            "¿Está seguro de **activar** el usuario de **" + nombreFuncionario + "**?";
-
-        // Usamos la variable global Swal (SweetAlert2)
-        if (typeof Swal !== 'undefined') {
+        if (!nuevoRol) {
             Swal.fire({
-                title: 'Confirmar Cambio de Estado',
-                html: mensaje,
                 icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, ' + (nuevoEstado === 'Activo' ? 'activar' : 'desactivar'),
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    realizarCambioEstado(idUsuario, estadoActual, nuevoEstado, $btn, tabla);
-                }
+                title: 'Campo requerido',
+                text: 'Debe seleccionar un rol',
+                confirmButtonColor: '#f6c23e'
             });
+            return;
         }
-    });
 
-
-    // Función separada que realiza la llamada AJAX y la manipulación del DOM
-    function realizarCambioEstado(idUsuario, estadoActual, nuevoEstado, $btn, tabla) {
-        
-        var iconActual = $btn.html(); 
-        $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i>');
-
-        // RUTA CORRECTA: Apunta a tu ControladorusuarioADM.php
-        const ajaxURL = '../../Controller/ControladorusuarioADM.php';
+        const btn  = $(this);
+        const orig = btn.html();
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Guardando...');
 
         $.ajax({
-            url: ajaxURL,
-            type: 'POST',
-            dataType: 'json', 
+            url:      urlControlador,
+            type:     'POST',
+            dataType: 'json',
             data: {
-                accion: 'cambiarEstado', // Acción definida en el Controlador
-                id: idUsuario, // Parámetro que espera el controlador
+                accion:    'actualizar',
+                IdUsuario:  idUsuario,
+                tipo_rol:   nuevoRol
             },
-            success: function(response) {
-                
-                if (response && response.ok === true) {
-                    
-                    // --- MANIPULACIÓN DEL DOM (Actualización visual sin recargar) ---
-                    var $row = $btn.closest('tr');
-                    
-                    // La columna del Estado es la 3 (0-indexado)
-                    var $badgeCell = $row.find('td:eq(3)'); 
-                    
-                    // 1. Actualizar el BADGE
-                    $badgeCell.empty(); // Limpiamos el contenido
-                    var newBadge = (nuevoEstado === 'Activo') ? 
-                        '<span class="badge bg-success px-2 py-1 estado-badge">Activo</span>' :
-                        '<span class="badge bg-danger px-2 py-1 estado-badge">Inactivo</span>';
-                    $badgeCell.html(newBadge);
-                    
-                    // 2. Actualizar el BOTÓN de acción (solo actualizamos el data-estado-actual)
-                    $btn.data('estado-actual', nuevoEstado); 
-                    $btn.html('<i class="fas fa-sync-alt"></i>'); // Restauramos el ícono de sincronización
+            success: function (response) {
 
-                    // Notificación de éxito
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire('¡Actualizado!', response.data, 'success');
-                    }
-                    
-                    // Forzar a DataTables a redibujar la fila con los nuevos datos del DOM
-                    tabla.row($row).invalidate().draw(false); 
+                btn.prop('disabled', false).html(orig);
+                console.log("✓ Respuesta actualizar:", response);
 
+                if (response.success === true) {
+                    Swal.fire({
+                        icon:  'success',
+                        title: '¡Éxito!',
+                        text:   response.message,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    }).then(() => {
+                        $('#modalEditarRol').modal('hide');
+                        location.reload();
+                    });
                 } else {
-                    // Muestra mensaje de error del backend
-                    var errorMessage = response.data || 'Hubo un error inesperado al cambiar el estado.';
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire('Error', errorMessage, 'error');
-                    }
-                    // Restaurar ícono en caso de error
-                    $btn.html(iconActual); 
+                    Swal.fire({
+                        icon:  'warning',
+                        title: 'No se pudo actualizar',
+                        text:   response.message || 'Error al actualizar el rol',
+                        confirmButtonColor: '#f6c23e'
+                    });
                 }
-                
-                // Habilitar botón
-                $btn.prop('disabled', false);
-
             },
-            error: function(xhr, status, error) {
-                // Manejo de error de conexión (404, 500, etc.)
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire('Error de Conexión', 'No se pudo conectar con el servidor: ' + status, 'error');
-                }
-                
-                // Restaurar ícono original
-                $btn.prop('disabled', false).html(iconActual);
+            error: function (xhr, status, error) {
+                btn.prop('disabled', false).html(orig);
+                console.error("❌ Error AJAX actualizar:", xhr.responseText);
+                Swal.fire({
+                    icon:  'error',
+                    title: 'Error de conexión',
+                    text:  'No se pudo conectar con el servidor',
+                    confirmButtonColor: '#e74a3b'
+                });
             }
         });
-    }
+    });
+
 });
+
+// ============================================
+// CAMBIAR ESTADO (clic en badge)
+// ============================================
+function cambiarEstado(idUsuario, estadoActual) {
+
+    console.log("=== CAMBIAR ESTADO ===", idUsuario, estadoActual);
+
+    const nuevoEstado = (estadoActual === 'Activo') ? 'Inactivo' : 'Activo';
+
+    Swal.fire({
+        title: '¿Cambiar estado?',
+        text:  `El usuario pasará a estar ${nuevoEstado}`,
+        icon:  'warning',
+        showCancelButton:   true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor:  '#d33',
+        confirmButtonText:  'Sí, cambiar',
+        cancelButtonText:   'Cancelar',
+        reverseButtons: true
+    }).then((result) => {
+
+        if (!result.isConfirmed) return;
+
+        // Loading igual que DispositivoLista
+        Swal.fire({
+            title: 'Actualizando...',
+            html:  '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
+            allowOutsideClick: false,
+            allowEscapeKey:    false,
+            showConfirmButton:  false
+        });
+
+        $.ajax({
+            url:      urlControlador,
+            type:     'POST',
+            dataType: 'json',
+            data: {
+                accion:    'cambiar_estado',
+                IdUsuario:  idUsuario,
+                Estado:     nuevoEstado
+            },
+            success: function (response) {
+
+                console.log("✓ Respuesta cambiar estado:", response);
+
+                if (response.success === true) {
+                    Swal.fire({
+                        icon:  'success',
+                        title: '¡Listo!',
+                        text:   response.message,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    }).then(() => location.reload());
+                } else {
+                    Swal.fire({
+                        icon:  'warning',
+                        title: 'No se pudo cambiar',
+                        text:   response.message || 'Error al cambiar el estado',
+                        confirmButtonColor: '#f6c23e'
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("❌ Error AJAX cambiar estado:", xhr.responseText);
+                Swal.fire({
+                    icon:  'error',
+                    title: 'Error de conexión',
+                    text:  'No se pudo conectar con el servidor',
+                    confirmButtonColor: '#e74a3b',
+                    footer: '<small>Revisa la consola del navegador (F12)</small>'
+                });
+            }
+        });
+    });
+}
+
+// ============================================
+// ABRIR MODAL EDITAR ROL
+// ============================================
+function editarRol(idUsuario, rolActual, nombreFuncionario) {
+    console.log("=== EDITAR ROL ===", idUsuario, rolActual);
+    $('#editIdUsuario').val(idUsuario);
+    $('#editNombreFuncionario').text(nombreFuncionario);
+    $('#editTipoRol').val(rolActual);
+    $('#modalEditarRol').modal('show');
+}
+
+console.log("✅ Funciones listas: cambiarEstado, editarRol");

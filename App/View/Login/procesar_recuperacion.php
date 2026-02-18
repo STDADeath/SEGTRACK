@@ -77,7 +77,7 @@ $mail->isSMTP();
  $mail->SMTPAuth = true;
  $mail->Username = 'seguridad.integral.segtrack@gmail.com';
 // Usar la Contraseña de Aplicación de Google
-$mail->Password = 'bnin xnai egbo yris';
+$mail->Password = 'lwfc rpts gcog iysv';
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587; // Puerto estándar para STARTTLS
 

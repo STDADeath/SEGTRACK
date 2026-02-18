@@ -83,7 +83,7 @@ $sedes = $controladorSede->obtenerSedes();
 
                             <option value="">Seleccione...</option>
                             <option value="Personal Seguridad">Personal Seguridad</option>
-                            <option value="Funcionario.">Funcionario</option>
+                            <option value="Funcionario">Funcionario</option>
                         </select>
 
                         <!-- Mensaje de error si no es válido -->

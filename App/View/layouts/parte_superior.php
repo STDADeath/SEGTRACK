@@ -35,8 +35,9 @@ $nombreUsuario = htmlspecialchars($_SESSION['usuario']['NombreFuncionario'] ?? '
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Hojas de estilo del tema y personalizadas -->
-    <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet"> <!-- Plantilla base -->
-    <link href="../../../Public/css/styles.css" rel="stylesheet"> <!-- Tus estilos -->
+    <link href="../../../Public/css/sb-admin-2.css" rel="stylesheet"> <!-- Plantilla base -->
+    
+
     <link href="../../../Public/css/graficas.css" rel="stylesheet"> <!-- Estilos para gráficos -->
     <link href="../../../Public/css/icono.css" rel="stylesheet"> <!-- Estilos para íconos personalizados -->
 
@@ -163,7 +164,9 @@ $nombreUsuario = htmlspecialchars($_SESSION['usuario']['NombreFuncionario'] ?? '
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
                                 <!-- Aquí se muestra el nombre dinámico del usuario -->
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= isset($nombreUsuario) ? $nombreUsuario : 'Usuario' ?></span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['usuario_nombre']; ?> | <?php echo $_SESSION['usuario_rol']; ?>
+                                </span>
 
                                 <img class="img-profile rounded-circle"
                                      src="../../../Public/img/undraw_profile.svg">

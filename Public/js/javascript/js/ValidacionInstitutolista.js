@@ -46,6 +46,48 @@ $(document).ready(function() {
             return;
         }
 
+        /**
+ * ==========================================================
+ * LISTA DE INSTITUCIONES - SEGTRACK
+ * ==========================================================
+ * Configuración profesional de DataTable
+ */
+
+console.log("✅ InstitutoLista.js cargado");
+
+$(document).ready(function () {
+
+    $('#tablaInstitutos').DataTable({
+
+        // Registros por página
+        pageLength: 10,
+
+        // Menú de cantidad
+        lengthMenu: [5, 10, 25, 50, 100],
+
+        // Orden por defecto (Nombre ascendente)
+        order: [[0, "asc"]],
+
+        // Desactivar orden en columna Acciones (índice 4)
+        columnDefs: [
+            {
+                targets: 4,
+                orderable: false
+            }
+        ],
+
+        // Traducción oficial en español
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
+        }
+
+    });
+
+    console.log("✓ DataTable inicializado correctamente");
+
+});
+
+
         // Deshabilitar botón
         $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i>');
 

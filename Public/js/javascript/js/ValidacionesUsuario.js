@@ -1,109 +1,115 @@
+/**
+ * ========================================
+ * VALIDACIONES USUARIO - SEGTRACK
+ * ========================================
+ */
 
-// ===============================
-// VALIDACIONES
-// ===============================
+console.log("✅ ValidacionesUsuario.js cargado");
 
-function validarMin7(texto) {
-    return texto.trim().length >= 7;
-}
+// ==============================
+// TOGGLE CONTRASEÑA
+// ==============================
+function togglePassword() {
+    const input   = document.getElementById('contrasena');
+    const eyeIcon = document.getElementById('eye-icon');
 
-function marcarCampo(input, valido) {
-    const label = input.closest(".mb-3").querySelector("label");
-
-    input.classList.remove("input-valid", "input-invalid");
-    label.classList.remove("label-valid", "label-invalid");
-
-    if (valido) {
-        input.classList.add("input-valid");
-        label.classList.add("label-valid");
+    if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
     } else {
-        input.classList.add("input-invalid");
-        label.classList.add("label-invalid");
+        input.type = 'password';
+        eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
     }
 }
 
-// ===============================
-// VALIDACIÓN TIEMPO REAL
-// ===============================
+// ==============================
+// VALIDAR CAMPO VISUAL
+// ==============================
+function validarCampo($campo, $label, minLength = 1) {
+    const valor = $campo.val().trim();
 
-document.getElementById("tipo_rol").addEventListener("change", function () {
-    marcarCampo(this, this.value !== "");
-});
-
-document.getElementById("contrasena").addEventListener("input", function () {
-    marcarCampo(this, validarMin7(this.value));
-});
-
-document.getElementById("id_funcionario").addEventListener("change", function () {
-    marcarCampo(this, this.value !== "");
-});
-
-// ===============================
-// ENVÍO DEL FORMULARIO VIA AJAX
-// ===============================
-
-document.getElementById("formUsuario").addEventListener("submit", function(e) {
-    e.preventDefault(); // NO RECARGA PÁGINA
-
-    const rol = document.getElementById('tipo_rol');
-    const contrasena = document.getElementById('contrasena');
-    const funcionario = document.getElementById('id_funcionario');
-
-    let valido = true;
-
-    if (rol.value === "") { marcarCampo(rol, false); valido = false; }
-    if (!validarMin7(contrasena.value)) { marcarCampo(contrasena, false); valido = false; }
-    if (funcionario.value === "") { marcarCampo(funcionario, false); valido = false; }
-
-    if (!valido) {
-        Swal.fire({
-            icon: "error",
-            title: "Campos inválidos",
-            text: "Revisa los campos marcados en rojo"
-        });
-        return;
+    if (valor.length >= minLength) {
+        $campo.removeClass('input-invalid').addClass('input-valid');
+        $label.removeClass('label-invalid').addClass('label-valid');
+        return true;
+    } else {
+        $campo.removeClass('input-valid').addClass('input-invalid');
+        $label.removeClass('label-valid').addClass('label-invalid');
+        return false;
     }
+}
 
-    // =================================
-    //  ENVÍO AJAX F A L I N A L
-    // =================================
-    let datos = new FormData(this);
+// ==============================
+// DOCUMENTO LISTO
+// ==============================
+$(document).ready(function () {
 
-    fetch("../../Controller/ControladorusuarioADM.php", {
-        method: "POST",
-        body: datos
-    })
-    .then(resp => resp.json())
-    .then(data => {
+    const $funcionario = $('#id_funcionario');
+    const $tipoRol     = $('#tipo_rol');
+    const $contrasena  = $('#contrasena');
 
-        if (data.ok) {
-            Swal.fire({
-                icon: "success",
-                title: "Usuario Registrado",
-                text: data.mensaje,
-                confirmButtonText: "Aceptar"
-            }).then(() => {
-                document.getElementById("formUsuario").reset();
+    const $labelFuncionario = $('#label_funcionario');
+    const $labelTipoRol     = $('#label_tipo_rol');
+    const $labelContrasena  = $('#label_contrasena');
 
-                [rol, contrasena, funcionario].forEach(i => {
-                    i.classList.remove("input-valid", "input-invalid");
-                });
-            });
+    // Validación en tiempo real
+    $funcionario.on('change', () => validarCampo($funcionario, $labelFuncionario));
+    $tipoRol.on('change',     () => validarCampo($tipoRol,     $labelTipoRol));
+    $contrasena.on('input',   () => validarCampo($contrasena,  $labelContrasena, 7));
 
-        } else {
-            Swal.fire({
-                icon: "error",
-                title: "Error al registrar",
-                text: data.mensaje
-            });
+    // ==============================
+    // SUBMIT REGISTRAR USUARIO
+    // ==============================
+    $('#formUsuario').on('submit', function (e) {
+        e.preventDefault();
+
+        const v1 = validarCampo($funcionario, $labelFuncionario);
+        const v2 = validarCampo($tipoRol,     $labelTipoRol);
+        const v3 = validarCampo($contrasena,  $labelContrasena, 7);
+
+        if (!(v1 && v2 && v3)) {
+            Swal.fire('Campos incompletos', 'Por favor completa todos los campos correctamente', 'warning');
+            return;
         }
 
-    })
-    .catch(() => {
-        Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "No se pudo contactar con el servidor"
+        const btn = $('#formUsuario button[type=submit]');
+        const textoOriginal = btn.html();
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Registrando...');
+
+        $.ajax({
+            url: '../../Controller/ControladorusuarioADM.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                accion:         'registrar',
+                id_funcionario:  $funcionario.val(),
+                tipo_rol:        $tipoRol.val(),
+                contrasena:      $contrasena.val()
+            },
+            success: function (response) {
+
+                btn.prop('disabled', false).html(textoOriginal);
+                console.log("✓ Respuesta registrar:", response);
+
+                if (response.success === true) {
+                    Swal.fire({
+                        title: '¡Registrado!',
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonColor: '#1cc88a'
+                    }).then(() => {
+                        window.location.href = 'UsuariosLista.php';
+                    });
+                } else {
+                    Swal.fire('Error', response.message || 'No se pudo registrar el usuario', 'error');
+                }
+            },
+            error: function (xhr, status, error) {
+                btn.prop('disabled', false).html(textoOriginal);
+                console.error('❌ Error AJAX registrar:', status, error);
+                console.error('Respuesta cruda:', xhr.responseText);
+                Swal.fire('Error de conexión', 'No se pudo comunicar con el servidor', 'error');
+            }
         });
     });
 
