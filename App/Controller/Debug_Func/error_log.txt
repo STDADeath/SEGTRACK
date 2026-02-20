@@ -6756,3 +6756,37 @@ Stack trace:
 [17-Feb-2026 21:31:47 Europe/Berlin] PHP Warning:  Undefined variable $cargo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 171
 [17-Feb-2026 21:31:47 Europe/Berlin] PHP Warning:  Undefined variable $documento in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 174
 [17-Feb-2026 21:31:47 Europe/Berlin] PHP Warning:  Undefined variable $correo in C:\xampp\htdocs\SEGTRACK\App\Controller\ControladorFuncionarios.php on line 177
+[19-Feb-2026 07:49:25 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 07:49:25 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 07:49:25 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 246
+[19-Feb-2026 07:49:25 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 247
+[19-Feb-2026 07:49:39 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 07:49:39 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 07:49:39 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 246
+[19-Feb-2026 07:49:39 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 247
+[19-Feb-2026 08:07:43 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 08:07:43 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 08:07:50 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 08:07:51 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 08:07:59 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 08:07:59 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 08:27:59 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 08:27:59 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 08:27:59 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 246
+[19-Feb-2026 08:27:59 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 247
+[19-Feb-2026 08:28:28 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 08:28:28 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 08:28:28 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 246
+[19-Feb-2026 08:28:28 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 247
+[19-Feb-2026 08:42:13 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 08:42:13 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 08:42:13 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 246
+[19-Feb-2026 08:42:13 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 247
+[19-Feb-2026 08:42:27 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 08:42:27 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 08:42:27 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 246
+[19-Feb-2026 08:42:27 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 247
+[19-Feb-2026 08:45:39 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 218
+[19-Feb-2026 08:45:39 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 219
+[19-Feb-2026 08:45:39 Europe/Berlin] PHP Warning:  Undefined array key "DocumentoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 246
+[19-Feb-2026 08:45:39 Europe/Berlin] PHP Warning:  Undefined array key "CorreoFuncionario" in C:\xampp\htdocs\SEGTRACK\App\Model\ModeloFuncionarios.php on line 247

@@ -4282,3 +4282,100 @@ POST recibido:
 2026-02-18 08:33:53 - Error al enviar correo a EDWIN2002@gmail.com: SMTP Error: Could not authenticate.
 2026-02-18 19:28:51 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-119-699604e3b8503.png
 2026-02-18 19:28:54 - Error al enviar correo a Estupinan@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 05:35:33 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-69969315a326d.png
+2026-02-19 05:35:35 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 05:39:34 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-6996940676e95.png
+2026-02-19 05:39:35 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 07:49:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-6996b2760259a.png
+2026-02-19 07:49:26 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 07:49:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-27-6996b283a7bda.png
+2026-02-19 07:49:39 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 08:05:18 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-121-6996b62edbe45.png
+2026-02-19 08:05:21 - Error al enviar correo a pasachoa@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 08:27:59 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-6996bb7f82a38.png
+2026-02-19 08:28:28 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-6996bb9c4d796.png
+2026-02-19 08:28:28 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 08:42:13 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-27-6996bed5c65bb.png
+2026-02-19 08:42:13 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 08:42:27 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-27-6996bee3654d9.png
+2026-02-19 08:42:27 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 08:44:29 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-122-6996bf5d916e1.png
+2026-02-19 08:44:33 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 08:45:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-122-6996bfa325ecf.png
+2026-02-19 08:45:39 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 09:18:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-6996c7527eab0.png
+2026-02-19 09:18:48 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 09:35:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-6996cb6aefcb9.png
+2026-02-19 09:35:58 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 09:43:41 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-6996cd3d26aa7.png
+2026-02-19 09:43:43 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 10:00:56 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:00:56 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Rick  Morty","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996cd3d26aa7.png"}
+2026-02-19 10:00:56 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:00:57 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 10:00:57 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-19 10:02:30 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:02:30 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Rick  Morty","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996cd3d26aa7.png"}
+2026-02-19 10:02:30 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:02:35 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:02:35 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:04:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-6996d210eb24c.png
+2026-02-19 10:04:21 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:13:44 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:13:44 - ERROR en enviarQRPorCorreo: Funcionario no encontrado o inactivo
+2026-02-19 10:13:57 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:13:57 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d210eb24c.png"}
+2026-02-19 10:13:57 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:14:00 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:14:00 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:27:08 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:27:08 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d210eb24c.png"}
+2026-02-19 10:27:08 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:27:13 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:27:13 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:28:45 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:28:45 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d210eb24c.png"}
+2026-02-19 10:28:45 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:28:49 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:28:49 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:35:45 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:35:45 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d210eb24c.png"}
+2026-02-19 10:35:45 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:35:49 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:35:49 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:37:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-6996d9c559f30.png
+2026-02-19 10:37:12 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:38:43 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:38:43 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d9c559f30.png"}
+2026-02-19 10:38:43 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:38:46 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:38:46 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 11:31:20 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-6996e678ce74b.png
+2026-02-19 11:31:25 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 11:52:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACKqr/Qr_Func//QR-FUNC-97-6996eb7776a15.png
+2026-02-19 11:52:39 - QR no encontrado en: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-97-6996eb7776a15.png
+2026-02-19 11:56:21 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-124-6996ec55ba45e.png
+2026-02-19 11:56:23 - Error al enviar correo a Dory@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 20:57:04 - === enviarQRPorCorreo llamado para ID: 97 ===
+2026-02-19 20:57:04 - Funcionario encontrado: {"IdFuncionario":"97","NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Personal Seguridad","DocumentoFuncionario":"1000991666","CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-97-6996eb7776a15.png"}
+2026-02-19 20:57:04 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-19 21:57:28 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 21:57:28 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996e678ce74b.png"}
+2026-02-19 21:57:28 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 21:57:40 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 21:57:40 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 21:58:38 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACKqr/Qr_Func//QR-FUNC-123-6997797ed45ce.png
+2026-02-19 21:58:38 - QR no encontrado en: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-123-6997797ed45ce.png
+2026-02-19 22:31:05 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACKqr/Qr_Func//QR-FUNC-97-69978119c73d5.png
+2026-02-19 22:31:05 - QR no encontrado en: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-97-69978119c73d5.png
+2026-02-19 23:08:54 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-699789f657c8a.png
+2026-02-19 23:08:55 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 23:11:56 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-19 23:11:56 - Funcionario encontrado: {"IdFuncionario":"125","NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12313123123","CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-699789f657c8a.png"}
+2026-02-19 23:11:56 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-19 23:11:58 - ✓ Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-19 23:11:58 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+2026-02-20 06:14:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-6997edc2c666e.png
+2026-02-20 06:14:44 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-20 06:15:24 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-23-6997edec94ee4.png
+2026-02-20 06:15:25 - Error al enviar correo a Supervisor@gmail.com: SMTP Error: Could not authenticate.

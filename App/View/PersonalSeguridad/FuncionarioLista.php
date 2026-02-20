@@ -42,6 +42,29 @@ require_once __DIR__ . '/../layouts/parte_superior.php';
         border: none;
         box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
     }
+    /* Zebra */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fc;
+}
+
+/* Hover suave */
+.table-hover tbody tr:hover {
+    background-color: #f1f3f8;
+    transition: 0.2s ease-in-out;
+}
+
+/* Tamaño badge */
+.badge {
+    font-size: 0.85rem;
+}
+
+/* 🔥 Quitar flechas de ordenamiento */
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after {
+    display: none !important;
+}
 </style>
 
 <div class="container-fluid px-4 py-4">

@@ -1,10 +1,4 @@
 <?php
-/**
- * ========================================
- * LISTA DE USUARIOS - SEGTRACK
- * ========================================
- */
-
 require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
 require_once __DIR__ . '/../../Core/conexion.php';
 
@@ -30,7 +24,6 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 
 <div class="container-fluid px-4 py-4">
 
-    <!-- Encabezado -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-users me-2"></i>Usuarios Registrados
@@ -40,7 +33,6 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
         </a>
     </div>
 
-    <!-- Tarjeta tabla -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Usuarios</h6>
@@ -71,34 +63,39 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 
                                 <td><?= htmlspecialchars($row['TipoRol']) ?></td>
 
-                                <!-- Badge estado clickeable (igual que "No aplica" de dispositivos) -->
                                 <td>
-                                    <span class="badge <?= $activo ? 'bg-success' : 'bg-danger' ?>"
-                                          style="padding:6px 14px;border-radius:20px;font-size:12px;
-                                                 font-weight:500;cursor:pointer;transition:all .3s;"
-                                          onclick="cambiarEstado(<?= $row['IdUsuario'] ?>, '<?= $row['Estado'] ?>')"
-                                          title="Clic para cambiar estado">
-                                        <i class="fas <?= $activo ? 'fa-check-circle' : 'fa-times-circle' ?> me-1"></i>
-                                        <?= $row['Estado'] ?>
-                                    </span>
+                                    <?php if ($activo): ?>
+                                        <span class="badge bg-success px-3 py-2">Activo</span>
+                                    <?php else: ?>
+                                        <span class="badge px-3 py-2"
+                                              style="background-color:#60a5fa;">Inactivo</span>
+                                    <?php endif; ?>
                                 </td>
 
-                                <!-- Botón editar rol (igual estilo outline que botón editar dispositivo) -->
                                 <td>
-                                    <div class="btn-group" role="group">
-                                        <button type="button"
-                                                class="btn btn-sm btn-outline-primary"
-                                                onclick='editarRol(
-                                                    <?= $row["IdUsuario"] ?>,
-                                                    "<?= htmlspecialchars($row["TipoRol"], ENT_QUOTES) ?>",
-                                                    "<?= htmlspecialchars($row["NombreFuncionario"], ENT_QUOTES) ?>"
-                                                )'
-                                                title="Editar rol"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalEditarRol">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </div>
+                                    <!-- ✅ EDITAR: solo data-* sin onclick ni data-bs-toggle -->
+                                    <button type="button"
+                                            class="btn btn-outline-primary btn-sm rounded-3 btn-editar-rol"
+                                            style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;"
+                                            data-id="<?= $row['IdUsuario'] ?>"
+                                            data-rol="<?= htmlspecialchars($row['TipoRol'], ENT_QUOTES) ?>"
+                                            data-nombre="<?= htmlspecialchars($row['NombreFuncionario'], ENT_QUOTES) ?>"
+                                            title="Editar rol">
+                                        <i class="fas fa-pen-to-square"></i>
+                                    </button>
+
+                                    <!-- CANDADO ESTADO -->
+                                    <button class="btn btn-sm btn-toggle-estado ms-1"
+                                            style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;border:1px solid #d4af37;background:#fff8dc;"
+                                            data-id="<?= $row['IdUsuario'] ?>"
+                                            data-estado="<?= $row['Estado'] ?>"
+                                            title="<?= $activo ? 'Desactivar usuario' : 'Activar usuario'; ?>">
+                                        <?php if ($activo): ?>
+                                            <i class="fas fa-lock text-warning"></i>
+                                        <?php else: ?>
+                                            <i class="fas fa-unlock text-success"></i>
+                                        <?php endif; ?>
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -119,18 +116,19 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
     </div>
 </div>
 
-<!-- ================================================================
-     MODAL EDITAR ROL
-================================================================= -->
+<!-- MODAL EDITAR ROL -->
 <div class="modal fade" id="modalEditarRol" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
-            <div class="modal-header bg-warning text-dark">
+            <div class="modal-header text-white" style="background-color:#3b82f6;">
                 <h5 class="modal-title">
                     <i class="fas fa-user-tag me-2"></i>Editar Rol de Usuario
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <!-- ✅ btn-close normal, Bootstrap 4 no tiene btn-close-white -->
+                <button type="button" class="close text-white" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
             </div>
 
             <div class="modal-body">
@@ -138,9 +136,9 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Funcionario</label>
-                    <p id="editNombreFuncionario"
-                       class="form-control bg-light mb-0"
-                       style="min-height:38px;padding:6px 12px;"></p>
+                    <!-- ✅ input readonly en vez de <p> -->
+                    <input type="text" id="editNombreFuncionario"
+                           class="form-control bg-light" readonly>
                 </div>
 
                 <div class="mb-3">
@@ -164,26 +162,46 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <!-- ✅ data-dismiss (Bootstrap 4) -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="fas fa-times me-1"></i> Cancelar
                 </button>
-                <button type="button" class="btn btn-warning" id="btnGuardarRol">
+                <button type="button" class="btn text-white" id="btnGuardarRol"
+                        style="background-color:#3b82f6;">
                     <i class="fas fa-save me-1"></i> Guardar Cambios
                 </button>
             </div>
-
         </div>
     </div>
 </div>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
 
-<!-- ── Scripts (mismo orden que DispositivoLista) ────────────── -->
+<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
+
+<!-- CSS -->
+<link rel="stylesheet" href="../../../Public/vendor/datatables/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- JS EN ORDEN CORRECTO -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-<link  rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
+
+<!-- ✅ Bootstrap JS es OBLIGATORIO para que funcione .modal('show') -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../../Public/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../Public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script src="../../../Public/js/javascript/js/ValidacionListaUsuario.js"></script>
+<!-- Tu JS siempre al final -->
+<script src="../../../Public/js/javascript/js/ValidacionUsuarioLista.js"></script>
+
+<style>
+.table-striped tbody tr:nth-of-type(odd) { background-color: #f8f9fc; }
+.table-hover tbody tr:hover              { background-color: #f1f3f8; transition: 0.2s ease-in-out; }
+.badge { font-size: 0.85rem; }
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after { display: none !important; }
+</style>
