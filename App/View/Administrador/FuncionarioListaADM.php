@@ -6,7 +6,8 @@
  */
 require_once __DIR__ . '/../layouts/parte_superior_administrador.php'; 
 
-$baseQR = 'Public/qr';
+// ✅ CORRECCIÓN: $baseQR solo '/qr' para no duplicar 'Public/' en la URL
+$baseQR = '/qr';
 ?>
 
 <style>
@@ -26,8 +27,8 @@ $baseQR = 'Public/qr';
     ============================================= */
     .btn-qr-ver,
     .btn-qr-enviar {
-        font-size: 0.72rem;  /* ← TAMAÑO DEL TEXTO E ICONO */
-        padding: 2px 7px;    /* ← ESPACIADO INTERNO        */
+        font-size: 0.72rem;
+        padding: 2px 7px;
         line-height: 1.5;
     }
 
@@ -38,15 +39,22 @@ $baseQR = 'Public/qr';
        → border-radius: controla cuánto se redondean las esquinas
     ============================================= */
     .btn-accion {
-        width: 36px;          /* ← ANCHO  */
-        height: 36px;         /* ← ALTO   */
+        width: 36px;
+        height: 36px;
         padding: 0;
-        border-radius: 8px;   /* ← ESQUINAS REDONDEADAS */
-        font-size: 0.85rem;   /* ← TAMAÑO DEL ICONO     */
+        border-radius: 8px;
+        font-size: 0.85rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
     }
+    .table-striped tbody tr:nth-of-type(odd) { background-color: #f8f9fc; }
+    .table-hover tbody tr:hover              { background-color: #f1f3f8; transition: 0.2s ease-in-out; }
+    .badge { font-size: 0.85rem; }
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_desc:after { display: none !important; }
 </style>
 
 <div class="container-fluid px-4 py-4">
@@ -158,24 +166,45 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <!-- ===== QR: Ver y Enviar AL LADO (d-flex) ===== -->
                         <td>
                             <?php if (!empty($row['QrCodigoFuncionario'])) : ?>
-                                <?php $rutaQR = $baseQR . trim($row['QrCodigoFuncionario']); ?>
+                                <?php
+                                /*
+                                 * ✅ CORRECCIÓN RUTA QR PARA "Ver":
+                                 *
+                                 * La BD guarda el QR como:  "qr/Qr_Func/QR-FUNC-109-xxx.png"
+                                 * $baseQR = '/qr'
+                                 *
+                                 * Normalizamos el valor de BD para que arranque con '/'
+                                 * y NO empiece ya con '/qr' (evitar doble prefijo).
+                                 *
+                                 * Resultado esperado: "/qr/Qr_Func/QR-FUNC-109-xxx.png"
+                                 * El JS añade: origin + /SEGTRACK + /Public  → URL completa
+                                 */
+                                $qrBD = $row['QrCodigoFuncionario'];
+
+                                // Si la BD guarda "qr/Qr_Func/..." lo convertimos a "/qr/Qr_Func/..."
+                                if (!str_starts_with($qrBD, '/')) {
+                                    $qrBD = '/' . $qrBD;
+                                }
+
+                                // Si por algún motivo el valor ya trae '/qr/qr/...' lo corregimos
+                                // (caso raro, pero seguro)
+                                $rutaQR = $qrBD;
+                                ?>
                                 <div class="d-flex gap-1 align-items-center flex-nowrap">
 
-                                    <!-- VER: verde | tamaño → .btn-qr-ver en CSS -->
+                                    <!-- VER QR: abre modal con la imagen -->
                                     <button class="btn btn-outline-success btn-qr-ver"
                                             title="Ver código QR"
                                             onclick="verQR('<?= htmlspecialchars($rutaQR) ?>', <?= (int)$row['IdFuncionario'] ?>)">
                                         <i class="fas fa-qrcode me-1"></i>Ver
                                     </button>
 
-                                    <!-- ENVIAR: azul | tamaño → .btn-qr-enviar en CSS -->
+                                    <!-- ✅ ENVIAR QR: solo pasa IdFuncionario
+                                         El controlador (enviarQRPorCorreo) consulta la BD
+                                         y obtiene correo + ruta QR internamente -->
                                     <button class="btn btn-outline-primary btn-qr-enviar"
                                             title="Enviar QR por correo"
-                                            onclick="enviarQR(
-                                                <?= (int)$row['IdFuncionario'] ?>,
-                                                '<?= htmlspecialchars($rutaQR) ?>',
-                                                '<?= htmlspecialchars($row['CorreoFuncionario']) ?>'
-                                            )">
+                                            onclick="enviarQR(<?= (int)$row['IdFuncionario'] ?>)">
                                         <i class="fas fa-envelope me-1"></i>Enviar
                                     </button>
 
@@ -192,14 +221,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= htmlspecialchars($row['DocumentoFuncionario']) ?></td>
                         <td><?= htmlspecialchars($row['CorreoFuncionario']) ?></td>
 
-                        <!-- ===== ESTADO: Activo=verde | Inactivo=AZUL (no gris) ===== -->
+                        <!-- ===== ESTADO: Activo=verde | Inactivo=AZUL ===== -->
                         <td class="text-center">
                             <?php if ($row['Estado'] === 'Activo'): ?>
                                 <span id="badge-estado-<?= $row['IdFuncionario'] ?>" class="badge bg-success">
                                     <i class="fas fa-check-circle"></i> Activo
                                 </span>
                             <?php else: ?>
-                                <!-- AZUL para inactivo → cambia bg-primary por otro color si prefieres -->
                                 <span id="badge-estado-<?= $row['IdFuncionario'] ?>" class="badge bg-primary">
                                     <i class="fas fa-lock"></i> Inactivo
                                 </span>
@@ -207,11 +235,10 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </td>
 
                         <!-- ===== ACCIONES: lápiz + candado cuadrados ===== -->
-                        <!-- tamaño → .btn-accion en CSS arriba -->
                         <td>
                             <div class="d-flex gap-2">
 
-                                <!-- EDITAR: azul outline cuadrado -->
+                                <!-- EDITAR -->
                                 <button class="btn btn-outline-primary btn-accion"
                                         title="Editar funcionario"
                                         onclick='cargarDatosEdicion(
@@ -223,11 +250,10 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?= json_encode($row["DocumentoFuncionario"]) ?>,
                                             <?= json_encode($row["CorreoFuncionario"]) ?>
                                         )'>
-                                    <i class="fas fa-pen"></i>
+                                    <i class="fas fa-edit text-primary"></i>
                                 </button>
 
-                                <!-- CANDADO amarillo = activo (click desactiva) -->
-                                <!-- CANDADO verde    = inactivo (click activa)  -->
+                                <!-- CANDADO: amarillo=activo (click desactiva) | verde=inactivo (click activa) -->
                                 <?php if ($row['Estado'] === 'Activo'): ?>
                                     <button id="btn-estado-<?= $row['IdFuncionario'] ?>"
                                             class="btn btn-outline-warning btn-accion"
@@ -257,7 +283,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- MODAL VER QR -->
+<!-- ===== MODAL VER QR ===== -->
 <div class="modal fade" id="modalVerQR" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -268,7 +294,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body text-center p-4">
-                <img id="qrImagen" src="" alt="Código QR" class="img-fluid rounded shadow" style="max-width:350px;">
+                <img id="qrImagen" src="" alt="Código QR"
+                     class="img-fluid rounded shadow" style="max-width:350px;">
             </div>
             <div class="modal-footer">
                 <a id="btnDescargarQR" class="btn btn-success btn-sm" download>
@@ -282,7 +309,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- MODAL EDITAR -->
+<!-- ===== MODAL EDITAR ===== -->
 <div class="modal fade" id="modalEditar" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -350,27 +377,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
-
 <!-- CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- ✅ JS EN ORDEN CORRECTO: jQuery primero, luego librerías, luego tu JS -->
+<!-- JS EN ORDEN CORRECTO -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- ✅ Tu JS SIEMPRE al final -->
-<script src="../../../Public/js/javascript/js/ValidacionListaUsuario.js"></script>
-
-<style>
-.table-striped tbody tr:nth-of-type(odd) { background-color: #f8f9fc; }
-.table-hover tbody tr:hover              { background-color: #f1f3f8; transition: 0.2s ease-in-out; }
-.badge { font-size: 0.85rem; }
-table.dataTable thead .sorting:after,
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_desc:after { display: none !important; }
-</style>
+<script src="../../../Public/js/javascript/js/FuncionarioLista.js"></script>

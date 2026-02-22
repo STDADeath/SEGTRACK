@@ -4379,3 +4379,106 @@ POST recibido:
 2026-02-20 06:14:44 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
 2026-02-20 06:15:24 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-23-6997edec94ee4.png
 2026-02-20 06:15:25 - Error al enviar correo a Supervisor@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:10:21 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-699a739db10ac.png
+2026-02-22 04:10:24 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:15:19 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-699a74c74888b.png
+2026-02-22 04:15:20 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:31:42 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-22 04:31:42 - Funcionario encontrado: {"IdFuncionario":"125","NombreFuncionario":"Anderson Arevalo III","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12313123123","CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-699a74c74888b.png"}
+2026-02-22 04:31:42 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-22 04:31:44 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:31:44 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 04:32:41 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-22 04:32:41 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6997797ed45ce.png"}
+2026-02-22 04:32:41 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-22 04:32:53 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-22 04:32:53 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6997797ed45ce.png"}
+2026-02-22 04:32:53 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-22 04:33:02 - === enviarQRPorCorreo llamado para ID: 26 ===
+2026-02-22 04:33:02 - Funcionario encontrado: {"IdFuncionario":"26","NombreFuncionario":"Laura G\u00f3mez Rinc\u00f3n","CargoFuncionario":"Funcionario","DocumentoFuncionario":"3124589076","CorreoFuncionario":"aura.gomez@udistrital.edu.co","QrCodigoFuncionario":"QR-FUNC-26-69115e7929831.png"}
+2026-02-22 04:33:02 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-22 04:33:11 - === enviarQRPorCorreo llamado para ID: 23 ===
+2026-02-22 04:33:11 - ERROR en enviarQRPorCorreo: Funcionario no encontrado o inactivo
+2026-02-22 04:33:23 - === enviarQRPorCorreo llamado para ID: 28 ===
+2026-02-22 04:33:23 - Funcionario encontrado: {"IdFuncionario":"28","NombreFuncionario":"Carlos","CargoFuncionario":"Personal Seguridad","DocumentoFuncionario":"1145632298","CorreoFuncionario":"carlos.medina@gmail.com","QrCodigoFuncionario":"QR-FUNC-28-69115ef11a339.png"}
+2026-02-22 04:33:23 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-22 04:35:31 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:35:31 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:35:31 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:35:33 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:35:33 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 04:38:43 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:38:43 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:38:43 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:38:47 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-22 04:38:47 - ✓ Correo enviado exitosamente a: caroldayana989@gmail.com
+2026-02-22 04:49:09 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:49:09 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:49:09 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:49:09 - Logo cargado desde: C:\xampp\htdocs\SEGTRACK\Public\img\LOGO_SEGTRACK-re-con.ico
+2026-02-22 04:49:10 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:49:10 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 04:49:54 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:49:54 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:49:54 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:49:54 - Logo cargado desde: C:\xampp\htdocs\SEGTRACK\Public\img\LOGO_SEGTRACK-re-con.ico
+2026-02-22 04:49:58 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-22 04:49:58 - ✓ Correo enviado exitosamente a: caroldayana989@gmail.com
+2026-02-22 04:57:22 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:57:22 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:57:22 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:57:22 - Logo cargado: C:\xampp\htdocs\SEGTRACK\Public\img\LOGO_SEGTRACK-re-con.ico
+2026-02-22 04:57:23 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:57:23 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 04:58:07 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:58:07 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:58:07 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:58:07 - Logo cargado: C:\xampp\htdocs\SEGTRACK\Public\img\LOGO_SEGTRACK-re-con.ico
+2026-02-22 04:58:10 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-22 04:58:10 - ✓ Correo enviado exitosamente a: caroldayana989@gmail.com
+2026-02-22 05:27:13 - === enviarQRPorCorreo llamado para ID: 121 ===
+2026-02-22 05:27:13 - Funcionario encontrado: {"IdFuncionario":"121","NombreFuncionario":"David montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"34234223212","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-121-6996b62edbe45.png"}
+2026-02-22 05:27:13 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:27:15 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 05:27:15 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 05:29:51 - === enviarQRPorCorreo llamado para ID: 121 ===
+2026-02-22 05:29:51 - Funcionario encontrado: {"IdFuncionario":"121","NombreFuncionario":"David montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"34234223212","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-121-6996b62edbe45.png"}
+2026-02-22 05:29:51 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:29:53 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 05:29:53 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 05:30:29 - === enviarQRPorCorreo llamado para ID: 121 ===
+2026-02-22 05:30:29 - Funcionario encontrado: {"IdFuncionario":"121","NombreFuncionario":"David montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"34234223212","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-121-6996b62edbe45.png"}
+2026-02-22 05:30:29 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:30:33 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 05:30:33 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-22 05:32:18 - === enviarQRPorCorreo llamado para ID: 121 ===
+2026-02-22 05:32:18 - Funcionario encontrado: {"IdFuncionario":"121","NombreFuncionario":"David montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"34234223212","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-121-6996b62edbe45.png"}
+2026-02-22 05:32:18 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:32:22 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 05:32:22 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-22 05:38:29 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-126-699a8844f3c7a.png
+2026-02-22 05:38:30 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 05:39:35 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-126-699a8886d43ed.png
+2026-02-22 05:39:38 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 05:47:28 - === enviarQRPorCorreo llamado para ID: 126 ===
+2026-02-22 05:47:28 - Funcionario encontrado: {"IdFuncionario":"126","NombreFuncionario":"Michael Montoya pasachoa","CargoFuncionario":"Personal Seguridad","DocumentoFuncionario":"10005178977","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-126-699a8886d43ed.png"}
+2026-02-22 05:47:28 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:47:32 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 05:47:32 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-22 09:07:30 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-22 09:07:30 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya","CargoFuncionario":"","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-120-6996162e4cb15.png"}
+2026-02-22 09:07:30 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 09:07:35 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 09:07:35 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-22 09:08:44 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-121-699ab98cd9b74.png
+2026-02-22 09:08:47 - Correo enviado correctamente a Morales@gmail.com
+2026-02-22 19:26:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-699b4a487dce2.png
+2026-02-22 19:26:22 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-22 19:31:36 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-26-699b4b8820918.png
+2026-02-22 19:32:18 - Correo enviado correctamente a aura.gomez@udistrital.edu.co
+2026-02-22 19:54:35 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-699b50eb4aff1.png
+2026-02-22 19:54:38 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-22 23:33:11 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-122-699b842774f7d.png
+2026-02-22 23:33:14 - Correo enviado correctamente a perezdaniela@gmail.com
+2026-02-23 00:06:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-699b8be18bb53.png
+2026-02-23 00:06:13 - Correo enviado correctamente a AlfonsoMorales@gmail.com

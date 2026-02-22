@@ -35,7 +35,7 @@
 
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <a class="btn btn-primary" href="../login/Logout.php">Salir</a>
+                   <a class="btn btn-primary" href="../login/Logout.php">Salir</a>
             </div>
 
         </div>

@@ -177,8 +177,6 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
-
 <!-- CSS -->
 <link rel="stylesheet" href="../../../Public/vendor/datatables/dataTables.bootstrap4.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

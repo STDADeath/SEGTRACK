@@ -63,9 +63,9 @@ $baseQR = '/qr';
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-user-tie me-2"></i>Funcionarios Registrados
         </h1>
-        <a href="./FuncionariosADM.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <!-- <a href="./FuncionariosADM.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus me-1"></i> Nuevo Funcionario
-        </a>
+        </a> -->
     </div>
 
 <?php
@@ -250,7 +250,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?= json_encode($row["DocumentoFuncionario"]) ?>,
                                             <?= json_encode($row["CorreoFuncionario"]) ?>
                                         )'>
-                                    <i class="fas fa-edit text-primary"></i>
+                                    <i class="fas fa-pen"></i>
                                 </button>
 
                                 <!-- CANDADO: amarillo=activo (click desactiva) | verde=inactivo (click activa) -->
@@ -325,6 +325,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <label class="form-label">Cargo <span class="text-danger">*</span></label>
                             <select id="editCargo" class="form-control">
                                 <option value="">Seleccione un cargo</option>
+                                <option value="Personal Seguridad">Personal Seguridad</option>
                                 <option value="Funcionario">Funcionario</option>
                             </select>
                         </div>

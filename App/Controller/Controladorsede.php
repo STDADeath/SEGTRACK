@@ -1,14 +1,15 @@
 <?php
 // App/Controller/ControladorSede.php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// ⚠️ IMPORTANTE: display_errors OFF para que los warnings de PHP
+// no contaminen la respuesta JSON y rompan el AJAX
+error_reporting(0);
+ini_set('display_errors', 0);
 
 require_once __DIR__ . '/../Model/modelosede.php';
 
 class ControladorSede
 {
-
     private $modelo;
 
     public function __construct()
@@ -29,7 +30,6 @@ class ControladorSede
     // ============================================================
     public function obtenerSedes()
     {
-        // La vista usa esta función.
         return $this->modelo->obtenerSedes();
     }
 
@@ -38,23 +38,23 @@ class ControladorSede
     // ============================================================
     public function registrarSede($datos)
     {
-
-        $tipoSede = trim($datos['TipoSede'] ?? '');
-        $ciudad = trim($datos['Ciudad'] ?? '');
+        $tipoSede    = trim($datos['TipoSede']       ?? '');
+        $ciudad      = trim($datos['Ciudad']          ?? '');
         $institucion = intval($datos['IdInstitucion'] ?? 0);
 
+        // Solo letras y espacios, sin números
         $regexTexto = '/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$/';
 
         if ($tipoSede === '' || $ciudad === '' || $institucion === 0) {
-            return ['success' => false, 'message' => 'Todos los campos son obligatorios'];
+            return ['success' => false, 'message' => 'Todos los campos son obligatorios.'];
         }
 
         if (!preg_match($regexTexto, $tipoSede)) {
-            return ['success' => false, 'message' => 'El tipo de sede contiene caracteres inválidos.'];
+            return ['success' => false, 'message' => 'El tipo de sede solo debe contener letras.'];
         }
 
         if (!preg_match($regexTexto, $ciudad)) {
-            return ['success' => false, 'message' => 'La ciudad contiene caracteres inválidos.'];
+            return ['success' => false, 'message' => 'La ciudad solo debe contener letras.'];
         }
 
         return $this->modelo->registrarSede($tipoSede, $ciudad, $institucion);
@@ -65,24 +65,28 @@ class ControladorSede
     // ============================================================
     public function editarSede($datos)
     {
+        $idSede      = intval($datos['IdSede']        ?? 0);
+        $tipoSede    = trim($datos['TipoSede']         ?? '');
+        $ciudad      = trim($datos['Ciudad']            ?? '');
+        $institucion = intval($datos['IdInstitucion']   ?? 0);
 
-        $idSede = intval($datos['IdSede'] ?? 0);
-        $tipoSede = trim($datos['TipoSede'] ?? '');
-        $ciudad = trim($datos['Ciudad'] ?? '');
-        $institucion = intval($datos['IdInstitucion'] ?? 0);
-
+        // Solo letras y espacios, sin números
         $regexTexto = '/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$/';
 
-        if ($idSede === 0 || $tipoSede === '' || $ciudad === '' || $institucion === 0) {
+        if ($idSede === 0) {
+            return ['success' => false, 'message' => 'No se pudo identificar la sede.'];
+        }
+
+        if ($tipoSede === '' || $ciudad === '' || $institucion === 0) {
             return ['success' => false, 'message' => 'Todos los campos son obligatorios.'];
         }
 
         if (!preg_match($regexTexto, $tipoSede)) {
-            return ['success' => false, 'message' => 'El tipo de sede contiene caracteres inválidos.'];
+            return ['success' => false, 'message' => 'El tipo de sede solo debe contener letras.'];
         }
 
         if (!preg_match($regexTexto, $ciudad)) {
-            return ['success' => false, 'message' => 'La ciudad contiene caracteres inválidos.'];
+            return ['success' => false, 'message' => 'La ciudad solo debe contener letras.'];
         }
 
         return $this->modelo->editarSede($idSede, $tipoSede, $ciudad, $institucion);
@@ -93,28 +97,34 @@ class ControladorSede
     // ============================================================
     public function obtenerSedePorId($idSede)
     {
+        $idSede = intval($idSede);
+
+        if ($idSede <= 0) {
+            return null;
+        }
+
         return $this->modelo->obtenerSedePorId($idSede);
     }
 
     // ============================================================
-    // CAMBIAR ESTADO (ACTIVO / INACTIVO) - CORREGIDO
+    // CAMBIAR ESTADO (ACTIVO / INACTIVO)
     // ============================================================
-    // Ya que el modelo maneja la lógica de alternar, el controlador solo necesita el ID.
     public function cambiarEstado($idSede)
     {
-        // Se llama al método del modelo.
         return $this->modelo->cambiarEstado($idSede);
     }
 }
 
 
-
 // ============================================================
-// PETICIÓN AJAX (Punto de entrada para la vista SedeLista)
+// PETICIÓN AJAX — Punto de entrada para la vista SedeLista
 // ============================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
 
+    // Limpiar cualquier salida previa que pudiera romper el JSON
+    ob_clean();
     header('Content-Type: application/json; charset=utf-8');
+
     $controlador = new ControladorSede();
 
     switch ($_POST['accion']) {
@@ -128,28 +138,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
             break;
 
         case 'obtener_sede':
-            // Se asume que en el POST se envía 'IdSede'
-            echo json_encode($controlador->obtenerSedePorId($_POST['IdSede']));
+            $idSede = intval($_POST['IdSede'] ?? 0);
+            if ($idSede > 0) {
+                echo json_encode($controlador->obtenerSedePorId($idSede));
+            } else {
+                echo json_encode(null);
+            }
             break;
 
-        // En tu ControladorSede.php (líneas 143-157)
         case 'cambiarEstado':
-            // CORRECCIÓN CLAVE: El modelo solo espera el ID, no el estado, 
-            // ya que el modelo calcula el nuevo estado.
-            // Se pasa el IdSede del POST.
-            $idSede = intval($_POST['id'] ?? 0); // La vista envía el ID como 'id' en la petición AJAX <--- CORRECTO
-
+            $idSede = intval($_POST['id'] ?? 0);
             if ($idSede > 0) {
-                echo json_encode(
-                    $controlador->cambiarEstado($idSede) // Se llama solo con el ID
-                );
+                echo json_encode($controlador->cambiarEstado($idSede));
             } else {
-                echo json_encode(["success" => false, "message" => "ID de Sede no proporcionado."]);
+                echo json_encode(['success' => false, 'message' => 'ID de Sede no proporcionado.']);
             }
             break;
 
         default:
-            echo json_encode(["success" => false, "message" => "Acción no válida"]);
+            echo json_encode(['success' => false, 'message' => 'Acción no válida.']);
     }
 
     exit;
