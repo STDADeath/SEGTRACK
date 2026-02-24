@@ -180,7 +180,7 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 <!-- CSS -->
 <link rel="stylesheet" href="../../../Public/vendor/datatables/dataTables.bootstrap4.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+<link rel="stylesheet" href="../../../Public/css/Tablas.css">
 <!-- JS EN ORDEN CORRECTO -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 
@@ -194,12 +194,3 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 <!-- Tu JS siempre al final -->
 <script src="../../../Public/js/javascript/js/ValidacionUsuarioLista.js"></script>
 
-<style>
-.table-striped tbody tr:nth-of-type(odd) { background-color: #f8f9fc; }
-.table-hover tbody tr:hover              { background-color: #f1f3f8; transition: 0.2s ease-in-out; }
-.badge { font-size: 0.85rem; }
-table.dataTable thead .sorting:after,
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_desc:after { display: none !important; }
-</style>

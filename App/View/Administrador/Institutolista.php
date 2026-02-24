@@ -1,13 +1,13 @@
 <?php
 /**
  * VISTA: LISTA DE INSTITUCIONES
+ * Capa Vista (MVC): solo presenta datos, sin lógica de negocio.
  */
 require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
 require_once __DIR__ . '/../../Core/Conexion.php';
 ?>
 <div class="container-fluid px-4 py-4">
 
-    <!-- TÍTULO -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-school me-2"></i>Instituciones Registradas
@@ -17,21 +17,19 @@ require_once __DIR__ . '/../../Core/Conexion.php';
         </a>
     </div>
 
-    <!-- CARD TABLA -->
     <div class="card shadow-sm">
         <div class="card-header bg-light">
             <h5 class="mb-0 text-primary fw-bold">Lista de Instituciones</h5>
         </div>
         <div class="card-body table-responsive">
-            <table id="tablaInstitutos"
-                   class="table table-hover align-middle"
-                   width="100%">
+            <table id="tablaInstitutos" class="table table-hover align-middle" width="100%">
 
                 <thead class="text-white" style="background-color:#5f636e;">
                     <tr>
                         <th>Nombre</th>
                         <th>NIT</th>
                         <th>Tipo</th>
+                        <th>Dirección</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -42,8 +40,11 @@ require_once __DIR__ . '/../../Core/Conexion.php';
                     try {
                         $conexion = new Conexion();
                         $db       = $conexion->getConexion();
-                        $sql      = "SELECT * FROM institucion ORDER BY IdInstitucion DESC";
-                        $stmt     = $db->prepare($sql);
+                        // ✅ SELECT explícito con DireccionInstitucion
+                        $sql  = "SELECT IdInstitucion, NombreInstitucion, Nit_Codigo,
+                                        TipoInstitucion, DireccionInstitucion, EstadoInstitucion
+                                 FROM institucion ORDER BY IdInstitucion DESC";
+                        $stmt = $db->prepare($sql);
                         $stmt->execute();
 
                         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)):
@@ -53,38 +54,54 @@ require_once __DIR__ . '/../../Core/Conexion.php';
                             <td><?= htmlspecialchars($fila['Nit_Codigo']); ?></td>
                             <td><?= htmlspecialchars($fila['TipoInstitucion']); ?></td>
 
-                            <!-- ESTADO -->
+                            <!-- DIRECCIÓN: muestra el valor o texto por defecto si está vacío -->
+                            <td>
+                                <?php 
+                                // ✅ FIX: verificamos con trim() para detectar también espacios
+                                // Si DireccionInstitucion es '' o '   ' → muestra texto por defecto
+                                $dir = trim($fila['DireccionInstitucion'] ?? '');
+                                ?>
+                                <?php if ($dir !== ''): ?>
+                                    <?= htmlspecialchars($dir); ?>
+                                <?php else: ?>
+                                    <span class="text-muted fst-italic">Sin dirección registrada</span>
+                                <?php endif; ?>
+                            </td>
+
+                            <!-- ESTADO: badge verde Activo / azul Inactivo con texto blanco -->
                             <td class="text-center">
                                 <?php if ($fila['EstadoInstitucion'] === 'Activo'): ?>
                                     <span id="badge-estado-<?= $fila['IdInstitucion'] ?>"
-                                          class="badge bg-success">
-                                        <i class="fas fa-check-circle"></i> Activo
+                                          class="badge bg-success text-white">
+                                        Activo
                                     </span>
                                 <?php else: ?>
                                     <span id="badge-estado-<?= $fila['IdInstitucion'] ?>"
-                                          class="badge bg-primary">
-                                        <i class="fas fa-lock"></i> Inactivo
+                                          class="badge bg-primary text-white">
+                                        Inactivo
                                     </span>
                                 <?php endif; ?>
                             </td>
 
-                            <!-- ACCIONES -->
+                            <!-- ACCIONES: editar (modal) + candado (toggle estado) -->
                             <td>
                                 <div class="d-flex gap-2">
 
-                                    <!-- EDITAR — abre modal igual que funcionarios -->
+                                    <!-- EDITAR: pasa 6 parámetros al modal incluyendo estado y dirección -->
                                     <button class="btn btn-outline-primary btn-accion"
                                             title="Editar institución"
                                             onclick='abrirModalEditar(
                                                 <?= $fila["IdInstitucion"] ?>,
                                                 <?= json_encode($fila["NombreInstitucion"]) ?>,
                                                 <?= json_encode($fila["Nit_Codigo"]) ?>,
-                                                <?= json_encode($fila["TipoInstitucion"]) ?>
+                                                <?= json_encode($fila["TipoInstitucion"]) ?>,
+                                                <?= json_encode(trim($fila["DireccionInstitucion"] ?? "")) ?>,
+                                                <?= json_encode($fila["EstadoInstitucion"]) ?>
                                             )'>
                                         <i class="fas fa-edit text-primary"></i>
                                     </button>
 
-                                    <!-- TOGGLE ESTADO — candado igual que funcionarios -->
+                                    <!-- CANDADO: amarillo (desactivar) o verde (activar) -->
                                     <?php if ($fila['EstadoInstitucion'] === 'Activo'): ?>
                                         <button id="btn-estado-<?= $fila['IdInstitucion'] ?>"
                                                 class="btn btn-outline-warning btn-accion btn-toggle-estado"
@@ -109,7 +126,7 @@ require_once __DIR__ . '/../../Core/Conexion.php';
                     <?php
                         endwhile;
                     } catch (PDOException $e) {
-                        echo '<tr><td colspan="5" class="text-center py-4 text-danger">
+                        echo '<tr><td colspan="6" class="text-center py-4 text-danger">
                                 Error al cargar los datos
                               </td></tr>';
                     }
@@ -120,15 +137,11 @@ require_once __DIR__ . '/../../Core/Conexion.php';
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     MODAL EDITAR INSTITUCIÓN
-     Idéntico al modal de funcionarios
-═══════════════════════════════════════════════ -->
+<!-- MODAL EDITAR INSTITUCIÓN -->
 <div class="modal fade" id="modalEditarInstituto" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
-            <!-- Header azul igual que funcionarios -->
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">
                     <i class="fas fa-edit me-2"></i>Editar Institución
@@ -139,20 +152,26 @@ require_once __DIR__ . '/../../Core/Conexion.php';
 
             <div class="modal-body">
                 <form id="formEditarInstituto">
+                    <!-- ID oculto para identificar el registro -->
                     <input type="hidden" id="editIdInstituto">
+                    <!-- ✅ Estado oculto: guarda el estado real para no pisarlo al guardar -->
+                    <input type="hidden" id="editEstadoInstituto">
 
                     <div class="row">
-                        <!-- Nombre -->
+                        <!-- Nombre: solo letras, validado en JS -->
                         <div class="col-md-8 mb-3">
                             <label class="form-label">
                                 Nombre de la Institución <span class="text-danger">*</span>
                             </label>
-                            <input type="text" id="editNombreInstituto"
-                                   class="form-control" required
-                                   placeholder="Nombre completo">
+                            <input type="text"
+                                   id="editNombreInstituto"
+                                   class="form-control"
+                                   required
+                                   maxlength="100"
+                                   placeholder="Solo letras y espacios">
                         </div>
 
-                        <!-- Tipo -->
+                        <!-- Tipo: select -->
                         <div class="col-md-4 mb-3">
                             <label class="form-label">
                                 Tipo <span class="text-danger">*</span>
@@ -170,15 +189,29 @@ require_once __DIR__ . '/../../Core/Conexion.php';
                     </div>
 
                     <div class="row">
-                        <!-- NIT (solo lectura como Documento en funcionarios) -->
+                        <!-- NIT: solo lectura -->
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">NIT / Código</label>
+                            <label class="form-label">NIT</label>
                             <input type="text" id="editNitInstituto"
-                                   class="form-control" readonly>
+                                   class="form-control bg-light" readonly>
+                        </div>
+
+                        <!-- Dirección: opcional, valida caracteres en JS -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Dirección <small class="text-muted">(opcional)</small>
+                            </label>
+                            <input type="text"
+                                   id="editDireccionInstituto"
+                                   class="form-control"
+                                   maxlength="150"
+                                   placeholder="Ej: Calle 45 # 23-10, Bogotá">
+                            <small class="text-muted">
+                                Solo letras, números, espacios, guiones, # y comas.
+                            </small>
                         </div>
                     </div>
 
-                    <!-- Alerta informativa igual que funcionarios -->
                     <div class="alert alert-info mb-0">
                         <i class="fas fa-info-circle me-2"></i>
                         El NIT no puede modificarse. Si necesitas cambiarlo, registra una nueva institución.
@@ -200,15 +233,11 @@ require_once __DIR__ . '/../../Core/Conexion.php';
         </div>
     </div>
 </div>
+
 <?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
-<!-- JS -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- TU JS SIEMPRE AL FINAL -->
-<script src="../../../Public/js/javascript/js/ValidacionListainstituto.js"></script>
-
+<script src="../../../Public/js/javascript/js/ValidacionListainstitutos.js"></script>

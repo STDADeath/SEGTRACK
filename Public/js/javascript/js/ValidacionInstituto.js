@@ -1,55 +1,56 @@
 $(document).ready(function () {
     console.log('=== SISTEMA DE REGISTRO/EDICIÓN DE INSTITUTO INICIADO ===');
-    
-    // ===== FUNCIONES DE VALIDACIÓN VISUAL INLINE =====
-    
+
+    // ===== FUNCIONES DE VALIDACIÓN VISUAL =====
+
+    // Borde ROJO → campo con error de validación
     function marcarInvalido(campo) {
         campo.css("border", "2px solid #ef4444");
         campo.css("box-shadow", "0 0 0 0.25rem rgba(239, 68, 68, 0.25)");
     }
 
+    // Borde VERDE → campo válido
     function marcarValido(campo) {
         campo.css("border", "2px solid #10b981");
         campo.css("box-shadow", "0 0 0 0.25rem rgba(16, 185, 129, 0.25)");
     }
 
+    // Sin borde → estado neutro inicial
     function marcarNeutral(campo) {
-        campo.css("border", ""); 
+        campo.css("border", "");
         campo.css("box-shadow", "");
     }
-    
+
     // ===== DETECTAR MODO EDICIÓN =====
+    // Existe input hidden con name="IdInstitucion" solo en edición
     var modoEdicion = $('input[name="IdInstitucion"]').length > 0;
-    
-    // ===== FUNCIÓN DE INICIALIZACIÓN VISUAL =====
-    // Fuerza a que los campos de selección inicien neutrales.
+
+    // ===== INICIALIZACIÓN VISUAL =====
+    // Solo el select de Tipo inicia neutro (se eliminó el select de Estado)
     function inicializarValidacion() {
         marcarNeutral($("#TipoInstitucion"));
-        marcarNeutral($("#EstadoInstitucion"));
+        marcarNeutral($("#DireccionInstitucion")); // Dirección siempre neutral al inicio
     }
 
-    // Ejecutar la inicialización al cargar la página
     inicializarValidacion();
 
-    // ===== SI ESTAMOS EN MODO EDICIÓN, MARCAR CAMPOS EN ROJO AL INICIO =====
+    // En edición los campos de texto inician en rojo para forzar revisión
     if (modoEdicion) {
         console.log('=== MODO EDICIÓN DETECTADO ===');
-        setTimeout(function() {
+        setTimeout(function () {
             marcarInvalido($("#NombreInstitucion"));
             marcarInvalido($("#Nit_Codigo"));
+            // Dirección NO se marca en rojo: es opcional
         }, 100);
     }
 
+    // ===== VALIDACIÓN EN TIEMPO REAL =====
 
-    // ===== VALIDACIÓN EN TIEMPO REAL (VERDE/ROJO INMEDIATO) =====
-
-    // 1. NOMBRE DE INSTITUCIÓN
+    // 1. NOMBRE: solo letras (incluye tildes y ñ) y espacios, mínimo 3 caracteres
     $("#NombreInstitucion").on("input", function () {
         let campo = $(this);
-        let valor = campo.val();
-        
-        // La validación en tiempo real para campos de texto es correcta (inician neutral)
-        let valorLimpio = valor.replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñ ]/g, "");
+        // Elimina automáticamente cualquier carácter NO permitido
+        let valorLimpio = campo.val().replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñ ]/g, "");
         campo.val(valorLimpio);
 
         if (valorLimpio.length >= 3 && /^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$/.test(valorLimpio)) {
@@ -59,13 +60,10 @@ $(document).ready(function () {
         }
     });
 
-    // 2. NIT/CÓDIGO
+    // 2. NIT: solo dígitos, exactamente 10 caracteres
     $("#Nit_Codigo").on("input", function () {
         let campo = $(this);
-        let valor = campo.val();
-        
-        let valorLimpio = valor.replace(/\D/g, "");
-        valorLimpio = valorLimpio.substring(0, 10);
+        let valorLimpio = campo.val().replace(/\D/g, "").substring(0, 10); // Solo dígitos, máx 10
         campo.val(valorLimpio);
 
         if (valorLimpio.length === 10) {
@@ -75,38 +73,42 @@ $(document).ready(function () {
         }
     });
 
-    // 3. TIPO DE INSTITUCIÓN
+    // 3. TIPO: válido si el usuario seleccionó algo distinto al placeholder
     $("#TipoInstitucion").on("change", function () {
         let campo = $(this);
-        if (campo.val() !== "") {
-            marcarValido(campo);
-        } else {
-            marcarInvalido(campo);
-        }
+        campo.val() !== "" ? marcarValido(campo) : marcarInvalido(campo);
     });
 
-    // 4. ESTADO
-    $("#EstadoInstitucion").on("change", function () {
+    // 4. DIRECCIÓN (opcional)
+    // Permite: letras, números, espacios, guiones, # y comas
+    // Bloquea: @, ., /, \, !, ?, % y cualquier otro símbolo
+    $("#DireccionInstitucion").on("input", function () {
         let campo = $(this);
-        if (campo.val() !== "") {
-            marcarValido(campo);
+        // Elimina cualquier carácter no válido para una dirección física
+        let valorLimpio = campo.val().replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñ0-9 \-#,]/g, "");
+        campo.val(valorLimpio);
+
+        if (valorLimpio.length === 0) {
+            marcarNeutral(campo);        // Vacío → neutro (es opcional, no es error)
+        } else if (valorLimpio.length >= 5) {
+            marcarValido(campo);         // 5+ caracteres → verde
         } else {
-            marcarInvalido(campo);
+            marcarInvalido(campo);       // Muy poco contenido → rojo
         }
     });
 
-    
-    // ===== FUNCIÓN DE ENVÍO DE REGISTRO/EDICIÓN (AJAX) =====
+    // ===== ENVÍO DEL FORMULARIO (AJAX con SweetAlert2) =====
     $("#formInstituto").submit(function (e) {
-        e.preventDefault();
+        e.preventDefault(); // Evita recarga de página
 
-        const nombre = $("#NombreInstitucion");
-        const nit = $("#Nit_Codigo");
-        const tipo = $("#TipoInstitucion");
+        const nombre    = $("#NombreInstitucion");
+        const nit       = $("#Nit_Codigo");
+        const tipo      = $("#TipoInstitucion");
+        const direccion = $("#DireccionInstitucion");
 
-        let errores = [];
+        let errores = []; // Acumula mensajes de error
 
-        // Forzamos las validaciones finales
+        // Validación nombre
         if (nombre.val().length < 3 || !/^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$/.test(nombre.val())) {
             errores.push("• El nombre debe contener solo letras (mínimo 3 caracteres).");
             marcarInvalido(nombre);
@@ -114,6 +116,7 @@ $(document).ready(function () {
             marcarValido(nombre);
         }
 
+        // Validación NIT
         if (nit.val().length !== 10) {
             errores.push("• El NIT debe tener exactamente 10 números.");
             marcarInvalido(nit);
@@ -121,6 +124,7 @@ $(document).ready(function () {
             marcarValido(nit);
         }
 
+        // Validación Tipo
         if (tipo.val() === "") {
             errores.push("• Debe seleccionar un tipo de institución.");
             marcarInvalido(tipo);
@@ -128,100 +132,107 @@ $(document).ready(function () {
             marcarValido(tipo);
         }
 
-        // Estado (aunque tiene valor por defecto, lo validamos)
-        if ($("#EstadoInstitucion").val() === "") {
-            errores.push("• Debe seleccionar un estado.");
-            marcarInvalido($("#EstadoInstitucion"));
+        // Validación Dirección (solo si escribió algo)
+        let valorDir = direccion.val().trim();
+        if (valorDir.length > 0) {
+            if (valorDir.length < 5 || !/^[A-Za-zÁÉÍÓÚÑáéíóúñ0-9 \-#,]+$/.test(valorDir)) {
+                errores.push("• La dirección solo permite letras, números, guiones, # y comas (mínimo 5 caracteres).");
+                marcarInvalido(direccion);
+            } else {
+                marcarValido(direccion);
+            }
         } else {
-            marcarValido($("#EstadoInstitucion"));
+            marcarNeutral(direccion); // Vacío es aceptado
         }
 
-
+        // Si hay errores de validación → SweetAlert2 de error
         if (errores.length > 0) {
             Swal.fire({
                 icon: "error",
-                title: "Error de validación",
-                html: "<div style='text-align: left;'>" + errores.join("<br>") + "</div>",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#ef4444",
+                title: "Campos incorrectos",
+                html: "<div style='text-align:left'>" + errores.join("<br>") + "</div>",
+                confirmButtonText: "Corregir",
+                confirmButtonColor: "#ef4444"
             });
-            return;
+            return; // Detiene el envío
         }
-        
-        // --- PROCESO AJAX ---
-        
-        // Detectar si es edición o registro
-        var esEdicion = $('input[name="IdInstitucion"]').length > 0;
+
+        // ─── PROCESO AJAX ───
+        var esEdicion    = $('input[name="IdInstitucion"]').length > 0;
         var tituloAccion = esEdicion ? 'Actualizando institución...' : 'Registrando institución...';
-        var tituloExito = esEdicion ? '¡Actualización Exitosa!' : '¡Registro Exitoso!';
-        
-        Swal.fire({ 
+        var tituloExito  = esEdicion ? '¡Institución Actualizada!'  : '¡Institución Registrada!';
+
+        // SweetAlert2 de carga mientras procesa la petición
+        Swal.fire({
             title: tituloAccion,
-            html: 'Por favor espere',
-            allowOutsideClick: false,
+            html: 'Por favor espere...',
+            allowOutsideClick: false, // No se puede cerrar haciendo clic afuera
             didOpen: () => Swal.showLoading()
         });
 
+        // Deshabilita el botón para evitar doble envío
         const btn = $(this).find('button[type="submit"]');
         const originalText = btn.html();
-        btn.prop('disabled', true); 
+        btn.prop('disabled', true);
 
         $.ajax({
-            url: '../../Controller/Controladorinstituto.php', 
+            url: '../../Controller/Controladorinstituto.php',
             type: "POST",
-            data: $(this).serialize(),
-            dataType: 'json', 
-            
+            data: $(this).serialize(), // Serializa TODOS los inputs incluyendo DireccionInstitucion
+            dataType: 'json',
+
             success: function (response) {
-                Swal.close(); 
+                Swal.close();
+
                 if (response.ok === true) {
+                    // Éxito: SweetAlert2 verde
                     Swal.fire({
                         icon: "success",
                         title: tituloExito,
-                        text: response.message, 
+                        text: response.message,
                         confirmButtonText: "OK",
                         confirmButtonColor: "#10b981"
                     }).then(() => {
                         if (esEdicion) {
-                            // Si es edición, redirigir a la lista
-                            window.location.href = 'InstitutoLista.php';
+                            window.location.href = 'InstitutoLista.php'; // Redirige tras editar
                         } else {
-                            // Si es registro, limpiar formulario
-                            $("#formInstituto")[0].reset();
-                            // Limpiar estilos después del éxito
-                            inicializarValidacion(); // Vuelve a dejarlos neutrales
+                            $("#formInstituto")[0].reset(); // Limpia formulario tras registrar
+                            inicializarValidacion();        // Resetea estilos
                         }
                     });
                 } else {
+                    // El servidor rechazó: NIT duplicado u otro error de negocio
+                    // SweetAlert2 de advertencia para datos repetidos
                     Swal.fire({
-                        icon: "error",
-                        title: "Error en " + (esEdicion ? "la Actualización" : "el Registro"),
-                        text: response.message || 'Ocurrió un error inesperado al guardar.', 
-                        confirmButtonText: "OK",
-                        confirmButtonColor: "#ef4444"
+                        icon: "warning",
+                        title: "No se pudo guardar",
+                        text: response.message || 'Ocurrió un error inesperado.',
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: "#f59e0b"
                     });
                 }
             },
             error: function (xhr) {
-                Swal.close(); 
-                
-                // Limpiar estilos en caso de error (solo en registro)
-                if (!esEdicion) {
-                    inicializarValidacion(); // Vuelve a dejarlos neutrales
-                }
+                Swal.close();
+                if (!esEdicion) inicializarValidacion();
 
-                let mensaje = `Error de conexión con el servidor. Revisar logs de PHP.`;
-                let responseMessage = (xhr.responseJSON && xhr.responseJSON.message) ? xhr.responseJSON.message : xhr.responseText;
-                
+                // SweetAlert2 de error de conexión
+                let responseMessage = (xhr.responseJSON && xhr.responseJSON.message)
+                    ? xhr.responseJSON.message
+                    : xhr.responseText;
+
                 Swal.fire({
                     icon: "error",
-                    title: "Error",
-                    html: `<p>${mensaje}</p><p>Detalle: ${responseMessage.substring(0, 100)}...</p><small>Código: ${xhr.status}</small>`,
+                    title: "Error de conexión",
+                    html: `<p>No se pudo conectar con el servidor.</p>
+                           <p><small>Detalle: ${responseMessage.substring(0, 120)}</small></p>
+                           <small>Código HTTP: ${xhr.status}</small>`,
                     confirmButtonText: "OK",
                     confirmButtonColor: "#ef4444"
                 });
             },
             complete: function () {
+                // Restaura el botón siempre (éxito o error)
                 btn.html(originalText);
                 btn.prop('disabled', false);
             }

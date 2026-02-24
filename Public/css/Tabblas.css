@@ -1,7 +1,0 @@
-.table-striped tbody tr:nth-of-type(odd)  { background-color: #f8f9fc; }
-.table-hover   tbody tr:hover             { background-color: #f1f3f8; transition: 0.2s ease-in-out; }
-.badge { font-size: 0.85rem; }
-table.dataTable thead .sorting:after,
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_desc:after { display: none !important; }

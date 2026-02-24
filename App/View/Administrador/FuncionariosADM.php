@@ -28,25 +28,7 @@ $controladorSede = new ControladorSede();
 $sedes = $controladorSede->obtenerSedes();
 ?>
 
-<!-- ================================================================
-     CSS PERSONALIZADO: Elimina los iconos de validación de Bootstrap
-================================================================= -->
-<style>
-    /* Oculta los íconos verdes (✔) y rojos (✘) de los inputs de Bootstrap */
-    .form-control.is-valid,
-    .form-control.is-invalid,
-    .form-select.is-valid,
-    .form-select.is-invalid {
-        background-image: none !important; /* elimina el ícono */
-        padding-right: 0.75rem !important; /* asegura que el padding sea uniforme */
-    }
 
-    /* Evita que el borde azul de Bootstrap aparezca al hacer clic en el input */
-    .form-control:focus,
-    .form-select:focus {
-        box-shadow: none;
-    }
-</style>
 
 <!-- ================================================================
      CONTENEDOR PRINCIPAL
@@ -218,7 +200,7 @@ $sedes = $controladorSede->obtenerSedes();
 
 <!-- PIE DE PÁGINA GENERAL -->
 <?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
-
+<link rel="stylesheet" href="../../../Public/css/Tablas.css"> <!-- RUTA RELATIVA -->
 <!-- Librerías JS -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

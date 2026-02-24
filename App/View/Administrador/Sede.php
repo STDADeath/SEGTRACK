@@ -70,7 +70,7 @@ $instituciones = $controlador->obtenerInstituciones();
                 <div class="row">
 
                     <div class="col-md-6 mb-3">
-                        <label for="TipoSede" class="form-label">Nombre / Tipo de Sede *</label>
+                        <label for="TipoSede" class="form-label">Tipo de Sede *</label>
                         <input type="text" id="TipoSede" name="TipoSede"
                             maxlength="30"
                             class="form-control border-primary shadow-sm"
