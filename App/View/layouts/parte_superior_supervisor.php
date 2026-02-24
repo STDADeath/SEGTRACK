@@ -1,19 +1,32 @@
 <?php
-// ===============================
-// 🔐 CONTROL DE SESIÓN
-// ===============================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../Login/Login.php");
-    exit;
+    exit();
 }
 
-// Datos usuario
-$nombreUsuario = htmlspecialchars($_SESSION['usuario']['NombreFuncionario'] ?? 'Usuario');
-$rolUsuario    = htmlspecialchars($_SESSION['usuario']['TipoRol'] ?? 'Administrador');
+if ($_SESSION['usuario']['TipoRol'] !== 'Supervisor') {
+
+    switch ($_SESSION['usuario']['TipoRol']) {
+
+        case 'Administrador':
+            header("Location: ../Administrador/DasboardAdministrador.php");
+            break;
+
+        case 'Personal Seguridad':
+            header("Location: ../PersonalSeguridad/DasboardPersonalSeguridad.php");
+            break;
+
+        default:
+            header("Location: ../Login/Login.php");
+            break;
+    }
+
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -389,7 +402,9 @@ $rolUsuario    = htmlspecialchars($_SESSION['usuario']['TipoRol'] ?? 'Administra
 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
 
 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-<?php echo $nombreUsuario; ?> | <?php echo $rolUsuario; ?>
+<?php echo $_SESSION['usuario']['NombreFuncionario']; ?>
+|
+<?php echo $_SESSION['usuario']['TipoRol']; ?>
 </span>
 
 <img class="img-profile rounded-circle"

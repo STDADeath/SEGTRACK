@@ -1,29 +1,3 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Si el usuario ya está logueado y tiene un rol definido
-if (!empty($_SESSION['usuario']['Rol'])) {
-    $rol = $_SESSION['usuario']['Rol'];
-
-    // Mapear roles a dashboards
-    $dashboards = [
-        'Administrador' => '/SEGTRACK/App/View/Administrador/DasboardAdministrador.php',
-        'Supervisor'    => '/SEGTRACK/App/View/Supervisor/DashboardSupervisor.php',
-        'Funcionario'   => '/SEGTRACK/App/View/Funcionario/DashboardFuncionario.php',
-    ];
-
-    if (isset($dashboards[$rol])) {
-        header("Location: " . $dashboards[$rol]);
-        exit();
-    }
-}
-
-// Si no hay sesión activa o rol no definido, queda en login
-
-
-?>
 <!DOCTYPE html>
 <html lang="es">
 
