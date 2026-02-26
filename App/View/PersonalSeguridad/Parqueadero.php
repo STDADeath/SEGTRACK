@@ -1,4 +1,15 @@
 <?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
+<?php require_once(__DIR__ . "/../../Core/conexion.php"); ?>
+
+<?php
+// Cargar sedes activas para el select
+$conexionObj = new Conexion();
+$connSede    = $conexionObj->getConexion();
+$sqlSedes    = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
+$stmtSedes   = $connSede->prepare($sqlSedes);
+$stmtSedes->execute();
+$sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
@@ -36,7 +47,7 @@
                                 </div>
                             </div>
 
-                            <!-- Placa — máximo 9 caracteres -->
+                            <!-- Placa -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Placa <span class="text-danger">*</span>
@@ -81,7 +92,7 @@
                         </div>
 
                         <div class="row">
-                            <!-- Tarjeta de Propiedad — máximo 50 caracteres -->
+                            <!-- Tarjeta de Propiedad -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Tarjeta de Propiedad <span class="text-danger">*</span>
@@ -124,24 +135,24 @@
                             </div>
                         </div>
 
-                        <!-- ID de Sede -->
+                        <!-- Sede -->
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
-                                ID de Sede <span class="text-danger">*</span>
+                                Sede <span class="text-danger">*</span>
                             </label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                <input type="text"
-                                    class="form-control"
-                                    name="IdSede"
-                                    id="IdSede"
-                                    required
-                                    pattern="[0-9]+"
-                                    title="Solo números"
-                                    placeholder="Ej: 27">
+                                <select class="form-select" name="IdSede" id="IdSede" required>
+                                    <option value="">Seleccione una sede...</option>
+                                    <?php foreach ($sedes as $sede) : ?>
+                                        <option value="<?= $sede['IdSede'] ?>">
+                                            <?= htmlspecialchars($sede['TipoSede']) ?> — <?= htmlspecialchars($sede['Ciudad']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                             <small class="form-text text-muted">
-                                <i class="fas fa-info-circle"></i> Solo números de momento, luego se usará un selector
+                                <i class="fas fa-info-circle"></i> Solo se muestran sedes activas
                             </small>
                         </div>
 

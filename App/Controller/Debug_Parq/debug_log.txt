@@ -1714,3 +1714,67 @@ Vehículo actualizado exitosamente
 Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-26-69a0928e445c0.png"}
 === FIN ===
 
+
+2026-02-26 13:59:42 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "BTY-876",
+    "DescripcionVehiculo": "Camaro del 98, color rojo con franjas blancas, ",
+    "TarjetaPropiedad": "tj252552125",
+    "IdSede": "29",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-26 13:59:42
+Generando QR para vehículo ID: 29
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-29-69a0981eac81f.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdParqueadero":"29","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-29-69a0981eac81f.png","FechaRegistro":"2026-02-26 13:59:42"}}
+=== FIN ===
+
+
+2026-02-26 14:00:00 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "29",
+    "correo_destinatario": "andersoarebalo@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 29 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":29,"TipoVehiculo":"Carro","PlacaVehiculo":"BTY-876","DescripcionVehiculo":"Camaro del 98, color rojo con franjas blancas, ","TarjetaPropiedad":"tj252552125","FechaParqueadero":"2026-02-26 13:59:42","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-29-69a0981eac81f.png","IdSede":29}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-26 14:01:20 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "BRR-873",
+    "DescripcionVehiculo": "Camaro del 98, color rojo con franjas blancas, cojineria de cuero blanco",
+    "TarjetaPropiedad": "tj252556655",
+    "IdSede": "25",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-26 14:01:20
+Generando QR para vehículo ID: 30
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-30-69a098808a60d.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 30","data":{"IdParqueadero":"30","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-30-69a098808a60d.png","FechaRegistro":"2026-02-26 14:01:20"}}
+=== FIN ===
+
