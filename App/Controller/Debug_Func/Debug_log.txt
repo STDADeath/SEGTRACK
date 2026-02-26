@@ -4509,3 +4509,5 @@ POST recibido:
 2026-02-24 06:32:17 - Preparando envío a: pasachoa2002@gmail.com
 2026-02-24 06:32:21 - Correo enviado correctamente a pasachoa2002@gmail.com
 2026-02-24 06:32:21 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-27 00:11:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-69a0d30dab52f.png
+2026-02-27 00:11:21 - Correo enviado correctamente a andersoarebalo@gmail.com

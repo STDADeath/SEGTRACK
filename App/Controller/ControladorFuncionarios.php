@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 // ================= CONFIGURACIÓN DEBUG =================
 $debugPath = __DIR__ . '/Debug_Func';
