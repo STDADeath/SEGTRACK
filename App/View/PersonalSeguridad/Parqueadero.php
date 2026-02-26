@@ -17,7 +17,6 @@
                     <h6 class="m-0 font-weight-bold text-white">Información del Vehículo</h6>
                 </div>
                 <div class="card-body">
-                    <!-- ⚠️ IMPORTANTE: Eliminamos novalidate para que funcione la validación HTML5 -->
                     <form method="POST" action="../../Controller/ControladorParqueadero.php" class="needs-validation">
                         <div class="row">
                             <!-- Tipo de vehículo -->
@@ -37,7 +36,7 @@
                                 </div>
                             </div>
 
-                            <!-- Placa - ✅ MÁXIMO 9 CARACTERES, MÍNIMO 3, OBLIGATORIO -->
+                            <!-- Placa — máximo 9 caracteres -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Placa <span class="text-danger">*</span>
@@ -56,12 +55,12 @@
                                         title="Solo letras, números, espacios y guiones">
                                 </div>
                                 <small class="form-text text-muted">
-                                    <i class="fas fa-info-circle"></i> Mínimo 6 caracteres, máximo 9
+                                    <i class="fas fa-info-circle"></i> Mínimo 3 caracteres, máximo 9
                                 </small>
                             </div>
                         </div>
 
-                        <!-- Descripción - ✅ OBLIGATORIO -->
+                        <!-- Descripción -->
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
                                 Descripción <span class="text-danger">*</span>
@@ -82,7 +81,7 @@
                         </div>
 
                         <div class="row">
-                            <!-- Tarjeta de Propiedad - ✅ OBLIGATORIO -->
+                            <!-- Tarjeta de Propiedad — máximo 50 caracteres -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Tarjeta de Propiedad <span class="text-danger">*</span>
@@ -93,17 +92,19 @@
                                         class="form-control"
                                         name="TarjetaPropiedad"
                                         id="TarjetaPropiedad"
+                                        maxlength="20"
+                                        minlength="11"
                                         required
                                         placeholder="Número de tarjeta"
                                         pattern="[a-zA-Z0-9\s-]+"
                                         title="Solo letras, números, espacios y guiones">
                                 </div>
                                 <small class="form-text text-muted">
-                                    <i class="fas fa-info-circle"></i> Número de la tarjeta de propiedad del vehículo
+                                    <i class="fas fa-info-circle"></i> Mínimo 11 caracteres, máximo 20
                                 </small>
                             </div>
 
-                            <!-- Fecha -->
+                            <!-- Fecha automática -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Fecha y Hora <span class="badge bg-info">Automática</span>
@@ -132,12 +133,18 @@
                                 <span class="input-group-text"><i class="fas fa-building"></i></span>
                                 <input type="text"
                                     class="form-control"
-                                    name="IdSede" id="IdSede" required pattern="[0-9]+"title="Solo números" placeholder="Ej: 27">
+                                    name="IdSede"
+                                    id="IdSede"
+                                    required
+                                    pattern="[0-9]+"
+                                    title="Solo números"
+                                    placeholder="Ej: 27">
                             </div>
                             <small class="form-text text-muted">
-                                <i class="fas fa-info-circle"></i> Solo números de momento, luego se usara un selector
+                                <i class="fas fa-info-circle"></i> Solo números de momento, luego se usará un selector
                             </small>
                         </div>
+
                         <!-- Botones -->
                         <div class="d-flex justify-content-between mt-4">
                             <button type="button" class="btn btn-secondary" onclick="window.location.href='./Parqueadero.php'">
@@ -167,5 +174,4 @@
 
 <script src="../../../Public/js/javascript/js/ValidacionParqueadero.js"></script>
 
-<!---fin del contenido principal--->
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

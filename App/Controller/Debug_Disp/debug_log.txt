@@ -2473,3 +2473,267 @@ Preparando envío a: andersoarebalo@gmail.com
 Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
 === FIN ===
 
+
+2026-02-19 06:04:46 === INICIO ===
+POST recibido:
+{
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN234567890987654321",
+    "IdFuncionario": "24",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Funcionario ya tiene dispositivo tipo Portatil
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f Este funcionario ya tiene un dispositivo tipo 'Portatil' registradoNo se puede registrar otro dispositivo del mismo tipo para el mismo funcionario."}
+=== FIN ===
+
+
+2026-02-19 06:05:12 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Portatil",
+    "marca": "HUAWEI",
+    "serial": "SN1999982856",
+    "id_funcionario": "24",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 29
+Datos preparados para actualizar: {"TipoDispositivo":"Portatil","MarcaDispositivo":"HUAWEI","NumeroSerial":"SN1999982856","IdFuncionario":"24","IdVisitante":""}
+=== actualizarDispositivo llamado ===
+ID: 29
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"HUAWEI","NumeroSerial":"SN1999982856","IdFuncionario":"24","IdVisitante":""}
+ERROR: Serial duplicado al actualizar - SN1999982856
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'SN1999982856' ya est\u00e1 registrado en otro dispositivo:\n\u2022 Dispositivo ID: 36\n\u2022 Tipo: Tablet\n\u2022 Marca: Dell"}
+=== FIN ===
+
+
+2026-02-19 06:05:31 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Portatil",
+    "marca": "HUAWEI",
+    "serial": "SN18765456789",
+    "id_funcionario": "24",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 29
+Datos preparados para actualizar: {"TipoDispositivo":"Portatil","MarcaDispositivo":"HUAWEI","NumeroSerial":"SN18765456789","IdFuncionario":"24","IdVisitante":""}
+=== actualizarDispositivo llamado ===
+ID: 29
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"HUAWEI","NumeroSerial":"SN18765456789","IdFuncionario":"24","IdVisitante":""}
+=== MODELO: actualizar ID: 29 ===
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"HUAWEI","NumeroSerial":"SN18765456789","IdFuncionario":"24","IdVisitante":""}
+SQL: UPDATE dispositivo SET 
+                        TipoDispositivo = :tipo, 
+                        MarcaDispositivo = :marca,
+                        NumeroSerial = :serial,
+                        IdFuncionario = :funcionario, 
+                        IdVisitante = :visitante
+                    WHERE IdDispositivo = :id
+Parámetros SQL: {":tipo":"Portatil",":marca":"HUAWEI",":serial":"SN18765456789",":funcionario":24,":visitante":null,":id":29}
+Resultado execute: true
+Filas afectadas: 1
+Resultado del modelo: {"success":true,"rows":1}
+Regenerando QR para ID: 29
+Generando QR para dispositivo ID: 29
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-29-69969a1b2c161.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-29-693cca3998639.png
+Nuevo QR generado: qr/Qr_Dipo/QR-DISP-29-69969a1b2c161.png
+Dispositivo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-29-69969a1b2c161.png"}
+=== FIN ===
+
+
+2026-02-19 06:05:43 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "29"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para ID: 29 ===
+PHPMailer cargado
+Dispositivo encontrado: {"IdDispositivo":29,"TipoDispositivo":"Port\u00e1til","MarcaDispositivo":"HUAWEI","NumeroSerial":"SN18765456789","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-29-69969a1b2c161.png","NombreFuncionario":"Maicol Montoya","CorreoFuncionario":"pasachoa2002@gmail.com"}
+Preparando envío a: pasachoa2002@gmail.com
+✓ Correo enviado exitosamente
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: pasachoa2002@gmail.com"}
+=== FIN ===
+
+
+2026-02-25 06:59:22 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "36",
+    "tipo": "Portatil",
+    "marca": "Dell",
+    "id_funcionario": "",
+    "id_visitante": "9"
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 36
+Datos preparados para actualizar: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","NumeroSerial":null,"IdFuncionario":"","IdVisitante":"9"}
+=== actualizarDispositivo llamado ===
+ID: 36
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","NumeroSerial":null,"IdFuncionario":"","IdVisitante":"9"}
+=== MODELO: actualizar ID: 36 ===
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","NumeroSerial":null,"IdFuncionario":"","IdVisitante":"9"}
+SQL: UPDATE dispositivo SET 
+                        TipoDispositivo = :tipo, 
+                        MarcaDispositivo = :marca,
+                        NumeroSerial = :serial,
+                        IdFuncionario = :funcionario, 
+                        IdVisitante = :visitante
+                    WHERE IdDispositivo = :id
+Parámetros SQL: {":tipo":"Portatil",":marca":"Dell",":serial":null,":funcionario":null,":visitante":9,":id":36}
+Resultado execute: true
+Filas afectadas: 1
+Resultado del modelo: {"success":true,"rows":1}
+Regenerando QR para ID: 36
+Generando QR para dispositivo ID: 36
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-36-699e8fbad351d.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Dipo/QR-DISP-36-696c1d9e86b00.png
+Nuevo QR generado: qr/Qr_Dipo/QR-DISP-36-699e8fbad351d.png
+Dispositivo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-36-699e8fbad351d.png"}
+=== FIN ===
+
+
+2026-02-25 07:00:14 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "37",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "id_funcionario": "58",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 37
+Datos preparados para actualizar: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","NumeroSerial":null,"IdFuncionario":"58","IdVisitante":""}
+=== actualizarDispositivo llamado ===
+ID: 37
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","NumeroSerial":null,"IdFuncionario":"58","IdVisitante":""}
+ERROR: Funcionario ya tiene otro dispositivo tipo Portatil
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f Este funcionario ya tiene otro dispositivo tipo 'Portatil' registrado:\n\u2022 Dispositivo ID: 32\n\u2022 Marca: Huawei\n\nNo se puede asignar otro dispositivo del mismo tipo al mismo funcionario."}
+=== FIN ===
+
+
+2026-02-25 07:01:50 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "37",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "id_funcionario": "58",
+    "id_visitante": ""
+}
+Conexión cargada
+Conexión verificada como PDO
+Librería QR cargada
+Modelo cargado
+Acción detectada: actualizar
+Procesando actualización para ID: 37
+Datos preparados para actualizar: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","NumeroSerial":null,"IdFuncionario":"58","IdVisitante":""}
+=== actualizarDispositivo llamado ===
+ID: 37
+Datos recibidos: {"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","NumeroSerial":null,"IdFuncionario":"58","IdVisitante":""}
+ERROR: Funcionario ya tiene otro dispositivo tipo Portatil
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f Este funcionario ya tiene otro dispositivo tipo 'Portatil' registrado:\n\u2022 Dispositivo ID: 32\n\u2022 Marca: Huawei\n\nNo se puede asignar otro dispositivo del mismo tipo al mismo funcionario."}
+=== FIN ===
+
+
+2026-02-25 07:08:37 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "37",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "id_funcionario": "58",
+    "id_visitante": ""
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 37 ===
+=== MODELO: actualizar ID: 37 ===
+{"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","NumeroSerial":null,"IdFuncionario":"58","IdVisitante":""}
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-37-699e91e5b9774.png"}
+=== FIN ===
+
+
+2026-02-25 07:08:55 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "37",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-02-26 19:12:07 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN23467676575",
+    "IdFuncionario": "24",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: SN23467676575
+INSERT exitoso, ID: 38
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 38","data":{"IdDispositivo":"38","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-38-69a08cf77d865.png"}}
+=== FIN ===
+
+
+2026-02-26 19:16:33 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "38"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: pasachoa2002@gmail.com"}
+=== FIN ===
+

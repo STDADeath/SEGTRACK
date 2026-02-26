@@ -18,16 +18,20 @@ if (!empty($_GET['marca'])) {
     $params[':marca'] = '%' . $_GET['marca'] . '%';
 }
 if (!empty($_GET['funcionario'])) {
-    $filtros[] = "d.IdFuncionario = :funcionario";
-    $params[':funcionario'] = $_GET['funcionario'];
+    $filtros[] = "f.NombreFuncionario LIKE :funcionario";
+    $params[':funcionario'] = '%' . $_GET['funcionario'] . '%';
 }
 if (!empty($_GET['visitante'])) {
-    $filtros[] = "d.IdVisitante = :visitante";
-    $params[':visitante'] = $_GET['visitante'];
+    $filtros[] = "v.NombreVisitante LIKE :visitante";
+    $params[':visitante'] = '%' . $_GET['visitante'] . '%';
 }
 if (!empty($_GET['estado'])) {
     $filtros[] = "d.Estado = :estado";
     $params[':estado'] = $_GET['estado'];
+}
+if (!empty($_GET['serial'])) {
+    $filtros[] = "d.NumeroSerial LIKE :serial";
+    $params[':serial'] = '%' . $_GET['serial'] . '%';
 }
 
 $where = "";
@@ -35,7 +39,7 @@ if (count($filtros) > 0) {
     $where = "WHERE " . implode(" AND ", $filtros);
 }
 
-// Query actualizado con JOINs para obtener nombres
+// Query con JOINs para obtener nombres
 $sql = "SELECT 
             d.*,
             f.NombreFuncionario,
@@ -82,17 +86,21 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="col-md-2">
                     <label for="marca" class="form-label">Marca</label>
-                    <input type="text" name="marca" id="marca" class="form-control" value="<?= $_GET['marca'] ?? '' ?>" placeholder="Buscar por marca">
+                    <input type="text" name="marca" id="marca" class="form-control" value="<?= htmlspecialchars($_GET['marca'] ?? '') ?>" placeholder="Buscar por marca">
                 </div>
                 <div class="col-md-2">
-                    <label for="funcionario" class="form-label">ID Funcionario</label>
-                    <input type="text" name="funcionario" id="funcionario" class="form-control" value="<?= $_GET['funcionario'] ?? '' ?>" placeholder="ID">
+                    <label for="serial" class="form-label">Número Serial</label>
+                    <input type="text" name="serial" id="serial" class="form-control" value="<?= htmlspecialchars($_GET['serial'] ?? '') ?>" placeholder="Buscar por serial">
                 </div>
                 <div class="col-md-2">
-                    <label for="visitante" class="form-label">ID Visitante</label>
-                    <input type="text" name="visitante" id="visitante" class="form-control" value="<?= $_GET['visitante'] ?? '' ?>" placeholder="ID">
+                    <label for="funcionario" class="form-label">Funcionario</label>
+                    <input type="text" name="funcionario" id="funcionario" class="form-control" value="<?= htmlspecialchars($_GET['funcionario'] ?? '') ?>" placeholder="Nombre funcionario">
                 </div>
                 <div class="col-md-2">
+                    <label for="visitante" class="form-label">Visitante</label>
+                    <input type="text" name="visitante" id="visitante" class="form-control" value="<?= htmlspecialchars($_GET['visitante'] ?? '') ?>" placeholder="Nombre visitante">
+                </div>
+                <div class="col-md-1">
                     <label for="estado" class="form-label">Estado</label>
                     <select name="estado" id="estado" class="form-select">
                         <option value="">Todos</option>
@@ -100,9 +108,9 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <option value="Inactivo" <?= (isset($_GET['estado']) && $_GET['estado'] == 'Inactivo') ? 'selected' : '' ?>>Inactivo</option>
                     </select>
                 </div>
-                <div class="col-md-2 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
-                    <a href="DispositivoSupervisor.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+                <div class="col-md-1 d-flex align-items-end gap-1">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i></button>
+                    <a href="DispositivoSupervisor.php" class="btn btn-secondary"><i class="fas fa-broom"></i></a>
                 </div>
             </form>
         </div>
@@ -117,12 +125,12 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <table class="table table-bordered table-hover table-striped align-middle text-center" id="TablaDispositivoSupervisor">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
                         <th>QR</th>
                         <th>Tipo</th>
                         <th>Marca</th>
-                        <th>ID Funcionario</th>
-                        <th>ID Visitante</th>
+                        <th>N° Serial</th>
+                        <th>Funcionario</th>
+                        <th>Visitante</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -131,7 +139,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdDispositivo']; ?>" class="<?php echo $row['Estado'] === 'Inactivo' ? 'fila-inactiva' : ''; ?>">
-                                <td><?php echo $row['IdDispositivo']; ?></td>
                                 <td class="text-center">
                                     <?php if (!empty($row['QrDispositivo'])) : ?>
                                         <button type="button" class="btn btn-sm btn-outline-success" 
@@ -143,10 +150,30 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge badge-warning">Sin QR</span>
                                     <?php endif; ?>
                                 </td>
-                                <td><?php echo $row['TipoDispositivo']; ?></td>
-                                <td><?php echo $row['MarcaDispositivo']; ?></td>
-                                <td><?php echo $row['IdFuncionario'] ?? '-'; ?></td>
-                                <td><?php echo $row['IdVisitante'] ?? '-'; ?></td>
+                                <td><?php echo htmlspecialchars($row['TipoDispositivo']); ?></td>
+                                <td><?php echo htmlspecialchars($row['MarcaDispositivo']); ?></td>
+                                <td>
+                                    <?php if (!empty($row['NumeroSerial'])) : ?>
+                                            <?php echo htmlspecialchars($row['NumeroSerial']); ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <span class="badge bg-info text-white">No tiene número serial</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if (!empty($row['NombreFuncionario'])) : ?>
+                                        <?php echo htmlspecialchars($row['NombreFuncionario']); ?>
+                                    <?php else : ?>
+                                        <span class="badge bg-info text-white">No aplica</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if (!empty($row['NombreVisitante'])) : ?>
+                                        <?php echo htmlspecialchars($row['NombreVisitante']); ?>
+                                    <?php else : ?>
+                                        <span class="badge bg-info text-white">No aplica</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="text-center">
                                     <?php if ($row['Estado'] === 'Activo') : ?>
                                         <span class="badge badge-success badge-estado">Activo</span>
@@ -242,6 +269,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Número Serial <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editNumeroSerial" class="form-control bg-light" readonly
+                                   placeholder="Sin número serial">
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Funcionario <small class="text-muted">(Solo lectura)</small></label>
                             <input type="text" id="editNombreFuncionario" class="form-control bg-light" readonly>
@@ -308,7 +343,7 @@ $(document).ready(function() {
         },
         pageLength: 10,
         responsive: true,
-        order: [[0, "desc"]]
+        order: [[0, "asc"]]
     });
 });
 
@@ -317,8 +352,6 @@ $(document).ready(function() {
 // ============================================
 function verQRDispositivo(rutaQR, idDispositivo) {
     var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
-    
-    console.log('Ruta QR completa:', rutaCompleta);
     
     $('#qrDispositivoId').text(idDispositivo);
     $('#qrImagenDispositivo').attr('src', rutaCompleta);
@@ -331,28 +364,20 @@ function verQRDispositivo(rutaQR, idDispositivo) {
 // Cargar datos en el modal de edición
 // ============================================
 function cargarDatosEdicionDispositivo(row) {
-    console.log('Cargando datos para editar:', row);
-    
     $('#editIdDispositivo').val(row.IdDispositivo);
     $('#editTipoDispositivo').val(row.TipoDispositivo);
     $('#editMarcaDispositivo').val(row.MarcaDispositivo);
+    
+    // Número serial (solo lectura en supervisor)
+    $('#editNumeroSerial').val(row.NumeroSerial || '');
     
     // IDs ocultos
     $('#editIdFuncionario').val(row.IdFuncionario || '');
     $('#editIdVisitante').val(row.IdVisitante || '');
     
     // Mostrar nombres en campos de texto (solo lectura)
-    if (row.NombreFuncionario) {
-        $('#editNombreFuncionario').val(row.NombreFuncionario);
-    } else {
-        $('#editNombreFuncionario').val('No aplica');
-    }
-    
-    if (row.NombreVisitante) {
-        $('#editNombreVisitante').val(row.NombreVisitante);
-    } else {
-        $('#editNombreVisitante').val('No aplica');
-    }
+    $('#editNombreFuncionario').val(row.NombreFuncionario || 'No aplica');
+    $('#editNombreVisitante').val(row.NombreVisitante || 'No aplica');
     
     $('#modalEditarDispositivo').modal('show');
 }
@@ -361,8 +386,6 @@ function cargarDatosEdicionDispositivo(row) {
 // Confirmar cambio de estado
 // ============================================
 function confirmarCambioEstadoDispositivo(id, estado) {
-    console.log('confirmarCambioEstado llamado:', {id, estado});
-    
     window.dispositivoACambiarEstado = id;
     window.estadoActualDispositivo = estado;
     
@@ -370,15 +393,12 @@ function confirmarCambioEstadoDispositivo(id, estado) {
     const accion = nuevoEstado === 'Activo' ? 'activar' : 'desactivar';
     const colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
     
-    // Configurar el header del modal
     $('#headerCambioEstadoDispositivo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
     $('#tituloCambioEstadoDispositivo').html('<i class="fas fa-' + (nuevoEstado === 'Activo' ? 'lock-open' : 'lock') + ' me-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Dispositivo');
     $('#mensajeCambioEstadoDispositivo').html('¿Está seguro que desea <strong>' + accion + '</strong> este dispositivo?');
     
-    // Mostrar modal
     $('#modalCambiarEstadoDispositivo').modal('show');
     
-    // Configurar el toggle visual después de mostrar el modal
     setTimeout(function() {
         const toggleLabel = document.getElementById('toggleEstadoVisualDispositivo');
         if (toggleLabel) {
@@ -397,35 +417,20 @@ function confirmarCambioEstadoDispositivo(id, estado) {
 $(document).ready(function() {
     // Botón confirmar cambio de estado
     $('#btnConfirmarCambioEstadoDispositivo').on('click', function() {
-        console.log('Confirmar cambio de estado clickeado');
-        
         if (!window.dispositivoACambiarEstado) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'No se ha seleccionado ningún dispositivo'
-            });
+            Swal.fire({ icon: 'error', title: 'Error', text: 'No se ha seleccionado ningún dispositivo' });
             return;
         }
         
         const nuevoEstado = window.estadoActualDispositivo === 'Activo' ? 'Inactivo' : 'Activo';
         
-        console.log('Enviando petición AJAX:', {
-            id: window.dispositivoACambiarEstado,
-            estado: nuevoEstado
-        });
-        
-        // Cerrar el modal personalizado
         $('#modalCambiarEstadoDispositivo').modal('hide');
         
-        // Mostrar loading de SweetAlert2
         Swal.fire({
             title: 'Procesando...',
             text: 'Por favor espere',
             allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+            didOpen: () => { Swal.showLoading(); }
         });
         
         $.ajax({
@@ -438,8 +443,6 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(response) {
-                console.log('Respuesta recibida:', response);
-                
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
@@ -447,30 +450,13 @@ $(document).ready(function() {
                         text: response.message || 'Dispositivo ' + (nuevoEstado === 'Activo' ? 'activado' : 'desactivado') + ' correctamente',
                         timer: 2000,
                         showConfirmButton: false
-                    }).then(() => {
-                        location.reload();
-                    });
+                    }).then(() => { location.reload(); });
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: response.message || 'No se pudo cambiar el estado del dispositivo'
-                    });
+                    Swal.fire({ icon: 'error', title: 'Error', text: response.message || 'No se pudo cambiar el estado del dispositivo' });
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('Error AJAX:', {
-                    xhr: xhr,
-                    status: status,
-                    error: error,
-                    responseText: xhr.responseText
-                });
-                
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo cambiar el estado del dispositivo'
-                });
+            error: function() {
+                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo cambiar el estado del dispositivo' });
             }
         });
     });
@@ -486,29 +472,18 @@ $(document).ready(function() {
             id_visitante: $('#editIdVisitante').val() || null
         };
 
-        console.log('Enviando datos:', formData);
-
-        // Validar campo obligatorio (solo Tipo)
         if (!formData.tipo) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campo incompleto',
-                text: 'Debe seleccionar un tipo de dispositivo'
-            });
+            Swal.fire({ icon: 'warning', title: 'Campo incompleto', text: 'Debe seleccionar un tipo de dispositivo' });
             return;
         }
 
-        // Cerrar modal de edición
         $('#modalEditarDispositivo').modal('hide');
         
-        // Mostrar loading de SweetAlert2
         Swal.fire({
             title: 'Guardando...',
             text: 'Por favor espere',
             allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+            didOpen: () => { Swal.showLoading(); }
         });
 
         $.ajax({
@@ -517,8 +492,6 @@ $(document).ready(function() {
             data: formData,
             dataType: 'json',
             success: function(response) {
-                console.log('Respuesta:', response);
-                
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
@@ -526,29 +499,15 @@ $(document).ready(function() {
                         text: 'Dispositivo actualizado correctamente',
                         timer: 2000,
                         showConfirmButton: false
-                    }).then(() => {
-                        location.reload();
-                    });
+                    }).then(() => { location.reload(); });
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: response.message || 'No se pudo actualizar el dispositivo'
-                    });
+                    Swal.fire({ icon: 'error', title: 'Error', text: response.message || 'No se pudo actualizar el dispositivo' });
                 }
             },
-            error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
-                
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo conectar con el servidor'
-                });
+            error: function() {
+                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo conectar con el servidor' });
             }
         });
     });
-
-    console.log('Todos los event listeners configurados correctamente');
 });
 </script>

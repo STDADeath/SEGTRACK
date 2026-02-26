@@ -10,41 +10,49 @@ $filtros = [];
 $params = [];
 
 if (!empty($_GET['tipo'])) {
-    $filtros[] = "TipoVehiculo = :tipo";
+    $filtros[] = "p.TipoVehiculo = :tipo";
     $params[':tipo'] = $_GET['tipo'];
 }
 if (!empty($_GET['placa'])) {
-    $filtros[] = "PlacaVehiculo LIKE :placa";
+    $filtros[] = "p.PlacaVehiculo LIKE :placa";
     $params[':placa'] = '%' . $_GET['placa'] . '%';
 }
 if (!empty($_GET['tarjeta'])) {
-    $filtros[] = "TarjetaPropiedad LIKE :tarjeta";
+    $filtros[] = "p.TarjetaPropiedad LIKE :tarjeta";
     $params[':tarjeta'] = '%' . $_GET['tarjeta'] . '%';
 }
 if (!empty($_GET['fecha'])) {
-    $filtros[] = "DATE(FechaParqueadero) = :fecha";
+    $filtros[] = "DATE(p.FechaParqueadero) = :fecha";
     $params[':fecha'] = $_GET['fecha'];
 }
 if (!empty($_GET['sede'])) {
-    $filtros[] = "IdSede = :sede";
+    $filtros[] = "p.IdSede = :sede";
     $params[':sede'] = $_GET['sede'];
 }
 if (!empty($_GET['estado'])) {
-    $filtros[] = "Estado = :estado";
+    $filtros[] = "p.Estado = :estado";
     $params[':estado'] = $_GET['estado'];
 }
 
-$where = "";
-if (count($filtros) > 0) {
-    $where = "WHERE " . implode(" AND ", $filtros);
-}
+$where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
 
-$sql = "SELECT * FROM Parqueadero $where ORDER BY 
-        CASE WHEN Estado = 'Activo' THEN 1 ELSE 2 END, 
-        IdParqueadero DESC";
+$sql = "SELECT p.*, s.TipoSede, s.Ciudad
+        FROM parqueadero p
+        LEFT JOIN sede s ON p.IdSede = s.IdSede
+        $where
+        ORDER BY 
+            CASE WHEN p.Estado = 'Activo' THEN 1 ELSE 2 END, 
+            p.IdParqueadero DESC";
+
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Cargar sedes activas para el filtro
+$sqlSedes = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
+$stmtSedes = $conn->prepare($sqlSedes);
+$stmtSedes->execute();
+$sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -67,37 +75,44 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <select name="tipo" id="tipo" class="form-select">
                         <option value="">Todos</option>
                         <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>>Bicicleta</option>
-                        <option value="Moto" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto') ? 'selected' : '' ?>>Moto</option>
-                        <option value="Carro" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro') ? 'selected' : '' ?>>Carro</option>
+                        <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>>Moto</option>
+                        <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>>Carro</option>
                     </select>
                 </div>
                 <div class="col-md-2">
                     <label for="placa" class="form-label">Placa</label>
-                    <input type="text" name="placa" id="placa" class="form-control" value="<?= $_GET['placa'] ?? '' ?>" placeholder="Buscar placa">
+                    <input type="text" name="placa" id="placa" class="form-control" value="<?= htmlspecialchars($_GET['placa'] ?? '') ?>" placeholder="Buscar placa">
                 </div>
                 <div class="col-md-2">
                     <label for="tarjeta" class="form-label">Tarjeta Propiedad</label>
-                    <input type="text" name="tarjeta" id="tarjeta" class="form-control" value="<?= $_GET['tarjeta'] ?? '' ?>" placeholder="Buscar tarjeta">
+                    <input type="text" name="tarjeta" id="tarjeta" class="form-control" value="<?= htmlspecialchars($_GET['tarjeta'] ?? '') ?>" placeholder="Buscar tarjeta">
                 </div>
                 <div class="col-md-2">
                     <label for="fecha" class="form-label">Fecha</label>
-                    <input type="date" name="fecha" id="fecha" class="form-control" value="<?= $_GET['fecha'] ?? '' ?>">
+                    <input type="date" name="fecha" id="fecha" class="form-control" value="<?= htmlspecialchars($_GET['fecha'] ?? '') ?>">
                 </div>
-                <div class="col-md-1">
-                    <label for="sede" class="form-label">ID Sede</label>
-                    <input type="text" name="sede" id="sede" class="form-control" value="<?= $_GET['sede'] ?? '' ?>" placeholder="ID">
+                <div class="col-md-2">
+                    <label for="sede" class="form-label">Sede</label>
+                    <select name="sede" id="sede" class="form-select">
+                        <option value="">Todas</option>
+                        <?php foreach ($sedesDisponibles as $sede) : ?>
+                            <option value="<?= $sede['IdSede'] ?>" <?= (isset($_GET['sede']) && $_GET['sede'] == $sede['IdSede']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($sede['TipoSede']) ?> — <?= htmlspecialchars($sede['Ciudad']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="col-md-1">
                     <label for="estado" class="form-label">Estado</label>
                     <select name="estado" id="estado" class="form-select">
                         <option value="">Todos</option>
-                        <option value="Activo" <?= (isset($_GET['estado']) && $_GET['estado'] == 'Activo') ? 'selected' : '' ?>>Activo</option>
+                        <option value="Activo"   <?= (isset($_GET['estado']) && $_GET['estado'] == 'Activo')   ? 'selected' : '' ?>>Activo</option>
                         <option value="Inactivo" <?= (isset($_GET['estado']) && $_GET['estado'] == 'Inactivo') ? 'selected' : '' ?>>Inactivo</option>
                     </select>
                 </div>
-                <div class="col-md-2 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
-                    <a href="VehiculoSupervisor.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+                <div class="col-md-1 d-flex align-items-end gap-1">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i></button>
+                    <a href="VehiculoSupervisor.php" class="btn btn-secondary"><i class="fas fa-broom"></i></a>
                 </div>
             </form>
         </div>
@@ -112,14 +127,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <table class="table table-bordered table-hover table-striped align-middle text-center" id="TablaVehiculoSupervisor">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
                         <th>QR</th>
                         <th>Tipo Vehículo</th>
                         <th>Placa</th>
                         <th>Descripción</th>
                         <th>Tarjeta Propiedad</th>
-                        <th>Fecha Parqueadero</th>
-                        <th>ID Sede</th>
+                        <th>Fecha</th>
+                        <th>Sede</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -128,10 +142,9 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdParqueadero']; ?>" class="<?php echo $row['Estado'] === 'Inactivo' ? 'fila-inactiva' : ''; ?>">
-                                <td><?php echo $row['IdParqueadero']; ?></td>
                                 <td class="text-center">
                                     <?php if (!empty($row['QrVehiculo'])) : ?>
-                                        <button type="button" class="btn btn-sm btn-outline-success" 
+                                        <button type="button" class="btn btn-sm btn-outline-success"
                                                 onclick="verQRVehiculo('<?php echo htmlspecialchars($row['QrVehiculo']); ?>', <?php echo $row['IdParqueadero']; ?>)"
                                                 title="Ver código QR">
                                             <i class="fas fa-qrcode me-1"></i> Ver QR
@@ -140,12 +153,18 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge badge-warning">Sin QR</span>
                                     <?php endif; ?>
                                 </td>
-                                <td><?php echo $row['TipoVehiculo']; ?></td>
-                                <td><?php echo $row['PlacaVehiculo']; ?></td>
-                                <td><?php echo $row['DescripcionVehiculo']; ?></td>
-                                <td><?php echo $row['TarjetaPropiedad']; ?></td>
-                                <td><?php echo $row['FechaParqueadero']; ?></td>
-                                <td><?php echo $row['IdSede']; ?></td>
+                                <td><?php echo htmlspecialchars($row['TipoVehiculo']); ?></td>
+                                <td><?php echo htmlspecialchars($row['PlacaVehiculo']); ?></td>
+                                <td><?php echo htmlspecialchars($row['DescripcionVehiculo']); ?></td>
+                                <td><?php echo htmlspecialchars($row['TarjetaPropiedad']); ?></td>
+                                <td><?php echo htmlspecialchars($row['FechaParqueadero']); ?></td>
+                                <td>
+                                    <?php if (!empty($row['TipoSede'])) : ?>
+                                        <?php echo htmlspecialchars($row['TipoSede']); ?> — <?php echo htmlspecialchars($row['Ciudad']); ?>
+                                    <?php else : ?>
+                                        <span class="text-muted">-</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="text-center">
                                     <?php if ($row['Estado'] === 'Activo') : ?>
                                         <span class="badge badge-success badge-estado">Activo</span>
@@ -160,8 +179,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             title="Editar vehículo">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button type="button" 
-                                                class="btn btn-sm <?php echo $row['Estado'] === 'Activo' ? 'btn-outline-warning' : 'btn-outline-success'; ?>" 
+                                        <button type="button"
+                                                class="btn btn-sm <?php echo $row['Estado'] === 'Activo' ? 'btn-outline-warning' : 'btn-outline-success'; ?>"
                                                 onclick="confirmarCambioEstadoVehiculo(<?php echo $row['IdParqueadero']; ?>, '<?php echo $row['Estado']; ?>')"
                                                 title="<?php echo $row['Estado'] === 'Activo' ? 'Desactivar' : 'Activar'; ?> vehículo">
                                             <i class="fas <?php echo $row['Estado'] === 'Activo' ? 'fa-lock' : 'fa-lock-open'; ?>"></i>
@@ -172,7 +191,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="10" class="text-center py-4">
+                            <td colspan="9" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay vehículos registrados con los filtros seleccionados</p>
                             </td>
@@ -233,8 +252,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Placa (No editable)</label>
-                            <input type="text" id="editPlacaVehiculoDisabled" class="form-control" disabled>
+                            <label class="form-label">Placa <small class="text-muted">(No editable)</small></label>
+                            <input type="text" id="editPlacaVehiculoDisabled" class="form-control bg-light" disabled>
                         </div>
                     </div>
 
@@ -245,18 +264,25 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Tarjeta Propiedad (No editable)</label>
-                            <input type="text" id="editTarjetaPropiedadDisabled" class="form-control" disabled>
+                            <label class="form-label">Tarjeta Propiedad <small class="text-muted">(No editable)</small></label>
+                            <input type="text" id="editTarjetaPropiedadDisabled" class="form-control bg-light" disabled>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Fecha Parqueadero (No editable)</label>
-                            <input type="datetime-local" id="editFechaParqueaderoDisabled" class="form-control" disabled>
+                            <label class="form-label">Fecha <small class="text-muted">(No editable)</small></label>
+                            <input type="datetime-local" id="editFechaParqueaderoDisabled" class="form-control bg-light" disabled>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">ID Sede</label>
-                        <input type="number" id="editIdSede" class="form-control" name="idsede" required>
+                        <label class="form-label">Sede</label>
+                        <select id="editIdSede" class="form-control" name="idsede" required>
+                            <option value="">-- Seleccione una sede --</option>
+                            <?php foreach ($sedesDisponibles as $sede) : ?>
+                                <option value="<?= $sede['IdSede'] ?>">
+                                    <?= htmlspecialchars($sede['TipoSede']) ?> — <?= htmlspecialchars($sede['Ciudad']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </form>
             </div>
@@ -300,266 +326,153 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- Scripts de jQuery y Bootstrap (ANTES de cerrar el layout) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-// Esperar a que jQuery esté completamente cargado
 $(document).ready(function() {
-    console.log('jQuery cargado - VehiculoSupervisor');
-    
-    let vehiculoIdAEditar = null;
-    let vehiculoACambiarEstado = null;
-    let estadoActualVehiculo = null;
 
-    // Función para mostrar QR del vehículo
+    let vehiculoACambiarEstado = null;
+    let estadoActualVehiculo   = null;
+
+    // ── Ver QR ───────────────────────────────────────────────────────────────
     window.verQRVehiculo = function(rutaQR, idVehiculo) {
         var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
-        
-        console.log('Ruta QR completa:', rutaCompleta);
-        
         $('#qrVehiculoId').text(idVehiculo);
         $('#qrImagenVehiculo').attr('src', rutaCompleta);
         $('#btnDescargarQRVehiculo').attr('href', rutaCompleta).attr('download', 'QR-Vehiculo-' + idVehiculo + '.png');
-        
         $('#modalVerQRVehiculo').modal('show');
     };
 
-    // Cargar datos en el modal de edición
+    // ── Cargar datos modal edición ───────────────────────────────────────────
     window.cargarDatosEdicionVehiculo = function(row) {
-        console.log('Cargando datos para editar:', row);
-        
-        vehiculoIdAEditar = row.IdParqueadero;
-        
         $('#editIdVehiculo').val(row.IdParqueadero);
         $('#editTipoVehiculo').val(row.TipoVehiculo);
         $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
         $('#editIdSede').val(row.IdSede);
-
         $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
         $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
 
         var fechaHora = row.FechaParqueadero;
-        if (fechaHora) {
-            fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
-        }
+        if (fechaHora) fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
         $('#editFechaParqueaderoDisabled').val(fechaHora);
-        
+
         $('#modalEditarVehiculo').modal('show');
     };
 
-    // Confirmar cambio de estado
+    // ── Confirmar cambio de estado ───────────────────────────────────────────
     window.confirmarCambioEstadoVehiculo = function(id, estado) {
-        console.log('confirmarCambioEstado llamado:', {id, estado});
-        
         vehiculoACambiarEstado = id;
-        estadoActualVehiculo = estado;
-        
-        const nuevoEstado = estado === 'Activo' ? 'Inactivo' : 'Activo';
-        const accion = nuevoEstado === 'Activo' ? 'activar' : 'desactivar';
-        const colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
-        
-        // Configurar el header del modal
+        estadoActualVehiculo   = estado;
+
+        const nuevoEstado  = estado === 'Activo' ? 'Inactivo' : 'Activo';
+        const accion       = nuevoEstado === 'Activo' ? 'activar' : 'desactivar';
+        const colorHeader  = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
+
         $('#headerCambioEstadoVehiculo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
         $('#tituloCambioEstadoVehiculo').html('<i class="fas fa-' + (nuevoEstado === 'Activo' ? 'lock-open' : 'lock') + ' me-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Vehículo');
         $('#mensajeCambioEstadoVehiculo').html('¿Está seguro que desea <strong>' + accion + '</strong> este vehículo?');
-        
-        // Mostrar modal
+
         $('#modalCambiarEstadoVehiculo').modal('show');
-        
-        // Configurar el toggle visual después de mostrar el modal
+
         setTimeout(function() {
             const toggleLabel = document.getElementById('toggleEstadoVisualVehiculo');
             if (toggleLabel) {
-                if (nuevoEstado === 'Activo') {
-                    toggleLabel.classList.add('activo');
-                } else {
-                    toggleLabel.classList.remove('activo');
-                }
+                nuevoEstado === 'Activo' ? toggleLabel.classList.add('activo') : toggleLabel.classList.remove('activo');
             }
         }, 100);
     };
 
-    // Botón confirmar cambio de estado
+    // ── Confirmar cambio estado (AJAX) ───────────────────────────────────────
     $('#btnConfirmarCambioEstadoVehiculo').on('click', function() {
-        console.log('Confirmar cambio de estado clickeado');
-        
         if (!vehiculoACambiarEstado) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'No se ha seleccionado ningún vehículo'
-            });
+            Swal.fire({ icon: 'error', title: 'Error', text: 'No se ha seleccionado ningún vehículo' });
             return;
         }
-        
+
         const nuevoEstado = estadoActualVehiculo === 'Activo' ? 'Inactivo' : 'Activo';
-        
-        console.log('Enviando petición AJAX:', {
-            id: vehiculoACambiarEstado,
-            estado: nuevoEstado
-        });
-        
-        // Cerrar el modal personalizado
         $('#modalCambiarEstadoVehiculo').modal('hide');
-        
-        // Mostrar loading de SweetAlert2
-        Swal.fire({
-            title: 'Procesando...',
-            text: 'Por favor espere',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
-        
+
+        Swal.fire({ title: 'Procesando...', text: 'Por favor espere', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
             type: 'POST',
-            data: {
-                accion: 'cambiar_estado',
-                id: vehiculoACambiarEstado,
-                estado: nuevoEstado
-            },
+            data: { accion: 'cambiar_estado', id: vehiculoACambiarEstado, estado: nuevoEstado },
             dataType: 'json',
             success: function(response) {
-                console.log('Respuesta recibida:', response);
-                
                 if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        text: response.message || 'Vehículo ' + (nuevoEstado === 'Activo' ? 'activado' : 'desactivado') + ' correctamente',
-                        timer: 2000,
-                        showConfirmButton: false
-                    }).then(() => {
-                        location.reload();
-                    });
+                    Swal.fire({ icon: 'success', title: '¡Éxito!', text: response.message || 'Estado cambiado correctamente', timer: 2000, showConfirmButton: false })
+                        .then(() => { location.reload(); });
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: response.message || 'No se pudo cambiar el estado del vehículo'
-                    });
+                    Swal.fire({ icon: 'error', title: 'Error', text: response.message || 'No se pudo cambiar el estado' });
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('Error AJAX:', {
-                    xhr: xhr,
-                    status: status,
-                    error: error,
-                    responseText: xhr.responseText
-                });
-                
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo cambiar el estado del vehículo'
-                });
+            error: function() {
+                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo cambiar el estado del vehículo' });
             }
         });
     });
 
-    // Rehabilitar botón al cerrar modal sin confirmar
-    $('#modalCambiarEstadoVehiculo').on('hidden.bs.modal', function () {
+    $('#modalCambiarEstadoVehiculo').on('hidden.bs.modal', function() {
         $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
     });
 
-    // Botón guardar cambios de edición
+    // ── Guardar cambios edición ──────────────────────────────────────────────
     $('#btnGuardarCambiosVehiculo').on('click', function() {
-        var formData = {
-            accion: 'actualizar',
-            id: $('#editIdVehiculo').val(),
-            tipo: $('#editTipoVehiculo').val(),
-            descripcion: $('#editDescripcionVehiculo').val(),
-            idsede: $('#editIdSede').val()
-        };
+        const id          = $('#editIdVehiculo').val();
+        const tipo        = $('#editTipoVehiculo').val();
+        const descripcion = $('#editDescripcionVehiculo').val().trim();
+        const idsede      = $('#editIdSede').val();
+        const regexDesc   = /^[a-zA-Z0-9\s.,-]+$/;
 
-        console.log('Enviando datos:', formData);
-
-        // Validar campos obligatorios
-        if (!formData.tipo || !formData.idsede) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campos incompletos',
-                text: 'Por favor, complete todos los campos obligatorios (Tipo e ID Sede)'
-            });
+        if (!id || !tipo || !idsede) {
+            Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Complete todos los campos obligatorios', confirmButtonColor: '#f6c23e' });
+            return;
+        }
+        if (!descripcion || descripcion.length < 5) {
+            Swal.fire({ icon: 'warning', title: 'Descripción inválida', text: 'La descripción debe tener al menos 5 caracteres', confirmButtonColor: '#f6c23e' });
+            return;
+        }
+        if (!regexDesc.test(descripcion)) {
+            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', text: 'La descripción contiene caracteres no válidos', confirmButtonColor: '#e74a3b' });
             return;
         }
 
-        // Cerrar modal de edición
         $('#modalEditarVehiculo').modal('hide');
-        
-        // Mostrar loading de SweetAlert2
-        Swal.fire({
-            title: 'Guardando...',
-            text: 'Por favor espere',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
+        Swal.fire({ title: 'Guardando...', text: 'Por favor espere', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
             type: 'POST',
-            data: formData,
+            data: { accion: 'actualizar', id, tipo, descripcion, idsede },
             dataType: 'json',
             success: function(response) {
-                console.log('Respuesta:', response);
-                
                 if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        text: 'Vehículo actualizado correctamente',
-                        timer: 2000,
-                        showConfirmButton: false
-                    }).then(() => {
-                        location.reload();
-                    });
+                    Swal.fire({ icon: 'success', title: '¡Actualizado!', text: 'Vehículo actualizado correctamente', timer: 2000, showConfirmButton: false })
+                        .then(() => { location.reload(); });
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: response.message || 'No se pudo actualizar el vehículo'
-                    });
+                    Swal.fire({ icon: 'error', title: 'Error', html: response.message.replace(/\n/g, '<br>'), confirmButtonColor: '#e74a3b' });
                 }
             },
-            error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
-                
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo conectar con el servidor'
-                });
+            error: function() {
+                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo conectar con el servidor' });
             }
         });
     });
 
-    // ============================================
-    // 🔥 ZONA DATATABLES - Activación de DataTable
-    // ============================================
-    $(document).ready(function() {
-        $('#TablaVehiculoSupervisor').DataTable({  // O el ID que tenga tu tabla
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-            },
-            pageLength: 10,
-            responsive: true,
-            order: [[0, "desc"]]
-        });
-    });
-
-    // Rehabilitar botón al cerrar modal de edición
-    $('#modalEditarVehiculo').on('hidden.bs.modal', function () {
+    $('#modalEditarVehiculo').on('hidden.bs.modal', function() {
         $('#btnGuardarCambiosVehiculo').prop('disabled', false).html('Guardar Cambios');
     });
 
-    console.log('Todos los event listeners configurados correctamente');
+    // ── DataTable ────────────────────────────────────────────────────────────
+    $('#TablaVehiculoSupervisor').DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
+        pageLength: 10,
+        responsive: true,
+        order: [[0, "asc"]]
+    });
 });
 </script>
 

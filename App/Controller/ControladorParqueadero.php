@@ -66,9 +66,8 @@ try {
                 $rutaCompleta = $rutaCarpeta . '/' . $nombreArchivo;
                 
                 $contenidoQR = "VEHÍCULO\n";
-                $contenidoQR .= "ID: $idVehiculo\n";
-                $contenidoQR .= "Tipo: $tipo\n";
                 $contenidoQR .= "Placa: $placa\n";
+                $contenidoQR .= "Tipo: $tipo\n";
                 $contenidoQR .= "Descripción: $descripcion\n";
                 $contenidoQR .= "Fecha: " . date('Y-m-d H:i:s');
 

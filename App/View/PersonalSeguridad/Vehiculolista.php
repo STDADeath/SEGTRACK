@@ -10,7 +10,6 @@ $filtros = [];
 $params = [];
 
 // FILTRO OBLIGATORIO: Solo mostrar vehículos activos
-// 🔧 CORREGIDO: Especificar tabla con alias p.Estado
 $filtros[] = "p.Estado = :estado";
 $params[':estado'] = 'Activo';
 
@@ -37,10 +36,7 @@ if (!empty($_GET['sede'])) {
 
 $where = "WHERE " . implode(" AND ", $filtros);
 
-// 🔧 MODIFICADO: JOIN con tabla sede para obtener TipoSede
-$sql = "SELECT 
-            p.*,
-            s.TipoSede
+$sql = "SELECT p.*, s.TipoSede, s.Ciudad
         FROM Parqueadero p
         LEFT JOIN sede s ON p.IdSede = s.IdSede
         $where 
@@ -49,6 +45,12 @@ $sql = "SELECT
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Cargar sedes activas para filtro y modal
+$sqlSedes = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
+$stmtSedes = $conn->prepare($sqlSedes);
+$stmtSedes->execute();
+$sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -71,25 +73,32 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <select name="tipo" id="tipo" class="form-select">
                         <option value="">Todos</option>
                         <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>>Bicicleta</option>
-                        <option value="Moto" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto') ? 'selected' : '' ?>>Moto</option>
-                        <option value="Carro" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro') ? 'selected' : '' ?>>Carro</option>
+                        <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>>Moto</option>
+                        <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>>Carro</option>
                     </select>
                 </div>
                 <div class="col-md-2">
                     <label for="placa" class="form-label">Placa</label>
-                    <input type="text" name="placa" id="placa" class="form-control" value="<?= $_GET['placa'] ?? '' ?>" placeholder="Buscar placa">
+                    <input type="text" name="placa" id="placa" class="form-control" value="<?= htmlspecialchars($_GET['placa'] ?? '') ?>" placeholder="Buscar placa">
                 </div>
                 <div class="col-md-2">
                     <label for="tarjeta" class="form-label">Tarjeta Propiedad</label>
-                    <input type="text" name="tarjeta" id="tarjeta" class="form-control" value="<?= $_GET['tarjeta'] ?? '' ?>" placeholder="Buscar tarjeta">
+                    <input type="text" name="tarjeta" id="tarjeta" class="form-control" value="<?= htmlspecialchars($_GET['tarjeta'] ?? '') ?>" placeholder="Buscar tarjeta">
                 </div>
                 <div class="col-md-2">
                     <label for="fecha" class="form-label">Fecha</label>
-                    <input type="date" name="fecha" id="fecha" class="form-control" value="<?= $_GET['fecha'] ?? '' ?>">
+                    <input type="date" name="fecha" id="fecha" class="form-control" value="<?= htmlspecialchars($_GET['fecha'] ?? '') ?>">
                 </div>
                 <div class="col-md-2">
-                    <label for="sede" class="form-label">ID Sede</label>
-                    <input type="text" name="sede" id="sede" class="form-control" value="<?= $_GET['sede'] ?? '' ?>" placeholder="ID Sede">
+                    <label for="sede" class="form-label">Sede</label>
+                    <select name="sede" id="sede" class="form-select">
+                        <option value="">Todas</option>
+                        <?php foreach ($sedesDisponibles as $sede) : ?>
+                            <option value="<?= $sede['IdSede'] ?>" <?= (isset($_GET['sede']) && $_GET['sede'] == $sede['IdSede']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($sede['TipoSede']) ?> — <?= htmlspecialchars($sede['Ciudad']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
@@ -108,7 +117,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <table class="table table-bordered table-hover table-striped align-middle text-center" id="TablaVehiculos">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
                         <th>QR</th>
                         <th>Tipo Vehículo</th>
                         <th>Placa</th>
@@ -123,16 +131,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
                             <tr id="fila-<?php echo $row['IdParqueadero']; ?>">
-                                <td><?php echo $row['IdParqueadero']; ?></td>
                                 <td class="text-center">
                                     <?php if (!empty($row['QrVehiculo'])) : ?>
-                                        <button type="button" class="btn btn-sm btn-outline-success" 
+                                        <button type="button" class="btn btn-sm btn-outline-success"
                                                 onclick="verQRVehiculo('<?php echo htmlspecialchars($row['QrVehiculo']); ?>', <?php echo $row['IdParqueadero']; ?>)"
                                                 title="Ver código QR">
                                             <i class="fas fa-qrcode me-1"></i> Ver QR
                                         </button>
                                         <br>
-                                        <!-- 🆕 BOTÓN ENVIAR QR -->
                                         <button type="button" class="btn btn-sm btn-outline-info mt-1"
                                                 onclick="solicitarCorreoYEnviarQR(<?php echo $row['IdParqueadero']; ?>, '<?php echo htmlspecialchars($row['PlacaVehiculo']); ?>')"
                                                 title="Enviar QR por correo">
@@ -142,14 +148,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge badge-warning">Sin QR</span>
                                     <?php endif; ?>
                                 </td>
-                                <td><?php echo $row['TipoVehiculo']; ?></td>
-                                <td><?php echo $row['PlacaVehiculo']; ?></td>
-                                <td><?php echo $row['DescripcionVehiculo']; ?></td>
-                                <td><?php echo $row['TarjetaPropiedad']; ?></td>
-                                <td><?php echo $row['FechaParqueadero']; ?></td>
+                                <td><?php echo htmlspecialchars($row['TipoVehiculo']); ?></td>
+                                <td><?php echo htmlspecialchars($row['PlacaVehiculo']); ?></td>
+                                <td><?php echo htmlspecialchars($row['DescripcionVehiculo']); ?></td>
+                                <td><?php echo htmlspecialchars($row['TarjetaPropiedad']); ?></td>
+                                <td><?php echo htmlspecialchars($row['FechaParqueadero']); ?></td>
                                 <td>
                                     <?php if (!empty($row['TipoSede'])) : ?>
-                                        <?php echo $row['TipoSede']; ?>
+                                        <?php echo htmlspecialchars($row['TipoSede']); ?> — <?php echo htmlspecialchars($row['Ciudad']); ?>
                                     <?php else : ?>
                                         <span class="badge bg-secondary">Sin sede</span>
                                     <?php endif; ?>
@@ -167,7 +173,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="9" class="text-center py-4">
+                            <td colspan="8" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay vehículos activos registrados con los filtros seleccionados</p>
                             </td>
@@ -228,8 +234,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Placa (No editable)</label>
-                            <input type="text" id="editPlacaVehiculoDisabled" class="form-control" disabled>
+                            <label class="form-label">Placa <small class="text-muted">(No editable)</small></label>
+                            <input type="text" id="editPlacaVehiculoDisabled" class="form-control bg-light" disabled>
                         </div>
                     </div>
 
@@ -240,18 +246,26 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Tarjeta Propiedad (No editable)</label>
-                            <input type="text" id="editTarjetaPropiedadDisabled" class="form-control" disabled>
+                            <label class="form-label">Tarjeta Propiedad <small class="text-muted">(No editable)</small></label>
+                            <input type="text" id="editTarjetaPropiedadDisabled" class="form-control bg-light" disabled>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Fecha Parqueadero (No editable)</label>
-                            <input type="datetime-local" id="editFechaParqueaderoDisabled" class="form-control" disabled>
+                            <label class="form-label">Fecha <small class="text-muted">(No editable)</small></label>
+                            <input type="datetime-local" id="editFechaParqueaderoDisabled" class="form-control bg-light" disabled>
                         </div>
                     </div>
 
+                    <!-- SELECT de sede en lugar del input numérico -->
                     <div class="mb-3">
-                        <label class="form-label">ID Sede</label>
-                        <input type="number" id="editIdSede" class="form-control" name="idsede" required>
+                        <label class="form-label">Sede</label>
+                        <select id="editIdSede" class="form-control" name="idsede" required>
+                            <option value="">-- Seleccione una sede --</option>
+                            <?php foreach ($sedesDisponibles as $sede) : ?>
+                                <option value="<?= $sede['IdSede'] ?>">
+                                    <?= htmlspecialchars($sede['TipoSede']) ?> — <?= htmlspecialchars($sede['Ciudad']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </form>
             </div>
@@ -266,41 +280,27 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
 <script>
-// ============================================
-// 🔥 ZONA DATATABLES
-// ============================================
+// ── DataTable ────────────────────────────────────────────────────────────────
 $(document).ready(function() {
     $('#TablaVehiculos').DataTable({
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-        },
+        language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
         pageLength: 10,
         responsive: true,
         order: [[0, "desc"]]
     });
 });
 
-// ============================================
-// Función para mostrar QR del vehículo
-// ============================================
+// ── Ver QR ───────────────────────────────────────────────────────────────────
 function verQRVehiculo(rutaQR, idVehiculo) {
     var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
-    
-    console.log('Ruta QR completa:', rutaCompleta);
-    
     $('#qrVehiculoId').text(idVehiculo);
     $('#qrImagenVehiculo').attr('src', rutaCompleta);
     $('#btnDescargarQRVehiculo').attr('href', rutaCompleta).attr('download', 'QR-Vehiculo-' + idVehiculo + '.png');
-    
     $('#modalVerQRVehiculo').modal('show');
 }
 
-// ============================================
-// 🆕 FUNCIÓN PARA SOLICITAR CORREO Y ENVIAR QR
-// ============================================
+// ── Solicitar correo y enviar QR ─────────────────────────────────────────────
 function solicitarCorreoYEnviarQR(idVehiculo, placa) {
-    console.log('📧 Solicitando correo para vehículo ID:', idVehiculo, 'Placa:', placa);
-    
     Swal.fire({
         title: '📧 Enviar Código QR',
         html: `
@@ -317,19 +317,14 @@ function solicitarCorreoYEnviarQR(idVehiculo, placa) {
         reverseButtons: true,
         preConfirm: () => {
             const correo = document.getElementById('correoInput').value;
-            
-            // Validar correo
             if (!correo) {
                 Swal.showValidationMessage('Por favor ingresa un correo electrónico');
                 return false;
             }
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(correo)) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
                 Swal.showValidationMessage('Por favor ingresa un correo electrónico válido');
                 return false;
             }
-            
             return correo;
         }
     }).then((result) => {
@@ -339,13 +334,7 @@ function solicitarCorreoYEnviarQR(idVehiculo, placa) {
     });
 }
 
-// ============================================
-// 🆕 FUNCIÓN PARA ENVIAR QR POR CORREO
-// ============================================
 function enviarQRVehiculo(idVehiculo, correoDestinatario, placa) {
-    console.log('Enviando QR a:', correoDestinatario);
-    
-    // Mostrar loading
     Swal.fire({
         title: 'Enviando correo...',
         html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
@@ -354,156 +343,84 @@ function enviarQRVehiculo(idVehiculo, correoDestinatario, placa) {
         showConfirmButton: false
     });
 
-    // Realizar petición AJAX
     $.ajax({
         url: '../../Controller/ControladorParqueadero.php',
         type: 'POST',
-        data: {
-            accion: 'enviar_qr',
-            id_vehiculo: idVehiculo,
-            correo_destinatario: correoDestinatario
-        },
+        data: { accion: 'enviar_qr', id_vehiculo: idVehiculo, correo_destinatario: correoDestinatario },
         dataType: 'json',
         timeout: 30000,
         success: function(response) {
-            console.log('✓ Respuesta:', response);
-            
             if (response.success) {
                 Swal.fire({
                     icon: 'success',
                     title: '¡Correo enviado!',
-                    html: `<p>${response.message}</p>
-                        <small class="text-muted">El código QR del vehículo con placa <strong>${placa}</strong> ha sido enviado</small>`,
+                    html: `<p>${response.message}</p><small class="text-muted">QR del vehículo con placa <strong>${placa}</strong> enviado</small>`,
                     timer: 4000,
                     timerProgressBar: true,
                     confirmButtonColor: '#1cc88a'
                 });
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error al enviar',
-                    text: response.message,
-                    confirmButtonColor: '#e74a3b'
-                });
+                Swal.fire({ icon: 'error', title: 'Error al enviar', text: response.message, confirmButtonColor: '#e74a3b' });
             }
         },
-        error: function(xhr, status, error) {
-            console.error('❌ Error AJAX:', {
-                status: status,
-                error: error,
-                response: xhr.responseText
-            });
-            
-            let errorMsg = 'No se pudo conectar con el servidor.';
-            
-            if (xhr.status === 404) {
-                errorMsg = 'El controlador no se encontró. Verifica la ruta.';
-            } else if (status === 'timeout') {
-                errorMsg = 'La solicitud tardó demasiado tiempo.';
-            }
-            
-            Swal.fire({
-                icon: 'error',
-                title: 'Error de conexión',
-                text: errorMsg,
-                confirmButtonColor: '#e74a3b',
-                footer: '<small>Revisa la consola (F12) para más detalles</small>'
-            });
+        error: function(xhr, status) {
+            let errorMsg = status === 'timeout' ? 'La solicitud tardó demasiado tiempo.' : 'No se pudo conectar con el servidor.';
+            Swal.fire({ icon: 'error', title: 'Error de conexión', text: errorMsg, confirmButtonColor: '#e74a3b' });
         }
     });
 }
 
-// ============================================
-// Cargar datos en el modal de edición
-// ============================================
+// ── Cargar datos modal edición ────────────────────────────────────────────────
 function cargarDatosEdicionVehiculo(row) {
-    console.log('Cargando datos para editar:', row);
-    
     $('#editIdVehiculo').val(row.IdParqueadero);
     $('#editTipoVehiculo').val(row.TipoVehiculo);
     $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
-    $('#editIdSede').val(row.IdSede);
-
+    $('#editIdSede').val(row.IdSede);          // preselecciona la sede actual
     $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
     $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
 
     var fechaHora = row.FechaParqueadero;
-    if (fechaHora) {
-        fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
-    }
+    if (fechaHora) fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
     $('#editFechaParqueaderoDisabled').val(fechaHora);
-    
+
     $('#modalEditarVehiculo').modal('show');
 }
 
-// ============================================
-// Botón guardar cambios
-// ============================================
+// ── Guardar cambios ───────────────────────────────────────────────────────────
 $(document).ready(function() {
     $('#btnGuardarCambiosVehiculo').click(function() {
-        var formData = {
-            accion: 'actualizar',
-            id: $('#editIdVehiculo').val(),
-            tipo: $('#editTipoVehiculo').val(),
-            descripcion: $('#editDescripcionVehiculo').val(),
-            idsede: $('#editIdSede').val()
-        };
+        var id          = $('#editIdVehiculo').val();
+        var tipo        = $('#editTipoVehiculo').val();
+        var descripcion = $('#editDescripcionVehiculo').val().trim();
+        var idsede      = $('#editIdSede').val();
 
-        console.log('Enviando datos:', formData);
-
-        if (!formData.tipo || !formData.idsede) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campos incompletos',
-                text: 'Complete todos los campos obligatorios'
-            });
+        if (!tipo || !idsede) {
+            Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Complete todos los campos obligatorios', confirmButtonColor: '#f6c23e' });
+            return;
+        }
+        if (!descripcion || descripcion.length < 5) {
+            Swal.fire({ icon: 'warning', title: 'Descripción inválida', text: 'La descripción debe tener al menos 5 caracteres', confirmButtonColor: '#f6c23e' });
             return;
         }
 
         $('#modalEditarVehiculo').modal('hide');
-
-        Swal.fire({
-            title: 'Guardando...',
-            text: 'Por favor espere',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
+        Swal.fire({ title: 'Guardando...', text: 'Por favor espere', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
             type: 'POST',
-            data: formData,
+            data: { accion: 'actualizar', id, tipo, descripcion, idsede },
             dataType: 'json',
             success: function(response) {
-                console.log('Respuesta:', response);
-                
                 if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        text: 'Vehículo actualizado correctamente',
-                        timer: 2000,
-                        showConfirmButton: false
-                    }).then(() => {
-                        location.reload();
-                    });
+                    Swal.fire({ icon: 'success', title: '¡Éxito!', text: 'Vehículo actualizado correctamente', timer: 2000, showConfirmButton: false })
+                        .then(() => { location.reload(); });
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: response.message || 'Error al actualizar el vehículo'
-                    });
+                    Swal.fire({ icon: 'error', title: 'Error', text: response.message || 'Error al actualizar el vehículo' });
                 }
             },
-            error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo conectar con el servidor'
-                });
+            error: function() {
+                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo conectar con el servidor' });
             }
         });
     });

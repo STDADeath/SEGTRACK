@@ -161,7 +161,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <?php if (!empty($row['NumeroSerial'])) : ?>
                                         <?php echo $row['NumeroSerial']; ?>
                                     <?php else : ?>
-                                        <span class="text-muted">-</span>
+                                        <span class="badge bg-info text-white">No tiene número serial</span>
                                     <?php endif; ?>
                                 </td>
                                 
