@@ -173,19 +173,19 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= htmlspecialchars($row['DocumentoFuncionario']) ?></td>
                         <td><?= htmlspecialchars($row['CorreoFuncionario']) ?></td>
 
-                        <!-- ===== ESTADO: Activo=verde | Inactivo=AZUL ===== -->
-                        <td class="text-center">
-                            <?php if ($row['Estado'] === 'Activo'): ?>
-                                <span id="badge-estado-<?= $row['IdFuncionario'] ?>" class="badge bg-success">
-                                   Activo
-                                </span>
-                            <?php else: ?>
-                                <span id="badge-estado-<?= $row['IdFuncionario'] ?>" class="badge bg-primary">
-                                    Inactivo
-                                </span>
-                            <?php endif; ?>
-                        </td>
-
+                     <td class="text-center">
+                        <?php if ($row['Estado'] === 'Activo'): ?>
+                            <span id="badge-estado-<?= $row['IdFuncionario'] ?>" 
+                                class="badge bg-success text-white">
+                            Activo
+                            </span>
+                        <?php else: ?>
+                            <span id="badge-estado-<?= $row['IdFuncionario'] ?>" 
+                                class="badge bg-primary text-white">
+                                Inactivo
+                            </span>
+                        <?php endif; ?>
+                    </td>
                         <!-- ===== ACCIONES: lápiz + candado cuadrados ===== -->
                         <td>
                             <div class="d-flex gap-2">

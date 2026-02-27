@@ -103,37 +103,131 @@ $mail->isHTML(true);
 $mail->CharSet = 'UTF-8';
 $mail->Subject = 'Recuperación de Contraseña - Segtrack';
 $mail->Body = "
-<html>
+<!DOCTYPE html>
+<html lang='es'>
 <head>
-<style>
-body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-.container { max-width: 600px; margin: 0 auto; padding: 20px; }
-.header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
-.content { padding: 20px; background-color: #f9f9f9; }
-.token { font-size: 32px; font-weight: bold; color: #4CAF50; text-align: center; padding: 20px; background-color: white; border: 2px dashed #4CAF50; margin: 20px 0; }
-.footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
-</style>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Recuperación de Contraseña</title>
 </head>
-<body>
-<div class='container'>
-<div class='header'>
-<h1>Recuperación de Contraseña</h1>
+
+<body style='margin:0; padding:0; background-color:#f0f4f8;
+             font-family:Arial,Helvetica,sans-serif;'>
+
+<table width='100%' cellpadding='0' cellspacing='0'
+       style='background-color:#f0f4f8; padding:30px 0;'>
+<tr>
+<td align='center'>
+
+<table width='600' cellpadding='0' cellspacing='0'
+       style='background-color:#ffffff; border-radius:12px;
+              overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.12);
+              max-width:600px; width:100%;'>
+
+<!-- ═══════════ HEADER AZUL CORPORATIVO ═══════════ -->
+<tr>
+<td style='background:linear-gradient(135deg,#1a5fc8 0%,#2979e0 60%,#3a8ef6 100%);
+           padding:30px 40px 26px 40px; text-align:center;'>
+
+<table cellpadding='0' cellspacing='0' style='margin:0 auto;'>
+<tr>
+<td valign='middle' style='padding-right:14px;'>
+<img src='cid:logo_segtrack' alt='Logo SEGTRACK'
+     style='width:80px; height:auto; display:block; vertical-align:middle;'>
+</td>
+<td valign='middle'>
+<span style='font-size:32px; font-weight:900; color:#ffffff;
+             letter-spacing:3px; text-transform:uppercase;
+             text-shadow:0 2px 8px rgba(0,0,0,0.2);'>
+SEGTRACK
+</span>
+</td>
+</tr>
+</table>
+
+<p style='margin:10px 0 0 0; color:rgba(255,255,255,0.88);
+          font-size:13px; letter-spacing:1px; text-align:center;'>
+Sistema de Gestión de Seguridad
+</p>
+
+</td>
+</tr>
+
+<!-- ═══════════ CUERPO ═══════════ -->
+<tr>
+<td style='padding:36px 40px 30px 40px;'>
+
+<p style='margin:0 0 8px 0; font-size:18px;
+          font-weight:700; color:#1a2d4e;'>
+Hola, {$usuario['NombreFuncionario']}
+</p>
+
+<p style='margin:0 0 24px 0; font-size:14px;
+          color:#555; line-height:1.6;'>
+Hemos recibido una solicitud para restablecer tu contraseña
+en el sistema <strong>SEGTRACK</strong>.
+</p>
+
+<!-- CAJA TOKEN ESTILO PREMIUM -->
+<table width='100%' cellpadding='0' cellspacing='0'
+       style='border-left:4px solid #2979e0;
+              background-color:#f5f9ff;
+              border-radius:0 8px 8px 0;
+              margin-bottom:26px;
+              box-shadow:0 2px 8px rgba(41,121,224,0.07);'>
+<tr>
+<td style='padding:22px 20px; text-align:center;'>
+
+<p style='margin:0 0 10px 0;
+          font-size:13px;
+          font-weight:700;
+          color:#1a5fc8;
+          text-transform:uppercase;
+          letter-spacing:1px;'>
+🔐 Código de Verificación
+</p>
+
+<div style='font-size:38px;
+            font-weight:900;
+            letter-spacing:6px;
+            color:#1a5fc8;
+            margin:10px 0;'>
+{$token}
 </div>
-<div class='content'>
-<p>Hola <strong>{$usuario['NombreFuncionario']}</strong>,</p>
-<p>Has solicitado recuperar tu contraseña en Segtrack.</p>
-<p>Tu token de verificación es:</p>
-<div class='token'>{$token}</div>
-<p><strong>Este token es válido por 15 minutos.</strong></p>
-<p>Si no solicitaste este cambio, ignora este correo.</p>
-</div>
-<div class='footer'>
-<p>&copy; 2024 Segtrack. Todos los derechos reservados.</p>
-</div>
-</div>
+
+<p style='margin:10px 0 0 0;
+          font-size:13px;
+          color:#444;'>
+⏳ Este código es válido por <strong>15 minutos</strong>.
+</p>
+
+</td>
+</tr>
+</table>
+
+<p style='font-size:13px; color:#666; line-height:1.6;'>
+Si no solicitaste este cambio, puedes ignorar este mensaje.
+Tu cuenta permanecerá segura.
+</p>
+
+</td>
+</tr>
+
+</table>
+
+<p style='margin:18px 0 0 0; font-size:11px;
+          color:#aaa; text-align:center;'>
+© " . date('Y') . " SEGTRACK - Sistema de Seguridad Integral<br>
+Este correo fue generado automáticamente. Por favor no respondas a este mensaje.
+</p>
+
+</td>
+</tr>
+</table>
+
 </body>
 </html>
- ";
+";
 
 $mail->AltBody = "Hola {$usuario['NombreFuncionario']}, tu token de recuperación es: {$token}. Válido por 15 minutos.";
 

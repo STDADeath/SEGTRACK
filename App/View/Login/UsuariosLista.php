@@ -63,17 +63,21 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 
                                 <td><?= htmlspecialchars($row['TipoRol']) ?></td>
 
-                                <td>
+                                <td class="text-center">
                                     <?php if ($activo): ?>
-                                        <span class="badge bg-success px-3 py-2">Activo</span>
+                                        <span class="badge bg-success text-white">
+                                            Activo
+                                        </span>
                                     <?php else: ?>
-                                        <span class="badge px-3 py-2"
-                                              style="background-color:#60a5fa;">Inactivo</span>
+                                        <span class="badge bg-primary text-white">
+                                            Inactivo
+                                        </span>
                                     <?php endif; ?>
                                 </td>
 
                                 <td>
-                                    <!-- ✅ EDITAR: solo data-* sin onclick ni data-bs-toggle -->
+
+                                    <!-- BOTÓN EDITAR -->
                                     <button type="button"
                                             class="btn btn-outline-primary btn-sm rounded-3 btn-editar-rol"
                                             style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;"
@@ -84,8 +88,9 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
                                         <i class="fas fa-pen-to-square"></i>
                                     </button>
 
-                                    <!-- CANDADO ESTADO -->
-                                    <button class="btn btn-sm btn-toggle-estado ms-1"
+                                    <!-- BOTÓN CANDADO ESTADO (CORREGIDO) -->
+                                    <button type="button"
+                                            class="btn btn-sm btn-toggle-estado ms-1"
                                             style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;border:1px solid #d4af37;background:#fff8dc;"
                                             data-id="<?= $row['IdUsuario'] ?>"
                                             data-estado="<?= $row['Estado'] ?>"
@@ -96,6 +101,7 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
                                             <i class="fas fa-unlock text-success"></i>
                                         <?php endif; ?>
                                     </button>
+
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -125,7 +131,6 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
                 <h5 class="modal-title">
                     <i class="fas fa-user-tag me-2"></i>Editar Rol de Usuario
                 </h5>
-                <!-- ✅ btn-close normal, Bootstrap 4 no tiene btn-close-white -->
                 <button type="button" class="close text-white" data-dismiss="modal">
                     <span>&times;</span>
                 </button>
@@ -136,7 +141,6 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Funcionario</label>
-                    <!-- ✅ input readonly en vez de <p> -->
                     <input type="text" id="editNombreFuncionario"
                            class="form-control bg-light" readonly>
                 </div>
@@ -162,7 +166,6 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
             </div>
 
             <div class="modal-footer">
-                <!-- ✅ data-dismiss (Bootstrap 4) -->
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="fas fa-times me-1"></i> Cancelar
                 </button>
@@ -171,6 +174,7 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
                     <i class="fas fa-save me-1"></i> Guardar Cambios
                 </button>
             </div>
+
         </div>
     </div>
 </div>
@@ -181,16 +185,13 @@ $roles_permitidos = ['Supervisor', 'Personal Seguridad', 'Administrador'];
 <link rel="stylesheet" href="../../../Public/vendor/datatables/dataTables.bootstrap4.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="../../../Public/css/Tablas.css">
+
 <!-- JS EN ORDEN CORRECTO -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
-
-<!-- ✅ Bootstrap JS es OBLIGATORIO para que funcione .modal('show') -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <script src="../../../Public/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="../../../Public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Tu JS siempre al final -->
+<!-- TU JS AL FINAL -->
 <script src="../../../Public/js/javascript/js/ValidacionUsuarioLista.js"></script>
-
