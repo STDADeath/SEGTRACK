@@ -48,7 +48,7 @@ if ($_SESSION['usuario']['TipoRol'] !== 'Personal Seguridad') {
 
     <!-- Hojas de estilo del tema y personalizadas -->
     <link href="../../../Public/css/sb-admin-2.css" rel="stylesheet"> <!-- Plantilla base -->
-    
+    <link href="../../../Public/css/Tablas.css" rel="stylesheet">
 
     <link href="../../../Public/css/graficas.css" rel="stylesheet"> <!-- Estilos para gráficos -->
     <link href="../../../Public/css/icono.css" rel="stylesheet"> <!-- Estilos para íconos personalizados -->
@@ -72,13 +72,12 @@ if ($_SESSION['usuario']['TipoRol'] !== 'Personal Seguridad') {
 
             <hr class="sidebar-divider">
 
-            <!-- Sección de Funcionario -->
+           <!-- Sección de Funcionario -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Funcionario</span>
                 </a>
-
                 <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Funcionarios:</h6>
@@ -87,19 +86,13 @@ if ($_SESSION['usuario']['TipoRol'] !== 'Personal Seguridad') {
 
                         <div class="collapse-divider"></div>
 
-                        <h6 class="collapse-header">Parqueadero:</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/Parqueadero.php">Ingreso Parqueadero</a>
-                        <a class="collapse-item" href="../PersonalSeguridad/Vehiculolista.php">Lista Parqueadero</a>
-
-                        <div class="collapse-divider"></div>
-
-                        <h6 class="collapse-header">Dispositivos:</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/Dispositivos.php">Registrar Dispositivo</a>
-                        <a class="collapse-item" href="../PersonalSeguridad/DispositivoLista.php">Lista de Dispositivos</a>
+                        <h6 class="collapse-header">Sedes:</h6>
+                        <a class="collapse-item" href="../PersonalSeguridad/InstitucionesLista.php">Lista de Institutos</a>  
+                        <a class="collapse-item" href="../PersonalSeguridad/SedeLista.php">Lista de Sedes</a>
+                                            
                     </div>
                 </div>
             </li>
-
             <!-- Control de Bitácora -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities">

@@ -2,6 +2,16 @@
 // Inicia la sesión para mantener variables de usuario
 session_start();
 
+if (!isset($_SESSION['usuario'])) {
+    header("Location: /SEGTRACK1/");
+    exit();
+}
+
+// Bloquear cache para que no puedan volver con flecha
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 // Importa la parte superior del layout (navbar, estilos, encabezado general)
 require_once __DIR__ . '/../layouts/parte_superior.php';
 
@@ -18,25 +28,7 @@ $controladorSede = new ControladorSede();
 $sedes = $controladorSede->obtenerSedes();
 ?>
 
-<!-- ================================================================
-     CSS PERSONALIZADO: Elimina los iconos de validación de Bootstrap
-================================================================= -->
-<style>
-    /* Oculta los íconos verdes (✔) y rojos (✘) de los inputs de Bootstrap */
-    .form-control.is-valid,
-    .form-control.is-invalid,
-    .form-select.is-valid,
-    .form-select.is-invalid {
-        background-image: none !important; /* elimina el ícono */
-        padding-right: 0.75rem !important; /* asegura que el padding sea uniforme */
-    }
 
-    /* Evita que el borde azul de Bootstrap aparezca al hacer clic en el input */
-    .form-control:focus,
-    .form-select:focus {
-        box-shadow: none;
-    }
-</style>
 
 <!-- ================================================================
      CONTENEDOR PRINCIPAL
@@ -84,6 +76,10 @@ $sedes = $controladorSede->obtenerSedes();
                             <option value="">Seleccione...</option>
                             <option value="Personal Seguridad">Personal Seguridad</option>
                             <option value="Funcionario">Funcionario</option>
+                            <option value="Visitante">Visitante</option>
+                            <option value="RR.HH">RR.HH</option>
+                            <option value="Contador">Contador</option>
+                            <option value="Financiero">Financiero</option>
                         </select>
 
                         <!-- Mensaje de error si no es válido -->
@@ -203,11 +199,9 @@ $sedes = $controladorSede->obtenerSedes();
 </div>
 
 <!-- PIE DE PÁGINA GENERAL -->
-<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
-
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+<link rel="stylesheet" href="../../../Public/css/Tablas.css"> <!-- RUTA RELATIVA -->
 <!-- Librerías JS -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Archivo JS específico de este módulo -->
 <script src="../../../Public/js/javascript/js/Funcionarios.js"></script> <!-- RUTA RELATIVA -->

@@ -1,62 +1,14 @@
-<?php 
+<?php  
 /**
  * ========================================
  * LISTA DE FUNCIONARIOS - SEGTRACK
  * ========================================
  */
-require_once __DIR__ . '/../layouts/parte_superior_administrador.php'; 
+require_once __DIR__ . '/../layouts/parte_superior.php'; 
 
 // ✅ CORRECCIÓN: $baseQR solo '/qr' para no duplicar 'Public/' en la URL
 $baseQR = '/qr';
 ?>
-
-<style>
-    .table-hover tbody tr:hover {
-        background-color: #f8f9fc;
-        transition: background-color 0.2s;
-    }
-    .card {
-        border: none;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-    }
-
-    /* =============================================
-       BOTONES QR: Ver / Enviar
-       → Para AGRANDAR: sube font-size y padding
-       → Para ACHICAR:  baja font-size y padding
-    ============================================= */
-    .btn-qr-ver,
-    .btn-qr-enviar {
-        font-size: 0.72rem;
-        padding: 2px 7px;
-        line-height: 1.5;
-    }
-
-    /* =============================================
-       BOTONES ACCIÓN: Lápiz / Candado
-       → Para AGRANDAR: sube width, height y font-size
-       → Para ACHICAR:  bájalos
-       → border-radius: controla cuánto se redondean las esquinas
-    ============================================= */
-    .btn-accion {
-        width: 36px;
-        height: 36px;
-        padding: 0;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .table-striped tbody tr:nth-of-type(odd) { background-color: #f8f9fc; }
-    .table-hover tbody tr:hover              { background-color: #f1f3f8; transition: 0.2s ease-in-out; }
-    .badge { font-size: 0.85rem; }
-    table.dataTable thead .sorting:after,
-    table.dataTable thead .sorting:before,
-    table.dataTable thead .sorting_asc:after,
-    table.dataTable thead .sorting_desc:after { display: none !important; }
-</style>
-
 <div class="container-fluid px-4 py-4">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -221,19 +173,19 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= htmlspecialchars($row['DocumentoFuncionario']) ?></td>
                         <td><?= htmlspecialchars($row['CorreoFuncionario']) ?></td>
 
-                        <!-- ===== ESTADO: Activo=verde | Inactivo=AZUL ===== -->
-                        <td class="text-center">
-                            <?php if ($row['Estado'] === 'Activo'): ?>
-                                <span id="badge-estado-<?= $row['IdFuncionario'] ?>" class="badge bg-success">
-                                    <i class="fas fa-check-circle"></i> Activo
-                                </span>
-                            <?php else: ?>
-                                <span id="badge-estado-<?= $row['IdFuncionario'] ?>" class="badge bg-primary">
-                                    <i class="fas fa-lock"></i> Inactivo
-                                </span>
-                            <?php endif; ?>
-                        </td>
-
+                     <td class="text-center">
+                        <?php if ($row['Estado'] === 'Activo'): ?>
+                            <span id="badge-estado-<?= $row['IdFuncionario'] ?>" 
+                                class="badge bg-success text-white">
+                            Activo
+                            </span>
+                        <?php else: ?>
+                            <span id="badge-estado-<?= $row['IdFuncionario'] ?>" 
+                                class="badge bg-primary text-white">
+                                Inactivo
+                            </span>
+                        <?php endif; ?>
+                    </td>
                         <!-- ===== ACCIONES: lápiz + candado cuadrados ===== -->
                         <td>
                             <div class="d-flex gap-2">
@@ -325,6 +277,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <label class="form-label">Cargo <span class="text-danger">*</span></label>
                             <select id="editCargo" class="form-control">
                                 <option value="">Seleccione un cargo</option>
+                                <option value="Personal Seguridad">Personal Seguridad</option>
                                 <option value="Funcionario">Funcionario</option>
                             </select>
                         </div>
@@ -374,12 +327,12 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
 <!-- CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+<Link rel="stylesheet" href="../../../Public/css/Tablas.css">
 <!-- JS EN ORDEN CORRECTO -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

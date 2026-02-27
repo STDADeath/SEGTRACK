@@ -4511,3 +4511,20 @@ POST recibido:
 2026-02-24 06:32:21 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
 2026-02-27 00:11:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-69a0d30dab52f.png
 2026-02-27 00:11:21 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-27 05:21:14 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-27 05:21:14 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-120-699d375b7ef4e.png"}
+2026-02-27 05:21:14 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-27 05:21:18 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-27 05:21:18 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-27 05:22:13 - === enviarQRPorCorreo llamado para ID: 25 ===
+2026-02-27 05:22:13 - Funcionario encontrado: {"IdFuncionario":"25","NombreFuncionario":"Wendy Rodriguez","CargoFuncionario":"Funcionario","DocumentoFuncionario":"1032458796","CorreoFuncionario":"PersonalSeguridad@gmail.com","QrCodigoFuncionario":"QR-FUNC-25-69115e1b196b8.png"}
+2026-02-27 05:22:13 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor. Ruta: QR-FUNC-25-69115e1b196b8.png
+2026-02-27 05:22:36 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-27 05:22:36 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-120-699d375b7ef4e.png"}
+2026-02-27 05:22:36 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-27 05:22:38 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-27 05:22:38 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-27 05:32:52 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-126-69a11e74b1787.png
+2026-02-27 05:32:55 - Correo enviado correctamente a lorenaGalindo@gmail.com
+2026-02-27 08:21:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-127-69a145ec75fec.png
+2026-02-27 08:21:19 - Correo enviado correctamente a FeriaDavid@gmail.com
