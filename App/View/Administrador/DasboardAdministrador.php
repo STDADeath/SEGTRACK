@@ -120,7 +120,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-    const BASE_URL = "/SEGTRACK/segtrack/Controller/Graficas/ControladorDashboard.php";
+    const BASE_URL = "/../../Controller/Graficas/ControladorDashboard.php";
 
     const crearGrafico = (id, tipo, labels, data, label, colores, opcionesExtra = {}) => {
         const ctx = document.getElementById(id);
