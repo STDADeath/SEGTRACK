@@ -3013,3 +3013,1544 @@ Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está re
 2025-12-11 22:08:10 - Ruta relativa para BD: qr/QR_Func/QR-FUNC-29-693b32ba68f0f.png
 Respuesta final: {"success":true,"ruta_qr":"qr\/QR_Func\/QR-FUNC-29-693b32ba68f0f.png"}
 >>>>>>> 135b80583f2ee4023413619c02e85a985e620b74
+
+2026-02-05 18:58:43 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan lopez",
+    "IdSede": "28",
+    "TelefonoFuncionario": "1234234000",
+    "DocumentoFuncionario": "1000547892",
+    "CorreoFuncionario": "carol@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 18:58:44 - registrarFuncionario llamado
+2026-02-05 18:58:44 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 18:58:44 - Resultado del modelo (BD): {"success":true,"id":"60"}
+2026-02-05 18:58:44 - Registro exitoso, ID: 60. Generando QR...
+2026-02-05 18:58:44 - Generando QR para funcionario ID: 60
+2026-02-05 18:58:44 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2026-02-05 18:58:44 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 18:58:44 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 18:58:44 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-60-6984da5477885.png
+
+2026-02-05 18:59:21 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan lopez",
+    "IdSede": "28",
+    "TelefonoFuncionario": "1234234000",
+    "DocumentoFuncionario": "1000547892",
+    "CorreoFuncionario": "carol@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 18:59:21 - registrarFuncionario llamado
+2026-02-05 18:59:21 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 18:59:21 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2026-02-05 18:59:21 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2026-02-05 18:59:38 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan lopez",
+    "IdSede": "28",
+    "TelefonoFuncionario": "1234234000",
+    "DocumentoFuncionario": "1000567744",
+    "CorreoFuncionario": "carol@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 18:59:38 - registrarFuncionario llamado
+2026-02-05 18:59:38 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 18:59:38 - Resultado del modelo (BD): {"success":true,"id":"61"}
+2026-02-05 18:59:38 - Registro exitoso, ID: 61. Generando QR...
+2026-02-05 18:59:38 - Generando QR para funcionario ID: 61
+2026-02-05 18:59:38 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2026-02-05 18:59:38 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 18:59:38 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 18:59:38 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-61-6984da8adf19c.png
+
+2026-02-05 18:59:44 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan lopez",
+    "IdSede": "28",
+    "TelefonoFuncionario": "1234234000",
+    "DocumentoFuncionario": "1000567744",
+    "CorreoFuncionario": "carol@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 18:59:44 - registrarFuncionario llamado
+2026-02-05 18:59:44 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 18:59:44 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2026-02-05 18:59:44 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2026-02-05 19:00:09 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan rose",
+    "IdSede": "28",
+    "TelefonoFuncionario": "2323232344",
+    "DocumentoFuncionario": "1000567744",
+    "CorreoFuncionario": "Rose@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:00:09 - registrarFuncionario llamado
+2026-02-05 19:00:09 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:00:09 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2026-02-05 19:00:09 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2026-02-05 19:00:16 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan rose",
+    "IdSede": "28",
+    "TelefonoFuncionario": "2323232344",
+    "DocumentoFuncionario": "1000222333",
+    "CorreoFuncionario": "Rose@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:00:16 - registrarFuncionario llamado
+2026-02-05 19:00:16 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:00:16 - Resultado del modelo (BD): {"success":true,"id":"62"}
+2026-02-05 19:00:16 - Registro exitoso, ID: 62. Generando QR...
+2026-02-05 19:00:16 - Generando QR para funcionario ID: 62
+2026-02-05 19:00:16 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2026-02-05 19:00:16 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 19:00:16 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 19:00:16 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-62-6984dab01a02d.png
+
+2026-02-05 19:00:49 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juan rose",
+    "IdSede": "28",
+    "TelefonoFuncionario": "2323232344",
+    "DocumentoFuncionario": "1000222333",
+    "CorreoFuncionario": "Rose@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:00:49 - registrarFuncionario llamado
+2026-02-05 19:00:49 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:00:49 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2026-02-05 19:00:49 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2026-02-05 19:12:24 === INICIO ===
+POST:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juaquin marques",
+    "IdSede": "30",
+    "TelefonoFuncionario": "4343553535",
+    "DocumentoFuncionario": "1000000000",
+    "CorreoFuncionario": "Juanpice@gmail.com",
+    "accion": "registrar"
+}
+
+2026-02-05 19:12:58 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juaquin marques",
+    "IdSede": "30",
+    "TelefonoFuncionario": "4343553535",
+    "DocumentoFuncionario": "1000000000",
+    "CorreoFuncionario": "Juanpice@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:12:58 - registrarFuncionario llamado
+2026-02-05 19:12:58 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:12:58 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2026-02-05 19:12:58 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2026-02-05 19:21:02 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "juaquin marques",
+    "IdSede": "30",
+    "TelefonoFuncionario": "4343553535",
+    "DocumentoFuncionario": "1000000000",
+    "CorreoFuncionario": "Juanpice@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:21:02 - registrarFuncionario llamado
+2026-02-05 19:21:02 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:21:02 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2026-02-05 19:21:02 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2026-02-05 19:21:31 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "rocio",
+    "IdSede": "30",
+    "TelefonoFuncionario": "2323244443",
+    "DocumentoFuncionario": "2423424465",
+    "CorreoFuncionario": "Rocio@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:21:31 - registrarFuncionario llamado
+2026-02-05 19:21:31 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:21:31 - Resultado del modelo (BD): {"success":true,"id":"64"}
+2026-02-05 19:21:31 - Registro exitoso, ID: 64. Generando QR...
+2026-02-05 19:21:31 - Generando QR para funcionario ID: 64
+2026-02-05 19:21:31 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2026-02-05 19:21:31 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 19:21:31 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 19:21:31 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-64-6984dfabd0b85.png
+
+2026-02-05 19:27:14 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "luis perez rodriguez",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "1231231231",
+    "CorreoFuncionario": "rodriguez@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:27:14 - registrarFuncionario llamado
+2026-02-05 19:27:14 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:27:14 - Resultado del modelo (BD): {"success":true,"id":"65"}
+2026-02-05 19:27:14 - Registro exitoso, ID: 65. Generando QR...
+2026-02-05 19:27:14 - Generando QR para funcionario ID: 65
+2026-02-05 19:27:14 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2026-02-05 19:27:14 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 19:27:14 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 19:27:14 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-65-6984e102ce085.png
+
+2026-02-05 19:31:51 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "luis perez rodriguez",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "1231231231",
+    "CorreoFuncionario": "rodriguez@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:31:51 - registrarFuncionario llamado
+2026-02-05 19:31:51 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:31:51 - Resultado del modelo (BD): {"success":false,"error":"La cédula ya está registrada en el sistema"}
+2026-02-05 19:31:51 - ERROR en BD: La cédula ya está registrada en el sistema
+Respuesta final: {"success":false,"message":"Error en BD: La cédula ya está registrada en el sistema"}
+
+2026-02-05 19:32:07 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "luis perez rodriguez",
+    "IdSede": "28",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "0000050645",
+    "CorreoFuncionario": "rodriguez2@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+Modelo cargado: C:\xampp\htdocs\SEGTRACK\App\Controller/../Model/ModeloFuncionarios.php
+Acción a ejecutar: registrar
+2026-02-05 19:32:07 - registrarFuncionario llamado
+2026-02-05 19:32:07 - Llamando a RegistrarFuncionario en el modelo
+2026-02-05 19:32:07 - Resultado del modelo (BD): {"success":true,"id":"66"}
+2026-02-05 19:32:07 - Registro exitoso, ID: 66. Generando QR...
+2026-02-05 19:32:07 - Generando QR para funcionario ID: 66
+2026-02-05 19:32:07 - Ruta base del proyecto: C:\xampp\htdocs\SEGTRACK
+2026-02-05 19:32:07 - Ruta física completa QR: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 19:32:07 - Carpeta QR ya existe: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func
+2026-02-05 19:32:07 - Intentando crear QR en ruta absoluta: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func\QR-FUNC-66-6984e227bb6e3.png
+
+2026-02-11 02:44:51 === INICIO DE PETICIÓN ===
+POST recibido:
+[]
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+
+2026-02-11 17:36:27 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "michael montoya",
+    "IdSede": "64",
+    "TelefonoFuncionario": "2009823776",
+    "DocumentoFuncionario": "43234555323",
+    "CorreoFuncionario": "Montoya@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+
+2026-02-11 18:04:40 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "28",
+    "TelefonoFuncionario": "3000988676",
+    "DocumentoFuncionario": "1237868687",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+
+2026-02-11 18:10:31 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "29",
+    "TelefonoFuncionario": "2435876876",
+    "DocumentoFuncionario": "1321223243",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+
+2026-02-11 18:16:29 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Dolores mon",
+    "IdSede": "25",
+    "TelefonoFuncionario": "3109324993",
+    "DocumentoFuncionario": "2300998234",
+    "CorreoFuncionario": "Dolores2002@gmail.com",
+    "accion": "registrar"
+}
+
+2026-02-11 18:22:10 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya pasachoa",
+    "IdSede": "25",
+    "TelefonoFuncionario": "3024117542",
+    "DocumentoFuncionario": "1209923213",
+    "CorreoFuncionario": "pasachoa2004@gmail.com",
+    "accion": "registrar"
+}
+
+2026-02-11 18:29:17 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "26",
+    "TelefonoFuncionario": "3224009234",
+    "DocumentoFuncionario": "4234980932",
+    "CorreoFuncionario": "prueba2002@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+ERROR FINAL: Modelo no encontrado en: C:\xampp\htdocs\SEGTRACK\App\Controller../Model/modeloFuncionario.php
+
+2026-02-11 18:29:37 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "26",
+    "TelefonoFuncionario": "3224009234",
+    "DocumentoFuncionario": "4234980932",
+    "CorreoFuncionario": "prueba2002@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+
+2026-02-11 18:33:54 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "27",
+    "TelefonoFuncionario": "3109828773",
+    "DocumentoFuncionario": "2313098091",
+    "CorreoFuncionario": "prueba2@gmail.com",
+    "accion": "registrar"
+}
+Conexión cargada
+Conexión verificada como instancia de PDO
+Librería QR cargada
+
+2026-02-11 18:42:24 === INICIO DE PETICIÓN ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya lol",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1234234000",
+    "DocumentoFuncionario": "1231231231",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+
+2026-02-11 19:02:11 === INICIO DE PETICIÓN ===
+
+2026-02-11 19:05:27 === INICIO DE PETICIÓN ===
+
+2026-02-11 19:07:20 === INICIO DE PETICIÓN ===
+
+2026-02-11 19:17:49 === INICIO DE PETICIÓN ===
+
+2026-02-11 19:26:11 === INICIO DE PETICIÓN ===
+
+2026-02-11 19:41:46 === INICIO DE PETICIÓN ===
+[2026-02-12 16:11:16] === INICIO DE PETICIÓN ===
+[2026-02-12 16:11:16] POST recibido: {"accion":"cambiar_estado","id":"73","estado":"Inactivo"}
+[2026-02-12 16:11:16] Cargando conexión...
+[2026-02-12 16:11:16] ✓ Conexión establecida
+[2026-02-12 16:11:16] Cargando librería QR...
+[2026-02-12 16:11:16] ✓ Librería QR cargada
+[2026-02-12 16:11:16] Cargando modelo...
+[2026-02-12 16:12:07] === INICIO DE PETICIÓN ===
+[2026-02-12 16:12:07] POST recibido: {"accion":"actualizar","id":"73","cargo":"Funcionario","nombre":"Michael Montoya cely","sede":"63","telefono":"1234234121","documento":"1231234543","correo":"pasachoa2002@gmail.com"}
+[2026-02-12 16:12:07] Cargando conexión...
+[2026-02-12 16:12:07] ✓ Conexión establecida
+[2026-02-12 16:12:07] Cargando librería QR...
+[2026-02-12 16:12:07] ✓ Librería QR cargada
+[2026-02-12 16:12:07] Cargando modelo...
+[2026-02-12 16:14:16] === INICIO DE PETICIÓN ===
+[2026-02-12 16:14:16] POST recibido: {"CargoFuncionario":"Personal Seguridad","NombreFuncionario":"geremias rojas","IdSede":"63","TelefonoFuncionario":"3245676761","DocumentoFuncionario":"32309981211","CorreoFuncionario":"Geremias@gmail.com","accion":"registrar"}
+[2026-02-12 16:14:16] Cargando conexión...
+[2026-02-12 16:14:16] ✓ Conexión establecida
+[2026-02-12 16:14:16] Cargando librería QR...
+[2026-02-12 16:14:16] ✓ Librería QR cargada
+[2026-02-12 16:14:16] Cargando modelo...
+2026-02-12 16:42:53 === INICIO ===
+2026-02-12 16:43:55 === INICIO ===
+2026-02-12 16:52:13 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Matias rojas ",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1234234000",
+    "DocumentoFuncionario": "12312312312",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+Generando QR...
+QR generado: QR-FUNC-76-698df72d7720b.png
+2026-02-12 16:53:16 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "23",
+    "estado": "Activo"
+}
+2026-02-12 17:04:06 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "LUISA MARIA",
+    "IdSede": "26",
+    "TelefonoFuncionario": "1234234121",
+    "DocumentoFuncionario": "23423423423",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-12 17:11:15 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "63",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "23423423423",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-12 17:11:29 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "78",
+    "estado": "Inactivo"
+}
+2026-02-12 17:11:37 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "78",
+    "cargo": "Personal Seguridad",
+    "nombre": "Michael Montoya 2",
+    "sede": "63",
+    "telefono": "1234556664",
+    "documento": "23423423423",
+    "correo": "pasachoa2002@gmail.com"
+}
+2026-02-12 17:18:29 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "michael montoya",
+    "IdSede": "30",
+    "TelefonoFuncionario": "2009823776",
+    "DocumentoFuncionario": "43234555323",
+    "CorreoFuncionario": "Montoya21@gmail.com",
+    "accion": "registrar"
+}
+2026-02-12 17:18:54 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "79",
+    "estado": "Inactivo"
+}
+2026-02-12 17:19:09 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "79",
+    "cargo": "Personal Seguridad",
+    "nombre": "loloa",
+    "sede": "30",
+    "telefono": "2009823776",
+    "documento": "43234555323",
+    "correo": "Montoya21@gmail.com"
+}
+2026-02-12 17:32:56 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "78",
+    "cargo": "Personal Seguridad",
+    "nombre": "Michael Montoya 2",
+    "sede": "63",
+    "telefono": "1234556664",
+    "documento": "23423423423",
+    "correo": "pasachoa2002@gmail.com"
+}
+2026-02-12 17:33:10 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "78",
+    "cargo": "Personal Seguridad",
+    "nombre": "Michael Montoya1",
+    "sede": "63",
+    "telefono": "1234556664",
+    "documento": "23423423423",
+    "correo": "pasachoa2002@gmail.com"
+}
+2026-02-12 17:33:26 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "78",
+    "cargo": "Personal Seguridad",
+    "nombre": "Michael Montoya1",
+    "sede": "63",
+    "telefono": "1234556664",
+    "documento": "23423423423",
+    "correo": "pasachoa2002@gmail.com"
+}
+2026-02-12 17:38:19 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "79",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "michael montoya II",
+    "IdSede": "30",
+    "TelefonoFuncionario": "2009823776",
+    "DocumentoFuncionario": "43234555323",
+    "CorreoFuncionario": "Montoya21@gmail.com"
+}
+2026-02-12 17:38:31 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "79",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "michael montoya",
+    "IdSede": "30",
+    "TelefonoFuncionario": "2009823776",
+    "DocumentoFuncionario": "43234555323",
+    "CorreoFuncionario": "Montoya21@gmail.com"
+}
+2026-02-12 17:38:36 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "79",
+    "Estado": "Inactivo"
+}
+2026-02-12 17:38:49 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "56",
+    "Estado": "Inactivo"
+}
+2026-02-12 17:39:51 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "79",
+    "estado": "Inactivo"
+}
+2026-02-12 17:53:33 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "79",
+    "Estado": "Inactivo"
+}
+2026-02-12 17:53:42 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "79",
+    "Estado": "Activo"
+}
+2026-02-12 17:54:13 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "79",
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "laura maria",
+    "IdSede": "27",
+    "TelefonoFuncionario": "10000012121212",
+    "DocumentoFuncionario": "43234555323",
+    "CorreoFuncionario": "Laura@gmail.com"
+}
+2026-02-12 17:54:51 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "79",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "michael montoya",
+    "IdSede": "25",
+    "TelefonoFuncionario": "2009823776",
+    "DocumentoFuncionario": "43234555323",
+    "CorreoFuncionario": "Montoya21@gmail.com"
+}
+2026-02-12 17:55:26 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "79",
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "laura maria",
+    "IdSede": "25",
+    "TelefonoFuncionario": "30992323",
+    "DocumentoFuncionario": "432355323",
+    "CorreoFuncionario": "Lauramaria1@gmail.com"
+}
+2026-02-12 20:08:57 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "79",
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "laura maria II",
+    "IdSede": "25",
+    "TelefonoFuncionario": "30992323",
+    "DocumentoFuncionario": "432355323",
+    "CorreoFuncionario": "Lauramaria1@gmail.com"
+}
+2026-02-12 20:32:23 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "79",
+    "Estado": "Inactivo"
+}
+2026-02-12 20:32:31 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "79",
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "laura maria II",
+    "IdSede": "25",
+    "TelefonoFuncionario": "30992323",
+    "DocumentoFuncionario": "432355323",
+    "CorreoFuncionario": "Lauramaria1@gmail.com"
+}
+2026-02-12 20:32:56 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "79",
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "laura maria III",
+    "IdSede": "25",
+    "TelefonoFuncionario": "099098034534",
+    "DocumentoFuncionario": "432355323",
+    "CorreoFuncionario": "Lauramaria1@gmail.com"
+}
+2026-02-12 20:33:05 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "79",
+    "Estado": "Activo"
+}
+2026-02-12 20:33:29 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "79",
+    "Estado": "Inactivo"
+}
+2026-02-12 20:37:16 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Dario gomez",
+    "IdSede": "63",
+    "TelefonoFuncionario": "3249003242",
+    "DocumentoFuncionario": "12312312312",
+    "CorreoFuncionario": "Dario@gmail.com",
+    "accion": "registrar"
+}
+2026-02-12 20:37:45 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "63",
+    "TelefonoFuncionario": "3242342343",
+    "DocumentoFuncionario": "23423423423",
+    "CorreoFuncionario": "Dario@gmail.com",
+    "accion": "registrar"
+}
+2026-02-12 20:37:54 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "63",
+    "TelefonoFuncionario": "3242342343",
+    "DocumentoFuncionario": "23423400000",
+    "CorreoFuncionario": "Dario@gmail.com",
+    "accion": "registrar"
+}
+2026-02-12 20:38:34 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "29",
+    "TelefonoFuncionario": "3242342343",
+    "DocumentoFuncionario": "23423400000",
+    "CorreoFuncionario": "Dario@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 05:39:01 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "80",
+    "Estado": "Inactivo"
+}
+2026-02-13 05:39:50 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "80",
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "63",
+    "TelefonoFuncionario": "2147483647",
+    "DocumentoFuncionario": "23423400000",
+    "CorreoFuncionario": "Dario@gmail.com"
+}
+2026-02-13 05:55:18 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "80",
+    "Estado": "Activo"
+}
+2026-02-13 05:58:23 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "80",
+    "Estado": "Inactivo"
+}
+2026-02-13 06:07:58 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "peña rocio",
+    "IdSede": "27",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "1231231231",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 06:08:06 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "peña rocio",
+    "IdSede": "27",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "20099323423",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 06:08:44 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "peña rocio",
+    "IdSede": "27",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "20099323423",
+    "CorreoFuncionario": "Pealosa@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 06:08:50 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "peña rocio",
+    "IdSede": "26",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "20099323423",
+    "CorreoFuncionario": "Pealosa@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 06:08:54 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "peña rocio",
+    "IdSede": "25",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "20099323423",
+    "CorreoFuncionario": "Pealosa@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 06:09:19 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "81",
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "peña rocio",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "20099323423",
+    "CorreoFuncionario": "Pealosa@gmail.com"
+}
+2026-02-13 06:09:29 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "81",
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "peña rocio",
+    "IdSede": "26",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "20099323423",
+    "CorreoFuncionario": "Pealosa@gmail.com"
+}
+2026-02-13 06:16:08 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "81",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "peña rocio",
+    "IdSede": "29",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "20099323423",
+    "CorreoFuncionario": "Pealosa@gmail.com"
+}
+2026-02-13 06:42:48 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "58",
+    "Estado": "Inactivo"
+}
+2026-02-13 06:43:01 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "58",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Anderson Estiben Moreno Pinzon II",
+    "IdSede": "30",
+    "TelefonoFuncionario": "1234567899",
+    "DocumentoFuncionario": "1000991666",
+    "CorreoFuncionario": "andersoarebalo@gmail.com"
+}
+2026-02-13 06:43:39 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "milis",
+    "IdSede": "27",
+    "TelefonoFuncionario": "3423254353",
+    "DocumentoFuncionario": "35345345345",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 06:43:55 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "milis",
+    "IdSede": "27",
+    "TelefonoFuncionario": "3423254353",
+    "DocumentoFuncionario": "35345345345",
+    "CorreoFuncionario": "milenis@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 06:50:44 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "IdFuncionario": "58",
+    "Estado": "Activo"
+}
+2026-02-13 06:50:55 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "IdFuncionario": "58",
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Anderson Estiben Moreno Pinzon II",
+    "IdSede": "27",
+    "TelefonoFuncionario": "1234567899",
+    "DocumentoFuncionario": "1000991666",
+    "CorreoFuncionario": "andersoarebalo@gmail.com"
+}
+2026-02-13 07:16:07 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "28",
+    "TelefonoFuncionario": "1234556664",
+    "DocumentoFuncionario": "23423423423",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 07:16:23 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "28",
+    "TelefonoFuncionario": "4322135435",
+    "DocumentoFuncionario": "10000098766",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 07:16:30 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "28",
+    "TelefonoFuncionario": "4322135435",
+    "DocumentoFuncionario": "10000098766",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 07:16:47 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Funcionario",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "28",
+    "TelefonoFuncionario": "4322135435",
+    "DocumentoFuncionario": "10000098766",
+    "CorreoFuncionario": "ochoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 07:31:41 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "64",
+    "TelefonoFuncionario": "4353534534",
+    "DocumentoFuncionario": "54657567657",
+    "CorreoFuncionario": "ptueba2@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 07:32:05 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "26",
+    "TelefonoFuncionario": "4353453453",
+    "DocumentoFuncionario": "34534654564",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 07:35:49 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "26",
+    "TelefonoFuncionario": "4353453453",
+    "DocumentoFuncionario": "34534654564",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-13 07:36:00 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "26",
+    "TelefonoFuncionario": "4353453453",
+    "DocumentoFuncionario": "34534654564",
+    "CorreoFuncionario": "lolas2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-14 06:46:03 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "25",
+    "TelefonoFuncionario": "6456456456",
+    "DocumentoFuncionario": "64564564564",
+    "CorreoFuncionario": "pasachoa2002@gmail.com",
+    "accion": "registrar"
+}
+2026-02-14 06:46:22 === INICIO ===
+POST recibido:
+{
+    "CargoFuncionario": "Personal Seguridad",
+    "NombreFuncionario": "Michael Montoya",
+    "IdSede": "25",
+    "TelefonoFuncionario": "6456456456",
+    "DocumentoFuncionario": "6456454464",
+    "CorreoFuncionario": "MM@gmail.com",
+    "accion": "registrar"
+}
+2026-02-15 00:51:53 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-89-69910a99cc801.png
+2026-02-15 01:06:33 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-90-69910e0944a99.png
+2026-02-15 01:06:36 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-15 01:15:14 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-91-69911012bd476.png
+2026-02-15 01:15:18 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-15 01:31:28 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-92-699113e0af07d.png
+2026-02-15 01:31:32 - Correo enviado correctamente a pasachoa20023@gmail.com
+2026-02-15 01:50:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-93-69911857c79b7.png
+2026-02-15 01:50:34 - Correo enviado correctamente a martinez@gmail.com
+2026-02-15 18:54:11 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-94-6992084338154.png
+2026-02-15 18:54:18 - Correo enviado correctamente a martinepoz@gmail.com
+2026-02-15 20:54:53 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-58-6992248d2eed9.png
+2026-02-15 20:54:56 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-15 20:58:28 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-58-6992256434b92.png
+2026-02-15 20:58:31 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-15 20:58:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-58-6992257f4bafe.png
+2026-02-15 20:58:58 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-15 20:59:19 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-58-69922596f29df.png
+2026-02-15 20:59:22 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-15 20:59:41 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-58-699225acf2c26.png
+2026-02-15 20:59:44 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-15 21:00:04 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-58-699225c4ec833.png
+2026-02-15 21:00:07 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-15 21:01:05 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-58-69922601dedd6.png
+2026-02-15 21:01:09 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-15 21:02:56 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-95-69922670d7d85.png
+2026-02-15 21:02:59 - Correo enviado correctamente a martinezsora@gmail.com
+2026-02-15 23:12:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-96-699244cf8272c.png
+2026-02-15 23:12:35 - Correo enviado correctamente a Carrimorro8090@gmail.com
+2026-02-16 01:21:44 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-97-6992631819504.png
+2026-02-16 01:21:50 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-16 01:49:10 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-98-699269865803d.png
+2026-02-16 01:49:18 - Correo enviado correctamente a Daniela@gmail.com
+2026-02-16 01:54:28 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-97-69926ac4c6145.png
+2026-02-16 01:54:34 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-16 04:11:37 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-97-69928ae9831dd.png
+2026-02-16 04:11:51 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-16 04:12:06 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-97-69928b064e848.png
+2026-02-16 04:12:17 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-16 04:23:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-97-69928dbe3cc4e.png
+2026-02-16 04:23:49 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-16 05:05:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-99-6992977c0f723.png
+2026-02-16 05:05:21 - Correo enviado correctamente a perezvaron@gmail.com
+2026-02-16 05:10:07 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-100-6992989fc1518.png
+2026-02-16 05:10:12 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-16 06:15:59 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-97-6992a80fc8788.png
+2026-02-16 06:16:05 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-16 06:23:22 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-97-6992a9ca38258.png
+2026-02-16 06:23:31 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-16 07:24:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-97-6992b81fe1b99.png
+2026-02-16 07:24:39 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-16 15:44:40 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-101-69932d584ae8b.png
+2026-02-16 15:44:56 - Correo enviado correctamente a prueba@gmail.com
+2026-02-17 05:43:07 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-102-6993f1db91e10.png
+2026-02-17 05:43:11 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 05:46:32 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-102-6993f2a843f54.png
+2026-02-17 05:46:36 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 05:58:24 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK1/Public/qr/QR_Func/QR-FUNC-102-6993f57075769.png
+2026-02-17 05:58:27 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 06:31:25 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-103-6993fd2de4476.png
+2026-02-17 06:31:30 - Correo enviado correctamente a mart2@gmail.com
+2026-02-17 06:32:08 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-103-6993fd586fb37.png
+2026-02-17 06:32:12 - Correo enviado correctamente a mart2@gmail.com
+2026-02-17 07:47:54 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-104-69940f1a3ce68.png
+2026-02-17 07:47:58 - Correo enviado correctamente a LUIS2002@gmail.com
+2026-02-17 07:49:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-97-69940f65d96d5.png
+2026-02-17 07:49:13 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-17 08:43:22 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-105-69941c1a4ddd3.png
+2026-02-17 08:43:26 - Correo enviado correctamente a prueba2@gmail.com
+2026-02-17 08:44:20 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-105-69941c54ccf39.png
+2026-02-17 08:44:24 - Correo enviado correctamente a prueba2@gmail.com
+2026-02-17 08:46:08 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-105-69941cc01585d.png
+2026-02-17 08:46:11 - Correo enviado correctamente a prueba2@gmail.com
+2026-02-17 09:34:19 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-6994280ba7285.png
+2026-02-17 09:34:23 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 09:53:36 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-69942c8fee97c.png
+2026-02-17 09:53:40 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 10:16:08 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699431d8b4125.png
+2026-02-17 10:16:11 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 10:18:07 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-6994324fb0058.png
+2026-02-17 10:18:11 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 10:20:40 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699432e85499b.png
+2026-02-17 10:20:44 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 10:26:41 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699434516ff9d.png
+2026-02-17 10:26:43 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 10:36:05 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-69943685da744.png
+2026-02-17 10:36:13 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-6994368d8cdf3.png
+2026-02-17 10:37:07 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699436c3a7695.png
+2026-02-17 10:37:11 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 10:46:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699438f2ce252.png
+2026-02-17 10:46:34 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699438f9efa68.png
+2026-02-17 10:46:58 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699439128d445.png
+2026-02-17 10:48:24 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-69943967f3199.png
+2026-02-17 10:49:04 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699439906bf7e.png
+2026-02-17 10:49:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699439a6839b2.png
+2026-02-17 10:49:30 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 10:52:41 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-69943a691583e.png
+2026-02-17 10:54:43 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-69943ae3e3b18.png
+2026-02-17 10:54:59 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-69943af3aac8f.png
+2026-02-17 10:55:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-69943b1b12a23.png
+2026-02-17 10:55:44 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 11:18:43 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-6994408313110.png
+2026-02-17 11:18:46 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 11:20:25 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-106-699440e97363b.png
+2026-02-17 11:20:29 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 13:00:14 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-107-6994584e2d458.png
+2026-02-17 13:00:17 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 13:12:00 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-108-69945b108c7c9.png
+2026-02-17 13:12:03 - Correo enviado correctamente a vanessa202@gmail.com
+2026-02-17 13:20:05 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-108-69945cf528ed8.png
+2026-02-17 13:20:11 - Correo enviado correctamente a vanessa202@gmail.com
+2026-02-17 13:21:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-107-69945d569ed92.png
+2026-02-17 13:21:46 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 14:28:41 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-107-69946d09b312e.png
+2026-02-17 14:28:44 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 14:38:30 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-107-69946f56a394d.png
+2026-02-17 14:38:33 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 14:39:54 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-107-69946faab28d0.png
+2026-02-17 14:39:57 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 14:43:59 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-107-6994709fa2f18.png
+2026-02-17 14:44:03 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 14:44:48 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-107-699470d09f98b.png
+2026-02-17 14:44:51 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 14:47:33 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-109-6994717524717.png
+2026-02-17 14:47:38 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 15:05:32 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-109-699475ac99972.png
+2026-02-17 15:05:35 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 15:13:14 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-110-6994777ac6f59.png
+2026-02-17 15:13:18 - Correo enviado correctamente a prueba5@gmail.com
+2026-02-17 15:29:30 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-27-69947b4a6c4c7.png
+2026-02-17 15:29:33 - Correo enviado correctamente a daniela.herrera@gmail.com
+2026-02-17 15:46:13 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-23-69947f3540468.png
+2026-02-17 15:46:16 - Correo enviado correctamente a carrimorro8080@gmail.com
+2026-02-17 15:55:01 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-111-699481454bf06.png
+2026-02-17 15:55:03 - Correo enviado correctamente a prueba6@gmail.com
+2026-02-17 16:00:41 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-27-69948299e4327.png
+2026-02-17 16:00:44 - Correo enviado correctamente a daniela.herrera@gmail.com
+2026-02-17 20:03:45 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-100-6994bb90f1401.png
+2026-02-17 20:03:57 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-17 20:39:46 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-113-6994c40209f43.png
+2026-02-17 20:39:50 - Correo enviado correctamente a prueba7@gmsil.com
+2026-02-17 20:58:03 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-109-6994c84b4cc5c.png
+2026-02-17 20:58:07 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 21:20:12 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-114-6994cd7c2d807.png
+2026-02-17 21:20:20 - Correo enviado correctamente a EDWIN2002@gmail.com
+2026-02-17 21:24:00 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-109-6994ce606e79d.png
+2026-02-17 21:24:08 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-17 21:31:47 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/QR_Func/QR-FUNC-115-6994d03353ded.png
+2026-02-17 21:31:55 - Correo enviado correctamente a Rmirez2002@gmail.com
+2026-02-17 21:43:11 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-109-6994d2df338f3.png
+2026-02-17 21:43:23 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-18 04:00:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-116-69952b40243e3.png
+2026-02-18 04:00:19 - Error al enviar correo a Pablo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-18 04:05:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-111-69952c86247c1.png
+2026-02-18 04:05:43 - Error al enviar correo a prueba6@gmail.com: SMTP Error: Could not authenticate.
+2026-02-18 04:30:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-69953257ddbd2.png
+2026-02-18 04:30:33 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-18 04:32:13 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-109-699532bd456ce.png
+2026-02-18 04:32:15 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-18 04:46:15 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-117-69953606f1c18.png
+2026-02-18 04:46:19 - Error al enviar correo a Juan@gmail.com: SMTP Error: Could not authenticate.
+2026-02-18 07:32:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-118-69955d0ae3f9a.png
+2026-02-18 07:32:44 - Error al enviar correo a salasar@gmail.com: SMTP Error: Could not authenticate.
+2026-02-18 08:33:52 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-114-69956b60682d1.png
+2026-02-18 08:33:53 - Error al enviar correo a EDWIN2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-18 19:28:51 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-119-699604e3b8503.png
+2026-02-18 19:28:54 - Error al enviar correo a Estupinan@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 05:35:33 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-69969315a326d.png
+2026-02-19 05:35:35 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 05:39:34 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-6996940676e95.png
+2026-02-19 05:39:35 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 07:49:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-6996b2760259a.png
+2026-02-19 07:49:26 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 07:49:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-27-6996b283a7bda.png
+2026-02-19 07:49:39 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 08:05:18 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-121-6996b62edbe45.png
+2026-02-19 08:05:21 - Error al enviar correo a pasachoa@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 08:27:59 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-6996bb7f82a38.png
+2026-02-19 08:28:28 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-6996bb9c4d796.png
+2026-02-19 08:28:28 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 08:42:13 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-27-6996bed5c65bb.png
+2026-02-19 08:42:13 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 08:42:27 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-27-6996bee3654d9.png
+2026-02-19 08:42:27 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 08:44:29 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-122-6996bf5d916e1.png
+2026-02-19 08:44:33 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 08:45:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-122-6996bfa325ecf.png
+2026-02-19 08:45:39 - Error al enviar correo a : Invalid address:  (to): 
+2026-02-19 09:18:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-6996c7527eab0.png
+2026-02-19 09:18:48 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 09:35:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-6996cb6aefcb9.png
+2026-02-19 09:35:58 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 09:43:41 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-6996cd3d26aa7.png
+2026-02-19 09:43:43 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 10:00:56 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:00:56 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Rick  Morty","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996cd3d26aa7.png"}
+2026-02-19 10:00:56 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:00:57 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 10:00:57 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-19 10:02:30 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:02:30 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Rick  Morty","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996cd3d26aa7.png"}
+2026-02-19 10:02:30 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:02:35 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:02:35 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:04:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-6996d210eb24c.png
+2026-02-19 10:04:21 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:13:44 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:13:44 - ERROR en enviarQRPorCorreo: Funcionario no encontrado o inactivo
+2026-02-19 10:13:57 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:13:57 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d210eb24c.png"}
+2026-02-19 10:13:57 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:14:00 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:14:00 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:27:08 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:27:08 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d210eb24c.png"}
+2026-02-19 10:27:08 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:27:13 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:27:13 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:28:45 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:28:45 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d210eb24c.png"}
+2026-02-19 10:28:45 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:28:49 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:28:49 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:35:45 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:35:45 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d210eb24c.png"}
+2026-02-19 10:35:45 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:35:49 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:35:49 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 10:37:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-6996d9c559f30.png
+2026-02-19 10:37:12 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:38:43 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 10:38:43 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996d9c559f30.png"}
+2026-02-19 10:38:43 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 10:38:46 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 10:38:46 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 11:31:20 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-6996e678ce74b.png
+2026-02-19 11:31:25 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 11:52:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACKqr/Qr_Func//QR-FUNC-97-6996eb7776a15.png
+2026-02-19 11:52:39 - QR no encontrado en: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-97-6996eb7776a15.png
+2026-02-19 11:56:21 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-124-6996ec55ba45e.png
+2026-02-19 11:56:23 - Error al enviar correo a Dory@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 20:57:04 - === enviarQRPorCorreo llamado para ID: 97 ===
+2026-02-19 20:57:04 - Funcionario encontrado: {"IdFuncionario":"97","NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Personal Seguridad","DocumentoFuncionario":"1000991666","CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-97-6996eb7776a15.png"}
+2026-02-19 20:57:04 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-19 21:57:28 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-19 21:57:28 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6996e678ce74b.png"}
+2026-02-19 21:57:28 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-19 21:57:40 - ✓ Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-19 21:57:40 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-19 21:58:38 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACKqr/Qr_Func//QR-FUNC-123-6997797ed45ce.png
+2026-02-19 21:58:38 - QR no encontrado en: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-123-6997797ed45ce.png
+2026-02-19 22:31:05 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACKqr/Qr_Func//QR-FUNC-97-69978119c73d5.png
+2026-02-19 22:31:05 - QR no encontrado en: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Func/QR-FUNC-97-69978119c73d5.png
+2026-02-19 23:08:54 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-699789f657c8a.png
+2026-02-19 23:08:55 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-19 23:11:56 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-19 23:11:56 - Funcionario encontrado: {"IdFuncionario":"125","NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12313123123","CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-699789f657c8a.png"}
+2026-02-19 23:11:56 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-19 23:11:58 - ✓ Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-19 23:11:58 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+2026-02-20 06:14:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-6997edc2c666e.png
+2026-02-20 06:14:44 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-20 06:15:24 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-23-6997edec94ee4.png
+2026-02-20 06:15:25 - Error al enviar correo a Supervisor@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:10:21 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-699a739db10ac.png
+2026-02-22 04:10:24 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:15:19 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-699a74c74888b.png
+2026-02-22 04:15:20 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:31:42 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-22 04:31:42 - Funcionario encontrado: {"IdFuncionario":"125","NombreFuncionario":"Anderson Arevalo III","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12313123123","CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-699a74c74888b.png"}
+2026-02-22 04:31:42 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-22 04:31:44 - Error al enviar correo a andersoarebalo@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:31:44 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 04:32:41 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-22 04:32:41 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6997797ed45ce.png"}
+2026-02-22 04:32:41 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-22 04:32:53 - === enviarQRPorCorreo llamado para ID: 123 ===
+2026-02-22 04:32:53 - Funcionario encontrado: {"IdFuncionario":"123","NombreFuncionario":"Michel Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"42356534534","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-123-6997797ed45ce.png"}
+2026-02-22 04:32:53 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-22 04:33:02 - === enviarQRPorCorreo llamado para ID: 26 ===
+2026-02-22 04:33:02 - Funcionario encontrado: {"IdFuncionario":"26","NombreFuncionario":"Laura G\u00f3mez Rinc\u00f3n","CargoFuncionario":"Funcionario","DocumentoFuncionario":"3124589076","CorreoFuncionario":"aura.gomez@udistrital.edu.co","QrCodigoFuncionario":"QR-FUNC-26-69115e7929831.png"}
+2026-02-22 04:33:02 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-22 04:33:11 - === enviarQRPorCorreo llamado para ID: 23 ===
+2026-02-22 04:33:11 - ERROR en enviarQRPorCorreo: Funcionario no encontrado o inactivo
+2026-02-22 04:33:23 - === enviarQRPorCorreo llamado para ID: 28 ===
+2026-02-22 04:33:23 - Funcionario encontrado: {"IdFuncionario":"28","NombreFuncionario":"Carlos","CargoFuncionario":"Personal Seguridad","DocumentoFuncionario":"1145632298","CorreoFuncionario":"carlos.medina@gmail.com","QrCodigoFuncionario":"QR-FUNC-28-69115ef11a339.png"}
+2026-02-22 04:33:23 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor
+2026-02-22 04:35:31 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:35:31 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:35:31 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:35:33 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:35:33 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 04:38:43 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:38:43 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:38:43 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:38:47 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-22 04:38:47 - ✓ Correo enviado exitosamente a: caroldayana989@gmail.com
+2026-02-22 04:49:09 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:49:09 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:49:09 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:49:09 - Logo cargado desde: C:\xampp\htdocs\SEGTRACK\Public\img\LOGO_SEGTRACK-re-con.ico
+2026-02-22 04:49:10 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:49:10 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 04:49:54 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:49:54 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:49:54 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:49:54 - Logo cargado desde: C:\xampp\htdocs\SEGTRACK\Public\img\LOGO_SEGTRACK-re-con.ico
+2026-02-22 04:49:58 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-22 04:49:58 - ✓ Correo enviado exitosamente a: caroldayana989@gmail.com
+2026-02-22 04:57:22 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:57:22 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:57:22 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:57:22 - Logo cargado: C:\xampp\htdocs\SEGTRACK\Public\img\LOGO_SEGTRACK-re-con.ico
+2026-02-22 04:57:23 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 04:57:23 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 04:58:07 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-22 04:58:07 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-22 04:58:07 - Preparando envío a: caroldayana989@gmail.com
+2026-02-22 04:58:07 - Logo cargado: C:\xampp\htdocs\SEGTRACK\Public\img\LOGO_SEGTRACK-re-con.ico
+2026-02-22 04:58:10 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-22 04:58:10 - ✓ Correo enviado exitosamente a: caroldayana989@gmail.com
+2026-02-22 05:27:13 - === enviarQRPorCorreo llamado para ID: 121 ===
+2026-02-22 05:27:13 - Funcionario encontrado: {"IdFuncionario":"121","NombreFuncionario":"David montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"34234223212","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-121-6996b62edbe45.png"}
+2026-02-22 05:27:13 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:27:15 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 05:27:15 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 05:29:51 - === enviarQRPorCorreo llamado para ID: 121 ===
+2026-02-22 05:29:51 - Funcionario encontrado: {"IdFuncionario":"121","NombreFuncionario":"David montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"34234223212","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-121-6996b62edbe45.png"}
+2026-02-22 05:29:51 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:29:53 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 05:29:53 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-02-22 05:30:29 - === enviarQRPorCorreo llamado para ID: 121 ===
+2026-02-22 05:30:29 - Funcionario encontrado: {"IdFuncionario":"121","NombreFuncionario":"David montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"34234223212","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-121-6996b62edbe45.png"}
+2026-02-22 05:30:29 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:30:33 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 05:30:33 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-22 05:32:18 - === enviarQRPorCorreo llamado para ID: 121 ===
+2026-02-22 05:32:18 - Funcionario encontrado: {"IdFuncionario":"121","NombreFuncionario":"David montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"34234223212","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-121-6996b62edbe45.png"}
+2026-02-22 05:32:18 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:32:22 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 05:32:22 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-22 05:38:29 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-126-699a8844f3c7a.png
+2026-02-22 05:38:30 - Error al enviar correo a pasachoa2002@gmail.com: SMTP Error: Could not authenticate.
+2026-02-22 05:39:35 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-126-699a8886d43ed.png
+2026-02-22 05:39:38 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 05:47:28 - === enviarQRPorCorreo llamado para ID: 126 ===
+2026-02-22 05:47:28 - Funcionario encontrado: {"IdFuncionario":"126","NombreFuncionario":"Michael Montoya pasachoa","CargoFuncionario":"Personal Seguridad","DocumentoFuncionario":"10005178977","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-126-699a8886d43ed.png"}
+2026-02-22 05:47:28 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 05:47:32 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 05:47:32 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-22 09:07:30 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-22 09:07:30 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya","CargoFuncionario":"","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/QR_Func\/QR-FUNC-120-6996162e4cb15.png"}
+2026-02-22 09:07:30 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-22 09:07:35 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-22 09:07:35 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-22 09:08:44 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-121-699ab98cd9b74.png
+2026-02-22 09:08:47 - Correo enviado correctamente a Morales@gmail.com
+2026-02-22 19:26:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-699b4a487dce2.png
+2026-02-22 19:26:22 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-22 19:31:36 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-26-699b4b8820918.png
+2026-02-22 19:32:18 - Correo enviado correctamente a aura.gomez@udistrital.edu.co
+2026-02-22 19:54:35 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-699b50eb4aff1.png
+2026-02-22 19:54:38 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-22 23:33:11 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-122-699b842774f7d.png
+2026-02-22 23:33:14 - Correo enviado correctamente a perezdaniela@gmail.com
+2026-02-23 00:06:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-123-699b8be18bb53.png
+2026-02-23 00:06:13 - Correo enviado correctamente a AlfonsoMorales@gmail.com
+2026-02-24 04:50:34 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-699d2009d8260.png
+2026-02-24 04:50:37 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-24 06:24:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-124-699d3626f32d6.png
+2026-02-24 06:24:59 - Correo enviado correctamente a perezq@gmail.com
+2026-02-24 06:25:22 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-699d3642c1df0.png
+2026-02-24 06:25:26 - Correo enviado correctamente a 2@gmail.com
+2026-02-24 06:27:23 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-699d36bb69736.png
+2026-02-24 06:27:26 - Correo enviado correctamente a 2@gmail.com
+2026-02-24 06:28:08 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-124-699d36e8c8e40.png
+2026-02-24 06:28:12 - Correo enviado correctamente a perezq@gmail.com
+2026-02-24 06:28:42 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-24 06:28:42 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-120-699d2009d8260.png"}
+2026-02-24 06:28:42 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-24 06:28:47 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-24 06:28:47 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-24 06:30:03 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-120-699d375b7ef4e.png
+2026-02-24 06:30:06 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-24 06:31:10 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-24 06:31:10 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-120-699d375b7ef4e.png"}
+2026-02-24 06:31:10 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-24 06:31:14 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-24 06:31:14 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-24 06:32:17 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-24 06:32:17 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-120-699d375b7ef4e.png"}
+2026-02-24 06:32:17 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-24 06:32:21 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-24 06:32:21 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-27 00:11:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-69a0d30dab52f.png
+2026-02-27 00:11:21 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-27 05:21:14 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-27 05:21:14 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-120-699d375b7ef4e.png"}
+2026-02-27 05:21:14 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-27 05:21:18 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-27 05:21:18 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-27 05:22:13 - === enviarQRPorCorreo llamado para ID: 25 ===
+2026-02-27 05:22:13 - Funcionario encontrado: {"IdFuncionario":"25","NombreFuncionario":"Wendy Rodriguez","CargoFuncionario":"Funcionario","DocumentoFuncionario":"1032458796","CorreoFuncionario":"PersonalSeguridad@gmail.com","QrCodigoFuncionario":"QR-FUNC-25-69115e1b196b8.png"}
+2026-02-27 05:22:13 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor. Ruta: QR-FUNC-25-69115e1b196b8.png
+2026-02-27 05:22:36 - === enviarQRPorCorreo llamado para ID: 120 ===
+2026-02-27 05:22:36 - Funcionario encontrado: {"IdFuncionario":"120","NombreFuncionario":"Michael Montoya pasachoa","CargoFuncionario":"Funcionario","DocumentoFuncionario":"12324234324","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-120-699d375b7ef4e.png"}
+2026-02-27 05:22:36 - Preparando envío a: pasachoa2002@gmail.com
+2026-02-27 05:22:38 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-02-27 05:22:38 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+2026-02-27 05:32:52 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-126-69a11e74b1787.png
+2026-02-27 05:32:55 - Correo enviado correctamente a lorenaGalindo@gmail.com
+2026-02-27 08:21:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-127-69a145ec75fec.png
+2026-02-27 08:21:19 - Correo enviado correctamente a FeriaDavid@gmail.com
+2026-02-28 00:50:36 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-28 00:50:36 - Funcionario encontrado: {"IdFuncionario":125,"NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":12313123123,"CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-6997edc2c666e.png"}
+2026-02-28 00:50:36 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor. Ruta: qr/Qr_Func/QR-FUNC-125-6997edc2c666e.png
+2026-02-28 00:50:46 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-69a22dd68b5dd.png
+2026-02-28 00:50:49 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-28 00:50:56 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-28 00:50:56 - Funcionario encontrado: {"IdFuncionario":125,"NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":12313123123,"CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-69a22dd68b5dd.png"}
+2026-02-28 00:50:56 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-28 00:50:59 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-28 00:50:59 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+2026-02-28 00:53:58 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-28 00:53:58 - Funcionario encontrado: {"IdFuncionario":125,"NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":12313123123,"CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-69a22dd68b5dd.png"}
+2026-02-28 00:53:58 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-28 00:54:01 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-28 00:54:01 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+2026-02-28 00:54:42 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-28 00:54:42 - Funcionario encontrado: {"IdFuncionario":125,"NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":12313123123,"CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-69a22dd68b5dd.png"}
+2026-02-28 00:54:42 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-28 00:54:44 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-28 00:54:44 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+2026-02-28 02:13:29 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-61-69a24138dbb89.png
+2026-02-28 02:13:32 - Correo enviado correctamente a valentina@gmail.com
+2026-02-28 02:15:36 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-62-69a241b8a3ac4.png
+2026-02-28 02:15:39 - Correo enviado correctamente a carrimorro9080@gmail.com
+2026-02-28 02:16:14 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-62-69a241de90287.png
+2026-02-28 02:16:18 - Correo enviado correctamente a carrimorro9080@gmail.com

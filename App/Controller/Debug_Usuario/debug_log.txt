@@ -1,0 +1,122 @@
+2026-02-16 07:31:47 - Usuario registrado correctamente - Funcionario ID: 97
+2026-02-16 07:34:38 - Usuario registrado correctamente - Funcionario ID: 23
+2026-02-16 07:41:16 - Acción recibida: registrar
+2026-02-16 07:41:16 - Datos recibidos: {"accion":"registrar","id_funcionario":"28","tipo_rol":"Supervisor","contrasena":"23e232323"}
+2026-02-16 07:41:16 - ✓ Usuario registrado correctamente - Funcionario ID: 28, Rol: Supervisor
+2026-02-16 07:48:58 - Acción recibida: registrar
+2026-02-16 07:48:58 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Supervisor","contrasena":"123123123"}
+2026-02-16 07:48:58 - ✓ Usuario registrado correctamente - Funcionario ID: 97, Rol: Supervisor
+2026-02-16 07:55:34 - Acción recibida: registrar
+2026-02-16 07:55:34 - Datos recibidos: {"accion":"registrar","id_funcionario":"100","tipo_rol":"Supervisor","contrasena":"12121211"}
+2026-02-16 07:55:34 - ✓ Usuario registrado correctamente - Funcionario ID: 100, Rol: Supervisor
+2026-02-16 08:05:52 - Acción recibida: cambiar_estado
+2026-02-16 08:05:52 - ✓ Estado actualizado correctamente - Usuario ID: 26 - Nuevo estado: Inactivo
+2026-02-16 08:08:29 - Acción recibida: cambiar_estado
+2026-02-16 08:08:29 - ✓ Estado actualizado correctamente - Usuario ID: 25 - Nuevo estado: Inactivo
+2026-02-16 08:10:36 - Acción recibida: eliminar
+2026-02-16 08:10:36 - ✓ Usuario eliminado correctamente - ID: 27
+2026-02-16 08:17:42 - Acción recibida: actualizar
+2026-02-16 08:17:42 - ✓ Usuario actualizado correctamente - ID: 26
+2026-02-16 08:21:08 - Acción recibida: cambiar_estado
+2026-02-16 08:21:08 - ✓ Estado actualizado correctamente - Usuario ID: 27 - Nuevo estado: Activo
+2026-02-16 08:21:23 - Acción recibida: registrar
+2026-02-16 08:21:23 - Datos recibidos: {"accion":"registrar","id_funcionario":"23","tipo_rol":"Supervisor","contrasena":"12312312312"}
+2026-02-16 08:21:23 - ✓ Usuario registrado correctamente - Funcionario ID: 23, Rol: Supervisor
+2026-02-16 08:26:43 - Acción recibida: registrar
+2026-02-16 08:26:43 - Datos recibidos: {"accion":"registrar","id_funcionario":"23","tipo_rol":"Supervisor","contrasena":"12312312312"}
+2026-02-16 08:26:43 - ERROR: Funcionario ya tiene usuario - ID: 23
+2026-02-16 13:59:37 - Acción recibida: cambiar_estado
+2026-02-16 13:59:37 - ✓ Estado actualizado correctamente - Usuario ID: 26 - Nuevo estado: Activo
+2026-02-16 13:59:48 - Acción recibida: actualizar
+2026-02-16 13:59:48 - ✓ Usuario actualizado correctamente - ID: 25
+2026-02-16 14:02:46 - Acción recibida: registrar
+2026-02-16 14:02:46 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Supervisor","contrasena":"1233444555556"}
+2026-02-16 14:02:46 - ✓ Usuario registrado correctamente - Funcionario ID: 97, Rol: Supervisor
+2026-02-16 14:21:02 - Acción recibida: registrar
+2026-02-16 14:21:02 - Datos recibidos: {"accion":"registrar","id_funcionario":"23","tipo_rol":"Supervisor","contrasena":"123456789"}
+2026-02-16 14:21:02 - ✓ Usuario registrado correctamente - Funcionario ID: 23, Rol: Supervisor
+2026-02-16 14:25:50 - Acción recibida: registrar
+2026-02-16 14:25:50 - Datos recibidos: {"accion":"registrar","id_funcionario":"28","tipo_rol":"Supervisor","contrasena":"123456789"}
+2026-02-16 14:25:50 - ✓ Usuario registrado correctamente - Funcionario ID: 28, Rol: Supervisor
+2026-02-16 14:26:22 - Acción recibida: registrar
+2026-02-16 14:26:22 - Datos recibidos: {"accion":"registrar","id_funcionario":"28","tipo_rol":"Supervisor","contrasena":"123456789"}
+2026-02-16 14:26:22 - ERROR: Funcionario ya tiene usuario - ID: 28
+2026-02-16 14:35:13 - Acción recibida: registrar
+2026-02-16 14:35:13 - Datos recibidos: {"accion":"registrar","id_funcionario":"99","tipo_rol":"Supervisor","contrasena":"2134567"}
+2026-02-16 14:35:13 - ✓ Usuario registrado correctamente - Funcionario ID: 99, Rol: Supervisor
+2026-02-16 14:39:45 - Acción recibida: registrar
+2026-02-16 14:39:45 - Datos recibidos: {"accion":"registrar","id_funcionario":"100","tipo_rol":"Administrador","contrasena":"1234567"}
+2026-02-16 14:39:46 - ✓ Usuario registrado correctamente - Funcionario ID: 100, Rol: Administrador
+2026-02-16 14:43:08 - Acción recibida: registrar
+2026-02-16 14:43:08 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Administrador","contrasena":"12345678"}
+2026-02-16 14:43:08 - ✓ Usuario registrado correctamente - Funcionario ID: 97, Rol: Administrador
+2026-02-16 14:48:26 - Acción recibida: registrar
+2026-02-16 14:48:26 - Datos recibidos: {"accion":"registrar","id_funcionario":"23","tipo_rol":"Supervisor","contrasena":"12345678"}
+2026-02-16 14:48:26 - ✓ Usuario registrado correctamente - Funcionario ID: 23, Rol: Supervisor
+2026-02-16 14:53:20 - Acción recibida: registrar
+2026-02-16 14:53:20 - Datos recibidos: {"accion":"registrar","id_funcionario":"28","tipo_rol":"Supervisor","contrasena":"1231231"}
+2026-02-16 14:53:20 - ✓ Usuario registrado correctamente - Funcionario ID: 28, Rol: Supervisor
+2026-02-16 14:54:41 - Acción recibida: registrar
+2026-02-16 14:54:41 - Datos recibidos: {"accion":"registrar","id_funcionario":"98","tipo_rol":"Personal Seguridad","contrasena":"12312312312312312312"}
+2026-02-16 14:54:41 - ✓ Usuario registrado correctamente - Funcionario ID: 98, Rol: Personal Seguridad
+2026-02-16 14:54:45 - Acción recibida: registrar
+2026-02-16 14:54:45 - Datos recibidos: {"accion":"registrar","id_funcionario":"98","tipo_rol":"Personal Seguridad","contrasena":"12312312312312312312"}
+2026-02-16 14:54:45 - ERROR: Funcionario ya tiene usuario - ID: 98
+2026-02-16 15:04:05 - Acción recibida: cambiar_estado
+2026-02-16 15:04:05 - ✓ Estado actualizado correctamente - Usuario ID: 9 - Nuevo estado: Inactivo
+2026-02-16 15:04:13 - Acción recibida: actualizar
+2026-02-16 15:04:13 - ✓ Usuario actualizado correctamente - ID: 9
+2026-02-16 15:13:50 - Acción recibida: registrar
+2026-02-16 15:13:50 - Datos recibidos: {"accion":"registrar","id_funcionario":"27","tipo_rol":"Supervisor","contrasena":"123456789"}
+2026-02-16 15:13:50 - ✓ Usuario registrado correctamente - Funcionario ID: 27, Rol: Supervisor
+2026-02-16 15:15:21 - Acción recibida: registrar
+2026-02-16 15:15:21 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Supervisor","contrasena":"123123123"}
+2026-02-16 15:15:21 - ✓ Usuario registrado correctamente - Funcionario ID: 97, Rol: Supervisor
+2026-02-16 15:17:51 - Acción recibida: registrar
+2026-02-16 15:17:51 - Datos recibidos: {"accion":"registrar","id_funcionario":"23","tipo_rol":"Supervisor","contrasena":"123123123"}
+2026-02-16 15:17:51 - ✓ Usuario registrado correctamente - Funcionario ID: 23, Rol: Supervisor
+2026-02-16 15:18:02 - Acción recibida: registrar
+2026-02-16 15:18:02 - Datos recibidos: {"accion":"registrar","id_funcionario":"99","tipo_rol":"Personal Seguridad","contrasena":"12312312"}
+2026-02-16 15:18:02 - ✓ Usuario registrado correctamente - Funcionario ID: 99, Rol: Personal Seguridad
+2026-02-16 15:31:04 - Acción recibida: registrar
+2026-02-16 15:31:04 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Supervisor","contrasena":"123123123123"}
+2026-02-16 15:31:04 - ✓ Usuario registrado correctamente - Funcionario ID: 97, Rol: Supervisor
+2026-02-16 15:34:32 - Acción recibida: registrar
+2026-02-16 15:34:32 - Datos recibidos: {"accion":"registrar","id_funcionario":"23","tipo_rol":"Supervisor","contrasena":"121312312"}
+2026-02-16 15:34:32 - ✓ Usuario registrado correctamente - Funcionario ID: 23, Rol: Supervisor
+2026-02-16 15:39:48 - Acción recibida: cambiar_estado
+2026-02-16 15:39:48 - ✓ Estado actualizado correctamente - Usuario ID: 9 - Nuevo estado: Activo
+2026-02-16 15:40:13 - Acción recibida: registrar
+2026-02-16 15:40:13 - Datos recibidos: {"accion":"registrar","id_funcionario":"28","tipo_rol":"Personal Seguridad","contrasena":"12345678"}
+2026-02-16 15:40:14 - ✓ Usuario registrado correctamente - Funcionario ID: 28, Rol: Personal Seguridad
+2026-02-16 15:40:19 - Acción recibida: cambiar_estado
+2026-02-16 15:40:19 - ✓ Estado actualizado correctamente - Usuario ID: 44 - Nuevo estado: Inactivo
+2026-02-16 15:42:15 - Acción recibida: registrar
+2026-02-16 15:42:15 - Datos recibidos: {"accion":"registrar","id_funcionario":"99","tipo_rol":"Supervisor","contrasena":"123123123"}
+2026-02-16 15:42:15 - ✓ Usuario registrado correctamente - Funcionario ID: 99, Rol: Supervisor
+2026-02-16 15:46:45 - Acción recibida: registrar
+2026-02-16 15:46:45 - Datos recibidos: {"accion":"registrar","id_funcionario":"27","tipo_rol":"Supervisor","contrasena":"123456789"}
+2026-02-16 15:46:45 - ✓ Usuario registrado correctamente - Funcionario ID: 27, Rol: Supervisor
+2026-02-16 15:47:12 - Acción recibida: registrar
+2026-02-16 15:47:12 - Datos recibidos: {"accion":"registrar","id_funcionario":"98","tipo_rol":"Supervisor","contrasena":"1231321312312"}
+2026-02-16 15:47:12 - ✓ Usuario registrado correctamente - Funcionario ID: 98, Rol: Supervisor
+2026-02-16 15:49:29 - Acción recibida: registrar
+2026-02-16 15:49:29 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Supervisor","contrasena":"123455667"}
+2026-02-16 15:49:29 - ✓ Usuario registrado correctamente - Funcionario ID: 97, Rol: Supervisor
+2026-02-16 15:50:23 - Acción recibida: registrar
+2026-02-16 15:50:23 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Personal Seguridad","contrasena":"1233456"}
+2026-02-16 15:50:23 - ✓ Usuario registrado correctamente - Funcionario ID: 97, Rol: Personal Seguridad
+2026-02-16 15:50:25 - Acción recibida: registrar
+2026-02-16 15:50:25 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Personal Seguridad","contrasena":"1233456"}
+2026-02-16 15:50:25 - ERROR: Funcionario ya tiene usuario - ID: 97
+2026-02-16 15:50:27 - Acción recibida: registrar
+2026-02-16 15:50:27 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Personal Seguridad","contrasena":"1233456"}
+2026-02-16 15:50:27 - ERROR: Funcionario ya tiene usuario - ID: 97
+2026-02-16 15:51:26 - Acción recibida: registrar
+2026-02-16 15:51:26 - Datos recibidos: {"accion":"registrar","id_funcionario":"97","tipo_rol":"Supervisor","contrasena":"123123123"}
+2026-02-16 15:51:26 - ✓ Usuario registrado correctamente - Funcionario ID: 97, Rol: Supervisor
+2026-02-17 02:52:27 - Acción recibida: cambiar_estado
+2026-02-17 02:52:27 - ✓ Estado actualizado correctamente - Usuario ID: 50 - Nuevo estado: Inactivo
+2026-02-17 02:53:05 - Acción recibida: registrar
+2026-02-17 02:53:05 - Datos recibidos: {"accion":"registrar","id_funcionario":"99","tipo_rol":"Supervisor","contrasena":"1231231"}
+2026-02-17 02:53:06 - ✓ Usuario registrado correctamente - Funcionario ID: 99, Rol: Supervisor
