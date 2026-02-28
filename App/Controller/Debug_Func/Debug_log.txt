@@ -4528,3 +4528,23 @@ POST recibido:
 2026-02-27 05:32:55 - Correo enviado correctamente a lorenaGalindo@gmail.com
 2026-02-27 08:21:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-127-69a145ec75fec.png
 2026-02-27 08:21:19 - Correo enviado correctamente a FeriaDavid@gmail.com
+2026-02-28 00:50:36 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-28 00:50:36 - Funcionario encontrado: {"IdFuncionario":125,"NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":12313123123,"CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-6997edc2c666e.png"}
+2026-02-28 00:50:36 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor. Ruta: qr/Qr_Func/QR-FUNC-125-6997edc2c666e.png
+2026-02-28 00:50:46 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-125-69a22dd68b5dd.png
+2026-02-28 00:50:49 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-28 00:50:56 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-28 00:50:56 - Funcionario encontrado: {"IdFuncionario":125,"NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":12313123123,"CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-69a22dd68b5dd.png"}
+2026-02-28 00:50:56 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-28 00:50:59 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-28 00:50:59 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+2026-02-28 00:53:58 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-28 00:53:58 - Funcionario encontrado: {"IdFuncionario":125,"NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":12313123123,"CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-69a22dd68b5dd.png"}
+2026-02-28 00:53:58 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-28 00:54:01 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-28 00:54:01 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+2026-02-28 00:54:42 - === enviarQRPorCorreo llamado para ID: 125 ===
+2026-02-28 00:54:42 - Funcionario encontrado: {"IdFuncionario":125,"NombreFuncionario":"Anderson Arevalo","CargoFuncionario":"Funcionario","DocumentoFuncionario":12313123123,"CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-125-69a22dd68b5dd.png"}
+2026-02-28 00:54:42 - Preparando envío a: andersoarebalo@gmail.com
+2026-02-28 00:54:44 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-02-28 00:54:44 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com

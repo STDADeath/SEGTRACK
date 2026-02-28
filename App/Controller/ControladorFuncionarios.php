@@ -124,13 +124,7 @@ try {
 
             // ── Plantilla HTML — el logo usa cid:logo_segtrack igual que dispositivos ──
             return "
-<!DOCTYPE html>
-<html lang='es'>
-<head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>{$asunto}</title>
-</head>
+
 <body style='margin:0; padding:0; background-color:#f0f4f8;
              font-family:Arial,Helvetica,sans-serif;'>
 
@@ -210,11 +204,7 @@ try {
                       <strong>Correo:</strong> {$correo}
                     </p>
                     <p style='margin:5px 0; font-size:14px; color:#333;'>
-                      <strong>Estado:</strong>
-                      <span style='background:#e8f5e9; color:#2e7d32; padding:2px 10px;
-                                   border-radius:12px; font-size:12px; font-weight:700;'>
-                        Activo
-                      </span>
+                      
                     </p>
                   </td>
                 </tr>
