@@ -1852,3 +1852,42 @@ Preparando envío a: pasachoa2002@gmail.com
 Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: pasachoa2002@gmail.com"}
 === FIN ===
 
+
+2026-02-27 20:14:18 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "23",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 23, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-02-27 20:16:35 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NO APLICA",
+    "DescripcionVehiculo": "Bicicleta marca Olympus",
+    "TarjetaPropiedad": "Tj1889995566",
+    "IdSede": "29",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-27 20:16:35
+Generando QR para vehículo ID: 26
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-26-69a241f3e8056.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 26","data":{"IdParqueadero":"26","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-26-69a241f3e8056.png","FechaRegistro":"2026-02-27 20:16:35"}}
+=== FIN ===
+
