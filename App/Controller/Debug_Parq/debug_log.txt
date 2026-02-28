@@ -975,6 +975,7 @@ Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente"
 === FIN ===
 
 
+<<<<<<< HEAD
 2025-12-10 19:53:03 === INICIO CONTROLADOR PARQUEADERO ===
 Zona horaria del servidor: America/Bogota
 POST recibido: {
@@ -1033,6 +1034,9 @@ Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente"
 
 
 2025-12-10 19:55:01 === INICIO CONTROLADOR PARQUEADERO ===
+=======
+2025-12-13 16:13:12 === INICIO CONTROLADOR PARQUEADERO ===
+>>>>>>> feature/parqueadero-dispositivo
 Zona horaria del servidor: America/Bogota
 POST recibido: {
     "accion": "cambiar_estado",
@@ -1049,6 +1053,7 @@ Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente"
 === FIN ===
 
 
+<<<<<<< HEAD
 2025-12-10 19:55:04 === INICIO CONTROLADOR PARQUEADERO ===
 Zona horaria del servidor: America/Bogota
 POST recibido: {
@@ -1107,12 +1112,22 @@ POST recibido: {
     "id": "18",
     "tipo": "Carro",
     "descripcion": "Sandero verde",
+=======
+2025-12-13 22:09:28 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "21",
+    "tipo": "Carro",
+    "descripcion": "Renaul, Kia, de color rojo",
+>>>>>>> feature/parqueadero-dispositivo
     "idsede": "28"
 }
 Librería QR cargada
 Modelo cargado correctamente
 Instancia de ControladorParqueadero creada
 Acción detectada: actualizar
+<<<<<<< HEAD
 Procesando actualización para ID: 18
 Datos preparados: {"tipo":"Carro","descripcion":"Sandero verde","idsede":"28"}
 === actualizarVehiculo llamado ===
@@ -1133,10 +1148,33 @@ POST recibido: {
     "accion": "cambiar_estado",
     "id": "18",
     "estado": "Inactivo"
+=======
+Procesando actualización para ID: 21
+Datos preparados: {"tipo":"Carro","descripcion":"Renaul, Kia, de color rojo","idsede":"28"}
+=== actualizarVehiculo llamado ===
+ID: 21
+Datos: {"tipo":"Carro","descripcion":"Renaul, Kia, de color rojo","idsede":"28"}
+Regenerando QR para ID: 21
+Generando QR para vehículo ID: 21
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-21-693e2a68a36dc.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-21-693e2a68a36dc.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-21-693e2a68a36dc.png"}
+=== FIN ===
+
+
+2026-01-07 19:05:01 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "21",
+    "correo_destinatario": "andersoarebalo@gmail.com"
+>>>>>>> feature/parqueadero-dispositivo
 }
 Librería QR cargada
 Modelo cargado correctamente
 Instancia de ControladorParqueadero creada
+<<<<<<< HEAD
 Acción detectada: cambiar_estado
 cambiarEstadoVehiculo llamado con ID: 18, Estado: Inactivo
 Vehículo desactivado exitosamente
@@ -1150,10 +1188,29 @@ POST recibido: {
     "accion": "cambiar_estado",
     "id": "23",
     "estado": "Activo"
+=======
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 21 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":21,"TipoVehiculo":"Carro","PlacaVehiculo":"Eho-456","DescripcionVehiculo":"Renaul, Kia, de color rojo","TarjetaPropiedad":"tj 495564","FechaParqueadero":"2025-11-20 18:38:00","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-21-693e2a68a36dc.png","IdSede":28}
+Preparando envío a: andersoarebalo@gmail.com
+Error PHPMailer: SMTP Error: Could not authenticate.
+Respuesta final: {"success":false,"message":"Error PHPMailer: SMTP Error: Could not authenticate."}
+=== FIN ===
+
+
+2026-01-07 19:07:13 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "21",
+    "correo_destinatario": "andersoarebalo@gmail.com"
+>>>>>>> feature/parqueadero-dispositivo
 }
 Librería QR cargada
 Modelo cargado correctamente
 Instancia de ControladorParqueadero creada
+<<<<<<< HEAD
 Acción detectada: cambiar_estado
 cambiarEstadoVehiculo llamado con ID: 23, Estado: Activo
 Vehículo activado exitosamente
@@ -1167,10 +1224,29 @@ POST recibido: {
     "accion": "cambiar_estado",
     "id": "21",
     "estado": "Activo"
+=======
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 21 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":21,"TipoVehiculo":"Carro","PlacaVehiculo":"Eho-456","DescripcionVehiculo":"Renaul, Kia, de color rojo","TarjetaPropiedad":"tj 495564","FechaParqueadero":"2025-11-20 18:38:00","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-21-693e2a68a36dc.png","IdSede":28}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-01-07 20:39:46 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "21",
+    "correo_destinatario": "brendamorenotu@gmail.com"
+>>>>>>> feature/parqueadero-dispositivo
 }
 Librería QR cargada
 Modelo cargado correctamente
 Instancia de ControladorParqueadero creada
+<<<<<<< HEAD
 Acción detectada: cambiar_estado
 cambiarEstadoVehiculo llamado con ID: 21, Estado: Activo
 Vehículo activado exitosamente
@@ -1185,6 +1261,108 @@ POST recibido: {
     "PlacaVehiculo": "No aplica",
     "DescripcionVehiculo": "Bicicleta de color vERDE",
     "TarjetaPropiedad": "TJ 2312421421421",
+=======
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 21 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":21,"TipoVehiculo":"Carro","PlacaVehiculo":"Eho-456","DescripcionVehiculo":"Renaul, Kia, de color rojo","TarjetaPropiedad":"tj 495564","FechaParqueadero":"2025-11-20 18:38:00","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-21-693e2a68a36dc.png","IdSede":28}
+Preparando envío a: brendamorenotu@gmail.com
+✓ Correo enviado exitosamente a: brendamorenotu@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: brendamorenotu@gmail.com"}
+=== FIN ===
+
+
+2026-02-14 21:45:50 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "EHO-34Y",
+    "DescripcionVehiculo": "Kaguasaki z mil",
+    "TarjetaPropiedad": "tj567890",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-14 21:45:50
+Generando QR para vehículo ID: 23
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-23-6991335e8af3c.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 23","data":{"IdParqueadero":"23","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-23-6991335e8af3c.png","FechaRegistro":"2026-02-14 21:45:50"}}
+=== FIN ===
+
+
+2026-02-14 21:46:20 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "EHO-34Y",
+    "DescripcionVehiculo": "Kaguasaki z 1200",
+    "TarjetaPropiedad": "tj567890",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-14 21:46:20
+ERROR: Placa duplicada - EHO-34Y
+Respuesta final: {"success":false,"message":"⚠️ La placa 'EHO-34Y' ya está registrada en:\n• Vehículo ID: 23\n• Tipo: Moto\n• Descripción: Kaguasaki z mil"}
+=== FIN ===
+
+
+2026-02-14 22:00:49 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "no aplica",
+    "DescripcionVehiculo": "Bicicleta morada",
+    "TarjetaPropiedad": "tj324444",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-14 22:00:49
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'PlacaVehiculo' at row 1"}
+=== FIN ===
+
+
+2026-02-14 22:03:23 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "no aplica",
+    "DescripcionVehiculo": "Bicicleta morada",
+    "TarjetaPropiedad": "tj324444",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-14 22:03:23
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'PlacaVehiculo' at row 1"}
+=== FIN ===
+
+
+2026-02-14 22:04:11 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "BGB-54B",
+    "DescripcionVehiculo": "Honda color rojo",
+    "TarjetaPropiedad": "tj324556789",
+>>>>>>> feature/parqueadero-dispositivo
     "IdSede": "28",
     "accion": "registrar"
 }
@@ -1193,10 +1371,725 @@ Modelo cargado correctamente
 Instancia de ControladorParqueadero creada
 Acción detectada: registrar
 registrarVehiculo llamado
+<<<<<<< HEAD
 Fecha generada en servidor: 2025-12-11 16:11:04
 ✅ Usando fecha del servidor (sin validación de cliente)
 Generando QR para vehículo ID: 13
 QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-13-693b336837a80.png
 Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 13","data":{"IdParqueadero":"13","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-13-693b336837a80.png","FechaRegistro":"2025-12-11 16:11:04"}}
+=======
+Fecha generada en servidor: 2026-02-14 22:04:11
+Generando QR para vehículo ID: 24
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-24-699137ab5f71f.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 24","data":{"IdParqueadero":"24","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-24-699137ab5f71f.png","FechaRegistro":"2026-02-14 22:04:11"}}
+=== FIN ===
+
+
+2026-02-14 22:04:24 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "BGB-54B",
+    "DescripcionVehiculo": "Honda color morada",
+    "TarjetaPropiedad": "tj324556789",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-14 22:04:24
+ERROR: Placa duplicada - BGB-54B
+Respuesta final: {"success":false,"message":"⚠️ La placa 'BGB-54B' ya está registrada para un vehículo tipo 'Moto'."}
+=== FIN ===
+
+
+2026-02-14 22:04:44 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "BGB-54H",
+    "DescripcionVehiculo": "Honda color morada",
+    "TarjetaPropiedad": "tj324556789",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-14 22:04:44
+ERROR: Tarjeta duplicada - tj324556789
+Respuesta final: {"success":false,"message":"⚠️ La tarjeta de propiedad 'tj324556789' ya está registrada para un vehículo tipo 'Moto'."}
+=== FIN ===
+
+
+2026-02-15 16:41:56 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "BGB-54B",
+    "DescripcionVehiculo": "Sparck ",
+    "TarjetaPropiedad": "tj324556789",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-15 16:41:57
+ERROR: Placa duplicada - BGB-54B
+Respuesta final: {"success":false,"message":"⚠️ La placa 'BGB-54B' ya está registrada para un vehículo tipo 'Moto'."}
+=== FIN ===
+
+
+2026-02-15 16:42:14 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "BGB-54Y",
+    "DescripcionVehiculo": "Sparck ",
+    "TarjetaPropiedad": "tj324556789",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-15 16:42:14
+ERROR: Tarjeta duplicada - tj324556789
+Respuesta final: {"success":false,"message":"⚠️ La tarjeta de propiedad 'tj324556789' ya está registrada para un vehículo tipo 'Moto'."}
+=== FIN ===
+
+
+2026-02-15 16:42:53 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "24",
+    "correo_destinatario": "andersoarebalo@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 24 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":24,"TipoVehiculo":"Moto","PlacaVehiculo":"BGB-54B","DescripcionVehiculo":"Honda color rojo","TarjetaPropiedad":"tj324556789","FechaParqueadero":"2026-02-14 22:04:11","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-24-699137ab5f71f.png","IdSede":28}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-15 16:45:29 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "24",
+    "correo_destinatario": "carrimorro9080@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 24 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":24,"TipoVehiculo":"Moto","PlacaVehiculo":"BGB-54B","DescripcionVehiculo":"Honda color rojo","TarjetaPropiedad":"tj324556789","FechaParqueadero":"2026-02-14 22:04:11","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-24-699137ab5f71f.png","IdSede":28}
+Preparando envío a: carrimorro9080@gmail.com
+✓ Correo enviado exitosamente a: carrimorro9080@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: carrimorro9080@gmail.com"}
+=== FIN ===
+
+
+2026-02-15 16:47:13 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "24",
+    "tipo": "Moto",
+    "descripcion": "Honda de color azul",
+    "idsede": "28"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 24
+Datos preparados: {"tipo":"Moto","descripcion":"Honda de color azul","idsede":"28"}
+=== actualizarVehiculo llamado ===
+ID: 24
+Datos: {"tipo":"Moto","descripcion":"Honda de color azul","idsede":"28"}
+Regenerando QR para ID: 24
+Generando QR para vehículo ID: 24
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-24-69923ee12b0b0.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-24-699137ab5f71f.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-24-69923ee12b0b0.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-24-69923ee12b0b0.png"}
+=== FIN ===
+
+
+2026-02-15 16:47:43 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "24",
+    "correo_destinatario": "carrimorro9080@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 24 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":24,"TipoVehiculo":"Moto","PlacaVehiculo":"BGB-54B","DescripcionVehiculo":"Honda de color azul","TarjetaPropiedad":"tj324556789","FechaParqueadero":"2026-02-14 22:04:11","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-24-69923ee12b0b0.png","IdSede":28}
+Preparando envío a: carrimorro9080@gmail.com
+✓ Correo enviado exitosamente a: carrimorro9080@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: carrimorro9080@gmail.com"}
+=== FIN ===
+
+
+2026-02-15 18:40:59 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "24",
+    "correo_destinatario": "carrimorro9080@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 24 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":24,"TipoVehiculo":"Moto","PlacaVehiculo":"BGB-54B","DescripcionVehiculo":"Honda de color azul","TarjetaPropiedad":"tj324556789","FechaParqueadero":"2026-02-14 22:04:11","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-24-69923ee12b0b0.png","IdSede":28}
+Preparando envío a: carrimorro9080@gmail.com
+✓ Correo enviado exitosamente a: carrimorro9080@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: carrimorro9080@gmail.com"}
+=== FIN ===
+
+
+2026-02-25 14:01:53 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NO APLICA",
+    "DescripcionVehiculo": "Bicicleta morada",
+    "TarjetaPropiedad": "TJ4567898765456723233",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-25 14:01:55
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'PlacaVehiculo' at row 1"}
+=== FIN ===
+
+
+2026-02-25 14:02:23 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NO APLICA",
+    "DescripcionVehiculo": "Bicicleta morada",
+    "TarjetaPropiedad": "TJ4567898765456723233",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-25 14:02:23
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'PlacaVehiculo' at row 1"}
+=== FIN ===
+
+
+2026-02-25 14:17:02 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NO APLICA",
+    "DescripcionVehiculo": "Bicicleta morada",
+    "TarjetaPropiedad": "TJ4567898765456723233",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-25 14:17:02
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'PlacaVehiculo' at row 1"}
+=== FIN ===
+
+
+2026-02-25 14:24:22 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NO APLICA",
+    "DescripcionVehiculo": "Bicicleta morada",
+    "TarjetaPropiedad": "TJ4567898765456723233",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-25 14:24:22
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'TarjetaPropiedad' at row 1"}
+=== FIN ===
+
+
+2026-02-25 14:27:44 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NO APLICA",
+    "DescripcionVehiculo": "Bicicleta morada",
+    "TarjetaPropiedad": "TJ4567898765456723233",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-25 14:27:44
+Respuesta final: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'TarjetaPropiedad' at row 1"}
+=== FIN ===
+
+
+2026-02-25 14:37:20 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NO APLICA",
+    "DescripcionVehiculo": "Bicicleta morada",
+    "TarjetaPropiedad": "Tj54637892052",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-25 14:37:20
+Generando QR para vehículo ID: 25
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-25-699f4f705c2ed.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 25","data":{"IdParqueadero":"25","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-25-699f4f705c2ed.png","FechaRegistro":"2026-02-25 14:37:20"}}
+=== FIN ===
+
+
+2026-02-25 15:25:26 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "BFG-43G",
+    "DescripcionVehiculo": "Kaguasaki z ninja verde ",
+    "TarjetaPropiedad": "tj324541666666",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-25 15:25:26
+Generando QR para vehículo ID: 26
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-26-699f5ab6425d4.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 26","data":{"IdParqueadero":"26","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-26-699f5ab6425d4.png","FechaRegistro":"2026-02-25 15:25:26"}}
+=== FIN ===
+
+
+2026-02-25 15:26:31 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "N-A",
+    "DescripcionVehiculo": "Bicicleta roja",
+    "TarjetaPropiedad": "tj324444653",
+    "IdSede": "27",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-25 15:26:32
+Generando QR para vehículo ID: 27
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-27-699f5af8086c2.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 27","data":{"IdParqueadero":"27","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-27-699f5af8086c2.png","FechaRegistro":"2026-02-25 15:26:32"}}
+=== FIN ===
+
+
+2026-02-26 12:58:52 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "27",
+    "correo_destinatario": "carrimorro9080@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 27 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":27,"TipoVehiculo":"Bicicleta","PlacaVehiculo":"N-A","DescripcionVehiculo":"Bicicleta roja","TarjetaPropiedad":"tj324444653","FechaParqueadero":"2026-02-25 15:26:32","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-27-699f5af8086c2.png","IdSede":27}
+Preparando envío a: carrimorro9080@gmail.com
+✓ Correo enviado exitosamente a: carrimorro9080@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: carrimorro9080@gmail.com"}
+=== FIN ===
+
+
+2026-02-26 12:59:14 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "27",
+    "tipo": "Bicicleta",
+    "descripcion": "Bicicleta Morada",
+    "idsede": "27"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 27
+Datos preparados: {"tipo":"Bicicleta","descripcion":"Bicicleta Morada","idsede":"27"}
+=== actualizarVehiculo llamado ===
+ID: 27
+Datos: {"tipo":"Bicicleta","descripcion":"Bicicleta Morada","idsede":"27"}
+Regenerando QR para ID: 27
+Generando QR para vehículo ID: 27
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-27-69a089f283fa0.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-27-699f5af8086c2.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-27-69a089f283fa0.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-27-69a089f283fa0.png"}
+=== FIN ===
+
+
+2026-02-26 13:11:38 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO-543",
+    "DescripcionVehiculo": "Mazda rojo",
+    "TarjetaPropiedad": "tj35789933",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-26 13:11:38
+Generando QR para vehículo ID: 28
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-28-69a08cda29e37.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 28","data":{"IdParqueadero":"28","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-28-69a08cda29e37.png","FechaRegistro":"2026-02-26 13:11:38"}}
+=== FIN ===
+
+
+2026-02-26 13:24:43 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "12",
+    "tipo": "Moto",
+    "descripcion": "Honda color Naranja con negro",
+    "idsede": "25"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 12
+Datos preparados: {"tipo":"Moto","descripcion":"Honda color Naranja con negro","idsede":"25"}
+=== actualizarVehiculo llamado ===
+ID: 12
+Datos: {"tipo":"Moto","descripcion":"Honda color Naranja con negro","idsede":"25"}
+Regenerando QR para ID: 12
+Generando QR para vehículo ID: 12
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-12-69a08feb265cd.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-12-69a08feb265cd.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-12-69a08feb265cd.png"}
+=== FIN ===
+
+
+2026-02-26 13:25:43 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "12",
+    "correo_destinatario": "carrimorro9080@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 12 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":12,"TipoVehiculo":"Moto","PlacaVehiculo":"bg-32-c","DescripcionVehiculo":"Honda color Naranja con negro","TarjetaPropiedad":"Tj 1564221","FechaParqueadero":"2025-11-11 19:05:00","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-12-69a08feb265cd.png","IdSede":25}
+Preparando envío a: carrimorro9080@gmail.com
+✓ Correo enviado exitosamente a: carrimorro9080@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: carrimorro9080@gmail.com"}
+=== FIN ===
+
+
+2026-02-26 13:35:43 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "28",
+    "tipo": "Carro",
+    "descripcion": "Mazda rojo",
+    "idsede": "29"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 28
+Datos preparados: {"tipo":"Carro","descripcion":"Mazda rojo","idsede":"29"}
+=== actualizarVehiculo llamado ===
+ID: 28
+Datos: {"tipo":"Carro","descripcion":"Mazda rojo","idsede":"29"}
+Regenerando QR para ID: 28
+Generando QR para vehículo ID: 28
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-28-69a0927fa2535.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-28-69a08cda29e37.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-28-69a0927fa2535.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-28-69a0927fa2535.png"}
+=== FIN ===
+
+
+2026-02-26 13:35:58 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "26",
+    "tipo": "Moto",
+    "descripcion": "Kaguasaki z ninja verde",
+    "idsede": "29"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 26
+Datos preparados: {"tipo":"Moto","descripcion":"Kaguasaki z ninja verde","idsede":"29"}
+=== actualizarVehiculo llamado ===
+ID: 26
+Datos: {"tipo":"Moto","descripcion":"Kaguasaki z ninja verde","idsede":"29"}
+Regenerando QR para ID: 26
+Generando QR para vehículo ID: 26
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-26-69a0928e445c0.png
+QR anterior eliminado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-26-699f5ab6425d4.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-26-69a0928e445c0.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-26-69a0928e445c0.png"}
+=== FIN ===
+
+
+2026-02-26 13:59:42 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "BTY-876",
+    "DescripcionVehiculo": "Camaro del 98, color rojo con franjas blancas, ",
+    "TarjetaPropiedad": "tj252552125",
+    "IdSede": "29",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-26 13:59:42
+Generando QR para vehículo ID: 29
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-29-69a0981eac81f.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdParqueadero":"29","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-29-69a0981eac81f.png","FechaRegistro":"2026-02-26 13:59:42"}}
+=== FIN ===
+
+
+2026-02-26 14:00:00 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "29",
+    "correo_destinatario": "andersoarebalo@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 29 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":29,"TipoVehiculo":"Carro","PlacaVehiculo":"BTY-876","DescripcionVehiculo":"Camaro del 98, color rojo con franjas blancas, ","TarjetaPropiedad":"tj252552125","FechaParqueadero":"2026-02-26 13:59:42","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-29-69a0981eac81f.png","IdSede":29}
+Preparando envío a: andersoarebalo@gmail.com
+✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-02-26 14:01:20 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "BRR-873",
+    "DescripcionVehiculo": "Camaro del 98, color rojo con franjas blancas, cojineria de cuero blanco",
+    "TarjetaPropiedad": "tj252556655",
+    "IdSede": "25",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-26 14:01:20
+Generando QR para vehículo ID: 30
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-30-69a098808a60d.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 30","data":{"IdParqueadero":"30","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-30-69a098808a60d.png","FechaRegistro":"2026-02-26 14:01:20"}}
+=== FIN ===
+
+
+2026-02-27 19:57:14 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "12",
+    "tipo": "Moto",
+    "descripcion": "Honda color morada",
+    "idsede": "25"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 12
+Datos preparados: {"tipo":"Moto","descripcion":"Honda color morada","idsede":"25"}
+=== actualizarVehiculo llamado ===
+ID: 12
+Datos: {"tipo":"Moto","descripcion":"Honda color morada","idsede":"25"}
+Regenerando QR para ID: 12
+Generando QR para vehículo ID: 12
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-12-69a23d6a65789.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-12-69a23d6a65789.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-12-69a23d6a65789.png"}
+=== FIN ===
+
+
+2026-02-27 19:57:43 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "25",
+    "tipo": "Moto",
+    "descripcion": "Honda de color rojo",
+    "idsede": "28"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 25
+Datos preparados: {"tipo":"Moto","descripcion":"Honda de color rojo","idsede":"28"}
+=== actualizarVehiculo llamado ===
+ID: 25
+Datos: {"tipo":"Moto","descripcion":"Honda de color rojo","idsede":"28"}
+Regenerando QR para ID: 25
+Generando QR para vehículo ID: 25
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-25-69a23d87beb6a.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-25-69a23d87beb6a.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-25-69a23d87beb6a.png"}
+=== FIN ===
+
+
+2026-02-27 19:57:56 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "25",
+    "correo_destinatario": "pasachoa2002@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 25 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":25,"TipoVehiculo":"Moto","PlacaVehiculo":"GFD-65I","DescripcionVehiculo":"Honda de color rojo","TarjetaPropiedad":"Tj123453598","FechaParqueadero":"2026-02-13 20:33:47","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-25-69a23d87beb6a.png","IdSede":28}
+Preparando envío a: pasachoa2002@gmail.com
+✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: pasachoa2002@gmail.com"}
+=== FIN ===
+
+
+2026-02-27 20:14:18 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "23",
+    "estado": "Inactivo"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: cambiar_estado
+cambiarEstadoVehiculo llamado con ID: 23, Estado: Inactivo
+Vehículo desactivado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-02-27 20:16:35 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NO APLICA",
+    "DescripcionVehiculo": "Bicicleta marca Olympus",
+    "TarjetaPropiedad": "Tj1889995566",
+    "IdSede": "29",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-02-27 20:16:35
+Generando QR para vehículo ID: 26
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-26-69a241f3e8056.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 26","data":{"IdParqueadero":"26","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-26-69a241f3e8056.png","FechaRegistro":"2026-02-27 20:16:35"}}
+>>>>>>> feature/parqueadero-dispositivo
 === FIN ===
 

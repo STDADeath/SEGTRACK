@@ -1,0 +1,29 @@
+
+2025-12-13 00:20:43 === INICIO ENVÍO QR ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Tablet",
+    "marca": "HUAWEI",
+    "id_funcionario": "24",
+    "id_visitante": ""
+}
+PHPMailer cargado correctamente
+Conexión a BD establecida
+ERROR: ID de dispositivo no proporcionado
+=== FIN ENVÍO QR ===
+
+
+2025-12-13 00:21:01 === INICIO ENVÍO QR ===
+POST recibido: {
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "IdFuncionario": "54",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+PHPMailer cargado correctamente
+Conexión a BD establecida
+ERROR: ID de dispositivo no proporcionado
+=== FIN ENVÍO QR ===
+
