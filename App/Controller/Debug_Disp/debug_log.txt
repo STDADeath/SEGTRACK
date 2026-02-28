@@ -2737,3 +2737,82 @@ Acción detectada: enviar_qr
 Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: pasachoa2002@gmail.com"}
 === FIN ===
 
+
+2026-02-28 01:56:37 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Portatil",
+    "marca": "HUAWEI",
+    "serial": "SN1998754666",
+    "id_funcionario": "24",
+    "id_visitante": ""
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 29 ===
+=== MODELO: actualizar ID: 29 ===
+{"TipoDispositivo":"Portatil","MarcaDispositivo":"HUAWEI","NumeroSerial":"SN1998754666","IdFuncionario":"24","IdVisitante":""}
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-29-69a23d45be2c2.png"}
+=== FIN ===
+
+
+2026-02-28 01:56:43 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "29"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: Pasachoa2002@gmail.com"}
+=== FIN ===
+
+
+2026-02-28 02:06:37 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "38",
+    "tipo": "Portatil",
+    "marca": "Dell",
+    "serial": "SN198595995959595",
+    "id_funcionario": "53",
+    "id_visitante": ""
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 38 ===
+=== MODELO: actualizar ID: 38 ===
+{"TipoDispositivo":"Portatil","MarcaDispositivo":"Dell","NumeroSerial":"SN198595995959595","IdFuncionario":"53","IdVisitante":""}
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":0,"qr":"qr\/Qr_Dipo\/QR-DISP-38-69a23f9d31392.png"}
+=== FIN ===
+
+
+2026-02-28 02:06:52 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "35",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "serial": "SN1999982886646",
+    "id_funcionario": "58",
+    "id_visitante": ""
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 35 ===
+=== MODELO: actualizar ID: 35 ===
+{"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","NumeroSerial":"SN1999982886646","IdFuncionario":"58","IdVisitante":""}
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":0,"qr":"qr\/Qr_Dipo\/QR-DISP-35-69a23fac50747.png"}
+=== FIN ===
+
+
+2026-02-28 02:07:51 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "35"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+

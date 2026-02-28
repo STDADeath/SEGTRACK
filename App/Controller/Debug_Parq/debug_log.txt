@@ -1778,3 +1778,77 @@ QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/q
 Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 30","data":{"IdParqueadero":"30","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-30-69a098808a60d.png","FechaRegistro":"2026-02-26 14:01:20"}}
 === FIN ===
 
+
+2026-02-27 19:57:14 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "12",
+    "tipo": "Moto",
+    "descripcion": "Honda color morada",
+    "idsede": "25"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 12
+Datos preparados: {"tipo":"Moto","descripcion":"Honda color morada","idsede":"25"}
+=== actualizarVehiculo llamado ===
+ID: 12
+Datos: {"tipo":"Moto","descripcion":"Honda color morada","idsede":"25"}
+Regenerando QR para ID: 12
+Generando QR para vehículo ID: 12
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-12-69a23d6a65789.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-12-69a23d6a65789.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-12-69a23d6a65789.png"}
+=== FIN ===
+
+
+2026-02-27 19:57:43 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "actualizar",
+    "id": "25",
+    "tipo": "Moto",
+    "descripcion": "Honda de color rojo",
+    "idsede": "28"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: actualizar
+Procesando actualización para ID: 25
+Datos preparados: {"tipo":"Moto","descripcion":"Honda de color rojo","idsede":"28"}
+=== actualizarVehiculo llamado ===
+ID: 25
+Datos: {"tipo":"Moto","descripcion":"Honda de color rojo","idsede":"28"}
+Regenerando QR para ID: 25
+Generando QR para vehículo ID: 25
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-25-69a23d87beb6a.png
+Nuevo QR generado: qr/Qr_Parq/QR-VEHICULO-25-69a23d87beb6a.png
+Vehículo actualizado exitosamente
+Respuesta final: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Parq\/QR-VEHICULO-25-69a23d87beb6a.png"}
+=== FIN ===
+
+
+2026-02-27 19:57:56 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "25",
+    "correo_destinatario": "pasachoa2002@gmail.com"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: enviar_qr
+=== enviarQRPorCorreo llamado para vehículo ID: 25 ===
+PHPMailer cargado
+Vehículo encontrado: {"IdParqueadero":25,"TipoVehiculo":"Moto","PlacaVehiculo":"GFD-65I","DescripcionVehiculo":"Honda de color rojo","TarjetaPropiedad":"Tj123453598","FechaParqueadero":"2026-02-13 20:33:47","Estado":"Activo","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-25-69a23d87beb6a.png","IdSede":28}
+Preparando envío a: pasachoa2002@gmail.com
+✓ Correo enviado exitosamente a: pasachoa2002@gmail.com
+Respuesta final: {"success":true,"message":"Código QR enviado exitosamente a: pasachoa2002@gmail.com"}
+=== FIN ===
+

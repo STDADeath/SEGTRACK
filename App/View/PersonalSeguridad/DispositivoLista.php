@@ -70,7 +70,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="card-body">
             <form method="get" class="row g-3">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="tipo" class="form-label">Tipo de Dispositivo</label>
                     <select name="tipo" id="tipo" class="form-select">
                         <option value="">Todos</option>
@@ -82,26 +82,23 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="col-md-2">
                     <label for="marca" class="form-label">Marca</label>
-                    <input type="text" name="marca" id="marca" class="form-control" value="<?= $_GET['marca'] ?? '' ?>" placeholder="Buscar por marca">
+                    <input type="text" name="marca" id="marca" class="form-control" value="<?= htmlspecialchars($_GET['marca'] ?? '') ?>" placeholder="Buscar por marca">
                 </div>
-                
-                <!-- 🆕 FILTRO POR SERIAL -->
                 <div class="col-md-2">
                     <label for="serial" class="form-label">Número Serial</label>
-                    <input type="text" name="serial" id="serial" class="form-control" value="<?= $_GET['serial'] ?? '' ?>" placeholder="Buscar por serial">
-                </div>
-                
-                <div class="col-md-2">
-                    <label for="funcionario" class="form-label">ID Funcionario</label>
-                    <input type="text" name="funcionario" id="funcionario" class="form-control" value="<?= $_GET['funcionario'] ?? '' ?>" placeholder="ID">
+                    <input type="text" name="serial" id="serial" class="form-control" value="<?= htmlspecialchars($_GET['serial'] ?? '') ?>" placeholder="Buscar por serial">
                 </div>
                 <div class="col-md-2">
-                    <label for="visitante" class="form-label">ID Visitante</label>
-                    <input type="text" name="visitante" id="visitante" class="form-control" value="<?= $_GET['visitante'] ?? '' ?>" placeholder="ID">
+                    <label for="funcionario" class="form-label">Funcionario</label>
+                    <input type="text" name="funcionario" id="funcionario" class="form-control" value="<?= htmlspecialchars($_GET['funcionario'] ?? '') ?>" placeholder="Nombre funcionario">
                 </div>
-                <div class="col-md-1 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
-                    <a href="Dispositivolista.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+                <div class="col-md-2">
+                    <label for="visitante" class="form-label">Visitante</label>
+                    <input type="text" name="visitante" id="visitante" class="form-control" value="<?= htmlspecialchars($_GET['visitante'] ?? '') ?>" placeholder="Nombre visitante">
+                </div>
+                <div class="col-md-1 d-flex align-items-end gap-1">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i></button>
+                    <a href="DispositivoSupervisor.php" class="btn btn-secondary"><i class="fas fa-broom"></i></a>
                 </div>
             </form>
         </div>
