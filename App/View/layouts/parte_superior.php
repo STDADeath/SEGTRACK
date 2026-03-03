@@ -87,7 +87,7 @@ if ($_SESSION['usuario']['TipoRol'] !== 'Personal Seguridad') {
                         <div class="collapse-divider"></div>
 
                         <h6 class="collapse-header">Sedes:</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/InstitucionesLista.php">Lista de Institutos</a>  
+                        <a class="collapse-item" href="../PersonalSeguridad/ListaInstituciones.php">Lista de Institutos</a>  
                         <a class="collapse-item" href="../PersonalSeguridad/SedeLista.php">Lista de Sedes</a>
                                             
                     </div>

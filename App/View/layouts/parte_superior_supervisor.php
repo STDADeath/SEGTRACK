@@ -92,9 +92,13 @@ $rolUsuario    = htmlspecialchars($_SESSION['usuario']['TipoRol'] ?? 'Supervisor
 
             <div class="collapse-divider"></div>
 
-            <h6 class="collapse-header">Sedes:</h6>
-              
+            <h6 class="collapse-header">Sedes:</h6> 
             <a class="collapse-item" href="../Supervisor/SedeLista.php">Lista de Sedes</a>
+
+            <h6 class="collapse-header">Institutos:</h6> 
+            <a class="collapse-item" href="../Supervisor/InstitutosListaSUP.php">Lista de Institutos</a>
+
+            
         </div>
     </div>
 </li>

@@ -66,7 +66,8 @@
                 const correo = $('#correoRecuperar').val();
                 
                 $.ajax({
-                    url: 'procesar_recuperacion.php',
+                    url: '../../../App/Controller/procesar_recuperacion.php',
+
                     type: 'POST',
                     data: { correo: correo },
                     dataType: 'json',

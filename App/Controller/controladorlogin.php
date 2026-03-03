@@ -13,7 +13,9 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 
-// Validar método
+// ==============================
+// VALIDAR MÉTODO
+// ==============================
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     ob_end_clean();
     http_response_code(405);
@@ -28,10 +30,13 @@ try {
 
     require_once __DIR__ . '/../Model/modulousuario.php';
 
-    $correo = trim($_POST['correo'] ?? '');
+    $correo     = trim($_POST['correo'] ?? '');
     $contrasena = trim($_POST['contrasena'] ?? '');
-    $nuevoRol = trim($_POST['rol'] ?? '');
+    $nuevoRol   = trim($_POST['rol'] ?? '');
 
+    // ==============================
+    // VALIDACIONES BÁSICAS
+    // ==============================
     if (empty($correo) || empty($contrasena)) {
         throw new Exception('Por favor llena todos los campos', 400);
     }
@@ -49,20 +54,36 @@ try {
 
     $usuario = $resultado['usuario'];
 
-    // Actualizar rol si se envía uno diferente
+    // ==================================================
+    // 🔒 VALIDAR ESTADO (REGLA QUE QUIERES IMPLEMENTAR)
+    // ==================================================
+    if (!isset($usuario['Estado']) || $usuario['Estado'] !== 'Activo') {
+
+        session_destroy(); // eliminar cualquier sesión creada
+
+        throw new Exception(
+            'No puedes ingresar porque tu cuenta está inactiva.',
+            403
+        );
+    }
+
+    // ==============================
+    // ACTUALIZAR ROL SI CAMBIA
+    // ==============================
     if (!empty($nuevoRol) && $nuevoRol !== $usuario['TipoRol']) {
         $usuarioModel->actualizarRol($usuario['IdFuncionario'], $nuevoRol);
         $usuario['TipoRol'] = $nuevoRol;
     }
 
     // ==============================
-    // GUARDAR SESIÓN (SOLO UNA ESTRUCTURA LIMPIA)
+    // GUARDAR SESIÓN
     // ==============================
     $_SESSION['usuario'] = [
         'IdFuncionario'     => $usuario['IdFuncionario'],
         'NombreFuncionario' => $usuario['NombreFuncionario'],
         'Correo'            => $usuario['Correo'] ?? $correo,
-        'TipoRol'           => $usuario['TipoRol']
+        'TipoRol'           => $usuario['TipoRol'],
+        'Estado'            => $usuario['Estado'] // guardamos estado en sesión
     ];
 
     // ==============================

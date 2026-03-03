@@ -39,22 +39,22 @@ class ModuloUsuario {
         try {
 
             // Consulta preparada para evitar SQL Injection
-            $sql = "SELECT 
-                        u.IdUsuario,
-                        u.TipoRol,
-                        u.Contrasena,
-                        f.IdFuncionario,
-                        f.NombreFuncionario,
-                        f.CorreoFuncionario,
-                        f.DocumentoFuncionario,
-                        f.IdSede
-                    FROM usuario u
-                    INNER JOIN funcionario f 
-                        ON u.IdFuncionario = f.IdFuncionario
-                    WHERE (f.CorreoFuncionario = :correo 
-                        OR f.DocumentoFuncionario = :correo)
-                    AND u.Estado = 'Activo'
-                    LIMIT 1"; // ← CORREGIDO
+           $sql = "SELECT 
+            u.IdUsuario,
+            u.TipoRol,
+            u.Contrasena,
+            u.Estado,  -- 👈 AGREGAMOS ESTADO
+            f.IdFuncionario,
+            f.NombreFuncionario,
+            f.CorreoFuncionario,
+            f.DocumentoFuncionario,
+            f.IdSede
+        FROM usuario u
+        INNER JOIN funcionario f 
+            ON u.IdFuncionario = f.IdFuncionario
+        WHERE (f.CorreoFuncionario = :correo 
+            OR f.DocumentoFuncionario = :correo)
+        LIMIT 1";
 
             $stmt = $this->conexion->prepare($sql);
 
@@ -115,16 +115,17 @@ class ModuloUsuario {
 
             // Retornar datos del usuario
             return [
-                'ok' => true,
-                'usuario' => [
-                    'IdUsuario'        => $usuario['IdUsuario'],
-                    'IdFuncionario'    => $usuario['IdFuncionario'],
-                    'NombreFuncionario'=> $usuario['NombreFuncionario'],
-                    'CorreoFuncionario'=> $usuario['CorreoFuncionario'],
-                    'TipoRol'          => $usuario['TipoRol'],
-                    'IdSede'           => $usuario['IdSede']
-                ]
-            ];
+                        'ok' => true,
+                        'usuario' => [
+                            'IdUsuario'        => $usuario['IdUsuario'],
+                            'IdFuncionario'    => $usuario['IdFuncionario'],
+                            'NombreFuncionario'=> $usuario['NombreFuncionario'],
+                            'CorreoFuncionario'=> $usuario['CorreoFuncionario'],
+                            'TipoRol'          => $usuario['TipoRol'],
+                            'IdSede'           => $usuario['IdSede'],
+                            'Estado'           => $usuario['Estado'] // 👈 IMPORTANTE
+                        ]
+                    ];
 
         } catch (PDOException $e) {
 

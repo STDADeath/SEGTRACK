@@ -139,7 +139,7 @@
                 }
                 
                 $.ajax({
-                    url: 'procesar_cambio_password.php',
+                    url: '../../../App/Controller/procesar_cambio_password.php',
                     type: 'POST',
                     data: {
                         correo: correo,

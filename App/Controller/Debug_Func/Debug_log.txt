@@ -4528,3 +4528,27 @@ POST recibido:
 2026-02-27 05:32:55 - Correo enviado correctamente a lorenaGalindo@gmail.com
 2026-02-27 08:21:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-127-69a145ec75fec.png
 2026-02-27 08:21:19 - Correo enviado correctamente a FeriaDavid@gmail.com
+2026-02-27 20:04:09 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-27 20:04:09 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-27 20:04:09 - Preparando envío a: caroldayana989@gmail.com
+2026-02-27 20:04:17 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-27 20:04:17 - ✓ Correo enviado exitosamente a: caroldayana989@gmail.com
+2026-02-28 23:29:58 - === enviarQRPorCorreo llamado para ID: 100 ===
+2026-02-28 23:29:58 - Funcionario encontrado: {"IdFuncionario":"100","NombreFuncionario":"Carol estupi\u00f1an","CargoFuncionario":"Funcionario","DocumentoFuncionario":"65454647979","CorreoFuncionario":"caroldayana989@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-100-6994bb90f1401.png"}
+2026-02-28 23:29:58 - Preparando envío a: caroldayana989@gmail.com
+2026-02-28 23:30:01 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-02-28 23:30:01 - ✓ Correo enviado exitosamente a: caroldayana989@gmail.com
+2026-03-01 09:12:33 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-128-69a3f4f11fc03.png
+2026-03-01 09:12:37 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-03-01 11:22:00 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-97-69a4134885986.png
+2026-03-01 11:22:11 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-03-01 11:42:11 - === enviarQRPorCorreo llamado para ID: 97 ===
+2026-03-01 11:42:11 - Funcionario encontrado: {"IdFuncionario":"97","NombreFuncionario":"Anderson Arevalo II","CargoFuncionario":"Funcionario","DocumentoFuncionario":"1000991666","CorreoFuncionario":"andersoarebalo@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-97-69a4134885986.png"}
+2026-03-01 11:42:11 - Preparando envío a: andersoarebalo@gmail.com
+2026-03-01 11:42:15 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-03-01 11:42:15 - ✓ Correo enviado exitosamente a: andersoarebalo@gmail.com
+2026-03-01 11:42:28 - === enviarQRPorCorreo llamado para ID: 128 ===
+2026-03-01 11:42:28 - Funcionario encontrado: {"IdFuncionario":"128","NombreFuncionario":"Juan Melo","CargoFuncionario":"Funcionario","DocumentoFuncionario":"1000568874","CorreoFuncionario":"pasachoa2002@gmail.com","QrCodigoFuncionario":"qr\/Qr_Func\/QR-FUNC-128-69a3f4f11fc03.png"}
+2026-03-01 11:42:28 - Preparando envío a: pasachoa2002@gmail.com
+2026-03-01 11:42:38 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-03-01 11:42:38 - ✓ Correo enviado exitosamente a: pasachoa2002@gmail.com

@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 
 try {
     // Incluir conexión a base de datos
-    require_once '../../Core/conexion.php';
+    require_once '../Core/conexion.php';
 
     // Verificar datos recibidos
     if (!isset($_POST['correo']) || !isset($_POST['token']) || !isset($_POST['nueva_password'])) {

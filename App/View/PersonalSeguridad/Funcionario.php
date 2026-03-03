@@ -74,12 +74,8 @@ $sedes = $controladorSede->obtenerSedes();
                             class="form-control border-primary shadow-sm">
 
                             <option value="">Seleccione...</option>
-                            <option value="Personal Seguridad">Personal Seguridad</option>
                             <option value="Funcionario">Funcionario</option>
-                            <option value="Visitante">Visitante</option>
-                            <option value="RR.HH">RR.HH</option>
-                            <option value="Contador">Contador</option>
-                            <option value="Financiero">Financiero</option>
+                          
                         </select>
 
                         <!-- Mensaje de error si no es válido -->
