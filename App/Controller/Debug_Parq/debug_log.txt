@@ -1778,3 +1778,88 @@ QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/q
 Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 30","data":{"IdParqueadero":"30","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-30-69a098808a60d.png","FechaRegistro":"2026-02-26 14:01:20"}}
 === FIN ===
 
+
+2026-03-01 16:32:22 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "OPD-865",
+    "DescripcionVehiculo": "Sandero de color negro ",
+    "TarjetaPropiedad": "tj2524567890",
+    "IdSede": "29",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-03-01 16:32:22
+Generando QR para vehículo ID: 31
+QR generado exitosamente: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Parq/QR-VEHICULO-31-69a4b066bf1b4.png
+Respuesta final: {"success":true,"message":"Vehículo registrado correctamente con ID: 31","data":{"IdParqueadero":"31","QrVehiculo":"qr\/Qr_Parq\/QR-VEHICULO-31-69a4b066bf1b4.png","FechaRegistro":"2026-03-01 16:32:22"}}
+=== FIN ===
+
+
+2026-03-01 16:35:12 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "OPD-865",
+    "DescripcionVehiculo": "Camioneta",
+    "TarjetaPropiedad": "tj2524567890",
+    "IdSede": "29",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-03-01 16:35:13
+ERROR: Placa duplicada - OPD-865
+Respuesta final: {"success":false,"message":"⚠️ La placa 'OPD-865' ya está registrada para un vehículo tipo 'Carro'."}
+=== FIN ===
+
+
+2026-03-01 16:50:47 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "OPD-865",
+    "DescripcionVehiculo": "camioneta",
+    "TarjetaPropiedad": "tj2524567890",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-03-01 16:50:47
+ERROR: Placa duplicada - OPD-865
+Respuesta final: {"success":false,"message":"⚠️ La placa 'OPD-865' ya está registrada para un vehículo tipo 'Carro'."}
+=== FIN ===
+
+
+2026-03-01 16:50:56 === INICIO CONTROLADOR PARQUEADERO ===
+Zona horaria del servidor: America/Bogota
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "OPD-567",
+    "DescripcionVehiculo": "camioneta",
+    "TarjetaPropiedad": "tj2524567890",
+    "IdSede": "28",
+    "accion": "registrar"
+}
+Librería QR cargada
+Modelo cargado correctamente
+Instancia de ControladorParqueadero creada
+Acción detectada: registrar
+registrarVehiculo llamado
+Fecha generada en servidor: 2026-03-01 16:50:56
+ERROR: Tarjeta duplicada - tj2524567890
+Respuesta final: {"success":false,"message":"⚠️ La tarjeta de propiedad 'tj2524567890' ya está registrada para un vehículo tipo 'Carro'."}
+=== FIN ===
+

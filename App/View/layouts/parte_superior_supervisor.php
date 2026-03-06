@@ -74,7 +74,7 @@
 
                         <h6 class="collapse-header">Registros Seguridad</h6>
                         <a class="collapse-item" href="../Supervisor/DispositivoSupervisor.php">Registros Dipositivos</a>
-                        <a class="collapse-item" href="../Supervisor/ParqueaderoSupervisor.php">Registros Parqueadero</a>
+                        <a class="collapse-item" href="../Supervisor/VehiculoSupervisor.php">Vista de Vehiculos</a>
                           <a class="collapse-item" href="">Registros Funcionarios</a>
                         <a class="collapse-item" href="">Registros Ingresos</a>
 

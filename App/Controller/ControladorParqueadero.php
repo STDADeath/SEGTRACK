@@ -2,471 +2,319 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/Debug_Parq/error_log.txt');
+ini_set('error_log', __DIR__ . '/Debug_Parqueadero/error_log.txt');
 
-// ⚠️ CONFIGURACIÓN DE ZONA HORARIA - Ajustar según tu ubicación
-date_default_timezone_set('America/Bogota'); // Colombia
+ob_start();
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-// Crear carpeta Debug_Parq si no existe
-$carpetaDebug = __DIR__ . '/Debug_Parq';
+// Crear carpeta Debug_Parqueadero si no existe
+$carpetaDebug = __DIR__ . '/Debug_Parqueadero';
 if (!file_exists($carpetaDebug)) {
     mkdir($carpetaDebug, 0777, true);
 }
 
-file_put_contents($carpetaDebug . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO CONTROLADOR PARQUEADERO ===\n", FILE_APPEND);
-file_put_contents($carpetaDebug . '/debug_log.txt', "Zona horaria del servidor: " . date_default_timezone_get() . "\n", FILE_APPEND);
-file_put_contents($carpetaDebug . '/debug_log.txt', "POST recibido: " . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+file_put_contents($carpetaDebug . '/debug_log.txt',
+    "\n" . date('Y-m-d H:i:s') . " === INICIO CONTROLADOR PARQUEADERO ===\n", FILE_APPEND);
 
 try {
-    // Ruta a phpqrcode
-    $ruta_qrlib = __DIR__ . '/../Libs/phpqrcode/qrlib.php';
-    if (!file_exists($ruta_qrlib)) {
-        throw new Exception("Librería phpqrcode no encontrada: $ruta_qrlib");
-    }
-    require_once $ruta_qrlib;
-    file_put_contents($carpetaDebug . '/debug_log.txt', "Librería QR cargada\n", FILE_APPEND);
+    file_put_contents($carpetaDebug . '/debug_log.txt',
+        "POST recibido:\n" . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
 
-    // Ruta al modelo
+    // ── Conexión ──────────────────────────────────────────────────────────────
+    $ruta_conexion = __DIR__ . '/../Core/conexion.php';
+    if (!file_exists($ruta_conexion)) {
+        throw new Exception("Archivo de conexión no encontrado: $ruta_conexion");
+    }
+    require_once $ruta_conexion;
+
+    $conexionObj = new Conexion();
+    $conexion    = $conexionObj->getConexion();
+
+    if (!isset($conexion) || !($conexion instanceof PDO)) {
+        throw new Exception("La conexión no es una instancia de PDO");
+    }
+
+    // ── Modelo ────────────────────────────────────────────────────────────────
     $ruta_modelo = __DIR__ . '/../Model/ModeloParqueadero.php';
     if (!file_exists($ruta_modelo)) {
         throw new Exception("Modelo no encontrado: $ruta_modelo");
     }
     require_once $ruta_modelo;
-    file_put_contents($carpetaDebug . '/debug_log.txt', "Modelo cargado correctamente\n", FILE_APPEND);
 
+    // ══════════════════════════════════════════════════════════════════════════
     class ControladorParqueadero {
         private $modelo;
         private $carpetaDebug;
+        private $conexion;
 
-        public function __construct() {
-            $this->carpetaDebug = __DIR__ . '/Debug_Parq';
-            $this->modelo = new ModeloParqueadero();
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "Instancia de ControladorParqueadero creada\n", FILE_APPEND);
+        public function __construct($conexion) {
+            $this->conexion     = $conexion;
+            $this->modelo       = new ModeloParqueadero($conexion);
+            $this->carpetaDebug = __DIR__ . '/Debug_Parqueadero';
         }
 
         private function campoVacio($campo): bool {
-            return !isset($campo) || $campo === '' || trim($campo) === '';
+            return !isset($campo) || $campo === '' || trim((string)$campo) === '';
         }
 
-        private function generarQR(int $idVehiculo, string $tipo, string $placa, string $descripcion): ?string {
-            try {
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "Generando QR para vehículo ID: $idVehiculo\n", FILE_APPEND);
-
-                // Carpeta en Public/qr/Qr_Parq
-                $rutaCarpeta = __DIR__ . '/../../Public/qr/Qr_Parq';
-                if (!file_exists($rutaCarpeta)) {
-                    mkdir($rutaCarpeta, 0777, true);
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Carpeta QR vehículos creada: $rutaCarpeta\n", FILE_APPEND);
-                }
-
-                $nombreArchivo = "QR-VEHICULO-" . $idVehiculo . "-" . uniqid() . ".png";
-                $rutaCompleta = $rutaCarpeta . '/' . $nombreArchivo;
-                
-                $contenidoQR = "VEHÍCULO\n";
-                $contenidoQR .= "Placa: $placa\n";
-                $contenidoQR .= "Tipo: $tipo\n";
-                $contenidoQR .= "Descripción: $descripcion\n";
-                $contenidoQR .= "Fecha: " . date('Y-m-d H:i:s');
-
-                QRcode::png($contenidoQR, $rutaCompleta, QR_ECLEVEL_H, 8);
-
-                if (!file_exists($rutaCompleta)) {
-                    throw new Exception("El archivo QR no se creó correctamente");
-                }
-
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "QR generado exitosamente: $rutaCompleta\n", FILE_APPEND);
-                
-                return 'qr/Qr_Parq/' . $nombreArchivo;
-
-            } catch (Exception $e) {
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR al generar QR vehículo: " . $e->getMessage() . "\n", FILE_APPEND);
-                return null;
-            }
+        private function log(string $msg): void {
+            file_put_contents($this->carpetaDebug . '/debug_log.txt',
+                date('Y-m-d H:i:s') . " $msg\n", FILE_APPEND);
         }
 
-        public function registrarVehiculo(array $datos): array {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "registrarVehiculo llamado\n", FILE_APPEND);
+        // ── Crear parqueadero ─────────────────────────────────────────────────
+        public function crear(array $d): array {
+            $this->log("=== crear parqueadero ===");
 
-            $TipoVehiculo = $datos['TipoVehiculo'] ?? null;
-            $PlacaVehiculo = $datos['PlacaVehiculo'] ?? null;
-            $DescripcionVehiculo = $datos['DescripcionVehiculo'] ?? '';
-            $TarjetaPropiedad = $datos['TarjetaPropiedad'] ?? '';
-            $IdSede = $datos['IdSede'] ?? null;
-            
-            // Generar la fecha SIEMPRE en el servidor
-            $FechaParqueadero = date('Y-m-d H:i:s');
-            
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "Fecha generada en servidor: $FechaParqueadero\n", FILE_APPEND);
+            $idSede = isset($d['IdSede']) ? (int)$d['IdSede'] : 0;
+            $carros = isset($d['Carros']) ? (int)$d['Carros'] : 0;
+            $motos  = isset($d['Motos'])  ? (int)$d['Motos']  : 0;
+            $bicis  = isset($d['Bicis'])  ? (int)$d['Bicis']  : 0;
+            $total  = $carros + $motos + $bicis;
 
-            // Validaciones de campos obligatorios
-            if ($this->campoVacio($TipoVehiculo)) {
-                return ['success' => false, 'message' => 'Falta el campo: Tipo de vehículo'];
+            if ($idSede <= 0) {
+                return ['success' => false, 'message' => 'Debe seleccionar una sede válida'];
             }
-            if ($this->campoVacio($PlacaVehiculo)) {
-                return ['success' => false, 'message' => 'Falta el campo: Placa del vehículo'];
+            if ($total <= 0) {
+                return ['success' => false, 'message' => 'La cantidad total de espacios debe ser mayor a 0'];
             }
-            if ($this->campoVacio($DescripcionVehiculo)) {
-                return ['success' => false, 'message' => 'Falta el campo: Descripción del vehículo'];
-            }
-            if ($this->campoVacio($TarjetaPropiedad)) {
-                return ['success' => false, 'message' => 'Falta el campo: Tarjeta de propiedad'];
-            }
-            if ($this->campoVacio($IdSede)) {
-                return ['success' => false, 'message' => 'Falta el campo: Sede'];
+            if ($carros < 0 || $motos < 0 || $bicis < 0) {
+                return ['success' => false, 'message' => 'Las cantidades no pueden ser negativas'];
             }
 
-            try {
-                // 🆕 VALIDACIÓN 1: VERIFICAR SI LA PLACA YA EXISTE
-                $placaExiste = $this->modelo->existePlaca($PlacaVehiculo);
-                if ($placaExiste['existe']) {
-                    $vehiculo = $placaExiste['vehiculo'];
-                    $mensaje = "⚠️ La placa '{$PlacaVehiculo}' ya está registrada para un vehículo tipo '{$vehiculo['TipoVehiculo']}'.";
-                    
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Placa duplicada - $PlacaVehiculo\n", FILE_APPEND);
-                    return ['success' => false, 'message' => $mensaje];
-                }
-
-                // 🆕 VALIDACIÓN 2: VERIFICAR SI LA TARJETA DE PROPIEDAD YA EXISTE
-                $tarjetaExiste = $this->modelo->existeTarjetaPropiedad($TarjetaPropiedad);
-                if ($tarjetaExiste['existe']) {
-                    $vehiculo = $tarjetaExiste['vehiculo'];
-                    $mensaje = "⚠️ La tarjeta de propiedad '{$TarjetaPropiedad}' ya está registrada para un vehículo tipo '{$vehiculo['TipoVehiculo']}'.";
-                    
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Tarjeta duplicada - $TarjetaPropiedad\n", FILE_APPEND);
-                    return ['success' => false, 'message' => $mensaje];
-                }
-
-                // Si todas las validaciones pasan, proceder con el registro
-                $resultado = $this->modelo->registrarVehiculo(
-                    $TipoVehiculo, 
-                    $PlacaVehiculo, 
-                    $DescripcionVehiculo, 
-                    $TarjetaPropiedad, 
-                    $FechaParqueadero, 
-                    $IdSede
-                );
-
-                if ($resultado['success']) {
-                    $idVehiculo = $resultado['id'];
-                    $rutaQR = $this->generarQR($idVehiculo, $TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo);
-
-                    if ($rutaQR) {
-                        $this->modelo->actualizarQR($idVehiculo, $rutaQR);
-                    }
-
-                    return [
-                        "success" => true,
-                        "message" => "Vehículo registrado correctamente con ID: " . $idVehiculo,
-                        "data" => [
-                            "IdParqueadero" => $idVehiculo, 
-                            "QrVehiculo" => $rutaQR,
-                            "FechaRegistro" => $FechaParqueadero
-                        ]
-                    ];
-                } else {
-                    return ['success' => false, 'message' => 'Error al registrar en BD: ' . ($resultado['error'] ?? 'Desconocido')];
-                }
-            } catch (Exception $e) {
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN en registrarVehiculo: " . $e->getMessage() . "\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
+            if ($this->modelo->existeParqueaderoPorSede($idSede)) {
+                return ['success' => false, 'message' => 'Esta sede ya tiene un parqueadero configurado. Use la opción Editar para modificarlo.'];
             }
-        }
 
-        public function actualizarVehiculo(int $id, array $datos): array {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== actualizarVehiculo llamado ===\n", FILE_APPEND);
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "ID: $id\n", FILE_APPEND);
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "Datos: " . json_encode($datos, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
+            $resultado = $this->modelo->crearParqueadero($idSede, $total, $carros, $motos, $bicis);
 
-            try {
-                // Obtener datos actuales para el QR
-                $vehiculoAnterior = $this->modelo->obtenerPorId($id);
-                $qrAnterior = $vehiculoAnterior['QrVehiculo'] ?? null;
-                $placa = $vehiculoAnterior['PlacaVehiculo'] ?? '';
-                
-                $resultado = $this->modelo->actualizarVehiculo(
-                    $id,
-                    $datos['tipo'] ?? null,
-                    $datos['descripcion'] ?? null,
-                    $datos['idsede'] ?? null
-                );
-                
-                if ($resultado['success']) {
-                    // Regenerar QR con los nuevos datos
-                    $tipo = $datos['tipo'] ?? '';
-                    $descripcion = $datos['descripcion'] ?? '';
-                    
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Regenerando QR para ID: $id\n", FILE_APPEND);
-                    
-                    $nuevoQR = $this->generarQR($id, $tipo, $placa, $descripcion);
-                    
-                    if ($nuevoQR) {
-                        $this->modelo->actualizarQR($id, $nuevoQR);
-                        
-                        // Eliminar QR anterior
-                        if ($qrAnterior) {
-                            $rutaQrAnterior = __DIR__ . '/../../Public/' . $qrAnterior;
-                            if (file_exists($rutaQrAnterior)) {
-                                unlink($rutaQrAnterior);
-                                file_put_contents($this->carpetaDebug . '/debug_log.txt', "QR anterior eliminado: $rutaQrAnterior\n", FILE_APPEND);
-                            }
-                        }
-                        
-                        file_put_contents($this->carpetaDebug . '/debug_log.txt', "Nuevo QR generado: $nuevoQR\n", FILE_APPEND);
-                    }
-                    
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Vehículo actualizado exitosamente\n", FILE_APPEND);
-                    return [
-                        'success' => true, 
-                        'message' => 'Vehículo actualizado correctamente',
-                        'qr' => $nuevoQR
-                    ];
-                } else {
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Error al actualizar: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
-                    return ['success' => false, 'message' => 'Error al actualizar vehículo'];
-                }
-            } catch (Exception $e) {
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN en actualizarVehiculo: " . $e->getMessage() . "\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
-            }
-        }
-
-        public function cambiarEstadoVehiculo(int $id, string $nuevoEstado): array {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "cambiarEstadoVehiculo llamado con ID: $id, Estado: $nuevoEstado\n", FILE_APPEND);
-
-            try {
-                $resultado = $this->modelo->cambiarEstado($id, $nuevoEstado);
-                
-                if ($resultado['success']) {
-                    $mensaje = $nuevoEstado === 'Activo' ? 'activado' : 'desactivado';
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Vehículo $mensaje exitosamente\n", FILE_APPEND);
-                    return [
-                        'success' => true, 
-                        'message' => "Vehículo $mensaje correctamente",
-                        'nuevoEstado' => $nuevoEstado
-                    ];
-                } else {
-                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Error al cambiar estado: " . ($resultado['error'] ?? 'desconocido') . "\n", FILE_APPEND);
-                    return ['success' => false, 'message' => 'Error al cambiar el estado del vehículo'];
-                }
-            } catch (Exception $e) {
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN en cambiar estado: " . $e->getMessage() . "\n", FILE_APPEND);
-                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
-            }
-        }
-
-        // 🆕 FUNCIÓN: ENVIAR QR POR CORREO
-        public function enviarQRPorCorreo(int $idVehiculo, string $correoDestinatario): array {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== enviarQRPorCorreo llamado para vehículo ID: $idVehiculo ===\n", FILE_APPEND);
-
-            try {
-                // Validar correo
-                if (!filter_var($correoDestinatario, FILTER_VALIDATE_EMAIL)) {
-                    throw new Exception('El correo electrónico no es válido');
-                }
-
-                // Cargar PHPMailer
-                $rutaPHPMailer = __DIR__ . '/../Libs/PHPMailer-master/src/PHPMailer.php';
-                $rutaSMTP = __DIR__ . '/../Libs/PHPMailer-master/src/SMTP.php';
-                $rutaException = __DIR__ . '/../Libs/PHPMailer-master/src/Exception.php';
-
-                if (!file_exists($rutaPHPMailer) || !file_exists($rutaSMTP) || !file_exists($rutaException)) {
-                    throw new Exception('Librerías PHPMailer no encontradas en /Libs/PHPMailer-master/src/');
-                }
-
-                require_once $rutaException;
-                require_once $rutaSMTP;
-                require_once $rutaPHPMailer;
-
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "PHPMailer cargado\n", FILE_APPEND);
-
-                // Obtener información del vehículo
-                $vehiculo = $this->modelo->obtenerPorId($idVehiculo);
-
-                if (!$vehiculo) {
-                    throw new Exception('Vehículo no encontrado');
-                }
-
-                if ($vehiculo['Estado'] !== 'Activo') {
-                    throw new Exception('El vehículo no está activo');
-                }
-
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "Vehículo encontrado: " . json_encode($vehiculo) . "\n", FILE_APPEND);
-
-                if (empty($vehiculo['QrVehiculo'])) {
-                    throw new Exception('Este vehículo no tiene código QR generado');
-                }
-
-                // Ruta completa del QR
-                $rutaQR = __DIR__ . '/../../Public/' . $vehiculo['QrVehiculo'];
-
-                if (!file_exists($rutaQR)) {
-                    throw new Exception('El archivo QR no existe: ' . $rutaQR);
-                }
-
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "Preparando envío a: $correoDestinatario\n", FILE_APPEND);
-
-                // Configurar PHPMailer
-                $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-
-                $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = 'seguridad.integral.segtrack@gmail.com';
-                $mail->Password = 'fhxj smlq jidt xnqs';
-                $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = 587;
-                $mail->CharSet = 'UTF-8';
-
-                $mail->setFrom('seguridad.integral.segtrack@gmail.com', 'Sistema SEGTRACK');
-                $mail->addAddress($correoDestinatario);
-                $mail->addAttachment($rutaQR, 'QR-Vehiculo-' . $idVehiculo . '.png');
-                $mail->addEmbeddedImage('../../Public/img/LOGO_SEGTRACK-re-con.ico', 'logo_segtrack');
-
-                $mail->isHTML(true);
-                $mail->Subject = 'Código QR - Vehículo Registrado';
-                $mail->Body = "
-                <html>
-                <head>
-                    <style>
-                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                        .header { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 8px 8px 0 0; }
-                        .content { background-color: #f8f9fc; padding: 30px; border: 1px solid #e3e6f0; }
-                        .info-box { background-color: white; padding: 20px; margin: 20px 0; border-left: 4px solid #4e73df; }
-                        .footer { text-align: center; padding: 20px; color: #858796; font-size: 12px; }
-                    </style>
-                </head>
-                <body>
-                    <div class='container'>
-                        <div class='header'>
-                            <h1><img src='cid:logo_segtrack' alt='Logo SEGTRACK' class='logo' style='width:80px; vertical-align:middle;'> SEGTRACK</h1>
-                            <p>Sistema de Gestión de Vehículos</p>
-                        </div>
-                        <div class='content'>
-                            <h3>Código QR de su Vehículo</h3>
-                            <p>Su vehículo ha sido registrado exitosamente en nuestro sistema de parqueadero.</p>
-                            <div class='info-box'>
-                                <strong>🚙 Información del Vehículo:</strong><br>
-                                <strong>Tipo:</strong> {$vehiculo['TipoVehiculo']}<br>
-                                <strong>Placa:</strong> {$vehiculo['PlacaVehiculo']}<br>
-                                <strong>Descripción:</strong> {$vehiculo['DescripcionVehiculo']}<br>
-                                <strong>Tarjeta de Propiedad:</strong> {$vehiculo['TarjetaPropiedad']}<br>
-                                <strong>Fecha de Registro:</strong> {$vehiculo['FechaParqueadero']}
-                            </div>
-                            <p>Adjunto encontrarás el código QR de tu vehículo.</p>
-                            <ul>
-                                <li>✅ Presenta este código al ingresar al parqueadero</li>
-                                <li>✅ Mantén este código disponible en tu dispositivo móvil</li>
-                                <li>✅ Facilita el control de entrada y salida</li>
-                            </ul>
-                            <p><strong>⚠️ Importante:</strong> Guarda este código en un lugar seguro.</p>
-                        </div>
-                        <div class='footer'>
-                            <p>Este es un correo automático, por favor no responder.</p>
-                            <p>&copy; " . date('Y') . " SEGTRACK - Sistema de Gestión de Parqueadero</p>
-                        </div>
-                    </div>
-                </body>
-                </html>";
-
-                $mail->send();
-
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "✓ Correo enviado exitosamente a: $correoDestinatario\n", FILE_APPEND);
-
+            if ($resultado['success']) {
+                $this->log("✅ Parqueadero creado ID: " . $resultado['id']);
                 return [
                     'success' => true,
-                    'message' => "Código QR enviado exitosamente a: {$correoDestinatario}"
+                    'message' => "Parqueadero creado con $total espacios ($carros carros, $motos motos, $bicis bicicletas)",
+                    'data'    => ['IdParqueadero' => $resultado['id'], 'Total' => $total]
                 ];
-
-            } catch (PHPMailer\PHPMailer\Exception $e) {
-                $error = "Error PHPMailer: " . $e->getMessage();
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', $error . "\n", FILE_APPEND);
-                return ['success' => false, 'message' => $error];
-            } catch (Exception $e) {
-                $error = $e->getMessage();
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: $error\n", FILE_APPEND);
-                return ['success' => false, 'message' => $error];
             }
+            return ['success' => false, 'message' => 'Error al crear: ' . ($resultado['error'] ?? 'Desconocido')];
+        }
+
+        // ── Actualizar parqueadero ────────────────────────────────────────────
+        public function actualizar(array $d): array {
+            $id     = isset($d['id'])     ? (int)$d['id']     : 0;
+            $carros = isset($d['Carros']) ? (int)$d['Carros'] : 0;
+            $motos  = isset($d['Motos'])  ? (int)$d['Motos']  : 0;
+            $bicis  = isset($d['Bicis'])  ? (int)$d['Bicis']  : 0;
+            $total  = $carros + $motos + $bicis;
+
+            $this->log("=== actualizar parqueadero ID: $id ===");
+
+            if ($id <= 0) {
+                return ['success' => false, 'message' => 'ID de parqueadero no válido'];
+            }
+            if ($total <= 0) {
+                return ['success' => false, 'message' => 'La cantidad total debe ser mayor a 0'];
+            }
+            if ($carros < 0 || $motos < 0 || $bicis < 0) {
+                return ['success' => false, 'message' => 'Las cantidades no pueden ser negativas'];
+            }
+
+            $resultado = $this->modelo->actualizarParqueadero($id, $total, $carros, $motos, $bicis);
+
+            if ($resultado['success']) {
+                return [
+                    'success' => true,
+                    'message' => "Parqueadero actualizado: $total espacios ($carros carros, $motos motos, $bicis bicicletas)"
+                ];
+            }
+            return ['success' => false, 'message' => $resultado['error'] ?? 'Error al actualizar'];
+        }
+
+        // ── Cambiar estado ────────────────────────────────────────────────────
+        public function cambiarEstado(int $id, string $estado): array {
+            $this->log("=== cambiarEstado ID: $id → $estado ===");
+
+            if ($id <= 0 || !in_array($estado, ['Activo', 'Inactivo'])) {
+                return ['success' => false, 'message' => 'Datos no válidos'];
+            }
+
+            $resultado = $this->modelo->cambiarEstado($id, $estado);
+
+            if ($resultado['success']) {
+                $accion = $estado === 'Activo' ? 'activado' : 'desactivado';
+                return [
+                    'success'     => true,
+                    'message'     => "Parqueadero $accion correctamente",
+                    'nuevoEstado' => $estado
+                ];
+            }
+            return ['success' => false, 'message' => 'Error al cambiar el estado'];
+        }
+
+        // ── Obtener espacios (para modal grid admin) ──────────────────────────
+        public function obtenerEspacios(int $id): array {
+            return $this->modelo->obtenerEspacios($id);
+        }
+
+        // ── Obtener datos de sede para el guardia ─────────────────────────────
+        public function obtenerDatosSede(int $idSede): array {
+            $parqueadero = $this->modelo->obtenerParqueaderoPorSede($idSede);
+            if (!$parqueadero) {
+                return ['success' => false, 'message' => 'Esta sede no tiene parqueadero activo configurado'];
+            }
+
+            $idParqueadero = (int)$parqueadero['IdParqueadero'];
+            return [
+                'success'     => true,
+                'parqueadero' => $parqueadero,
+                'espacios'    => $this->modelo->obtenerEspaciosDetalle($idParqueadero),
+                'resumen'     => $this->modelo->obtenerResumenEspacios($idParqueadero)
+            ];
+        }
+
+        // ── Ocupar espacio manualmente (guardia sin escáner) ──────────────────
+        public function ocuparManual(int $idEspacio, string $placa): array {
+            $this->log("=== ocuparManual espacio $idEspacio placa $placa ===");
+
+            if ($idEspacio <= 0)       return ['success' => false, 'message' => 'ID de espacio no válido'];
+            if (empty(trim($placa)))   return ['success' => false, 'message' => 'La placa es requerida'];
+
+            $vehiculo = $this->modelo->obtenerVehiculoPorPlaca($placa);
+            if (!$vehiculo) {
+                return ['success' => false, 'message' => "Vehículo con placa '$placa' no encontrado o inactivo"];
+            }
+
+            $r = $this->modelo->ocuparEspacio($idEspacio, (int)$vehiculo['IdVehiculo']);
+            if ($r['success']) {
+                return ['success' => true, 'message' => "Espacio asignado al vehículo $placa correctamente"];
+            }
+            return ['success' => false, 'message' => $r['error'] ?? 'Error al ocupar el espacio'];
+        }
+
+        // ── Liberar espacio manualmente (guardia) ─────────────────────────────
+        public function liberarManual(int $idEspacio): array {
+            $this->log("=== liberarManual espacio $idEspacio ===");
+
+            if ($idEspacio <= 0) return ['success' => false, 'message' => 'ID de espacio no válido'];
+
+            $r = $this->modelo->liberarEspacio($idEspacio);
+            if ($r['success']) {
+                return ['success' => true, 'message' => 'Espacio liberado correctamente'];
+            }
+            return ['success' => false, 'message' => $r['error'] ?? 'Error al liberar el espacio'];
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        // ACCIÓN PARA EL ESCÁNER (módulo del compañero)
+        // ══════════════════════════════════════════════════════════════════════
+        /**
+         * INTEGRACIÓN ESCÁNER:
+         * El módulo escáner debe hacer POST a ControladorParqueadero.php con:
+         *   accion      => 'escanear_qr'
+         *   placa       => 'ABC123'
+         *   id_sede     => 3
+         *   tipo_evento => 'entrada' | 'salida'
+         *
+         * Si el QR almacena IdVehiculo en lugar de placa, adaptar el método
+         * procesarEscaneo() en ModeloParqueadero.php para recibirlo por ID.
+         */
+        public function escanearQR(string $placa, int $idSede, string $tipoEvento): array {
+            $this->log("=== escanearQR placa=$placa sede=$idSede evento=$tipoEvento ===");
+
+            if (empty(trim($placa)))   return ['success' => false, 'mensaje' => 'Placa requerida'];
+            if ($idSede <= 0)          return ['success' => false, 'mensaje' => 'ID de sede no válido'];
+            if (!in_array($tipoEvento, ['entrada', 'salida'])) {
+                return ['success' => false, 'mensaje' => "Tipo de evento inválido. Use 'entrada' o 'salida'"];
+            }
+
+            return $this->modelo->procesarEscaneo($placa, $idSede, $tipoEvento);
         }
     }
 
-    $controlador = new ControladorParqueadero();
-    $accion = $_POST['accion'] ?? 'registrar';
+    // ── Router ────────────────────────────────────────────────────────────────
+    $controlador = new ControladorParqueadero($conexion);
+    $accion      = $_POST['accion'] ?? '';
 
     file_put_contents($carpetaDebug . '/debug_log.txt', "Acción detectada: $accion\n", FILE_APPEND);
 
-    if ($accion === 'registrar') {
-        $resultado = $controlador->registrarVehiculo($_POST);
-        
-    } elseif ($accion === 'actualizar') {
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-        
-        file_put_contents($carpetaDebug . '/debug_log.txt', "Procesando actualización para ID: $id\n", FILE_APPEND);
-        
-        if ($id > 0) {
-            $datos = [
-                'tipo' => $_POST['tipo'] ?? null,
-                'descripcion' => $_POST['descripcion'] ?? null,
-                'idsede' => $_POST['idsede'] ?? null
-            ];
-            
-            file_put_contents($carpetaDebug . '/debug_log.txt', "Datos preparados: " . json_encode($datos) . "\n", FILE_APPEND);
-            
-            $resultado = $controlador->actualizarVehiculo($id, $datos);
-        } else {
-            $resultado = ['success' => false, 'message' => 'ID de vehículo no válido'];
-        }
-        
-    } elseif ($accion === 'cambiar_estado') {
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-        $nuevoEstado = $_POST['estado'] ?? '';
-        
-        if ($id > 0 && in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
-            $resultado = $controlador->cambiarEstadoVehiculo($id, $nuevoEstado);
-        } else {
-            $resultado = ['success' => false, 'message' => 'Datos no válidos para cambiar estado'];
-        }
-        
-    } elseif ($accion === 'eliminar') {
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-        
-        if ($id > 0) {
-            $resultado = $controlador->cambiarEstadoVehiculo($id, 'Inactivo');
-        } else {
-            $resultado = ['success' => false, 'message' => 'ID de vehículo no válido'];
-        }
-        
-    } elseif ($accion === 'enviar_qr') {
-        $id = isset($_POST['id_vehiculo']) ? (int)$_POST['id_vehiculo'] : 0;
-        $correo = $_POST['correo_destinatario'] ?? '';
-        
-        if ($id > 0 && !empty($correo)) {
-            $resultado = $controlador->enviarQRPorCorreo($id, $correo);
-        } else {
-            $resultado = ['success' => false, 'message' => 'ID de vehículo o correo no válido'];
-        }
-        
-    } else {
-        $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];
+    switch ($accion) {
+
+        case 'crear':
+            $resultado = $controlador->crear($_POST);
+            break;
+
+        case 'actualizar':
+            $resultado = $controlador->actualizar($_POST);
+            break;
+
+        case 'cambiar_estado':
+            $id     = isset($_POST['id'])     ? (int)$_POST['id'] : 0;
+            $estado = $_POST['estado'] ?? '';
+            $resultado = $controlador->cambiarEstado($id, $estado);
+            break;
+
+        case 'obtener_espacios':
+            $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+            if ($id <= 0) {
+                $resultado = ['success' => false, 'message' => 'ID no válido'];
+            } else {
+                $espacios  = $controlador->obtenerEspacios($id);
+                $resultado = ['success' => true, 'espacios' => $espacios];
+            }
+            break;
+
+        // ── Guardia: cargar parqueadero de una sede ───────────────────────────
+        case 'obtener_sede':
+            $idSede    = isset($_POST['id_sede']) ? (int)$_POST['id_sede'] : 0;
+            $resultado = $idSede > 0
+                ? $controlador->obtenerDatosSede($idSede)
+                : ['success' => false, 'message' => 'ID de sede no válido'];
+            break;
+
+        // ── Guardia: ocupar espacio manualmente ───────────────────────────────
+        case 'ocupar_manual':
+            $idEspacio = isset($_POST['id_espacio']) ? (int)$_POST['id_espacio'] : 0;
+            $placa     = trim($_POST['placa'] ?? '');
+            $resultado = $controlador->ocuparManual($idEspacio, $placa);
+            break;
+
+        // ── Guardia: liberar espacio manualmente ──────────────────────────────
+        case 'liberar_manual':
+            $idEspacio = isset($_POST['id_espacio']) ? (int)$_POST['id_espacio'] : 0;
+            $resultado = $controlador->liberarManual($idEspacio);
+            break;
+
+        // ════════════════════════════════════════════════════════════════════
+        // ESCÁNER QR — Punto de entrada del módulo escáner del compañero
+        // POST: accion=escanear_qr, placa=ABC123, id_sede=3, tipo_evento=entrada|salida
+        // ════════════════════════════════════════════════════════════════════
+        case 'escanear_qr':
+            $placa      = trim($_POST['placa']       ?? '');
+            $idSede     = isset($_POST['id_sede'])   ? (int)$_POST['id_sede'] : 0;
+            $tipoEvento = trim($_POST['tipo_evento'] ?? '');
+            $resultado  = $controlador->escanearQR($placa, $idSede, $tipoEvento);
+            break;
+
+        default:
+            $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];
     }
 
-    file_put_contents($carpetaDebug . '/debug_log.txt', "Respuesta final: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
-    file_put_contents($carpetaDebug . '/debug_log.txt', "=== FIN ===\n\n", FILE_APPEND);
-    
+    file_put_contents($carpetaDebug . '/debug_log.txt',
+        "Respuesta final: " . json_encode($resultado, JSON_UNESCAPED_UNICODE) . "\n=== FIN ===\n\n", FILE_APPEND);
+
+    ob_end_clean();
     echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
 
 } catch (Exception $e) {
-    $error = $e->getMessage();
-    file_put_contents($carpetaDebug . '/debug_log.txt', "ERROR FINAL: $error\n", FILE_APPEND);
-    
+    ob_end_clean();
+    file_put_contents($carpetaDebug . '/debug_log.txt', "ERROR FINAL: " . $e->getMessage() . "\n", FILE_APPEND);
     echo json_encode([
         'success' => false,
-        'message' => 'Error del servidor: ' . $error,
-        'error' => $error
+        'message' => 'Error del servidor: ' . $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
 }
+
 exit;
 ?>

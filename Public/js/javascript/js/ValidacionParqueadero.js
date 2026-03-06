@@ -1,302 +1,402 @@
-// ============================================
-// 🔌 VARIABLE GLOBAL
-// ============================================
-let vehiculoIdAEliminar = null;
+// ============================================================
+// ValidacionGuardiaParqueadero.js
+// Lógica JS de la vista del personal de seguridad (guardia)
+// ============================================================
 
-// ============================================
-// 🔌 CONFIGURAR CAMPO DE FECHA
-// ============================================
 document.addEventListener('DOMContentLoaded', function () {
-    const campoFecha = document.getElementById('FechaParqueadero');
 
-    if (campoFecha) {
-        const ahora = new Date();
-        const year    = ahora.getFullYear();
-        const mes     = String(ahora.getMonth() + 1).padStart(2, '0');
-        const dia     = String(ahora.getDate()).padStart(2, '0');
-        const horas   = String(ahora.getHours()).padStart(2, '0');
-        const minutos = String(ahora.getMinutes()).padStart(2, '0');
-
-        const fechaHoraActual = `${year}-${mes}-${dia}T${horas}:${minutos}`;
-        campoFecha.value = fechaHoraActual;
-        campoFecha.min   = `${year}-${mes}-${dia}T00:00`;
-        campoFecha.max   = `${year}-${mes}-${dia}T23:59`;
-        campoFecha.readOnly = true;
-
-        setInterval(function () {
-            const n = new Date();
-            campoFecha.value = `${year}-${mes}-${dia}T${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`;
-        }, 60000);
+    function esperarJQuery(cb) {
+        if (typeof $ !== 'undefined') cb();
+        else setTimeout(() => esperarJQuery(cb), 50);
     }
 
-    // ── Validación en tiempo real: PLACA (máx 9) ────────────────────────────
-    const inputPlaca = document.getElementById('PlacaVehiculo');
-    if (inputPlaca) {
-        inputPlaca.addEventListener('input', function (e) {
-            let valor = e.target.value.toUpperCase().replace(/[^A-Z0-9\s-]/g, '');
-            if (valor.length > 9) valor = valor.substring(0, 9);
-            e.target.value = valor;
+    esperarJQuery(function () {
 
-            if (valor.length === 0) {
-                e.target.classList.remove('is-valid', 'is-invalid');
-            } else if (valor.length >= 3) {
-                e.target.classList.replace('is-invalid', 'is-valid') || e.target.classList.add('is-valid');
-            } else {
-                e.target.classList.replace('is-valid', 'is-invalid') || e.target.classList.add('is-invalid');
+        // Estado global de la sesión del guardia
+        var idSedeActual       = null;
+        var idParqueaderoActual = null;
+        var intervaloRefresco  = null;
+
+        // ── Cargar parqueadero al seleccionar sede ────────────────────────────
+        $('#btnCargarSede').on('click', function () {
+            var idSede = $('#selectSede').val();
+            if (!idSede) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Seleccione una sede',
+                    text: 'Debe seleccionar la sede donde se encuentra',
+                    confirmButtonColor: '#f6c23e'
+                });
+                return;
             }
+            cargarDatosSede(parseInt(idSede));
         });
-    }
 
-    // ── Validación en tiempo real: TARJETA DE PROPIEDAD (mín 11, máx 20) ────
-    const inputTarjeta = document.getElementById('TarjetaPropiedad');
-    if (inputTarjeta) {
-        inputTarjeta.addEventListener('input', function (e) {
-            let valor = e.target.value.replace(/[^a-zA-Z0-9\s-]/g, '');
-            if (valor.length > 20) valor = valor.substring(0, 20);
-            e.target.value = valor;
-
-            if (valor.length === 0) {
-                e.target.classList.remove('is-valid', 'is-invalid');
-            } else if (valor.length >= 11 && valor.length <= 20) {
-                e.target.classList.remove('is-invalid');
-                e.target.classList.add('is-valid');
-            } else {
-                e.target.classList.remove('is-valid');
-                e.target.classList.add('is-invalid');
-            }
+        // ── Botón refrescar ───────────────────────────────────────────────────
+        $('#btnRefrescar').on('click', function () {
+            if (idSedeActual) cargarDatosSede(idSedeActual, true);
         });
-    }
-});
 
-// ============================================
-// 🔌 VALIDACIÓN Y REGISTRO DE VEHÍCULO
-// ============================================
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form');
+        // ── Función principal: cargar datos de la sede ────────────────────────
+        function cargarDatosSede(idSede, silencioso) {
+            idSedeActual = idSede;
 
-    if (form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const tipoVehiculo = document.getElementById('TipoVehiculo').value.trim();
-            const placa        = document.getElementById('PlacaVehiculo').value.trim().toUpperCase();
-            const descripcion  = document.getElementById('DescripcionVehiculo').value.trim();
-            const tarjeta      = document.getElementById('TarjetaPropiedad').value.trim().toUpperCase();
-            const idSede       = document.getElementById('IdSede').value.trim();
-
-            const regexPlacaTarjeta = /^[a-zA-Z0-9\s-]+$/;
-            const regexDescripcion  = /^[a-zA-Z0-9\s.,-]+$/;
-            const regexIdSede       = /^\d+$/;
-
-            // 1. Tipo de vehículo
-            if (!tipoVehiculo) {
-                Swal.fire({ icon: 'error', title: 'Campo obligatorio', text: 'Debe seleccionar un tipo de vehículo', confirmButtonColor: '#e74a3b' });
-                return;
+            if (!silencioso) {
+                $('#estadoInicial').hide();
+                $('#contenidoParqueadero').hide();
+                $('#gridEspacios').html(
+                    '<div class="text-center py-4">' +
+                    '<i class="fas fa-spinner fa-spin fa-2x text-primary"></i>' +
+                    '<p class="mt-2 text-muted">Cargando espacios...</p></div>'
+                );
             }
 
-            // 2. Placa
-            if (!placa) {
-                Swal.fire({ icon: 'error', title: 'Campo obligatorio', text: 'La placa del vehículo es obligatoria', confirmButtonColor: '#e74a3b' });
-                return;
-            }
-            if (placa.length < 3) {
-                Swal.fire({ icon: 'error', title: 'Placa muy corta', text: 'La placa debe tener al menos 3 caracteres', confirmButtonColor: '#e74a3b' });
-                return;
-            }
-            if (placa.length > 9) {
-                Swal.fire({ icon: 'error', title: 'Placa muy larga', text: 'La placa no puede tener más de 9 caracteres', confirmButtonColor: '#e74a3b' });
-                return;
-            }
-            if (!regexPlacaTarjeta.test(placa)) {
-                Swal.fire({ icon: 'error', title: 'Caracteres inválidos', html: 'La placa solo puede contener:<br>• Letras (A-Z)<br>• Números (0-9)<br>• Espacios<br>• Guiones (-)', confirmButtonColor: '#e74a3b' });
-                return;
-            }
+            $.ajax({
+                url: '../../Controller/ControladorParqueadero.php',
+                type: 'POST',
+                data: { accion: 'obtener_sede', id_sede: idSede },
+                dataType: 'json',
+                timeout: 15000,
+                success: function (r) {
+                    if (r.success) {
+                        idParqueaderoActual = r.parqueadero.IdParqueadero;
 
-            // 3. Descripción
-            if (!descripcion) {
-                Swal.fire({ icon: 'error', title: 'Campo obligatorio', text: 'La descripción del vehículo es obligatoria', confirmButtonColor: '#e74a3b' });
-                return;
-            }
-            if (descripcion.length < 5) {
-                Swal.fire({ icon: 'warning', title: 'Descripción muy corta', text: 'La descripción debe tener al menos 5 caracteres', confirmButtonColor: '#f6c23e' });
-                return;
-            }
-            if (!regexDescripcion.test(descripcion)) {
-                Swal.fire({ icon: 'error', title: 'Caracteres inválidos', text: 'La descripción contiene caracteres no válidos', confirmButtonColor: '#e74a3b' });
-                return;
-            }
+                        // Mostrar nombre sede en badge header
+                        var nombreSede = r.parqueadero.TipoSede + ' — ' + r.parqueadero.Ciudad;
+                        $('#textSedeSel').text(nombreSede);
+                        $('#badgeSedeSel').show();
+                        $('#btnRefrescar').show();
 
-            // 4. Tarjeta de propiedad
-            if (!tarjeta) {
-                Swal.fire({ icon: 'error', title: 'Campo obligatorio', text: 'La tarjeta de propiedad es obligatoria', confirmButtonColor: '#e74a3b' });
-                return;
-            }
-            if (tarjeta.length < 11) {
-                Swal.fire({ icon: 'error', title: 'Tarjeta muy corta', text: 'La tarjeta de propiedad debe tener al menos 11 caracteres', confirmButtonColor: '#e74a3b' });
-                return;
-            }
-            if (tarjeta.length > 20) {
-                Swal.fire({ icon: 'error', title: 'Tarjeta muy larga', text: 'La tarjeta de propiedad no puede superar los 20 caracteres', confirmButtonColor: '#e74a3b' });
-                return;
-            }
-            if (!regexPlacaTarjeta.test(tarjeta)) {
-                Swal.fire({ icon: 'error', title: 'Caracteres inválidos', html: 'La tarjeta de propiedad solo puede contener:<br>• Letras<br>• Números<br>• Espacios<br>• Guiones', confirmButtonColor: '#e74a3b' });
-                return;
-            }
+                        renderizarResumen(r.resumen, r.parqueadero);
+                        renderizarGrid(r.espacios);
 
-            // 5. ID de sede
-            if (!regexIdSede.test(idSede)) {
-                Swal.fire({ icon: 'error', title: 'ID de Sede inválido', text: 'El ID de Sede solo puede contener números', confirmButtonColor: '#e74a3b' });
-                return;
-            }
+                        $('#estadoInicial').hide();
+                        $('#contenidoParqueadero').show();
 
-            // ── Envío ────────────────────────────────────────────────────────
-            const formData = new FormData(form);
-            formData.delete('FechaParqueadero');
-            formData.append('accion', 'registrar');
+                        // Auto-refresco cada 30 segundos
+                        if (intervaloRefresco) clearInterval(intervaloRefresco);
+                        intervaloRefresco = setInterval(function () {
+                            cargarDatosSede(idSedeActual, true);
+                        }, 30000);
 
-            Swal.fire({
-                title: 'Registrando vehículo...',
-                html: '<i class="fas fa-spinner fa-spin fa-3x text-success mb-3"></i><br>Validando y guardando datos',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                showConfirmButton: false
-            });
-
-            fetch('../../Controller/ControladorParqueadero.php', { method: 'POST', body: formData })
-                .then(r => r.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '¡Vehículo registrado!',
-                            html: data.message || 'El vehículo fue agregado correctamente.',
-                            timer: 3000,
-                            timerProgressBar: true,
-                            showConfirmButton: true,
-                            confirmButtonText: 'Entendido',
-                            confirmButtonColor: '#1cc88a'
-                        }).then(() => {
-                            form.reset();
-                            document.getElementById('PlacaVehiculo')?.classList.remove('is-valid', 'is-invalid');
-                            document.getElementById('TarjetaPropiedad')?.classList.remove('is-valid', 'is-invalid');
-                            location.reload();
-                        });
                     } else {
                         Swal.fire({
                             icon: 'warning',
-                            title: 'No se pudo registrar',
-                            html: data.message.replace(/\n/g, '<br>'),
-                            confirmButtonColor: '#f6c23e',
-                            confirmButtonText: 'Entendido',
-                            footer: '<small class="text-muted">Revise la información e intente nuevamente</small>'
+                            title: 'Sin parqueadero',
+                            text: r.message || 'Esta sede no tiene parqueadero activo',
+                            confirmButtonColor: '#f6c23e'
                         });
+                        $('#estadoInicial').show();
+                        $('#contenidoParqueadero').hide();
                     }
-                })
-                .catch(() => {
+                },
+                error: function () {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error de conexión',
-                        html: 'Ocurrió un problema al enviar los datos.<br>Por favor, intente nuevamente.',
+                        text: 'No se pudo cargar la información del parqueadero',
                         confirmButtonColor: '#e74a3b'
                     });
+                }
+            });
+        }
+
+        // ── Renderizar tarjetas de resumen ────────────────────────────────────
+        function renderizarResumen(resumen, parqueadero) {
+            var total   = parseInt(parqueadero.CantidadParqueadero) || 0;
+            var libres  = resumen.reduce(function(a, r) { return a + parseInt(r.Libres); }, 0);
+            var ocupados = resumen.reduce(function(a, r) { return a + parseInt(r.Ocupados); }, 0);
+            var pct     = total > 0 ? Math.round((ocupados / total) * 100) : 0;
+            var colorBarra = pct >= 90 ? 'bg-danger' : (pct >= 60 ? 'bg-warning' : 'bg-success');
+
+            var iconos = { 'Carro': 'fa-car', 'Moto': 'fa-motorcycle', 'Bicicleta': 'fa-bicycle' };
+            var colores = { 'Carro': 'text-primary', 'Moto': 'text-warning', 'Bicicleta': 'text-success' };
+            var bgCards = { 'Carro': 'border-left-primary', 'Moto': 'border-left-warning', 'Bicicleta': 'border-left-success' };
+
+            var html = '';
+
+            // Tarjeta general
+            html += `
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 border-left-secondary">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Total General</div>
+                                <div class="h5 mb-2 font-weight-bold text-gray-800">${total} espacios</div>
+                                <div class="progress mb-1" style="height:8px;">
+                                    <div class="progress-bar ${colorBarra}" style="width:${pct}%"></div>
+                                </div>
+                                <small class="text-muted">${pct}% ocupado</small>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-parking fa-2x text-secondary"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-success fw-bold"><i class="fas fa-circle me-1" style="font-size:8px;"></i>${libres} libres</small>
+                            <small class="text-danger fw-bold"><i class="fas fa-circle me-1" style="font-size:8px;"></i>${ocupados} ocupados</small>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+            // Tarjeta por tipo
+            resumen.forEach(function (r) {
+                var icono  = iconos[r.TipoVehiculo]  || 'fa-car';
+                var color  = colores[r.TipoVehiculo]  || 'text-primary';
+                var border = bgCards[r.TipoVehiculo]  || 'border-left-primary';
+                var pctTipo = parseInt(r.Total) > 0
+                    ? Math.round((parseInt(r.Ocupados) / parseInt(r.Total)) * 100) : 0;
+                var colorT = pctTipo >= 90 ? 'bg-danger' : (pctTipo >= 60 ? 'bg-warning' : 'bg-success');
+
+                html += `
+                <div class="col-xl-3 col-md-4 mb-4">
+                    <div class="card shadow h-100 ${border}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold ${color} text-uppercase mb-1">${r.TipoVehiculo}s</div>
+                                    <div class="h5 mb-2 font-weight-bold text-gray-800">${r.Total} espacios</div>
+                                    <div class="progress mb-1" style="height:8px;">
+                                        <div class="progress-bar ${colorT}" style="width:${pctTipo}%"></div>
+                                    </div>
+                                    <small class="text-muted">${pctTipo}% ocupado</small>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas ${icono} fa-2x ${color}"></i>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <small class="text-success fw-bold">${r.Libres} libres</small>
+                                <small class="text-danger fw-bold">${r.Ocupados} ocupados</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+
+            $('#tarjetasResumen').html(html);
+        }
+
+        // ── Renderizar grid de espacios ───────────────────────────────────────
+        function renderizarGrid(espacios) {
+            var tipos   = ['Carro', 'Moto', 'Bicicleta'];
+            var iconos  = { 'Carro': 'fa-car', 'Moto': 'fa-motorcycle', 'Bicicleta': 'fa-bicycle' };
+            var colores = { 'Carro': 'text-primary', 'Moto': 'text-warning', 'Bicicleta': 'text-success' };
+            var html    = '';
+
+            tipos.forEach(function (tipo) {
+                var delTipo  = espacios.filter(function (e) { return e.TipoVehiculo === tipo; });
+                if (delTipo.length === 0) return;
+
+                var libres   = delTipo.filter(function (e) { return e.Estado === 'Libre'; }).length;
+                var ocupados = delTipo.filter(function (e) { return e.Estado === 'Ocupado'; }).length;
+
+                html += `
+                <div class="mb-5">
+                    <h6 class="fw-bold ${colores[tipo]} border-bottom pb-2 mb-3">
+                        <i class="fas ${iconos[tipo]} me-2"></i>${tipo}s
+                        <span class="ms-2 badge badge-success">${libres} libres</span>
+                        <span class="ms-1 badge badge-danger">${ocupados} ocupados</span>
+                    </h6>
+                    <div class="row g-2">`;
+
+                delTipo.forEach(function (e) {
+                    var libre      = e.Estado === 'Libre';
+                    var bgColor    = libre ? '#e8f5e9' : '#ffebee';
+                    var border     = libre ? '#4caf50' : '#f44336';
+                    var propietario = '';
+
+                    if (!libre) {
+                        if (e.NombreFuncionario) {
+                            propietario = `<small class="text-muted d-block" style="font-size:10px;">
+                                <i class="fas fa-user-tie me-1"></i>${e.NombreFuncionario}</small>`;
+                        } else if (e.NombreVisitante) {
+                            propietario = `<small class="text-muted d-block" style="font-size:10px;">
+                                <i class="fas fa-user me-1"></i>${e.NombreVisitante}</small>`;
+                        }
+                    }
+
+                    if (libre) {
+                        // Espacio libre → clic para ocupar manualmente
+                        html += `
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
+                            <div class="border rounded p-2 text-center h-100 espacio-card espacio-libre"
+                                 style="background:${bgColor};border-color:${border}!important;cursor:pointer;"
+                                 onclick="abrirOcupar(${e.IdEspacio}, ${e.NumeroEspacio}, '${e.TipoVehiculo}')"
+                                 title="Clic para asignar un vehículo">
+                                <div class="fw-bold fs-5">#${e.NumeroEspacio}</div>
+                                <i class="fas fa-check-circle text-success mb-1"></i>
+                                <div><small class="badge badge-success">Libre</small></div>
+                                <small class="text-muted d-block" style="font-size:10px;">
+                                    <i class="fas fa-mouse-pointer me-1"></i>Clic para asignar
+                                </small>
+                            </div>
+                        </div>`;
+                    } else {
+                        // Espacio ocupado → clic para liberar
+                        html += `
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
+                            <div class="border rounded p-2 text-center h-100 espacio-card espacio-ocupado"
+                                 style="background:${bgColor};border-color:${border}!important;cursor:pointer;"
+                                 onclick="abrirLiberar(${e.IdEspacio}, ${e.NumeroEspacio}, '${e.PlacaVehiculo || ''}')"
+                                 title="Clic para registrar salida">
+                                <div class="fw-bold fs-5">#${e.NumeroEspacio}</div>
+                                <i class="fas fa-times-circle text-danger mb-1"></i>
+                                <div><span class="badge badge-dark">${e.PlacaVehiculo || 'Sin placa'}</span></div>
+                                ${propietario}
+                                <small class="text-muted d-block mt-1" style="font-size:10px;">
+                                    <i class="fas fa-sign-out-alt me-1"></i>Clic para salida
+                                </small>
+                            </div>
+                        </div>`;
+                    }
                 });
-        });
-    }
-});
 
-// ============================================
-// 🔌 FUNCIONES GLOBALES
-// ============================================
-function cargarDatosEdicionVehiculo(row) {
-    $('#editIdVehiculo').val(row.IdParqueadero);
-    $('#editTipoVehiculo').val(row.TipoVehiculo);
-    $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
-    $('#editIdSede').val(row.IdSede);
-    $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
-    $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
+                html += `</div></div>`;
+            });
 
-    let fechaHora = row.FechaParqueadero;
-    if (fechaHora) fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
-    $('#editFechaParqueaderoDisabled').val(fechaHora);
-}
-
-function confirmarEliminacionVehiculo(id) {
-    vehiculoIdAEliminar = id;
-    $('#confirmarEliminarModalVehiculo').modal('show');
-}
-
-// ============================================
-// 🔌 EVENTOS CON JQUERY
-// ============================================
-$(document).ready(function () {
-
-    $('#btnConfirmarEliminarVehiculo').click(function () {
-        if (!vehiculoIdAEliminar) return;
-
-        $.ajax({
-            url: '../../Controller/ControladorParqueadero.php',
-            type: 'POST',
-            data: { accion: 'eliminar', id: vehiculoIdAEliminar },
-            dataType: 'json',
-            success: function (response) {
-                $('#confirmarEliminarModalVehiculo').modal('hide');
-                if (response.success) {
-                    Swal.fire({ icon: 'success', title: 'Eliminado', text: '✅ Vehículo eliminado correctamente' })
-                        .then(() => { $('#fila-' + vehiculoIdAEliminar).fadeOut(400, function () { $(this).remove(); }); });
-                } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: '❌ Error: ' + response.message });
-                }
-            },
-            error: function () {
-                $('#confirmarEliminarModalVehiculo').modal('hide');
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: '❌ Error al intentar eliminar el vehículo' });
+            if (!html) {
+                html = '<div class="alert alert-info">No hay espacios registrados en este parqueadero.</div>';
             }
+
+            $('#gridEspacios').html(html);
+        }
+
+        // ── Abrir modal OCUPAR manualmente ────────────────────────────────────
+        window.abrirOcupar = function (idEspacio, numEspacio, tipoVehiculo) {
+            $('#ocuparIdEspacio').val(idEspacio);
+            $('#ocuparNumEspacio').text(numEspacio);
+            $('#ocuparPlaca').val('');
+            $('#ocuparTipoEspacio').text(tipoVehiculo);
+            $('#ocuparTipoInfo').show();
+            $('#modalOcuparEspacio').modal('show');
+            setTimeout(function () { $('#ocuparPlaca').focus(); }, 400);
+        };
+
+        // Forzar mayúsculas en placa
+        $('#ocuparPlaca').on('input', function () {
+            $(this).val($(this).val().toUpperCase().replace(/[^A-Z0-9]/g, ''));
         });
-    });
 
-    $('#btnGuardarCambiosVehiculo').click(function () {
-        const id          = $('#editIdVehiculo').val();
-        const tipo        = $('#editTipoVehiculo').val();
-        const descripcion = $('#editDescripcionVehiculo').val().trim();
-        const idsede      = $('#editIdSede').val().trim();
+        // Confirmar ocupar
+        $('#btnConfirmarOcupar').on('click', function () {
+            var idEspacio = $('#ocuparIdEspacio').val();
+            var placa     = $('#ocuparPlaca').val().trim();
 
-        const regexDescripcion = /^[a-zA-Z0-9\s.,-]+$/;
-
-        if (!id || !tipo || !idsede) {
-            Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Complete todos los campos obligatorios: Tipo de Vehículo e ID Sede', confirmButtonColor: '#f6c23e' });
-            return;
-        }
-        if (!descripcion || descripcion.length < 5) {
-            Swal.fire({ icon: 'warning', title: 'Descripción inválida', text: 'La descripción debe tener al menos 5 caracteres', confirmButtonColor: '#f6c23e' });
-            return;
-        }
-        if (!regexDescripcion.test(descripcion)) {
-            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', text: 'La descripción contiene caracteres no válidos', confirmButtonColor: '#e74a3b' });
-            return;
-        }
-
-        $('#modalEditarVehiculo').modal('hide');
-
-        Swal.fire({ title: 'Guardando cambios...', html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere', allowOutsideClick: false, allowEscapeKey: false, showConfirmButton: false });
-
-        $.ajax({
-            url: '../../Controller/ControladorParqueadero.php',
-            type: 'POST',
-            data: { accion: 'actualizar', id, tipo, descripcion, idsede },
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    Swal.fire({ icon: 'success', title: '¡Actualizado!', text: 'Vehículo actualizado correctamente', timer: 2000, timerProgressBar: true, showConfirmButton: true, confirmButtonColor: '#1cc88a' })
-                        .then(() => { location.reload(); });
-                } else {
-                    Swal.fire({ icon: 'error', title: 'Error', html: response.message.replace(/\n/g, '<br>'), confirmButtonColor: '#e74a3b' });
-                }
-            },
-            error: function () {
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: '❌ Error al intentar actualizar el vehículo', confirmButtonColor: '#e74a3b' });
+            if (!placa || placa.length < 3) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Placa requerida',
+                    text: 'Ingrese una placa válida (mínimo 3 caracteres)',
+                    confirmButtonColor: '#f6c23e'
+                });
+                return;
             }
-        });
-    });
 
+            $('#modalOcuparEspacio').modal('hide');
+            Swal.fire({
+                title: 'Asignando espacio...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: function () { Swal.showLoading(); }
+            });
+
+            $.ajax({
+                url: '../../Controller/ControladorParqueadero.php',
+                type: 'POST',
+                data: { accion: 'ocupar_manual', id_espacio: idEspacio, placa: placa },
+                dataType: 'json',
+                timeout: 15000,
+                success: function (r) {
+                    if (r.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Espacio asignado!',
+                            text: r.message,
+                            timer: 2500,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        }).then(function () {
+                            cargarDatosSede(idSedeActual, true);
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'No se pudo asignar',
+                            text: r.message,
+                            confirmButtonColor: '#e74a3b'
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({ icon: 'error', title: 'Error de conexión', confirmButtonColor: '#e74a3b' });
+                }
+            });
+        });
+
+        // ── Abrir modal LIBERAR ───────────────────────────────────────────────
+        window.abrirLiberar = function (idEspacio, numEspacio, placa) {
+            $('#liberarIdEspacio').val(idEspacio);
+            $('#liberarNumEspacio').text(numEspacio);
+            $('#liberarPlaca').text(placa || 'Sin placa registrada');
+            $('#modalLiberarEspacio').modal('show');
+        };
+
+        // Confirmar liberar
+        $('#btnConfirmarLiberar').on('click', function () {
+            var idEspacio = $('#liberarIdEspacio').val();
+
+            $('#modalLiberarEspacio').modal('hide');
+            Swal.fire({
+                title: 'Registrando salida...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: function () { Swal.showLoading(); }
+            });
+
+            $.ajax({
+                url: '../../Controller/ControladorParqueadero.php',
+                type: 'POST',
+                data: { accion: 'liberar_manual', id_espacio: idEspacio },
+                dataType: 'json',
+                timeout: 15000,
+                success: function (r) {
+                    if (r.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Salida registrada!',
+                            text: r.message,
+                            timer: 2500,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        }).then(function () {
+                            cargarDatosSede(idSedeActual, true);
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'No se pudo liberar',
+                            text: r.message,
+                            confirmButtonColor: '#e74a3b'
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({ icon: 'error', title: 'Error de conexión', confirmButtonColor: '#e74a3b' });
+                }
+            });
+        });
+
+        // Limpiar al cerrar modales
+        $('#modalOcuparEspacio').on('hidden.bs.modal', function () {
+            $('#ocuparPlaca').val('').removeClass('is-valid is-invalid');
+            $('#btnConfirmarOcupar').prop('disabled', false);
+        });
+        $('#modalLiberarEspacio').on('hidden.bs.modal', function () {
+            $('#btnConfirmarLiberar').prop('disabled', false);
+        });
+
+    }); // fin esperarJQuery
 });

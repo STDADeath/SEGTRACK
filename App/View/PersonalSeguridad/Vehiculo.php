@@ -2,22 +2,36 @@
 <?php require_once(__DIR__ . "/../../Core/conexion.php"); ?>
 
 <?php
-// Cargar sedes activas para el select
 $conexionObj = new Conexion();
-$connSede    = $conexionObj->getConexion();
-$sqlSedes    = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
-$stmtSedes   = $connSede->prepare($sqlSedes);
+$conn        = $conexionObj->getConexion();
+
+// Sedes activas
+$sqlSedes  = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
+$stmtSedes = $conn->prepare($sqlSedes);
 $stmtSedes->execute();
 $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
+
+// Funcionarios activos
+$sqlFuncionarios  = "SELECT IdFuncionario, NombreFuncionario FROM funcionario WHERE Estado = 'Activo' ORDER BY NombreFuncionario ASC";
+$stmtFuncionarios = $conn->prepare($sqlFuncionarios);
+$stmtFuncionarios->execute();
+$funcionarios = $stmtFuncionarios->fetchAll(PDO::FETCH_ASSOC);
+
+// Visitantes activos
+$sqlVisitantes  = "SELECT IdVisitante, NombreVisitante FROM visitante WHERE Estado = 'Activo' ORDER BY NombreVisitante ASC";
+$stmtVisitantes = $conn->prepare($sqlVisitantes);
+$stmtVisitantes->execute();
+$visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
         <div class="col-lg-8">
+
             <!-- Header -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-car me-2"></i>Registrar Vehículo</h1>
-                <a href="./Vehiculolista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+                <a href="./VehiculoLista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
                     <i class="fas fa-list me-1"></i> Ver Vehículos
                 </a>
             </div>
@@ -28,7 +42,8 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                     <h6 class="m-0 font-weight-bold text-white">Información del Vehículo</h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="../../Controller/ControladorParqueadero.php" class="needs-validation">
+                    <form method="POST" action="../../Controller/ControladorVehiculo.php" class="needs-validation">
+
                         <div class="row">
                             <!-- Tipo de vehículo -->
                             <div class="col-md-6 mb-3">
@@ -48,30 +63,28 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                             </div>
 
                             <!-- Placa -->
+                            <!-- ✅ FIX: maxlength=7 (varchar(7) en BD), pattern sin \s -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Placa <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                    <input type="text"
-                                        class="form-control"
-                                        name="PlacaVehiculo"
-                                        id="PlacaVehiculo"
-                                        maxlength="9"
-                                        minlength="3"
-                                        required
+                                    <input type="text" class="form-control"
+                                        name="PlacaVehiculo" id="PlacaVehiculo"
+                                        maxlength="7" minlength="3" required
                                         placeholder="Ej: ABC123"
-                                        pattern="[a-zA-Z0-9\s-]+"
+                                        pattern="[a-zA-Z0-9 -]+"
                                         title="Solo letras, números, espacios y guiones">
                                 </div>
                                 <small class="form-text text-muted">
-                                    <i class="fas fa-info-circle"></i> Mínimo 3 caracteres, máximo 9
+                                    <i class="fas fa-info-circle"></i> Mínimo 3 caracteres, máximo 7
                                 </small>
                             </div>
                         </div>
 
                         <!-- Descripción -->
+                        <!-- ✅ FIX: pattern sin \s -->
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
                                 Descripción <span class="text-danger">*</span>
@@ -79,11 +92,8 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-align-left"></i></span>
                                 <textarea class="form-control"
-                                    name="DescripcionVehiculo"
-                                    id="DescripcionVehiculo"
-                                    rows="3"
-                                    required
-                                    minlength="5"
+                                    name="DescripcionVehiculo" id="DescripcionVehiculo"
+                                    rows="3" required minlength="5"
                                     placeholder="Ej: Chevrolet Spark rojo modelo 2020"></textarea>
                             </div>
                             <small class="form-text text-muted">
@@ -93,21 +103,18 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="row">
                             <!-- Tarjeta de Propiedad -->
+                            <!-- ✅ FIX: pattern sin \s -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Tarjeta de Propiedad <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                    <input type="text"
-                                        class="form-control"
-                                        name="TarjetaPropiedad"
-                                        id="TarjetaPropiedad"
-                                        maxlength="20"
-                                        minlength="11"
-                                        required
+                                    <input type="text" class="form-control"
+                                        name="TarjetaPropiedad" id="TarjetaPropiedad"
+                                        maxlength="20" minlength="11" required
                                         placeholder="Número de tarjeta"
-                                        pattern="[a-zA-Z0-9\s-]+"
+                                        pattern="[a-zA-Z0-9 -]+"
                                         title="Solo letras, números, espacios y guiones">
                                 </div>
                                 <small class="form-text text-muted">
@@ -122,12 +129,9 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                 </label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                    <input type="datetime-local"
-                                        class="form-control bg-light"
-                                        name="FechaParqueadero"
-                                        id="FechaParqueadero"
-                                        readonly
-                                        style="cursor: not-allowed;">
+                                    <input type="datetime-local" class="form-control bg-light"
+                                        name="FechaDeVehiculo" id="FechaDeVehiculo"
+                                        readonly style="cursor:not-allowed;">
                                 </div>
                                 <small class="text-muted">
                                     <i class="fas fa-calendar-check"></i> La fecha y hora se registran automáticamente
@@ -151,20 +155,72 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                     <?php endforeach; ?>
                                 </select>
                             </div>
+                        </div>
+
+                        <!-- Tipo de Propietario -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                Tipo de Propietario <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                <select class="form-select" name="TipoPersona" id="TipoPersona" required>
+                                    <option value="">Seleccione tipo de propietario...</option>
+                                    <option value="Funcionario">Funcionario</option>
+                                    <option value="Visitante">Visitante</option>
+                                </select>
+                            </div>
                             <small class="form-text text-muted">
-                                <i class="fas fa-info-circle"></i> Solo se muestran sedes activas
+                                <i class="fas fa-info-circle"></i> Indique si el vehículo pertenece a un funcionario o visitante
                             </small>
+                        </div>
+
+                        <!-- Select Funcionario -->
+                        <div class="mb-3 d-none" id="divFuncionario">
+                            <label class="form-label fw-semibold">
+                                Funcionario <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                                <select class="form-select" name="IdFuncionario" id="IdFuncionario">
+                                    <option value="">Seleccione un funcionario...</option>
+                                    <?php foreach ($funcionarios as $f) : ?>
+                                        <option value="<?= $f['IdFuncionario'] ?>">
+                                            <?= htmlspecialchars($f['NombreFuncionario']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Select Visitante -->
+                        <div class="mb-3 d-none" id="divVisitante">
+                            <label class="form-label fw-semibold">
+                                Visitante <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <select class="form-select" name="IdVisitante" id="IdVisitante">
+                                    <option value="">Seleccione un visitante...</option>
+                                    <?php foreach ($visitantes as $v) : ?>
+                                        <option value="<?= $v['IdVisitante'] ?>">
+                                            <?= htmlspecialchars($v['NombreVisitante']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
 
                         <!-- Botones -->
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='./Parqueadero.php'">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='./Vehiculo.php'">
                                 <i class="fas fa-arrow-left me-1"></i> Volver
                             </button>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-1"></i> Guardar Vehículo
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -175,14 +231,45 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="card-body">
                     <div class="alert alert-info mb-0">
-                        <i class="fas fa-info-circle me-2"></i> El código QR se generará automáticamente después de guardar los datos del vehículo.
+                        <i class="fas fa-info-circle me-2"></i>
+                        El código QR se generará automáticamente después de guardar los datos del vehículo.
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
-<script src="../../../Public/js/javascript/js/ValidacionParqueadero.js"></script>
+<script>
+// ── Mostrar/ocultar select según tipo de propietario ─────────────────────────
+document.getElementById('TipoPersona').addEventListener('change', function () {
+    const divF = document.getElementById('divFuncionario');
+    const divV = document.getElementById('divVisitante');
+    const selF = document.getElementById('IdFuncionario');
+    const selV = document.getElementById('IdVisitante');
+
+    if (this.value === 'Funcionario') {
+        divF.classList.remove('d-none');
+        divV.classList.add('d-none');
+        selF.required = true;
+        selV.required = false;
+        selV.value    = '';
+    } else if (this.value === 'Visitante') {
+        divV.classList.remove('d-none');
+        divF.classList.add('d-none');
+        selV.required = true;
+        selF.required = false;
+        selF.value    = '';
+    } else {
+        divF.classList.add('d-none');
+        divV.classList.add('d-none');
+        selF.required = false;
+        selV.required = false;
+    }
+});
+</script>
+
+<script src="../../../Public/js/javascript/js/ValidacionVehiculo.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

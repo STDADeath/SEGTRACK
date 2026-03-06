@@ -1,323 +1,519 @@
 <?php
-require_once __DIR__ . '/../Core/conexion.php';
-
 class ModeloParqueadero {
     private $conexion;
-    private $logPath;
+    private $debugPath;
 
-    public function __construct() {
-        $this->logPath = __DIR__ . '/../controller/parqueadero_dispositivo/debug_log.txt';
-        
-        try {
-            $conexionObj = new Conexion();
-            $this->conexion = $conexionObj->getConexion();
-            file_put_contents($this->logPath, "✅ Conexión establecida correctamente\n", FILE_APPEND);
-        } catch (PDOException $e) {
-            $msg = "❌ Error de conexión: " . $e->getMessage();
-            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
-            throw new Exception($msg);
+    public function __construct($conexion) {
+        $this->conexion  = $conexion;
+        $this->debugPath = __DIR__ . '/../Controller/Debug_Parqueadero/debug_log.txt';
+
+        $carpetaDebug = dirname($this->debugPath);
+        if (!file_exists($carpetaDebug)) {
+            mkdir($carpetaDebug, 0777, true);
         }
     }
 
-    // 🆕 VALIDACIÓN: Verificar si una placa ya existe
-    public function existePlaca(string $placa, ?int $excluirId = null): array {
+    private function log(string $msg): void {
+        file_put_contents($this->debugPath, date('Y-m-d H:i:s') . " $msg\n", FILE_APPEND);
+    }
+
+    // ── Verificar si ya existe parqueadero para esa sede ──────────────────────
+    public function existeParqueaderoPorSede(int $idSede, ?int $excluirId = null): bool {
         try {
-            if (!$this->conexion) {
-                return ['existe' => false];
-            }
-
-            // Solo validar si la placa no está vacía
-            if (empty(trim($placa))) {
-                return ['existe' => false];
-            }
-
             if ($excluirId !== null) {
-                // Para edición: excluir el ID actual
-                $sql = "SELECT IdParqueadero, TipoVehiculo, PlacaVehiculo 
-                        FROM parqueadero 
-                        WHERE PlacaVehiculo = :placa 
-                        AND IdParqueadero != :id 
-                        AND Estado = 'Activo'
-                        LIMIT 1";
+                $sql  = "SELECT 1 FROM parqueadero WHERE IdSede = :sede AND IdParqueadero != :id LIMIT 1";
                 $stmt = $this->conexion->prepare($sql);
-                $stmt->execute([':placa' => $placa, ':id' => $excluirId]);
+                $stmt->execute([':sede' => $idSede, ':id' => $excluirId]);
             } else {
-                // Para registro nuevo
-                $sql = "SELECT IdParqueadero, TipoVehiculo, PlacaVehiculo 
-                        FROM parqueadero 
-                        WHERE PlacaVehiculo = :placa 
-                        AND Estado = 'Activo'
-                        LIMIT 1";
+                $sql  = "SELECT 1 FROM parqueadero WHERE IdSede = :sede LIMIT 1";
                 $stmt = $this->conexion->prepare($sql);
-                $stmt->execute([':placa' => $placa]);
+                $stmt->execute([':sede' => $idSede]);
             }
-
-            $vehiculo = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($vehiculo) {
-                file_put_contents($this->logPath, "⚠️ Placa duplicada encontrada: $placa\n", FILE_APPEND);
-                return [
-                    'existe' => true,
-                    'vehiculo' => $vehiculo
-                ];
-            }
-
-            return ['existe' => false];
-
+            return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
-            file_put_contents($this->logPath, "❌ Error en existePlaca: " . $e->getMessage() . "\n", FILE_APPEND);
-            return ['existe' => false, 'error' => $e->getMessage()];
+            $this->log("❌ existeParqueaderoPorSede: " . $e->getMessage());
+            return false;
         }
     }
 
-    // 🆕 VALIDACIÓN: Verificar si una tarjeta de propiedad ya existe
-    public function existeTarjetaPropiedad(string $tarjeta, ?int $excluirId = null): array {
+    // ── Crear parqueadero + generar espacios individuales ─────────────────────
+    public function crearParqueadero(int $idSede, int $total, int $carros, int $motos, int $bicis): array {
         try {
-            if (!$this->conexion) {
-                return ['existe' => false];
-            }
+            $this->conexion->beginTransaction();
 
-            // Solo validar si la tarjeta no está vacía
-            if (empty(trim($tarjeta))) {
-                return ['existe' => false];
-            }
-
-            if ($excluirId !== null) {
-                // Para edición: excluir el ID actual
-                $sql = "SELECT IdParqueadero, TipoVehiculo, PlacaVehiculo, TarjetaPropiedad 
-                        FROM parqueadero 
-                        WHERE TarjetaPropiedad = :tarjeta 
-                        AND IdParqueadero != :id 
-                        AND Estado = 'Activo'
-                        LIMIT 1";
-                $stmt = $this->conexion->prepare($sql);
-                $stmt->execute([':tarjeta' => $tarjeta, ':id' => $excluirId]);
-            } else {
-                // Para registro nuevo
-                $sql = "SELECT IdParqueadero, TipoVehiculo, PlacaVehiculo, TarjetaPropiedad 
-                        FROM parqueadero 
-                        WHERE TarjetaPropiedad = :tarjeta 
-                        AND Estado = 'Activo'
-                        LIMIT 1";
-                $stmt = $this->conexion->prepare($sql);
-                $stmt->execute([':tarjeta' => $tarjeta]);
-            }
-
-            $vehiculo = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($vehiculo) {
-                file_put_contents($this->logPath, "⚠️ Tarjeta de propiedad duplicada encontrada: $tarjeta\n", FILE_APPEND);
-                return [
-                    'existe' => true,
-                    'vehiculo' => $vehiculo
-                ];
-            }
-
-            return ['existe' => false];
-
-        } catch (PDOException $e) {
-            file_put_contents($this->logPath, "❌ Error en existeTarjetaPropiedad: " . $e->getMessage() . "\n", FILE_APPEND);
-            return ['existe' => false, 'error' => $e->getMessage()];
-        }
-    }
-
-    // ✅ Registrar vehículo (con campo QrVehiculo)
-    public function registrarVehiculo($TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo, $TarjetaPropiedad, $FechaParqueadero, $IdSede): array {
-        try {
-            file_put_contents($this->logPath, "Punto 1: Preparando SQL INSERT\n", FILE_APPEND);
-            
-            $sql = "INSERT INTO parqueadero 
-                    (TipoVehiculo, PlacaVehiculo, DescripcionVehiculo, TarjetaPropiedad, FechaParqueadero, IdSede, Estado, QrVehiculo)
-                    VALUES (:TipoVehiculo, :PlacaVehiculo, :DescripcionVehiculo, :TarjetaPropiedad, :FechaParqueadero, :IdSede, 'Activo', '')";
-            
-            file_put_contents($this->logPath, "Punto 2: Preparando statement\n", FILE_APPEND);
+            $sql  = "INSERT INTO parqueadero
+                        (CantidadParqueadero, CantidadCarros, CantidadMotos, CantidadBicicletas, Estado, IdSede)
+                     VALUES (:total, :carros, :motos, :bicis, 'Activo', :sede)";
             $stmt = $this->conexion->prepare($sql);
-
-            file_put_contents($this->logPath, "Punto 3: Ejecutando con parámetros\n", FILE_APPEND);
             $stmt->execute([
-                ':TipoVehiculo' => $TipoVehiculo,
-                ':PlacaVehiculo' => $PlacaVehiculo,
-                ':DescripcionVehiculo' => $DescripcionVehiculo,
-                ':TarjetaPropiedad' => $TarjetaPropiedad,
-                ':FechaParqueadero' => $FechaParqueadero,
-                ':IdSede' => $IdSede
+                ':total'  => $total,
+                ':carros' => $carros,
+                ':motos'  => $motos,
+                ':bicis'  => $bicis,
+                ':sede'   => $idSede,
             ]);
+            $idParqueadero = (int)$this->conexion->lastInsertId();
 
-            $id = $this->conexion->lastInsertId();
-            file_put_contents($this->logPath, "✅ Vehículo insertado ID: $id con Estado: Activo\n", FILE_APPEND);
-            return ['success' => true, 'id' => $id, 'message' => 'Vehículo registrado correctamente'];
-        } catch (PDOException $e) {
-            $msg = "❌ Error en registrarVehiculo: " . $e->getMessage();
-            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
-            return ['success' => false, 'error' => $msg];
-        }
-    }
+            $this->generarEspacios($idParqueadero, $carros, $motos, $bicis);
 
-    // ✅ Actualizar QR del vehículo
-    public function actualizarQR(int $idVehiculo, string $rutaQR): array {
-        try {
-            if (!$this->conexion) {
-                return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
-            }
-
-            $sql = "UPDATE parqueadero SET QrVehiculo = :qr WHERE IdParqueadero = :id";
-            $stmt = $this->conexion->prepare($sql);
-            $resultado = $stmt->execute([
-                ':qr' => $rutaQR,
-                ':id' => $idVehiculo
-            ]);
-
-            file_put_contents($this->logPath, "✅ QR actualizado para vehículo ID: $idVehiculo\n", FILE_APPEND);
-
-            return [
-                'success' => $resultado,
-                'rows' => $stmt->rowCount()
-            ];
+            $this->conexion->commit();
+            $this->log("✅ Parqueadero creado ID: $idParqueadero, Sede: $idSede");
+            return ['success' => true, 'id' => $idParqueadero];
 
         } catch (PDOException $e) {
-            $msg = "❌ Error en actualizarQR: " . $e->getMessage();
-            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
+            $this->conexion->rollBack();
+            $this->log("❌ crearParqueadero: " . $e->getMessage());
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
-    // ✅ Obtener la ruta del QR de un vehículo
-    public function obtenerQR(int $idVehiculo): ?string {
-        try {
-            if (!$this->conexion) {
-                return null;
-            }
+    // ── Generar espacios individuales numerados ───────────────────────────────
+    private function generarEspacios(int $idParqueadero, int $carros, int $motos, int $bicis): void {
+        $sql  = "INSERT INTO espacio_parqueadero (NumeroEspacio, TipoVehiculo, Estado, IdParqueadero)
+                 VALUES (:numero, :tipo, 'Libre', :idp)";
+        $stmt = $this->conexion->prepare($sql);
 
-            $sql = "SELECT QrVehiculo FROM parqueadero WHERE IdParqueadero = :id";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idVehiculo]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            return $resultado['QrVehiculo'] ?? null;
-
-        } catch (PDOException $e) {
-            file_put_contents($this->logPath, "❌ Error en obtenerQR: " . $e->getMessage() . "\n", FILE_APPEND);
-            return null;
+        $numero = 1;
+        for ($i = 0; $i < $carros; $i++, $numero++) {
+            $stmt->execute([':numero' => $numero, ':tipo' => 'Carro',     ':idp' => $idParqueadero]);
         }
+        for ($i = 0; $i < $motos;  $i++, $numero++) {
+            $stmt->execute([':numero' => $numero, ':tipo' => 'Moto',      ':idp' => $idParqueadero]);
+        }
+        for ($i = 0; $i < $bicis;  $i++, $numero++) {
+            $stmt->execute([':numero' => $numero, ':tipo' => 'Bicicleta', ':idp' => $idParqueadero]);
+        }
+        $this->log("✅ Espacios generados: $carros carros, $motos motos, $bicis bicicletas");
     }
 
-    // ✅ Actualizar vehículo (sin tocar el Estado ni QR)
-    public function actualizarVehiculo($id, $tipo, $descripcion, $idsede): array {
+    // ── Actualizar parqueadero y ajustar espacios ─────────────────────────────
+    public function actualizarParqueadero(int $id, int $total, int $carros, int $motos, int $bicis): array {
         try {
-            $sql = "UPDATE parqueadero 
-                    SET TipoVehiculo = :tipo, DescripcionVehiculo = :descripcion, IdSede = :idsede
-                    WHERE IdParqueadero = :id";
+            $this->conexion->beginTransaction();
+
+            $actual = $this->obtenerPorId($id);
+            if (!$actual) throw new Exception('Parqueadero no encontrado');
+
+            $sql  = "UPDATE parqueadero
+                     SET CantidadParqueadero = :total,
+                         CantidadCarros      = :carros,
+                         CantidadMotos       = :motos,
+                         CantidadBicicletas  = :bicis
+                     WHERE IdParqueadero = :id";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([
-                ':tipo' => $tipo,
-                ':descripcion' => $descripcion,
-                ':idsede' => $idsede,
-                ':id' => $id
+                ':total'  => $total,
+                ':carros' => $carros,
+                ':motos'  => $motos,
+                ':bicis'  => $bicis,
+                ':id'     => $id,
             ]);
-            file_put_contents($this->logPath, "✅ Vehículo actualizado ID: $id\n", FILE_APPEND);
-            return ['success' => true, 'message' => 'Vehículo actualizado correctamente'];
-        } catch (PDOException $e) {
-            $msg = "❌ Error al actualizar: " . $e->getMessage();
-            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
-            return ['success' => false, 'error' => $msg];
+
+            $this->ajustarEspacios($id, 'Carro',     (int)$actual['CantidadCarros'],     $carros);
+            $this->ajustarEspacios($id, 'Moto',      (int)$actual['CantidadMotos'],      $motos);
+            $this->ajustarEspacios($id, 'Bicicleta', (int)$actual['CantidadBicicletas'], $bicis);
+            $this->renumerarEspacios($id);
+
+            $this->conexion->commit();
+            $this->log("✅ Parqueadero actualizado ID: $id");
+            return ['success' => true];
+
+        } catch (Exception $e) {
+            $this->conexion->rollBack();
+            $this->log("❌ actualizarParqueadero: " . $e->getMessage());
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
-    // 🆕 Cambiar estado del vehículo (Activo <-> Inactivo) - SOFT DELETE
-    public function cambiarEstado(int $idParqueadero, string $nuevoEstado): array {
+    // ── Ajustar espacios de un tipo (agrega o elimina solo los LIBRES) ────────
+    private function ajustarEspacios(int $idParqueadero, string $tipo, int $anterior, int $nuevo): void {
+        $diferencia = $nuevo - $anterior;
+
+        if ($diferencia > 0) {
+            $sql  = "INSERT INTO espacio_parqueadero (NumeroEspacio, TipoVehiculo, Estado, IdParqueadero)
+                     VALUES (0, :tipo, 'Libre', :idp)";
+            $stmt = $this->conexion->prepare($sql);
+            for ($i = 0; $i < $diferencia; $i++) {
+                $stmt->execute([':tipo' => $tipo, ':idp' => $idParqueadero]);
+            }
+        } elseif ($diferencia < 0) {
+            $eliminar = abs($diferencia);
+
+            $sqlLibres = "SELECT COUNT(*) FROM espacio_parqueadero
+                          WHERE IdParqueadero = :idp AND TipoVehiculo = :tipo AND Estado = 'Libre'";
+            $stmtL = $this->conexion->prepare($sqlLibres);
+            $stmtL->execute([':idp' => $idParqueadero, ':tipo' => $tipo]);
+            $libres = (int)$stmtL->fetchColumn();
+
+            if ($libres < $eliminar) {
+                throw new Exception("No se pueden eliminar $eliminar espacios de $tipo: solo hay $libres libres disponibles.");
+            }
+
+            $sql  = "DELETE FROM espacio_parqueadero
+                     WHERE IdParqueadero = :idp AND TipoVehiculo = :tipo AND Estado = 'Libre'
+                     ORDER BY NumeroEspacio DESC
+                     LIMIT :lim";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindValue(':idp',  $idParqueadero, PDO::PARAM_INT);
+            $stmt->bindValue(':tipo', $tipo,          PDO::PARAM_STR);
+            $stmt->bindValue(':lim',  $eliminar,      PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    }
+
+    // ── Renumerar espacios de corrido (1, 2, 3…) ──────────────────────────────
+    private function renumerarEspacios(int $idParqueadero): void {
+        $sql  = "SELECT IdEspacio FROM espacio_parqueadero
+                 WHERE IdParqueadero = :idp
+                 ORDER BY TipoVehiculo, IdEspacio ASC";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute([':idp' => $idParqueadero]);
+        $espacios = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        $sqlUp  = "UPDATE espacio_parqueadero SET NumeroEspacio = :num WHERE IdEspacio = :id";
+        $stmtUp = $this->conexion->prepare($sqlUp);
+        $numero = 1;
+        foreach ($espacios as $idEspacio) {
+            $stmtUp->execute([':num' => $numero++, ':id' => $idEspacio]);
+        }
+    }
+
+    // ── Cambiar estado del parqueadero ────────────────────────────────────────
+    public function cambiarEstado(int $id, string $nuevoEstado): array {
         try {
             if (!in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
                 return ['success' => false, 'error' => 'Estado no válido'];
             }
-
-            $sql = "UPDATE parqueadero SET Estado = :estado WHERE IdParqueadero = :id";
+            $sql  = "UPDATE parqueadero SET Estado = :estado WHERE IdParqueadero = :id";
             $stmt = $this->conexion->prepare($sql);
-            $resultado = $stmt->execute([
-                ':estado' => $nuevoEstado,
-                ':id' => $idParqueadero
-            ]);
-
-            file_put_contents($this->logPath, "✅ Estado cambiado a '$nuevoEstado' para vehículo ID: $idParqueadero\n", FILE_APPEND);
-
-            return [
-                'success' => $resultado,
-                'rows' => $stmt->rowCount(),
-                'nuevoEstado' => $nuevoEstado
-            ];
+            $stmt->execute([':estado' => $nuevoEstado, ':id' => $id]);
+            $this->log("✅ Estado '$nuevoEstado' para parqueadero ID: $id");
+            return ['success' => true, 'rows' => $stmt->rowCount(), 'nuevoEstado' => $nuevoEstado];
         } catch (PDOException $e) {
-            $msg = "❌ Error al cambiar estado: " . $e->getMessage();
-            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
-            return ['success' => false, 'error' => $msg];
+            $this->log("❌ cambiarEstado: " . $e->getMessage());
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
-    // ⚠️ DEPRECADO: Mantener por compatibilidad
-    public function eliminarVehiculo($id): array {
-        file_put_contents($this->logPath, "⚠️ ADVERTENCIA: Se llamó a eliminarVehiculo() (método deprecado). Use cambiarEstado() en su lugar.\n", FILE_APPEND);
-        
-        try {
-            return $this->cambiarEstado((int)$id, 'Inactivo');
-        } catch (Exception $e) {
-            $msg = "❌ Error en eliminarVehiculo: " . $e->getMessage();
-            file_put_contents($this->logPath, "$msg\n", FILE_APPEND);
-            return ['success' => false, 'error' => $msg];
-        }
-    }
-
-    // ✅ Obtener todos los vehículos ACTIVOS
+    // ── Obtener todos con conteo de libres/ocupados ───────────────────────────
     public function obtenerTodos(): array {
         try {
-            $sql = "SELECT * FROM parqueadero WHERE Estado = 'Activo' ORDER BY IdParqueadero DESC";
+            $sql = "SELECT p.*,
+                           s.TipoSede, s.Ciudad,
+                           (SELECT COUNT(*) FROM espacio_parqueadero e
+                            WHERE e.IdParqueadero = p.IdParqueadero AND e.Estado = 'Libre')   AS EspaciosLibres,
+                           (SELECT COUNT(*) FROM espacio_parqueadero e
+                            WHERE e.IdParqueadero = p.IdParqueadero AND e.Estado = 'Ocupado') AS EspaciosOcupados
+                    FROM parqueadero p
+                    LEFT JOIN sede s ON p.IdSede = s.IdSede
+                    ORDER BY p.IdParqueadero DESC";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            file_put_contents($this->logPath, "❌ Error en obtenerTodos: " . $e->getMessage() . "\n", FILE_APPEND);
+            $this->log("❌ obtenerTodos: " . $e->getMessage());
             return [];
         }
     }
 
-    // ✅ Obtener todos los vehículos (incluye activos e inactivos)
-    public function obtenerTodosConEstado(): array {
+    // ── Obtener parqueadero por ID ────────────────────────────────────────────
+    public function obtenerPorId(int $id): ?array {
         try {
-            $sql = "SELECT * FROM parqueadero ORDER BY 
-                    CASE 
-                        WHEN Estado = 'Activo' THEN 1 
-                        WHEN Estado = 'Inactivo' THEN 2 
-                        ELSE 3 
-                    END, 
-                    IdParqueadero DESC";
+            $sql  = "SELECT * FROM parqueadero WHERE IdParqueadero = :id";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            file_put_contents($this->logPath, "❌ Error en obtenerTodosConEstado: " . $e->getMessage() . "\n", FILE_APPEND);
-            return [];
-        }
-    }
-
-    // ✅ Obtener un vehículo por su ID
-    public function obtenerPorId(int $idParqueadero): ?array {
-        try {
-            $sql = "SELECT * FROM parqueadero WHERE IdParqueadero = :id";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idParqueadero]);
+            $stmt->execute([':id' => $id]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
         } catch (PDOException $e) {
-            file_put_contents($this->logPath, "❌ Error en obtenerPorId: " . $e->getMessage() . "\n", FILE_APPEND);
+            $this->log("❌ obtenerPorId: " . $e->getMessage());
             return null;
         }
     }
 
-    // ✅ Verifica si existe un vehículo
-    public function existe(int $idParqueadero): bool {
+    // ── Obtener espacios individuales con placa si está ocupado ──────────────
+    public function obtenerEspacios(int $idParqueadero): array {
         try {
-            $sql = "SELECT 1 FROM parqueadero WHERE IdParqueadero = :id LIMIT 1";
+            $sql = "SELECT e.*,
+                           v.PlacaVehiculo,
+                           v.TipoVehiculo  AS TipoVehiculoRegistrado,
+                           v.DescripcionVehiculo
+                    FROM espacio_parqueadero e
+                    LEFT JOIN vehiculo v ON e.IdVehiculo = v.IdVehiculo
+                    WHERE e.IdParqueadero = :idp
+                    ORDER BY e.NumeroEspacio ASC";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idParqueadero]);
-            return $stmt->rowCount() > 0;
+            $stmt->execute([':idp' => $idParqueadero]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            return false;
+            $this->log("❌ obtenerEspacios: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ── Resumen de espacios por tipo (para tarjetas) ──────────────────────────
+    public function obtenerResumenEspacios(int $idParqueadero): array {
+        try {
+            $sql = "SELECT
+                        TipoVehiculo,
+                        COUNT(*) AS Total,
+                        SUM(CASE WHEN Estado = 'Libre'   THEN 1 ELSE 0 END) AS Libres,
+                        SUM(CASE WHEN Estado = 'Ocupado' THEN 1 ELSE 0 END) AS Ocupados
+                    FROM espacio_parqueadero
+                    WHERE IdParqueadero = :idp
+                    GROUP BY TipoVehiculo";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':idp' => $idParqueadero]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $this->log("❌ obtenerResumenEspacios: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // MÉTODOS GUARDIA — Vista de espacios y gestión manual
+    // ══════════════════════════════════════════════════════════════════════════
+
+    // ── Sedes activas que tienen parqueadero configurado ─────────────────────
+    public function obtenerSedesConParqueadero(): array {
+        try {
+            $sql  = "SELECT s.IdSede, s.TipoSede, s.Ciudad
+                     FROM sede s
+                     INNER JOIN parqueadero p ON s.IdSede = p.IdSede
+                     WHERE s.Estado = 'Activo' AND p.Estado = 'Activo'
+                     ORDER BY s.TipoSede ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $this->log("❌ obtenerSedesConParqueadero: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ── Parqueadero activo de una sede con datos de sede ─────────────────────
+    public function obtenerParqueaderoPorSede(int $idSede): ?array {
+        try {
+            $sql  = "SELECT p.*, s.TipoSede, s.Ciudad
+                     FROM parqueadero p
+                     INNER JOIN sede s ON p.IdSede = s.IdSede
+                     WHERE p.IdSede = :sede AND p.Estado = 'Activo'
+                     LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':sede' => $idSede]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (PDOException $e) {
+            $this->log("❌ obtenerParqueaderoPorSede: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // ── Espacios con detalle completo (incluye propietario del vehículo) ──────
+    public function obtenerEspaciosDetalle(int $idParqueadero): array {
+        try {
+            $sql = "SELECT e.*,
+                           v.PlacaVehiculo,
+                           v.TipoVehiculo      AS TipoVehiculoRegistrado,
+                           v.DescripcionVehiculo,
+                           f.NombreFuncionario,
+                           vis.NombreVisitante
+                    FROM espacio_parqueadero e
+                    LEFT JOIN vehiculo    v   ON e.IdVehiculo    = v.IdVehiculo
+                    LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
+                    LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                    WHERE e.IdParqueadero = :idp
+                    ORDER BY e.TipoVehiculo ASC, e.NumeroEspacio ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':idp' => $idParqueadero]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $this->log("❌ obtenerEspaciosDetalle: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ── Vehículo por placa ────────────────────────────────────────────────────
+    public function obtenerVehiculoPorPlaca(string $placa): ?array {
+        try {
+            $sql  = "SELECT v.*, f.NombreFuncionario, vis.NombreVisitante
+                     FROM vehiculo v
+                     LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
+                     LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                     WHERE v.PlacaVehiculo = :placa AND v.Estado = 'Activo'
+                     LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':placa' => strtoupper(trim($placa))]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (PDOException $e) {
+            $this->log("❌ obtenerVehiculoPorPlaca: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // ── Espacio ocupado por un vehículo en un parqueadero ────────────────────
+    public function obtenerEspacioOcupadoPorVehiculo(int $idVehiculo, int $idParqueadero): ?array {
+        try {
+            $sql  = "SELECT * FROM espacio_parqueadero
+                     WHERE IdVehiculo = :idv AND IdParqueadero = :idp AND Estado = 'Ocupado'
+                     LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':idv' => $idVehiculo, ':idp' => $idParqueadero]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (PDOException $e) {
+            $this->log("❌ obtenerEspacioOcupadoPorVehiculo: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // ── Primer espacio libre del tipo del vehículo ────────────────────────────
+    public function obtenerPrimerEspacioLibre(int $idParqueadero, string $tipo): ?array {
+        try {
+            $sql  = "SELECT * FROM espacio_parqueadero
+                     WHERE IdParqueadero = :idp AND TipoVehiculo = :tipo AND Estado = 'Libre'
+                     ORDER BY NumeroEspacio ASC
+                     LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':idp' => $idParqueadero, ':tipo' => $tipo]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (PDOException $e) {
+            $this->log("❌ obtenerPrimerEspacioLibre: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // ── OCUPAR espacio (entrada manual o por escáner) ─────────────────────────
+    public function ocuparEspacio(int $idEspacio, int $idVehiculo): array {
+        try {
+            $sql  = "UPDATE espacio_parqueadero
+                     SET Estado = 'Ocupado', IdVehiculo = :idv
+                     WHERE IdEspacio = :ide AND Estado = 'Libre'";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':idv' => $idVehiculo, ':ide' => $idEspacio]);
+
+            if ($stmt->rowCount() === 0) {
+                return ['success' => false, 'error' => 'El espacio ya fue ocupado por otro vehículo'];
+            }
+            $this->log("✅ Espacio $idEspacio ocupado por vehículo $idVehiculo");
+            return ['success' => true];
+        } catch (PDOException $e) {
+            $this->log("❌ ocuparEspacio: " . $e->getMessage());
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    // ── LIBERAR espacio (salida manual o por escáner) ─────────────────────────
+    public function liberarEspacio(int $idEspacio): array {
+        try {
+            $sql  = "UPDATE espacio_parqueadero
+                     SET Estado = 'Libre', IdVehiculo = NULL
+                     WHERE IdEspacio = :ide AND Estado = 'Ocupado'";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':ide' => $idEspacio]);
+
+            if ($stmt->rowCount() === 0) {
+                return ['success' => false, 'error' => 'El espacio ya estaba libre'];
+            }
+            $this->log("✅ Espacio $idEspacio liberado");
+            return ['success' => true];
+        } catch (PDOException $e) {
+            $this->log("❌ liberarEspacio: " . $e->getMessage());
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // MÉTODO PRINCIPAL PARA EL ESCÁNER (integración con módulo del compañero)
+    // ══════════════════════════════════════════════════════════════════════════
+    /**
+     * CÓMO CONECTAR EL ESCÁNER:
+     * El módulo escáner debe enviar POST a ControladorParqueadero.php con:
+     *   accion      => 'escanear_qr'
+     *   placa       => 'ABC123'       ← placa leída del QR
+     *   id_sede     => 3              ← sede donde está el lector
+     *   tipo_evento => 'entrada'      ← o 'salida'
+     *
+     * Respuesta JSON:
+     *   { "success": true,  "espacio": 5, "mensaje": "Espacio #5 asignado" }
+     *   { "success": false, "sin_espacio": true, "tipo": "Carro", "mensaje": "..." }
+     *
+     * NOTA: Si el QR guarda IdVehiculo en lugar de placa, reemplazar
+     *       obtenerVehiculoPorPlaca() por obtenerVehiculoPorId() aquí.
+     */
+    public function procesarEscaneo(string $placa, int $idSede, string $tipoEvento): array {
+        try {
+            $vehiculo = $this->obtenerVehiculoPorPlaca($placa);
+            if (!$vehiculo) {
+                return ['success' => false, 'mensaje' => "Vehículo '$placa' no encontrado o inactivo"];
+            }
+
+            $parqueadero = $this->obtenerParqueaderoPorSede($idSede);
+            if (!$parqueadero) {
+                return ['success' => false, 'mensaje' => 'No hay parqueadero activo para esta sede'];
+            }
+
+            $idParqueadero = (int)$parqueadero['IdParqueadero'];
+            $idVehiculo    = (int)$vehiculo['IdVehiculo'];
+            $tipoVehiculo  = $vehiculo['TipoVehiculo'];
+
+            if ($tipoEvento === 'entrada') {
+                $espacioActual = $this->obtenerEspacioOcupadoPorVehiculo($idVehiculo, $idParqueadero);
+                if ($espacioActual) {
+                    return [
+                        'success' => false,
+                        'mensaje' => "El vehículo '$placa' ya ocupa el espacio #{$espacioActual['NumeroEspacio']}"
+                    ];
+                }
+
+                $espacioLibre = $this->obtenerPrimerEspacioLibre($idParqueadero, $tipoVehiculo);
+                if (!$espacioLibre) {
+                    return [
+                        'success'     => false,
+                        'sin_espacio' => true,
+                        'tipo'        => $tipoVehiculo,
+                        'mensaje'     => "Sin espacios disponibles para $tipoVehiculo. El guardia debe decidir."
+                    ];
+                }
+
+                $r = $this->ocuparEspacio((int)$espacioLibre['IdEspacio'], $idVehiculo);
+                if ($r['success']) {
+                    return [
+                        'success'       => true,
+                        'tipo_evento'   => 'entrada',
+                        'espacio'       => (int)$espacioLibre['NumeroEspacio'],
+                        'id_espacio'    => (int)$espacioLibre['IdEspacio'],
+                        'placa'         => $placa,
+                        'tipo_vehiculo' => $tipoVehiculo,
+                        'mensaje'       => "Entrada registrada. Espacio #{$espacioLibre['NumeroEspacio']} asignado"
+                    ];
+                }
+                return ['success' => false, 'mensaje' => $r['error'] ?? 'Error al ocupar espacio'];
+
+            } elseif ($tipoEvento === 'salida') {
+                $espacioOcupado = $this->obtenerEspacioOcupadoPorVehiculo($idVehiculo, $idParqueadero);
+                if (!$espacioOcupado) {
+                    return ['success' => false, 'mensaje' => "El vehículo '$placa' no tiene espacio ocupado en esta sede"];
+                }
+
+                $r = $this->liberarEspacio((int)$espacioOcupado['IdEspacio']);
+                if ($r['success']) {
+                    return [
+                        'success'       => true,
+                        'tipo_evento'   => 'salida',
+                        'espacio'       => (int)$espacioOcupado['NumeroEspacio'],
+                        'id_espacio'    => (int)$espacioOcupado['IdEspacio'],
+                        'placa'         => $placa,
+                        'tipo_vehiculo' => $tipoVehiculo,
+                        'mensaje'       => "Salida registrada. Espacio #{$espacioOcupado['NumeroEspacio']} liberado"
+                    ];
+                }
+                return ['success' => false, 'mensaje' => $r['error'] ?? 'Error al liberar espacio'];
+
+            } else {
+                return ['success' => false, 'mensaje' => "Tipo de evento inválido: '$tipoEvento'"];
+            }
+
+        } catch (Exception $e) {
+            $this->log("❌ procesarEscaneo: " . $e->getMessage());
+            return ['success' => false, 'mensaje' => 'Error interno: ' . $e->getMessage()];
         }
     }
 }

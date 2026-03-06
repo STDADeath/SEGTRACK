@@ -2737,3 +2737,161 @@ Acción detectada: enviar_qr
 Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: pasachoa2002@gmail.com"}
 === FIN ===
 
+
+2026-03-01 18:52:17 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN23467676575",
+    "IdFuncionario": "58",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Serial duplicado - SN23467676575
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'SN23467676575' ya est\u00e1 registrado en otro dispositivo (ID: 38 - Port\u00e1til lenovo)."}
+=== FIN ===
+
+
+2026-03-01 19:20:23 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN45252616777",
+    "IdFuncionario": "58",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: SN45252616777
+INSERT exitoso, ID: 39
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 39","data":{"IdDispositivo":"39","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-39-69a48367193ae.png"}}
+=== FIN ===
+
+
+2026-03-01 19:21:36 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "Dell",
+    "NumeroSerial": "NS56789098765",
+    "IdFuncionario": "",
+    "IdVisitante": "10"
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: Dell, Serial: NS56789098765
+INSERT exitoso, ID: 40
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 40","data":{"IdDispositivo":"40","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-40-69a483b0295ba.png"}}
+=== FIN ===
+
+
+2026-03-02 00:55:47 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "39",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-02 00:55:55 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "40",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-02 00:55:59 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "36",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-02 00:56:03 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "38",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-02 00:56:07 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "35",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-02 00:56:12 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "32",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-04 07:17:09 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "NumeroSerial": "NS56789098765",
+    "IdFuncionario": "58",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Dell, Serial: NS56789098765
+INSERT exitoso, ID: 38
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 38","data":{"IdDispositivo":"38","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-38-69a7ce65785ce.png"}}
+=== FIN ===
+
+
+2026-03-04 07:22:06 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "38",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
