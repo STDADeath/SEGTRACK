@@ -2895,3 +2895,22 @@ Acción detectada: cambiar_estado
 Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
 === FIN ===
 
+
+2026-03-06 21:21:34 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "HP",
+    "NumeroSerial": "",
+    "IdFuncionario": "",
+    "IdVisitante": "10"
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: HP, Serial: 
+EXCEPCIÓN PDO: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'NumeroSerial' in 'field list'
+Respuesta final: {"success":false,"message":"Error al registrar en BD: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'NumeroSerial' in 'field list'"}
+=== FIN ===
+
