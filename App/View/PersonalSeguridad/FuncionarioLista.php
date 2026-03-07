@@ -15,7 +15,7 @@ $baseQR = '/qr';
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-user-tie me-2"></i>Funcionarios Registrados
         </h1>
-        <a href="./Funcionario.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="Funcionario.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus me-1"></i> Nuevo Funcionario
         </a>
     </div>

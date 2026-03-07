@@ -2,3 +2,7 @@
 2026-03-07 00:09:25 - Correo enviado correctamente a maquezperea@gmail.com
 2026-03-07 00:09:50 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-65-69ab5ebeb7ea2.png
 2026-03-07 00:09:57 - Correo enviado correctamente a maquezperea@gmail.com
+2026-03-07 03:25:13 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-66-69ab8c8933868.png
+2026-03-07 03:25:19 - Correo enviado correctamente a talajazi@gmail.com
+2026-03-07 03:28:01 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-63-69ab8d31d4b63.png
+2026-03-07 03:28:08 - Correo enviado correctamente a zambrano@gmail.com

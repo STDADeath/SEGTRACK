@@ -44,7 +44,7 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
                                 <select class="form-select" name="TipoDispositivo" id="TipoDispositivo" required
                                         style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
                                                font-size:1rem; color:#6c757d; background-color:#fff;
-                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07); width:100%;">
                                     <option value="" disabled selected>Seleccione...</option>
                                     <option value="Portatil">Portátil</option>
                                     <option value="Tablet">Tablet</option>
@@ -64,29 +64,29 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
                                 <input type="text" class="form-control" name="MarcaDispositivo" id="MarcaDispositivo" required
                                        placeholder="Ej: Dell, HP, Lenovo"
                                        style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
-                                              font-size:1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                              font-size:1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07); width:100%;">
                             </div>
                         </div>
 
                         <!-- 🆕 NUEVO CAMPO: NÚMERO SERIAL -->
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <label class="form-label" style="color:#555; font-size:0.95rem;">Número Serial</label>
                                 <input type="text" class="form-control" name="NumeroSerial" id="NumeroSerial" placeholder="Ej: SN123456789"
                                        style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
-                                              font-size:1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                              font-size:1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07); width:100%;">
                                 <small class="text-muted">Campo opcional - Ingrese el serial del dispositivo</small>
                             </div>
                         </div>
 
                         <!-- 🔹 Selección de visitante -->
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <label class="form-label" style="color:#555; font-size:0.95rem;">¿El dispositivo pertenece a un visitante?</label>
                                 <select id="TieneVisitante" name="TieneVisitante" class="form-select"
                                         style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
                                                font-size:1rem; color:#6c757d; background-color:#fff;
-                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07); width:100%;">
                                     <option value="no" selected>No (Funcionario)</option>
                                     <option value="si">Sí (Visitante)</option>
                                 </select>
@@ -95,12 +95,12 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
 
                         <!-- 🔹 Campo Funcionario (visible por defecto) -->
                         <div class="row" id="FuncionarioContainer">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <label class="form-label" style="color:#555; font-size:0.95rem;">Funcionario <span class="text-danger">*</span></label>
                                 <select class="form-select" name="IdFuncionario" id="IdFuncionario"
                                         style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
                                                font-size:1rem; color:#6c757d; background-color:#fff;
-                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07); width:100%;">
                                     <option value="" disabled selected>Seleccione...</option>
                                     <?php foreach ($funcionarios as $func) : ?>
                                         <option value="<?php echo $func['IdFuncionario']; ?>">
@@ -113,12 +113,12 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
 
                         <!-- 🔹 Campo Visitante (oculto por defecto) -->
                         <div class="row" id="VisitanteContainer" style="display: none;">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <label class="form-label" style="color:#555; font-size:0.95rem;">Visitante <span class="text-danger">*</span></label>
                                 <select class="form-select" name="IdVisitante" id="IdVisitante"
                                         style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
                                                font-size:1rem; color:#6c757d; background-color:#fff;
-                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07); width:100%;">
                                     <option value="" disabled selected>Seleccione...</option>
                                     <?php foreach ($visitantes as $vis) : ?>
                                         <option value="<?php echo $vis['IdVisitante']; ?>">
