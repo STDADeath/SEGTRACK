@@ -60,9 +60,14 @@
 
                         <div class="collapse-divider"></div>
 
-                        <h6 class="collapse-header">Parqueadero:</h6>
+                        <h6 class="collapse-header">Vehiculos:</h6>
                         <a class="collapse-item" href="../PersonalSeguridad/Vehiculo.php">Ingreso Vehiculo</a>
                         <a class="collapse-item" href="../PersonalSeguridad/Vehiculolista.php">Lista Vehiculo</a>
+
+                        <div class="collapse-divider"></div>
+
+                        <h6 class="collapse-header">Vehiculos:</h6>
+                        <a class="collapse-item" href="../PersonalSeguridad/Parqueaderoguardia.php">Ingreso al Parqueadero</a>
 
                         <div class="collapse-divider"></div>
 

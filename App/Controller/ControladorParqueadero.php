@@ -15,8 +15,7 @@ if (!file_exists($carpetaDebug)) {
     mkdir($carpetaDebug, 0777, true);
 }
 
-file_put_contents($carpetaDebug . '/debug_log.txt',
-    "\n" . date('Y-m-d H:i:s') . " === INICIO CONTROLADOR PARQUEADERO ===\n", FILE_APPEND);
+file_put_contents($carpetaDebug . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO ===\n", FILE_APPEND);
 
 try {
     file_put_contents($carpetaDebug . '/debug_log.txt',
@@ -43,14 +42,12 @@ try {
     }
     require_once $ruta_modelo;
 
-    // ══════════════════════════════════════════════════════════════════════════
+    // ═════════════════════════════════════════════════════════════════════════
     class ControladorParqueadero {
         private $modelo;
         private $carpetaDebug;
-        private $conexion;
 
         public function __construct($conexion) {
-            $this->conexion     = $conexion;
             $this->modelo       = new ModeloParqueadero($conexion);
             $this->carpetaDebug = __DIR__ . '/Debug_Parqueadero';
         }
@@ -59,107 +56,102 @@ try {
             return !isset($campo) || $campo === '' || trim((string)$campo) === '';
         }
 
-        private function log(string $msg): void {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt',
-                date('Y-m-d H:i:s') . " $msg\n", FILE_APPEND);
-        }
-
         // ── Crear parqueadero ─────────────────────────────────────────────────
         public function crear(array $d): array {
-            $this->log("=== crear parqueadero ===");
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== crear parqueadero ===\n", FILE_APPEND);
 
             $idSede = isset($d['IdSede']) ? (int)$d['IdSede'] : 0;
-            $carros = isset($d['Carros']) ? (int)$d['Carros'] : 0;
-            $motos  = isset($d['Motos'])  ? (int)$d['Motos']  : 0;
-            $bicis  = isset($d['Bicis'])  ? (int)$d['Bicis']  : 0;
+            $carros = isset($d['Carros'])  ? (int)$d['Carros']  : 0;
+            $motos  = isset($d['Motos'])   ? (int)$d['Motos']   : 0;
+            $bicis  = isset($d['Bicis'])   ? (int)$d['Bicis']   : 0;
             $total  = $carros + $motos + $bicis;
 
             if ($idSede <= 0) {
                 return ['success' => false, 'message' => 'Debe seleccionar una sede válida'];
             }
             if ($total <= 0) {
-                return ['success' => false, 'message' => 'La cantidad total de espacios debe ser mayor a 0'];
+                return ['success' => false, 'message' => 'Debe ingresar al menos un espacio (carros, motos o bicicletas)'];
             }
-            if ($carros < 0 || $motos < 0 || $bicis < 0) {
-                return ['success' => false, 'message' => 'Las cantidades no pueden ser negativas'];
-            }
-
             if ($this->modelo->existeParqueaderoPorSede($idSede)) {
-                return ['success' => false, 'message' => 'Esta sede ya tiene un parqueadero configurado. Use la opción Editar para modificarlo.'];
+                return ['success' => false, 'message' => 'Esta sede ya tiene un parqueadero registrado'];
             }
 
-            $resultado = $this->modelo->crearParqueadero($idSede, $total, $carros, $motos, $bicis);
+            try {
+                $resultado = $this->modelo->crearParqueadero($idSede, $total, $carros, $motos, $bicis);
 
-            if ($resultado['success']) {
-                $this->log("✅ Parqueadero creado ID: " . $resultado['id']);
-                return [
-                    'success' => true,
-                    'message' => "Parqueadero creado con $total espacios ($carros carros, $motos motos, $bicis bicicletas)",
-                    'data'    => ['IdParqueadero' => $resultado['id'], 'Total' => $total]
-                ];
+                if ($resultado['success']) {
+                    return [
+                        'success' => true,
+                        'message' => "Parqueadero creado correctamente con ID: " . $resultado['id'],
+                        'data'    => ['IdParqueadero' => $resultado['id']]
+                    ];
+                }
+                return ['success' => false, 'message' => 'Error al crear en BD: ' . ($resultado['error'] ?? 'desconocido')];
+
+            } catch (Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN crear: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
-            return ['success' => false, 'message' => 'Error al crear: ' . ($resultado['error'] ?? 'Desconocido')];
         }
 
         // ── Actualizar parqueadero ────────────────────────────────────────────
         public function actualizar(array $d): array {
-            $id     = isset($d['id'])     ? (int)$d['id']     : 0;
+            $id = isset($d['id']) ? (int)$d['id'] : 0;
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== actualizar parqueadero ID: $id ===\n", FILE_APPEND);
+
+            if ($id <= 0) {
+                return ['success' => false, 'message' => 'ID de parqueadero no válido'];
+            }
+
             $carros = isset($d['Carros']) ? (int)$d['Carros'] : 0;
             $motos  = isset($d['Motos'])  ? (int)$d['Motos']  : 0;
             $bicis  = isset($d['Bicis'])  ? (int)$d['Bicis']  : 0;
             $total  = $carros + $motos + $bicis;
 
-            $this->log("=== actualizar parqueadero ID: $id ===");
-
-            if ($id <= 0) {
-                return ['success' => false, 'message' => 'ID de parqueadero no válido'];
-            }
             if ($total <= 0) {
-                return ['success' => false, 'message' => 'La cantidad total debe ser mayor a 0'];
-            }
-            if ($carros < 0 || $motos < 0 || $bicis < 0) {
-                return ['success' => false, 'message' => 'Las cantidades no pueden ser negativas'];
+                return ['success' => false, 'message' => 'Debe ingresar al menos un espacio'];
             }
 
-            $resultado = $this->modelo->actualizarParqueadero($id, $total, $carros, $motos, $bicis);
+            try {
+                $resultado = $this->modelo->actualizarParqueadero($id, $total, $carros, $motos, $bicis);
 
-            if ($resultado['success']) {
-                return [
-                    'success' => true,
-                    'message' => "Parqueadero actualizado: $total espacios ($carros carros, $motos motos, $bicis bicicletas)"
-                ];
+                if ($resultado['success']) {
+                    return ['success' => true, 'message' => 'Parqueadero actualizado correctamente'];
+                }
+                return ['success' => false, 'message' => 'Error al actualizar: ' . ($resultado['error'] ?? 'desconocido')];
+
+            } catch (Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN actualizar: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
-            return ['success' => false, 'message' => $resultado['error'] ?? 'Error al actualizar'];
         }
 
-        // ── Cambiar estado ────────────────────────────────────────────────────
+        // ── Cambiar estado (Activo <-> Inactivo) ──────────────────────────────
         public function cambiarEstado(int $id, string $estado): array {
-            $this->log("=== cambiarEstado ID: $id → $estado ===");
+            try {
+                $resultado = $this->modelo->cambiarEstado($id, $estado);
 
-            if ($id <= 0 || !in_array($estado, ['Activo', 'Inactivo'])) {
-                return ['success' => false, 'message' => 'Datos no válidos'];
+                if ($resultado['success']) {
+                    $accion = $estado === 'Activo' ? 'activado' : 'desactivado';
+                    return ['success' => true, 'message' => "Parqueadero $accion correctamente", 'nuevoEstado' => $estado];
+                }
+                return ['success' => false, 'message' => 'Error al cambiar estado del parqueadero'];
+
+            } catch (Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN cambiarEstado: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
-
-            $resultado = $this->modelo->cambiarEstado($id, $estado);
-
-            if ($resultado['success']) {
-                $accion = $estado === 'Activo' ? 'activado' : 'desactivado';
-                return [
-                    'success'     => true,
-                    'message'     => "Parqueadero $accion correctamente",
-                    'nuevoEstado' => $estado
-                ];
-            }
-            return ['success' => false, 'message' => 'Error al cambiar el estado'];
         }
 
-        // ── Obtener espacios (para modal grid admin) ──────────────────────────
+        // ── Obtener espacios (admin — modal ver espacios) ─────────────────────
         public function obtenerEspacios(int $id): array {
             return $this->modelo->obtenerEspacios($id);
         }
 
         // ── Obtener datos de sede para el guardia ─────────────────────────────
         public function obtenerDatosSede(int $idSede): array {
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== obtenerDatosSede — Sede: $idSede ===\n", FILE_APPEND);
+
             $parqueadero = $this->modelo->obtenerParqueaderoPorSede($idSede);
             if (!$parqueadero) {
                 return ['success' => false, 'message' => 'Esta sede no tiene parqueadero activo configurado'];
@@ -176,34 +168,54 @@ try {
 
         // ── Ocupar espacio manualmente (guardia sin escáner) ──────────────────
         public function ocuparManual(int $idEspacio, string $placa): array {
-            $this->log("=== ocuparManual espacio $idEspacio placa $placa ===");
+            file_put_contents($this->carpetaDebug . '/debug_log.txt',
+                "=== ocuparManual — Espacio: $idEspacio, Placa: $placa ===\n", FILE_APPEND);
 
-            if ($idEspacio <= 0)       return ['success' => false, 'message' => 'ID de espacio no válido'];
-            if (empty(trim($placa)))   return ['success' => false, 'message' => 'La placa es requerida'];
-
-            $vehiculo = $this->modelo->obtenerVehiculoPorPlaca($placa);
-            if (!$vehiculo) {
-                return ['success' => false, 'message' => "Vehículo con placa '$placa' no encontrado o inactivo"];
+            if ($idEspacio <= 0) {
+                return ['success' => false, 'message' => 'ID de espacio no válido'];
+            }
+            if (empty(trim($placa))) {
+                return ['success' => false, 'message' => 'La placa es requerida'];
             }
 
-            $r = $this->modelo->ocuparEspacio($idEspacio, (int)$vehiculo['IdVehiculo']);
-            if ($r['success']) {
-                return ['success' => true, 'message' => "Espacio asignado al vehículo $placa correctamente"];
+            try {
+                $vehiculo = $this->modelo->obtenerVehiculoPorPlaca($placa);
+                if (!$vehiculo) {
+                    return ['success' => false, 'message' => "Vehículo con placa '$placa' no encontrado o inactivo"];
+                }
+
+                $r = $this->modelo->ocuparEspacio($idEspacio, (int)$vehiculo['IdVehiculo']);
+                if ($r['success']) {
+                    return ['success' => true, 'message' => "Espacio asignado al vehículo $placa correctamente"];
+                }
+                return ['success' => false, 'message' => $r['error'] ?? 'Error al ocupar el espacio'];
+
+            } catch (Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN ocuparManual: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
-            return ['success' => false, 'message' => $r['error'] ?? 'Error al ocupar el espacio'];
         }
 
         // ── Liberar espacio manualmente (guardia) ─────────────────────────────
         public function liberarManual(int $idEspacio): array {
-            $this->log("=== liberarManual espacio $idEspacio ===");
+            file_put_contents($this->carpetaDebug . '/debug_log.txt',
+                "=== liberarManual — Espacio: $idEspacio ===\n", FILE_APPEND);
 
-            if ($idEspacio <= 0) return ['success' => false, 'message' => 'ID de espacio no válido'];
-
-            $r = $this->modelo->liberarEspacio($idEspacio);
-            if ($r['success']) {
-                return ['success' => true, 'message' => 'Espacio liberado correctamente'];
+            if ($idEspacio <= 0) {
+                return ['success' => false, 'message' => 'ID de espacio no válido'];
             }
-            return ['success' => false, 'message' => $r['error'] ?? 'Error al liberar el espacio'];
+
+            try {
+                $r = $this->modelo->liberarEspacio($idEspacio);
+                if ($r['success']) {
+                    return ['success' => true, 'message' => 'Espacio liberado correctamente'];
+                }
+                return ['success' => false, 'message' => $r['error'] ?? 'Error al liberar el espacio'];
+
+            } catch (Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN liberarManual: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
+            }
         }
 
         // ══════════════════════════════════════════════════════════════════════
@@ -211,7 +223,7 @@ try {
         // ══════════════════════════════════════════════════════════════════════
         /**
          * INTEGRACIÓN ESCÁNER:
-         * El módulo escáner debe hacer POST a ControladorParqueadero.php con:
+         * El módulo escáner debe hacer POST a este archivo con:
          *   accion      => 'escanear_qr'
          *   placa       => 'ABC123'
          *   id_sede     => 3
@@ -221,84 +233,90 @@ try {
          * procesarEscaneo() en ModeloParqueadero.php para recibirlo por ID.
          */
         public function escanearQR(string $placa, int $idSede, string $tipoEvento): array {
-            $this->log("=== escanearQR placa=$placa sede=$idSede evento=$tipoEvento ===");
+            file_put_contents($this->carpetaDebug . '/debug_log.txt',
+                "=== escanearQR — Placa: $placa, Sede: $idSede, Evento: $tipoEvento ===\n", FILE_APPEND);
 
-            if (empty(trim($placa)))   return ['success' => false, 'mensaje' => 'Placa requerida'];
-            if ($idSede <= 0)          return ['success' => false, 'mensaje' => 'ID de sede no válido'];
+            if (empty(trim($placa))) {
+                return ['success' => false, 'mensaje' => 'Placa requerida'];
+            }
+            if ($idSede <= 0) {
+                return ['success' => false, 'mensaje' => 'ID de sede no válido'];
+            }
             if (!in_array($tipoEvento, ['entrada', 'salida'])) {
                 return ['success' => false, 'mensaje' => "Tipo de evento inválido. Use 'entrada' o 'salida'"];
             }
 
-            return $this->modelo->procesarEscaneo($placa, $idSede, $tipoEvento);
+            try {
+                return $this->modelo->procesarEscaneo($placa, $idSede, $tipoEvento);
+            } catch (Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN escanearQR: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'mensaje' => 'Error: ' . $e->getMessage()];
+            }
         }
     }
+    // ═════════════════════════════════════════════════════════════════════════
 
-    // ── Router ────────────────────────────────────────────────────────────────
     $controlador = new ControladorParqueadero($conexion);
     $accion      = $_POST['accion'] ?? '';
 
     file_put_contents($carpetaDebug . '/debug_log.txt', "Acción detectada: $accion\n", FILE_APPEND);
 
-    switch ($accion) {
+    if ($accion === 'crear') {
+        $resultado = $controlador->crear($_POST);
 
-        case 'crear':
-            $resultado = $controlador->crear($_POST);
-            break;
-
-        case 'actualizar':
+    } elseif ($accion === 'actualizar') {
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        if ($id > 0) {
             $resultado = $controlador->actualizar($_POST);
-            break;
+        } else {
+            $resultado = ['success' => false, 'message' => 'ID de parqueadero no válido'];
+        }
 
-        case 'cambiar_estado':
-            $id     = isset($_POST['id'])     ? (int)$_POST['id'] : 0;
-            $estado = $_POST['estado'] ?? '';
+    } elseif ($accion === 'cambiar_estado') {
+        $id    = isset($_POST['id'])     ? (int)$_POST['id'] : 0;
+        $estado = $_POST['estado']       ?? '';
+        if ($id > 0 && in_array($estado, ['Activo', 'Inactivo'])) {
             $resultado = $controlador->cambiarEstado($id, $estado);
-            break;
+        } else {
+            $resultado = ['success' => false, 'message' => 'Datos no válidos para cambiar estado'];
+        }
 
-        case 'obtener_espacios':
-            $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-            if ($id <= 0) {
-                $resultado = ['success' => false, 'message' => 'ID no válido'];
-            } else {
-                $espacios  = $controlador->obtenerEspacios($id);
-                $resultado = ['success' => true, 'espacios' => $espacios];
-            }
-            break;
+    } elseif ($accion === 'obtener_espacios') {
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        if ($id > 0) {
+            $espacios  = $controlador->obtenerEspacios($id);
+            $resultado = ['success' => true, 'espacios' => $espacios];
+        } else {
+            $resultado = ['success' => false, 'message' => 'ID no válido'];
+        }
 
-        // ── Guardia: cargar parqueadero de una sede ───────────────────────────
-        case 'obtener_sede':
-            $idSede    = isset($_POST['id_sede']) ? (int)$_POST['id_sede'] : 0;
-            $resultado = $idSede > 0
-                ? $controlador->obtenerDatosSede($idSede)
-                : ['success' => false, 'message' => 'ID de sede no válido'];
-            break;
+    } elseif ($accion === 'obtener_sede') {
+        $idSede    = isset($_POST['id_sede']) ? (int)$_POST['id_sede'] : 0;
+        $resultado = $idSede > 0
+            ? $controlador->obtenerDatosSede($idSede)
+            : ['success' => false, 'message' => 'ID de sede no válido'];
 
-        // ── Guardia: ocupar espacio manualmente ───────────────────────────────
-        case 'ocupar_manual':
-            $idEspacio = isset($_POST['id_espacio']) ? (int)$_POST['id_espacio'] : 0;
-            $placa     = trim($_POST['placa'] ?? '');
-            $resultado = $controlador->ocuparManual($idEspacio, $placa);
-            break;
+    } elseif ($accion === 'ocupar_manual') {
+        $idEspacio = isset($_POST['id_espacio']) ? (int)$_POST['id_espacio'] : 0;
+        $placa     = trim($_POST['placa'] ?? '');
+        $resultado = $controlador->ocuparManual($idEspacio, $placa);
 
-        // ── Guardia: liberar espacio manualmente ──────────────────────────────
-        case 'liberar_manual':
-            $idEspacio = isset($_POST['id_espacio']) ? (int)$_POST['id_espacio'] : 0;
-            $resultado = $controlador->liberarManual($idEspacio);
-            break;
+    } elseif ($accion === 'liberar_manual') {
+        $idEspacio = isset($_POST['id_espacio']) ? (int)$_POST['id_espacio'] : 0;
+        $resultado = $controlador->liberarManual($idEspacio);
 
-        // ════════════════════════════════════════════════════════════════════
-        // ESCÁNER QR — Punto de entrada del módulo escáner del compañero
-        // POST: accion=escanear_qr, placa=ABC123, id_sede=3, tipo_evento=entrada|salida
-        // ════════════════════════════════════════════════════════════════════
-        case 'escanear_qr':
-            $placa      = trim($_POST['placa']       ?? '');
-            $idSede     = isset($_POST['id_sede'])   ? (int)$_POST['id_sede'] : 0;
-            $tipoEvento = trim($_POST['tipo_evento'] ?? '');
-            $resultado  = $controlador->escanearQR($placa, $idSede, $tipoEvento);
-            break;
+    // ═════════════════════════════════════════════════════════════════════════
+    // ESCÁNER QR — Punto de entrada del módulo escáner del compañero
+    // POST: accion=escanear_qr, placa=ABC123, id_sede=3, tipo_evento=entrada|salida
+    // ═════════════════════════════════════════════════════════════════════════
+    } elseif ($accion === 'escanear_qr') {
+        $placa      = trim($_POST['placa']       ?? '');
+        $idSede     = isset($_POST['id_sede'])   ? (int)$_POST['id_sede'] : 0;
+        $tipoEvento = trim($_POST['tipo_evento'] ?? '');
+        $resultado  = $controlador->escanearQR($placa, $idSede, $tipoEvento);
 
-        default:
-            $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];
+    } else {
+        $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];
     }
 
     file_put_contents($carpetaDebug . '/debug_log.txt',
@@ -309,7 +327,7 @@ try {
 
 } catch (Exception $e) {
     ob_end_clean();
-    file_put_contents($carpetaDebug . '/debug_log.txt', "ERROR FINAL: " . $e->getMessage() . "\n", FILE_APPEND);
+    file_put_contents($carpetaDebug . '/debug_log.txt', "ERROR GENERAL: " . $e->getMessage() . "\n=== FIN ===\n\n", FILE_APPEND);
     echo json_encode([
         'success' => false,
         'message' => 'Error del servidor: ' . $e->getMessage()
