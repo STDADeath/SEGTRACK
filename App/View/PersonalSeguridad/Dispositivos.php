@@ -40,40 +40,41 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
                         <div class="row">
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Tipo de Dispositivo <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-desktop"></i></span>
-                                    <select class="form-select" name="TipoDispositivo" id="TipoDispositivo" required>
-                                        <option value="">Seleccione tipo...</option>
-                                        <option value="Portatil">Portátil</option>
-                                        <option value="Tablet">Tablet</option>
-                                        <option value="Computador">Computador</option>
-                                        <option value="Otro">Otro</option>
-                                    </select>
-                                </div>
+                                <label class="form-label" style="color:#555; font-size:0.95rem;">Tipo de Dispositivo <span class="text-danger">*</span></label>
+                                <select class="form-select" name="TipoDispositivo" id="TipoDispositivo" required
+                                        style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
+                                               font-size:1rem; color:#6c757d; background-color:#fff;
+                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                    <option value="" disabled selected>Seleccione...</option>
+                                    <option value="Portatil">Portátil</option>
+                                    <option value="Tablet">Tablet</option>
+                                    <option value="Computador">Computador</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
 
                                 <div id="campoOtro" class="mt-2" style="display:none;">
-                                    <input type="text" class="form-control" name="OtroTipoDispositivo" placeholder="Especifique el tipo">
+                                    <input type="text" class="form-control" name="OtroTipoDispositivo" placeholder="Especifique el tipo"
+                                           style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
+                                                  font-size:1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
                                 </div>
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Marca <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                                    <input type="text" class="form-control" name="MarcaDispositivo" id="MarcaDispositivo" required>
-                                </div>
+                                <label class="form-label" style="color:#555; font-size:0.95rem;">Marca <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="MarcaDispositivo" id="MarcaDispositivo" required
+                                       placeholder="Ej: Dell, HP, Lenovo"
+                                       style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
+                                              font-size:1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
                             </div>
                         </div>
 
                         <!-- 🆕 NUEVO CAMPO: NÚMERO SERIAL -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Número Serial</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-barcode"></i></span>
-                                    <input type="text" class="form-control" name="NumeroSerial" id="NumeroSerial" placeholder="Ej: SN123456789">
-                                </div>
+                                <label class="form-label" style="color:#555; font-size:0.95rem;">Número Serial</label>
+                                <input type="text" class="form-control" name="NumeroSerial" id="NumeroSerial" placeholder="Ej: SN123456789"
+                                       style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
+                                              font-size:1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
                                 <small class="text-muted">Campo opcional - Ingrese el serial del dispositivo</small>
                             </div>
                         </div>
@@ -81,8 +82,11 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
                         <!-- 🔹 Selección de visitante -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">¿El dispositivo pertenece a un visitante?</label>
-                                <select id="TieneVisitante" name="TieneVisitante" class="form-select border-primary shadow-sm">
+                                <label class="form-label" style="color:#555; font-size:0.95rem;">¿El dispositivo pertenece a un visitante?</label>
+                                <select id="TieneVisitante" name="TieneVisitante" class="form-select"
+                                        style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
+                                               font-size:1rem; color:#6c757d; background-color:#fff;
+                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
                                     <option value="no" selected>No (Funcionario)</option>
                                     <option value="si">Sí (Visitante)</option>
                                 </select>
@@ -92,36 +96,36 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
                         <!-- 🔹 Campo Funcionario (visible por defecto) -->
                         <div class="row" id="FuncionarioContainer">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Funcionario <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-                                    <select class="form-select" name="IdFuncionario" id="IdFuncionario">
-                                        <option value="">Seleccione un funcionario...</option>
-                                        <?php foreach ($funcionarios as $func) : ?>
-                                            <option value="<?php echo $func['IdFuncionario']; ?>">
-                                                <?php echo $func['NombreFuncionario']; ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
+                                <label class="form-label" style="color:#555; font-size:0.95rem;">Funcionario <span class="text-danger">*</span></label>
+                                <select class="form-select" name="IdFuncionario" id="IdFuncionario"
+                                        style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
+                                               font-size:1rem; color:#6c757d; background-color:#fff;
+                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                    <option value="" disabled selected>Seleccione...</option>
+                                    <?php foreach ($funcionarios as $func) : ?>
+                                        <option value="<?php echo $func['IdFuncionario']; ?>">
+                                            <?php echo $func['NombreFuncionario']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
 
                         <!-- 🔹 Campo Visitante (oculto por defecto) -->
                         <div class="row" id="VisitanteContainer" style="display: none;">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Visitante <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <select class="form-select" name="IdVisitante" id="IdVisitante">
-                                        <option value="">Seleccione un visitante...</option>
-                                        <?php foreach ($visitantes as $vis) : ?>
-                                            <option value="<?php echo $vis['IdVisitante']; ?>">
-                                                <?php echo $vis['NombreVisitante']; ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
+                                <label class="form-label" style="color:#555; font-size:0.95rem;">Visitante <span class="text-danger">*</span></label>
+                                <select class="form-select" name="IdVisitante" id="IdVisitante"
+                                        style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
+                                               font-size:1rem; color:#6c757d; background-color:#fff;
+                                               box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                                    <option value="" disabled selected>Seleccione...</option>
+                                    <?php foreach ($visitantes as $vis) : ?>
+                                        <option value="<?php echo $vis['IdVisitante']; ?>">
+                                            <?php echo $vis['NombreVisitante']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
 

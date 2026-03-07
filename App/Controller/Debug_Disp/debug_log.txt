@@ -1,0 +1,19 @@
+
+2026-03-07 00:30:35 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "HP",
+    "NumeroSerial": "23432432432",
+    "IdFuncionario": "63",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: HP, Serial: 23432432432
+INSERT exitoso, ID: 39
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 39","data":{"IdDispositivo":"39","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-39-69ab639b1c053.png"}}
+=== FIN ===
+

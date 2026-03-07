@@ -1,12 +1,4 @@
 <?php
-// Inicia la sesión para mantener variables de usuario
-session_start();
-
-if (!isset($_SESSION['usuario'])) {
-    header("Location: /SEGTRACK1/");
-    exit();
-}
-
 // Bloquear cache para que no puedan volver con flecha
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");

@@ -1,0 +1,61 @@
+
+2026-03-06 18:18:46 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "123456",
+    "DescripcionVehiculo": "roja con negro pixi",
+    "TarjetaPropiedad": "10005178955",
+    "IdSede": "64",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "63",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 24","data":{"IdVehiculo":"24","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-24-69ab60d64217e.png","FechaRegistro":"2026-03-06 18:18:46"}}
+=== FIN ===
+
+
+2026-03-06 18:19:33 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "24",
+    "tipo": "Moto",
+    "descripcion": "roja con negro pixi",
+    "idsede": "64"
+}
+Acción: actualizar
+Respuesta: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Vehiculo\/QR-VEHICULO-24-69ab610605da4.png"}
+=== FIN ===
+
+
+2026-03-06 18:28:34 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "123456",
+    "DescripcionVehiculo": "Honda",
+    "TarjetaPropiedad": "158654645664",
+    "IdSede": "25",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "63",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":false,"message":"⚠️ La placa '123456' ya está registrada para un vehículo tipo 'Moto'."}
+=== FIN ===
+
+
+2026-03-06 18:28:50 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "24",
+    "correo_destinatario": ""
+}
+Acción: enviar_qr
+enviarQRPorCorreo vehículo ID: 24
+Correo automático de funcionario: pasachoa2002@gmail.com
+✅ Correo enviado a: pasachoa2002@gmail.com
+Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: pasachoa2002@gmail.com","esFuncionario":true,"correo":"pasachoa2002@gmail.com"}
+=== FIN ===
+

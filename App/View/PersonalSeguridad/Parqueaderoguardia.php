@@ -39,18 +39,18 @@ $sedes = $modelo->obtenerSedesConParqueadero();
             <?php else : ?>
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold">Sede donde se encuentra</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-building"></i></span>
-                            <select class="form-select" id="selectSede">
-                                <option value="">-- Seleccione una sede --</option>
-                                <?php foreach ($sedes as $s) : ?>
-                                    <option value="<?= $s['IdSede'] ?>">
-                                        <?= htmlspecialchars($s['TipoSede']) ?> — <?= htmlspecialchars($s['Ciudad']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                        <label class="form-label" style="color:#555; font-size:0.95rem;">Sede <span class="text-danger">*</span></label>
+                        <select class="form-select" id="selectSede"
+                                style="border:1.5px solid #d1d3e2; border-radius:12px; padding:14px 18px;
+                                       font-size:1rem; color:#6c757d; background-color:#fff;
+                                       box-shadow: 0 1px 3px rgba(0,0,0,0.07);">
+                            <option value="" disabled selected>Seleccione...</option>
+                            <?php foreach ($sedes as $s) : ?>
+                                <option value="<?= $s['IdSede'] ?>">
+                                    <?= htmlspecialchars($s['TipoSede']) ?> — <?= htmlspecialchars($s['Ciudad']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-primary w-100" id="btnCargarSede">

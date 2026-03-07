@@ -88,7 +88,7 @@ if ($_SESSION['usuario']['TipoRol'] !== 'Personal Seguridad') {
                         <div class="collapse-divider"></div>
 
                         <h6 class="collapse-header">Parqueadero:</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/Parqueadero.php">Ingreso Parqueadero</a>
+                        <a class="collapse-item" href="../PersonalSeguridad/Parqueaderoguardia.php">Ingreso Parqueadero</a>
                         <a class="collapse-item" href="../PersonalSeguridad/Vehiculolista.php">Lista Parqueadero</a>
 
                         <div class="collapse-divider"></div>
@@ -185,8 +185,8 @@ if ($_SESSION['usuario']['TipoRol'] !== 'Personal Seguridad') {
 
                             <!-- Botón de menú del usuario -->
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
-
+                                <?php echo $_SESSION['usuario']['NombreFuncionario']; ?>
+                                <?php echo $_SESSION['usuario']['TipoRol']; ?>
                                 <!-- Imagen del perfil -->
                                 <img class="img-profile rounded-circle"
                                     src="../../../Public/img/undraw_profile.svg">

@@ -1,0 +1,4 @@
+2026-03-07 00:09:17 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-65-69ab5e9dbfe0a.png
+2026-03-07 00:09:25 - Correo enviado correctamente a maquezperea@gmail.com
+2026-03-07 00:09:50 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-65-69ab5ebeb7ea2.png
+2026-03-07 00:09:57 - Correo enviado correctamente a maquezperea@gmail.com

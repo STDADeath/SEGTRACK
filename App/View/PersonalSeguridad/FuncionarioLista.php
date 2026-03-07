@@ -15,7 +15,7 @@ $baseQR = '/qr';
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-user-tie me-2"></i>Funcionarios Registrados
         </h1>
-        <a href="./FuncionariosADM.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="./Funcionario.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus me-1"></i> Nuevo Funcionario
         </a>
     </div>
@@ -84,7 +84,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="col-md-2 d-flex align-items-end gap-2">
                 <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-                <a href="FuncionarioListaADM.php" class="btn btn-secondary"><i class="fas fa-broom"></i></a>
+                <a href="Funcionario.php" class="btn btn-secondary"><i class="fas fa-broom"></i></a>
             </div>
         </form>
     </div>
