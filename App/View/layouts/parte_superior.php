@@ -187,6 +187,7 @@ if ($_SESSION['usuario']['TipoRol'] !== 'Personal Seguridad') {
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
                                 <?php echo $_SESSION['usuario']['NombreFuncionario']; ?>
                                 <?php echo $_SESSION['usuario']['TipoRol']; ?>
+                                
                                 <!-- Imagen del perfil -->
                                 <img class="img-profile rounded-circle"
                                     src="../../../Public/img/undraw_profile.svg">

@@ -1,105 +1,167 @@
 <?php
-// Bloquear cache para que no puedan volver con flecha
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header("Location: /SEGTRACK1/");
+    exit();
+}
+
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-// Importa la parte superior del layout (navbar, estilos, encabezado general)
 require_once __DIR__ . '/../layouts/parte_superior.php';
-
-// -------------------------------------------------------------
-// CARGA DE LAS SEDES PARA LLENAR EL SELECT DEL FORMULARIO
-// -------------------------------------------------------------
-
 require_once __DIR__ . "/../../Controller/ControladorSede.php";
 
-// Crea instancia del controlador de sedes
 $controladorSede = new ControladorSede();
-
-// Obtiene las sedes desde la base de datos
 $sedes = $controladorSede->obtenerSedes();
 ?>
 
+<style>
+    .form-control.is-valid,
+    .form-control.is-invalid,
+    .form-select.is-valid,
+    .form-select.is-invalid {
+        background-image: none !important;
+        padding-right: 0.75rem !important;
+    }
+    .form-control:focus,
+    .form-select:focus {
+        box-shadow: none;
+    }
+</style>
 
-
-<!-- ================================================================
-     CONTENEDOR PRINCIPAL
-================================================================= -->
 <div class="container-fluid px-4 py-4">
 
-    <!-- Título superior y botón para ver lista de funcionarios -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
-            <i class="fas fa-user-tie me-2"></i>Registrar Funcionario
+            <i class="fas fa-user-shield me-2"></i>Registrar Personal de Seguridad
         </h1>
-
         <a href="./FuncionarioLista.php" class="btn btn-primary btn-sm">
             <i class="fas fa-list me-1"></i> Ver Funcionarios
         </a>
     </div>
 
-    <!-- ================================================================
-         TARJETA CON EL FORMULARIO DE REGISTRO
-    ================================================================= -->
     <div class="card shadow mb-4">
-
-        <!-- Encabezado de la tarjeta -->
         <div class="card-header bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Formulario de registro</h6>
         </div>
-
-        <!-- Cuerpo de la tarjeta -->
         <div class="card-body">
 
-            <!-- FORMULARIO PRINCIPAL -->
-            <form id="formRegistrarFuncionario">
+            <!-- ✅ enctype necesario para enviar la foto -->
+            <form id="formRegistrarFuncionario" enctype="multipart/form-data">
 
-                <!-- FILA 1 (Cargo - Nombre) -->
+                <!-- ============================================================
+                     SECCIÓN FOTO
+                ============================================================ -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-camera me-1 text-primary"></i>Foto del Funcionario
+                        </label>
+
+                        <div class="d-flex flex-wrap gap-3 align-items-start">
+
+                            <!-- Preview circular -->
+                            <div style="flex-shrink:0;">
+                                <div id="previewFotoContainer"
+                                     style="width:130px;height:130px;border-radius:50%;
+                                            border:3px dashed #4e73df;overflow:hidden;
+                                            background:#f0f4ff;display:flex;
+                                            align-items:center;justify-content:center;
+                                            cursor:pointer;"
+                                     title="Clic para subir foto"
+                                     onclick="document.getElementById('FotoFuncionario').click()">
+                                    <img id="previewFoto" src="" alt=""
+                                         style="width:100%;height:100%;object-fit:cover;display:none;">
+                                    <div id="previewPlaceholder" class="text-center text-muted px-2">
+                                        <i class="fas fa-user-circle fa-3x text-secondary mb-1"></i>
+                                        <div style="font-size:11px;">Clic para foto</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Botones foto -->
+                            <div class="d-flex flex-column gap-2 justify-content-center" style="padding-top:10px;">
+                                <div>
+                                    <input type="file" id="FotoFuncionario" name="FotoFuncionario"
+                                           accept="image/*" class="d-none">
+                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                            onclick="document.getElementById('FotoFuncionario').click()">
+                                        <i class="fas fa-upload me-1"></i> Subir foto
+                                    </button>
+                                </div>
+                                <button type="button" class="btn btn-outline-success btn-sm"
+                                        id="btnAbrirCamara">
+                                    <i class="fas fa-camera me-1"></i> Usar cámara
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-sm d-none"
+                                        id="btnQuitarFoto" onclick="quitarFoto()">
+                                    <i class="fas fa-times me-1"></i> Quitar foto
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Área de cámara -->
+                        <div id="areaCamera" class="mt-3 d-none">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white py-2">
+                                    <small><i class="fas fa-video me-1"></i>Vista previa de la cámara</small>
+                                </div>
+                                <div class="card-body text-center p-2">
+                                    <video id="videoCamera" autoplay playsinline muted
+                                           style="width:100%;max-width:350px;border-radius:8px;
+                                                  border:2px solid #28a745;"></video>
+                                    <canvas id="canvasCaptura" style="display:none;"></canvas>
+                                    <div class="mt-2 d-flex justify-content-center gap-2">
+                                        <button type="button" class="btn btn-success btn-sm" id="btnCapturar">
+                                            <i class="fas fa-camera me-1"></i> Capturar
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-sm" id="btnCerrarCamara">
+                                            <i class="fas fa-times me-1"></i> Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="FotoCapturaBase64" name="FotoCapturaBase64">
+                    </div>
+                </div>
+
+                <!-- FILA 1: Cargo - Nombre -->
                 <div class="row">
 
-                    <!-- SELECT CARGO -->
+                    <!-- ✅ SELECT CARGO CORREGIDO — sin punto, valor exacto del ENUM -->
                     <div class="col-md-6 mb-3">
                         <label for="CargoFuncionario" class="form-label">Cargo *</label>
-
-                        <!-- Lista de cargos disponibles -->
                         <select id="CargoFuncionario" name="CargoFuncionario"
                             class="form-control border-primary shadow-sm">
-
                             <option value="">Seleccione...</option>
+                            <option value="Personal Seguridad">Personal Seguridad</option>
                             <option value="Funcionario">Funcionario</option>
-                          
                         </select>
-
-                        <!-- Mensaje de error si no es válido -->
                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                     </div>
 
                     <!-- INPUT NOMBRE -->
                     <div class="col-md-6 mb-3">
                         <label for="NombreFuncionario" class="form-label">Nombre Completo *</label>
-
                         <input type="text" id="NombreFuncionario" name="NombreFuncionario"
                             class="form-control border-primary shadow-sm"
                             placeholder="Ej: Juan Pérez">
-
                         <div class="invalid-feedback">
                             El nombre solo debe contener letras y espacios (Mínimo 3 caracteres).
                         </div>
                     </div>
                 </div>
 
-                <!-- FILA 2 (Sede - Teléfono - Documento) -->
+                <!-- FILA 2: Sede - Teléfono - Documento -->
                 <div class="row">
-
-                    <!-- SELECT SEDE -->
                     <div class="col-md-4 mb-3">
                         <label for="IdSede" class="form-label">Sede *</label>
-
                         <select id="IdSede" name="IdSede" class="form-control border-primary shadow-sm">
-
                             <option value="">Seleccione...</option>
-
-                            <!-- Si hay sedes, cargarlas una por una -->
                             <?php if (!empty($sedes)): ?>
                                 <?php foreach ($sedes as $sede): ?>
                                     <option value="<?= htmlspecialchars($sede['IdSede']) ?>">
@@ -109,56 +171,40 @@ $sedes = $controladorSede->obtenerSedes();
                             <?php else: ?>
                                 <option value="" disabled>No hay sedes disponibles</option>
                             <?php endif; ?>
-
                         </select>
-
                         <div class="invalid-feedback">Este campo es obligatorio.</div>
                     </div>
 
-                    <!-- INPUT TELÉFONO -->
                     <div class="col-md-4 mb-3">
                         <label for="TelefonoFuncionario" class="form-label">Teléfono *</label>
-
                         <input type="text" id="TelefonoFuncionario" name="TelefonoFuncionario"
                             maxlength="10"
                             class="form-control border-primary shadow-sm"
                             placeholder="Ej: 3001234567">
-
-                        <div class="invalid-feedback">
-                            Debe contener exactamente 10 dígitos numéricos.
-                        </div>
+                        <div class="invalid-feedback">Debe contener exactamente 10 dígitos numéricos.</div>
                     </div>
 
-                    <!-- INPUT DOCUMENTO -->
                     <div class="col-md-4 mb-3">
                         <label for="DocumentoFuncionario" class="form-label">Documento *</label>
-
                         <input type="text" id="DocumentoFuncionario" name="DocumentoFuncionario"
                             maxlength="11"
                             class="form-control border-primary shadow-sm"
                             placeholder="Ej: 10024567891">
-
-                        <div class="invalid-feedback">
-                            Debe contener exactamente 11 dígitos numéricos.
-                        </div>
+                        <div class="invalid-feedback">Debe contener exactamente 11 dígitos numéricos.</div>
                     </div>
                 </div>
 
-                <!-- INPUT CORREO -->
+                <!-- CORREO -->
                 <div class="mb-3">
                     <label for="CorreoFuncionario" class="form-label">Correo Electrónico *</label>
-
                     <input type="email" id="CorreoFuncionario" name="CorreoFuncionario"
                         maxlength="100"
                         class="form-control border-primary shadow-sm"
                         placeholder="Ej: correo@dominio.com">
-
-                    <div class="invalid-feedback">
-                        Ingrese un formato de correo válido (debe incluir @ y .).
-                    </div>
+                    <div class="invalid-feedback">Ingrese un formato de correo válido (debe incluir @ y .).</div>
                 </div>
 
-                <!-- BOTÓN REGISTRAR -->
+                <!-- BOTÓN -->
                 <div class="text-end">
                     <button type="submit" class="btn btn-success" id="btnRegistrar">
                         <i class="fas fa-save me-1"></i> Registrar Funcionario
@@ -169,14 +215,10 @@ $sedes = $controladorSede->obtenerSedes();
         </div>
     </div>
 
-    <!-- ================================================================
-         TARJETA INFORMATIVA SOBRE EL QR
-    ================================================================ -->
     <div class="card shadow mb-4">
         <div class="card-header bg-light">
             <h6 class="m-0 font-weight-bold text-primary">Información Adicional</h6>
         </div>
-
         <div class="card-body">
             <div class="alert alert-info mb-0">
                 <i class="fas fa-info-circle me-2"></i>
@@ -186,10 +228,8 @@ $sedes = $controladorSede->obtenerSedes();
     </div>
 </div>
 
-<!-- PIE DE PÁGINA GENERAL -->
-<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
-<link rel="stylesheet" href="../../../Public/css/Tablas.css"> <!-- RUTA RELATIVA -->
-<!-- Librerías JS -->
+<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
+
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../../../Public/js/javascript/js/Funcionarios.js"></script> <!-- RUTA RELATIVA -->
+<script src="../../../Public/js/javascript/js/Funcionarios.js"></script>

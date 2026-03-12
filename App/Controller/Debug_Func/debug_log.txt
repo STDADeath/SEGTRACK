@@ -6,3 +6,13 @@
 2026-03-07 03:25:19 - Correo enviado correctamente a talajazi@gmail.com
 2026-03-07 03:28:01 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-63-69ab8d31d4b63.png
 2026-03-07 03:28:08 - Correo enviado correctamente a zambrano@gmail.com
+2026-03-11 08:52:17 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-67-69b11f317e878.jpg
+2026-03-11 08:52:17 - Foto guardada para funcionario 67: qr/Fotos/FOTO-FUNC-67-69b11f317e878.jpg
+2026-03-11 08:52:17 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-67-69b11f3181541.png
+2026-03-11 08:52:26 - Correo enviado correctamente a pruebas2026@gmail.com
+2026-03-12 10:43:44 - === enviarQRPorCorreo llamado para ID: 24 ===
+2026-03-12 10:43:44 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor. Ruta: qr/Qr_Func/QR-FUNC-24-69b285f21abfe.png
+2026-03-12 10:46:07 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-24-69b28b5fb51a2.png
+2026-03-12 10:46:17 - Correo enviado correctamente a Pasachoa2002@gmail.com
+2026-03-12 11:49:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-25-69b29a3bad3b2.png
+2026-03-12 11:49:35 - Correo enviado correctamente a Wendy@gmail.com

@@ -53,6 +53,80 @@ try {
             return !isset($campo) || trim($campo) === '';
         }
 
+        // ================= GUARDAR FOTO =================
+        /**
+         * Guarda la foto del funcionario en Public/qr/Fotos/
+         * Acepta:
+         *   1. Archivo subido ($_FILES['FotoFuncionario'])
+         *   2. Base64 capturado con la cámara ($_POST['FotoCapturaBase64'])
+         * Devuelve la ruta relativa "qr/Fotos/FOTO-FUNC-{id}-{uniqid}.jpg" o null
+         */
+        private function guardarFoto(int $idFuncionario): ?string {
+
+            try {
+                $raiz        = realpath(__DIR__ . '/../../');
+                $rutaCarpeta = $raiz . '/Public/qr/Fotos';
+
+                // Crear carpeta si no existe
+                if (!file_exists($rutaCarpeta)) {
+                    mkdir($rutaCarpeta, 0777, true);
+                    chmod($rutaCarpeta, 0777);
+                }
+
+                $nombreArchivo = "FOTO-FUNC-" . $idFuncionario . "-" . uniqid() . ".jpg";
+                $rutaCompleta  = $rutaCarpeta . '/' . $nombreArchivo;
+                $rutaRelativa  = "qr/Fotos/" . $nombreArchivo;
+
+                // ---- CASO 1: Foto subida como archivo ----
+                if (
+                    isset($_FILES['FotoFuncionario']) &&
+                    $_FILES['FotoFuncionario']['error'] === UPLOAD_ERR_OK
+                ) {
+                    $tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                    $tipoMime = mime_content_type($_FILES['FotoFuncionario']['tmp_name']);
+
+                    if (!in_array($tipoMime, $tiposPermitidos)) {
+                        $this->log("Tipo de imagen no permitido: $tipoMime");
+                        return null;
+                    }
+
+                    if (move_uploaded_file($_FILES['FotoFuncionario']['tmp_name'], $rutaCompleta)) {
+                        $this->log("Foto guardada (archivo): $rutaCompleta");
+                        return $rutaRelativa;
+                    } else {
+                        $this->log("Error al mover foto a: $rutaCompleta");
+                        return null;
+                    }
+                }
+
+                // ---- CASO 2: Foto capturada con cámara (base64) ----
+                $base64 = $_POST['FotoCapturaBase64'] ?? '';
+                if (!empty($base64)) {
+                    // Formato: "data:image/jpeg;base64,/9j/4AAQ..."
+                    if (preg_match('/^data:image\/(\w+);base64,/', $base64, $matches)) {
+                        $imageData = substr($base64, strpos($base64, ',') + 1);
+                        $imageData = base64_decode($imageData);
+
+                        if ($imageData === false) {
+                            $this->log("Error al decodificar base64 de cámara");
+                            return null;
+                        }
+
+                        file_put_contents($rutaCompleta, $imageData);
+                        $this->log("Foto guardada (cámara): $rutaCompleta");
+                        return $rutaRelativa;
+                    }
+                }
+
+                // Sin foto
+                return null;
+
+            } catch (Throwable $e) {
+                $this->log("EXCEPCIÓN al guardar foto: " . $e->getMessage());
+                return null;
+            }
+        }
+
         // ================= GENERAR QR =================
         private function generarQR(int $idFuncionario, string $nombre, string $documento): ?string {
 
@@ -95,16 +169,6 @@ try {
         }
 
         // ================= TEMPLATE HTML DEL CORREO =================
-        // Mismo estilo que dispositivos:
-        // - Logo con cid:logo_segtrack (addEmbeddedImage) al lado de "SEGTRACK"
-        // - Header azul degradado
-        // - Info con borde azul izquierdo
-        // - QR embebido en sección azul
-        // - Aviso amarillo + pie de página
-        //
-        // El $qrBase64 se pasa desde enviarCorreoConQR() ya codificado.
-        // El logo NO se pasa aquí — se embebe en el <img src='cid:logo_segtrack'>
-        // y PHPMailer lo adjunta con addEmbeddedImage() en enviarCorreoConQR().
         private function generarHTMLCorreo(
             string $nombre,
             string $cargo,
@@ -114,7 +178,6 @@ try {
             string $asunto
         ): string {
 
-            // QR embebido como base64 dentro del HTML
             $qrImgHtml = $qrBase64
                 ? "<img src='{$qrBase64}' alt='Código QR'
                         style='width:180px; height:180px; display:block; margin:0 auto;
@@ -122,7 +185,6 @@ try {
                                box-shadow:0 4px 15px rgba(0,0,0,0.2);'>"
                 : "<p style='color:#e74c3c; text-align:center; margin:0;'>No se pudo cargar el código QR.</p>";
 
-            // ── Plantilla HTML — el logo usa cid:logo_segtrack igual que dispositivos ──
             return "
 <!DOCTYPE html>
 <html lang='es'>
@@ -133,7 +195,6 @@ try {
 </head>
 <body style='margin:0; padding:0; background-color:#f0f4f8;
              font-family:Arial,Helvetica,sans-serif;'>
-
   <table width='100%' cellpadding='0' cellspacing='0'
          style='background-color:#f0f4f8; padding:30px 0;'>
     <tr>
@@ -142,13 +203,9 @@ try {
                style='background-color:#ffffff; border-radius:12px;
                       overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.12);
                       max-width:600px; width:100%;'>
-
-          <!-- ══ ENCABEZADO: logo (cid) a la izquierda + SEGTRACK a la derecha ══
-               Idéntico al correo de dispositivos                                   -->
           <tr>
             <td style='background:linear-gradient(135deg,#1a5fc8 0%,#2979e0 60%,#3a8ef6 100%);
                         padding:30px 40px 26px 40px; text-align:center;'>
-
               <table cellpadding='0' cellspacing='0' style='margin:0 auto;'>
                 <tr>
                   <td valign='middle' style='padding-right:14px;'>
@@ -165,19 +222,14 @@ try {
                   </td>
                 </tr>
               </table>
-
               <p style='margin:10px 0 0 0; color:rgba(255,255,255,0.88);
                           font-size:13px; letter-spacing:1px; text-align:center;'>
                 Sistema de Gestión de Seguridad
               </p>
             </td>
           </tr>
-
-          <!-- ══ CUERPO ══ -->
           <tr>
             <td style='padding:36px 40px 20px 40px;'>
-
-              <!-- Saludo -->
               <p style='margin:0 0 4px 0; font-size:18px; font-weight:700; color:#1a2d4e;'>
                 Hola, {$nombre}
               </p>
@@ -185,8 +237,6 @@ try {
                 Has sido registrado exitosamente en el sistema SEGTRACK.<br>
                 A continuación encontrarás tu información y tu código QR de acceso personal.
               </p>
-
-              <!-- Info del funcionario: borde azul izquierdo (igual dispositivos) -->
               <table width='100%' cellpadding='0' cellspacing='0'
                      style='border-left:4px solid #2979e0; background-color:#f5f9ff;
                              border-radius:0 8px 8px 0; margin-bottom:26px;
@@ -197,18 +247,10 @@ try {
                                color:#1a5fc8; text-transform:uppercase; letter-spacing:1px;'>
                       📋 Información del Funcionario
                     </p>
-                    <p style='margin:5px 0; font-size:14px; color:#333;'>
-                      <strong>Nombre:</strong> {$nombre}
-                    </p>
-                    <p style='margin:5px 0; font-size:14px; color:#333;'>
-                      <strong>Cargo:</strong> {$cargo}
-                    </p>
-                    <p style='margin:5px 0; font-size:14px; color:#333;'>
-                      <strong>Documento:</strong> {$documento}
-                    </p>
-                    <p style='margin:5px 0; font-size:14px; color:#333;'>
-                      <strong>Correo:</strong> {$correo}
-                    </p>
+                    <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Nombre:</strong> {$nombre}</p>
+                    <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Cargo:</strong> {$cargo}</p>
+                    <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Documento:</strong> {$documento}</p>
+                    <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Correo:</strong> {$correo}</p>
                     <p style='margin:5px 0; font-size:14px; color:#333;'>
                       <strong>Estado:</strong>
                       <span style='background:#e8f5e9; color:#2e7d32; padding:2px 10px;
@@ -221,22 +263,18 @@ try {
               </table>
             </td>
           </tr>
-
         </table>
-
         <p style='margin:18px 0 0 0; font-size:11px; color:#aaa; text-align:center;'>
           Este correo fue generado automáticamente. Por favor no respondas a este mensaje.
         </p>
-
       </td>
     </tr>
   </table>
-
 </body>
 </html>";
         }
 
-        // ================= ENVIAR CORREO CON QR (PRIVADO) =================
+        // ================= ENVIAR CORREO CON QR =================
         private function enviarCorreoConQR(
             string $correo,
             string $nombre,
@@ -248,12 +286,11 @@ try {
 
             try {
                 $mail = new PHPMailer(true);
-
                 $mail->isSMTP();
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
                 $mail->Username   = 'seguridad.integral.segtrack@gmail.com';
-                $mail->Password   = 'lwfc rpts gcog iysv'; // App password Gmail
+                $mail->Password   = 'lwfc rpts gcog iysv';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
                 $mail->CharSet    = 'UTF-8';
@@ -261,13 +298,11 @@ try {
                 $mail->setFrom('seguridad.integral.segtrack@gmail.com', 'SEGTRACK - Administración');
                 $mail->addAddress($correo, $nombre);
 
-                // ── Logo embebido con cid (igual que dispositivos) ──────────
                 $rutaLogo = realpath(__DIR__ . '/../../Public/img/LOGO_SEGTRACK-re-con.ico');
                 if ($rutaLogo && file_exists($rutaLogo)) {
                     $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
                 }
 
-                // ── QR: adjuntar como archivo + embeber como base64 en HTML ─
                 $rutaFisicaQR = realpath(__DIR__ . '/../../Public/' . $rutaQR);
                 $qrBase64     = '';
 
@@ -323,17 +358,20 @@ try {
             if ($resultado['success']) {
 
                 $id = $resultado['id'];
-                $qr = $this->generarQR($id, $nombre, $documento);
 
+                // ---- GUARDAR FOTO ----
+                $rutaFoto = $this->guardarFoto($id);
+                if ($rutaFoto) {
+                    $this->modelo->actualizarFotoFuncionario($id, $rutaFoto);
+                    $this->log("Foto guardada para funcionario $id: $rutaFoto");
+                }
+
+                // ---- GENERAR QR ----
+                $qr = $this->generarQR($id, $nombre, $documento);
                 if ($qr) {
                     $this->modelo->ActualizarQrFuncionario($id, $qr);
-
                     $this->enviarCorreoConQR(
-                        $correo,
-                        $nombre,
-                        $cargo,
-                        $documento,
-                        $qr,
+                        $correo, $nombre, $cargo, $documento, $qr,
                         '¡Bienvenido a SEGTRACK! — Su Código QR de Acceso'
                     );
                 }
@@ -343,7 +381,8 @@ try {
                     'message' => 'Funcionario registrado correctamente y QR enviado por correo',
                     'data'    => [
                         'IdFuncionario'       => $id,
-                        'QrCodigoFuncionario' => $qr
+                        'QrCodigoFuncionario' => $qr,
+                        'FotoFuncionario'     => $rutaFoto
                     ]
                 ];
             }
@@ -376,16 +415,10 @@ try {
                 $correo    = $datos['CorreoFuncionario']    ?? '';
 
                 $qr = $this->generarQR($id, $nombre, $documento);
-
                 if ($qr) {
                     $this->modelo->ActualizarQrFuncionario($id, $qr);
-
                     $this->enviarCorreoConQR(
-                        $correo,
-                        $nombre,
-                        $cargo,
-                        $documento,
-                        $qr,
+                        $correo, $nombre, $cargo, $documento, $qr,
                         'SEGTRACK — Tu Código QR ha sido actualizado'
                     );
                 }
@@ -421,7 +454,6 @@ try {
             }
 
             $funcionario = $this->modelo->obtenerPorId($id);
-
             if (!$funcionario) {
                 return ['success' => false, 'message' => 'Funcionario no encontrado'];
             }
@@ -445,7 +477,6 @@ try {
             }
 
             $this->modelo->ActualizarQrFuncionario($id, $qr);
-
             $this->enviarCorreoConQR(
                 $funcionario['CorreoFuncionario'],
                 $funcionario['NombreFuncionario'],
@@ -462,22 +493,16 @@ try {
             ];
         }
 
-        // ================= ENVIAR QR POR CORREO (ACCIÓN MANUAL) =================
-        // Llamado desde la vista cuando el admin presiona el botón "Enviar QR"
+        // ================= ENVIAR QR POR CORREO =================
         public function enviarQRPorCorreo(int $idFuncionario): array {
 
             $this->log("=== enviarQRPorCorreo llamado para ID: $idFuncionario ===");
 
             try {
-                $sql = "SELECT
-                            f.IdFuncionario,
-                            f.NombreFuncionario,
-                            f.CargoFuncionario,
-                            f.DocumentoFuncionario,
-                            f.CorreoFuncionario,
-                            f.QrCodigoFuncionario
-                        FROM funcionario f
-                        WHERE f.IdFuncionario = :id
+                $sql = "SELECT IdFuncionario, NombreFuncionario, CargoFuncionario,
+                               DocumentoFuncionario, CorreoFuncionario, QrCodigoFuncionario
+                        FROM funcionario
+                        WHERE IdFuncionario = :id
                         LIMIT 1";
 
                 $stmt = $this->conexion->prepare($sql);
@@ -487,8 +512,6 @@ try {
                 if (!$funcionario) {
                     throw new \Exception('Funcionario no encontrado');
                 }
-
-                $this->log("Funcionario encontrado: " . json_encode($funcionario));
 
                 $correoDestinatario = $funcionario['CorreoFuncionario'] ?? null;
                 $nombreDestinatario = $funcionario['NombreFuncionario'] ?? null;
@@ -508,8 +531,6 @@ try {
                     throw new \Exception('El archivo QR no existe en el servidor. Ruta: ' . $rutaQR);
                 }
 
-                $this->log("Preparando envío a: $correoDestinatario");
-
                 $enviado = $this->enviarCorreoConQR(
                     $correoDestinatario,
                     $nombreDestinatario,
@@ -520,7 +541,6 @@ try {
                 );
 
                 if ($enviado) {
-                    $this->log("✓ Correo enviado exitosamente a: $correoDestinatario");
                     return [
                         'success' => true,
                         'message' => "Código QR enviado exitosamente a: {$correoDestinatario}"
@@ -530,17 +550,15 @@ try {
                 }
 
             } catch (\Exception $e) {
-                $error = $e->getMessage();
-                $this->log("ERROR en enviarQRPorCorreo: $error");
-                return ['success' => false, 'message' => $error];
+                $this->log("ERROR en enviarQRPorCorreo: " . $e->getMessage());
+                return ['success' => false, 'message' => $e->getMessage()];
             }
         }
 
-    } // end class
-
+    } 
 
     // =====================================================
-    // =================== EJECUCIÓN =======================
+    // EJECUCIÓN
     // =====================================================
 
     $controlador = new ControladorFuncionario($conexion);
@@ -586,12 +604,8 @@ try {
     echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
 
 } catch (Throwable $e) {
-
     ob_end_clean();
-    echo json_encode([
-        'success' => false,
-        'message' => $e->getMessage()
-    ]);
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
 
 exit;

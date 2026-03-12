@@ -44,7 +44,7 @@
                 <!-- Botones del modal -->
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="../../../Public/index.html">Salir</a>
+                    <a class="btn btn-primary" href="../../../index.html">Salir</a>
                 </div>
 
             </div>
