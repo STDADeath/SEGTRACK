@@ -25,11 +25,9 @@ class ControladorIngresoDispositivo {
     }
 
 
-    // ========================================
-    // REGISTRAR ENTRADA O SALIDA DE DISPOSITIVO
+    // REGISTRAR INGRESO O SALIDA DE DISPOSITIVO
     // Este método recibe un JSON desde JavaScript,
     // valida el QR, busca el dispositivo y registra el movimiento.
-    // ========================================
 
     public function registrarIngreso() {
 
@@ -56,10 +54,10 @@ class ControladorIngresoDispositivo {
         }
 
         // Registrar el movimiento en la tabla ingreso
-        $exito = $this->modelo->registrarIngresoDispositivo(
+        $exito = $this->modelo->registrarIngreso(
             $dispositivo['IdDispositivo'],
             $dispositivo['IdFuncionario'] ?? null,
-            $dispositivo['IdSede'] ?? null,
+            $dispositivo['IdSede']        ?? null,
             $tipoMovimiento
         );
 
@@ -80,15 +78,13 @@ class ControladorIngresoDispositivo {
     }
 
 
-    // ========================================
-    // LISTAR MOVIMIENTOS DE DISPOSITIVOS
-    // Obtiene todos los registros desde el modelo.
+    // LISTAR INGRESOS DE DISPOSITIVOS
+    // Obtiene todos los movimientos desde el modelo.
     // Este método responde cuando el navegador hace GET al controlador
-    // ========================================
 
     public function listarIngresos() {
 
-        $lista = $this->modelo->listarIngresosDispositivos();
+        $lista = $this->modelo->listarIngresos();
 
         echo json_encode([
             "data" => $lista
@@ -98,11 +94,9 @@ class ControladorIngresoDispositivo {
     }
 
 
-    // ========================================
     // FUNCIÓN DE RESPUESTA GLOBAL
     // Formatea todas las respuestas del controlador en JSON
     // para mantener un estándar único.
-    // ========================================
 
     private function responder($success, $message, $data = null) {
 
@@ -112,6 +106,7 @@ class ControladorIngresoDispositivo {
             'data'    => $data
         ], JSON_UNESCAPED_UNICODE);
 
+        // Se evita que siga corriendo código después de responder
         exit;
     }
 }
