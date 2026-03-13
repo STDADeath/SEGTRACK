@@ -8,6 +8,7 @@ const App = {
     btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
+    infoVehiculo: null,
     config: {
         urlControlador: "/SEGTRACK/App/Controller/ControladorIngresoParqueadero.php",
         fps: 10,
@@ -30,6 +31,27 @@ function mostrarMensaje(esExito, texto) {
     }, 5000);
 }
 
+/**
+ * Muestra la tarjeta de información del vehículo escaneado
+ */
+function mostrarInfoVehiculo(data) {
+    if (!App.infoVehiculo || !data) return;
+
+    document.getElementById("infoDueno").textContent   = data.dueno        || "No registrado";
+    document.getElementById("infoPlaca").textContent   = data.placa        || "—";
+    document.getElementById("infoTipo").textContent    = data.tipo         || "—";
+    document.getElementById("infoEspacio").textContent = data.numeroEspacio || "Sin asignar";
+
+    App.infoVehiculo.classList.remove("d-none");
+}
+
+/**
+ * Oculta la tarjeta de información del vehículo
+ */
+function ocultarInfoVehiculo() {
+    if (App.infoVehiculo) App.infoVehiculo.classList.add("d-none");
+}
+
 async function enviarQr(qr, tipo) {
     if (App.btnCapturar) App.btnCapturar.disabled = true;
 
@@ -43,12 +65,20 @@ async function enviarQr(qr, tipo) {
         const data = await res.json();
         mostrarMensaje(data.success, data.message);
 
-        if (data.success && App.table) {
-            App.table.ajax.reload(null, false);
+        if (data.success) {
+            // Mostrar info del vehículo en la tarjeta
+            mostrarInfoVehiculo(data.data);
+
+            // Recargar tabla
+            if (App.table) App.table.ajax.reload(null, false);
+
+        } else {
+            ocultarInfoVehiculo();
         }
 
     } catch (e) {
         mostrarMensaje(false, "Error de conexión.");
+        ocultarInfoVehiculo();
     } finally {
         if (App.btnCapturar) App.btnCapturar.disabled = false;
     }
@@ -111,11 +141,12 @@ async function descargarPDF() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    App.tipoMovimiento = document.getElementById("tipoMovimiento");
-    App.btnCapturar = document.getElementById("btnCapturar");
-    App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
-    App.mensajeExito = document.getElementById("mensajeExito");
-    App.mensajeError = document.getElementById("mensajeError");
+    App.tipoMovimiento   = document.getElementById("tipoMovimiento");
+    App.btnCapturar      = document.getElementById("btnCapturar");
+    App.btnDescargarPDF  = document.getElementById("btnDescargarPDF");
+    App.mensajeExito     = document.getElementById("mensajeExito");
+    App.mensajeError     = document.getElementById("mensajeError");
+    App.infoVehiculo     = document.getElementById("infoVehiculo");
 
     App.table = $("#tablaParqueaderoDT").DataTable({
         ajax: {
@@ -124,19 +155,21 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         columns: [
             { data: "QrVehiculo" },
+            { data: "DuenoVehiculo",  defaultContent: "No registrado" },
             { data: "PlacaVehiculo" },
             { data: "TipoVehiculo" },
             { data: "DescripcionVehiculo" },
+            { data: "NumeroEspacio", defaultContent: "Sin asignar" },
             { data: "TipoMovimiento" },
             {
                 data: "FechaIngreso",
                 render: d => new Date(d).toLocaleString("es-ES")
             }
         ],
-        order: [[5, "desc"]],
+        order: [[7, "desc"]],
         language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" }
     });
 
-    if (App.btnCapturar) App.btnCapturar.addEventListener("click", iniciarCamara);
+    if (App.btnCapturar)     App.btnCapturar.addEventListener("click", iniciarCamara);
     if (App.btnDescargarPDF) App.btnDescargarPDF.addEventListener("click", descargarPDF);
 });

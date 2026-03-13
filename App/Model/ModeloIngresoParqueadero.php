@@ -11,6 +11,7 @@ class ModeloParqueadero {
 
     /**
      * Buscar vehículo por su QR (formato: "ID: X")
+     * Retorna también el espacio asignado al vehículo
      */
     public function buscarVehiculoPorQr($qrCodigo) {
 
@@ -20,7 +21,23 @@ class ModeloParqueadero {
             return false;
         }
 
-        $sql = "SELECT * FROM parqueadero WHERE IdParqueadero = ?";
+        // JOIN con espacio para obtener el número de espacio asignado al vehículo
+        $sql = "SELECT 
+                    v.IdVehiculo,
+                    v.TipoVehiculo,
+                    v.PlacaVehiculo,
+                    v.DescripcionVehiculo,
+                    v.TarjetaPropiedad AS DuenoVehiculo,
+                    v.QrVehiculo,
+                    v.IdSede,
+                    e.IdEspacio,
+                    e.NumeroEspacio,
+                    e.Estado AS EstadoEspacio
+                FROM vehiculo v
+                LEFT JOIN espacio e ON e.IdVehiculo = v.IdVehiculo
+                WHERE v.IdVehiculo = ?
+                LIMIT 1";
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
 
@@ -30,24 +47,38 @@ class ModeloParqueadero {
     /**
      * Registrar entrada o salida en la tabla ingreso
      */
-    public function registrarIngreso($idParqueadero, $idSede, $tipoMovimiento = 'Entrada') {
+    public function registrarIngreso($idVehiculo, $idSede, $tipoMovimiento = 'Entrada') {
 
-        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdParqueadero)
+        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdVehiculo)
                 VALUES (?, NOW(), ?, ?)";
 
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$tipoMovimiento, $idSede, $idParqueadero]);
+        return $stmt->execute([$tipoMovimiento, $idSede, $idVehiculo]);
     }
 
     /**
-     * Lista los ingresos de vehículos
+     * Lista los ingresos de vehículos con dueño, placa, tipo y número de espacio
      */
     public function listarIngresos() {
 
-        $sql = "SELECT i.IdIngreso, i.TipoMovimiento, i.FechaIngreso,
-                p.PlacaVehiculo, p.TipoVehiculo, p.QrVehiculo, p.DescripcionVehiculo
+        // AJUSTA los nombres de tabla si difieren en tu BD:
+        // - Tabla de vehículos: "vehiculo"  (columnas: IdVehiculo, PlacaVehiculo, TipoVehiculo, TarjetaPropiedad, QrVehiculo, DescripcionVehiculo, IdSede)
+        // - Tabla de espacios:  "espacio"   (columnas: IdEspacio, NumeroEspacio, TipoVehiculo, Estado, IdParqueadero, IdVehiculo)
+        // - Tabla de ingresos:  "ingreso"   (columnas: IdIngreso, TipoMovimiento, FechaIngreso, IdSede, IdVehiculo)
+
+        $sql = "SELECT 
+                    i.IdIngreso,
+                    i.TipoMovimiento,
+                    i.FechaIngreso,
+                    v.QrVehiculo,
+                    v.PlacaVehiculo,
+                    v.TipoVehiculo,
+                    v.DescripcionVehiculo,
+                    v.TarjetaPropiedad   AS DuenoVehiculo,
+                    e.NumeroEspacio
                 FROM ingreso i
-                INNER JOIN parqueadero p ON i.IdParqueadero = p.IdParqueadero
+                INNER JOIN vehiculo v ON i.IdVehiculo = v.IdVehiculo
+                LEFT  JOIN espacio  e ON e.IdVehiculo = v.IdVehiculo
                 ORDER BY i.IdIngreso DESC";
 
         $stmt = $this->pdo->prepare($sql);
