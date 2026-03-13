@@ -9,6 +9,7 @@ require_once __DIR__ . "/../Core/conexion.php";
 require_once __DIR__ . "/../Model/ModeloIngresoDispositivo.php";
 
 class ControladorDispositivo {
+
     private $modelo;
 
     public function __construct() {
@@ -17,62 +18,57 @@ class ControladorDispositivo {
 
     /**
      * REGISTRAR INGRESO O SALIDA DE DISPOSITIVO
-     * EXACTAMENTE IGUAL QUE FUNCIONARIOS
      */
     public function registrarIngreso() {
-        // Obtenemos el cuerpo del POST (JSON enviado desde fetch)
+
         $input = json_decode(file_get_contents('php://input'), true);
 
-        // QR enviado por la vista
         $qrCodigo = $input['qr_codigo'] ?? null;
-
-        // Tipo de movimiento enviado ("Entrada" o "Salida")
         $tipoMovimiento = $input['tipoMovimiento'] ?? 'Entrada';
 
-        // Si no llegó ningún QR → error inmediato
         if (!$qrCodigo) {
             return $this->responder(false, 'Código QR no recibido');
         }
 
-        // Se consulta si el QR pertenece a un dispositivo
         $dispositivo = $this->modelo->buscarDispositivoPorQr($qrCodigo);
 
-        // Si no coincide con ningún dispositivo → no se registra nada
         if (!$dispositivo) {
             return $this->responder(false, 'Dispositivo no encontrado');
         }
 
         /**
-         * Registrar el movimiento en la tabla ingreso
-         * USANDO LOS DATOS DEL DISPOSITIVO (igual que funcionario usa sus datos)
+         * Registrar movimiento
          */
         $exito = $this->modelo->registrarIngreso(
             $dispositivo['IdDispositivo'],
-            $dispositivo['IdSede'] ?? null,
-            $dispositivo['IdParqueadero'] ?? null,
+            1,          // IdSede fijo si tu sistema lo usa
+            null,       // Parqueadero opcional
             $tipoMovimiento
         );
 
-        // Error al insertar en BD
         if (!$exito) {
             return $this->responder(false, 'No se pudo registrar el movimiento');
         }
 
-        // Respuesta exitosa para la vista
         return $this->responder(true, "$tipoMovimiento registrada correctamente", [
-            'qr' => $dispositivo['QrDispositivo'],
-            'tipo' => $dispositivo['TipoDispositivo'],
-            'marca' => $dispositivo['MarcaDispositivo'],
-            'fecha' => date('Y-m-d H:i:s'),
-            'movimiento' => $tipoMovimiento
+
+            "IdDispositivo" => $dispositivo['IdDispositivo'],
+            "QrDispositivo" => $dispositivo['QrDispositivo'],
+            "TipoDispositivo" => $dispositivo['TipoDispositivo'],
+            "MarcaDispositivo" => $dispositivo['MarcaDispositivo'],
+            "NumeroSerial" => $dispositivo['NumeroSerial'],
+            "Estado" => $dispositivo['Estado'],
+            "FechaIngreso" => date('Y-m-d H:i:s'),
+            "TipoMovimiento" => $tipoMovimiento
+
         ]);
     }
 
     /**
-     * LISTAR INGRESOS DE DISPOSITIVOS
-     * IGUAL QUE FUNCIONARIOS
+     * LISTAR INGRESOS
      */
     public function listarIngresos() {
+
         $lista = $this->modelo->listarIngresos();
 
         echo json_encode([
@@ -83,28 +79,32 @@ class ControladorDispositivo {
     }
 
     /**
-     * FUNCION DE RESPUESTA GLOBAL
-     * IGUAL QUE FUNCIONARIOS
+     * RESPUESTA GLOBAL
      */
     private function responder($success, $message, $data = null) {
+
         echo json_encode([
-            'success' => $success,
-            'message' => $message,
-            'data'    => $data
+            "success" => $success,
+            "message" => $message,
+            "data" => $data
         ], JSON_UNESCAPED_UNICODE);
 
         exit;
     }
 }
 
-// ----- RUTEO BÁSICO -----
-// POST → Registrar entrada o salida
-// GET  → Listar ingresos
+/**
+ * RUTEO
+ */
+
 $controlador = new ControladorDispositivo();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $controlador->registrarIngreso();
+
 } else {
+
     $controlador->listarIngresos();
 }
 
