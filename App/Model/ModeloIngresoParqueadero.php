@@ -1,84 +1,97 @@
 <?php
 
-class ModeloParqueadero {
+class ModeloIngresoParqueadero {
     private $pdo;
 
     public function __construct() {
         require_once __DIR__ . '/../Core/conexion.php';
         $conexionObj = new Conexion();
-        $this->pdo = $conexionObj->getConexion();
+        $this->pdo   = $conexionObj->getConexion();
+
+        if (!$this->pdo) {
+            die("ERROR: La conexión no se inicializó correctamente.");
+        }
     }
 
-    /**
-     * Buscar vehículo por su QR (formato: "ID: X")
-     * Retorna también el espacio asignado al vehículo
-     */
+    // Busca un vehículo usando el contenido del código QR.
+    // El QR trae un formato como:
+    //   VEHÍCULO
+    //   Placa: ABC123
+    //   Tipo: Carro
+    //   Descripción: Toyota Corolla
+    //   Fecha: 2024-01-15 10:30:00
+
     public function buscarVehiculoPorQr($qrCodigo) {
 
-        if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $match)) {
-            $id = $match[1];
+        if (preg_match('/Placa:\s*(.+)/i', $qrCodigo, $match)) {
+            $placa = strtoupper(trim($match[1]));
         } else {
             return false;
         }
 
-        // JOIN con espacio para obtener el número de espacio asignado al vehículo
-        $sql = "SELECT 
-                    v.IdVehiculo,
-                    v.TipoVehiculo,
-                    v.PlacaVehiculo,
-                    v.DescripcionVehiculo,
-                    v.TarjetaPropiedad AS DuenoVehiculo,
-                    v.QrVehiculo,
-                    v.IdSede,
-                    e.IdEspacio,
-                    e.NumeroEspacio,
-                    e.Estado AS EstadoEspacio
+        $sql = "SELECT
+                    v.*,
+                    COALESCE(f.NombreFuncionario, vis.NombreVisitante, v.TarjetaPropiedad) AS DuenoVehiculo,
+                    f.IdFuncionario AS IdFuncionarioReal,
+                    p.IdParqueadero,
+                    ep.NumeroEspacio
                 FROM vehiculo v
-                LEFT JOIN espacio e ON e.IdVehiculo = v.IdVehiculo
-                WHERE v.IdVehiculo = ?
+                LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
+                LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                LEFT JOIN parqueadero p   ON p.IdSede = v.IdSede AND p.Estado = 'Activo'
+                LEFT JOIN espacio_parqueadero ep
+                       ON ep.IdVehiculo = v.IdVehiculo AND ep.Estado = 'Ocupado'
+                WHERE v.PlacaVehiculo = ?
+                  AND v.Estado = 'Activo'
                 LIMIT 1";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$id]);
+        $stmt->execute([$placa]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Registrar entrada o salida en la tabla ingreso
-     */
-    public function registrarIngreso($idVehiculo, $idSede, $tipoMovimiento = 'Entrada') {
+    // Registra un ingreso o salida del vehículo en la base de datos
+    // Retorna true si se insertó correctamente, false en caso contrario
 
-        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdVehiculo)
-                VALUES (?, NOW(), ?, ?)";
+    public function registrarIngreso($idVehiculo, $idFuncionario = null, $idSede = null, $idParqueadero = null, $tipoMovimiento = 'Entrada') {
+
+        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, Estado, IdSede, IdVehiculo, IdParqueadero, IdFuncionario)
+                VALUES (?, NOW(), 'Activo', ?, ?, ?, ?)";
 
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$tipoMovimiento, $idSede, $idVehiculo]);
+
+        return $stmt->execute([
+            $tipoMovimiento,
+            $idSede,
+            $idVehiculo,
+            $idParqueadero,
+            $idFuncionario
+        ]);
     }
 
-    /**
-     * Lista los ingresos de vehículos con dueño, placa, tipo y número de espacio
-     */
+    // Lista todos los movimientos de vehículos registrados.
+    // Se utiliza JOIN para unir ingreso con vehiculo, funcionario/visitante y espacio.
+
     public function listarIngresos() {
 
-        // AJUSTA los nombres de tabla si difieren en tu BD:
-        // - Tabla de vehículos: "vehiculo"  (columnas: IdVehiculo, PlacaVehiculo, TipoVehiculo, TarjetaPropiedad, QrVehiculo, DescripcionVehiculo, IdSede)
-        // - Tabla de espacios:  "espacio"   (columnas: IdEspacio, NumeroEspacio, TipoVehiculo, Estado, IdParqueadero, IdVehiculo)
-        // - Tabla de ingresos:  "ingreso"   (columnas: IdIngreso, TipoMovimiento, FechaIngreso, IdSede, IdVehiculo)
-
-        $sql = "SELECT 
+        $sql = "SELECT
                     i.IdIngreso,
-                    i.TipoMovimiento,
-                    i.FechaIngreso,
                     v.QrVehiculo,
                     v.PlacaVehiculo,
                     v.TipoVehiculo,
                     v.DescripcionVehiculo,
-                    v.TarjetaPropiedad   AS DuenoVehiculo,
-                    e.NumeroEspacio
+                    COALESCE(f.NombreFuncionario, vis.NombreVisitante, v.TarjetaPropiedad) AS DuenoVehiculo,
+                    ep.NumeroEspacio,
+                    i.TipoMovimiento,
+                    i.FechaIngreso
                 FROM ingreso i
-                INNER JOIN vehiculo v ON i.IdVehiculo = v.IdVehiculo
-                LEFT  JOIN espacio  e ON e.IdVehiculo = v.IdVehiculo
+                INNER JOIN vehiculo v   ON i.IdVehiculo    = v.IdVehiculo
+                LEFT  JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
+                LEFT  JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                LEFT  JOIN espacio_parqueadero ep
+                        ON ep.IdVehiculo = v.IdVehiculo AND ep.Estado = 'Ocupado'
+                WHERE i.IdVehiculo IS NOT NULL
                 ORDER BY i.IdIngreso DESC";
 
         $stmt = $this->pdo->prepare($sql);
@@ -87,5 +100,4 @@ class ModeloParqueadero {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-
 ?>
