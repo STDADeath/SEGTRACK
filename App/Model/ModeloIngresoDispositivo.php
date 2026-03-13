@@ -1,15 +1,18 @@
 <?php
 
 class ModeloDispositivo {
+
     private $pdo;
 
     public function __construct() {
+
         require_once __DIR__ . '/../Core/conexion.php';
+
         $conexionObj = new Conexion();
         $this->pdo = $conexionObj->getConexion();
 
         if (!$this->pdo) {
-            die("ERROR: La conexión no se inicializó correctamente.");
+            die("ERROR: No se pudo establecer la conexión con la base de datos.");
         }
     }
 
@@ -18,84 +21,105 @@ class ModeloDispositivo {
      */
     public function buscarDispositivoPorQr($qrCodigo) {
 
-        if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $match)) {
-            $id = $match[1];
-        } else {
+        try {
+
+            $qrCodigo = trim($qrCodigo);
+
+            $sql = "SELECT 
+                        IdDispositivo,
+                        QrDispositivo,
+                        TipoDispositivo,
+                        MarcaDispositivo,
+                        NumeroSerial,
+                        Estado,
+                        IdFuncionario,
+                        IdVisitante
+                    FROM dispositivo
+                    WHERE TRIM(QrDispositivo) = TRIM(?)";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$qrCodigo]);
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+
+            error_log("Error buscarDispositivoPorQr: " . $e->getMessage());
             return false;
         }
-
-        $sql = "SELECT 
-                    IdDispositivo,
-                    QrDispositivo,
-                    TipoDispositivo,
-                    MarcaDispositivo,
-                    NumeroSerial,
-                    Estado,
-                    IdFuncionario,
-                    IdVisitante
-                FROM dispositivo
-                WHERE IdDispositivo = ?";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$id]);
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
-     * Registrar ingreso o salida
+     * Registrar ingreso o salida del dispositivo
      */
     public function registrarIngreso($idDispositivo, $idSede, $idParqueadero = null, $tipoMovimiento = 'Entrada') {
 
-        $sql = "INSERT INTO ingreso 
-                (TipoMovimiento, FechaIngreso, IdSede, IdParqueadero, IdDispositivo)
-                VALUES (?, NOW(), ?, ?, ?)";
+        try {
 
-        $stmt = $this->pdo->prepare($sql);
+            $sql = "INSERT INTO ingreso 
+                    (TipoMovimiento, FechaIngreso, IdSede, IdParqueadero, IdDispositivo)
+                    VALUES (?, NOW(), ?, ?, ?)";
 
-        return $stmt->execute([
-            $tipoMovimiento,
-            $idSede,
-            $idParqueadero,
-            $idDispositivo
-        ]);
+            $stmt = $this->pdo->prepare($sql);
+
+            return $stmt->execute([
+                $tipoMovimiento,
+                $idSede,
+                $idParqueadero,
+                $idDispositivo
+            ]);
+
+        } catch (PDOException $e) {
+
+            error_log("Error registrarIngreso: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
-     * Listar ingresos con datos del dispositivo
-     * + funcionario dueño
+     * Listar ingresos de dispositivos
+     * Incluye datos del dispositivo y funcionario dueño
      */
     public function listarIngresos() {
 
-        $sql = "SELECT 
-                    i.IdIngreso,
-                    i.TipoMovimiento,
-                    i.FechaIngreso,
+        try {
 
-                    d.IdDispositivo,
-                    d.QrDispositivo,
-                    d.TipoDispositivo,
-                    d.MarcaDispositivo,
-                    d.NumeroSerial,
-                    d.Estado,
+            $sql = "SELECT 
+                        i.IdIngreso,
+                        i.TipoMovimiento,
+                        i.FechaIngreso,
 
-                    f.NombreFuncionario,
-                    f.CargoFuncionario
+                        d.IdDispositivo,
+                        d.QrDispositivo,
+                        d.TipoDispositivo,
+                        d.MarcaDispositivo,
+                        d.NumeroSerial,
+                        d.Estado,
 
-                FROM ingreso i
+                        f.NombreFuncionario,
+                        f.CargoFuncionario
 
-                INNER JOIN dispositivo d
-                    ON i.IdDispositivo = d.IdDispositivo
+                    FROM ingreso i
 
-                LEFT JOIN funcionario f
-                    ON d.IdFuncionario = f.IdFuncionario
+                    INNER JOIN dispositivo d
+                        ON i.IdDispositivo = d.IdDispositivo
 
-                ORDER BY i.IdIngreso DESC";
+                    LEFT JOIN funcionario f
+                        ON d.IdFuncionario = f.IdFuncionario
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+                    ORDER BY i.IdIngreso DESC";
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+
+            error_log("Error listarIngresos: " . $e->getMessage());
+            return [];
+        }
     }
+
 }
 ?>
