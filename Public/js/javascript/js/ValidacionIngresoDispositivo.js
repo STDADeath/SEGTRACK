@@ -1,5 +1,7 @@
 // ========================================
 // CONTROL DE DISPOSITIVOS - SISTEMA SEGTRACK
+// Lectura continua de QR
+// Compatible con DroidCam, webcam y móvil
 // ========================================
 
 const App = {
@@ -9,9 +11,9 @@ const App = {
     escaneando: false,
     tipoMovimiento: null,
     btnCapturar: null,
-    btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
+
     config: {
         urlControlador: "/SEGTRACK/App/Controller/ControladorIngresoDispositivo.php",
         fps: 10,
@@ -20,7 +22,10 @@ const App = {
     }
 };
 
-// ================= MENSAJES =================
+
+// ========================================
+// MENSAJES EN PANTALLA
+// ========================================
 
 function mostrarMensaje(esExito, texto) {
 
@@ -37,9 +42,13 @@ function mostrarMensaje(esExito, texto) {
         mensajeExito.classList.add("d-none");
         mensajeError.classList.add("d-none");
     }, 5000);
+
 }
 
-// ================= ENVÍO QR =================
+
+// ========================================
+// ENVIAR QR AL SERVIDOR
+// ========================================
 
 async function enviarQr(qr, tipo) {
 
@@ -49,7 +58,9 @@ async function enviarQr(qr, tipo) {
 
         const res = await fetch(App.config.urlControlador, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
                 qr_codigo: qr,
                 tipoMovimiento: tipo
@@ -66,16 +77,21 @@ async function enviarQr(qr, tipo) {
 
     } catch (e) {
 
-        mostrarMensaje(false, "Error de conexión con el servidor.");
+        console.error(e);
+        mostrarMensaje(false, "Error de conexión.");
 
     } finally {
 
         if (App.btnCapturar) App.btnCapturar.disabled = false;
 
     }
+
 }
 
-// ================= LECTURA QR =================
+
+// ========================================
+// CUANDO SE DETECTA UN QR
+// ========================================
 
 function onScanQR(qr) {
 
@@ -96,9 +112,14 @@ function onScanQR(qr) {
         }, App.config.bloqueoQRms);
 
     });
+
 }
 
-// ================= CÁMARA =================
+
+// ========================================
+// INICIAR CÁMARA
+// Compatible con DroidCam y cualquier webcam
+// ========================================
 
 async function iniciarCamara() {
 
@@ -108,66 +129,74 @@ async function iniciarCamara() {
 
     try {
 
-        await App.qrReader.start(
-            { facingMode: "environment" },
-            { fps: App.config.fps, qrbox: App.config.qrboxSize },
-            onScanQR
+        const devices = await Html5Qrcode.getCameras();
+
+        if (!devices || devices.length === 0) {
+            mostrarMensaje(false, "No se detectaron cámaras.");
+            return;
+        }
+
+        console.log("Cámaras detectadas:", devices);
+
+        let cameraId = null;
+
+        // Buscar DroidCam primero
+        const droidcam = devices.find(device =>
+            device.label.toLowerCase().includes("droid")
         );
 
-    } catch (e) {
+        if (droidcam) {
 
-        console.error("Error al iniciar cámara:", e);
+            cameraId = droidcam.id;
+            console.log("Usando DroidCam:", droidcam.label);
+
+        } else {
+
+            cameraId = devices[0].id;
+            console.log("Usando cámara:", devices[0].label);
+
+        }
+
+        await App.qrReader.start(
+            cameraId,
+            {
+                fps: App.config.fps,
+                qrbox: {
+                    width: App.config.qrboxSize,
+                    height: App.config.qrboxSize
+                }
+            },
+            onScanQR,
+            error => {
+                // Errores normales de lectura (ignorar)
+            }
+        );
+
+    } catch (error) {
+
+        console.error("Error iniciando cámara:", error);
         mostrarMensaje(false, "No se pudo iniciar la cámara.");
 
     }
+
 }
 
-// ================= DESCARGAR PDF =================
 
-async function descargarPDF() {
-
-    try {
-
-        const res = await fetch('/SEGTRACK/App/Controller/DispositivoIngresoPDF.php?accion=pdf');
-
-        if (!res.ok) throw new Error('Error al generar PDF');
-
-        const blob = await res.blob();
-
-        const url = window.URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-
-        a.href = url;
-        a.download = `Dispositivos_${new Date().toISOString().slice(0,10)}.pdf`;
-
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        window.URL.revokeObjectURL(url);
-
-        mostrarMensaje(true, "PDF descargado correctamente.");
-
-    } catch (e) {
-
-        console.error(e);
-        mostrarMensaje(false, "No se pudo descargar el PDF.");
-
-    }
-}
-
-// ================= INICIO =================
+// ========================================
+// INICIALIZACIÓN
+// ========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
     App.tipoMovimiento = document.getElementById("tipoMovimiento");
-    App.btnCapturar = document.getElementById("btnCapturar");
-    App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
-    App.mensajeExito = document.getElementById("mensajeExito");
-    App.mensajeError = document.getElementById("mensajeError");
+    App.btnCapturar    = document.getElementById("btnCapturar");
+    App.mensajeExito   = document.getElementById("mensajeExito");
+    App.mensajeError   = document.getElementById("mensajeError");
 
-    // ================= TABLA =================
+
+    // ========================================
+    // TABLA DE MOVIMIENTOS DE DISPOSITIVOS
+    // ========================================
 
     App.table = $("#tablaDispositivosDT").DataTable({
 
@@ -179,33 +208,31 @@ document.addEventListener("DOMContentLoaded", () => {
         },
 
         columns: [
-
-            { data: "QrDispositivo" },
-            { data: "TipoDispositivo" },
+            { data: "TipoDispositivo"  },
             { data: "MarcaDispositivo" },
-            { data: "NumeroSerial" },
-            { data: "NombreFuncionario" },
-            { data: "TipoMovimiento" },
-
+            { data: "NumeroSerial"     },
+            { data: "NombreFuncionario"},
+            { data: "TipoMovimiento"   },
             {
                 data: "FechaIngreso",
-                render: d => new Date(d).toLocaleString('es-CO')
+                render: d => new Date(d).toLocaleString('es-ES')
             }
-
         ],
 
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
         },
 
-        order: [[6, 'desc']]
+        order: [[5, 'desc']]
 
     });
 
+
+    // ========================================
+    // EVENTOS
+    // ========================================
+
     if (App.btnCapturar)
         App.btnCapturar.addEventListener("click", iniciarCamara);
-
-    if (App.btnDescargarPDF)
-        App.btnDescargarPDF.addEventListener("click", descargarPDF);
 
 });

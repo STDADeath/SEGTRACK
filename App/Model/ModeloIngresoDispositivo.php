@@ -1,125 +1,99 @@
 <?php
 
-class ModeloDispositivo {
+class ModeloIngresoDispositivo {
 
-    private $pdo;
+    private $pdo; // Almacena la conexión a la base de datos
 
+    // Constructor: se ejecuta automáticamente al crear el objeto del modelo
     public function __construct() {
-
         require_once __DIR__ . '/../Core/conexion.php';
 
         $conexionObj = new Conexion();
         $this->pdo = $conexionObj->getConexion();
 
         if (!$this->pdo) {
-            die("ERROR: No se pudo establecer la conexión con la base de datos.");
+            die("ERROR: La conexión no se inicializó correctamente.");
         }
     }
 
-    /**
-     * Buscar dispositivo por QR
-     */
+
+    // ========================================
+    // BUSCAR DISPOSITIVO POR QR
+    // El QR debe tener formato: "DISP: 12"
+    // ========================================
+
     public function buscarDispositivoPorQr($qrCodigo) {
 
-        try {
-
-            $qrCodigo = trim($qrCodigo);
-
-            $sql = "SELECT 
-                        IdDispositivo,
-                        QrDispositivo,
-                        TipoDispositivo,
-                        MarcaDispositivo,
-                        NumeroSerial,
-                        Estado,
-                        IdFuncionario,
-                        IdVisitante
-                    FROM dispositivo
-                    WHERE TRIM(QrDispositivo) = TRIM(?)";
-
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$qrCodigo]);
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-
-            error_log("Error buscarDispositivoPorQr: " . $e->getMessage());
+        // Expresión regular que extrae el número después de "DISP:"
+        if (preg_match('/DISP:\s*(\d+)/i', $qrCodigo, $match)) {
+            $id = $match[1]; // Se obtiene el IdDispositivo
+        } else {
+            // Si el QR no tiene el formato correcto, se retorna false
             return false;
         }
+
+        // Busca el dispositivo activo con su funcionario asignado (si tiene)
+        $sql = "SELECT d.*,
+                       COALESCE(f.NombreFuncionario, 'Sin asignar') AS NombreFuncionario,
+                       COALESCE(f.CargoFuncionario,  'Sin asignar') AS CargoFuncionario,
+                       f.IdSede
+                FROM dispositivo d
+                LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
+                WHERE d.IdDispositivo = ?
+                  AND d.Estado = 'Activo'";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$id]);
+
+        // Retorna un arreglo asociativo con los datos, o false si no existe
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Registrar ingreso o salida del dispositivo
-     */
-    public function registrarIngreso($idDispositivo, $idSede, $idParqueadero = null, $tipoMovimiento = 'Entrada') {
 
-        try {
+    // ========================================
+    // REGISTRAR MOVIMIENTO EN LA TABLA ingreso
+    // Usa el campo IdDispositivo que ya existe en ingreso
+    // ========================================
 
-            $sql = "INSERT INTO ingreso 
-                    (TipoMovimiento, FechaIngreso, IdSede, IdParqueadero, IdDispositivo)
-                    VALUES (?, NOW(), ?, ?, ?)";
+    public function registrarIngresoDispositivo($idDispositivo, $idSede = null, $tipoMovimiento = 'Entrada') {
 
-            $stmt = $this->pdo->prepare($sql);
+        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdDispositivo)
+                VALUES (?, NOW(), ?, ?)";
 
-            return $stmt->execute([
-                $tipoMovimiento,
-                $idSede,
-                $idParqueadero,
-                $idDispositivo
-            ]);
+        $stmt = $this->pdo->prepare($sql);
 
-        } catch (PDOException $e) {
-
-            error_log("Error registrarIngreso: " . $e->getMessage());
-            return false;
-        }
+        // Se ejecuta con los parámetros enviados
+        return $stmt->execute([$tipoMovimiento, $idSede, $idDispositivo]);
     }
 
-    /**
-     * Listar ingresos de dispositivos
-     * Incluye datos del dispositivo y funcionario dueño
-     */
-    public function listarIngresos() {
 
-        try {
+    // ========================================
+    // LISTAR MOVIMIENTOS DE DISPOSITIVOS
+    // Filtra los registros de ingreso donde IdDispositivo no es NULL
+    // ========================================
 
-            $sql = "SELECT 
-                        i.IdIngreso,
-                        i.TipoMovimiento,
-                        i.FechaIngreso,
+    public function listarIngresosDispositivos() {
 
-                        d.IdDispositivo,
-                        d.QrDispositivo,
-                        d.TipoDispositivo,
-                        d.MarcaDispositivo,
-                        d.NumeroSerial,
-                        d.Estado,
+        $sql = "SELECT
+                    i.IdIngreso,
+                    d.TipoDispositivo,
+                    d.MarcaDispositivo,
+                    d.NumeroSerial,
+                    COALESCE(f.NombreFuncionario, 'Sin asignar') AS NombreFuncionario,
+                    i.TipoMovimiento,
+                    i.FechaIngreso
+                FROM ingreso i
+                INNER JOIN dispositivo d  ON i.IdDispositivo  = d.IdDispositivo
+                LEFT  JOIN funcionario f  ON d.IdFuncionario  = f.IdFuncionario
+                WHERE i.IdDispositivo IS NOT NULL
+                ORDER BY i.IdIngreso DESC"; // Del más reciente al más antiguo
 
-                        f.NombreFuncionario,
-                        f.CargoFuncionario
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
 
-                    FROM ingreso i
-
-                    INNER JOIN dispositivo d
-                        ON i.IdDispositivo = d.IdDispositivo
-
-                    LEFT JOIN funcionario f
-                        ON d.IdFuncionario = f.IdFuncionario
-
-                    ORDER BY i.IdIngreso DESC";
-
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-
-            error_log("Error listarIngresos: " . $e->getMessage());
-            return [];
-        }
+        // Retorna un arreglo con todos los registros
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }
+
 ?>
