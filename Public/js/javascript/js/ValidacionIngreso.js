@@ -1,5 +1,5 @@
 // ========================================
-// CONTROL DE INGRESOS - SISTEMA SEGTRACK
+// CONTROL DE DISPOSITIVOS - SISTEMA SEGTRACK
 // Lectura continua de QR
 // Compatible con DroidCam, webcam y móvil
 // ========================================
@@ -11,12 +11,11 @@ const App = {
     escaneando: false,
     tipoMovimiento: null,
     btnCapturar: null,
-    btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
 
     config: {
-        urlControlador: "/SEGTRACK/App/Controller/ControladorIngreso.php",
+        urlControlador: "/SEGTRACK/App/Controller/ControladorIngresoDispositivo.php",
         fps: 10,
         qrboxSize: 250,
         bloqueoQRms: 1500
@@ -141,7 +140,7 @@ async function iniciarCamara() {
 
         let cameraId = null;
 
-        // Buscar DroidCam
+        // Buscar DroidCam primero
         const droidcam = devices.find(device =>
             device.label.toLowerCase().includes("droid")
         );
@@ -169,7 +168,7 @@ async function iniciarCamara() {
             },
             onScanQR,
             error => {
-                // errores normales de lectura (ignorar)
+                // Errores normales de lectura (ignorar)
             }
         );
 
@@ -184,64 +183,22 @@ async function iniciarCamara() {
 
 
 // ========================================
-// DESCARGAR PDF
-// ========================================
-
-async function descargarPDF() {
-
-    try {
-
-        const res = await fetch('/SEGTRACK/App/Controller/IngresoPDFController.php?accion=pdf');
-
-        if (!res.ok) throw new Error('Error al generar PDF');
-
-        const blob = await res.blob();
-
-        const url = window.URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-
-        a.href = url;
-        a.download = `Ingresos_${new Date().toISOString().slice(0, 10)}.pdf`;
-
-        document.body.appendChild(a);
-
-        a.click();
-
-        document.body.removeChild(a);
-
-        window.URL.revokeObjectURL(url);
-
-        mostrarMensaje(true, "PDF descargado correctamente.");
-
-    } catch (e) {
-
-        console.error(e);
-        mostrarMensaje(false, "No se pudo descargar el PDF.");
-
-    }
-
-}
-
-
-// ========================================
 // INICIALIZACIÓN
 // ========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
     App.tipoMovimiento = document.getElementById("tipoMovimiento");
-    App.btnCapturar = document.getElementById("btnCapturar");
-    App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
-    App.mensajeExito = document.getElementById("mensajeExito");
-    App.mensajeError = document.getElementById("mensajeError");
+    App.btnCapturar    = document.getElementById("btnCapturar");
+    App.mensajeExito   = document.getElementById("mensajeExito");
+    App.mensajeError   = document.getElementById("mensajeError");
 
 
     // ========================================
-    // TABLA DE INGRESOS
+    // TABLA DE MOVIMIENTOS DE DISPOSITIVOS
     // ========================================
 
-    App.table = $("#tablaIngresosDT").DataTable({
+    App.table = $("#tablaDispositivosDT").DataTable({
 
         ajax: {
             url: App.config.urlControlador,
@@ -251,9 +208,11 @@ document.addEventListener("DOMContentLoaded", () => {
         },
 
         columns: [
-            { data: "NombreFuncionario" },
-            { data: "CargoFuncionario" },
-            { data: "TipoMovimiento" },
+            { data: "TipoDispositivo"  },
+            { data: "MarcaDispositivo" },
+            { data: "NumeroSerial"     },
+            { data: "NombreFuncionario"},
+            { data: "TipoMovimiento"   },
             {
                 data: "FechaIngreso",
                 render: d => new Date(d).toLocaleString('es-ES')
@@ -264,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
             url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
         },
 
-        order: [[3, 'desc']]
+        order: [[5, 'desc']]
 
     });
 
@@ -275,8 +234,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (App.btnCapturar)
         App.btnCapturar.addEventListener("click", iniciarCamara);
-
-    if (App.btnDescargarPDF)
-        App.btnDescargarPDF.addEventListener("click", descargarPDF);
 
 });

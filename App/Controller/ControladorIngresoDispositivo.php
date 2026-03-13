@@ -1,8 +1,11 @@
 <?php
 
 header('Content-Type: application/json; charset=utf-8');
+// Permitimos que cualquier dominio pueda consumir este servicio (evita errores CORS)
 header('Access-Control-Allow-Origin: *');
+// Permitimos únicamente los métodos GET y POST
 header('Access-Control-Allow-Methods: GET, POST');
+// Permitimos que el cliente envíe contenido JSON
 header('Access-Control-Allow-Headers: Content-Type');
 
 
@@ -24,7 +27,8 @@ class ControladorIngresoDispositivo {
 
     // ========================================
     // REGISTRAR ENTRADA O SALIDA DE DISPOSITIVO
-    // Recibe un JSON desde JavaScript: { qr_codigo, tipoMovimiento }
+    // Este método recibe un JSON desde JavaScript,
+    // valida el QR, busca el dispositivo y registra el movimiento.
     // ========================================
 
     public function registrarIngreso() {
@@ -43,17 +47,18 @@ class ControladorIngresoDispositivo {
             return $this->responder(false, 'Código QR no recibido');
         }
 
-        // Se busca el dispositivo activo que corresponde al QR
+        // Se consulta si el QR pertenece a un dispositivo activo
         $dispositivo = $this->modelo->buscarDispositivoPorQr($qrCodigo);
 
-        // Si no coincide con ningún dispositivo activo → no se registra nada
+        // Si no coincide con ningún dispositivo → no se registra nada
         if (!$dispositivo) {
             return $this->responder(false, 'Dispositivo no encontrado o inactivo');
         }
 
-        // Se registra el movimiento en la tabla ingreso (campo IdDispositivo)
+        // Registrar el movimiento en la tabla ingreso
         $exito = $this->modelo->registrarIngresoDispositivo(
             $dispositivo['IdDispositivo'],
+            $dispositivo['IdFuncionario'] ?? null,
             $dispositivo['IdSede'] ?? null,
             $tipoMovimiento
         );
@@ -70,14 +75,15 @@ class ControladorIngresoDispositivo {
             'serial'      => $dispositivo['NumeroSerial'],
             'funcionario' => $dispositivo['NombreFuncionario'],
             'fecha'       => date('Y-m-d H:i:s'),
-            'movimiento'  => $tipoMovimiento
+            'tipo_mov'    => $tipoMovimiento
         ]);
     }
 
 
     // ========================================
     // LISTAR MOVIMIENTOS DE DISPOSITIVOS
-    // Responde cuando el navegador hace GET al controlador
+    // Obtiene todos los registros desde el modelo.
+    // Este método responde cuando el navegador hace GET al controlador
     // ========================================
 
     public function listarIngresos() {
@@ -93,7 +99,9 @@ class ControladorIngresoDispositivo {
 
 
     // ========================================
-    // FUNCIÓN DE RESPUESTA GLOBAL EN JSON
+    // FUNCIÓN DE RESPUESTA GLOBAL
+    // Formatea todas las respuestas del controlador en JSON
+    // para mantener un estándar único.
     // ========================================
 
     private function responder($success, $message, $data = null) {
@@ -111,7 +119,7 @@ class ControladorIngresoDispositivo {
 
 // ----- RUTEO BÁSICO -----
 // POST → Registrar entrada o salida de dispositivo
-// GET  → Listar movimientos
+// GET  → Listar movimientos de dispositivos
 
 $controlador = new ControladorIngresoDispositivo();
 

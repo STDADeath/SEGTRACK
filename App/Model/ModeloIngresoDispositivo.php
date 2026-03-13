@@ -19,31 +19,24 @@ class ModeloIngresoDispositivo {
 
     // ========================================
     // BUSCAR DISPOSITIVO POR QR
-    // El QR debe tener formato: "DISP: 12"
+    // El campo QrDispositivo guarda la ruta del QR generado
+    // Igual que QrCodigoFuncionario en funcionario
     // ========================================
 
     public function buscarDispositivoPorQr($qrCodigo) {
 
-        // Expresión regular que extrae el número después de "DISP:"
-        if (preg_match('/DISP:\s*(\d+)/i', $qrCodigo, $match)) {
-            $id = $match[1]; // Se obtiene el IdDispositivo
-        } else {
-            // Si el QR no tiene el formato correcto, se retorna false
-            return false;
-        }
-
-        // Busca el dispositivo activo con su funcionario asignado (si tiene)
+        // Busca el dispositivo cuyo QrDispositivo coincida exactamente
         $sql = "SELECT d.*,
                        COALESCE(f.NombreFuncionario, 'Sin asignar') AS NombreFuncionario,
                        COALESCE(f.CargoFuncionario,  'Sin asignar') AS CargoFuncionario,
                        f.IdSede
                 FROM dispositivo d
                 LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                WHERE d.IdDispositivo = ?
+                WHERE d.QrDispositivo = ?
                   AND d.Estado = 'Activo'";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$id]);
+        $stmt->execute([$qrCodigo]);
 
         // Retorna un arreglo asociativo con los datos, o false si no existe
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -52,24 +45,24 @@ class ModeloIngresoDispositivo {
 
     // ========================================
     // REGISTRAR MOVIMIENTO EN LA TABLA ingreso
-    // Usa el campo IdDispositivo que ya existe en ingreso
+    // Misma tabla que funcionarios — usa IdDispositivo
+    // IdFuncionario se llena si el dispositivo tiene uno asignado
     // ========================================
 
-    public function registrarIngresoDispositivo($idDispositivo, $idSede = null, $tipoMovimiento = 'Entrada') {
+    public function registrarIngresoDispositivo($idDispositivo, $idFuncionario = null, $idSede, $tipoMovimiento = 'Entrada') {
 
-        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdDispositivo)
-                VALUES (?, NOW(), ?, ?)";
+        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdFuncionario, IdDispositivo)
+                VALUES (?, NOW(), ?, ?, ?)";
 
         $stmt = $this->pdo->prepare($sql);
 
-        // Se ejecuta con los parámetros enviados
-        return $stmt->execute([$tipoMovimiento, $idSede, $idDispositivo]);
+        return $stmt->execute([$tipoMovimiento, $idSede, $idFuncionario, $idDispositivo]);
     }
 
 
     // ========================================
     // LISTAR MOVIMIENTOS DE DISPOSITIVOS
-    // Filtra los registros de ingreso donde IdDispositivo no es NULL
+    // Filtra los registros donde IdDispositivo no es NULL
     // ========================================
 
     public function listarIngresosDispositivos() {
@@ -83,15 +76,14 @@ class ModeloIngresoDispositivo {
                     i.TipoMovimiento,
                     i.FechaIngreso
                 FROM ingreso i
-                INNER JOIN dispositivo d  ON i.IdDispositivo  = d.IdDispositivo
-                LEFT  JOIN funcionario f  ON d.IdFuncionario  = f.IdFuncionario
+                INNER JOIN dispositivo d ON i.IdDispositivo  = d.IdDispositivo
+                LEFT  JOIN funcionario f ON i.IdFuncionario  = f.IdFuncionario
                 WHERE i.IdDispositivo IS NOT NULL
-                ORDER BY i.IdIngreso DESC"; // Del más reciente al más antiguo
+                ORDER BY i.IdIngreso DESC";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
-        // Retorna un arreglo con todos los registros
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
