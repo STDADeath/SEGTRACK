@@ -16,3 +16,27 @@
 2026-03-12 10:46:17 - Correo enviado correctamente a Pasachoa2002@gmail.com
 2026-03-12 11:49:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-25-69b29a3bad3b2.png
 2026-03-12 11:49:35 - Correo enviado correctamente a Wendy@gmail.com
+2026-03-12 12:12:31 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-69-69b29f9f723de.jpg
+2026-03-12 12:12:31 - Foto guardada para funcionario 69: qr/Fotos/FOTO-FUNC-69-69b29f9f723de.jpg
+2026-03-12 12:12:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-69-69b29f9f73e13.png
+2026-03-12 12:12:34 - Correo enviado correctamente a yoyo@gmail.com
+2026-03-12 12:42:49 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-70-69b2a6b90cfa7.jpg
+2026-03-12 12:42:49 - Foto guardada para funcionario 70: qr/Fotos/FOTO-FUNC-70-69b2a6b90cfa7.jpg
+2026-03-12 12:42:49 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-70-69b2a6b90fbfb.png
+2026-03-12 12:42:52 - Correo enviado correctamente a prueba32@gmail.com
+2026-03-13 04:48:10 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-71-69b388fa93744.png
+2026-03-13 04:48:15 - Correo enviado correctamente a sonia@gmail.com
+2026-03-13 05:07:15 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-58-69b38d731ebe7.png
+2026-03-13 05:07:18 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-03-13 05:07:57 - === enviarQRPorCorreo llamado para ID: 24 ===
+2026-03-13 05:08:00 - Correo enviado correctamente a Pasachoa2002@gmail.com
+2026-03-13 05:09:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-24-69b38df6466a4.png
+2026-03-13 05:09:30 - Correo enviado correctamente a Pasachoa2002@gmail.com
+2026-03-13 05:13:13 - === enviarQRPorCorreo llamado para ID: 24 ===
+2026-03-13 05:13:16 - Correo enviado correctamente a Pasachoa2002@gmail.com
+2026-03-13 05:27:17 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-72-69b3922596566.jpg
+2026-03-13 05:27:17 - Foto guardada para funcionario 72: qr/Fotos/FOTO-FUNC-72-69b3922596566.jpg
+2026-03-13 05:27:17 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-72-69b3922598c6e.png
+2026-03-13 05:27:21 - Correo enviado correctamente a pruebas2002@gmail.com
+2026-03-13 10:10:56 - === enviarQRPorCorreo llamado para ID: 24 ===
+2026-03-13 10:11:00 - Correo enviado correctamente a Pasachoa2002@gmail.com

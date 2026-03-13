@@ -1,38 +1,26 @@
 <?php
 // ======================================================================
 // MODELO: ModeloSede
-// Capa Modelo (MVC): toda interacción con la base de datos.
-// El controlador llama estos métodos y recibe arrays con resultado.
 // ======================================================================
 
 require_once __DIR__ . "/../Core/Conexion.php";
 
 class ModeloSede
 {
-    private $conexion; // Objeto PDO reutilizado en todos los métodos
+    private $conexion;
 
-    // ══════════════════════════════════════════════════════
-    // CONSTRUCTOR
-    // Instancia Conexion y obtiene el objeto PDO.
-    // Mismo patrón que ModeloInstituto: new Conexion() → getConexion()
-    // ══════════════════════════════════════════════════════
     public function __construct()
     {
         $conexionObj    = new Conexion();
         $this->conexion = $conexionObj->getConexion();
     }
 
-
     // ══════════════════════════════════════════════════════
     // REGISTRAR SEDE
-    // Verifica duplicado (mismo tipo y ciudad) antes de insertar.
-    // Estado siempre 'Activo' al registrar — forzado en el INSERT.
-    // Detecta FK inválida con código PDO 23000.
     // ══════════════════════════════════════════════════════
     public function registrarSede($tipoSede, $ciudad, $idInstitucion)
     {
         try {
-            // Verifica si ya existe una sede con ese tipo en esa ciudad
             $checkSql = "SELECT IdSede FROM sede
                          WHERE TipoSede = :tipo AND Ciudad = :ciudad
                          LIMIT 1";
@@ -46,7 +34,6 @@ class ModeloSede
                 ];
             }
 
-            // INSERT con Estado siempre 'Activo' — no viene del usuario
             $sql = "INSERT INTO sede (TipoSede, Ciudad, IdInstitucion, Estado)
                     VALUES (:tipo, :ciudad, :institucion, 'Activo')";
 
@@ -59,7 +46,6 @@ class ModeloSede
             return ['success' => true, 'message' => 'Sede registrada exitosamente.'];
 
         } catch (PDOException $e) {
-            // Código 23000 = FK inválida (institución no existe)
             if ($e->getCode() == 23000) {
                 return ['success' => false,
                         'message' => 'La institución seleccionada no existe.'];
@@ -69,12 +55,8 @@ class ModeloSede
         }
     }
 
-
     // ══════════════════════════════════════════════════════
     // EDITAR SEDE
-    // Actualiza TipoSede, Ciudad e IdInstitucion.
-    // Retorna success:true aunque rowCount() sea 0 (mismos datos)
-    // para no confundir al usuario con un falso error.
     // ══════════════════════════════════════════════════════
     public function editarSede($idSede, $tipoSede, $ciudad, $idInstitucion)
     {
@@ -92,8 +74,6 @@ class ModeloSede
             $stmt->bindParam(':id',          $idSede,        PDO::PARAM_INT);
             $stmt->execute();
 
-            // success:true siempre que no haya excepción
-            // rowCount() = 0 no es error: el usuario pudo guardar los mismos datos
             return ['success' => true, 'message' => 'Sede actualizada exitosamente.'];
 
         } catch (PDOException $e) {
@@ -103,12 +83,8 @@ class ModeloSede
         }
     }
 
-
     // ══════════════════════════════════════════════════════
     // OBTENER SEDE POR ID
-    // Retorna array asociativo con los datos del registro
-    // o null si no existe ese ID.
-    // Usado por el controlador para precargar el modal.
     // ══════════════════════════════════════════════════════
     public function obtenerSedePorId($idSede)
     {
@@ -121,7 +97,7 @@ class ModeloSede
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':id', $idSede, PDO::PARAM_INT);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC); // false si no existe
+            return $stmt->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
             error_log("Error (obtener sede por ID): " . $e->getMessage());
@@ -129,17 +105,12 @@ class ModeloSede
         }
     }
 
-
     // ══════════════════════════════════════════════════════
     // CAMBIAR ESTADO (toggle Activo / Inactivo)
-    // Primero consulta el estado actual, luego lo invierte.
-    // Solo toca el campo Estado, no modifica ningún otro dato.
-    // Se activa desde el clic en el candado de la lista.
     // ══════════════════════════════════════════════════════
     public function cambiarEstado($idSede)
     {
         try {
-            // Consulta el estado actual del registro
             $sqlSelect = "SELECT Estado FROM sede WHERE IdSede = :id LIMIT 1";
             $stmt = $this->conexion->prepare($sqlSelect);
             $stmt->bindParam(':id', $idSede, PDO::PARAM_INT);
@@ -150,15 +121,11 @@ class ModeloSede
                 return ['success' => false, 'message' => 'Sede no encontrada.'];
             }
 
-            // Invierte el estado actual
             $nuevoEstado = ($data['Estado'] === 'Activo') ? 'Inactivo' : 'Activo';
 
             $sqlUpdate = "UPDATE sede SET Estado = :estado WHERE IdSede = :id";
-            $update = $this->conexion->prepare($sqlUpdate);
-            $exito = $update->execute([
-                ':estado' => $nuevoEstado,
-                ':id'     => $idSede
-            ]);
+            $update    = $this->conexion->prepare($sqlUpdate);
+            $exito     = $update->execute([':estado' => $nuevoEstado, ':id' => $idSede]);
 
             if ($exito) {
                 return ['success' => true,
@@ -173,11 +140,8 @@ class ModeloSede
         }
     }
 
-
     // ══════════════════════════════════════════════════════
     // OBTENER INSTITUCIONES
-    // Retorna todas las instituciones para llenar el select
-    // del formulario de registro y el modal de edición.
     // ══════════════════════════════════════════════════════
     public function obtenerInstituciones()
     {
@@ -196,11 +160,8 @@ class ModeloSede
         }
     }
 
-
     // ══════════════════════════════════════════════════════
-    // OBTENER TODAS LAS SEDES
-    // Hace JOIN con institución para mostrar el nombre
-    // en lugar del ID en la tabla de la vista lista.
+    // OBTENER TODAS LAS SEDES (con JOIN para la tabla lista)
     // ══════════════════════════════════════════════════════
     public function obtenerSedes()
     {
@@ -223,6 +184,31 @@ class ModeloSede
 
         } catch (PDOException $e) {
             error_log("Error (obtener sedes): " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ══════════════════════════════════════════════════════
+    // ✅ OBTENER SEDES ACTIVAS — solo para selects/formularios
+    // Retorna IdSede y NombreSede (solo TipoSede, sin ciudad)
+    // Filtra únicamente las sedes con Estado = 'Activo'
+    // ══════════════════════════════════════════════════════
+    public function obtenerSedesActivas()
+    {
+        try {
+            $sql = "SELECT
+                        IdSede,
+                        TipoSede AS NombreSede
+                    FROM sede
+                    WHERE Estado = 'Activo'
+                    ORDER BY TipoSede ASC";
+
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            error_log("Error (obtener sedes activas): " . $e->getMessage());
             return [];
         }
     }

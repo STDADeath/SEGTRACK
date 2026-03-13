@@ -1,10 +1,14 @@
 // ========================================
 // LISTA DE FUNCIONARIOS - SEGTRACK
+//
+// CAMBIO RESPECTO A TU VERSIÓN ORIGINAL:
+// ✅ Agregado fix para el warning aria-hidden en modales
+//    Se mueve el foco ANTES de que Bootstrap oculte el modal
+//    Aplica a: #modalVerQR y #modalEditar
 // ========================================
 
 console.log("✅ FuncionarioListaADM cargado");
 
-// URL del controlador
 const urlControlador = "../../Controller/ControladorFuncionarios.php";
 
 
@@ -37,6 +41,28 @@ $(document).ready(function () {
             }
         }
     });
+
+
+    // ======================================================
+    // ✅ FIX ARIA-HIDDEN — aplica a TODOS los modales
+    //
+    // Problema: Bootstrap pone aria-hidden="true" en el modal
+    // pero el botón "Cerrar" dentro del modal aún tiene foco,
+    // lo que genera el warning de accesibilidad.
+    //
+    // Solución: antes de que el modal se oculte (hide.bs.modal),
+    // movemos el foco al body para que ningún elemento dentro
+    // del modal lo tenga cuando Bootstrap aplique aria-hidden.
+    // ======================================================
+    ['#modalVerQR', '#modalEditar'].forEach(function (id) {
+        document.querySelector(id)?.addEventListener('hide.bs.modal', function () {
+            // Mueve el foco fuera del modal antes de ocultarlo
+            if (document.activeElement && this.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
+        });
+    });
+
 
     // ==============================
     // GUARDAR CAMBIOS EDICIÓN
@@ -112,7 +138,7 @@ $(document).ready(function () {
 
 
 // ========================================
-// ✅ VER QR — RUTA CORREGIDA
+// VER QR
 // ========================================
 function verQR(rutaQR, idFuncionario) {
 
@@ -121,21 +147,10 @@ function verQR(rutaQR, idFuncionario) {
         return;
     }
 
-    /*
-     * rutaQR llega del PHP ya normalizado como: "/qr/Qr_Func/QR-FUNC-109-xxx.png"
-     * La imagen física está en:   SEGTRACK/Public/qr/Qr_Func/QR-FUNC-109-xxx.png
-     * La URL pública debe ser:    http://localhost/SEGTRACK/Public/qr/Qr_Func/QR-FUNC-109-xxx.png
-     *
-     * Detectamos el segmento raíz del proyecto (SEGTRACK) desde el pathname actual.
-     */
-    const pathname = window.location.pathname;   // /SEGTRACK/App/View/Administrador/FuncionarioListaADM.php
-    const partes   = pathname.split('/');         // ["","SEGTRACK","App","View","Administrador","..."]
+    const pathname = window.location.pathname;
+    const partes   = pathname.split('/');
     const idx      = partes.indexOf('SEGTRACK');
-
-    // base = "/SEGTRACK"  (o "" si el proyecto está en la raíz del servidor)
-    const base = (idx !== -1) ? '/' + partes.slice(1, idx + 1).join('/') : '';
-
-    // URL completa: http://localhost/SEGTRACK/Public/qr/Qr_Func/QR-FUNC-109-xxx.png
+    const base     = (idx !== -1) ? '/' + partes.slice(1, idx + 1).join('/') : '';
     const rutaCompleta = window.location.origin + base + '/Public' + rutaQR;
 
     console.log("📂 Base proyecto:", window.location.origin + base);
@@ -150,9 +165,8 @@ function verQR(rutaQR, idFuncionario) {
 
 
 // ========================================
-// ✅ ENVIAR QR POR CORREO — CORREGIDO
-//
-//==========================================
+// ENVIAR QR POR CORREO
+// ========================================
 function enviarQR(idFuncionario) {
 
     Swal.fire({
@@ -168,7 +182,6 @@ function enviarQR(idFuncionario) {
 
         if (!result.isConfirmed) return;
 
-        // Spinner mientras se procesa
         Swal.fire({
             title:             'Enviando correo...',
             text:              'Por favor espera un momento',
@@ -182,16 +195,12 @@ function enviarQR(idFuncionario) {
             type:     'POST',
             dataType: 'json',
             data: {
-                accion:        'enviar_qr',      // ← case 'enviar_qr' en el controlador
-                IdFuncionario: idFuncionario     // ← el controlador busca todo en la BD
+                accion:        'enviar_qr',
+                IdFuncionario: idFuncionario
             },
             success: function (response) {
                 if (response.success) {
-                    Swal.fire({
-                        title:  'Enviado',
-                        text:   response.message,
-                        icon:  'success'
-                    });
+                    Swal.fire({ title: 'Enviado', text: response.message, icon: 'success' });
                 } else {
                     Swal.fire('Error', response.message, 'error');
                 }
