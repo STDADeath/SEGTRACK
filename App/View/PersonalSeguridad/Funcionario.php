@@ -149,6 +149,7 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                 <div class="invalid-feedback">Este campo es obligatorio.</div>
                             </div>
 
+
                             <!-- NOMBRE -->
                             <div class="col-md-4 mb-3">
                                 <label for="NombreFuncionario" class="form-label">Nombre Completo *</label>
@@ -159,6 +160,11 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                     placeholder="Ej: Juan Pérez">
                                 <div class="invalid-feedback">Mínimo 3 letras, solo caracteres válidos.</div>
                             </div>
+
+                            <option value="">Seleccione...</option>
+                            <option value="Funcionario">Funcionario</option>
+                          
+                        </select>
 
                             <!-- SEDE — solo muestra sedes Activas -->
                             <div class="col-md-4 mb-3">

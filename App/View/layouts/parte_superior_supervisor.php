@@ -81,8 +81,21 @@ $rolUsuario    = htmlspecialchars($_SESSION['usuario']['TipoRol'] ?? 'Supervisor
                     <span>Supervisión de Personal</span>
                 </a>
 
+<<<<<<< HEAD
                 <div id="collapseSuper1" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+=======
+            <h6 class="collapse-header">Sedes:</h6> 
+            <a class="collapse-item" href="../Supervisor/SedeLista.php">Lista de Sedes</a>
+
+            <h6 class="collapse-header">Institutos:</h6> 
+            <a class="collapse-item" href="../Supervisor/InstitutosListaSUP.php">Lista de Institutos</a>
+
+            
+        </div>
+    </div>
+</li>
+>>>>>>> 0db12bb23b699e72b6de07f01ea7ed0e8eb8654a
 
                         <h6 class="collapse-header">Personal Seguridad</h6>
                         <a class="collapse-item" href="">Reporte De Dotacion</a>

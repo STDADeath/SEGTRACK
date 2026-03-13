@@ -100,6 +100,7 @@ if ($usuario['TipoRol'] !== 'Personal Seguridad') {
                         <a class="collapse-item" href="../PersonalSeguridad/Funcionario.php">Registrar Funcionario</a>
                         <a class="collapse-item" href="../PersonalSeguridad/FuncionarioLista.php">Lista de Funcionarios</a>
                         <div class="collapse-divider"></div>
+<<<<<<< HEAD
                         <h6 class="collapse-header">Parqueadero:</h6>
                         <a class="collapse-item" href="../PersonalSeguridad/Parqueaderoguardia.php">Ingreso Parqueadero</a>
                         <a class="collapse-item" href="../PersonalSeguridad/Vehiculolista.php">Lista Parqueadero</a>
@@ -107,6 +108,13 @@ if ($usuario['TipoRol'] !== 'Personal Seguridad') {
                         <h6 class="collapse-header">Dispositivos:</h6>
                         <a class="collapse-item" href="../PersonalSeguridad/Dispositivos.php">Registrar Dispositivo</a>
                         <a class="collapse-item" href="../PersonalSeguridad/DispositivoLista.php">Lista de Dispositivos</a>
+=======
+
+                        <h6 class="collapse-header">Sedes:</h6>
+                        <a class="collapse-item" href="../PersonalSeguridad/ListaInstituciones.php">Lista de Institutos</a>  
+                        <a class="collapse-item" href="../PersonalSeguridad/SedeLista.php">Lista de Sedes</a>
+                                            
+>>>>>>> 0db12bb23b699e72b6de07f01ea7ed0e8eb8654a
                     </div>
                 </div>
             </li>
