@@ -1,23 +1,16 @@
 <?php
-// =============================
-// ControladorDashboard.php
-// =============================
+$ruta_conexion = __DIR__ . '../core/conexion.php';
 
-// Ruta de conexión
-$ruta_conexion = __DIR__ . '/../../core/conexion.php';
-
-// Validar que exista el archivo de conexión
 if (file_exists($ruta_conexion)) {
     require_once $ruta_conexion;
 } else {
     header('Content-Type: application/json; charset=utf-8');
     die(json_encode([
         'success' => false,
-        'message' => 'Error: Archivo de conexión no encontrado en: ' . $ruta_conexion
+        'message' => 'Error: Archivo de conexión no encontrado.'
     ]));
 }
 
-// ✅ Cargar modelo
 require_once __DIR__ . "/../../Model/Graficas/ModeloDashboard.php";
 
 class ControladorDashboard {
@@ -33,9 +26,8 @@ class ControladorDashboard {
         switch ($accion) {
 
             // =============================
-            // 📊 GRAFICAS
+            // 📊 GRÁFICAS
             // =============================
-
             case 'tipos_dispositivos':
                 echo json_encode($this->model->DispositivosPorTipo());
                 break;
@@ -64,10 +56,25 @@ class ControladorDashboard {
                 echo json_encode($this->model->DotacionesPorDevolucionMes());
                 break;
 
+            case 'funcionarios_por_cargo':
+                echo json_encode($this->model->FuncionariosPorCargo());
+                break;
+
+            case 'funcionarios_por_sede':
+                echo json_encode($this->model->FuncionariosPorSede());
+                break;
+
+            case 'visitantes_por_mes':
+                echo json_encode($this->model->VisitantesPorMes());
+                break;
+
+            case 'ingresos_por_tipo':
+                echo json_encode($this->model->IngresosPorTipo());
+                break;
+
             // =============================
             // 📖 BITÁCORA
             // =============================
-
             case 'total_bitacora':
                 echo json_encode([
                     "total_bitacora" => $this->model->TotalBitacora()
@@ -85,7 +92,6 @@ class ControladorDashboard {
             // =============================
             // 🔢 TOTALES
             // =============================
-
             case 'total_dispositivos':
                 echo json_encode([
                     "total_dispositivos" => $this->model->DispositivosTotal()
@@ -123,7 +129,6 @@ class ControladorDashboard {
     }
 }
 
-// ✅ Ejecutar controlador si se llama por AJAX
 if (isset($_GET['accion'])) {
     $dashboard = new ControladorDashboard($conexion);
     $dashboard->manejarSolicitud($_GET['accion']);

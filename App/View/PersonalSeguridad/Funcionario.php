@@ -1,18 +1,4 @@
 <?php
-// ============================================================
-// VISTA: Funcionario.php — Registrar Personal de Seguridad
-//
-// CAMBIOS RESPECTO A TU VERSIÓN ORIGINAL:
-//   ✅ 1. Eliminado session_start() — ya lo hace parte_superior.php
-//   ✅ 2. Eliminado if(!isset($_SESSION['usuario'])) — ídem
-//   ✅ 3. Eliminados headers de cache — se ponen una sola vez
-//   ✅ 4. Usa obtenerSedesActivas() para mostrar solo sedes Activas
-//
-// RESPONSABILIDAD DE ESTE ARCHIVO:
-//   - Cargar sedes activas para el select
-//   - Mostrar el formulario de registro
-// ============================================================
-
 require_once __DIR__ . '/../layouts/parte_superior.php';
 require_once __DIR__ . "/../../Controller/ControladorSede.php";
 
@@ -34,9 +20,7 @@ $sedes           = $controladorSede->obtenerSedesActivas();
 
             <form id="formRegistrarFuncionario" enctype="multipart/form-data">
 
-                <!-- ==========================================
-                PANEL FOTO
-                =========================================== -->
+                <!-- PANEL FOTO -->
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="card border-primary shadow">
@@ -50,7 +34,6 @@ $sedes           = $controladorSede->obtenerSedesActivas();
 
                                     <!-- PREVIEW FOTO -->
                                     <div class="col-md-4 text-center">
-
                                         <div id="previewFotoContainer"
                                             style="
                                                 width:200px; height:200px; margin:auto;
@@ -68,7 +51,6 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                                 <i class="fas fa-user fa-3x text-secondary"></i>
                                                 <div>Clic para foto</div>
                                             </div>
-
                                         </div>
 
                                         <input type="file"
@@ -84,12 +66,10 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                                 Subir foto
                                             </button>
                                         </div>
-
                                     </div>
 
                                     <!-- CAMARA -->
                                     <div class="col-md-4">
-
                                         <button type="button"
                                             class="btn btn-outline-success btn-sm mb-2"
                                             id="btnAbrirCamara">
@@ -120,7 +100,6 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                         <input type="hidden"
                                             id="FotoCapturaBase64"
                                             name="FotoCapturaBase64">
-
                                     </div>
 
                                 </div>
@@ -130,9 +109,7 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                     </div>
                 </div>
 
-                <!-- ==========================================
-                CAMPOS DEL FORMULARIO
-                =========================================== -->
+                <!-- CAMPOS DEL FORMULARIO -->
                 <div class="row">
                     <div class="col-12">
 
@@ -145,10 +122,10 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                     class="form-control border-primary shadow-sm">
                                     <option value="">Seleccione...</option>
                                     <option value="Funcionario">Funcionario</option>
+                                    
                                 </select>
                                 <div class="invalid-feedback">Este campo es obligatorio.</div>
                             </div>
-
 
                             <!-- NOMBRE -->
                             <div class="col-md-4 mb-3">
@@ -161,12 +138,7 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                 <div class="invalid-feedback">Mínimo 3 letras, solo caracteres válidos.</div>
                             </div>
 
-                            <option value="">Seleccione...</option>
-                            <option value="Funcionario">Funcionario</option>
-                          
-                        </select>
-
-                            <!-- SEDE — solo muestra sedes Activas -->
+                            <!-- SEDE -->
                             <div class="col-md-4 mb-3">
                                 <label for="IdSede" class="form-label">Sede *</label>
                                 <select id="IdSede" name="IdSede"
