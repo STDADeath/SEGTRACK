@@ -125,3 +125,105 @@ Correo automático de funcionario: andersoarebalo@gmail.com
 Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com","esFuncionario":true,"correo":"andersoarebalo@gmail.com"}
 === FIN ===
 
+
+2026-03-15 12:44:08 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "GTR43R",
+    "DescripcionVehiculo": "Moto Honda de color rojo",
+    "TarjetaPropiedad": "tj3244445432",
+    "IdSede": "64",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "58",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 25","data":{"IdVehiculo":"25","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-25-69b6efe868d4a.png","FechaRegistro":"2026-03-15 12:44:08"}}
+=== FIN ===
+
+
+2026-03-15 12:45:17 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "N-A",
+    "DescripcionVehiculo": "Bicicleta azul con morada marca Olimpus",
+    "TarjetaPropiedad": "tj3232112451",
+    "IdSede": "28",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "62",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 26","data":{"IdVehiculo":"26","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-26-69b6f02de7dec.png","FechaRegistro":"2026-03-15 12:45:17"}}
+=== FIN ===
+
+
+2026-03-15 13:44:11 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "TTT43G",
+    "DescripcionVehiculo": "kaguasaki ninja 1000",
+    "TarjetaPropiedad": "tj2445678876",
+    "IdSede": "26",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "59",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 27","data":{"IdVehiculo":"27","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-27-69b6fdfb1069a.png","FechaRegistro":"2026-03-15 13:44:11"}}
+=== FIN ===
+
+
+2026-03-15 13:45:00 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "FRT43G",
+    "DescripcionVehiculo": "Honda de color morado con rojo",
+    "TarjetaPropiedad": "tj2445678876",
+    "IdSede": "26",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "58",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":false,"message":"⚠️ La tarjeta 'tj2445678876' ya está registrada para un vehículo tipo 'Moto'."}
+=== FIN ===
+
+
+2026-03-15 13:45:09 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "FRT43G",
+    "DescripcionVehiculo": "Honda de color morado con rojo",
+    "TarjetaPropiedad": "tj24454444663",
+    "IdSede": "26",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "58",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 28","data":{"IdVehiculo":"28","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-28-69b6fe359a9ab.png","FechaRegistro":"2026-03-15 13:45:09"}}
+=== FIN ===
+
+
+2026-03-15 13:46:32 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO346",
+    "DescripcionVehiculo": "Renaul sandero de color rojo",
+    "TarjetaPropiedad": "tj32454176445",
+    "IdSede": "26",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "53",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdVehiculo":"29","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-29-69b6fe889e40a.png","FechaRegistro":"2026-03-15 13:46:32"}}
+=== FIN ===
+

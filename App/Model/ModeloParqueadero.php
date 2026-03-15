@@ -464,87 +464,36 @@ class ModeloParqueadero {
     }
 
     /**
-     * Obtiene un vehículo activo por su placa
+     * Obtiene vehículos activos filtrados por tipo (Carro, Moto, Bicicleta)
      */
-    public function obtenerVehiculoPorPlaca(string $placa): ?array {
+    public function obtenerVehiculosPorTipo(string $tipo): array {
         try {
-            if (!$this->conexion) return null;
+            if (!$this->conexion) return [];
 
-            file_put_contents($this->debugPath, "=== MODELO: obtenerVehiculoPorPlaca — Placa: $placa ===\n", FILE_APPEND);
+            file_put_contents($this->debugPath, "=== MODELO: obtenerVehiculosPorTipo — Tipo: $tipo ===\n", FILE_APPEND);
 
-            $sql  = "SELECT v.*, f.NombreFuncionario, vis.NombreVisitante
-                     FROM vehiculo v
-                     LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
-                     LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
-                     WHERE v.PlacaVehiculo = :placa AND v.Estado = 'Activo'
-                     LIMIT 1";
+            $sql = "SELECT v.IdVehiculo, v.PlacaVehiculo, v.TipoVehiculo, v.DescripcionVehiculo,
+                           f.NombreFuncionario, vis.NombreVisitante
+                    FROM vehiculo v
+                    LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
+                    LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                    WHERE v.TipoVehiculo = :tipo AND v.Estado = 'Activo'
+                    ORDER BY v.PlacaVehiculo ASC";
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':placa' => strtoupper(trim($placa))]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->execute([':tipo' => $tipo]);
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            if ($resultado) {
-                file_put_contents($this->debugPath, "Vehículo encontrado: ID={$resultado['IdVehiculo']} Tipo={$resultado['TipoVehiculo']}\n", FILE_APPEND);
-            } else {
-                file_put_contents($this->debugPath, "Vehículo con placa '$placa' NO encontrado o inactivo\n", FILE_APPEND);
-            }
-            return $resultado ?: null;
+            file_put_contents($this->debugPath, count($resultado) . " vehículos encontrados de tipo $tipo\n", FILE_APPEND);
+            return $resultado;
 
         } catch (PDOException $e) {
-            file_put_contents($this->debugPath, "ERROR en obtenerVehiculoPorPlaca: " . $e->getMessage() . "\n", FILE_APPEND);
-            return null;
+            file_put_contents($this->debugPath, "ERROR en obtenerVehiculosPorTipo: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
         }
     }
 
     /**
-     * Verifica si el vehículo ya tiene un espacio ocupado en el parqueadero
-     */
-    public function obtenerEspacioOcupadoPorVehiculo(int $idVehiculo, int $idParqueadero): ?array {
-        try {
-            if (!$this->conexion) return null;
-
-            $sql  = "SELECT * FROM espacio_parqueadero
-                     WHERE IdVehiculo = :idv AND IdParqueadero = :idp AND Estado = 'Ocupado'
-                     LIMIT 1";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':idv' => $idVehiculo, ':idp' => $idParqueadero]);
-            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-
-        } catch (PDOException $e) {
-            file_put_contents($this->debugPath, "ERROR en obtenerEspacioOcupadoPorVehiculo: " . $e->getMessage() . "\n", FILE_APPEND);
-            return null;
-        }
-    }
-
-    /**
-     * Obtiene el primer espacio libre del tipo del vehículo
-     */
-    public function obtenerPrimerEspacioLibre(int $idParqueadero, string $tipo): ?array {
-        try {
-            if (!$this->conexion) return null;
-
-            $sql  = "SELECT * FROM espacio_parqueadero
-                     WHERE IdParqueadero = :idp AND TipoVehiculo = :tipo AND Estado = 'Libre'
-                     ORDER BY NumeroEspacio ASC
-                     LIMIT 1";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':idp' => $idParqueadero, ':tipo' => $tipo]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($resultado) {
-                file_put_contents($this->debugPath, "Primer espacio libre de $tipo: #{$resultado['NumeroEspacio']}\n", FILE_APPEND);
-            } else {
-                file_put_contents($this->debugPath, "Sin espacios libres de tipo $tipo en parqueadero $idParqueadero\n", FILE_APPEND);
-            }
-            return $resultado ?: null;
-
-        } catch (PDOException $e) {
-            file_put_contents($this->debugPath, "ERROR en obtenerPrimerEspacioLibre: " . $e->getMessage() . "\n", FILE_APPEND);
-            return null;
-        }
-    }
-
-    /**
-     * Ocupa un espacio (entrada del vehículo — manual o por escáner)
+     * Ocupa un espacio manualmente
      */
     public function ocuparEspacio(int $idEspacio, int $idVehiculo): array {
         try {
@@ -583,7 +532,7 @@ class ModeloParqueadero {
     }
 
     /**
-     * Libera un espacio (salida del vehículo — manual o por escáner)
+     * Libera un espacio manualmente
      */
     public function liberarEspacio(int $idEspacio): array {
         try {
@@ -621,95 +570,5 @@ class ModeloParqueadero {
         }
     }
 
-    public function procesarEscaneo(string $placa, int $idSede, string $tipoEvento): array {
-        try {
-            file_put_contents($this->debugPath,
-                "=== MODELO: procesarEscaneo — Placa: $placa, Sede: $idSede, Evento: $tipoEvento ===\n",
-                FILE_APPEND);
-
-            if (!$this->conexion) {
-                return ['success' => false, 'mensaje' => 'Conexión no disponible'];
-            }
-
-            $vehiculo = $this->obtenerVehiculoPorPlaca($placa);
-            if (!$vehiculo) {
-                return ['success' => false, 'mensaje' => "Vehículo '$placa' no encontrado o inactivo"];
-            }
-
-            $parqueadero = $this->obtenerParqueaderoPorSede($idSede);
-            if (!$parqueadero) {
-                return ['success' => false, 'mensaje' => 'No hay parqueadero activo para esta sede'];
-            }
-
-            $idParqueadero = (int)$parqueadero['IdParqueadero'];
-            $idVehiculo    = (int)$vehiculo['IdVehiculo'];
-            $tipoVehiculo  = $vehiculo['TipoVehiculo'];
-
-            file_put_contents($this->debugPath,
-                "Vehículo: ID=$idVehiculo Tipo=$tipoVehiculo — Parqueadero: ID=$idParqueadero\n",
-                FILE_APPEND);
-
-            if ($tipoEvento === 'entrada') {
-                $espacioActual = $this->obtenerEspacioOcupadoPorVehiculo($idVehiculo, $idParqueadero);
-                if ($espacioActual) {
-                    return ['success' => false, 'mensaje' => "El vehículo '$placa' ya ocupa el espacio #{$espacioActual['NumeroEspacio']}"];
-                }
-
-                $espacioLibre = $this->obtenerPrimerEspacioLibre($idParqueadero, $tipoVehiculo);
-                if (!$espacioLibre) {
-                    return [
-                        'success'     => false,
-                        'sin_espacio' => true,
-                        'tipo'        => $tipoVehiculo,
-                        'mensaje'     => "Sin espacios disponibles para $tipoVehiculo. El guardia debe decidir."
-                    ];
-                }
-
-                $r = $this->ocuparEspacio((int)$espacioLibre['IdEspacio'], $idVehiculo);
-                if ($r['success']) {
-                    file_put_contents($this->debugPath, "Entrada procesada: $placa → espacio #{$espacioLibre['NumeroEspacio']}\n", FILE_APPEND);
-                    return [
-                        'success'       => true,
-                        'tipo_evento'   => 'entrada',
-                        'espacio'       => (int)$espacioLibre['NumeroEspacio'],
-                        'id_espacio'    => (int)$espacioLibre['IdEspacio'],
-                        'placa'         => $placa,
-                        'tipo_vehiculo' => $tipoVehiculo,
-                        'mensaje'       => "Entrada registrada. Espacio #{$espacioLibre['NumeroEspacio']} asignado"
-                    ];
-                }
-                return ['success' => false, 'mensaje' => $r['error'] ?? 'Error al ocupar espacio'];
-
-            } elseif ($tipoEvento === 'salida') {
-                $espacioOcupado = $this->obtenerEspacioOcupadoPorVehiculo($idVehiculo, $idParqueadero);
-                if (!$espacioOcupado) {
-                    return ['success' => false, 'mensaje' => "El vehículo '$placa' no tiene espacio ocupado en esta sede"];
-                }
-
-                $r = $this->liberarEspacio((int)$espacioOcupado['IdEspacio']);
-                if ($r['success']) {
-                    file_put_contents($this->debugPath, "Salida procesada: $placa ← espacio #{$espacioOcupado['NumeroEspacio']} liberado\n", FILE_APPEND);
-                    return [
-                        'success'       => true,
-                        'tipo_evento'   => 'salida',
-                        'espacio'       => (int)$espacioOcupado['NumeroEspacio'],
-                        'id_espacio'    => (int)$espacioOcupado['IdEspacio'],
-                        'placa'         => $placa,
-                        'tipo_vehiculo' => $tipoVehiculo,
-                        'mensaje'       => "Salida registrada. Espacio #{$espacioOcupado['NumeroEspacio']} liberado"
-                    ];
-                }
-                return ['success' => false, 'mensaje' => $r['error'] ?? 'Error al liberar espacio'];
-
-            } else {
-                file_put_contents($this->debugPath, "Tipo de evento inválido: $tipoEvento\n", FILE_APPEND);
-                return ['success' => false, 'mensaje' => "Tipo de evento inválido: '$tipoEvento'"];
-            }
-
-        } catch (Exception $e) {
-            file_put_contents($this->debugPath, "EXCEPCIÓN procesarEscaneo: " . $e->getMessage() . "\n", FILE_APPEND);
-            return ['success' => false, 'mensaje' => 'Error interno: ' . $e->getMessage()];
-        }
-    }
 }
 ?>

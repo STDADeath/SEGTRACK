@@ -166,27 +166,35 @@ try {
             ];
         }
 
+        // ── Obtener vehículos activos por tipo (para el select del guardia) ─────
+        public function obtenerVehiculosPorTipo(string $tipo): array {
+            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== obtenerVehiculosPorTipo — Tipo: $tipo ===\n", FILE_APPEND);
+
+            $tipos_validos = ['Carro', 'Moto', 'Bicicleta'];
+            if (!in_array($tipo, $tipos_validos)) {
+                return ['success' => false, 'message' => "Tipo de vehículo inválido: $tipo"];
+            }
+
+            $vehiculos = $this->modelo->obtenerVehiculosPorTipo($tipo);
+            return ['success' => true, 'vehiculos' => $vehiculos];
+        }
+
         // ── Ocupar espacio manualmente (guardia sin escáner) ──────────────────
-        public function ocuparManual(int $idEspacio, string $placa): array {
+        public function ocuparManual(int $idEspacio, int $idVehiculo): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt',
-                "=== ocuparManual — Espacio: $idEspacio, Placa: $placa ===\n", FILE_APPEND);
+                "=== ocuparManual — Espacio: $idEspacio, IdVehiculo: $idVehiculo ===\n", FILE_APPEND);
 
             if ($idEspacio <= 0) {
                 return ['success' => false, 'message' => 'ID de espacio no válido'];
             }
-            if (empty(trim($placa))) {
-                return ['success' => false, 'message' => 'La placa es requerida'];
+            if ($idVehiculo <= 0) {
+                return ['success' => false, 'message' => 'Debe seleccionar un vehículo'];
             }
 
             try {
-                $vehiculo = $this->modelo->obtenerVehiculoPorPlaca($placa);
-                if (!$vehiculo) {
-                    return ['success' => false, 'message' => "Vehículo con placa '$placa' no encontrado o inactivo"];
-                }
-
-                $r = $this->modelo->ocuparEspacio($idEspacio, (int)$vehiculo['IdVehiculo']);
+                $r = $this->modelo->ocuparEspacio($idEspacio, $idVehiculo);
                 if ($r['success']) {
-                    return ['success' => true, 'message' => "Espacio asignado al vehículo $placa correctamente"];
+                    return ['success' => true, 'message' => 'Espacio asignado correctamente'];
                 }
                 return ['success' => false, 'message' => $r['error'] ?? 'Error al ocupar el espacio'];
 
@@ -218,41 +226,6 @@ try {
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════════
-        // ACCIÓN PARA EL ESCÁNER (módulo del compañero)
-        // ══════════════════════════════════════════════════════════════════════
-        /**
-         * INTEGRACIÓN ESCÁNER:
-         * El módulo escáner debe hacer POST a este archivo con:
-         *   accion      => 'escanear_qr'
-         *   placa       => 'ABC123'
-         *   id_sede     => 3
-         *   tipo_evento => 'entrada' | 'salida'
-         *
-         * Si el QR almacena IdVehiculo en lugar de placa, adaptar el método
-         * procesarEscaneo() en ModeloParqueadero.php para recibirlo por ID.
-         */
-        public function escanearQR(string $placa, int $idSede, string $tipoEvento): array {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt',
-                "=== escanearQR — Placa: $placa, Sede: $idSede, Evento: $tipoEvento ===\n", FILE_APPEND);
-
-            if (empty(trim($placa))) {
-                return ['success' => false, 'mensaje' => 'Placa requerida'];
-            }
-            if ($idSede <= 0) {
-                return ['success' => false, 'mensaje' => 'ID de sede no válido'];
-            }
-            if (!in_array($tipoEvento, ['entrada', 'salida'])) {
-                return ['success' => false, 'mensaje' => "Tipo de evento inválido. Use 'entrada' o 'salida'"];
-            }
-
-            try {
-                return $this->modelo->procesarEscaneo($placa, $idSede, $tipoEvento);
-            } catch (Exception $e) {
-                file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN escanearQR: " . $e->getMessage() . "\n", FILE_APPEND);
-                return ['success' => false, 'mensaje' => 'Error: ' . $e->getMessage()];
-            }
-        }
     }
     // ═════════════════════════════════════════════════════════════════════════
 
@@ -296,24 +269,18 @@ try {
             ? $controlador->obtenerDatosSede($idSede)
             : ['success' => false, 'message' => 'ID de sede no válido'];
 
+    } elseif ($accion === 'obtener_vehiculos_tipo') {
+        $tipo      = trim($_POST['tipo'] ?? '');
+        $resultado = $controlador->obtenerVehiculosPorTipo($tipo);
+
     } elseif ($accion === 'ocupar_manual') {
-        $idEspacio = isset($_POST['id_espacio']) ? (int)$_POST['id_espacio'] : 0;
-        $placa     = trim($_POST['placa'] ?? '');
-        $resultado = $controlador->ocuparManual($idEspacio, $placa);
+        $idEspacio  = isset($_POST['id_espacio'])  ? (int)$_POST['id_espacio']  : 0;
+        $idVehiculo = isset($_POST['id_vehiculo']) ? (int)$_POST['id_vehiculo'] : 0;
+        $resultado  = $controlador->ocuparManual($idEspacio, $idVehiculo);
 
     } elseif ($accion === 'liberar_manual') {
         $idEspacio = isset($_POST['id_espacio']) ? (int)$_POST['id_espacio'] : 0;
         $resultado = $controlador->liberarManual($idEspacio);
-
-    // ═════════════════════════════════════════════════════════════════════════
-    // ESCÁNER QR — Punto de entrada del módulo escáner del compañero
-    // POST: accion=escanear_qr, placa=ABC123, id_sede=3, tipo_evento=entrada|salida
-    // ═════════════════════════════════════════════════════════════════════════
-    } elseif ($accion === 'escanear_qr') {
-        $placa      = trim($_POST['placa']       ?? '');
-        $idSede     = isset($_POST['id_sede'])   ? (int)$_POST['id_sede'] : 0;
-        $tipoEvento = trim($_POST['tipo_evento'] ?? '');
-        $resultado  = $controlador->escanearQR($placa, $idSede, $tipoEvento);
 
     } else {
         $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];
