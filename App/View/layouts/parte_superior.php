@@ -73,7 +73,6 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo">
                 <i class="fas fa-fw fa-cog"></i><span>Funcionario</span>
             </a>
-<<<<<<< HEAD
             <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Funcionarios:</h6>
@@ -90,41 +89,6 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
                     <h6 class="collapse-header">Sedes:</h6>
                     <a class="collapse-item" href="../PersonalSeguridad/ListaInstituciones.php">Lista de Institutos</a>
                     <a class="collapse-item" href="../PersonalSeguridad/SedeLista.php">Lista de Sedes</a>
-=======
-
-            <hr class="sidebar-divider">
-
-            <!-- Sección de Funcionario -->
-            <li class="nav-item">
-                <!-- Botón que despliega submenú -->
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Funcionario</span>
-                </a>
-
-                <!-- Contenedor del submenú -->
-                <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        
-                        <!-- Subtítulo -->
-                        <h6 class="collapse-header">Funcionarios:</h6>
-                        <!-- Opciones -->
-                        <a class="collapse-item" href="../PersonalSeguridad/Funcionario.php">Registrar Funcionario</a>
-                        <a class="collapse-item" href="../PersonalSeguridad/FuncionarioLista.php">Lista de Funcionarios</a>
-
-                        <div class="collapse-divider"></div>
-
-                        <h6 class="collapse-header">Parqueadero:</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/Vehiculo.php">Ingreso Vehiculo</a>
-                        <a class="collapse-item" href="../PersonalSeguridad/Vehiculolista.php">Lista Vehiculo</a>
-
-                        <div class="collapse-divider"></div>
-
-                        <h6 class="collapse-header">Dispositivos:</h6>
-                        <a class="collapse-item" href="../PersonalSeguridad/Dispositivos.php">Registrar Dispositivo</a>
-                        <a class="collapse-item" href="../PersonalSeguridad/DispositivoLista.php">Lista de Dispositivos</a>
-                    </div>
->>>>>>> feature/parqueadero-dispositivo
                 </div>
             </div>
         </li>
