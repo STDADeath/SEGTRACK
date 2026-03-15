@@ -4572,3 +4572,8 @@ POST recibido:
 2026-03-15 05:40:45 - Foto guardada para funcionario 79: qr/Fotos/FOTO-FUNC-79-69b6384daaabe.jpg
 2026-03-15 05:40:45 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-79-69b6384dad4b7.png
 2026-03-15 05:40:49 - Correo enviado correctamente a pasachoa2002@gmail.com
+2026-03-15 13:41:19 - EXCEPCIÓN al generar QR: Call to undefined function ImageCreate()
+2026-03-15 13:42:03 - EXCEPCIÓN al generar QR: Call to undefined function ImageCreate()
+2026-03-15 13:44:35 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-65-69b6a9b3239ef.jpg
+2026-03-15 13:44:35 - Foto guardada para funcionario 65: qr/Fotos/FOTO-FUNC-65-69b6a9b3239ef.jpg
+2026-03-15 13:44:35 - EXCEPCIÓN al generar QR: Call to undefined function ImageCreate()
