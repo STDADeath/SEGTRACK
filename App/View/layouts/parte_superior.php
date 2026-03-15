@@ -31,15 +31,12 @@ if ($usuario['TipoRol'] !== 'Personal Seguridad') {
     exit();
 }
 
-// ✅ SCRIPT_NAME = /SEGTRACK/App/View/PersonalSeguridad/Dashboard.php
-// dirname x4 sube hasta /SEGTRACK/
 $baseUrl = rtrim(
     str_replace('\\', '/',
         dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))))
     ), '/'
 );
 
-// ✅ Resultado: /SEGTRACK/Public/qr/Fotos/FOTO-FUNC-75-xxx.jpg
 $fotoPerfil   = (!empty($usuario['FotoFuncionario']))
     ? $baseUrl . '/Public/' . htmlspecialchars($usuario['FotoFuncionario'])
     : $baseUrl . '/Public/img/undraw_profile.svg';
@@ -152,16 +149,23 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
                     </li>
 
                     <li class="nav-item dropdown no-arrow">
+
                         <a class="nav-link dropdown-toggle" href="#"
-                            id="userDropdown" data-toggle="dropdown">
+                            id="userDropdown" data-toggle="dropdown"
+                            style="display:flex;align-items:center;gap:10px;">
 
-                            <?php echo htmlspecialchars($usuario['NombreFuncionario']); ?>
-                            &nbsp;|&nbsp;
-                            <?php echo htmlspecialchars($usuario['TipoRol']); ?>
+                            <div style="text-align:right;line-height:1.3;">
+                                <div style="font-size:13px;font-weight:600;color:#333;">
+                                    <?= htmlspecialchars($usuario['NombreFuncionario']) ?>
+                                </div>
+                                <div style="font-size:11px;color:#888;">
+                                    <?= htmlspecialchars($usuario['TipoRol']) ?>
+                                </div>
+                            </div>
 
-                            <!-- ✅ FOTO TOPBAR -->
                             <img class="img-profile rounded-circle"
-                                style="width:40px;height:40px;object-fit:cover;"
+                                style="width:42px;height:42px;object-fit:cover;
+                                       border:2px solid #e0e0e0;flex-shrink:0;"
                                 src="<?= $fotoPerfil ?>"
                                 onerror="this.src='<?= $fotoFallback ?>'">
                         </a>
@@ -169,19 +173,21 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
 
-                            <!-- ✅ FOTO DROPDOWN — texto negro y pequeño -->
-                            <div class="text-center p-3">
+                            <div class="text-center" style="padding:16px 12px 12px;">
                                 <img src="<?= $fotoPerfil ?>"
-                                    style="width:70px;height:70px;object-fit:cover;
-                                           border-radius:50%;border:2px solid #4e73df;"
+                                    style="width:72px;height:72px;object-fit:cover;
+                                           border-radius:50%;border:2px solid #4e73df;
+                                           display:block;margin:0 auto;"
                                     onerror="this.src='<?= $fotoFallback ?>'">
-                                <div class="mt-2"
-                                    style="font-size:13px;font-weight:600;color:#333;">
+
+                                <div style="margin-top:10px;font-size:13px;
+                                            font-weight:600;color:#333;">
                                     <?= htmlspecialchars($usuario['NombreFuncionario']) ?>
                                 </div>
-                                <small style="font-size:11px;color:#666;">
+
+                                <div style="margin-top:3px;font-size:11px;color:#777;">
                                     <?= htmlspecialchars($usuario['TipoRol']) ?>
-                                </small>
+                                </div>
                             </div>
 
                             <div class="dropdown-divider"></div>

@@ -4558,3 +4558,7 @@ POST recibido:
 2026-03-14 01:52:01 - Foto guardada para funcionario 75: qr/Fotos/FOTO-FUNC-75-69b4b1312cae6.jpg
 2026-03-14 01:52:01 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-75-69b4b13131303.png
 2026-03-14 01:52:09 - Correo enviado correctamente a andersoarebalo@gmail.com
+2026-03-14 12:05:13 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-76-69b540e9b7cb7.jpg
+2026-03-14 12:05:13 - Foto guardada para funcionario 76: qr/Fotos/FOTO-FUNC-76-69b540e9b7cb7.jpg
+2026-03-14 12:05:13 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-76-69b540e9bae17.png
+2026-03-14 12:05:22 - Correo enviado correctamente a pasachoa2002@gmail.com
