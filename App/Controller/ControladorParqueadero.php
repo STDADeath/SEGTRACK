@@ -176,7 +176,7 @@ try {
             }
 
             $vehiculos = $this->modelo->obtenerVehiculosPorTipo($tipo);
-            return ['success' => true, 'vehiculos' => $vehiculos];
+            return ['success' => true, 'vehiculos' => $vehiculos]; 
         }
 
         // ── Ocupar espacio manualmente (guardia sin escáner) ──────────────────
