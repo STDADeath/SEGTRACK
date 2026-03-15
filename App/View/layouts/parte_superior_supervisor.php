@@ -92,6 +92,7 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
             </div>
         </li>
 
+<<<<<<< HEAD
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuper2">
                 <i class="fas fa-fw fa-clipboard-list"></i>
@@ -104,6 +105,25 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
                     <a class="collapse-item" href="../Supervisor/ParqueaderoSupervisor.php">Registros Parqueadero</a>
                     <a class="collapse-item" href="">Registros Funcionarios</a>
                     <a class="collapse-item" href="">Registros Ingresos</a>
+=======
+            <!-- Gestión -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuper2">
+                    <i class="fas fa-fw fa-clipboard-list"></i>
+                    <span>Informacion De Registros </span>
+                </a>
+
+                <div id="collapseSuper2" class="collapse" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+                        <h6 class="collapse-header">Registros Seguridad</h6>
+                        <a class="collapse-item" href="../Supervisor/DispositivoSupervisor.php">Registros Dipositivos</a>
+                        <a class="collapse-item" href="../Supervisor/VehiculoSupervisor.php">Vista de Vehiculos</a>
+                          <a class="collapse-item" href="">Registros Funcionarios</a>
+                        <a class="collapse-item" href="">Registros Ingresos</a>
+
+                    </div>
+>>>>>>> feature/parqueadero-dispositivo
                 </div>
             </div>
         </li>
