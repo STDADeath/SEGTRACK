@@ -94,3 +94,34 @@ Acción: cambiar_estado
 Respuesta: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
 === FIN ===
 
+
+2026-03-14 23:23:36 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "NA1",
+    "DescripcionVehiculo": "Cicla roja con serial 1234",
+    "TarjetaPropiedad": "12345678910",
+    "IdSede": "25",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "78",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 25","data":{"IdVehiculo":"25","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-25-69b634488cf8b.png","FechaRegistro":"2026-03-14 23:23:36"}}
+=== FIN ===
+
+
+2026-03-14 23:23:49 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "25",
+    "correo_destinatario": ""
+}
+Acción: enviar_qr
+enviarQRPorCorreo vehículo ID: 25
+Correo automático de funcionario: pasachoa2002@gmail.com
+✅ Correo enviado a: pasachoa2002@gmail.com
+Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: pasachoa2002@gmail.com","esFuncionario":true,"correo":"pasachoa2002@gmail.com"}
+=== FIN ===
+

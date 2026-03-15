@@ -2914,3 +2914,52 @@ EXCEPCIÓN PDO: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'NumeroSe
 Respuesta final: {"success":false,"message":"Error al registrar en BD: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'NumeroSerial' in 'field list'"}
 === FIN ===
 
+
+2026-03-15 05:26:30 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "ASUS",
+    "NumeroSerial": "SN987654321",
+    "IdFuncionario": "78",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: ASUS, Serial: SN987654321
+INSERT exitoso, ID: 41
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 41","data":{"IdDispositivo":"41","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-41-69b634f61f9e7.png"}}
+=== FIN ===
+
+
+2026-03-15 05:27:56 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "ASUS",
+    "NumeroSerial": "2344235425325",
+    "IdFuncionario": "78",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: ASUS, Serial: 2344235425325
+INSERT exitoso, ID: 42
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 42","data":{"IdDispositivo":"42","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-42-69b6354c2401a.png"}}
+=== FIN ===
+
+
+2026-03-15 05:28:35 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "41"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: pasachoa2002@gmail.com"}
+=== FIN ===
+

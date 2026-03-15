@@ -43,8 +43,6 @@ $fotoPerfil   = (!empty($usuario['FotoFuncionario']))
 
 $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
 ?>
-<!DOCTYPE html>
-<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,7 +51,6 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
     <link href="../../../Public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../../../Public/css/styles.css" rel="stylesheet">
     <link href="../../../Public/css/graficas.css" rel="stylesheet">
     <link href="../../../Public/css/icono.css" rel="stylesheet">
 </head>
@@ -72,58 +69,86 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
 
         <hr class="sidebar-divider">
 
+        <!-- Módulo: Funcionarios -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuper1">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFuncionarios">
                 <i class="fas fa-fw fa-user-shield"></i>
-                <span>Supervisión de Personal</span>
+                <span>Funcionarios</span>
             </a>
-            <div id="collapseSuper1" class="collapse" data-parent="#accordionSidebar">
+            <div id="collapseFuncionarios" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Personal Seguridad</h6>
-                    <a class="collapse-item" href="">Reporte De Dotacion</a>
-                    <a class="collapse-item" href="">Reporte De Bitacoras</a>
-                    <a class="collapse-item" href="">Reporte De Visitante</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Sedes:</h6>
-                    <a class="collapse-item" href="../Supervisor/SedeLista.php">Lista de Sedes</a>
-                    <h6 class="collapse-header">Institutos:</h6>
-                    <a class="collapse-item" href="../Supervisor/InstitutosListaSUP.php">Lista de Institutos</a>
+                    <h6 class="collapse-header">Funcionarios</h6>
+                    <a class="collapse-item" href="../Supervisor/FuncionarioListaSUP.php">Lista de Funcionarios</a>
                 </div>
             </div>
         </li>
 
-<<<<<<< HEAD
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Dispositivos -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuper2">
-                <i class="fas fa-fw fa-clipboard-list"></i>
-                <span>Información De Registros</span>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDispositivos">
+                <i class="fas fa-fw fa-laptop"></i>
+                <span>Dispositivos</span>
             </a>
-            <div id="collapseSuper2" class="collapse" data-parent="#accordionSidebar">
+            <div id="collapseDispositivos" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Registros Seguridad</h6>
+                    <h6 class="collapse-header">Dispositivos</h6>
                     <a class="collapse-item" href="../Supervisor/DispositivoSupervisor.php">Registros Dispositivos</a>
-                    <a class="collapse-item" href="../Supervisor/ParqueaderoSupervisor.php">Registros Parqueadero</a>
-                    <a class="collapse-item" href="">Registros Funcionarios</a>
-                    <a class="collapse-item" href="">Registros Ingresos</a>
-=======
-            <!-- Gestión -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuper2">
-                    <i class="fas fa-fw fa-clipboard-list"></i>
-                    <span>Informacion De Registros </span>
-                </a>
+                </div>
+            </div>
+        </li>
 
-                <div id="collapseSuper2" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+        <hr class="sidebar-divider">
 
-                        <h6 class="collapse-header">Registros Seguridad</h6>
-                        <a class="collapse-item" href="../Supervisor/DispositivoSupervisor.php">Registros Dipositivos</a>
-                        <a class="collapse-item" href="../Supervisor/VehiculoSupervisor.php">Vista de Vehiculos</a>
-                          <a class="collapse-item" href="">Registros Funcionarios</a>
-                        <a class="collapse-item" href="">Registros Ingresos</a>
+        <!-- Módulo: Parqueadero -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParqueadero">
+                <i class="fas fa-fw fa-parking"></i>
+                <span>Parqueadero</span>
+            </a>
+            <div id="collapseParqueadero" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Parqueadero</h6>
+                    <a class="collapse-item" href="../Supervisor/VehiculoSupervisor.php">Administrar Parqueaderos</a>
+                </div>
+            </div>
+        </li>
 
-                    </div>
->>>>>>> feature/parqueadero-dispositivo
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Sedes -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSedes">
+                <i class="fas fa-fw fa-building"></i>
+                <span>Sedes</span>
+            </a>
+            <div id="collapseSedes" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Sedes</h6>
+                    <a class="collapse-item" href="../Supervisor/InstitutosListaSUP.php">Lista de Institutos</a>
+                    <a class="collapse-item" href="../Supervisor/SedeLista.php">Lista de Sedes</a>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Reportes -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes">
+                <i class="fas fa-fw fa-clipboard-list"></i>
+                <span>Reportes</span>
+            </a>
+            <div id="collapseReportes" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Personal Seguridad</h6>
+                    <a class="collapse-item" href="../Supervisor/ReporteDotacion.php">Reporte De Dotación</a>
+                    <a class="collapse-item" href="../Supervisor/ReporteBitacora.php">Reporte De Bitácoras</a>
+                    <a class="collapse-item" href="../Supervisor/ReporteVisitante.php">Reporte De Visitantes</a>
+                    <div class="collapse-divider"></div>
+                    <h6 class="collapse-header">Registros</h6>
+                    <a class="collapse-item" href="../Supervisor/ReporteIngresos.php">Registros Ingresos</a>
                 </div>
             </div>
         </li>
@@ -142,6 +167,13 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
                 </button>
 
                 <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#"
+                            id="searchDropdown" data-toggle="dropdown">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                    </li>
 
                     <li class="nav-item dropdown no-arrow">
 

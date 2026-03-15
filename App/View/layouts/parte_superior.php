@@ -69,23 +69,81 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
 
         <hr class="sidebar-divider">
 
+        <!-- Módulo: Funcionario -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo">
-                <i class="fas fa-fw fa-cog"></i><span>Funcionario</span>
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Funcionario</span>
             </a>
             <div id="collapseTwo" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Funcionarios:</h6>
                     <a class="collapse-item" href="../PersonalSeguridad/Funcionario.php">Registrar Funcionario</a>
                     <a class="collapse-item" href="../PersonalSeguridad/FuncionarioLista.php">Lista de Funcionarios</a>
-                    <div class="collapse-divider"></div>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Vehículos -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVehiculos">
+                <i class="fas fa-fw fa-car"></i>
+                <span>Vehículos</span>
+            </a>
+            <div id="collapseVehiculos" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Vehículos:</h6>
+                    <a class="collapse-item" href="../PersonalSeguridad/Vehiculo.php">Ingreso Vehículo</a>
+                    <a class="collapse-item" href="../PersonalSeguridad/Vehiculolista.php">Lista Vehículo</a>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Parqueadero -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParqueadero">
+                <i class="fas fa-fw fa-parking"></i>
+                <span>Parqueadero</span>
+            </a>
+            <div id="collapseParqueadero" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Parqueadero:</h6>
-                    <a class="collapse-item" href="../PersonalSeguridad/Parqueaderoguardia.php">Ingreso Parqueadero</a>
-                    <a class="collapse-item" href="../PersonalSeguridad/Vehiculolista.php">Lista Parqueadero</a>
-                    <div class="collapse-divider"></div>
+                    <a class="collapse-item" href="../PersonalSeguridad/Parqueaderoguardia.php">Ingreso al Parqueadero</a>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Dispositivos -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDispositivos">
+                <i class="fas fa-fw fa-laptop"></i>
+                <span>Dispositivos</span>
+            </a>
+            <div id="collapseDispositivos" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Dispositivos:</h6>
                     <a class="collapse-item" href="../PersonalSeguridad/Dispositivos.php">Registrar Dispositivo</a>
                     <a class="collapse-item" href="../PersonalSeguridad/DispositivoLista.php">Lista de Dispositivos</a>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Sedes -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSedes">
+                <i class="fas fa-fw fa-building"></i>
+                <span>Sedes</span>
+            </a>
+            <div id="collapseSedes" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Sedes:</h6>
                     <a class="collapse-item" href="../PersonalSeguridad/ListaInstituciones.php">Lista de Institutos</a>
                     <a class="collapse-item" href="../PersonalSeguridad/SedeLista.php">Lista de Sedes</a>
@@ -93,9 +151,13 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
             </div>
         </li>
 
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Control Bitácora -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities">
-                <i class="fas fa-fw fa-wrench"></i><span>Control Bitácora</span>
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Control Bitácora</span>
             </a>
             <div id="collapseUtilities" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -106,7 +168,20 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
                     <h6 class="collapse-header">Dotación</h6>
                     <a class="collapse-item" href="../PersonalSeguridad/Dotaciones.php">Ingresar Dotación</a>
                     <a class="collapse-item" href="../PersonalSeguridad/DotacionLista.php">Registro de Dotación</a>
-                    <div class="collapse-divider"></div>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Visitantes -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisitantes">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Visitantes</span>
+            </a>
+            <div id="collapseVisitantes" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Visitantes</h6>
                     <a class="collapse-item" href="../PersonalSeguridad/Visitante.php">Registro Visitante</a>
                     <a class="collapse-item" href="../PersonalSeguridad/VisitanteLista.php">Lista de Visitantes</a>
@@ -114,9 +189,13 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
             </div>
         </li>
 
+        <hr class="sidebar-divider">
+
+        <!-- Módulo: Tabla de Ingreso -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages">
-                <i class="fas fa-fw fa-folder"></i><span>Tabla de ingreso</span>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Tabla de ingreso</span>
             </a>
             <div id="collapsePages" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
