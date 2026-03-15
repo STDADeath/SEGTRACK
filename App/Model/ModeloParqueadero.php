@@ -621,20 +621,6 @@ class ModeloParqueadero {
         }
     }
 
-    // ══════════════════════════════════════════════════════════════════════════
-    // MÉTODO PARA EL ESCÁNER (integración con módulo del compañero)
-    // ══════════════════════════════════════════════════════════════════════════
-    /**
-     * CÓMO CONECTAR EL ESCÁNER:
-     * El módulo escáner debe enviar POST a ControladorParqueadero.php con:
-     *   accion      => 'escanear_qr'
-     *   placa       => 'ABC123'       ← placa leída del QR
-     *   id_sede     => 3              ← sede donde está el lector
-     *   tipo_evento => 'entrada'      ← o 'salida'
-     *
-     * NOTA: Si el QR guarda IdVehiculo en lugar de placa, reemplazar
-     *       obtenerVehiculoPorPlaca() por una consulta por IdVehiculo.
-     */
     public function procesarEscaneo(string $placa, int $idSede, string $tipoEvento): array {
         try {
             file_put_contents($this->debugPath,

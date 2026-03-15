@@ -94,3 +94,34 @@ Acción: cambiar_estado
 Respuesta: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
 === FIN ===
 
+
+2026-03-12 21:43:40 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "BGF 65F",
+    "DescripcionVehiculo": "Honda color azul",
+    "TarjetaPropiedad": "tj3244445566",
+    "IdSede": "64",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "58",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 24","data":{"IdVehiculo":"24","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-24-69b379dce34ce.png","FechaRegistro":"2026-03-12 21:43:40"}}
+=== FIN ===
+
+
+2026-03-12 21:43:56 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "24",
+    "correo_destinatario": ""
+}
+Acción: enviar_qr
+enviarQRPorCorreo vehículo ID: 24
+Correo automático de funcionario: andersoarebalo@gmail.com
+✅ Correo enviado a: andersoarebalo@gmail.com
+Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com","esFuncionario":true,"correo":"andersoarebalo@gmail.com"}
+=== FIN ===
+
