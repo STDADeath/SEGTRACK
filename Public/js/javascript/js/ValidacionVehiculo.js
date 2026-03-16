@@ -335,4 +335,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     }); // fin esperarJQuery
-});
+})
