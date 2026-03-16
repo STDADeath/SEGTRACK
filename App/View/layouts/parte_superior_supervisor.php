@@ -80,7 +80,7 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
             <div id="collapseSuper1" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Personal Seguridad</h6>
-                    <a class="collapse-item" href="">Reporte De Dotacion</a>
+                    <a class="collapse-item" href="../Supervisor/FuncionarioListaSUP.php">Lista de Funcionarios</a>
                     <a class="collapse-item" href="">Reporte De Bitacoras</a>
                     <a class="collapse-item" href="">Reporte De Visitante</a>
                     <div class="collapse-divider"></div>

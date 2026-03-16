@@ -148,9 +148,9 @@ Segtrack ofrece una interfaz de bienvenida atractiva y moderna, diseñada para p
 
 ---
 
-![Vista principal](Public/img/Fotos_Manual/image.png)
+![Vista principal](Public/img/Fotos_Manual/image-5.png)
 
-![Vista principal 2](Public/img/Fotos_Manual/image-1.png)
+![Vista principal 2](Public/img/Fotos_Manual/image-3.png)
 
 ![Vista principal 3](Public/img/Fotos_Manual/image-2.png)
 
