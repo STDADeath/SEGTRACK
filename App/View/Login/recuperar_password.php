@@ -49,7 +49,7 @@
                     </form>
 
                     <div class="links">
-                        <a href="#">¿Ya tienes tu token? Cambiar contraseña</a>
+                        <a href="cambiar_password.php">¿Ya tienes tu token? Cambiar contraseña</a>
                     </div>
                 </div>
             </div>

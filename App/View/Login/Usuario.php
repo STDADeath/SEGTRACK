@@ -16,9 +16,7 @@ $sql_funcionarios = "SELECT
                         f.NombreFuncionario, 
                         f.DocumentoFuncionario 
                      FROM Funcionario f
-                     LEFT JOIN Usuario u ON f.IdFuncionario = u.IdFuncionario
                      WHERE f.Estado = 'Activo' 
-                     AND u.IdUsuario IS NULL
                      ORDER BY f.NombreFuncionario";
 
 try {

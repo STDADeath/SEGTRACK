@@ -352,7 +352,7 @@ try {
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
                 $mail->Username   = 'seguridad.integral.segtrack@gmail.com';
-                $mail->Password   = 'lwfc rpts gcog iysv';
+                $mail->Password   = 'uext kzcp fwta imhs';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
                 $mail->CharSet    = 'UTF-8';

@@ -4567,3 +4567,99 @@ POST recibido:
 2026-03-15 13:55:56 - Foto guardada para funcionario 67: qr/Fotos/FOTO-FUNC-67-69b6ac5c09396.jpg
 2026-03-15 13:55:56 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-67-69b6ac5c24bb4.png
 2026-03-15 13:55:59 - Correo enviado correctamente a curry@gmail.com
+2026-03-15 20:53:21 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-68-69b70e31a16d8.jpg
+2026-03-15 20:53:21 - Foto guardada para funcionario 68: qr/Fotos/FOTO-FUNC-68-69b70e31a16d8.jpg
+2026-03-15 20:53:21 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-68-69b70e31a4f82.png
+2026-03-15 20:53:34 - Correo enviado correctamente a feria@gmail.com
+2026-03-15 20:55:36 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-68-69b70eb8e230e.png
+2026-03-15 20:55:47 - Correo enviado correctamente a feria@gmail.com
+2026-03-15 21:52:43 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-69-69b71c1b28eab.jpg
+2026-03-15 21:52:43 - Foto guardada para funcionario 69: qr/Fotos/FOTO-FUNC-69-69b71c1b28eab.jpg
+2026-03-15 21:52:43 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-69-69b71c1b2bec5.png
+2026-03-15 21:52:47 - Correo enviado correctamente a Daniela@gmail.com
+2026-03-15 23:46:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-70-69b736c78c346.png
+2026-03-15 23:46:35 - Correo enviado correctamente a prueba@gmail.com
+2026-03-15 23:51:45 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-71-69b7380106355.png
+2026-03-15 23:51:48 - Correo enviado correctamente a Segtrack@gmail.com
+2026-03-15 23:57:47 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-72-69b7396b5a7d2.png
+2026-03-15 23:57:50 - Correo enviado correctamente a Segtrack@gmail.com
+2026-03-15 23:59:30 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-73-69b739d267e1f.png
+2026-03-15 23:59:34 - Correo enviado correctamente a luisperez@123.com
+2026-03-16 00:03:57 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-74-69b73addc2b50.png
+2026-03-16 00:04:01 - Correo enviado correctamente a Daniela1@gmail.com
+2026-03-16 00:09:14 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-75-69b73c1ad24e8.png
+2026-03-16 00:09:19 - Correo enviado correctamente a teresamaria@gmail.com
+2026-03-16 00:31:42 - Foto guardada (archivo) en ambas carpetas: FOTO-FUNC-76-69b7415ec473c.jpg
+2026-03-16 00:31:42 - Foto guardada para funcionario 76: qr/Fotos/FOTO-FUNC-76-69b7415ec473c.jpg
+2026-03-16 00:31:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-76-69b7415ecb404.png
+2026-03-16 00:31:49 - Correo enviado correctamente a loreal@gmail.com
+2026-03-16 00:37:33 - Foto guardada (archivo) en ambas carpetas: FOTO-FUNC-77-69b742bd02e0c.jpg
+2026-03-16 00:37:33 - Foto guardada para funcionario 77: qr/Fotos/FOTO-FUNC-77-69b742bd02e0c.jpg
+2026-03-16 00:37:33 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-77-69b742bd162ff.png
+2026-03-16 00:37:40 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-03-16 00:41:37 - === enviarQRPorCorreo llamado para ID: 77 ===
+2026-03-16 00:41:41 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-03-16 00:43:00 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 00:43:00 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor. Ruta: qr/Qr_Func/QR-FUNC-64-69b6ffebc6875.png
+2026-03-16 00:43:29 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-64-69b744210e110.png
+2026-03-16 00:43:38 - Correo enviado correctamente a Pasachoa2002@gmail.com
+2026-03-16 00:43:46 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 00:43:54 - Correo enviado correctamente a Pasachoa2002@gmail.com
+2026-03-16 00:45:43 - === enviarQRPorCorreo llamado para ID: 77 ===
+2026-03-16 00:45:49 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-03-16 00:46:00 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 00:46:07 - Correo enviado correctamente a Pasachoa2002@gmail.com
+2026-03-16 00:46:53 - === enviarQRPorCorreo llamado para ID: 77 ===
+2026-03-16 00:46:57 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-03-16 00:53:05 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 00:53:12 - Correo enviado correctamente a Pasachoa2002@gmail.com
+2026-03-16 01:06:41 - === enviarQRPorCorreo llamado para ID: 77 ===
+2026-03-16 01:06:46 - Correo enviado correctamente a caroldayana989@gmail.com
+2026-03-16 01:06:50 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:06:52 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:06:53 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:07:39 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:07:42 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:07:42 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:07:47 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:07:49 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:07:49 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:08:07 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:08:11 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:08:11 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:08:31 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-64-69b749ffc82f7.png
+2026-03-16 01:08:35 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:08:43 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:08:44 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:08:45 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:09:17 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:09:21 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:09:21 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:15:48 - === enviarQRPorCorreo llamado para ID: 77 ===
+2026-03-16 01:15:51 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:15:51 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:16:39 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:16:42 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:16:42 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:17:38 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:17:42 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:17:42 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:19:11 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:19:13 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:19:13 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:19:28 - === enviarQRPorCorreo llamado para ID: 77 ===
+2026-03-16 01:19:32 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:19:32 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:26:56 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:27:00 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:27:00 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:32:48 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:32:54 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:32:54 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:34:32 - === enviarQRPorCorreo llamado para ID: 64 ===
+2026-03-16 01:34:35 - Error al enviar correo a Pasachoa2002@gmail.com: SMTP Error: data not accepted.
+2026-03-16 01:34:35 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-16 01:37:51 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-78-69b750df7c936.jpg
+2026-03-16 01:37:51 - Foto guardada para funcionario 78: qr/Fotos/FOTO-FUNC-78-69b750df7c936.jpg
+2026-03-16 01:37:51 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-78-69b750df81825.png
+2026-03-16 01:37:54 - Error al enviar correo a pocoyo@gmail.com: SMTP Error: data not accepted.

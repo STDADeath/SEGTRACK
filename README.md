@@ -1,39 +1,45 @@
 <div align="center">
 
-# MANUAL DE USUARIO
 
-## ANÁLISIS Y DESARROLLO DE SOFTWARE
-
----
-
-## ACCIONES DE SEGTRACK
-
+MANUAL DE USUARIO
 <br/>
 <br/>
-
+ANÁLISIS Y DESARROLLO DE SOFTWARE
+<br/>
+<br/>
+ACCIONES DE SEGTRACK
+<br/>
+<br/>
+<br/>
 **TUTOR**
-
+<br/>
 Elsa María Junca Bernal
-
 <br/>
 <br/>
-
 **APRENDICES**
 
 Andres Camilo Carrillo Jaimes
-
+<br/>
+<br/>
 Michael David Montoya Pasachoa
-
+<br/>
+<br/>
 Anderson Estiven Moreno Pinzon
 
+
 <br/>
 <br/>
+
 
 **2025**
 
+
 </div>
 
----
+
+
+
+
 
 # Proyecto SEGTRACK
 
@@ -51,7 +57,7 @@ Anderson Estiven Moreno Pinzon
   - [4.3 Control de Parqueadero](#43-control-de-parqueadero-)
 - [5. Tecnologías Utilizadas](#5-tecnologías-utilizadas)
 - [6. Uso del Sistema](#6-uso-del-sistema)
-- [7. Inicio del Sistema](#7-inicio-del-sistema)
+- [7. Pantalla principal](#7-Pantalla-principal)
 - [8. Inicio de Sesión](#8-inicio-de-sesión)
   - [8.1 Validaciones del Formulario](#81-validaciones-del-formulario)
 - [9. Recuperación de Contraseña](#9-recuperación-de-contraseña)
@@ -123,7 +129,7 @@ Segtrack gestiona los espacios de estacionamiento disponibles por sede. El siste
 
 ## 6. Uso del Sistema
 
-El sistema permite iniciar sesión de acuerdo con el rol asignado a cada usuario. Al ingresar las credenciales (correo electrónico o número de documento junto con la contraseña), Segtrack valida la información y redirige automáticamente al panel de control correspondiente:
+El sistema permite iniciar sesión de acuerdo con el rol asignado a cada usuario. Al ingresar las credenciales (correo electrónico junto con la contraseña), Segtrack valida la información y redirige automáticamente al panel de control correspondiente:
 
 | Rol | Panel de acceso |
 |-----|----------------|
@@ -133,7 +139,7 @@ El sistema permite iniciar sesión de acuerdo con el rol asignado a cada usuario
 
 ---
 
-## 7. Inicio del Sistema
+## 7. Pantalla principal
 
 Segtrack ofrece una interfaz de bienvenida atractiva y moderna, diseñada para presentar de forma clara la propuesta principal del sistema: el control de entrada y salida de funcionarios mediante códigos QR. Desde esta pantalla el usuario puede navegar hacia el inicio de sesión y conocer más sobre la plataforma.
 
@@ -230,6 +236,37 @@ Al seleccionar la opción de recuperación, el sistema solicita el correo electr
 ![Token recibido](not.jpeg)
 
 ---
+
+**Sistema de  validacion de token de 15 min.**
+En esta parte solicitara el token para poder  realizar el cambio de contraseña.
+![recuperar_password](image-17.png)
+
+---
+Despues de haber ingresado el token y el cambio de contraseña ya podemo ingresar al perfil principal del aplicativo.
+
+![Dashboard](image-18.png)
+
+---
+
+## Registrar Funcionarios.
+En este caso interactuaremos con el perfil de  persola de seguridad el cual podra registrar a un funcionario en el sistema con sus datos principales y una foto.
+
+![Dasboard Pesonal seguridad](image-19.png)
+
+---
+El formulario esta configurado para poder validar los campos para que estos sean obligatorios y sean validados para evitar caracteres inapropiados
+
+![alt text](image-21.png)
+
+---
+- Datos duplicados.
+
+
+- Formulario diligenciado
+![alt text](image-20.png)
+
+
+
 
 ## 10. Autores
 
