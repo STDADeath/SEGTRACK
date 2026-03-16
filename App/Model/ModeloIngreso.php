@@ -1,77 +1,73 @@
 <?php
 
 class ModeloIngreso {
-    private $pdo; // Almacena la conexión a la base de datos
+    private $pdo;
 
-    // Constructor: se ejecuta automáticamente al crear el objeto del modelo
     public function __construct() {
-        require_once __DIR__ . '/../Core/conexion.php'; 
-        // Carga la clase Conexion para acceder a la BD
-
-        $conexionObj = new Conexion();      
-        $this->pdo = $conexionObj->getConexion();  
-        // Se obtiene la conexión PDO desde la clase Conexion
-
+        require_once __DIR__ . '/../Core/conexion.php';
+        $conexionObj = new Conexion();
+        $this->pdo   = $conexionObj->getConexion();
 
         if (!$this->pdo) {
-            die("ERROR: La conexión no se inicializó correctamente.");
+            die(json_encode(['success' => false, 'message' => 'Conexión fallida']));
         }
     }
 
-
     // Busca un funcionario usando el contenido del código QR.
-    // El QR debe traer un formato como: "ID: 12"
+    // El QR tiene formato: "ID: 12\nNombre: ...\nDocumento: ..."
 
     public function buscarFuncionarioPorQr($qrCodigo) {
 
-        // Expresión regular que extrae el número después de "ID:"
         if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $match)) {
-            $id = $match[1]; // Se obtiene el IdFuncionario
+            $id = (int)$match[1];
         } else {
-            // Si el QR no tiene formato correcto, se retorna false
             return false;
         }
 
-        // Consulta SQL para obtener los datos del funcionario por su ID
-        $sql = "SELECT * FROM funcionario WHERE IdFuncionario = ?";
+        $sql  = "SELECT * FROM funcionario WHERE IdFuncionario = ? LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
 
-        // Retorna un arreglo asociativo con los datos, o false si no existe
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: false;
     }
 
-    // Registra un ingreso o salida en la base de datos
-    // Retorna true si se insertó correctamente, false en caso contrario
-    public function registrarIngreso($idFuncionario, $idSede, $idParqueadero = null, $tipoMovimiento = 'Entrada') {
+    // Registra un ingreso o salida del funcionario.
 
-        $sql = "INSERT INTO ingreso (TipoMovimiento, FechaIngreso, IdSede, IdParqueadero, IdFuncionario)
-                VALUES (?, NOW(), ?, ?, ?)";
-        
+    public function registrarIngreso($idFuncionario, $idSede, $tipoMovimiento = 'Entrada') {
+
+        $sql  = "INSERT INTO ingreso
+                     (TipoMovimiento, FechaIngreso, Estado, IdSede, IdFuncionario, IdVehiculo, IdParqueadero)
+                 VALUES
+                     (?, NOW(), 'Activo', ?, ?, NULL, NULL)";
+
         $stmt = $this->pdo->prepare($sql);
 
-        // Se ejecuta la consulta con los parámetros enviados
-        return $stmt->execute([$tipoMovimiento, $idSede, $idParqueadero, $idFuncionario]);
+        return $stmt->execute([
+            $tipoMovimiento,
+            $idSede,
+            $idFuncionario
+        ]);
     }
 
-    /**
-     * Lista todos los ingresos registrados, mostrando información del funcionario.
-     * Se utiliza un JOIN para unir la tabla ingreso con funcionario.
-     */
+    // Lista todos los ingresos de funcionarios
+
     public function listarIngresos() {
 
-        $sql = "SELECT i.IdIngreso, i.TipoMovimiento, i.FechaIngreso, 
-                f.NombreFuncionario, f.CargoFuncionario
-                FROM ingreso i
-                INNER JOIN funcionario f ON i.IdFuncionario = f.IdFuncionario
-                ORDER BY i.IdIngreso DESC"; // Se muestran del más reciente al más antiguo
-        
+        $sql  = "SELECT
+                     i.IdIngreso,
+                     i.TipoMovimiento,
+                     i.FechaIngreso,
+                     f.NombreFuncionario,
+                     f.CargoFuncionario
+                 FROM ingreso i
+                 INNER JOIN funcionario f ON i.IdFuncionario = f.IdFuncionario
+                 WHERE i.IdFuncionario IS NOT NULL
+                 ORDER BY i.IdIngreso DESC";
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
-        // Se retorna un arreglo con todos los registros
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-
 ?>

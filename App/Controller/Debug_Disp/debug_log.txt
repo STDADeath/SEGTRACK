@@ -2963,3 +2963,5 @@ Acción detectada: enviar_qr
 Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: pasachoa2002@gmail.com"}
 === FIN ===
 
+2026-03-15 21:55:40 QR hex: 4e6f6d6272653a20416e647265732063616d696c6f2063617272696c6c6f0a436172676f3a2046756e63696f6e6172696f0a45737461646f3a2041637469766f0a536564653a2053616c6f6e20353031
+2026-03-15 21:55:40 ERROR: QR sin formato Serial:

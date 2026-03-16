@@ -1,8 +1,4 @@
-// ========================================
-// CONTROL DE DISPOSITIVOS - SISTEMA SEGTRACK
-// Lectura continua de QR
-// Compatible con DroidCam, webcam y móvil
-// ========================================
+
 
 const App = {
     table: null,
@@ -11,11 +7,12 @@ const App = {
     escaneando: false,
     tipoMovimiento: null,
     btnCapturar: null,
+    btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
 
     config: {
-        urlControlador: "/SEGTRACK/App/Controller/ControladorIngresoDispositivo.php",
+        urlControlador: "/SEGTRACK/App/Controller/ControladorIngreso.php",
         fps: 10,
         qrboxSize: 250,
         bloqueoQRms: 1500
@@ -140,21 +137,16 @@ async function iniciarCamara() {
 
         let cameraId = null;
 
-        // Buscar DroidCam primero
         const droidcam = devices.find(device =>
             device.label.toLowerCase().includes("droid")
         );
 
         if (droidcam) {
-
             cameraId = droidcam.id;
             console.log("Usando DroidCam:", droidcam.label);
-
         } else {
-
             cameraId = devices[0].id;
             console.log("Usando cámara:", devices[0].label);
-
         }
 
         await App.qrReader.start(
@@ -167,9 +159,7 @@ async function iniciarCamara() {
                 }
             },
             onScanQR,
-            error => {
-                // Errores normales de lectura (ignorar)
-            }
+            error => {}
         );
 
     } catch (error) {
@@ -183,22 +173,58 @@ async function iniciarCamara() {
 
 
 // ========================================
+// DESCARGAR PDF
+// ========================================
+
+async function descargarPDF() {
+
+    try {
+
+        const res = await fetch('/SEGTRACK/App/Controller/IngresoPDFController.php?accion=pdf');
+        if (!res.ok) throw new Error();
+
+        const blob = await res.blob();
+        const url  = window.URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = `Ingresos_${new Date().toISOString().slice(0, 10)}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+
+        mostrarMensaje(true, "PDF descargado correctamente.");
+
+    } catch (e) {
+
+        console.error(e);
+        mostrarMensaje(false, "No se pudo descargar el PDF.");
+
+    }
+
+}
+
+
+// ========================================
 // INICIALIZACIÓN
+// Usa DOMContentLoaded igual que el de dispositivos
+// para no depender de jQuery
 // ========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    App.tipoMovimiento = document.getElementById("tipoMovimiento");
-    App.btnCapturar    = document.getElementById("btnCapturar");
-    App.mensajeExito   = document.getElementById("mensajeExito");
-    App.mensajeError   = document.getElementById("mensajeError");
+    App.tipoMovimiento  = document.getElementById("tipoMovimiento");
+    App.btnCapturar     = document.getElementById("btnCapturar");
+    App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
+    App.mensajeExito    = document.getElementById("mensajeExito");
+    App.mensajeError    = document.getElementById("mensajeError");
 
 
     // ========================================
-    // TABLA DE MOVIMIENTOS DE DISPOSITIVOS
+    // TABLA DE INGRESOS
     // ========================================
 
-    App.table = $("#tablaDispositivosDT").DataTable({
+    App.table = $("#tablaIngresosDT").DataTable({
 
         ajax: {
             url: App.config.urlControlador,
@@ -208,11 +234,9 @@ document.addEventListener("DOMContentLoaded", () => {
         },
 
         columns: [
-            { data: "TipoDispositivo"  },
-            { data: "MarcaDispositivo" },
-            { data: "NumeroSerial"     },
-            { data: "NombreFuncionario"},
-            { data: "TipoMovimiento"   },
+            { data: "NombreFuncionario" },
+            { data: "CargoFuncionario"  },
+            { data: "TipoMovimiento"    },
             {
                 data: "FechaIngreso",
                 render: d => new Date(d).toLocaleString('es-ES')
@@ -223,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
             url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
         },
 
-        order: [[5, 'desc']]
+        order: [[3, 'desc']]
 
     });
 
@@ -234,5 +258,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (App.btnCapturar)
         App.btnCapturar.addEventListener("click", iniciarCamara);
+
+    if (App.btnDescargarPDF)
+        App.btnDescargarPDF.addEventListener("click", descargarPDF);
 
 });

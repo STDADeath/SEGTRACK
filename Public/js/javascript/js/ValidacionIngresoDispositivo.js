@@ -4,7 +4,7 @@
 // Compatible con DroidCam, webcam y móvil
 // ========================================
 
-const App = {
+const AppDispositivo = {
     table: null,
     qrReader: null,
     ultimaLectura: null,
@@ -27,9 +27,9 @@ const App = {
 // MENSAJES EN PANTALLA
 // ========================================
 
-function mostrarMensaje(esExito, texto) {
+function mostrarMensajeDispositivo(esExito, texto) {
 
-    const { mensajeExito, mensajeError } = App;
+    const { mensajeExito, mensajeError } = AppDispositivo;
 
     if (!mensajeExito || !mensajeError) return;
 
@@ -50,13 +50,13 @@ function mostrarMensaje(esExito, texto) {
 // ENVIAR QR AL SERVIDOR
 // ========================================
 
-async function enviarQr(qr, tipo) {
+async function enviarQrDispositivo(qr, tipo) {
 
-    if (App.btnCapturar) App.btnCapturar.disabled = true;
+    if (AppDispositivo.btnCapturar) AppDispositivo.btnCapturar.disabled = true;
 
     try {
 
-        const res = await fetch(App.config.urlControlador, {
+        const res = await fetch(AppDispositivo.config.urlControlador, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -69,20 +69,20 @@ async function enviarQr(qr, tipo) {
 
         const data = await res.json();
 
-        mostrarMensaje(data.success, data.message);
+        mostrarMensajeDispositivo(data.success, data.message);
 
-        if (data.success && App.table) {
-            App.table.ajax.reload(null, false);
+        if (data.success && AppDispositivo.table) {
+            AppDispositivo.table.ajax.reload(null, false);
         }
 
     } catch (e) {
 
         console.error(e);
-        mostrarMensaje(false, "Error de conexión.");
+        mostrarMensajeDispositivo(false, "Error de conexión.");
 
     } finally {
 
-        if (App.btnCapturar) App.btnCapturar.disabled = false;
+        if (AppDispositivo.btnCapturar) AppDispositivo.btnCapturar.disabled = false;
 
     }
 
@@ -93,23 +93,23 @@ async function enviarQr(qr, tipo) {
 // CUANDO SE DETECTA UN QR
 // ========================================
 
-function onScanQR(qr) {
+function onScanQRDispositivo(qr) {
 
     qr = qr.trim();
 
-    if (!qr || App.escaneando || qr === App.ultimaLectura) return;
+    if (!qr || AppDispositivo.escaneando || qr === AppDispositivo.ultimaLectura) return;
 
-    App.escaneando = true;
-    App.ultimaLectura = qr;
+    AppDispositivo.escaneando    = true;
+    AppDispositivo.ultimaLectura = qr;
 
-    enviarQr(qr, App.tipoMovimiento.value).finally(() => {
+    enviarQrDispositivo(qr, AppDispositivo.tipoMovimiento.value).finally(() => {
 
         setTimeout(() => {
 
-            App.escaneando = false;
-            App.ultimaLectura = null;
+            AppDispositivo.escaneando    = false;
+            AppDispositivo.ultimaLectura = null;
 
-        }, App.config.bloqueoQRms);
+        }, AppDispositivo.config.bloqueoQRms);
 
     });
 
@@ -121,18 +121,18 @@ function onScanQR(qr) {
 // Compatible con DroidCam y cualquier webcam
 // ========================================
 
-async function iniciarCamara() {
+async function iniciarCamaraDispositivo() {
 
-    if (App.qrReader) return;
+    if (AppDispositivo.qrReader) return;
 
-    App.qrReader = new Html5Qrcode("qr-reader");
+    AppDispositivo.qrReader = new Html5Qrcode("qr-reader");
 
     try {
 
         const devices = await Html5Qrcode.getCameras();
 
         if (!devices || devices.length === 0) {
-            mostrarMensaje(false, "No se detectaron cámaras.");
+            mostrarMensajeDispositivo(false, "No se detectaron cámaras.");
             return;
         }
 
@@ -157,16 +157,16 @@ async function iniciarCamara() {
 
         }
 
-        await App.qrReader.start(
+        await AppDispositivo.qrReader.start(
             cameraId,
             {
-                fps: App.config.fps,
+                fps: AppDispositivo.config.fps,
                 qrbox: {
-                    width: App.config.qrboxSize,
-                    height: App.config.qrboxSize
+                    width: AppDispositivo.config.qrboxSize,
+                    height: AppDispositivo.config.qrboxSize
                 }
             },
-            onScanQR,
+            onScanQRDispositivo,
             error => {
                 // Errores normales de lectura (ignorar)
             }
@@ -175,7 +175,7 @@ async function iniciarCamara() {
     } catch (error) {
 
         console.error("Error iniciando cámara:", error);
-        mostrarMensaje(false, "No se pudo iniciar la cámara.");
+        mostrarMensajeDispositivo(false, "No se pudo iniciar la cámara.");
 
     }
 
@@ -188,31 +188,31 @@ async function iniciarCamara() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    App.tipoMovimiento = document.getElementById("tipoMovimiento");
-    App.btnCapturar    = document.getElementById("btnCapturar");
-    App.mensajeExito   = document.getElementById("mensajeExito");
-    App.mensajeError   = document.getElementById("mensajeError");
+    AppDispositivo.tipoMovimiento = document.getElementById("tipoMovimiento");
+    AppDispositivo.btnCapturar    = document.getElementById("btnCapturar");
+    AppDispositivo.mensajeExito   = document.getElementById("mensajeExito");
+    AppDispositivo.mensajeError   = document.getElementById("mensajeError");
 
 
     // ========================================
     // TABLA DE MOVIMIENTOS DE DISPOSITIVOS
     // ========================================
 
-    App.table = $("#tablaDispositivosDT").DataTable({
+    AppDispositivo.table = $("#tablaDispositivosDT").DataTable({
 
         ajax: {
-            url: App.config.urlControlador,
+            url: AppDispositivo.config.urlControlador,
             dataSrc: function (json) {
                 return json.data || [];
             }
         },
 
         columns: [
-            { data: "TipoDispositivo"  },
-            { data: "MarcaDispositivo" },
-            { data: "NumeroSerial"     },
-            { data: "NombreFuncionario"},
-            { data: "TipoMovimiento"   },
+            { data: "TipoDispositivo"   },
+            { data: "MarcaDispositivo"  },
+            { data: "NumeroSerial"      },
+            { data: "NombreFuncionario" },
+            { data: "TipoMovimiento"    },
             {
                 data: "FechaIngreso",
                 render: d => new Date(d).toLocaleString('es-ES')
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // EVENTOS
     // ========================================
 
-    if (App.btnCapturar)
-        App.btnCapturar.addEventListener("click", iniciarCamara);
+    if (AppDispositivo.btnCapturar)
+        AppDispositivo.btnCapturar.addEventListener("click", iniciarCamaraDispositivo);
 
 });

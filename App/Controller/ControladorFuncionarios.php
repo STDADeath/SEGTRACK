@@ -175,12 +175,12 @@ try {
                 $rutaCompleta  = $rutaCarpeta . '/' . $nombreArchivo;
 
                 // ✅ Datos que se leen al escanear el QR
-                $contenidoQR =
-                    "Nombre: $nombre\n"  .
-                    "Cargo: $cargo\n"    .
-                    "Estado: $estado\n"  .
-                    "Sede: $sede";
-
+             $contenidoQR =
+    "ID: $idFuncionario\n" .   // ← agregar esta línea
+    "Nombre: $nombre\n"  .
+    "Cargo: $cargo\n"    .
+    "Estado: $estado\n"  .
+    "Sede: $sede";
                 ob_start();
                 QRcode::png($contenidoQR, false, QR_ECLEVEL_H, 10, 2);
                 $imageData = ob_get_contents();
