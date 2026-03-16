@@ -4663,3 +4663,9 @@ POST recibido:
 2026-03-16 01:37:51 - Foto guardada para funcionario 78: qr/Fotos/FOTO-FUNC-78-69b750df7c936.jpg
 2026-03-16 01:37:51 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-78-69b750df81825.png
 2026-03-16 01:37:54 - Error al enviar correo a pocoyo@gmail.com: SMTP Error: data not accepted.
+2026-03-16 04:12:38 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-79-69b775261032e.jpg
+2026-03-16 04:12:38 - Foto guardada para funcionario 79: qr/Fotos/FOTO-FUNC-79-69b775261032e.jpg
+2026-03-16 04:12:38 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-79-69b7752612882.png
+2026-03-16 04:12:43 - Error al enviar correo a pocoyo0@gmail.com: SMTP Error: data not accepted.
+2026-03-16 06:40:02 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-77-69b797b2cbeab.png
+2026-03-16 06:40:04 - Error al enviar correo a caroldayana989@gmail.com: SMTP Error: data not accepted.

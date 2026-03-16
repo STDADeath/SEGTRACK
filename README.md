@@ -1,45 +1,39 @@
 <div align="center">
 
+# MANUAL DE USUARIO
 
-MANUAL DE USUARIO
+## ANÁLISIS Y DESARROLLO DE SOFTWARE
+
+---
+
+## ACCIONES DE SEGTRACK
+
 <br/>
 <br/>
-ANÁLISIS Y DESARROLLO DE SOFTWARE
-<br/>
-<br/>
-ACCIONES DE SEGTRACK
-<br/>
-<br/>
-<br/>
+
 **TUTOR**
-<br/>
+
 Elsa María Junca Bernal
+
 <br/>
 <br/>
+
 **APRENDICES**
 
 Andres Camilo Carrillo Jaimes
-<br/>
-<br/>
+
 Michael David Montoya Pasachoa
-<br/>
-<br/>
+
 Anderson Estiven Moreno Pinzon
 
-
 <br/>
 <br/>
-
 
 **2025**
 
-
 </div>
 
-
-
-
-
+---
 
 # Proyecto SEGTRACK
 
@@ -57,11 +51,20 @@ Anderson Estiven Moreno Pinzon
   - [4.3 Control de Parqueadero](#43-control-de-parqueadero-)
 - [5. Tecnologías Utilizadas](#5-tecnologías-utilizadas)
 - [6. Uso del Sistema](#6-uso-del-sistema)
-- [7. Pantalla principal](#7-Pantalla-principal)
+- [7. Pantalla Principal](#7-pantalla-principal)
 - [8. Inicio de Sesión](#8-inicio-de-sesión)
   - [8.1 Validaciones del Formulario](#81-validaciones-del-formulario)
 - [9. Recuperación de Contraseña](#9-recuperación-de-contraseña)
-- [10. Autores](#10-autores)
+- [10. Registrar Funcionarios](#10-registrar-funcionarios)
+  - [10.1 Validaciones del Formulario de Registro](#101-validaciones-del-formulario-de-registro)
+- [11. Lista de Funcionarios](#11-lista-de-funcionarios)
+  - [11.1 Acciones Disponibles](#111-acciones-disponibles)
+- [12. Módulo Instituto](#12-módulo-instituto)
+- [13. Módulo Sede](#13-módulo-sede)
+- [14. Módulo Parqueadero — Administrador](#14-módulo-parqueadero--administrador)
+- [15. Módulo Parqueadero — Personal de Seguridad](#15-módulo-parqueadero--personal-de-seguridad)
+- [16. Registro de Vehículos](#16-registro-de-vehículos)
+- [17. Autores](#17-autores)
 
 ---
 
@@ -139,17 +142,21 @@ El sistema permite iniciar sesión de acuerdo con el rol asignado a cada usuario
 
 ---
 
-## 7. Pantalla principal
+## 7. Pantalla Principal
 
 Segtrack ofrece una interfaz de bienvenida atractiva y moderna, diseñada para presentar de forma clara la propuesta principal del sistema: el control de entrada y salida de funcionarios mediante códigos QR. Desde esta pantalla el usuario puede navegar hacia el inicio de sesión y conocer más sobre la plataforma.
 
 ---
 
-![Vista principal](image.png)
-![Vista principal 2](image-1.png)
-![Vista principal 3](image-2.png)
-![Vista principal 4](image-3.png)
-![Vista principal 5](image-4.png)
+![Vista principal](Public/img/Fotos_Manual/image.png)
+
+![Vista principal 2](Public/img/Fotos_Manual/image-1.png)
+
+![Vista principal 3](Public/img/Fotos_Manual/image-2.png)
+
+![Vista principal 4](Public/img/Fotos_Manual/image-3.png)
+
+![Vista principal 5](Public/img/Fotos_Manual/image-4.png)
 
 ---
 
@@ -157,19 +164,19 @@ Segtrack ofrece una interfaz de bienvenida atractiva y moderna, diseñada para p
 
 Para ingresar al sistema, el usuario debe dirigirse a la parte superior de la página y hacer clic en el botón **"Iniciar Sesión"**.
 
-![Botón de inicio de sesión](image-5.png)
+![Botón inicio de sesión](Public/img/Fotos_Manual/image-5.png)
 
 ---
 
 Al hacer clic, el sistema redirige al formulario de autenticación donde se deben ingresar las credenciales registradas.
 
-![Formulario de inicio de sesión](image-6.png)
+![Formulario de inicio de sesión](Public/img/Fotos_Manual/image-6.png)
 
 ---
 
 Este formulario valida la identidad de todos los funcionarios que cuenten con un rol activo en la institución. Una vez autenticado correctamente, el usuario podrá interactuar con los módulos habilitados según su perfil.
 
-![Validación de credenciales](image-7.png)
+![Validación de credenciales](Public/img/Fotos_Manual/image-7.png)
 
 ---
 
@@ -181,25 +188,25 @@ El sistema cuenta con un conjunto de validaciones que garantizan la integridad d
 
 - **Campos incompletos** — cuando se intenta ingresar sin llenar todos los campos requeridos:
 
-![Campos incompletos](image-8.png)
+![Campos incompletos](Public/img/Fotos_Manual/image-8.png)
 
 ---
 
 - **Correo no registrado** — cuando el correo ingresado no existe en la base de datos:
 
-![Correo no registrado](image-11.png)
+![Correo no registrado](Public/img/Fotos_Manual/image-11.png)
 
 ---
 
 - **Contraseña incorrecta** — cuando las credenciales no coinciden con las registradas:
 
-![Contraseña incorrecta](image-12.png)
+![Contraseña incorrecta](Public/img/Fotos_Manual/image-12.png)
 
 ---
 
 - **Credenciales correctas** — acceso exitoso al sistema:
 
-![Credenciales correctas](image-13.png)
+![Credenciales correctas](Public/img/Fotos_Manual/image-13.png)
 
 ---
 
@@ -207,68 +214,163 @@ El sistema cuenta con un conjunto de validaciones que garantizan la integridad d
 
 En caso de olvidar la contraseña, Segtrack ofrece un proceso de recuperación sencillo y seguro. Esta funcionalidad está disponible exclusivamente para funcionarios con un rol activo en el sistema.
 
----
-
-![Opción de recuperación](image-14.png)
+![Opción de recuperación](Public/img/Fotos_Manual/image-14.png)
 
 ---
 
 Al seleccionar la opción de recuperación, el sistema solicita el correo electrónico registrado y verifica si existe en la base de datos antes de continuar con el proceso.
 
-![Formulario de recuperación](image-15.png)
+![Formulario de recuperación](Public/img/Fotos_Manual/image-15.png)
 
 ---
 
 - **Correo no registrado** — si el correo ingresado no se encuentra en el sistema:
 
-![Correo no encontrado](image-11.png)
+![Correo no encontrado](Public/img/Fotos_Manual/image-11.png)
 
 ---
 
-**Correo registrado** — si el correo es válido, el sistema envía un token de verificación al correo electrónico del usuario:
+- **Correo registrado** — si el correo es válido, el sistema envía un token de verificación al correo electrónico del usuario:
 
 **Notificación de envío:**
 
-![Notificación de envío](image-16.png)
+![Notificación de envío](Public/img/Fotos_Manual/image-16.png)
 
 **Token recibido en el correo:**
 
-![Token recibido](not.jpeg)
+![Token recibido](Public/img/Fotos_Manual/not.jpeg)
 
 ---
 
-**Sistema de  validacion de token de 15 min.**
-En esta parte solicitara el token para poder  realizar el cambio de contraseña.
-![recuperar_password](image-17.png)
+El sistema solicita el token recibido para poder realizar el cambio de contraseña. Este token tiene una vigencia de **15 minutos**.
 
----
-Despues de haber ingresado el token y el cambio de contraseña ya podemo ingresar al perfil principal del aplicativo.
-
-![Dashboard](image-18.png)
+![Validación de token](Public/img/Fotos_Manual/image-17.png)
 
 ---
 
-## Registrar Funcionarios.
-En este caso interactuaremos con el perfil de  persola de seguridad el cual podra registrar a un funcionario en el sistema con sus datos principales y una foto.
+Después de ingresar el token y establecer la nueva contraseña, el usuario puede acceder normalmente al panel principal del aplicativo.
 
-![Dasboard Pesonal seguridad](image-19.png)
-
----
-El formulario esta configurado para poder validar los campos para que estos sean obligatorios y sean validados para evitar caracteres inapropiados
-
-![alt text](image-21.png)
+![Dashboard](Public/img/Fotos_Manual/image-18.png)
 
 ---
-- Datos duplicados.
 
+## 10. Registrar Funcionarios
 
-- Formulario diligenciado
-![alt text](image-20.png)
+En esta sección se trabaja con el perfil de **Personal de Seguridad**, el cual puede registrar a un funcionario en el sistema con sus datos principales y una foto. Al completar el registro, el sistema genera automáticamente un código QR único y lo envía al correo registrado del funcionario.
 
+![Dashboard Personal Seguridad](Public/img/Fotos_Manual/image-19.png)
 
+---
 
+El formulario está configurado con validaciones en todos sus campos para garantizar que la información ingresada sea correcta y evitar caracteres inapropiados o datos incompletos.
 
-## 10. Autores
+### 10.1 Validaciones del Formulario de Registro
+
+- **Datos duplicados** — cuando el documento o correo ya existe en el sistema:
+
+![Duplicados](Public/img/Fotos_Manual/image-21.png)
+
+---
+
+- **Formulario correctamente diligenciado:**
+
+![Registro](Public/img/Fotos_Manual/image-20.png)
+
+---
+
+- **Notificación de registro exitoso:**
+
+![Notificación de registro](Public/img/FotoManual/image-22.png)
+
+---
+
+## 11. Lista de Funcionarios
+
+En este módulo se visualiza un listado completo del personal registrado por el guarda de seguridad. La tabla permite filtrar por cantidad de registros y por datos específicos, facilitando la búsqueda de cualquier funcionario. Además, es posible editar la información de cada funcionario y cambiar su estado entre Activo e Inactivo según corresponda.
+
+![Lista de funcionarios](Public/img/FotosManual/image-24.png)
+
+![Acciones lista](Public/img/FotosManual/image-26.png)
+
+---
+
+### 11.1 Acciones Disponibles
+
+**1. Visualización del QR**
+
+![Visualización QR](Public/img/FotosManual/image-27.png)
+
+---
+
+**2. Envío del QR por correo**
+
+![Envío QR](Public/img/FotosManual/image-28.png)
+
+---
+
+**3. Actualización de datos del funcionario**
+
+![Actualización funcionario](Public/img/FotosManual/image-29.png)
+
+---
+
+**4. Cambio de estado del funcionario**
+
+![Cambio de estado](Public/img/FotosManual/image-30.png)
+
+---
+
+## 12. Módulo Instituto
+
+El módulo de Instituto permite al personal de seguridad visualizar las instituciones vinculadas al sistema y verificar su estado — activo o inactivo.
+
+![Instituto lista](Public/img/FotosManual/image-31.png)
+
+---
+
+## 13. Módulo Sede
+
+El módulo de Sede permite al personal de seguridad tener un listado de las sedes para verificar cuáles están activas o inactivas.
+
+![Sede lista](Public/img/FotosManual/image-32.png)
+
+---
+
+## 14. Módulo Parqueadero — Administrador
+
+El Administrador puede configurar los espacios del parqueadero por sede. Para hacerlo, debe ingresar al módulo de Parqueadero, seleccionar la opción **"Configurar sede"** y especificar la cantidad de espacios disponibles para cada tipo de vehículo. Una vez creado, el parqueadero queda visible en la lista principal donde puede ser editado, activado o inactivado según se requiera.
+
+![Parqueadero configurar](Public/img/FotosManual/image-33.png)
+
+![Parqueadero configuración 2](Public/img/FotosManual/image-34.png)
+
+![Parqueadero lista](Public/img/FotosManual/image-35.png)
+
+![Parqueadero acciones](Public/img/FotosManual/image-36.png)
+
+---
+
+## 15. Módulo Parqueadero — Personal de Seguridad
+
+Cuando el guarda de seguridad ingresa al módulo de Parqueadero, puede seleccionar la sede en la que se encuentra y elegir el espacio disponible donde el vehículo se ubicará según su tipo. El sistema muestra en tiempo real los espacios libres y ocupados, facilitando el control del flujo vehicular.
+
+![Parqueadero guardia](Public/img/FotosManual/image-37.png)
+
+![Parqueadero selección espacio](Public/img/FotosManual/image-38.png)
+
+![Parqueadero registro](Public/img/FotosManual/image-39.png)
+
+---
+
+## 16. Registro de Vehículos
+
+En este módulo el Personal de Seguridad puede registrar los vehículos que ingresan a cualquiera de las sedes en las que esté trabajando. El sistema solicita los datos del vehículo (placa, tipo, número de tarjeta de propiedad) y los asocia al funcionario o visitante correspondiente. El sistema valida que la placa no esté duplicada y registra automáticamente la fecha y hora del movimiento.
+
+![Registro de vehículos](Public/img/FotosManual/image-40.png)
+
+---
+
+## 17. Autores
 
 Proyecto desarrollado por aprendices del programa de **Análisis y Desarrollo de Software**:
 
