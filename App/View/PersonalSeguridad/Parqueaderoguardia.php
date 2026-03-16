@@ -108,42 +108,64 @@ $sedes = $modelo->obtenerSedesConParqueadero();
         <div class="modal-content">
             <div class="modal-header bg-warning">
                 <h5 class="modal-title">
-                    <i class="fas fa-car me-2"></i>Asignar Vehículo — Espacio #<span id="ocuparNumEspacio"></span>
+                    <i class="fas fa-car mr-2"></i>Asignar Vehículo — Espacio #<span id="ocuparNumEspacio"></span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="ocuparIdEspacio">
-                <div class="alert alert-warning py-2">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
-                    Use esta opción cuando el escáner no esté disponible o no haya espacios automáticos.
+                <input type="hidden" id="ocuparTipoVehiculo">
+
+                <div class="alert alert-warning py-2 mb-3">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Use esta opción cuando el escáner no esté disponible.
                 </div>
+
+                <!-- Tipo de espacio (informativo) -->
+                <div class="alert alert-info py-2 mb-3" id="ocuparTipoInfo">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Este espacio es para: <strong id="ocuparTipoLabel"></strong>
+                </div>
+
+                <!-- Select de vehículos -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">
-                        Placa del vehículo <span class="text-danger">*</span>
+                    <label class="form-label font-weight-bold">
+                        Seleccione el vehículo <span class="text-danger">*</span>
                     </label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-car"></i></span>
-                        <input type="text" class="form-control" id="ocuparPlaca"
-                               placeholder="Ej: ABC123" maxlength="7"
-                               style="text-transform:uppercase;">
+                        <span class="input-group-text" id="ocuparIconoTipo">
+                            <i class="fas fa-car"></i>
+                        </span>
+                        <select class="form-control" id="selectVehiculo">
+                            <option value="">-- Cargando vehículos... --</option>
+                        </select>
                     </div>
-                    <small class="text-muted">
-                        <i class="fas fa-info-circle me-1"></i>
-                        El vehículo debe estar registrado y activo en el sistema
-                    </small>
+                    <small class="text-muted mt-1 d-block" id="ocuparSelectInfo"></small>
                 </div>
-                <div id="ocuparTipoInfo" class="alert alert-info py-2" style="display:none;">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Este espacio es para: <strong id="ocuparTipoEspacio"></strong>
+
+                <!-- Detalle del vehículo seleccionado -->
+                <div id="ocuparDetalleVehiculo" class="card border-info" style="display:none;">
+                    <div class="card-body py-2">
+                        <div class="row text-center">
+                            <div class="col-6 border-right">
+                                <small class="text-muted d-block">Propietario</small>
+                                <strong id="detallePropietario" class="text-primary" style="font-size:0.85rem;"></strong>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block">Identificador</small>
+                                <strong id="detalleIdentificador" class="text-dark" style="font-size:0.85rem;"></strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-dismiss="modal">
-                    <i class="fas fa-times me-1"></i>Cancelar
+                    <i class="fas fa-times mr-1"></i>Cancelar
                 </button>
-                <button class="btn btn-warning" id="btnConfirmarOcupar">
-                    <i class="fas fa-check me-1"></i>Asignar Espacio
+                <button class="btn btn-warning" id="btnConfirmarOcupar" disabled>
+                    <i class="fas fa-check mr-1"></i>Asignar Espacio
                 </button>
             </div>
         </div>
@@ -425,31 +447,83 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // ── Abrir modal OCUPAR manualmente ────────────────────────────────────
+        var iconosTipo = { 'Carro': 'fa-car', 'Moto': 'fa-motorcycle', 'Bicicleta': 'fa-bicycle' };
+
         window.abrirOcupar = function (idEspacio, numEspacio, tipoVehiculo) {
             $('#ocuparIdEspacio').val(idEspacio);
+            $('#ocuparTipoVehiculo').val(tipoVehiculo);
             $('#ocuparNumEspacio').text(numEspacio);
-            $('#ocuparPlaca').val('').removeClass('is-valid is-invalid');
-            $('#ocuparTipoEspacio').text(tipoVehiculo);
-            $('#ocuparTipoInfo').show();
+            $('#ocuparTipoLabel').text(tipoVehiculo + 's');
+            $('#ocuparIconoTipo').html('<i class="fas ' + (iconosTipo[tipoVehiculo] || 'fa-car') + '"></i>');
+            $('#selectVehiculo').html('<option value="">-- Cargando... --</option>');
+            $('#ocuparDetalleVehiculo').hide();
+            $('#ocuparSelectInfo').text('');
+            $('#btnConfirmarOcupar').prop('disabled', true);
             $('#modalOcuparEspacio').modal('show');
-            setTimeout(function () { $('#ocuparPlaca').focus(); }, 400);
+
+            // Cargar vehículos del tipo correcto
+            $.ajax({
+                url: '../../Controller/ControladorParqueadero.php',
+                type: 'POST',
+                data: { accion: 'obtener_vehiculos_tipo', tipo: tipoVehiculo },
+                dataType: 'json',
+                timeout: 10000,
+                success: function (r) {
+                    if (r.success && r.vehiculos && r.vehiculos.length > 0) {
+                        var opts = '<option value="">-- Seleccione un vehículo --</option>';
+                        r.vehiculos.forEach(function (v) {
+                            var propietario = v.NombreFuncionario || v.NombreVisitante || 'Sin propietario';
+                            // Bicicletas pueden no tener placa — usar descripción o ID
+                            var identificador = v.PlacaVehiculo
+                                ? v.PlacaVehiculo
+                                : (v.DescripcionVehiculo ? v.DescripcionVehiculo : 'ID #' + v.IdVehiculo);
+                            opts += '<option value="' + v.IdVehiculo + '" ' +
+                                'data-propietario="' + propietario + '" ' +
+                                'data-identificador="' + identificador + '">' +
+                                identificador + ' — ' + propietario +
+                                '</option>';
+                        });
+                        $('#selectVehiculo').html(opts);
+                        $('#ocuparSelectInfo').text(r.vehiculos.length + ' vehículo(s) disponible(s)');
+                    } else {
+                        $('#selectVehiculo').html('<option value="">Sin vehículos de este tipo registrados</option>');
+                        $('#ocuparSelectInfo').html('<span class="text-danger"><i class="fas fa-exclamation-circle mr-1"></i>No hay ' + tipoVehiculo.toLowerCase() + 's activos registrados</span>');
+                    }
+                },
+                error: function () {
+                    $('#selectVehiculo').html('<option value="">Error al cargar vehículos</option>');
+                }
+            });
         };
 
-        // Forzar mayúsculas en placa
-        $('#ocuparPlaca').on('input', function () {
-            $(this).val($(this).val().toUpperCase().replace(/[^A-Z0-9]/g, ''));
+        // Al cambiar el select — mostrar detalle del vehículo
+        $(document).on('change', '#selectVehiculo', function () {
+            var selected = $(this).find('option:selected');
+            var idVeh    = $(this).val();
+
+            if (idVeh) {
+                var propietario    = selected.data('propietario') || '';
+                var identificador  = selected.data('identificador') || '';
+                $('#detallePropietario').text(propietario);
+                $('#detalleIdentificador').text(identificador);
+                $('#ocuparDetalleVehiculo').show();
+                $('#btnConfirmarOcupar').prop('disabled', false);
+            } else {
+                $('#ocuparDetalleVehiculo').hide();
+                $('#btnConfirmarOcupar').prop('disabled', true);
+            }
         });
 
         // Confirmar OCUPAR
         $('#btnConfirmarOcupar').on('click', function () {
-            var idEspacio = $('#ocuparIdEspacio').val();
-            var placa     = $('#ocuparPlaca').val().trim();
+            var idEspacio   = $('#ocuparIdEspacio').val();
+            var idVehiculo  = $('#selectVehiculo').val();
 
-            if (!placa || placa.length < 3) {
+            if (!idVehiculo) {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Placa requerida',
-                    text: 'Ingrese una placa válida (mínimo 3 caracteres)',
+                    title: 'Seleccione un vehículo',
+                    text: 'Debe seleccionar el vehículo a asignar',
                     confirmButtonColor: '#f6c23e'
                 });
                 return;
@@ -466,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 url: '../../Controller/ControladorParqueadero.php',
                 type: 'POST',
-                data: { accion: 'ocupar_manual', id_espacio: idEspacio, placa: placa },
+                data: { accion: 'ocupar_manual', id_espacio: idEspacio, id_vehiculo: idVehiculo },
                 dataType: 'json',
                 timeout: 15000,
                 success: function (r) {
@@ -537,8 +611,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Limpiar al cerrar modales
         $('#modalOcuparEspacio').on('hidden.bs.modal', function () {
-            $('#ocuparPlaca').val('').removeClass('is-valid is-invalid');
-            $('#btnConfirmarOcupar').prop('disabled', false);
+            $('#selectVehiculo').html('<option value="">-- Seleccione un vehículo --</option>');
+            $('#ocuparDetalleVehiculo').hide();
+            $('#ocuparSelectInfo').text('');
+            $('#btnConfirmarOcupar').prop('disabled', true);
         });
         $('#modalLiberarEspacio').on('hidden.bs.modal', function () {
             $('#btnConfirmarLiberar').prop('disabled', false);
@@ -547,6 +623,5 @@ document.addEventListener('DOMContentLoaded', function () {
     }); // fin esperarJQuery
 });
 </script>
-
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

@@ -72,13 +72,13 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
                                     <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                     <input type="text" class="form-control"
                                         name="PlacaVehiculo" id="PlacaVehiculo"
-                                        maxlength="7" minlength="3" required
+                                        maxlength="6" minlength="3" required
                                         placeholder="Ej: ABC123"
                                         pattern="[a-zA-Z0-9 -]+"
                                         title="Solo letras, números, espacios y guiones">
                                 </div>
                                 <small class="form-text text-muted">
-                                    <i class="fas fa-info-circle"></i> Mínimo 3 caracteres, máximo 7
+                                    <i class="fas fa-info-circle"></i> Mínimo 3 caracteres, máximo 6
                                 </small>
                             </div>
                         </div>
@@ -112,13 +112,13 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
                                     <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
                                     <input type="text" class="form-control"
                                         name="TarjetaPropiedad" id="TarjetaPropiedad"
-                                        maxlength="20" minlength="11" required
+                                        maxlength="20" minlength="10" required
                                         placeholder="Número de tarjeta"
                                         pattern="[a-zA-Z0-9 -]+"
                                         title="Solo letras, números, espacios y guiones">
                                 </div>
                                 <small class="form-text text-muted">
-                                    <i class="fas fa-info-circle"></i> Mínimo 11 caracteres, máximo 20
+                                    <i class="fas fa-info-circle"></i> Mínimo 10 caracteres, máximo 20
                                 </small>
                             </div>
 
