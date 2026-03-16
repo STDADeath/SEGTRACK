@@ -65,43 +65,66 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Filtros -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-light">
-            <h6 class="m-0 font-weight-bold text-primary">Filtrar Dispositivos</h6>
-        </div>
+    <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-filter mr-2"></i>Filtrar Dispositivos
+        </h6>
+        <a href="Dispositivolista.php" class="btn btn-sm btn-outline-secondary">
+            <i class="fas fa-broom mr-1"></i>Limpiar filtros
+        </a>
+    </div>
         <div class="card-body">
-            <form method="get" class="row g-3">
-                <div class="col-md-3">
-                    <label for="tipo" class="form-label">Tipo de Dispositivo</label>
-                    <select name="tipo" id="tipo" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="Portatil" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Portatil') ? 'selected' : '' ?>>Portátil</option>
-                        <option value="Tablet" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Tablet') ? 'selected' : '' ?>>Tablet</option>
-                        <option value="Computador" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Computador') ? 'selected' : '' ?>>Computador</option>
-                        <option value="Otro" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Otro') ? 'selected' : '' ?>>Otro</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="marca" class="form-label">Marca</label>
-                    <input type="text" name="marca" id="marca" class="form-control" value="<?= $_GET['marca'] ?? '' ?>" placeholder="Buscar por marca">
-                </div>
-                
-                <!-- 🆕 FILTRO POR SERIAL -->
-                <div class="col-md-2">
-                    <label for="serial" class="form-label">Número Serial</label>
-                    <input type="text" name="serial" id="serial" class="form-control" value="<?= $_GET['serial'] ?? '' ?>" placeholder="Buscar por serial">
-                </div>
-                
-                <div class="col-md-2">
-                    <label for="funcionario" class="form-label">ID Funcionario</label>
-                    <input type="text" name="funcionario" id="funcionario" class="form-control" value="<?= $_GET['funcionario'] ?? '' ?>" placeholder="ID">
-                </div>
-                <div class="col-md-2">
-                    <label for="visitante" class="form-label">ID Visitante</label>
-                    <input type="text" name="visitante" id="visitante" class="form-control" value="<?= $_GET['visitante'] ?? '' ?>" placeholder="ID">
-                </div>
-                <div class="col-md-1 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary me-2"><i class="fas fa-filter me-1"></i> Filtrar</button>
-                    <a href="Dispositivolista.php" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</a>
+            <form method="get">
+                <div class="row align-items-end">
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-laptop mr-1 text-primary"></i>Tipo
+                        </label>
+                        <select name="tipo" id="tipo" class="form-control">
+                            <option value="">Todos</option>
+                            <option value="Portatil"   <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Portatil')   ? 'selected' : '' ?>>💻 Portátil</option>
+                            <option value="Tablet"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Tablet')     ? 'selected' : '' ?>>📱 Tablet</option>
+                            <option value="Computador" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Computador') ? 'selected' : '' ?>>🖥️ Computador</option>
+                            <option value="Otro"       <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Otro')       ? 'selected' : '' ?>>📦 Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-tag mr-1 text-primary"></i>Marca
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" name="marca" id="marca" class="form-control"
+                                value="<?= htmlspecialchars($_GET['marca'] ?? '') ?>"
+                                placeholder="Buscar por marca">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-barcode mr-1 text-primary"></i>Número Serial
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" name="serial" id="serial" class="form-control"
+                                value="<?= htmlspecialchars($_GET['serial'] ?? '') ?>"
+                                placeholder="Buscar por serial">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label d-block invisible">.</label>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-search mr-1"></i>Filtrar
+                        </button>
+                    </div>
+
                 </div>
             </form>
         </div>

@@ -2895,3 +2895,182 @@ Acción detectada: cambiar_estado
 Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
 === FIN ===
 
+
+2026-03-16 18:53:38 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "NumeroSerial": "NS56789098765",
+    "IdFuncionario": "58",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Serial duplicado - NS56789098765
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'NS56789098765' ya est\u00e1 registrado en otro dispositivo (ID: 38 - Port\u00e1til Dell)."}
+=== FIN ===
+
+
+2026-03-16 18:53:47 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "NumeroSerial": "NS56789098765",
+    "IdFuncionario": "58",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Serial duplicado - NS56789098765
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'NS56789098765' ya est\u00e1 registrado en otro dispositivo (ID: 38 - Port\u00e1til Dell)."}
+=== FIN ===
+
+
+2026-03-16 18:54:03 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "NumeroSerial": "NS345678965432",
+    "IdFuncionario": "58",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Dell, Serial: NS345678965432
+INSERT exitoso, ID: 39
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 39","data":{"IdDispositivo":"39","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-39-69b843bb1244a.png"}}
+=== FIN ===
+
+
+2026-03-16 19:09:20 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN545536638822",
+    "IdFuncionario": "",
+    "IdVisitante": "6"
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: lenovo, Serial: SN545536638822
+INSERT exitoso, ID: 40
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 40","data":{"IdDispositivo":"40","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-40-69b8475061193.png"}}
+=== FIN ===
+
+
+2026-03-16 19:40:14 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Computador",
+    "MarcaDispositivo": "Huawei",
+    "NumeroSerial": "SN6584939902",
+    "IdFuncionario": "62",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Computador, Marca: Huawei, Serial: SN6584939902
+INSERT exitoso, ID: 41
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 41","data":{"IdDispositivo":"41","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-41-69b84e8edfa92.png"}}
+=== FIN ===
+
+
+2026-03-16 19:48:10 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "41"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":false,"message":"Error PHPMailer: SMTP Error: Could not authenticate."}
+=== FIN ===
+
+
+2026-03-16 22:50:33 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "41"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":false,"message":"Error PHPMailer: SMTP Error: data not accepted."}
+=== FIN ===
+
+
+2026-03-16 22:51:06 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":false,"message":"Error PHPMailer: SMTP Error: data not accepted."}
+=== FIN ===
+
+
+2026-03-16 22:53:57 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "41"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":false,"message":"Error PHPMailer: SMTP Error: data not accepted."}
+=== FIN ===
+
+
+2026-03-16 22:54:04 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":false,"message":"Error PHPMailer: SMTP Error: data not accepted."}
+=== FIN ===
+
+
+2026-03-16 23:28:57 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":false,"message":"Error PHPMailer: SMTP Error: data not accepted."}
+=== FIN ===
+
+
+2026-03-16 23:46:01 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-03-17 00:05:47 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+

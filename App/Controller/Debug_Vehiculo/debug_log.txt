@@ -227,3 +227,64 @@ Acción: registrar
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdVehiculo":"29","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-29-69b6fe889e40a.png","FechaRegistro":"2026-03-15 13:46:32"}}
 === FIN ===
 
+
+2026-03-16 13:41:06 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "FRE435",
+    "DescripcionVehiculo": "Audi rojo con franjas blancas",
+    "TarjetaPropiedad": "tj56777747488",
+    "IdSede": "29",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "62",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 30","data":{"IdVehiculo":"30","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-30-69b84ec295b75.png","FechaRegistro":"2026-03-16 13:41:06"}}
+=== FIN ===
+
+
+2026-03-16 13:41:19 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "30",
+    "correo_destinatario": ""
+}
+Acción: enviar_qr
+enviarQRPorCorreo vehículo ID: 30
+Correo automático de funcionario: carrimorro9080@gmail.com
+Error PHPMailer: SMTP Error: Could not authenticate.
+Respuesta: {"success":false,"message":"Error PHPMailer: SMTP Error: Could not authenticate."}
+=== FIN ===
+
+
+2026-03-16 17:26:56 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "28",
+    "correo_destinatario": ""
+}
+✅ Conexión establecida correctamente
+Acción: enviar_qr
+enviarQRPorCorreo vehículo ID: 28
+Correo automático de funcionario: andersoarebalo@gmail.com
+Error PHPMailer: SMTP Error: data not accepted.
+Respuesta: {"success":false,"message":"Error PHPMailer: SMTP Error: data not accepted."}
+=== FIN ===
+
+
+2026-03-16 18:05:59 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "28",
+    "correo_destinatario": ""
+}
+✅ Conexión establecida correctamente
+Acción: enviar_qr
+enviarQRPorCorreo vehículo ID: 28
+Correo automático de funcionario: andersoarebalo@gmail.com
+✅ Correo enviado a: andersoarebalo@gmail.com
+Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com","esFuncionario":true,"correo":"andersoarebalo@gmail.com"}
+=== FIN ===
+

@@ -73,34 +73,69 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- Filtros -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-light">
-            <h6 class="m-0 font-weight-bold text-primary">Filtrar Vehículos</h6>
-        </div>
-        <div class="card-body">
-            <form method="get" class="row g-3">
-                <div class="col-md-2">
-                    <label for="tipo" class="form-label">Tipo de Vehículo</label>
-                    <select name="tipo" id="tipo" class="form-select">
+<div class="card shadow mb-4">
+    <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-filter mr-2"></i>Filtrar Vehículos
+        </h6>
+        <a href="VehiculoSupervisor.php" class="btn btn-sm btn-outline-secondary">
+            <i class="fas fa-broom mr-1"></i>Limpiar filtros
+        </a>
+    </div>
+    <div class="card-body">
+        <form method="get">
+            <div class="row align-items-end">
+
+                <!-- Tipo de Vehículo -->
+                <div class="col-md-2 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-car mr-1 text-primary"></i>Tipo
+                    </label>
+                    <select name="tipo" id="tipo" class="form-control">
                         <option value="">Todos</option>
-                        <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>>Bicicleta</option>
-                        <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>>Moto</option>
-                        <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>>Carro</option>
+                        <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>>🚲 Bicicleta</option>
+                        <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>>🏍️ Moto</option>
+                        <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>>🚗 Carro</option>
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <label for="placa" class="form-label">Placa</label>
-                    <input type="text" name="placa" id="placa" class="form-control"
-                        value="<?= htmlspecialchars($_GET['placa'] ?? '') ?>" placeholder="Buscar placa">
+
+                <!-- Placa -->
+                <div class="col-md-2 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-id-card mr-1 text-primary"></i>Placa
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input type="text" name="placa" id="placa" class="form-control"
+                               value="<?= htmlspecialchars($_GET['placa'] ?? '') ?>"
+                               placeholder="Ej: ABC123"
+                               style="text-transform:uppercase;">
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <label for="tarjeta" class="form-label">Tarjeta Propiedad</label>
-                    <input type="text" name="tarjeta" id="tarjeta" class="form-control"
-                        value="<?= htmlspecialchars($_GET['tarjeta'] ?? '') ?>" placeholder="Buscar tarjeta">
+
+                <!-- Tarjeta Propiedad -->
+                <div class="col-md-2 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-address-card mr-1 text-primary"></i>Tarjeta Propiedad
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input type="text" name="tarjeta" id="tarjeta" class="form-control"
+                               value="<?= htmlspecialchars($_GET['tarjeta'] ?? '') ?>"
+                               placeholder="Buscar tarjeta">
+                    </div>
                 </div>
-                <div class="col-md-1">
-                    <label for="sede" class="form-label">Sede</label>
-                    <select name="sede" id="sede" class="form-select">
+
+                <!-- Sede -->
+                <div class="col-md-2 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-building mr-1 text-primary"></i>Sede
+                    </label>
+                    <select name="sede" id="sede" class="form-control">
                         <option value="">Todas</option>
                         <?php foreach ($sedesDisponibles as $sede) : ?>
                             <option value="<?= $sede['IdSede'] ?>"
@@ -110,30 +145,47 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-1">
-                    <label for="propietario" class="form-label">Propietario</label>
-                    <select name="propietario" id="propietario" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="Funcionario" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Funcionario') ? 'selected' : '' ?>>Funcionario</option>
-                        <option value="Visitante"   <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Visitante')   ? 'selected' : '' ?>>Visitante</option>
-                    </select>
-                </div>
-                <div class="col-md-1">
-                    <label for="estado" class="form-label">Estado</label>
-                    <select name="estado" id="estado" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="Activo"   <?= (isset($_GET['estado']) && $_GET['estado'] == 'Activo')   ? 'selected' : '' ?>>Activo</option>
-                        <option value="Inactivo" <?= (isset($_GET['estado']) && $_GET['estado'] == 'Inactivo') ? 'selected' : '' ?>>Inactivo</option>
-                    </select>
-                </div>
-                <div class="col-md-1 d-flex align-items-end gap-1">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i></button>
-                    <a href="VehiculoSupervisor.php" class="btn btn-secondary"><i class="fas fa-broom"></i></a>
-                </div>
-            </form>
-        </div>
-    </div>
 
+                <!-- Propietario -->
+                <div class="col-md-2 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-user mr-1 text-primary"></i>Propietario
+                    </label>
+                    <select name="propietario" id="propietario" class="form-control">
+                        <option value="">Todos</option>
+                        <option value="Funcionario" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Funcionario') ? 'selected' : '' ?>>
+                            👔 Funcionario
+                        </option>
+                        <option value="Visitante" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Visitante') ? 'selected' : '' ?>>
+                            🧑 Visitante
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Estado -->
+                <div class="col-md-1 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-toggle-on mr-1 text-primary"></i>Estado
+                    </label>
+                    <select name="estado" id="estado" class="form-control">
+                        <option value="">Todos</option>
+                        <option value="Activo"   <?= (isset($_GET['estado']) && $_GET['estado'] == 'Activo')   ? 'selected' : '' ?>>✅ Activo</option>
+                        <option value="Inactivo" <?= (isset($_GET['estado']) && $_GET['estado'] == 'Inactivo') ? 'selected' : '' ?>>❌ Inactivo</option>
+                    </select>
+                </div>
+
+                <!-- Botón filtrar -->
+                <div class="col-md-1 mb-3">
+                    <label class="form-label d-block invisible">.</label>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-search mr-1"></i>Filtrar
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
     <!-- Tabla -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
