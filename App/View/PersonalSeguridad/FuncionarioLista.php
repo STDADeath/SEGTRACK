@@ -6,7 +6,7 @@
  */
 require_once __DIR__ . '/../layouts/parte_superior.php'; 
 
-// ✅ CORRECCIÓN: $baseQR solo '/qr' para no duplicar 'Public/' en la URL
+// ✅ $baseQR solo '/qr' para no duplicar 'Public/' en la URL
 $baseQR = '/qr';
 ?>
 <div class="container-fluid px-4 py-4">
@@ -115,45 +115,24 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($result as $row) : ?>
                     <tr>
 
-                        <!-- ===== QR: Ver y Enviar AL LADO (d-flex) ===== -->
+                        <!-- QR: Ver y Enviar -->
                         <td>
                             <?php if (!empty($row['QrCodigoFuncionario'])) : ?>
                                 <?php
-                                /*
-                                 * ✅ CORRECCIÓN RUTA QR PARA "Ver":
-                                 *
-                                 * La BD guarda el QR como:  "qr/Qr_Func/QR-FUNC-109-xxx.png"
-                                 * $baseQR = '/qr'
-                                 *
-                                 * Normalizamos el valor de BD para que arranque con '/'
-                                 * y NO empiece ya con '/qr' (evitar doble prefijo).
-                                 *
-                                 * Resultado esperado: "/qr/Qr_Func/QR-FUNC-109-xxx.png"
-                                 * El JS añade: origin + /SEGTRACK + /Public  → URL completa
-                                 */
                                 $qrBD = $row['QrCodigoFuncionario'];
-
-                                // Si la BD guarda "qr/Qr_Func/..." lo convertimos a "/qr/Qr_Func/..."
                                 if (!str_starts_with($qrBD, '/')) {
                                     $qrBD = '/' . $qrBD;
                                 }
-
-                                // Si por algún motivo el valor ya trae '/qr/qr/...' lo corregimos
-                                // (caso raro, pero seguro)
                                 $rutaQR = $qrBD;
                                 ?>
                                 <div class="d-flex gap-1 align-items-center flex-nowrap">
 
-                                    <!-- VER QR: abre modal con la imagen -->
                                     <button class="btn btn-outline-success btn-qr-ver"
                                             title="Ver código QR"
                                             onclick="verQR('<?= htmlspecialchars($rutaQR) ?>', <?= (int)$row['IdFuncionario'] ?>)">
                                         <i class="fas fa-qrcode me-1"></i>Ver
                                     </button>
 
-                                    <!-- ✅ ENVIAR QR: solo pasa IdFuncionario
-                                         El controlador (enviarQRPorCorreo) consulta la BD
-                                         y obtiene correo + ruta QR internamente -->
                                     <button class="btn btn-outline-primary btn-qr-enviar"
                                             title="Enviar QR por correo"
                                             onclick="enviarQR(<?= (int)$row['IdFuncionario'] ?>)">
@@ -173,24 +152,24 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= htmlspecialchars($row['DocumentoFuncionario']) ?></td>
                         <td><?= htmlspecialchars($row['CorreoFuncionario']) ?></td>
 
-                     <td class="text-center">
-                        <?php if ($row['Estado'] === 'Activo'): ?>
-                            <span id="badge-estado-<?= $row['IdFuncionario'] ?>" 
-                                class="badge bg-success text-white">
-                            Activo
-                            </span>
-                        <?php else: ?>
-                            <span id="badge-estado-<?= $row['IdFuncionario'] ?>" 
-                                class="badge bg-primary text-white">
-                                Inactivo
-                            </span>
-                        <?php endif; ?>
-                    </td>
-                        <!-- ===== ACCIONES: lápiz + candado cuadrados ===== -->
+                        <!-- ESTADO — solo badge, sin candado -->
+                        <td class="text-center">
+                            <?php if ($row['Estado'] === 'Activo'): ?>
+                                <span id="badge-estado-<?= $row['IdFuncionario'] ?>"
+                                      class="badge bg-success text-white">
+                                    Activo
+                                </span>
+                            <?php else: ?>
+                                <span id="badge-estado-<?= $row['IdFuncionario'] ?>"
+                                      class="badge bg-secondary text-white">
+                                    Inactivo
+                                </span>
+                            <?php endif; ?>
+                        </td>
+
+                        <!-- ACCIONES: solo lápiz de editar -->
                         <td>
                             <div class="d-flex gap-2">
-
-                                <!-- EDITAR -->
                                 <button class="btn btn-outline-primary btn-accion"
                                         title="Editar funcionario"
                                         onclick='cargarDatosEdicion(
@@ -204,24 +183,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         )'>
                                     <i class="fas fa-edit text-primary"></i>
                                 </button>
-
-                                <!-- CANDADO: amarillo=activo (click desactiva) | verde=inactivo (click activa) -->
-                                <?php if ($row['Estado'] === 'Activo'): ?>
-                                    <button id="btn-estado-<?= $row['IdFuncionario'] ?>"
-                                            class="btn btn-outline-warning btn-accion"
-                                            title="Desactivar funcionario"
-                                            onclick="cambiarEstado(<?= $row['IdFuncionario'] ?>,'Activo')">
-                                        <i class="fas fa-lock"></i>
-                                    </button>
-                                <?php else: ?>
-                                    <button id="btn-estado-<?= $row['IdFuncionario'] ?>"
-                                            class="btn btn-outline-success btn-accion"
-                                            title="Activar funcionario"
-                                            onclick="cambiarEstado(<?= $row['IdFuncionario'] ?>,'Inactivo')">
-                                        <i class="fas fa-lock-open"></i>
-                                    </button>
-                                <?php endif; ?>
-
                             </div>
                         </td>
 
@@ -235,7 +196,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- ===== MODAL VER QR ===== -->
+<!-- MODAL VER QR -->
 <div class="modal fade" id="modalVerQR" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -261,7 +222,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- ===== MODAL EDITAR ===== -->
+<!-- MODAL EDITAR -->
 <div class="modal fade" id="modalEditar" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -280,10 +241,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <option value="Personal Seguridad">Personal Seguridad</option>
                                 <option value="Funcionario">Funcionario</option>
                             </select>
+                            <div class="invalid-feedback">Seleccione un cargo válido.</div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nombre Completo <span class="text-danger">*</span></label>
-                            <input type="text" id="editNombre" class="form-control" required>
+                            <input type="text" id="editNombre" class="form-control"
+                                   placeholder="Ej: Juan Pérez" required>
+                            <div class="invalid-feedback">Mínimo 3 letras, solo caracteres válidos.</div>
                         </div>
                     </div>
                     <div class="row">
@@ -295,10 +259,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <option value="<?= $s['IdSede'] ?>"><?= htmlspecialchars($s['TipoSede']) ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <div class="invalid-feedback">Seleccione una sede.</div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Teléfono <span class="text-danger">*</span></label>
-                            <input type="tel" id="editTelefono" class="form-control" required>
+                            <input type="tel" id="editTelefono" class="form-control"
+                                   placeholder="Ej: 3001234567" required>
+                            <div class="invalid-feedback">Debe tener exactamente 10 dígitos.</div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Documento</label>
@@ -332,7 +299,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<Link rel="stylesheet" href="../../../Public/css/Tablas.css">
+<link rel="stylesheet" href="../../../Public/css/Tablas.css">
+
 <!-- JS EN ORDEN CORRECTO -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

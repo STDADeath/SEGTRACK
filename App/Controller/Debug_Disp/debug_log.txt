@@ -2965,3 +2965,22 @@ Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente 
 
 2026-03-15 21:55:40 QR hex: 4e6f6d6272653a20416e647265732063616d696c6f2063617272696c6c6f0a436172676f3a2046756e63696f6e6172696f0a45737461646f3a2041637469766f0a536564653a2053616c6f6e20353031
 2026-03-15 21:55:40 ERROR: QR sin formato Serial:
+
+2026-03-17 01:35:42 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Lenovo",
+    "NumeroSerial": "SN34365546546",
+    "IdFuncionario": "64",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Lenovo, Serial: SN34365546546
+INSERT exitoso, ID: 44
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 44","data":{"IdDispositivo":"44","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-44-69b8a1de22a36.png"}}
+=== FIN ===
+

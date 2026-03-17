@@ -1,0 +1,17 @@
+2026-03-17 01:36:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-65-69b8a2178b8c2.png
+2026-03-17 01:36:41 - Error al enviar correo a valentina@gmail.com: SMTP Error: Could not authenticate.
+2026-03-17 01:42:44 - === enviarQRPorCorreo llamado para ID: 65 ===
+2026-03-17 01:42:45 - Error al enviar correo a valentina@gmail.com: SMTP Error: Could not authenticate.
+2026-03-17 01:42:45 - ERROR en enviarQRPorCorreo: No se pudo enviar el correo. Revise la configuración SMTP.
+2026-03-17 01:51:16 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-66-69b8a584d6294.jpg
+2026-03-17 01:51:16 - Foto guardada para funcionario 66: qr/Fotos/FOTO-FUNC-66-69b8a584d6294.jpg
+2026-03-17 01:51:17 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-66-69b8a584d8321.png
+2026-03-17 01:51:17 - Error al enviar correo a carrimorro8080@gmail.com: SMTP Error: Could not connect to SMTP host. Failed to connect to server
+2026-03-17 01:53:20 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-67-69b8a600d68ca.jpg
+2026-03-17 01:53:20 - Foto guardada para funcionario 67: qr/Fotos/FOTO-FUNC-67-69b8a600d68ca.jpg
+2026-03-17 01:53:20 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-67-69b8a600d77e6.png
+2026-03-17 01:53:25 - Correo enviado correctamente a carri@gmail.com
+2026-03-17 01:56:12 - Foto guardada (cámara): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-68-69b8a6ac4ed5d.jpg
+2026-03-17 01:56:12 - Foto guardada para funcionario 68: qr/Fotos/FOTO-FUNC-68-69b8a6ac4ed5d.jpg
+2026-03-17 01:56:12 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-68-69b8a6ac4fa61.png
+2026-03-17 01:56:17 - Correo enviado correctamente a MICKY@gmail.com

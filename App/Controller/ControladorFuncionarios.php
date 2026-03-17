@@ -175,12 +175,12 @@ try {
                 $rutaCompleta  = $rutaCarpeta . '/' . $nombreArchivo;
 
                 // ✅ Datos que se leen al escanear el QR
-             $contenidoQR =
-    "ID: $idFuncionario\n" .   // ← agregar esta línea
-    "Nombre: $nombre\n"  .
-    "Cargo: $cargo\n"    .
-    "Estado: $estado\n"  .
-    "Sede: $sede";
+                $contenidoQR =
+                    "Nombre: $nombre\n"  .
+                    "Cargo: $cargo\n"    .
+                    "Estado: $estado\n"  .
+                    "Sede: $sede";
+
                 ob_start();
                 QRcode::png($contenidoQR, false, QR_ECLEVEL_H, 10, 2);
                 $imageData = ob_get_contents();
@@ -352,7 +352,7 @@ try {
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
                 $mail->Username   = 'seguridad.integral.segtrack@gmail.com';
-                $mail->Password   = 'lwfc rpts gcog iysv';
+                $mail->Password   = 'uext kzcp fwta imhs';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
                 $mail->CharSet    = 'UTF-8';

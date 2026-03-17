@@ -95,14 +95,13 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuper2">
                 <i class="fas fa-fw fa-clipboard-list"></i>
-                <span>Información De Registros</span>
+                <span>Información Registros</span>
             </a>
             <div id="collapseSuper2" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Registros Seguridad</h6>
                     <a class="collapse-item" href="../Supervisor/DispositivoSupervisor.php">Registros Dispositivos</a>
                     <a class="collapse-item" href="../Supervisor/ParqueaderoSupervisor.php">Registros Parqueadero</a>
-                    <a class="collapse-item" href="">Registros Funcionarios</a>
                     <a class="collapse-item" href="">Registros Ingresos</a>
                 </div>
             </div>

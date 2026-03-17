@@ -78,7 +78,7 @@ $sedes      = $modeloSede->obtenerSedes();
 <!-- CSS DataTables -->
 <link rel="stylesheet"
       href="../../../Public/vendor/datatables/dataTables.bootstrap4.css">
-li
+<link rel="stylesheet" href="../../../Public/css/Tablas.css">
 <!-- JS -->
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="../../../Public/vendor/datatables/jquery.dataTables.min.js"></script>
