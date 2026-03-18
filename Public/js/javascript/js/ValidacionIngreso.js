@@ -1,5 +1,3 @@
-
-
 const App = {
     table: null,
     qrReader: null,
@@ -10,12 +8,16 @@ const App = {
     btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
+    _timerCard: null,
 
     config: {
         urlControlador: "/SEGTRACK/App/Controller/ControladorIngreso.php",
+        rutaFotos: "/SEGTRACK/Public/",
+        avatarDefault: "/SEGTRACK/Public/img/avatar_default.png",
         fps: 10,
         qrboxSize: 250,
-        bloqueoQRms: 1500
+        bloqueoQRms: 1500,
+        tiempoCard: 7000
     }
 };
 
@@ -27,19 +29,66 @@ const App = {
 function mostrarMensaje(esExito, texto) {
 
     const { mensajeExito, mensajeError } = App;
-
     if (!mensajeExito || !mensajeError) return;
 
     mensajeExito.classList.toggle("d-none", !esExito);
     mensajeError.classList.toggle("d-none", esExito);
-
     (esExito ? mensajeExito : mensajeError).textContent = texto;
 
     setTimeout(() => {
         mensajeExito.classList.add("d-none");
         mensajeError.classList.add("d-none");
     }, 5000);
+}
 
+
+// ========================================
+// MOSTRAR CARD CON FOTO DEL FUNCIONARIO
+// ========================================
+
+function mostrarFuncionario(data) {
+
+    const card   = document.getElementById("cardFuncionario");
+    const foto   = document.getElementById("fotoFuncionario");
+    const nombre = document.getElementById("nombreFuncionario");
+    const cargo  = document.getElementById("cargoFuncionario");
+    const tipo   = document.getElementById("tipoFuncionario");
+    const fecha  = document.getElementById("fechaFuncionario");
+
+    if (!card) return;
+
+    // Foto: usa la ruta de la BD o avatar por defecto
+    foto.onerror = () => { foto.src = App.config.avatarDefault; };
+    foto.src = (data.foto && data.foto.trim() !== "" && data.foto !== "NULL")
+        ? App.config.rutaFotos + data.foto.trim()
+        : App.config.avatarDefault;
+
+    nombre.textContent = data.nombre ?? "—";
+    cargo.textContent  = data.cargo  ?? "—";
+    fecha.textContent  = data.fecha
+        ? new Date(data.fecha).toLocaleString('es-ES')
+        : "";
+
+    tipo.textContent = data.tipo ?? "—";
+    tipo.className   = "badge fs-6 px-3 py-2 mb-2 " +
+        (data.tipo === "Entrada" ? "bg-success" : "bg-danger");
+
+    // Limpiar timer anterior
+    if (App._timerCard) clearTimeout(App._timerCard);
+
+    // Mostrar con fade in
+    card.classList.remove("d-none");
+    card.style.transition = "opacity 0.4s ease";
+    card.style.opacity    = "0";
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => { card.style.opacity = "1"; });
+    });
+
+    // Ocultar con fade out
+    App._timerCard = setTimeout(() => {
+        card.style.opacity = "0";
+        setTimeout(() => card.classList.add("d-none"), 400);
+    }, App.config.tiempoCard);
 }
 
 
@@ -55,9 +104,7 @@ async function enviarQr(qr, tipo) {
 
         const res = await fetch(App.config.urlControlador, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 qr_codigo: qr,
                 tipoMovimiento: tipo
@@ -68,13 +115,14 @@ async function enviarQr(qr, tipo) {
 
         mostrarMensaje(data.success, data.message);
 
-        if (data.success && App.table) {
-            App.table.ajax.reload(null, false);
+        if (data.success) {
+            if (App.table) App.table.ajax.reload(null, false);
+            if (data.data)  mostrarFuncionario(data.data);
         }
 
     } catch (e) {
 
-        console.error(e);
+        console.error("Error enviarQr:", e);
         mostrarMensaje(false, "Error de conexión.");
 
     } finally {
@@ -82,7 +130,6 @@ async function enviarQr(qr, tipo) {
         if (App.btnCapturar) App.btnCapturar.disabled = false;
 
     }
-
 }
 
 
@@ -96,26 +143,20 @@ function onScanQR(qr) {
 
     if (!qr || App.escaneando || qr === App.ultimaLectura) return;
 
-    App.escaneando = true;
+    App.escaneando    = true;
     App.ultimaLectura = qr;
 
     enviarQr(qr, App.tipoMovimiento.value).finally(() => {
-
         setTimeout(() => {
-
-            App.escaneando = false;
+            App.escaneando    = false;
             App.ultimaLectura = null;
-
         }, App.config.bloqueoQRms);
-
     });
-
 }
 
 
 // ========================================
 // INICIAR CÁMARA
-// Compatible con DroidCam y cualquier webcam
 // ========================================
 
 async function iniciarCamara() {
@@ -133,42 +174,29 @@ async function iniciarCamara() {
             return;
         }
 
-        console.log("Cámaras detectadas:", devices);
-
-        let cameraId = null;
-
-        const droidcam = devices.find(device =>
-            device.label.toLowerCase().includes("droid")
+        const droidcam = devices.find(d =>
+            d.label.toLowerCase().includes("droid")
         );
 
-        if (droidcam) {
-            cameraId = droidcam.id;
-            console.log("Usando DroidCam:", droidcam.label);
-        } else {
-            cameraId = devices[0].id;
-            console.log("Usando cámara:", devices[0].label);
-        }
+        const cameraId = droidcam ? droidcam.id : devices[0].id;
 
         await App.qrReader.start(
             cameraId,
             {
                 fps: App.config.fps,
                 qrbox: {
-                    width: App.config.qrboxSize,
+                    width:  App.config.qrboxSize,
                     height: App.config.qrboxSize
                 }
             },
             onScanQR,
-            error => {}
+            () => {}
         );
 
     } catch (error) {
-
         console.error("Error iniciando cámara:", error);
         mostrarMensaje(false, "No se pudo iniciar la cámara.");
-
     }
-
 }
 
 
@@ -196,19 +224,14 @@ async function descargarPDF() {
         mostrarMensaje(true, "PDF descargado correctamente.");
 
     } catch (e) {
-
         console.error(e);
         mostrarMensaje(false, "No se pudo descargar el PDF.");
-
     }
-
 }
 
 
 // ========================================
 // INICIALIZACIÓN
-// Usa DOMContentLoaded igual que el de dispositivos
-// para no depender de jQuery
 // ========================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -219,18 +242,11 @@ document.addEventListener("DOMContentLoaded", () => {
     App.mensajeExito    = document.getElementById("mensajeExito");
     App.mensajeError    = document.getElementById("mensajeError");
 
-
-    // ========================================
-    // TABLA DE INGRESOS
-    // ========================================
-
     App.table = $("#tablaIngresosDT").DataTable({
 
         ajax: {
             url: App.config.urlControlador,
-            dataSrc: function (json) {
-                return json.data || [];
-            }
+            dataSrc: json => json.data || []
         },
 
         columns: [
@@ -248,13 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
 
         order: [[3, 'desc']]
-
     });
-
-
-    // ========================================
-    // EVENTOS
-    // ========================================
 
     if (App.btnCapturar)
         App.btnCapturar.addEventListener("click", iniciarCamara);

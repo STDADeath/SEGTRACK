@@ -15,3 +15,15 @@
 2026-03-17 01:56:12 - Foto guardada para funcionario 68: qr/Fotos/FOTO-FUNC-68-69b8a6ac4ed5d.jpg
 2026-03-17 01:56:12 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-68-69b8a6ac4fa61.png
 2026-03-17 01:56:17 - Correo enviado correctamente a MICKY@gmail.com
+2026-03-18 08:06:39 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-71-69ba4effb7f55.jpg
+2026-03-18 08:06:39 - Foto guardada para funcionario 71: qr/Fotos/FOTO-FUNC-71-69ba4effb7f55.jpg
+2026-03-18 08:06:39 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-71-69ba4effb9bdc.png
+2026-03-18 08:06:44 - Correo enviado correctamente a valentina@gmail.com
+2026-03-18 08:31:36 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-72-69ba54d807226.jpg
+2026-03-18 08:31:36 - Foto guardada para funcionario 72: qr/Fotos/FOTO-FUNC-72-69ba54d807226.jpg
+2026-03-18 08:31:36 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-72-69ba54d808856.png
+2026-03-18 08:31:40 - Correo enviado correctamente a saoeresunaperra@gmail.com
+2026-03-18 08:37:02 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-73-69ba561e7f5ab.jpg
+2026-03-18 08:37:02 - Foto guardada para funcionario 73: qr/Fotos/FOTO-FUNC-73-69ba561e7f5ab.jpg
+2026-03-18 08:37:02 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-73-69ba561e80fc3.png
+2026-03-18 08:37:05 - Correo enviado correctamente a pepitoperez@gmail.com

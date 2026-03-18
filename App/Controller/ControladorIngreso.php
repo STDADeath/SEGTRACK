@@ -19,8 +19,6 @@ class ControladorIngreso {
         $this->modelo = new ModeloIngreso();
     }
 
-    // REGISTRAR INGRESO O SALIDA
-
     public function registrarIngreso() {
 
         $input          = json_decode(file_get_contents('php://input'), true);
@@ -51,11 +49,10 @@ class ControladorIngreso {
             'nombre' => $funcionario['NombreFuncionario'],
             'cargo'  => $funcionario['CargoFuncionario'],
             'fecha'  => date('Y-m-d H:i:s'),
-            'tipo'   => $tipoMovimiento
+            'tipo'   => $tipoMovimiento,
+            'foto'   => $funcionario['FotoFuncionario']
         ]);
     }
-
-    // LISTAR INGRESOS
 
     public function listarIngresos() {
 
@@ -65,8 +62,6 @@ class ControladorIngreso {
         echo json_encode(['data' => $lista], JSON_UNESCAPED_UNICODE);
         exit;
     }
-
-    // RESPUESTA ESTÁNDAR JSON
 
     private function responder($success, $message, $data = null) {
 
@@ -81,8 +76,6 @@ class ControladorIngreso {
     }
 }
 
-
-// ----- RUTEO -----
 
 try {
 

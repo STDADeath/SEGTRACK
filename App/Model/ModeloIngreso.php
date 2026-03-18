@@ -13,22 +13,28 @@ class ModeloIngreso {
         }
     }
 
-    // Busca un funcionario usando el contenido del código QR.
-    // El QR tiene formato: "ID: 12\nNombre: ...\nDocumento: ..."
-
     public function buscarFuncionarioPorQr($qrCodigo) {
 
+        // Intento 1: formato "ID: 12"
         if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $match)) {
-            $id = (int)$match[1];
-        } else {
-            return false;
+            $id   = (int)$match[1];
+            $sql  = "SELECT * FROM funcionario WHERE IdFuncionario = ? LIMIT 1";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: false;
         }
 
-        $sql  = "SELECT * FROM funcionario WHERE IdFuncionario = ? LIMIT 1";
+        // Intento 2: buscar por QrCodigoFuncionario directo
+        $sql  = "SELECT * FROM funcionario 
+                 WHERE QrCodigoFuncionario = ? 
+                 AND Estado = 'Activo' 
+                 LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$id]);
+        $stmt->execute([trim($qrCodigo)]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) return $result;
 
-        return $stmt->fetch(PDO::FETCH_ASSOC) ?: false;
+        return false;
     }
 
     // Registra un ingreso o salida del funcionario.

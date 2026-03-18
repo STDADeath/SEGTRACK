@@ -8,7 +8,9 @@
                 <i class="fas fa-id-card-alt me-2"></i>Control de Ingreso de Funcionarios
             </h4>
 
-            <div class="text-center mb-5">
+            <!-- ===== ESCANER QR ===== -->
+            <div class="text-center mb-4">
+
                 <h5 class="fw-semibold mb-4 text-secondary">
                     <i class="fas fa-qrcode me-2"></i>Escanear Código QR
                 </h5>
@@ -30,14 +32,41 @@
                 <button id="btnCapturar" class="btn btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
                     <i class="fas fa-camera me-2"></i>Capturar Código QR
                 </button>
-            </div>
 
+            </div>
+            <!-- ===== FIN ESCANER QR ===== -->
+
+            <!-- ===== CARD FOTO FUNCIONARIO ===== -->
+            <div id="cardFuncionario" class="d-none mb-4">
+                <div class="card border-0 shadow rounded-4 mx-auto" style="max-width: 450px;">
+                    <div class="card-body text-center py-4 px-4">
+
+                        <img id="fotoFuncionario"
+                             src=""
+                             alt="Foto Funcionario"
+                             class="rounded-circle mb-3 border border-4 border-primary shadow"
+                             style="width: 220px; height: 220px; object-fit: cover;">
+
+                        <h5 id="nombreFuncionario" class="fw-bold text-primary mb-1 fs-4"></h5>
+                        <p  id="cargoFuncionario"  class="text-muted mb-2"></p>
+                        <span id="tipoFuncionario" class="badge fs-5 px-4 py-2 mb-2"></span>
+                        <p   id="fechaFuncionario" class="text-muted small mt-1 mb-0"></p>
+
+                    </div>
+                </div>
+            </div>
+            <!-- ===== FIN CARD FOTO FUNCIONARIO ===== -->
+
+            <!-- ===== MENSAJES ===== -->
             <div class="mb-4">
-                <div id="mensajeExito" class="alert alert-success text-center d-none mb-3 shadow-sm"></div>
-                <div id="mensajeError" class="alert alert-danger text-center d-none mb-3 shadow-sm"></div>
+                <div id="mensajeExito" class="alert alert-success text-center d-none mb-3 shadow-sm fw-semibold"></div>
+                <div id="mensajeError"  class="alert alert-danger  text-center d-none mb-3 shadow-sm fw-semibold"></div>
             </div>
+            <!-- ===== FIN MENSAJES ===== -->
 
+            <!-- ===== TABLA INGRESOS ===== -->
             <div class="bg-white p-4 rounded-4 shadow-sm">
+
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-semibold text-secondary mb-0">
                         <i class="fas fa-list me-2"></i>Lista de Ingresos Recientes
@@ -62,7 +91,9 @@
                         <tbody></tbody>
                     </table>
                 </div>
+
             </div>
+            <!-- ===== FIN TABLA INGRESOS ===== -->
 
         </div>
     </div>
@@ -73,5 +104,4 @@
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
-<!-- Script DESPUÉS de parte_inferior — jQuery y DataTables ya están cargados -->
 <script src="../../../Public/js/javascript/js/ValidacionIngreso.js"></script>

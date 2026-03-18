@@ -154,53 +154,54 @@ try {
         // Genera el código QR en Public/qr/Qr_Func/
         // ✅ Contenido del QR: Nombre, Cargo, Estado, Sede
         // Retorna la ruta relativa o null si falla
-        private function generarQR(
-            int    $idFuncionario,
-            string $nombre,
-            string $cargo,
-            string $estado,
-            string $sede
-        ): ?string {
+       private function generarQR(
+    int    $idFuncionario,
+    string $nombre,
+    string $cargo,
+    string $estado,
+    string $sede
+): ?string {
 
-            try {
-                $raiz        = realpath(__DIR__ . '/../../');
-                $rutaCarpeta = $raiz . '/Public/qr/Qr_Func';
+    try {
+        $raiz        = realpath(__DIR__ . '/../../');
+        $rutaCarpeta = $raiz . '/Public/qr/Qr_Func';
 
-                if (!file_exists($rutaCarpeta)) {
-                    mkdir($rutaCarpeta, 0777, true);
-                    chmod($rutaCarpeta, 0777);
-                }
-
-                $nombreArchivo = "QR-FUNC-" . $idFuncionario . "-" . uniqid() . ".png";
-                $rutaCompleta  = $rutaCarpeta . '/' . $nombreArchivo;
-
-                // ✅ Datos que se leen al escanear el QR
-                $contenidoQR =
-                    "Nombre: $nombre\n"  .
-                    "Cargo: $cargo\n"    .
-                    "Estado: $estado\n"  .
-                    "Sede: $sede";
-
-                ob_start();
-                QRcode::png($contenidoQR, false, QR_ECLEVEL_H, 10, 2);
-                $imageData = ob_get_contents();
-                ob_end_clean();
-
-                file_put_contents($rutaCompleta, $imageData);
-
-                if (!file_exists($rutaCompleta)) {
-                    $this->log("ERROR: No se pudo crear el QR en $rutaCompleta");
-                    return null;
-                }
-
-                $this->log("QR generado exitosamente: $rutaCompleta");
-                return "qr/Qr_Func/" . $nombreArchivo;
-
-            } catch (Throwable $e) {
-                $this->log("EXCEPCIÓN al generar QR: " . $e->getMessage());
-                return null;
-            }
+        if (!file_exists($rutaCarpeta)) {
+            mkdir($rutaCarpeta, 0777, true);
+            chmod($rutaCarpeta, 0777);
         }
+
+        $nombreArchivo = "QR-FUNC-" . $idFuncionario . "-" . uniqid() . ".png";
+        $rutaCompleta  = $rutaCarpeta . '/' . $nombreArchivo;
+
+        // ✅ Agrega ID al contenido del QR
+        $contenidoQR =
+            "ID: $idFuncionario\n"  .
+            "Nombre: $nombre\n"     .
+            "Cargo: $cargo\n"       .
+            "Estado: $estado\n"     .
+            "Sede: $sede";
+
+        ob_start();
+        QRcode::png($contenidoQR, false, QR_ECLEVEL_H, 10, 2);
+        $imageData = ob_get_contents();
+        ob_end_clean();
+
+        file_put_contents($rutaCompleta, $imageData);
+
+        if (!file_exists($rutaCompleta)) {
+            $this->log("ERROR: No se pudo crear el QR en $rutaCompleta");
+            return null;
+        }
+
+        $this->log("QR generado exitosamente: $rutaCompleta");
+        return "qr/Qr_Func/" . $nombreArchivo;
+
+    } catch (Throwable $e) {
+        $this->log("EXCEPCIÓN al generar QR: " . $e->getMessage());
+        return null;
+    }
+}
 
 
         // ╔══════════════════════════════════════════════════════╗
