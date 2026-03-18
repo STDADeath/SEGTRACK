@@ -1,10 +1,4 @@
-// ========================================
-// CONTROL DE DISPOSITIVOS - SISTEMA SEGTRACK
-// Lectura continua de QR
-// Compatible con DroidCam, webcam y móvil
-// ========================================
-
-const AppDispositivo = {
+const AppDev = {
     table: null,
     qrReader: null,
     ultimaLectura: null,
@@ -13,12 +7,16 @@ const AppDispositivo = {
     btnCapturar: null,
     mensajeExito: null,
     mensajeError: null,
+    _timerCard: null,
 
     config: {
         urlControlador: "/SEGTRACK/App/Controller/ControladorIngresoDispositivo.php",
+        rutaFotos: "/SEGTRACK/Public/",
+        avatarDefault: "/SEGTRACK/Public/img/avatar_default.png",
         fps: 10,
         qrboxSize: 250,
-        bloqueoQRms: 1500
+        bloqueoQRms: 1500,
+        tiempoCard: 7000
     }
 };
 
@@ -27,22 +25,77 @@ const AppDispositivo = {
 // MENSAJES EN PANTALLA
 // ========================================
 
-function mostrarMensajeDispositivo(esExito, texto) {
+function mostrarMensaje(esExito, texto) {
 
-    const { mensajeExito, mensajeError } = AppDispositivo;
+    const exito = document.getElementById("mensajeExito");
+    const error = document.getElementById("mensajeError");
 
-    if (!mensajeExito || !mensajeError) return;
+    if (!exito || !error) return;
 
-    mensajeExito.classList.toggle("d-none", !esExito);
-    mensajeError.classList.toggle("d-none", esExito);
-
-    (esExito ? mensajeExito : mensajeError).textContent = texto;
+    exito.classList.toggle("d-none", !esExito);
+    error.classList.toggle("d-none", esExito);
+    (esExito ? exito : error).textContent = texto;
 
     setTimeout(() => {
-        mensajeExito.classList.add("d-none");
-        mensajeError.classList.add("d-none");
+        exito.classList.add("d-none");
+        error.classList.add("d-none");
     }, 5000);
+}
 
+
+// ========================================
+// MOSTRAR CARD CON FOTO Y DATOS DISPOSITIVO
+// ========================================
+
+function mostrarDispositivo(data) {
+
+    const card    = document.getElementById("cardDispositivo");
+    const foto    = document.getElementById("fotoFuncionario");
+    const nombre  = document.getElementById("nombreFuncionario");
+    const cargo   = document.getElementById("cargoFuncionario");
+    const tipo    = document.getElementById("tipoDispositivo");
+    const marca   = document.getElementById("marcaDispositivo");
+    const serial  = document.getElementById("serialDispositivo");
+    const tipomov = document.getElementById("tipoMovimiento2");
+    const fecha   = document.getElementById("fechaDispositivo");
+
+    if (!card) return;
+
+    // Foto del funcionario
+    foto.onerror = () => { foto.src = AppDev.config.avatarDefault; };
+    foto.src = (data.foto && data.foto.trim() !== "" && data.foto !== "NULL")
+        ? AppDev.config.rutaFotos + data.foto.trim()
+        : AppDev.config.avatarDefault;
+
+    nombre.textContent = data.funcionario ?? "Sin asignar";
+    cargo.textContent  = data.cargo       ?? "—";
+    tipo.textContent   = data.tipo        ?? "—";
+    marca.textContent  = data.marca       ?? "—";
+    serial.textContent = data.serial      ?? "—";
+    fecha.textContent  = data.fecha
+        ? new Date(data.fecha).toLocaleString('es-ES')
+        : "";
+
+    tipomov.textContent = data.tipo_mov ?? "—";
+    tipomov.className   = "badge fs-5 px-4 py-2 mb-2 " +
+        (data.tipo_mov === "Entrada" ? "bg-success" : "bg-danger");
+
+    // Limpiar timer anterior
+    if (AppDev._timerCard) clearTimeout(AppDev._timerCard);
+
+    // Mostrar con fade in
+    card.classList.remove("d-none");
+    card.style.transition = "opacity 0.4s ease";
+    card.style.opacity    = "0";
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => { card.style.opacity = "1"; });
+    });
+
+    // Ocultar con fade out
+    AppDev._timerCard = setTimeout(() => {
+        card.style.opacity = "0";
+        setTimeout(() => card.classList.add("d-none"), 400);
+    }, AppDev.config.tiempoCard);
 }
 
 
@@ -50,17 +103,15 @@ function mostrarMensajeDispositivo(esExito, texto) {
 // ENVIAR QR AL SERVIDOR
 // ========================================
 
-async function enviarQrDispositivo(qr, tipo) {
+async function enviarQr(qr, tipo) {
 
-    if (AppDispositivo.btnCapturar) AppDispositivo.btnCapturar.disabled = true;
+    if (AppDev.btnCapturar) AppDev.btnCapturar.disabled = true;
 
     try {
 
-        const res = await fetch(AppDispositivo.config.urlControlador, {
+        const res = await fetch(AppDev.config.urlControlador, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 qr_codigo: qr,
                 tipoMovimiento: tipo
@@ -69,23 +120,23 @@ async function enviarQrDispositivo(qr, tipo) {
 
         const data = await res.json();
 
-        mostrarMensajeDispositivo(data.success, data.message);
+        mostrarMensaje(data.success, data.message);
 
-        if (data.success && AppDispositivo.table) {
-            AppDispositivo.table.ajax.reload(null, false);
+        if (data.success) {
+            if (AppDev.table) AppDev.table.ajax.reload(null, false);
+            if (data.data)    mostrarDispositivo(data.data);
         }
 
     } catch (e) {
 
-        console.error(e);
-        mostrarMensajeDispositivo(false, "Error de conexión.");
+        console.error("Error enviarQr:", e);
+        mostrarMensaje(false, "Error de conexión.");
 
     } finally {
 
-        if (AppDispositivo.btnCapturar) AppDispositivo.btnCapturar.disabled = false;
+        if (AppDev.btnCapturar) AppDev.btnCapturar.disabled = false;
 
     }
-
 }
 
 
@@ -93,92 +144,66 @@ async function enviarQrDispositivo(qr, tipo) {
 // CUANDO SE DETECTA UN QR
 // ========================================
 
-function onScanQRDispositivo(qr) {
+function onScanQR(qr) {
 
     qr = qr.trim();
 
-    if (!qr || AppDispositivo.escaneando || qr === AppDispositivo.ultimaLectura) return;
+    if (!qr || AppDev.escaneando || qr === AppDev.ultimaLectura) return;
 
-    AppDispositivo.escaneando    = true;
-    AppDispositivo.ultimaLectura = qr;
+    AppDev.escaneando    = true;
+    AppDev.ultimaLectura = qr;
 
-    enviarQrDispositivo(qr, AppDispositivo.tipoMovimiento.value).finally(() => {
-
+    enviarQr(qr, AppDev.tipoMovimiento.value).finally(() => {
         setTimeout(() => {
-
-            AppDispositivo.escaneando    = false;
-            AppDispositivo.ultimaLectura = null;
-
-        }, AppDispositivo.config.bloqueoQRms);
-
+            AppDev.escaneando    = false;
+            AppDev.ultimaLectura = null;
+        }, AppDev.config.bloqueoQRms);
     });
-
 }
 
 
 // ========================================
 // INICIAR CÁMARA
-// Compatible con DroidCam y cualquier webcam
 // ========================================
 
-async function iniciarCamaraDispositivo() {
+async function iniciarCamara() {
 
-    if (AppDispositivo.qrReader) return;
+    if (AppDev.qrReader) return;
 
-    AppDispositivo.qrReader = new Html5Qrcode("qr-reader");
+    AppDev.qrReader = new Html5Qrcode("qr-reader");
 
     try {
 
         const devices = await Html5Qrcode.getCameras();
 
         if (!devices || devices.length === 0) {
-            mostrarMensajeDispositivo(false, "No se detectaron cámaras.");
+            mostrarMensaje(false, "No se detectaron cámaras.");
             return;
         }
 
-        console.log("Cámaras detectadas:", devices);
-
-        let cameraId = null;
-
-        // Buscar DroidCam primero
-        const droidcam = devices.find(device =>
-            device.label.toLowerCase().includes("droid")
+        const droidcam = devices.find(d =>
+            d.label.toLowerCase().includes("droid")
         );
 
-        if (droidcam) {
+        const cameraId = droidcam ? droidcam.id : devices[0].id;
 
-            cameraId = droidcam.id;
-            console.log("Usando DroidCam:", droidcam.label);
-
-        } else {
-
-            cameraId = devices[0].id;
-            console.log("Usando cámara:", devices[0].label);
-
-        }
-
-        await AppDispositivo.qrReader.start(
+        await AppDev.qrReader.start(
             cameraId,
             {
-                fps: AppDispositivo.config.fps,
+                fps: AppDev.config.fps,
                 qrbox: {
-                    width: AppDispositivo.config.qrboxSize,
-                    height: AppDispositivo.config.qrboxSize
+                    width:  AppDev.config.qrboxSize,
+                    height: AppDev.config.qrboxSize
                 }
             },
-            onScanQRDispositivo,
-            error => {
-                // Errores normales de lectura (ignorar)
-            }
+            onScanQR,
+            () => {}
         );
 
     } catch (error) {
-
         console.error("Error iniciando cámara:", error);
-        mostrarMensajeDispositivo(false, "No se pudo iniciar la cámara.");
-
+        mostrarMensaje(false, "No se pudo iniciar la cámara.");
     }
-
 }
 
 
@@ -188,31 +213,24 @@ async function iniciarCamaraDispositivo() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    AppDispositivo.tipoMovimiento = document.getElementById("tipoMovimiento");
-    AppDispositivo.btnCapturar    = document.getElementById("btnCapturar");
-    AppDispositivo.mensajeExito   = document.getElementById("mensajeExito");
-    AppDispositivo.mensajeError   = document.getElementById("mensajeError");
+    AppDev.tipoMovimiento = document.getElementById("tipoMovimiento");
+    AppDev.btnCapturar    = document.getElementById("btnCapturar");
+    AppDev.mensajeExito   = document.getElementById("mensajeExito");
+    AppDev.mensajeError   = document.getElementById("mensajeError");
 
-
-    // ========================================
-    // TABLA DE MOVIMIENTOS DE DISPOSITIVOS
-    // ========================================
-
-    AppDispositivo.table = $("#tablaDispositivosDT").DataTable({
+    AppDev.table = $("#tablaDispositivosDT").DataTable({
 
         ajax: {
-            url: AppDispositivo.config.urlControlador,
-            dataSrc: function (json) {
-                return json.data || [];
-            }
+            url: AppDev.config.urlControlador,
+            dataSrc: json => json.data || []
         },
 
         columns: [
-            { data: "TipoDispositivo"   },
-            { data: "MarcaDispositivo"  },
-            { data: "NumeroSerial"      },
-            { data: "NombreFuncionario" },
-            { data: "TipoMovimiento"    },
+            { data: "TipoDispositivo"  },
+            { data: "MarcaDispositivo" },
+            { data: "NumeroSerial"     },
+            { data: "NombreFuncionario"},
+            { data: "TipoMovimiento"   },
             {
                 data: "FechaIngreso",
                 render: d => new Date(d).toLocaleString('es-ES')
@@ -224,15 +242,9 @@ document.addEventListener("DOMContentLoaded", () => {
         },
 
         order: [[5, 'desc']]
-
     });
 
-
-    // ========================================
-    // EVENTOS
-    // ========================================
-
-    if (AppDispositivo.btnCapturar)
-        AppDispositivo.btnCapturar.addEventListener("click", iniciarCamaraDispositivo);
+    if (AppDev.btnCapturar)
+        AppDev.btnCapturar.addEventListener("click", iniciarCamara);
 
 });

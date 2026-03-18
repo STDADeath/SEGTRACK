@@ -2984,3 +2984,60 @@ INSERT exitoso, ID: 44
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 44","data":{"IdDispositivo":"44","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-44-69b8a1de22a36.png"}}
 === FIN ===
 
+
+2026-03-18 16:59:46 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "1141s4f4524",
+    "IdFuncionario": "69",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: 1141s4f4524
+INSERT exitoso, ID: 44
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 44","data":{"IdDispositivo":"44","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-44-69bacbf242a5e.png"}}
+=== FIN ===
+
+
+2026-03-18 17:05:25 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "xaomi",
+    "NumeroSerial": "987654321sw2",
+    "IdFuncionario": "72",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: xaomi, Serial: 987654321sw2
+INSERT exitoso, ID: 45
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 45","data":{"IdDispositivo":"45","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-45-69bacd45e07d9.png"}}
+=== FIN ===
+
+
+2026-03-18 17:12:50 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "987654321sw2wd",
+    "IdFuncionario": "73",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: 987654321sw2wd
+INSERT exitoso, ID: 46
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 46","data":{"IdDispositivo":"46","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-46-69bacf02c4d96.png"}}
+=== FIN ===
+

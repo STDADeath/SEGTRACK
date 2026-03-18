@@ -8,7 +8,9 @@
                 <i class="fas fa-laptop me-2"></i>Control de Ingreso de Dispositivos
             </h4>
 
-            <div class="text-center mb-5">
+            <!-- ===== ESCANER QR ===== -->
+            <div class="text-center mb-4">
+
                 <h5 class="fw-semibold mb-4 text-secondary">
                     <i class="fas fa-qrcode me-2"></i>Escanear Código QR
                 </h5>
@@ -30,20 +32,57 @@
                 <button id="btnCapturar" class="btn btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
                     <i class="fas fa-camera me-2"></i>Capturar Código QR
                 </button>
-            </div>
 
+            </div>
+            <!-- ===== FIN ESCANER QR ===== -->
+
+            <!-- ===== CARD DISPOSITIVO + FOTO FUNCIONARIO ===== -->
+            <div id="cardDispositivo" class="d-none mb-4">
+                <div class="card border-0 shadow rounded-4 mx-auto" style="max-width: 450px;">
+                    <div class="card-body text-center py-4 px-4">
+
+                        <img id="fotoFuncionario"
+                             src=""
+                             alt="Foto Funcionario"
+                             class="rounded-circle mb-3 border border-4 border-primary shadow"
+                             style="width: 220px; height: 220px; object-fit: cover;">
+
+                        <h5 id="nombreFuncionario" class="fw-bold text-primary mb-1 fs-4"></h5>
+                        <p  id="cargoFuncionario"  class="text-muted mb-1"></p>
+
+                        <hr class="my-2">
+
+                        <p class="mb-1">
+                            <i class="fas fa-laptop text-primary me-1"></i>
+                            <span id="tipoDispositivo" class="fw-semibold"></span>
+                            — <span id="marcaDispositivo" class="text-muted"></span>
+                        </p>
+                        <p class="mb-2 text-muted small">
+                            Serial: <span id="serialDispositivo"></span>
+                        </p>
+
+                        <span id="tipoMovimiento2" class="badge fs-5 px-4 py-2 mb-2"></span>
+                        <p    id="fechaDispositivo" class="text-muted small mt-1 mb-0"></p>
+
+                    </div>
+                </div>
+            </div>
+            <!-- ===== FIN CARD ===== -->
+
+            <!-- ===== MENSAJES ===== -->
             <div class="mb-4">
                 <div id="mensajeExito" class="alert alert-success text-center d-none mb-3 shadow-sm"></div>
                 <div id="mensajeError"  class="alert alert-danger  text-center d-none mb-3 shadow-sm"></div>
             </div>
+            <!-- ===== FIN MENSAJES ===== -->
 
+            <!-- ===== TABLA ===== -->
             <div class="bg-white p-4 rounded-4 shadow-sm">
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-semibold text-secondary mb-0">
                         <i class="fas fa-list me-2"></i>Lista de Movimientos de Dispositivos
                     </h5>
-
                     <a href="/SEGTRACK/App/Controller/DispositivoIngresoPDF.php?accion=pdf"
                        target="_blank"
                        class="btn btn-danger shadow-sm fw-semibold">
@@ -52,8 +91,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table id="tablaDispositivosDT"
-                           class="table table-hover align-middle text-center mb-0">
+                    <table id="tablaDispositivosDT" class="table table-hover align-middle text-center mb-0">
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>Tipo</th>
@@ -69,6 +107,8 @@
                 </div>
 
             </div>
+            <!-- ===== FIN TABLA ===== -->
+
         </div>
     </div>
 </div>
@@ -78,5 +118,4 @@
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
-<!-- Script DESPUÉS de parte_inferior -->
 <script src="../../../Public/js/javascript/js/ValidacionIngresoDispositivo.js"></script>
