@@ -3041,3 +3041,41 @@ INSERT exitoso, ID: 46
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 46","data":{"IdDispositivo":"46","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-46-69bacf02c4d96.png"}}
 === FIN ===
 
+
+2026-03-19 08:27:36 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "HP",
+    "NumeroSerial": "MYC123",
+    "IdFuncionario": "68",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: HP, Serial: MYC123
+INSERT exitoso, ID: 45
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 45","data":{"IdDispositivo":"45","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-45-69bba5687ca67.png"}}
+=== FIN ===
+
+
+2026-03-19 09:52:57 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "ASUS",
+    "NumeroSerial": "MYC125",
+    "IdFuncionario": "83",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: ASUS, Serial: MYC125
+INSERT exitoso, ID: 46
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 46","data":{"IdDispositivo":"46","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-46-69bbb9698a42b.png"}}
+=== FIN ===
+

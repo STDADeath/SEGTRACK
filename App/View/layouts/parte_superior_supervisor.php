@@ -1,4 +1,7 @@
 <?php
+// ==============================
+// 🔐 CONTROL DE SESIÓN
+// ==============================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -10,12 +13,18 @@ if (!isset($_SESSION['usuario'])) {
 
 $usuario = $_SESSION['usuario'];
 
+// ==============================
+// 🚫 VALIDAR ESTADO
+// ==============================
 if (!isset($usuario['Estado']) || $usuario['Estado'] !== 'Activo') {
     session_destroy();
     header("Location: ../Login/Login.php?error=inactivo");
     exit();
 }
 
+// ==============================
+// 🔄 VALIDAR ROL
+// ==============================
 if ($usuario['TipoRol'] !== 'Supervisor') {
     switch ($usuario['TipoRol']) {
         case 'Administrador':
@@ -31,29 +40,40 @@ if ($usuario['TipoRol'] !== 'Supervisor') {
     exit();
 }
 
-$baseUrl = rtrim(
-    str_replace('\\', '/',
-        dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))))
-    ), '/'
-);
+// ==============================
+// 🌐 BASE URL
+// ==============================
+$baseUrl = "http://" . $_SERVER['HTTP_HOST'] . "/SEGTRACK";
 
-$fotoPerfil   = (!empty($usuario['FotoFuncionario']))
-    ? $baseUrl . '/Public/' . htmlspecialchars($usuario['FotoFuncionario'])
-    : $baseUrl . '/Public/img/undraw_profile.svg';
+// ==============================
+// 🖼️ FOTO PERFIL (FIX REAL)
+// ==============================
+$fotoFallback = $baseUrl . "/Public/img/undraw_profile.svg";
+$fotoPerfil = $fotoFallback;
 
-$fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
+if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL') {
+
+    // Ruta que viene de la BD
+    $rutaBD = $usuario['FotoFuncionario'];
+
+    // Ruta física en el servidor
+    $rutaFisica = $_SERVER['DOCUMENT_ROOT'] . "/SEGTRACK/Public/" . $rutaBD;
+
+    // Validar si existe el archivo
+    if (file_exists($rutaFisica)) {
+        $fotoPerfil = $baseUrl . "/Public/" . $rutaBD;
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SEGTRACK | Supervisor</title>
+
     <link href="../../../Public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../../../Public/css/styles.css" rel="stylesheet">
     <link href="../../../Public/css/graficas.css" rel="stylesheet">
     <link href="../../../Public/css/icono.css" rel="stylesheet">
 </head>
@@ -61,120 +81,115 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
 <body id="page-top">
 <div id="wrapper">
 
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<!-- SIDEBAR -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <a class="sidebar-brand d-flex align-items-center justify-content-center"
-            href="../Supervisor/DasboardSupervisor.php">
-            <div class="sidebar-brand-icon">
-                <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" alt="Logo" id="logo">
-            </div>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center"
+        href="../Supervisor/DasboardSupervisor.php">
+        <div class="sidebar-brand-icon">
+            <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" id="logo">
+        </div>
+    </a>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" href="../Supervisor/FuncionarioListaSUP.php">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Funcionarios</span>
         </a>
+    </li>
 
-        <hr class="sidebar-divider">
+    <hr class="sidebar-divider">
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuper1">
-                <i class="fas fa-fw fa-user-shield"></i>
-                <span>Supervisión de Personal</span>
-            </a>
-            <div id="collapseSuper1" class="collapse" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Personal Seguridad</h6>
-                    <a class="collapse-item" href="../Supervisor/FuncionarioListaSUP.php">Lista de Funcionarios</a>
-                    <a class="collapse-item" href="">Reporte De Bitacoras</a>
-                    <a class="collapse-item" href="">Reporte De Visitante</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Sedes:</h6>
-                    <a class="collapse-item" href="../Supervisor/SedeLista.php">Lista de Sedes</a>
-                    <h6 class="collapse-header">Institutos:</h6>
-                    <a class="collapse-item" href="../Supervisor/InstitutosListaSUP.php">Lista de Institutos</a>
-                </div>
-            </div>
-        </li>
+    <li class="nav-item">
+        <a class="nav-link" href="../Supervisor/BitacoraListaSUP.php">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Bitácoras</span>
+        </a>
+    </li>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuper2">
-                <i class="fas fa-fw fa-clipboard-list"></i>
-                <span>Información Registros</span>
-            </a>
-            <div id="collapseSuper2" class="collapse" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Registros Seguridad</h6>
-                    <a class="collapse-item" href="../Supervisor/DispositivoSupervisor.php">Registros Dispositivos</a>
-                    <a class="collapse-item" href="../Supervisor/ParqueaderoSupervisor.php">Registros Parqueadero</a>
-                    <a class="collapse-item" href="">Registros Ingresos</a>
-                </div>
-            </div>
-        </li>
+    <hr class="sidebar-divider">
 
-        <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link" href="../Supervisor/VisitanteListaSUP.php">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Visitantes</span>
+        </a>
+    </li>
 
-    </ul>
+    <hr class="sidebar-divider">
 
-    <div id="content-wrapper" class="d-flex flex-column">
-        <div id="content">
+    <li class="nav-item">
+        <a class="nav-link" href="../Supervisor/SedeLista.php">
+            <i class="fas fa-fw fa-building"></i>
+            <span>Sedes</span>
+        </a>
+    </li>
 
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
+    <hr class="sidebar-divider">
 
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+    <li class="nav-item">
+        <a class="nav-link" href="../Supervisor/InstitutosListaSUP.php">
+            <i class="fas fa-fw fa-university"></i>
+            <span>Institutos</span>
+        </a>
+    </li>
 
-                <ul class="navbar-nav ml-auto">
+    <hr class="sidebar-divider">
 
-                    <li class="nav-item dropdown no-arrow">
+</ul>
 
-                        <a class="nav-link dropdown-toggle" href="#"
-                            id="userDropdown" data-toggle="dropdown"
-                            style="display:flex;align-items:center;gap:10px;">
+<!-- CONTENIDO -->
+<div id="content-wrapper" class="d-flex flex-column">
+<div id="content">
 
-                            <div style="text-align:right;line-height:1.3;">
-                                <div style="font-size:13px;font-weight:600;color:#333;">
-                                    <?= htmlspecialchars($usuario['NombreFuncionario']) ?>
-                                </div>
-                                <div style="font-size:11px;color:#888;">
-                                    <?= htmlspecialchars($usuario['TipoRol']) ?>
-                                </div>
-                            </div>
+<!-- TOPBAR -->
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
 
-                            <img class="img-profile rounded-circle"
-                                style="width:42px;height:42px;object-fit:cover;
-                                       border:2px solid #e0e0e0;flex-shrink:0;"
-                                src="<?= $fotoPerfil ?>"
-                                onerror="this.src='<?= $fotoFallback ?>'">
-                        </a>
+<ul class="navbar-nav ml-auto">
 
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
+<li class="nav-item dropdown no-arrow">
 
-                            <div class="text-center" style="padding:16px 12px 12px;">
-                                <img src="<?= $fotoPerfil ?>"
-                                    style="width:72px;height:72px;object-fit:cover;
-                                           border-radius:50%;border:2px solid #4e73df;
-                                           display:block;margin:0 auto;"
-                                    onerror="this.src='<?= $fotoFallback ?>'">
+<a class="nav-link dropdown-toggle"
+    href="#"
+    id="userDropdown"
+    data-toggle="dropdown"
+    role="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    style="display:flex;align-items:center;gap:10px;">
 
-                                <div style="margin-top:10px;font-size:13px;
-                                            font-weight:600;color:#333;">
-                                    <?= htmlspecialchars($usuario['NombreFuncionario']) ?>
-                                </div>
+    <div style="text-align:right;">
+        <div style="font-size:13px;font-weight:600;">
+            <?= htmlspecialchars($usuario['NombreFuncionario']) ?>
+        </div>
+        <div style="font-size:11px;color:#777;">
+            <?= htmlspecialchars($usuario['TipoRol']) ?>
+        </div>
+    </div>
 
-                                <div style="margin-top:3px;font-size:11px;color:#777;">
-                                    <?= htmlspecialchars($usuario['TipoRol']) ?>
-                                </div>
-                            </div>
+    <img class="img-profile rounded-circle"
+        style="width:42px;height:42px;object-fit:cover;border:2px solid #e0e0e0;"
+        src="<?= $fotoPerfil ?>"
+        onerror="this.src='<?= $fotoFallback ?>'">
+</a>
 
-                            <div class="dropdown-divider"></div>
+<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+     aria-labelledby="userDropdown">
 
-                            <a class="dropdown-item" href="../Login/logout.php">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Cerrar sesión
-                            </a>
+    <div class="dropdown-divider"></div>
 
-                        </div>
-                    </li>
+    <a class="dropdown-item" href="../Login/logout.php">
+        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+        Cerrar sesión
+    </a>
 
-                </ul>
-            </nav>
+</div>
 
-            <div class="container-fluid">
+</li>
+</ul>
+</nav>
+
+<!-- 🔥 IMPORTANTE -->
+<div class="container-fluid">
