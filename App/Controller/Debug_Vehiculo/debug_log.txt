@@ -32,3 +32,54 @@ Acción: registrar
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 27","data":{"IdVehiculo":"27","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-27-69bbc09e82058.png","FechaRegistro":"2026-03-19 04:23:42"}}
 === FIN ===
 
+
+2026-03-19 22:38:02 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "FVS15S",
+    "DescripcionVehiculo": "21321321",
+    "TarjetaPropiedad": "t1125478137",
+    "IdSede": "65",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "70",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":false,"message":"⚠️ La placa 'FVS15S' ya está registrada para un vehículo tipo 'Bicicleta'."}
+=== FIN ===
+
+
+2026-03-19 22:38:06 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "2121FS",
+    "DescripcionVehiculo": "21321321",
+    "TarjetaPropiedad": "t1125478137",
+    "IdSede": "65",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "70",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":false,"message":"⚠️ La tarjeta 't1125478137' ya está registrada para un vehículo tipo 'Bicicleta'."}
+=== FIN ===
+
+
+2026-03-19 22:38:10 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "2121FS",
+    "DescripcionVehiculo": "21321321",
+    "TarjetaPropiedad": "t11254781371",
+    "IdSede": "65",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "70",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+Acción: registrar
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 27","data":{"IdVehiculo":"27","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-27-69bcc1227e1b5.png","FechaRegistro":"2026-03-19 22:38:10"}}
+=== FIN ===
+

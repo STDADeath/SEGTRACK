@@ -1,95 +1,206 @@
 <?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
 
 <div class="container-fluid px-4 py-4">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-book me-2"></i>Registrar Bitácora</h1>
-        <a href="./BitacoraLista.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-list me-1"></i> Ver Bitácoras
-        </a>
-    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
 
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-light">
-            <h6 class="m-0 font-weight-bold text-primary">Formulario de Registro</h6>
-        </div>
-        <div class="card-body">
-            <form id="formRegistrarBitacora">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="TurnoBitacora" class="form-label">Turno</label>
-                        <select id="TurnoBitacora" name="TurnoBitacora" class="form-select border-primary shadow-sm" required>
-                            <option value="" disabled selected>-- Seleccione --</option>
-                            <option value="Jornada mañana">Jornada mañana</option>
-                            <option value="Jornada tarde">Jornada tarde</option>
-                            <option value="Jornada noche">Jornada noche</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="FechaBitacora" class="form-label">Fecha y Hora</label>
-                        <input type="datetime-local" id="FechaBitacora" name="FechaBitacora" class="form-control" required>
+            <!-- Cabecera -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">
+                    <i class="fas fa-book me-2"></i>Registrar Bitácora
+                </h1>
+                <a href="./BitacoraLista.php" class="btn btn-sm btn-secondary shadow-sm">
+                    <i class="fas fa-list me-1"></i> Ver Bitácoras
+                </a>
+            </div>
+
+            <!-- Card principal -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 bg-primary">
+                    <h6 class="m-0 font-weight-bold text-white">Información de la Bitácora</h6>
+                </div>
+                <div class="card-body">
+                    <form id="formRegistrarBitacora" enctype="multipart/form-data">
+
+                        <!-- Fila 1: Turno + Fecha -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    Turno <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <select id="TurnoBitacora" name="TurnoBitacora"
+                                            class="form-select" required>
+                                        <option value="" disabled selected>Seleccione turno...</option>
+                                        <option value="Jornada mañana">Jornada mañana</option>
+                                        <option value="Jornada tarde">Jornada tarde</option>
+                                        <option value="Jornada noche">Jornada noche</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    Fecha y Hora <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                    <input type="datetime-local" id="FechaBitacora" name="FechaBitacora"
+                                           class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Novedades -->
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label class="form-label fw-semibold">
+                                    Novedades <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-align-left"></i></span>
+                                    <textarea id="NovedadesBitacora" name="NovedadesBitacora"
+                                              class="form-control" rows="3"
+                                              placeholder="Describa las novedades del turno..." required></textarea>
+                                </div>
+                                <small class="text-muted">Mínimo 10 caracteres.</small>
+                            </div>
+                        </div>
+
+                        <!-- Fila 2: Personal de seguridad + ¿Hay visitante? -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    Personal de Seguridad <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user-shield"></i></span>
+                                    <select id="IdFuncionario" name="IdFuncionario"
+                                            class="form-select" required>
+                                        <option value="" disabled selected>Cargando personal...</option>
+                                    </select>
+                                </div>
+                                <div id="msgPersonal" class="form-text"></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    ¿Hay visitante? <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                                    <select id="TieneVisitante" name="TieneVisitante"
+                                            class="form-select" required>
+                                        <option value="" disabled selected>Seleccione...</option>
+                                        <option value="no">No</option>
+                                        <option value="si">Sí</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visitante (condicional) -->
+                        <div class="row" id="VisitanteContainer" style="display:none;">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    Visitante <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <select id="IdVisitante" name="IdVisitante" class="form-select">
+                                        <option value="" disabled selected>Cargando visitantes...</option>
+                                    </select>
+                                </div>
+                                <div id="msgVisitante" class="form-text"></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    ¿El visitante trae dispositivo? <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-laptop"></i></span>
+                                    <select id="TraeDispositivo" name="TraeDispositivo" class="form-select">
+                                        <option value="" disabled selected>Seleccione...</option>
+                                        <option value="no">No</option>
+                                        <option value="si">Sí</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dispositivo (condicional) -->
+                        <div class="row" id="DispositivoContainer" style="display:none;">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    Dispositivo <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-desktop"></i></span>
+                                    <select id="IdDispositivo" name="IdDispositivo" class="form-select">
+                                        <option value="" disabled selected>-- Seleccione dispositivo --</option>
+                                    </select>
+                                </div>
+                                <div id="msgDispositivo" class="form-text"></div>
+                            </div>
+                        </div>
+
+                        <!-- Adjuntar PDF -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    <i class="fas fa-file-pdf text-danger me-1"></i>
+                                    Adjuntar PDF de soporte
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-paperclip"></i></span>
+                                    <input type="file" id="ReportePDF" name="ReportePDF"
+                                           class="form-control" accept="application/pdf">
+                                </div>
+                                <small class="text-muted">Opcional · máx. 5 MB</small>
+                                <!-- Indicador del archivo seleccionado -->
+                                <div id="pdfPreview" class="mt-2" style="display:none;">
+                                    <span class="badge bg-success py-2 px-3">
+                                        <i class="fas fa-check-circle me-1"></i>
+                                        <span id="pdfNombre"></span>
+                                    </span>
+                                    <button type="button" id="btnQuitarPDF"
+                                            class="btn btn-sm btn-link text-danger p-0 ms-2">
+                                        <i class="fas fa-times"></i> Quitar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botón -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> Registrar Bitácora
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Card informativa -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 bg-light">
+                    <h6 class="m-0 font-weight-bold text-primary">Información Adicional</h6>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Los campos marcados con <span class="text-danger fw-bold">*</span> son obligatorios.
+                        El PDF de soporte es opcional y no debe superar los 5 MB.
                     </div>
                 </div>
+            </div>
 
-                <div class="mb-3">
-                    <label for="NovedadesBitacora" class="form-label">Novedades</label>
-                    <textarea id="NovedadesBitacora" name="NovedadesBitacora" class="form-control" rows="3" placeholder="Describa las novedades aquí..." required></textarea>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="IdFuncionario" class="form-label">ID Funcionario</label>
-                        <input type="number" id="IdFuncionario" name="IdFuncionario" class="form-control" placeholder="Ej: 101" required>
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                        <label for="IdIngreso" class="form-label">ID Ingreso</label>
-                        <input type="number" id="IdIngreso" name="IdIngreso" class="form-control" placeholder="Ej: 205" required>
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">¿Hay visitante?</label>
-                        <select id="TieneVisitante" name="TieneVisitante" class="form-select border-primary shadow-sm" required>
-                            <option value="" disabled selected>-- Seleccione --</option>
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row" id="VisitanteContainer" style="display: none;">
-                    <div class="col-md-6 mb-3">
-                        <label for="IdVisitante" class="form-label">ID Visitante</label>
-                        <input type="number" id="IdVisitante" name="IdVisitante" class="form-control" placeholder="Ej: 303">
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">¿El visitante trae dispositivo?</label>
-                        <select id="TraeDispositivo" name="TraeDispositivo" class="form-select border-primary shadow-sm">
-                            <option value="" disabled selected>-- Seleccione --</option>
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row" id="DispositivoContainer" style="display: none;">
-                    <div class="col-md-6 mb-3">
-                        <label for="IdDispositivo" class="form-label">ID Dispositivo</label>
-                        <input type="number" id="IdDispositivo" name="IdDispositivo" class="form-control" placeholder="Ej: 401">
-                    </div>
-                </div>
-
-                <div class="text-end">
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save me-1"></i> Registrar
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 </div>
 
-<script src="../../../Public/vendor/jquery/jquery.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../../Public/js/javascript/js/validacionBitacora.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
