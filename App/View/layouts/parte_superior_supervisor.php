@@ -112,6 +112,24 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
     <hr class="sidebar-divider">
 
     <li class="nav-item">
+        <a class="nav-link" href="../Supervisor/VehiculoSupervisor.php">
+            <i class="fas fa-car"></i>
+            <span>Vehiculos</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" href="../Supervisor/DispositivoSupervisor.php">
+            <i class="fas fa-laptop"></i>
+            <span>Dispositivos</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
         <a class="nav-link" href="../Supervisor/VisitanteListaSUP.php">
             <i class="fas fa-fw fa-users"></i>
             <span>Visitantes</span>
@@ -136,7 +154,7 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
         </a>
     </li>
 
-    <hr class="sidebar-divider">
+
 
 </ul>
 
