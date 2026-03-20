@@ -13,9 +13,6 @@ class ControladorVisitante {
         return !isset($arr[$campo]) || trim($arr[$campo]) === "";
     }
 
-    // ──────────────────────────────────────────────
-    // REGISTRAR
-    // ──────────────────────────────────────────────
     public function registrarVisitante(array $datos): array {
         foreach (['IdentificacionVisitante', 'NombreVisitante'] as $campo) {
             if ($this->campoVacio($datos, $campo)) {
@@ -23,18 +20,15 @@ class ControladorVisitante {
             }
         }
 
-        // Validar identificación: CC (solo números) o CE (alfanumérico)
         $id = trim($datos['IdentificacionVisitante']);
         if (!preg_match('/^\d{6,10}$/', $id) && !preg_match('/^[A-Za-z0-9\-]{4,20}$/', $id)) {
             return ['success' => false, 'message' => 'Identificación inválida. CC: 6-10 dígitos. CE: 4-20 caracteres alfanuméricos.'];
         }
 
-        // Validar nombre
-        if (!preg_match('/^[a-zA-ZÀ-ÿ\s]{3,100}$/', trim($datos['NombreVisitante']))) {
+        if (!preg_match('/^[a-zA-ZÀ-ÿ\s]{3,100}$/u', trim($datos['NombreVisitante']))) {
             return ['success' => false, 'message' => 'El nombre solo debe contener letras (mínimo 3 caracteres).'];
         }
 
-        // Validar correo si se envía
         if (!empty($datos['CorreoVisitante']) && !filter_var($datos['CorreoVisitante'], FILTER_VALIDATE_EMAIL)) {
             return ['success' => false, 'message' => 'El correo electrónico no es válido.'];
         }
@@ -49,47 +43,35 @@ class ControladorVisitante {
         }
     }
 
-    // ──────────────────────────────────────────────
-    // MOSTRAR CON FILTROS
-    // ──────────────────────────────────────────────
     public function mostrarVisitantes(): array {
         $filtros = [];
         $params  = [];
 
         if (!empty($_POST['identificacion'])) {
-            $filtros[]               = "IdentificacionVisitante LIKE :identificacion";
+            $filtros[]                 = "IdentificacionVisitante LIKE :identificacion";
             $params[':identificacion'] = '%' . $_POST['identificacion'] . '%';
         }
         if (!empty($_POST['nombre'])) {
-            $filtros[]          = "NombreVisitante LIKE :nombre";
-            $params[':nombre']  = '%' . $_POST['nombre'] . '%';
+            $filtros[]         = "NombreVisitante LIKE :nombre";
+            $params[':nombre'] = '%' . $_POST['nombre'] . '%';
         }
         if (!empty($_POST['estado'])) {
-            $filtros[]          = "Estado = :estado";
-            $params[':estado']  = $_POST['estado'];
+            $filtros[]         = "Estado = :estado";
+            $params[':estado'] = $_POST['estado'];
         }
 
         return $this->modelo->obtenerTodos($filtros, $params);
     }
 
-    // ──────────────────────────────────────────────
-    // OBTENER POR ID
-    // ──────────────────────────────────────────────
     public function obtenerPorId(int $id): ?array {
         return $this->modelo->obtenerPorId($id);
     }
 
-    // ──────────────────────────────────────────────
-    // ACTUALIZAR
-    // ──────────────────────────────────────────────
     public function actualizar(int $id, array $datos): array {
         return $this->modelo->actualizar($id, $datos);
     }
 }
 
-// ════════════════════════════════════════════════
-// RUTEO
-// ════════════════════════════════════════════════
 try {
     if (!isset($conexion)) throw new Exception("Conexión no disponible");
 

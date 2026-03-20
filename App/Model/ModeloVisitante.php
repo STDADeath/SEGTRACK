@@ -6,16 +6,13 @@ class VisitanteModelo {
         $this->conexion = $conexion;
     }
 
-    // ══════════════════════════════════════════════
-    // INSERTAR
-    // ══════════════════════════════════════════════
     public function insertar(array $datos): array {
         try {
             if (!$this->conexion) return ['success' => false, 'error' => 'Conexión no disponible'];
 
             $sql = "INSERT INTO visitante (IdentificacionVisitante, NombreVisitante, CorreoVisitante, Estado)
                     VALUES (:identificacion, :nombre, :correo, 'Activo')";
-            $stmt = $this->conexion->prepare($sql);
+            $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 ':identificacion' => $datos['IdentificacionVisitante'],
                 ':nombre'         => $datos['NombreVisitante'],
@@ -31,9 +28,6 @@ class VisitanteModelo {
         }
     }
 
-    // ══════════════════════════════════════════════
-    // OBTENER TODOS (con filtros)
-    // ══════════════════════════════════════════════
     public function obtenerTodos(array $filtros = [], array $params = []): array {
         try {
             $where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
@@ -46,9 +40,6 @@ class VisitanteModelo {
         }
     }
 
-    // ══════════════════════════════════════════════
-    // OBTENER POR ID
-    // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
         try {
             $stmt = $this->conexion->prepare("SELECT * FROM visitante WHERE IdVisitante = ?");
@@ -59,9 +50,6 @@ class VisitanteModelo {
         }
     }
 
-    // ══════════════════════════════════════════════
-    // ACTUALIZAR
-    // ══════════════════════════════════════════════
     public function actualizar(int $id, array $datos): array {
         try {
             $sql = "UPDATE visitante SET
