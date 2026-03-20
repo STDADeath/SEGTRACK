@@ -48,16 +48,21 @@ class BitacoraModelo {
     }
 
     // ══════════════════════════════════════════════
-    // OBTENER TODAS (con JOIN al funcionario)
+    // OBTENER TODAS (JOIN completo con funcionario,
+    // visitante y dispositivo)
     // ══════════════════════════════════════════════
     public function obtenerBitacoras(array $filtros = [], array $params = []): array {
         try {
             $where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
 
             $sql = "SELECT b.*,
-                           f.NombreFuncionario AS NombreCompleto
+                           f.NombreFuncionario,
+                           v.NombreVisitante,
+                           CONCAT(d.TipoDispositivo, ' - ', d.MarcaDispositivo) AS NombreDispositivo
                     FROM   bitacora b
-                    LEFT   JOIN funcionario f ON f.IdFuncionario = b.IdFuncionario
+                    LEFT JOIN funcionario f ON f.IdFuncionario = b.IdFuncionario
+                    LEFT JOIN visitante   v ON v.IdVisitante   = b.IdVisitante
+                    LEFT JOIN dispositivo d ON d.IdDispositivo = b.IdDispositivo
                     $where
                     ORDER  BY b.IdBitacora DESC";
 
@@ -76,9 +81,13 @@ class BitacoraModelo {
     public function obtenerPorId(int $id): ?array {
         try {
             $sql = "SELECT b.*,
-                           f.NombreFuncionario AS NombreCompleto
+                           f.NombreFuncionario,
+                           v.NombreVisitante,
+                           CONCAT(d.TipoDispositivo, ' - ', d.MarcaDispositivo) AS NombreDispositivo
                     FROM   bitacora b
-                    LEFT   JOIN funcionario f ON f.IdFuncionario = b.IdFuncionario
+                    LEFT JOIN funcionario f ON f.IdFuncionario = b.IdFuncionario
+                    LEFT JOIN visitante   v ON v.IdVisitante   = b.IdVisitante
+                    LEFT JOIN dispositivo d ON d.IdDispositivo = b.IdDispositivo
                     WHERE  b.IdBitacora = ?";
 
             $stmt = $this->conexion->prepare($sql);
@@ -135,7 +144,7 @@ class BitacoraModelo {
     }
 
     // ══════════════════════════════════════════════
-    // PERSONAL DE SEGURIDAD (para el dropdown)
+    // PERSONAL DE SEGURIDAD (dropdown)
     // ══════════════════════════════════════════════
     public function obtenerPersonalSeguridad(): array {
         try {
@@ -156,11 +165,10 @@ class BitacoraModelo {
     }
 
     // ══════════════════════════════════════════════
-    // VISITANTES ACTIVOS (para el dropdown)
+    // VISITANTES ACTIVOS (dropdown)
     // ══════════════════════════════════════════════
     public function obtenerVisitantes(): array {
         try {
-            // ⚠️ Ajusta el nombre de columnas según tu tabla `visitante`
             $sql = "SELECT   IdVisitante,
                              NombreVisitante AS NombreCompleto
                     FROM     visitante
@@ -177,9 +185,8 @@ class BitacoraModelo {
     }
 
     // ══════════════════════════════════════════════
-    // DISPOSITIVOS ACTIVOS (para el dropdown)
-    // Filtra por IdVisitante si se envía, para mostrar
-    // solo los dispositivos del visitante seleccionado
+    // DISPOSITIVOS ACTIVOS (dropdown)
+    // Filtra por IdVisitante si se envía
     // ══════════════════════════════════════════════
     public function obtenerDispositivos(?int $idVisitante = null): array {
         try {

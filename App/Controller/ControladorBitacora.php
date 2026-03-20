@@ -5,8 +5,6 @@ require_once __DIR__ . "/../Model/ModeloBitacora.php";
 class ControladorBitacora {
 
     private BitacoraModelo $modelo;
-
-    // Carpeta donde se almacenan los PDFs subidos
     private string $dirPDF = __DIR__ . "/../../Public/uploads/bitacoras/";
 
     public function __construct($conexion) {
@@ -40,16 +38,9 @@ class ControladorBitacora {
         return ['success' => true];
     }
 
-    /**
-     * Procesa el PDF adjunto en $_FILES['ReportePDF'].
-     * Retorna:
-     *   - null          → no se adjuntó ningún archivo (campo vacío)
-     *   - string        → ruta relativa guardada en BD  (ej: "uploads/bitacoras/bitacora_abc.pdf")
-     *   - array         → ['success'=>false, 'message'=>'...'] en caso de error
-     */
     private function procesarPDF(): string|array|null {
         if (!isset($_FILES['ReportePDF']) || $_FILES['ReportePDF']['error'] === UPLOAD_ERR_NO_FILE) {
-            return null; // Sin archivo adjunto → OK
+            return null;
         }
 
         $archivo = $_FILES['ReportePDF'];
@@ -58,7 +49,6 @@ class ControladorBitacora {
             return ['success' => false, 'message' => "Error al subir el PDF (código {$archivo['error']})"];
         }
 
-        // Validar que sea realmente un PDF por MIME
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime  = finfo_file($finfo, $archivo['tmp_name']);
         finfo_close($finfo);
@@ -67,12 +57,10 @@ class ControladorBitacora {
             return ['success' => false, 'message' => 'El archivo adjunto no es un PDF válido'];
         }
 
-        // Máximo 5 MB
         if ($archivo['size'] > 5 * 1024 * 1024) {
             return ['success' => false, 'message' => 'El PDF no debe superar los 5 MB'];
         }
 
-        // Crear directorio si no existe
         if (!is_dir($this->dirPDF)) {
             mkdir($this->dirPDF, 0755, true);
         }
@@ -84,7 +72,7 @@ class ControladorBitacora {
             return ['success' => false, 'message' => 'No se pudo guardar el PDF en el servidor'];
         }
 
-        return 'uploads/bitacoras/' . $nombreArchivo; // ruta relativa para BD
+        return 'uploads/bitacoras/' . $nombreArchivo;
     }
 
     // ──────────────────────────────────────────────
@@ -102,7 +90,6 @@ class ControladorBitacora {
         $validacion = $this->validarFechas($data, ['FechaBitacora']);
         if (!$validacion['success']) return $validacion;
 
-        // Visitante y dispositivo
         if (($data['TieneVisitante'] ?? 'no') === 'si') {
             if ($this->campoVacio($data, 'IdVisitante')) {
                 return ['success' => false, 'message' => 'El ID del visitante es obligatorio'];
@@ -117,10 +104,9 @@ class ControladorBitacora {
             $data['TraeDispositivo'] = 'no';
         }
 
-        // Procesar PDF adjunto
         $pdf = $this->procesarPDF();
-        if (is_array($pdf)) return $pdf;          // Error en el PDF
-        $data['ReporteBitacora'] = $pdf;           // null si no hay PDF
+        if (is_array($pdf)) return $pdf;
+        $data['ReporteBitacora'] = $pdf;
 
         try {
             $res = $this->modelo->insertar($data);
@@ -135,9 +121,25 @@ class ControladorBitacora {
     }
 
     // ──────────────────────────────────────────────
-    // OBTENER TODAS LAS BITÁCORAS
+    // OBTENER TODAS LAS BITÁCORAS (con filtros)
     // ──────────────────────────────────────────────
-    public function obtenerBitacoras(array $filtros = [], array $params = []): array {
+    public function mostrarBitacoras(): array {
+        $filtros = [];
+        $params  = [];
+
+        if (!empty($_POST['turno'])) {
+            $filtros[]        = "b.TurnoBitacora = :turno";
+            $params[':turno'] = $_POST['turno'];
+        }
+        if (!empty($_POST['fecha'])) {
+            $filtros[]        = "DATE(b.FechaBitacora) = :fecha";
+            $params[':fecha'] = $_POST['fecha'];
+        }
+        if (!empty($_POST['funcionario'])) {
+            $filtros[]              = "f.NombreFuncionario LIKE :funcionario";
+            $params[':funcionario'] = '%' . $_POST['funcionario'] . '%';
+        }
+
         return $this->modelo->obtenerBitacoras($filtros, $params);
     }
 
@@ -163,22 +165,16 @@ class ControladorBitacora {
     }
 
     // ──────────────────────────────────────────────
-    // PERSONAL DE SEGURIDAD (para el dropdown)
+    // DROPDOWNS
     // ──────────────────────────────────────────────
     public function obtenerPersonalSeguridad(): array {
         return $this->modelo->obtenerPersonalSeguridad();
     }
 
-    // ──────────────────────────────────────────────
-    // VISITANTES ACTIVOS (para el dropdown)
-    // ──────────────────────────────────────────────
     public function obtenerVisitantes(): array {
         return $this->modelo->obtenerVisitantes();
     }
 
-    // ──────────────────────────────────────────────
-    // DISPOSITIVOS ACTIVOS (para el dropdown)
-    // ──────────────────────────────────────────────
     public function obtenerDispositivos(?int $idVisitante = null): array {
         return $this->modelo->obtenerDispositivos($idVisitante);
     }
@@ -201,7 +197,7 @@ try {
             echo json_encode($controlador->registrarBitacora($_POST));
             break;
         case 'mostrar':
-            echo json_encode($controlador->obtenerBitacoras());
+            echo json_encode($controlador->mostrarBitacoras());
             break;
         case 'obtener':
             echo json_encode($controlador->obtenerPorId($id));
@@ -210,16 +206,12 @@ try {
             echo json_encode($controlador->actualizar($id, $_POST));
             break;
         case 'personal_seguridad':
-            // Endpoint para cargar el dropdown desde JS
             echo json_encode($controlador->obtenerPersonalSeguridad());
             break;
-
         case 'visitantes':
             echo json_encode($controlador->obtenerVisitantes());
             break;
-
         case 'dispositivos':
-            // Filtra por visitante si se envía, para mostrar solo sus dispositivos
             $idVisitante = isset($_POST['IdVisitante']) && $_POST['IdVisitante'] !== ''
                 ? (int)$_POST['IdVisitante']
                 : null;
@@ -231,6 +223,7 @@ try {
     }
 
 } catch (Exception $e) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'Error servidor: ' . $e->getMessage()]);
 }
 ?>
