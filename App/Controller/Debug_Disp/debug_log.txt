@@ -3206,3 +3206,22 @@ INSERT exitoso, ID: 50
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 50","data":{"IdDispositivo":"50","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-50-69bd00d3447d2.png"}}
 === FIN ===
 
+
+2026-03-20 20:51:05 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "1141s4f4524",
+    "IdFuncionario": "84",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: 1141s4f4524
+INSERT exitoso, ID: 51
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 51","data":{"IdDispositivo":"51","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-51-69bda529b451f.png"}}
+=== FIN ===
+
