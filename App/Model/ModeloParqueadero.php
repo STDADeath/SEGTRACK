@@ -464,26 +464,55 @@ class ModeloParqueadero {
     }
 
     /**
-     * Obtiene vehículos activos filtrados por tipo (Carro, Moto, Bicicleta)
+     * Obtiene vehículos activos filtrados por tipo, excluyendo los que ya
+     * ocupan un espacio en el parqueadero indicado.
+     * Si $idParqueadero = 0 devuelve todos (sin filtro de ocupación).
      */
-    public function obtenerVehiculosPorTipo(string $tipo): array {
+    public function obtenerVehiculosPorTipo(string $tipo, int $idParqueadero = 0): array {
         try {
             if (!$this->conexion) return [];
 
-            file_put_contents($this->debugPath, "=== MODELO: obtenerVehiculosPorTipo — Tipo: $tipo ===\n", FILE_APPEND);
+            file_put_contents($this->debugPath,
+                "=== MODELO: obtenerVehiculosPorTipo — Tipo: $tipo, Parqueadero: $idParqueadero ===\n",
+                FILE_APPEND);
 
-            $sql = "SELECT v.IdVehiculo, v.PlacaVehiculo, v.TipoVehiculo, v.DescripcionVehiculo,
-                           f.NombreFuncionario, vis.NombreVisitante
-                    FROM vehiculo v
-                    LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
-                    LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
-                    WHERE v.TipoVehiculo = :tipo AND v.Estado = 'Activo'
-                    ORDER BY v.PlacaVehiculo ASC";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':tipo' => $tipo]);
+            if ($idParqueadero > 0) {
+                // Excluir vehículos que ya están asignados a un espacio Ocupado
+                // en este parqueadero específico
+                $sql = "SELECT v.IdVehiculo, v.PlacaVehiculo, v.TipoVehiculo, v.DescripcionVehiculo,
+                               f.NombreFuncionario, vis.NombreVisitante
+                        FROM vehiculo v
+                        LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
+                        LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                        WHERE v.TipoVehiculo = :tipo
+                          AND v.Estado = 'Activo'
+                          AND v.IdVehiculo NOT IN (
+                              SELECT ep.IdVehiculo
+                              FROM espacio_parqueadero ep
+                              WHERE ep.IdParqueadero = :idp
+                                AND ep.Estado        = 'Ocupado'
+                                AND ep.IdVehiculo    IS NOT NULL
+                          )
+                        ORDER BY v.PlacaVehiculo ASC";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([':tipo' => $tipo, ':idp' => $idParqueadero]);
+            } else {
+                $sql = "SELECT v.IdVehiculo, v.PlacaVehiculo, v.TipoVehiculo, v.DescripcionVehiculo,
+                               f.NombreFuncionario, vis.NombreVisitante
+                        FROM vehiculo v
+                        LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
+                        LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                        WHERE v.TipoVehiculo = :tipo AND v.Estado = 'Activo'
+                        ORDER BY v.PlacaVehiculo ASC";
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute([':tipo' => $tipo]);
+            }
+
             $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            file_put_contents($this->debugPath, count($resultado) . " vehículos encontrados de tipo $tipo\n", FILE_APPEND);
+            file_put_contents($this->debugPath,
+                count($resultado) . " vehículos disponibles de tipo $tipo (excluidos los ya ocupando espacio)\n",
+                FILE_APPEND);
             return $resultado;
 
         } catch (PDOException $e) {

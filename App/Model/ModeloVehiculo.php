@@ -6,7 +6,13 @@ class ModeloVehiculo {
     private $logPath;
 
     public function __construct() {
-        $this->logPath = __DIR__ . '/../controller/vehiculo_dispositivo/debug_log.txt';
+        // ✅ CORREGIDO: apunta a Debug_Vehiculo del controlador (antes era vehiculo_dispositivo que no existe)
+        $this->logPath = __DIR__ . '/../Controller/Debug_Vehiculo/debug_log.txt';
+
+        $carpetaDebug = dirname($this->logPath);
+        if (!file_exists($carpetaDebug)) {
+            mkdir($carpetaDebug, 0777, true);
+        }
 
         try {
             $conexionObj = new Conexion();
@@ -19,7 +25,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── VALIDACIÓN: Verificar si una placa ya existe ─────────────────────────
     public function existePlaca(string $placa, ?int $excluirId = null): array {
         try {
             if (!$this->conexion || empty(trim($placa))) return ['existe' => false];
@@ -27,17 +32,14 @@ class ModeloVehiculo {
             if ($excluirId !== null) {
                 $sql = "SELECT IdVehiculo, TipoVehiculo, PlacaVehiculo 
                         FROM vehiculo 
-                        WHERE PlacaVehiculo = :placa 
-                        AND IdVehiculo != :id 
-                        AND Estado = 'Activo'
+                        WHERE PlacaVehiculo = :placa AND IdVehiculo != :id AND Estado = 'Activo'
                         LIMIT 1";
                 $stmt = $this->conexion->prepare($sql);
                 $stmt->execute([':placa' => $placa, ':id' => $excluirId]);
             } else {
                 $sql = "SELECT IdVehiculo, TipoVehiculo, PlacaVehiculo 
                         FROM vehiculo 
-                        WHERE PlacaVehiculo = :placa 
-                        AND Estado = 'Activo'
+                        WHERE PlacaVehiculo = :placa AND Estado = 'Activo'
                         LIMIT 1";
                 $stmt = $this->conexion->prepare($sql);
                 $stmt->execute([':placa' => $placa]);
@@ -56,7 +58,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── VALIDACIÓN: Verificar si una tarjeta de propiedad ya existe ──────────
     public function existeTarjetaPropiedad(string $tarjeta, ?int $excluirId = null): array {
         try {
             if (!$this->conexion || empty(trim($tarjeta))) return ['existe' => false];
@@ -64,17 +65,14 @@ class ModeloVehiculo {
             if ($excluirId !== null) {
                 $sql = "SELECT IdVehiculo, TipoVehiculo, PlacaVehiculo, TarjetaPropiedad 
                         FROM vehiculo 
-                        WHERE TarjetaPropiedad = :tarjeta 
-                        AND IdVehiculo != :id 
-                        AND Estado = 'Activo'
+                        WHERE TarjetaPropiedad = :tarjeta AND IdVehiculo != :id AND Estado = 'Activo'
                         LIMIT 1";
                 $stmt = $this->conexion->prepare($sql);
                 $stmt->execute([':tarjeta' => $tarjeta, ':id' => $excluirId]);
             } else {
                 $sql = "SELECT IdVehiculo, TipoVehiculo, PlacaVehiculo, TarjetaPropiedad 
                         FROM vehiculo 
-                        WHERE TarjetaPropiedad = :tarjeta 
-                        AND Estado = 'Activo'
+                        WHERE TarjetaPropiedad = :tarjeta AND Estado = 'Activo'
                         LIMIT 1";
                 $stmt = $this->conexion->prepare($sql);
                 $stmt->execute([':tarjeta' => $tarjeta]);
@@ -93,16 +91,10 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Registrar vehículo ───────────────────────────────────────────────────
     public function registrarVehiculo(
-        $TipoVehiculo,
-        $PlacaVehiculo,
-        $DescripcionVehiculo,
-        $TarjetaPropiedad,
-        $FechaDeVehiculo,
-        $IdSede,
-        $IdFuncionario,
-        $IdVisitante
+        $TipoVehiculo, $PlacaVehiculo, $DescripcionVehiculo,
+        $TarjetaPropiedad, $FechaDeVehiculo, $IdSede,
+        $IdFuncionario, $IdVisitante
     ): array {
         try {
             file_put_contents($this->logPath, "Punto 1: Preparando SQL INSERT\n", FILE_APPEND);
@@ -137,7 +129,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Actualizar QR ────────────────────────────────────────────────────────
     public function actualizarQR(int $idVehiculo, string $rutaQR): array {
         try {
             if (!$this->conexion) return ['success' => false, 'error' => 'Conexión no disponible'];
@@ -153,7 +144,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Obtener ruta del QR ──────────────────────────────────────────────────
     public function obtenerQR(int $idVehiculo): ?string {
         try {
             if (!$this->conexion) return null;
@@ -168,7 +158,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Actualizar vehículo ──────────────────────────────────────────────────
     public function actualizarVehiculo($id, $tipo, $descripcion, $idsede): array {
         try {
             $sql = "UPDATE vehiculo 
@@ -185,7 +174,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Cambiar estado ───────────────────────────────────────────────────────
     public function cambiarEstado(int $idVehiculo, string $nuevoEstado): array {
         try {
             if (!in_array($nuevoEstado, ['Activo', 'Inactivo']))
@@ -202,13 +190,11 @@ class ModeloVehiculo {
         }
     }
 
-    // ── DEPRECADO ────────────────────────────────────────────────────────────
     public function eliminarVehiculo($id): array {
         file_put_contents($this->logPath, "⚠️ eliminarVehiculo() deprecado. Use cambiarEstado().\n", FILE_APPEND);
         return $this->cambiarEstado((int)$id, 'Inactivo');
     }
 
-    // ── Obtener todos ACTIVOS ────────────────────────────────────────────────
     public function obtenerTodos(): array {
         try {
             $sql  = "SELECT * FROM vehiculo WHERE Estado = 'Activo' ORDER BY IdVehiculo DESC";
@@ -221,7 +207,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Obtener todos con estado ─────────────────────────────────────────────
     public function obtenerTodosConEstado(): array {
         try {
             $sql = "SELECT * FROM vehiculo ORDER BY 
@@ -236,7 +221,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Obtener por ID ───────────────────────────────────────────────────────
     public function obtenerPorId(int $idVehiculo): ?array {
         try {
             $sql  = "SELECT * FROM vehiculo WHERE IdVehiculo = :id";
@@ -249,7 +233,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Verificar existencia ─────────────────────────────────────────────────
     public function existe(int $idVehiculo): bool {
         try {
             $sql  = "SELECT 1 FROM vehiculo WHERE IdVehiculo = :id LIMIT 1";
@@ -261,7 +244,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Obtener funcionarios activos ─────────────────────────────────────────
     public function obtenerFuncionarios(): array {
         try {
             $sql  = "SELECT IdFuncionario, NombreFuncionario FROM funcionario WHERE Estado = 'Activo' ORDER BY NombreFuncionario ASC";
@@ -274,7 +256,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── Obtener visitantes activos ───────────────────────────────────────────
     public function obtenerVisitantes(): array {
         try {
             $sql  = "SELECT IdVisitante, NombreVisitante FROM visitante WHERE Estado = 'Activo' ORDER BY NombreVisitante ASC";
@@ -287,8 +268,6 @@ class ModeloVehiculo {
         }
     }
 
-    // ── 🆕 Obtener correo del funcionario ligado a un vehículo ───────────────
-    // Retorna el CorreoFuncionario si el vehículo tiene IdFuncionario, o null si no.
     public function obtenerCorreoFuncionarioPorVehiculo(int $idVehiculo): ?string {
         try {
             $sql = "SELECT f.CorreoFuncionario

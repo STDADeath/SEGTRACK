@@ -3115,3 +3115,39 @@ INSERT exitoso, ID: 47
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 47","data":{"IdDispositivo":"47","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-47-69bcd0b520ca4.png"}}
 === FIN ===
 
+
+2026-03-20 07:36:30 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "987654321sw2",
+    "IdFuncionario": "69",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Serial duplicado - 987654321sw2
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial '987654321sw2' ya est\u00e1 registrado en otro dispositivo (ID: 45 - Port\u00e1til xaomi)."}
+=== FIN ===
+
+
+2026-03-20 07:36:32 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "987654321sw221",
+    "IdFuncionario": "69",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: 987654321sw221
+INSERT exitoso, ID: 48
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 48","data":{"IdDispositivo":"48","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-48-69bceaf0e6770.png"}}
+=== FIN ===
+

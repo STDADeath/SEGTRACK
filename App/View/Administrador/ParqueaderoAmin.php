@@ -228,7 +228,6 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
             <div class="modal-body">
                 <form id="formCrearParqueadero">
 
-                    <!-- Sede -->
                     <div class="mb-4">
                         <label class="form-label fw-semibold">
                             Sede <span class="text-danger">*</span>
@@ -255,7 +254,6 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
                         Defina cuántos espacios hay para cada tipo de vehículo. El total se calculará automáticamente.
                     </div>
 
-                    <!-- Cantidades por tipo -->
                     <div class="row g-3 mb-3">
                         <div class="col-md-4">
                             <label class="form-label fw-semibold">
@@ -289,7 +287,6 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
                         </div>
                     </div>
 
-                    <!-- Total calculado -->
                     <div class="card bg-light border-primary">
                         <div class="card-body py-2 d-flex align-items-center justify-content-between">
                             <span class="fw-bold text-primary">
@@ -332,7 +329,6 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
                         Solo se pueden <strong>eliminar espacios libres</strong>. Los ocupados se conservan siempre.
                     </div>
 
-                    <!-- Cantidades por tipo -->
                     <div class="row g-3 mb-3">
                         <div class="col-md-4">
                             <label class="form-label fw-semibold">
@@ -369,7 +365,6 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
                         </div>
                     </div>
 
-                    <!-- Total calculado -->
                     <div class="card bg-light border-warning">
                         <div class="card-body py-2 d-flex align-items-center justify-content-between">
                             <span class="fw-bold text-warning">
@@ -451,311 +446,6 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
     </div>
 </div>
 
-<!-- ══ Scripts — jQuery y SweetAlert2 primero, luego el archivo de validación ═ -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
-<script>
-// ============================================================
-// Lógica JS del módulo Administrar Parqueadero
-// ============================================================
-
-function esperarDependencias(cb) {
-    if (typeof $ !== 'undefined' && typeof Swal !== 'undefined') cb();
-    else setTimeout(function () { esperarDependencias(cb); }, 50);
-}
-
-esperarDependencias(function () {
-
-    // ── Calcular total en tiempo real (CREAR) ─────────────────────────────────
-    $(document).on('input', '.contador-tipo', function () {
-        actualizarTotal('crearCarros', 'crearMotos', 'crearBicis', 'crearTotal');
-    });
-
-    // ── Calcular total en tiempo real (EDITAR) ────────────────────────────────
-    $(document).on('input', '.contador-editar', function () {
-        actualizarTotal('editCarros', 'editMotos', 'editBicis', 'editTotal');
-    });
-
-    function actualizarTotal(idC, idM, idB, idTotal) {
-        var c = parseInt($('#' + idC).val()) || 0;
-        var m = parseInt($('#' + idM).val()) || 0;
-        var b = parseInt($('#' + idB).val()) || 0;
-        $('#' + idTotal).text(c + m + b);
-    }
-
-    // ── Validar valores no negativos ──────────────────────────────────────────
-    $(document).on('input', '.contador-tipo, .contador-editar', function () {
-        var val = parseInt($(this).val());
-        if (isNaN(val) || val < 0) {
-            $(this).val(0);
-            $(this).addClass('is-invalid').removeClass('is-valid');
-        } else {
-            $(this).removeClass('is-invalid').addClass('is-valid');
-        }
-    });
-
-    // ── Limpiar modal crear al abrirlo ────────────────────────────────────────
-    $('#modalCrearParqueadero').on('show.bs.modal', function () {
-        $('#crearIdSede').val('').removeClass('is-valid is-invalid');
-        $('#crearCarros, #crearMotos, #crearBicis').val(0).removeClass('is-valid is-invalid');
-        $('#crearTotal').text('0');
-    });
-
-    // ══ CREAR parqueadero ═════════════════════════════════════════════════════
-    $('#btnCrearParqueadero').on('click', function () {
-        var sede   = $('#crearIdSede').val();
-        var carros = parseInt($('#crearCarros').val()) || 0;
-        var motos  = parseInt($('#crearMotos').val())  || 0;
-        var bicis  = parseInt($('#crearBicis').val())  || 0;
-        var total  = carros + motos + bicis;
-
-        if (!sede) {
-            Swal.fire({ icon: 'warning', title: 'Sede requerida', text: 'Debe seleccionar una sede antes de continuar', confirmButtonColor: '#f6c23e' });
-            $('#crearIdSede').addClass('is-invalid');
-            return;
-        }
-        $('#crearIdSede').removeClass('is-invalid').addClass('is-valid');
-
-        if (total <= 0) {
-            Swal.fire({ icon: 'warning', title: 'Sin espacios definidos', html: 'Debe asignar al menos <strong>1 espacio</strong> en alguno de los tipos de vehículo.', confirmButtonColor: '#f6c23e' });
-            return;
-        }
-
-        $('#modalCrearParqueadero').modal('hide');
-        Swal.fire({
-            title: 'Creando parqueadero...',
-            html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Generando ' + total + ' espacios, por favor espere',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            showConfirmButton: false
-        });
-
-        $.ajax({
-            url: '../../Controller/ControladorParqueadero.php',
-            type: 'POST',
-            data: { accion: 'crear', IdSede: sede, Carros: carros, Motos: motos, Bicis: bicis },
-            dataType: 'json',
-            timeout: 30000,
-            success: function (r) {
-                if (r.success) {
-                    Swal.fire({ icon: 'success', title: '¡Parqueadero creado!', text: r.message, timer: 3000, timerProgressBar: true, confirmButtonText: 'Entendido', confirmButtonColor: '#1cc88a' })
-                        .then(function () { location.reload(); });
-                } else {
-                    Swal.fire({ icon: 'error', title: 'No se pudo crear', text: r.message, confirmButtonColor: '#e74a3b' });
-                }
-            },
-            error: function (xhr, status) {
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: status === 'timeout' ? 'La solicitud tardó demasiado.' : 'No se pudo conectar con el servidor.', confirmButtonColor: '#e74a3b' });
-            }
-        });
-    });
-
-    // ══ Abrir modal EDITAR ════════════════════════════════════════════════════
-    window.abrirModalEditar = function (p) {
-        $('#editIdParqueadero').val(p.IdParqueadero);
-        $('#editNombreSede').text((p.TipoSede || '') + ' — ' + (p.Ciudad || ''));
-        $('#editCarros').val(parseInt(p.CantidadCarros)    || 0).removeClass('is-valid is-invalid');
-        $('#editMotos').val(parseInt(p.CantidadMotos)      || 0).removeClass('is-valid is-invalid');
-        $('#editBicis').val(parseInt(p.CantidadBicicletas) || 0).removeClass('is-valid is-invalid');
-        $('#editTotal').text((parseInt(p.CantidadCarros) || 0) + (parseInt(p.CantidadMotos) || 0) + (parseInt(p.CantidadBicicletas) || 0));
-        $('#editCarrosInfo').text('Actual: ' + (p.CantidadCarros     || 0) + ' espacios');
-        $('#editMotosInfo').text('Actual: '  + (p.CantidadMotos      || 0) + ' espacios');
-        $('#editBicisInfo').text('Actual: '  + (p.CantidadBicicletas || 0) + ' espacios');
-        $('#modalEditarParqueadero').modal('show');
-    };
-
-    // ══ GUARDAR EDICIÓN ═══════════════════════════════════════════════════════
-    $('#btnEditarParqueadero').on('click', function () {
-        var id     = $('#editIdParqueadero').val();
-        var carros = parseInt($('#editCarros').val()) || 0;
-        var motos  = parseInt($('#editMotos').val())  || 0;
-        var bicis  = parseInt($('#editBicis').val())  || 0;
-        var total  = carros + motos + bicis;
-
-        if (!id || parseInt(id) <= 0) {
-            Swal.fire({ icon: 'error', title: 'Error interno', text: 'ID de parqueadero no válido', confirmButtonColor: '#e74a3b' });
-            return;
-        }
-        if (total <= 0) {
-            Swal.fire({ icon: 'warning', title: 'Sin espacios', text: 'El total de espacios no puede quedar en 0', confirmButtonColor: '#f6c23e' });
-            return;
-        }
-
-        $('#modalEditarParqueadero').modal('hide');
-        Swal.fire({
-            title: 'Actualizando espacios...',
-            html: '<i class="fas fa-spinner fa-spin fa-3x text-warning mb-3"></i><br>Ajustando espacios, por favor espere',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            showConfirmButton: false
-        });
-
-        $.ajax({
-            url: '../../Controller/ControladorParqueadero.php',
-            type: 'POST',
-            data: { accion: 'actualizar', id: id, Carros: carros, Motos: motos, Bicis: bicis },
-            dataType: 'json',
-            timeout: 30000,
-            success: function (r) {
-                if (r.success) {
-                    Swal.fire({ icon: 'success', title: '¡Actualizado!', text: r.message, timer: 3000, timerProgressBar: true, confirmButtonText: 'Entendido', confirmButtonColor: '#1cc88a' })
-                        .then(function () { location.reload(); });
-                } else {
-                    Swal.fire({ icon: 'error', title: 'No se pudo actualizar', html: (r.message || r.error || 'Error desconocido').replace(/\n/g, '<br>'), confirmButtonColor: '#e74a3b', footer: '<small class="text-muted">Solo puede reducir espacios <strong>libres</strong></small>' });
-                }
-            },
-            error: function (xhr, status) {
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: status === 'timeout' ? 'La solicitud tardó demasiado.' : 'No se pudo conectar con el servidor.', confirmButtonColor: '#e74a3b' });
-            }
-        });
-    });
-
-    // ══ VER espacios individuales ═════════════════════════════════════════════
-    window.verEspacios = function (idParqueadero, nombreSede) {
-        $('#verEspaciosNombreSede').text(nombreSede);
-        $('#verEspaciosContenido').html('<div class="text-center py-4"><i class="fas fa-spinner fa-spin fa-2x text-info"></i><p class="mt-2 text-muted">Cargando espacios...</p></div>');
-        $('#modalVerEspacios').modal('show');
-
-        $.ajax({
-            url: '../../Controller/ControladorParqueadero.php',
-            type: 'POST',
-            data: { accion: 'obtener_espacios', id: idParqueadero },
-            dataType: 'json',
-            timeout: 15000,
-            success: function (r) {
-                if (r.success && r.espacios) {
-                    renderizarEspacios(r.espacios);
-                } else {
-                    $('#verEspaciosContenido').html('<div class="alert alert-warning">No se pudieron cargar los espacios.</div>');
-                }
-            },
-            error: function () {
-                $('#verEspaciosContenido').html('<div class="alert alert-danger">Error de conexión al cargar los espacios.</div>');
-            }
-        });
-    };
-
-    function renderizarEspacios(espacios) {
-        var tipos   = ['Carro', 'Moto', 'Bicicleta'];
-        var iconos  = { 'Carro': 'fa-car', 'Moto': 'fa-motorcycle', 'Bicicleta': 'fa-bicycle' };
-        var colores = { 'Carro': 'text-primary', 'Moto': 'text-warning', 'Bicicleta': 'text-success' };
-        var html    = '';
-
-        tipos.forEach(function (tipo) {
-            var delTipo  = espacios.filter(function (e) { return e.TipoVehiculo === tipo; });
-            if (delTipo.length === 0) return;
-
-            var libres   = delTipo.filter(function (e) { return e.Estado === 'Libre'; }).length;
-            var ocupados = delTipo.filter(function (e) { return e.Estado === 'Ocupado'; }).length;
-
-            html += '<div class="mb-4">' +
-                    '<h6 class="font-weight-bold ' + colores[tipo] + ' border-bottom pb-2 mb-3">' +
-                    '<i class="fas ' + iconos[tipo] + ' mr-2"></i>' + tipo + 's ' +
-                    '<span class="ml-2 badge badge-success">' + libres + ' libres</span> ' +
-                    '<span class="ml-1 badge badge-danger">' + ocupados + ' ocupados</span>' +
-                    '</h6><div class="row">';
-
-            delTipo.forEach(function (e) {
-                var libre   = e.Estado === 'Libre';
-                var bgColor = libre ? '#e8f5e9' : '#ffebee';
-                var border  = libre ? '#4caf50' : '#f44336';
-                var icono   = libre ? 'fa-check-circle text-success' : 'fa-times-circle text-danger';
-                var placa   = (!libre && e.PlacaVehiculo) ? '<div><span class="badge badge-dark mt-1">' + e.PlacaVehiculo + '</span></div>' : '';
-
-                html += '<div class="col-6 col-md-3 col-lg-2 mb-2">' +
-                        '<div class="border rounded p-2 text-center h-100" style="background:' + bgColor + ';border-color:' + border + '!important;">' +
-                        '<div class="font-weight-bold" style="font-size:1.1rem;">#' + e.NumeroEspacio + '</div>' +
-                        '<i class="fas ' + icono + ' mb-1"></i>' +
-                        '<div><small class="text-muted">' + e.Estado + '</small></div>' +
-                        placa +
-                        '</div></div>';
-            });
-
-            html += '</div></div>';
-        });
-
-        $('#verEspaciosContenido').html(html || '<div class="alert alert-info">Sin espacios registrados.</div>');
-    }
-
-    // ══ CAMBIO DE ESTADO ══════════════════════════════════════════════════════
-    var parqueaderoACambiar = null;
-    var estadoActual        = null;
-
-    window.confirmarCambioEstado = function (id, estado) {
-        parqueaderoACambiar = id;
-        estadoActual        = estado;
-
-        var nuevo  = estado === 'Activo' ? 'Inactivo' : 'Activo';
-        var accion = nuevo  === 'Activo' ? 'activar'  : 'desactivar';
-        var color  = nuevo  === 'Activo' ? 'bg-success' : 'bg-warning';
-        var icono  = nuevo  === 'Activo' ? 'fa-lock-open' : 'fa-lock';
-
-        $('#headerCambioEstado').removeClass('bg-success bg-warning').addClass(color + ' text-white');
-        $('#tituloCambioEstado').html('<i class="fas ' + icono + ' mr-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Parqueadero');
-        $('#mensajeCambioEstado').html('¿Está seguro que desea <strong>' + accion + '</strong> este parqueadero?');
-        $('#modalCambiarEstado').modal('show');
-
-        setTimeout(function () {
-            var toggleLabel = document.getElementById('toggleEstadoVisualParqueadero');
-            if (toggleLabel) {
-                if (nuevo === 'Activo') {
-                    toggleLabel.classList.add('activo');
-                } else {
-                    toggleLabel.classList.remove('activo');
-                }
-            }
-        }, 100);
-    };
-
-    $('#btnConfirmarEstado').on('click', function () {
-        if (!parqueaderoACambiar) return;
-
-        var nuevo = estadoActual === 'Activo' ? 'Inactivo' : 'Activo';
-        $('#modalCambiarEstado').modal('hide');
-
-        Swal.fire({
-            title: 'Procesando...',
-            html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i>',
-            allowOutsideClick: false,
-            showConfirmButton: false
-        });
-
-        $.ajax({
-            url: '../../Controller/ControladorParqueadero.php',
-            type: 'POST',
-            data: { accion: 'cambiar_estado', id: parqueaderoACambiar, estado: nuevo },
-            dataType: 'json',
-            success: function (r) {
-                if (r.success) {
-                    Swal.fire({ icon: 'success', title: '¡Éxito!', text: r.message, timer: 2000, timerProgressBar: true, showConfirmButton: false })
-                        .then(function () { location.reload(); });
-                } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: r.message, confirmButtonColor: '#e74a3b' });
-                }
-            },
-            error: function () {
-                Swal.fire({ icon: 'error', title: 'Error de conexión', confirmButtonColor: '#e74a3b' });
-            }
-        });
-    });
-
-    $('#modalCambiarEstado').on('hidden.bs.modal', function () {
-        $('#btnConfirmarEstado').prop('disabled', false).html('<i class="fas fa-check mr-1"></i>Confirmar');
-    });
-
-    // ── DataTable ─────────────────────────────────────────────────────────────
-    if ($('#TablaParqueaderos').length) {
-        $('#TablaParqueaderos').DataTable({
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
-            pageLength: 10,
-            responsive: true
-        });
-    }
-
-}); // fin esperarDependencias
-</script>
+<script src="/SEGTRACK/Public/js/javascript/js/ValidacionParqueadero.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

@@ -278,7 +278,7 @@ try {
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
                 $mail->Username   = 'seguridad.integral.segtrack@gmail.com';
-                $mail->Password   = 'fhxj smlq jidt xnqs';
+                $mail->Password   = 'bhrs xjis zvan fxkw';
                 $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
                 $mail->CharSet    = 'UTF-8';
@@ -286,7 +286,10 @@ try {
                 $mail->setFrom('seguridad.integral.segtrack@gmail.com', 'Sistema SEGTRACK');
                 $mail->addAddress($correoDestinatario, $nombreDestinatario);
                 $mail->addAttachment($rutaQR, 'QR-Dispositivo-' . $idDispositivo . '.png');
-                $mail->addEmbeddedImage('../../Public/img/LOGO_SEGTRACK-re-con.ico', 'logo_segtrack');
+                $rutaLogo = __DIR__ . '/../../Public/img/LOGO_SEGTRACK-re-con.png';
+                    if (file_exists($rutaLogo)) {
+                        $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
+                    }
 
                 $serialInfo = !empty($dispositivo['NumeroSerial'])
                     ? "<strong>Número Serial:</strong> {$dispositivo['NumeroSerial']}<br>"

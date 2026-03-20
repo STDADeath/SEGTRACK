@@ -219,7 +219,7 @@ try {
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
                 $mail->Username   = 'seguridad.integral.segtrack@gmail.com';
-                $mail->Password   = 'fhxj smlq jidt xnqs';
+                $mail->Password   = 'bhrs xjis zvan fxkw';
                 $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
                 $mail->CharSet    = 'UTF-8';
@@ -227,7 +227,10 @@ try {
                 $mail->setFrom('seguridad.integral.segtrack@gmail.com', 'Sistema SEGTRACK');
                 $mail->addAddress($correoDestino);
                 $mail->addAttachment($rutaQR, 'QR-Vehiculo-' . $idVehiculo . '.png');
-                $mail->addEmbeddedImage('../../Public/img/LOGO_SEGTRACK-re-con.ico', 'logo_segtrack');
+                $rutaLogo = __DIR__ . '/../../Public/img/LOGO_SEGTRACK-re-con.png';
+                    if (file_exists($rutaLogo)) {
+                        $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
+                    }
 
                 $mail->isHTML(true);
                 $mail->Subject = 'Código QR - Vehículo Registrado';
@@ -244,7 +247,7 @@ try {
                 </head><body>
                 <div class='container'>
                     <div class='header'>
-                        <h1><img src='cid:logo_segtrack' alt='SEGTRACK' style='width:80px;vertical-align:middle'> SEGTRACK</h1>
+                        <h1><img src='cid:logo_segtrack' alt='Logo SEGTRACK' style='width:80px;vertical-align:middle'> SEGTRACK</h1>
                         <p>Sistema de Gestión de Vehículos</p>
                     </div>
                     <div class='content'>
