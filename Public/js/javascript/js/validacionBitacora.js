@@ -469,9 +469,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 }); // fin DOMContentLoaded
 
-// ══════════════════════════════════════════════
-// 7. DATATABLE
-// ══════════════════════════════════════════════
+
 $(document).ready(function () {
     const tabla = document.getElementById('tablaBitacorasDT');
     if (!tabla) return;

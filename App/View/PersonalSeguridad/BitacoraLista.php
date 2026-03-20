@@ -236,19 +236,3 @@ $bitacoras = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
-
-<script>
-$(document).ready(function () {
-    $('#tablaBitacorasDT').DataTable({
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-        },
-        pageLength: 10,
-        responsive: true,
-        order:      [[0, "desc"]],
-        columnDefs: [
-            { orderable: false, targets: [7] } // PDF no ordenable
-        ]
-    });
-});
-</script>
