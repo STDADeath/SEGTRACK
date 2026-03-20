@@ -83,3 +83,24 @@ Acción: registrar
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 27","data":{"IdVehiculo":"27","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-27-69bcc1227e1b5.png","FechaRegistro":"2026-03-19 22:38:10"}}
 === FIN ===
 
+
+2026-03-20 02:49:58 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "FVS123",
+    "DescripcionVehiculo": "Moto de color azul",
+    "TarjetaPropiedad": "t1125478137",
+    "IdSede": "73",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "90",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 28
+✅ QR actualizado para vehículo ID: 28
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 28","data":{"IdVehiculo":"28","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-28-69bcfc26c26fe.png","FechaRegistro":"2026-03-20 02:49:58"}}
+=== FIN ===
+

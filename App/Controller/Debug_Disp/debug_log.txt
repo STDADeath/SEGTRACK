@@ -3151,3 +3151,58 @@ INSERT exitoso, ID: 48
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 48","data":{"IdDispositivo":"48","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-48-69bceaf0e6770.png"}}
 === FIN ===
 
+
+2026-03-20 08:52:24 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "987654321s",
+    "IdFuncionario": "81",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: 987654321s
+INSERT exitoso, ID: 49
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 49","data":{"IdDispositivo":"49","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-49-69bcfcb870a60.png"}}
+=== FIN ===
+
+
+2026-03-20 09:09:52 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "xaomi",
+    "NumeroSerial": "987654321s",
+    "IdFuncionario": "",
+    "IdVisitante": "12"
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Serial duplicado - 987654321s
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial '987654321s' ya est\u00e1 registrado en otro dispositivo (ID: 49 - Port\u00e1til lenovo)."}
+=== FIN ===
+
+
+2026-03-20 09:09:55 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "xaomi",
+    "NumeroSerial": "987654321s2",
+    "IdFuncionario": "",
+    "IdVisitante": "12"
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: xaomi, Serial: 987654321s2
+INSERT exitoso, ID: 50
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 50","data":{"IdDispositivo":"50","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-50-69bd00d3447d2.png"}}
+=== FIN ===
+

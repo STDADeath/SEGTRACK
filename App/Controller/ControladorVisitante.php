@@ -1,111 +1,122 @@
 <?php
-// Incluye la conexión a la base de datos
 require_once __DIR__ . "/../Core/conexion.php";
-// Incluye el modelo de Visitante para interactuar con la base de datos
 require_once __DIR__ . "/../Model/ModeloVisitante.php";
 
 class ControladorVisitante {
-    // Instancia del modelo de Visitante
     private VisitanteModelo $modelo;
 
-    // Constructor: recibe la conexión y crea la instancia del modelo
     public function __construct($conexion) {
         $this->modelo = new VisitanteModelo($conexion);
     }
 
-    // Función privada para verificar si un campo está vacío
     private function campoVacio(array $arr, string $campo): bool {
         return !isset($arr[$campo]) || trim($arr[$campo]) === "";
     }
 
-    // Método para registrar un visitante
+    // ──────────────────────────────────────────────
+    // REGISTRAR
+    // ──────────────────────────────────────────────
     public function registrarVisitante(array $datos): array {
-        // Campos obligatorios para registrar un visitante
-        $requeridos = ['IdentificacionVisitante', 'NombreVisitante'];
-
-        // Verifica que los campos obligatorios no estén vacíos
-        foreach ($requeridos as $campo) {
+        foreach (['IdentificacionVisitante', 'NombreVisitante'] as $campo) {
             if ($this->campoVacio($datos, $campo)) {
                 return ['success' => false, 'message' => "Falta el campo: $campo"];
             }
         }
 
-        try {
-            // Llama al método insertar del modelo para guardar en la base de datos
-            $resultado = $this->modelo->insertar($datos);
+        // Validar identificación: CC (solo números) o CE (alfanumérico)
+        $id = trim($datos['IdentificacionVisitante']);
+        if (!preg_match('/^\d{6,10}$/', $id) && !preg_match('/^[A-Za-z0-9\-]{4,20}$/', $id)) {
+            return ['success' => false, 'message' => 'Identificación inválida. CC: 6-10 dígitos. CE: 4-20 caracteres alfanuméricos.'];
+        }
 
-            if ($resultado['success']) {
-                // Si se insertó correctamente, devuelve éxito y el ID generado
-                return [
-                    'success' => true,
-                    'message' => 'Visitante registrado correctamente',
-                    'data' => ['IdVisitante' => $resultado['id']]
-                ];
-            } else {
-                // Si hubo error en la base de datos, devuelve el mensaje de error
-                return ['success' => false, 'message' => $resultado['error']];
-            }
+        // Validar nombre
+        if (!preg_match('/^[a-zA-ZÀ-ÿ\s]{3,100}$/', trim($datos['NombreVisitante']))) {
+            return ['success' => false, 'message' => 'El nombre solo debe contener letras (mínimo 3 caracteres).'];
+        }
+
+        // Validar correo si se envía
+        if (!empty($datos['CorreoVisitante']) && !filter_var($datos['CorreoVisitante'], FILTER_VALIDATE_EMAIL)) {
+            return ['success' => false, 'message' => 'El correo electrónico no es válido.'];
+        }
+
+        try {
+            $res = $this->modelo->insertar($datos);
+            return $res['success']
+                ? ['success' => true,  'message' => 'Visitante registrado correctamente', 'data' => ['IdVisitante' => $res['id']]]
+                : ['success' => false, 'message' => $res['error']];
         } catch (Exception $e) {
-            // Captura errores de ejecución y los devuelve
             return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
         }
     }
 
-    // Método para obtener todos los visitantes
+    // ──────────────────────────────────────────────
+    // MOSTRAR CON FILTROS
+    // ──────────────────────────────────────────────
     public function mostrarVisitantes(): array {
-        return $this->modelo->obtenerTodos();
+        $filtros = [];
+        $params  = [];
+
+        if (!empty($_POST['identificacion'])) {
+            $filtros[]               = "IdentificacionVisitante LIKE :identificacion";
+            $params[':identificacion'] = '%' . $_POST['identificacion'] . '%';
+        }
+        if (!empty($_POST['nombre'])) {
+            $filtros[]          = "NombreVisitante LIKE :nombre";
+            $params[':nombre']  = '%' . $_POST['nombre'] . '%';
+        }
+        if (!empty($_POST['estado'])) {
+            $filtros[]          = "Estado = :estado";
+            $params[':estado']  = $_POST['estado'];
+        }
+
+        return $this->modelo->obtenerTodos($filtros, $params);
     }
 
-    // Método para obtener un visitante por su ID
+    // ──────────────────────────────────────────────
+    // OBTENER POR ID
+    // ──────────────────────────────────────────────
     public function obtenerPorId(int $id): ?array {
         return $this->modelo->obtenerPorId($id);
     }
 
-    // Método para actualizar los datos de un visitante
+    // ──────────────────────────────────────────────
+    // ACTUALIZAR
+    // ──────────────────────────────────────────────
     public function actualizar(int $id, array $datos): array {
         return $this->modelo->actualizar($id, $datos);
     }
 }
 
-// Bloque de manejo de peticiones POST
+// ════════════════════════════════════════════════
+// RUTEO
+// ════════════════════════════════════════════════
 try {
-    // Verifica que la conexión exista
     if (!isset($conexion)) throw new Exception("Conexión no disponible");
 
-    // Crea la instancia del controlador
     $controlador = new ControladorVisitante($conexion);
-    // Obtiene la acción enviada por POST
-    $accion = $_POST['accion'] ?? null;
+    $accion      = $_POST['accion'] ?? null;
+    $id          = (int)($_POST['IdVisitante'] ?? 0);
 
-    // Configura la respuesta en formato JSON
     header('Content-Type: application/json; charset=utf-8');
 
-    // Ruteo de acciones según lo enviado por POST
     switch ($accion) {
         case 'registrar':
             echo json_encode($controlador->registrarVisitante($_POST));
             break;
-
         case 'mostrar':
             echo json_encode($controlador->mostrarVisitantes());
             break;
-
         case 'obtener':
-            $id = (int)($_POST['IdVisitante'] ?? 0);
             echo json_encode($controlador->obtenerPorId($id));
             break;
-
         case 'actualizar':
-            $id = (int)($_POST['IdVisitante'] ?? 0);
             echo json_encode($controlador->actualizar($id, $_POST));
             break;
-
         default:
-            // Si la acción no está definida, devuelve un error
             echo json_encode(['success' => false, 'message' => 'Acción no reconocida']);
     }
 } catch (Exception $e) {
-    // Captura cualquier error del servidor y lo devuelve en JSON
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
 }
 ?>
