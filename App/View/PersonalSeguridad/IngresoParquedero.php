@@ -4,23 +4,20 @@
     <div class="card border-0 shadow-lg rounded-4 bg-light">
         <div class="card-body px-4 py-5">
 
-            <!-- TÍTULO PRINCIPAL -->
             <h4 class="text-center fw-bold text-primary mb-5">
                 <i class="fas fa-car me-2"></i>Control de Ingreso de Vehículos
             </h4>
 
-            <!-- SECCIÓN DE ESCANEO QR -->
+            <!-- ESCANER QR -->
             <div class="text-center mb-4">
                 <h5 class="fw-semibold mb-4 text-secondary">
                     <i class="fas fa-qrcode me-2"></i>Escanear Código QR del Vehículo
                 </h5>
 
-                <!-- CONTENEDOR DEL LECTOR QR -->
                 <div class="d-flex justify-content-center mb-3">
                     <div id="qr-reader" style="width: 100%; max-width: 500px;"></div>
                 </div>
 
-                <!-- SELECCIÓN DEL TIPO DE MOVIMIENTO -->
                 <div class="mt-4 w-50 mx-auto">
                     <label for="tipoMovimiento" class="form-label fw-semibold text-secondary">
                         Tipo de movimiento
@@ -31,86 +28,71 @@
                     </select>
                 </div>
 
-                <!-- BOTÓN PARA ACTIVAR CÁMARA -->
                 <button id="btnCapturar" class="btn btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
                     <i class="fas fa-camera me-2"></i>Capturar Código QR
                 </button>
             </div>
 
-            <!-- MENSAJES DE RESULTADO -->
-            <div class="mb-3">
-                <div id="mensajeExito" class="alert alert-success text-center d-none mb-3 shadow-sm"></div>
-                <div id="mensajeError" class="alert alert-danger text-center d-none mb-3 shadow-sm"></div>
-            </div>
+            <!-- CARD VEHÍCULO + FOTO FUNCIONARIO -->
+            <div id="cardVehiculo" class="d-none mb-4">
+                <div class="card border-0 shadow rounded-4 mx-auto" style="max-width: 450px;">
+                    <div class="card-body text-center py-4 px-4">
 
-            <!-- TARJETA DE INFORMACIÓN DEL VEHÍCULO ESCANEADO -->
-            <div id="infoVehiculo" class="d-none mb-5">
-                <div class="card border-0 shadow-sm rounded-4 bg-white">
-                    <div class="card-body p-4">
-                        <h6 class="fw-bold text-primary mb-3">
-                            <i class="fas fa-info-circle me-2"></i>Información del Vehículo Detectado
-                        </h6>
-                        <div class="row g-3 text-start">
-                            <div class="col-md-3 col-6">
-                                <div class="border rounded-3 p-3 h-100 bg-light">
-                                    <div class="text-muted small mb-1">
-                                        <i class="fas fa-user me-1"></i>Dueño
-                                    </div>
-                                    <div id="infoDueno" class="fw-semibold text-dark">—</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="border rounded-3 p-3 h-100 bg-light">
-                                    <div class="text-muted small mb-1">
-                                        <i class="fas fa-id-card me-1"></i>Placa
-                                    </div>
-                                    <div id="infoPlaca" class="fw-semibold text-dark">—</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="border rounded-3 p-3 h-100 bg-light">
-                                    <div class="text-muted small mb-1">
-                                        <i class="fas fa-car me-1"></i>Tipo de Carro
-                                    </div>
-                                    <div id="infoTipo" class="fw-semibold text-dark">—</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="border rounded-3 p-3 h-100 bg-light">
-                                    <div class="text-muted small mb-1">
-                                        <i class="fas fa-parking me-1"></i>N° Espacio
-                                    </div>
-                                    <div id="infoEspacio" class="fw-semibold text-dark">—</div>
-                                </div>
-                            </div>
-                        </div>
+                        <img id="fotoFuncionario"
+                             src=""
+                             alt="Foto Funcionario"
+                             class="rounded-circle mb-3 border border-4 border-primary shadow"
+                             style="width: 220px; height: 220px; object-fit: cover;">
+
+                        <h5 id="nombreDueno" class="fw-bold text-primary mb-1 fs-4"></h5>
+
+                        <hr class="my-2">
+
+                        <p class="mb-1">
+                            <i class="fas fa-car text-primary me-1"></i>
+                            <span id="tipoVehiculo" class="fw-semibold"></span>
+                            — <span id="placaVehiculo" class="text-muted"></span>
+                        </p>
+                        <p class="mb-1 text-muted small">
+                            Descripción: <span id="descripcionVehiculo"></span>
+                        </p>
+                        <p class="mb-2 text-muted small">
+                            Espacio N°: <span id="espacioVehiculo"></span>
+                        </p>
+
+                        <span id="badgeMovimiento" class="badge fs-5 px-4 py-2 mb-2"></span>
+                        <p id="fechaVehiculo" class="text-muted small mt-1 mb-0"></p>
+
                     </div>
                 </div>
             </div>
 
-            <!-- TABLA DE INGRESOS RECIENTES -->
-            <div class="bg-white p-4 rounded-4 shadow-sm">
+            <!-- MENSAJES -->
+            <div class="mb-4">
+                <div id="mensajeExito" class="alert alert-success text-center d-none mb-3 shadow-sm"></div>
+                <div id="mensajeError"  class="alert alert-danger  text-center d-none mb-3 shadow-sm"></div>
+            </div>
 
-                <!-- Encabezado + Botón PDF -->
+            <!-- TABLA -->
+            <div class="bg-white p-4 rounded-4 shadow-sm">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-semibold text-secondary mb-0">
                         <i class="fas fa-list me-2"></i>Lista de Movimientos de Vehículos
                     </h5>
-                    <button id="btnDescargarPDF" class="btn btn-danger shadow-sm fw-semibold">
+                    <a href="/SEGTRACK/App/Controller/ParqueaderoIngresoPDF.php?accion=pdf"
+                       target="_blank"
+                       class="btn btn-danger shadow-sm fw-semibold">
                         <i class="fas fa-file-pdf me-2"></i>Descargar PDF
-                    </button>
+                    </a>
                 </div>
 
-                <!-- TABLA -->
                 <div class="table-responsive">
                     <table id="tablaParqueaderoDT" class="table table-hover align-middle text-center mb-0">
                         <thead class="bg-primary text-white">
                             <tr>
-                                <th>Código QR</th>
-                                <th>Dueño</th>
                                 <th>Placa</th>
-                                <th>Tipo Vehículo</th>
-                                <th>Descripción</th>
+                                <th>Tipo</th>
+                                <th>Dueño</th>
                                 <th>N° Espacio</th>
                                 <th>Tipo Movimiento</th>
                                 <th>Fecha</th>
@@ -125,15 +107,8 @@
     </div>
 </div>
 
-<!-- LIBRERÍAS EXTERNAS -->
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../../../Public/css/Tablas.css">
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-
-<!-- SCRIPT PERSONALIZADO -->
-<script src="../../../Public/js/javascript/js/ValidacionParqueaderoIngreso.js"></script>
-
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+
+<script src="../../../Public/js/javascript/js/ValidacionParqueaderoIngreso.js"></script>

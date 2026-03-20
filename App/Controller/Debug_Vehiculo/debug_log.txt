@@ -104,3 +104,40 @@ Punto 1: Preparando SQL INSERT
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 28","data":{"IdVehiculo":"28","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-28-69bcfc26c26fe.png","FechaRegistro":"2026-03-20 02:49:58"}}
 === FIN ===
 
+
+2026-03-20 15:02:27 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "28",
+    "tipo": "Carro",
+    "descripcion": "Moto de color rojo",
+    "idsede": "73"
+}
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 28
+✅ QR actualizado para vehículo ID: 28
+Respuesta: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Vehiculo\/QR-VEHICULO-28-69bda7d396cc4.png"}
+=== FIN ===
+
+
+2026-03-20 15:05:07 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "ASD245",
+    "DescripcionVehiculo": "carro rojo",
+    "TarjetaPropiedad": "t112547824137",
+    "IdSede": "75",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "86",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 29
+✅ QR actualizado para vehículo ID: 29
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdVehiculo":"29","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-29-69bda8733e905.png","FechaRegistro":"2026-03-20 15:05:07"}}
+=== FIN ===
+

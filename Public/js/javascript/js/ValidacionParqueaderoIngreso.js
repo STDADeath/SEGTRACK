@@ -1,228 +1,176 @@
-const App = {
+const AppPark = {
     table: null,
     qrReader: null,
     ultimaLectura: null,
     escaneando: false,
     tipoMovimiento: null,
     btnCapturar: null,
-    btnDescargarPDF: null,
     mensajeExito: null,
     mensajeError: null,
-    infoVehiculo: null,
+    _timerCard: null,
 
     config: {
         urlControlador: "/SEGTRACK/App/Controller/ControladorIngresoParqueadero.php",
-        urlPDF:         "/SEGTRACK/App/Controller/ParqueaderoIngresoPDF.php?accion=pdf",
-        fps: 10,
-        qrboxSize: 250,
-        bloqueoQRms: 1500
+        rutaFotos:      "/SEGTRACK/Public/",
+        avatarDefault:  "/SEGTRACK/Public/img/avatar_default.png",
+        fps:            10,
+        qrboxSize:      250,
+        bloqueoQRms:    1500,
+        tiempoCard:     7000
     }
 };
 
-
-// ========================================
-// MENSAJES EN PANTALLA
-// ========================================
-
 function mostrarMensaje(esExito, texto) {
-
-    const { mensajeExito, mensajeError } = App;
-    if (!mensajeExito || !mensajeError) return;
-
-    mensajeExito.classList.toggle("d-none", !esExito);
-    mensajeError.classList.toggle("d-none", esExito);
-
-    (esExito ? mensajeExito : mensajeError).textContent = texto;
-
+    const exito = document.getElementById("mensajeExito");
+    const error = document.getElementById("mensajeError");
+    if (!exito || !error) return;
+    exito.classList.toggle("d-none", !esExito);
+    error.classList.toggle("d-none", esExito);
+    (esExito ? exito : error).textContent = texto;
     setTimeout(() => {
-        mensajeExito.classList.add("d-none");
-        mensajeError.classList.add("d-none");
+        exito.classList.add("d-none");
+        error.classList.add("d-none");
     }, 5000);
 }
 
+function mostrarVehiculo(data) {
+    const card    = document.getElementById("cardVehiculo");
+    const foto    = document.getElementById("fotoFuncionario");
+    const nombre  = document.getElementById("nombreDueno");
+    const tipo    = document.getElementById("tipoVehiculo");
+    const placa   = document.getElementById("placaVehiculo");
+    const desc    = document.getElementById("descripcionVehiculo");
+    const espacio = document.getElementById("espacioVehiculo");
+    const badge   = document.getElementById("badgeMovimiento");
+    const fecha   = document.getElementById("fechaVehiculo");
 
-// ========================================
-// TARJETA DE INFO DEL VEHÍCULO ESCANEADO
-// ========================================
+    if (!card) return;
 
-function mostrarInfoVehiculo(data) {
+    // Igual que dispositivos
+    foto.onerror = () => { foto.src = AppPark.config.avatarDefault; };
+    foto.src = (data.foto && data.foto.trim() !== "" && data.foto !== "NULL")
+        ? AppPark.config.rutaFotos + data.foto.trim()
+        : AppPark.config.avatarDefault;
 
-    if (!App.infoVehiculo || !data) return;
+    console.log("FOTO recibida:", data.foto);
+    console.log("RUTA final:", foto.src);
 
-    document.getElementById("infoDueno").textContent   = data.dueno         || "No registrado";
-    document.getElementById("infoPlaca").textContent   = data.placa         || "—";
-    document.getElementById("infoTipo").textContent    = data.tipo          || "—";
-    document.getElementById("infoEspacio").textContent = data.numeroEspacio || "Sin asignar";
+    nombre.textContent  = data.dueno         ?? "Sin asignar";
+    tipo.textContent    = data.tipo          ?? "—";
+    placa.textContent   = data.placa         ?? "—";
+    desc.textContent    = data.descripcion   ?? "—";
+    espacio.textContent = data.numeroEspacio ?? "Sin asignar";
+    fecha.textContent   = data.fecha
+        ? new Date(data.fecha).toLocaleString('es-ES')
+        : "";
 
-    App.infoVehiculo.classList.remove("d-none");
+    badge.textContent = data.movimiento ?? "—";
+    badge.className   = "badge fs-5 px-4 py-2 mb-2 " +
+        (data.movimiento === "Entrada" ? "bg-success" : "bg-danger");
+
+    if (AppPark._timerCard) clearTimeout(AppPark._timerCard);
+
+    card.classList.remove("d-none");
+    card.style.transition = "opacity 0.4s ease";
+    card.style.opacity    = "0";
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => { card.style.opacity = "1"; });
+    });
+
+    AppPark._timerCard = setTimeout(() => {
+        card.style.opacity = "0";
+        setTimeout(() => card.classList.add("d-none"), 400);
+    }, AppPark.config.tiempoCard);
 }
-
-function ocultarInfoVehiculo() {
-    if (App.infoVehiculo) App.infoVehiculo.classList.add("d-none");
-}
-
-
-// ========================================
-// ENVIAR QR AL SERVIDOR
-// ========================================
 
 async function enviarQr(qr, tipo) {
-
-    if (App.btnCapturar) App.btnCapturar.disabled = true;
-
+    if (AppPark.btnCapturar) AppPark.btnCapturar.disabled = true;
     try {
-
-        const res  = await fetch(App.config.urlControlador, {
+        const res  = await fetch(AppPark.config.urlControlador, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ qr_codigo: qr, tipoMovimiento: tipo })
         });
-
         const data = await res.json();
 
+        console.log("RESPUESTA COMPLETA:", JSON.stringify(data));
+
         mostrarMensaje(data.success, data.message);
-
         if (data.success) {
-            mostrarInfoVehiculo(data.data);
-            if (App.table) App.table.ajax.reload(null, false);
-        } else {
-            ocultarInfoVehiculo();
+            if (AppPark.table) AppPark.table.ajax.reload(null, false);
+            if (data.data)     mostrarVehiculo(data.data);
         }
-
     } catch (e) {
-        console.error(e);
+        console.error("Error enviarQr:", e);
         mostrarMensaje(false, "Error de conexión.");
-        ocultarInfoVehiculo();
     } finally {
-        if (App.btnCapturar) App.btnCapturar.disabled = false;
+        if (AppPark.btnCapturar) AppPark.btnCapturar.disabled = false;
     }
 }
 
-
-// ========================================
-// CUANDO SE DETECTA UN QR
-// ========================================
-
 function onScanQR(qr) {
-
     qr = qr.trim();
-    if (!qr || App.escaneando || qr === App.ultimaLectura) return;
-
-    App.escaneando    = true;
-    App.ultimaLectura = qr;
-
-    enviarQr(qr, App.tipoMovimiento.value).finally(() => {
+    if (!qr || AppPark.escaneando || qr === AppPark.ultimaLectura) return;
+    AppPark.escaneando    = true;
+    AppPark.ultimaLectura = qr;
+    enviarQr(qr, AppPark.tipoMovimiento.value).finally(() => {
         setTimeout(() => {
-            App.escaneando    = false;
-            App.ultimaLectura = null;
-        }, App.config.bloqueoQRms);
+            AppPark.escaneando    = false;
+            AppPark.ultimaLectura = null;
+        }, AppPark.config.bloqueoQRms);
     });
 }
 
-
-// ========================================
-// INICIAR CÁMARA
-// Compatible con DroidCam y cualquier webcam
-// ========================================
-
 async function iniciarCamara() {
-
-    if (App.qrReader) return;
-
-    App.qrReader = new Html5Qrcode("qr-reader");
-
+    if (AppPark.qrReader) return;
+    AppPark.qrReader = new Html5Qrcode("qr-reader");
     try {
-
         const devices = await Html5Qrcode.getCameras();
-
         if (!devices || devices.length === 0) {
             mostrarMensaje(false, "No se detectaron cámaras.");
             return;
         }
-
         const droidcam = devices.find(d => d.label.toLowerCase().includes("droid"));
         const cameraId = droidcam ? droidcam.id : devices[0].id;
-
-        await App.qrReader.start(
+        await AppPark.qrReader.start(
             cameraId,
-            { fps: App.config.fps, qrbox: { width: App.config.qrboxSize, height: App.config.qrboxSize } },
+            { fps: AppPark.config.fps, qrbox: { width: AppPark.config.qrboxSize, height: AppPark.config.qrboxSize } },
             onScanQR,
             () => {}
         );
-
-    } catch (e) {
-        console.error("Error iniciando cámara:", e);
+    } catch (error) {
+        console.error("Error iniciando cámara:", error);
         mostrarMensaje(false, "No se pudo iniciar la cámara.");
     }
 }
 
-
-// ========================================
-// DESCARGAR PDF
-// ========================================
-
-async function descargarPDF() {
-
-    try {
-
-        const res = await fetch(App.config.urlPDF);
-        if (!res.ok) throw new Error();
-
-        const blob = await res.blob();
-        const url  = window.URL.createObjectURL(blob);
-        const a    = document.createElement('a');
-        a.href     = url;
-        a.download = `Vehiculos_${new Date().toISOString().slice(0, 10)}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-
-        mostrarMensaje(true, "PDF descargado correctamente.");
-
-    } catch (e) {
-        console.error(e);
-        mostrarMensaje(false, "No se pudo descargar el PDF.");
-    }
-}
-
-
-// ========================================
-// INICIALIZACIÓN
-// ========================================
-
 document.addEventListener("DOMContentLoaded", () => {
+    AppPark.tipoMovimiento = document.getElementById("tipoMovimiento");
+    AppPark.btnCapturar    = document.getElementById("btnCapturar");
+    AppPark.mensajeExito   = document.getElementById("mensajeExito");
+    AppPark.mensajeError   = document.getElementById("mensajeError");
 
-    App.tipoMovimiento  = document.getElementById("tipoMovimiento");
-    App.btnCapturar     = document.getElementById("btnCapturar");
-    App.btnDescargarPDF = document.getElementById("btnDescargarPDF");
-    App.mensajeExito    = document.getElementById("mensajeExito");
-    App.mensajeError    = document.getElementById("mensajeError");
-    App.infoVehiculo    = document.getElementById("infoVehiculo");
-
-    App.table = $("#tablaParqueaderoDT").DataTable({
+    AppPark.table = $("#tablaParqueaderoDT").DataTable({
         ajax: {
-            url: App.config.urlControlador,
+            url:     AppPark.config.urlControlador,
             dataSrc: json => json.data || []
         },
         columns: [
-            { data: "QrVehiculo",          defaultContent: "—" },
-            { data: "DuenoVehiculo",       defaultContent: "No registrado" },
-            { data: "PlacaVehiculo",       defaultContent: "—" },
-            { data: "TipoVehiculo",        defaultContent: "—" },
-            { data: "DescripcionVehiculo", defaultContent: "—" },
-            { data: "NumeroEspacio",       defaultContent: "Sin asignar" },
-            { data: "TipoMovimiento",      defaultContent: "—" },
+            { data: "PlacaVehiculo",  defaultContent: "—" },
+            { data: "TipoVehiculo",   defaultContent: "—" },
+            { data: "DuenoVehiculo",  defaultContent: "No registrado" },
+            { data: "NumeroEspacio",  defaultContent: "Sin asignar" },
+            { data: "TipoMovimiento", defaultContent: "—" },
             {
                 data: "FechaIngreso",
                 defaultContent: "—",
-                render: d => d ? new Date(d).toLocaleString("es-ES") : "—"
+                render: d => d ? new Date(d).toLocaleString('es-ES') : "—"
             }
         ],
-        order: [[7, "desc"]],
-        language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" }
+        language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
+        order: [[5, 'desc']]
     });
 
-    if (App.btnCapturar)     App.btnCapturar.addEventListener("click", iniciarCamara);
-    if (App.btnDescargarPDF) App.btnDescargarPDF.addEventListener("click", descargarPDF);
+    if (AppPark.btnCapturar)
+        AppPark.btnCapturar.addEventListener("click", iniciarCamara);
 });
