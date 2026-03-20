@@ -7,7 +7,7 @@ $conn = $conexion->getConexion();
 
 // Construcción de filtros dinámicos
 $filtros = [];
-$params = [];
+$params  = [];
 
 // FILTRO OBLIGATORIO: Solo mostrar dispositivos activos
 $filtros[] = "d.Estado = :estado";
@@ -29,8 +29,6 @@ if (!empty($_GET['visitante'])) {
     $filtros[] = "d.IdVisitante = :visitante";
     $params[':visitante'] = $_GET['visitante'];
 }
-
-// 🆕 FILTRO POR NÚMERO SERIAL
 if (!empty($_GET['serial'])) {
     $filtros[] = "d.NumeroSerial LIKE :serial";
     $params[':serial'] = '%' . $_GET['serial'] . '%';
@@ -38,16 +36,15 @@ if (!empty($_GET['serial'])) {
 
 $where = "WHERE " . implode(" AND ", $filtros);
 
-// Query CON NumeroSerial
-$sql = "SELECT 
+$sql = "SELECT
             d.*,
             f.NombreFuncionario,
             f.CorreoFuncionario,
             v.NombreVisitante
         FROM dispositivo d
         LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-        LEFT JOIN visitante v ON d.IdVisitante = v.IdVisitante
-        $where 
+        LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
+        $where
         ORDER BY d.IdDispositivo DESC";
 
 $stmt = $conn->prepare($sql);
@@ -65,14 +62,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Filtros -->
     <div class="card shadow mb-4">
-    <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">
-            <i class="fas fa-filter mr-2"></i>Filtrar Dispositivos
-        </h6>
-        <a href="Dispositivolista.php" class="btn btn-sm btn-outline-secondary">
-            <i class="fas fa-broom mr-1"></i>Limpiar filtros
-        </a>
-    </div>
+        <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-filter mr-2"></i>Filtrar Dispositivos
+            </h6>
+            <a href="Dispositivolista.php" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-broom mr-1"></i>Limpiar filtros
+            </a>
+        </div>
         <div class="card-body">
             <form method="get">
                 <div class="row align-items-end">
@@ -142,7 +139,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>QR</th>
                         <th>Tipo</th>
                         <th>Marca</th>
-                        <th>Número Serial</th> <!-- 🆕 NUEVA COLUMNA -->
+                        <th>Número Serial</th>
                         <th>Funcionario</th>
                         <th>Visitante</th>
                         <th>Acciones</th>
@@ -151,65 +148,59 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tbody>
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
-                            <?php 
-                            // Solo funcionarios tienen correo por ahora
+                            <?php
                             $correoDisponible = $row['CorreoFuncionario'] ?? '';
-                            $tieneCorreo = !empty($correoDisponible);
+                            $tieneCorreo      = !empty($correoDisponible);
                             ?>
-                            <tr id="fila-<?php echo $row['IdDispositivo']; ?>">
+                            <tr id="fila-<?= $row['IdDispositivo'] ?>">
                                 <td class="text-center">
                                     <?php if (!empty($row['QrDispositivo'])) : ?>
-                                        <button type="button" class="btn btn-sm btn-outline-success mb-1" 
-                                                onclick="verQRDispositivo('<?php echo htmlspecialchars($row['QrDispositivo']); ?>', <?php echo $row['IdDispositivo']; ?>)"
+                                        <button type="button" class="btn btn-sm btn-outline-success mb-1"
+                                                onclick="verQRDispositivo('<?= htmlspecialchars($row['QrDispositivo']) ?>', <?= $row['IdDispositivo'] ?>)"
                                                 title="Ver código QR">
                                             <i class="fas fa-qrcode me-1"></i> Ver
                                         </button>
-                                        <!-- 🆕 BOTÓN ENVIAR QR -->
-                                        <button type="button" 
-                                                class="btn btn-sm btn-outline-info <?php echo !$tieneCorreo ? 'disabled' : ''; ?>" 
-                                                onclick="enviarQRPorCorreo(<?php echo $row['IdDispositivo']; ?>, '<?php echo htmlspecialchars($correoDisponible); ?>')"
-                                                title="<?php echo $tieneCorreo ? 'Enviar QR por correo' : 'Solo funcionarios pueden recibir correo'; ?>"
-                                                <?php echo !$tieneCorreo ? 'disabled' : ''; ?>>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-info <?= !$tieneCorreo ? 'disabled' : '' ?>"
+                                                onclick="enviarQRPorCorreo(<?= $row['IdDispositivo'] ?>, '<?= htmlspecialchars($correoDisponible) ?>')"
+                                                title="<?= $tieneCorreo ? 'Enviar QR por correo' : 'Solo funcionarios pueden recibir correo' ?>"
+                                                <?= !$tieneCorreo ? 'disabled' : '' ?>>
                                             <i class="fas fa-envelope me-1"></i> Enviar
                                         </button>
                                     <?php else : ?>
                                         <span class="badge badge-warning">Sin QR</span>
                                     <?php endif; ?>
                                 </td>
-                                <td><?php echo $row['TipoDispositivo']; ?></td>
-                                <td><?php echo $row['MarcaDispositivo']; ?></td>
-                                
-                                <!-- 🆕 MOSTRAR NÚMERO SERIAL -->
+                                <td><?= htmlspecialchars($row['TipoDispositivo']) ?></td>
+                                <td><?= htmlspecialchars($row['MarcaDispositivo']) ?></td>
                                 <td>
                                     <?php if (!empty($row['NumeroSerial'])) : ?>
-                                        <?php echo $row['NumeroSerial']; ?>
+                                        <?= htmlspecialchars($row['NumeroSerial']) ?>
                                     <?php else : ?>
                                         <span class="badge bg-info text-white">No tiene número serial</span>
                                     <?php endif; ?>
                                 </td>
-                                
                                 <td>
                                     <?php if (!empty($row['NombreFuncionario'])) : ?>
-                                        <?php echo $row['NombreFuncionario']; ?>
+                                        <?= htmlspecialchars($row['NombreFuncionario']) ?>
                                     <?php else : ?>
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
                                     <?php if (!empty($row['NombreVisitante'])) : ?>
-                                        <?php echo $row['NombreVisitante']; ?>
+                                        <?= htmlspecialchars($row['NombreVisitante']) ?>
                                     <?php else : ?>
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-center">
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-sm btn-outline-primary"
-                                            onclick='cargarDatosEdicionDispositivo(<?php echo json_encode($row); ?>)'
-                                            title="Editar dispositivo" data-toggle="modal" data-target="#modalEditarDispositivo">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-primary"
+                                        onclick='cargarDatosEdicionDispositivo(<?= json_encode($row) ?>)'
+                                        title="Editar dispositivo"
+                                        data-toggle="modal" data-target="#modalEditarDispositivo">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -227,20 +218,19 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- Modal para visualizar QR del Dispositivo -->
-<div class="modal fade" id="modalVerQRDispositivo" tabindex="-1" role="dialog" aria-labelledby="modalVerQRDispositivoLabel" aria-hidden="true">
+<!-- Modal Ver QR -->
+<div class="modal fade" id="modalVerQRDispositivo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="modalVerQRDispositivoLabel">
+                <h5 class="modal-title">
                     <i class="fas fa-qrcode me-2"></i>Código QR - Dispositivo #<span id="qrDispositivoId"></span>
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body text-center">
-                <img id="qrImagenDispositivo" src="" alt="Código QR Dispositivo" class="img-fluid" style="max-width: 300px; border: 2px solid #ddd; padding: 10px; border-radius: 5px;">
+                <img id="qrImagenDispositivo" src="" alt="Código QR Dispositivo" class="img-fluid"
+                    style="max-width:300px;border:2px solid #ddd;padding:10px;border-radius:5px;">
                 <p class="text-muted mt-3">Escanea este código con tu dispositivo móvil</p>
             </div>
             <div class="modal-footer">
@@ -281,19 +271,20 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <label class="form-label">Marca <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                                <input type="text" id="editMarcaDispositivo" class="form-control" name="marca" required placeholder="Ej: HP, Dell, Lenovo">
+                                <input type="text" id="editMarcaDispositivo" class="form-control" name="marca"
+                                       required placeholder="Ej: HP, Dell, Lenovo">
                             </div>
                             <small class="text-muted">Puede modificar la marca del dispositivo</small>
                         </div>
                     </div>
 
-                    <!-- 🆕 NÚMERO SERIAL EN MODAL EDITAR -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Número Serial</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-barcode"></i></span>
-                                <input type="text" id="editNumeroSerial" class="form-control" name="serial" placeholder="Ej: SN123456789" maxlength="50">
+                                <input type="text" id="editNumeroSerial" class="form-control" name="serial"
+                                       placeholder="Ej: SN123456789" maxlength="50">
                             </div>
                             <small class="text-muted">Campo opcional - Solo letras, números, guiones (-) y guiones bajos (_)</small>
                         </div>
@@ -323,354 +314,4 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
-<script>
-// ============================================
-// 🔥 ZONA DATATABLES - Activación de DataTable
-// ============================================
-$(document).ready(function() {
-    $('#TablaDispositivo').DataTable({
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-        },
-        pageLength: 10,
-        responsive: true,
-        order: [[0, "desc"]]
-    });
-
-    // 🆕 VALIDACIÓN EN TIEMPO REAL DEL SERIAL EN MODAL EDITAR
-    const editSerialInput = document.getElementById('editNumeroSerial');
-    const editMarcaInput = document.getElementById('editMarcaDispositivo');
-    
-    if (editSerialInput) {
-        editSerialInput.addEventListener('input', function(e) {
-            let valor = e.target.value;
-            // Remover caracteres no permitidos automáticamente
-            valor = valor.replace(/[^a-zA-Z0-9\-_]/g, '');
-            e.target.value = valor;
-            
-            // Validar longitud
-            if (valor.length > 50) {
-                e.target.value = valor.substring(0, 50);
-                e.target.classList.add('is-invalid');
-            } else if (valor.length > 0 && valor.length >= 3) {
-                e.target.classList.remove('is-invalid');
-                e.target.classList.add('is-valid');
-            } else if (valor.length > 0 && valor.length < 3) {
-                e.target.classList.add('is-invalid');
-                e.target.classList.remove('is-valid');
-            } else {
-                e.target.classList.remove('is-invalid', 'is-valid');
-            }
-        });
-    }
-
-    // 🆕 VALIDACIÓN EN TIEMPO REAL DE LA MARCA EN MODAL EDITAR
-    if (editMarcaInput) {
-        editMarcaInput.addEventListener('input', function(e) {
-            const regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]+$/;
-            let valor = e.target.value;
-            
-            if (valor.length > 0) {
-                if (regexTexto.test(valor)) {
-                    e.target.classList.remove('is-invalid');
-                    e.target.classList.add('is-valid');
-                } else {
-                    e.target.classList.add('is-invalid');
-                    e.target.classList.remove('is-valid');
-                }
-            } else {
-                e.target.classList.remove('is-invalid', 'is-valid');
-            }
-        });
-    }
-});
-
-// ============================================
-// Función para mostrar QR del dispositivo
-// ============================================
-function verQRDispositivo(rutaQR, idDispositivo) {
-    var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
-    
-    console.log('Ruta QR completa:', rutaCompleta);
-    
-    $('#qrDispositivoId').text(idDispositivo);
-    $('#qrImagenDispositivo').attr('src', rutaCompleta);
-    $('#btnDescargarQRDispositivo').attr('href', rutaCompleta).attr('download', 'QR-Dispositivo-' + idDispositivo + '.png');
-    
-    $('#modalVerQRDispositivo').modal('show');
-}
-
-// ============================================
-// 🆕 FUNCIÓN PARA ENVIAR QR POR CORREO
-// ============================================
-function enviarQRPorCorreo(idDispositivo, correoDestinatario) {
-    console.log('📧 Enviando QR - ID:', idDispositivo, 'Correo:', correoDestinatario);
-    
-    // Validar que exista un correo
-    if (!correoDestinatario || correoDestinatario.trim() === '') {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Sin correo registrado',
-            html: 'Este dispositivo no tiene un correo electrónico asociado.<br><small class="text-muted">Por ahora solo funcionarios pueden recibir correos.</small>',
-            confirmButtonColor: '#3085d6'
-        });
-        return;
-    }
-
-    // Confirmar el envío
-    Swal.fire({
-        title: '📧 ¿Enviar código QR?',
-        html: `Se enviará el código QR al correo:<br><br><strong class="text-primary">${correoDestinatario}</strong>`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '<i class="fas fa-paper-plane"></i> Sí, enviar',
-        cancelButtonText: '<i class="fas fa-times"></i> Cancelar',
-        reverseButtons: true
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Mostrar loading
-            Swal.fire({
-                title: 'Enviando correo...',
-                html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                showConfirmButton: false
-            });
-
-            // Realizar petición AJAX al MISMO controlador de dispositivos
-            $.ajax({
-                url: '../../Controller/ControladorDispositivo.php',
-                type: 'POST',
-                data: {
-                    accion: 'enviar_qr',
-                    id_dispositivo: idDispositivo
-                },
-                dataType: 'json',
-                timeout: 30000,
-                success: function(response) {
-                    console.log('✓ Respuesta:', response);
-                    
-                    if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '¡Correo enviado!',
-                            html: `<p>${response.message}</p>`,
-                            timer: 4000,
-                            timerProgressBar: true,
-                            confirmButtonColor: '#1cc88a'
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error al enviar',
-                            text: response.message,
-                            confirmButtonColor: '#e74a3b'
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('❌ Error AJAX:', {
-                        status: status,
-                        error: error,
-                        response: xhr.responseText
-                    });
-                    
-                    let errorMsg = 'No se pudo conectar con el servidor.';
-                    
-                    if (xhr.status === 404) {
-                        errorMsg = 'El archivo ControladorEnviarQR.php no existe. Verifica la ruta.';
-                    } else if (status === 'timeout') {
-                        errorMsg = 'La solicitud tardó demasiado tiempo.';
-                    }
-                    
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error de conexión',
-                        text: errorMsg,
-                        confirmButtonColor: '#e74a3b',
-                        footer: '<small>Revisa la consola del navegador (F12) para más detalles</small>'
-                    });
-                }
-            });
-        }
-    });
-}
-
-// ============================================
-// Cargar datos en el modal de edición
-// ============================================
-function cargarDatosEdicionDispositivo(row) {
-    console.log('Cargando datos para editar:', row);
-    
-    $('#editIdDispositivo').val(row.IdDispositivo);
-    $('#editTipoDispositivo').val(row.TipoDispositivo);
-    $('#editMarcaDispositivo').val(row.MarcaDispositivo);
-    $('#editNumeroSerial').val(row.NumeroSerial || ''); // 🆕 CARGAR SERIAL
-    
-    // IDs ocultos
-    $('#editIdFuncionario').val(row.IdFuncionario || '');
-    $('#editIdVisitante').val(row.IdVisitante || '');
-    
-    // Mostrar nombres en campos de texto
-    $('#editNombreFuncionario').val(row.NombreFuncionario || '-');
-    $('#editNombreVisitante').val(row.NombreVisitante || '-');
-    
-    $('#modalEditarDispositivo').modal('show');
-}
-
-// ============================================
-// Botón guardar cambios
-// ============================================
-$(document).ready(function() {
-    $('#btnGuardarCambiosDispositivo').click(function() {
-        // 🆕 VALIDACIONES MEJORADAS
-        const tipo = $('#editTipoDispositivo').val();
-        const marca = $('#editMarcaDispositivo').val().trim();
-        const serial = $('#editNumeroSerial').val().trim();
-        
-        // Expresiones regulares
-        const regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]+$/;
-        const regexSerial = /^[a-zA-Z0-9\-_]+$/;
-
-        // Validar tipo
-        if (!tipo) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campo incompleto',
-                text: 'Debe seleccionar un tipo de dispositivo',
-                confirmButtonColor: '#f6c23e'
-            });
-            return;
-        }
-
-        // Validar marca
-        if (!marca) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campo incompleto',
-                text: 'Debe ingresar la marca del dispositivo',
-                confirmButtonColor: '#f6c23e'
-            });
-            $('#editMarcaDispositivo').focus();
-            return;
-        }
-
-        if (!regexTexto.test(marca)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Caracteres inválidos',
-                text: 'La marca contiene caracteres inválidos. Solo se permiten letras, números y .-,',
-                confirmButtonColor: '#e74a3b'
-            });
-            $('#editMarcaDispositivo').focus();
-            return;
-        }
-
-        // 🆕 VALIDAR NÚMERO SERIAL
-        if (serial) {
-            if (!regexSerial.test(serial)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Serial inválido',
-                    html: 'El número serial solo puede contener:<br>' +
-                        '• Letras (A-Z, a-z)<br>' +
-                        '• Números (0-9)<br>' +
-                        '• Guiones (-)<br>' +
-                        '• Guiones bajos (_)',
-                    confirmButtonColor: '#e74a3b'
-                });
-                $('#editNumeroSerial').focus();
-                return;
-            }
-
-            if (serial.length < 3) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Serial muy corto',
-                    text: 'El número serial debe tener al menos 3 caracteres',
-                    confirmButtonColor: '#f6c23e'
-                });
-                $('#editNumeroSerial').focus();
-                return;
-            }
-
-            if (serial.length > 50) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Serial muy largo',
-                    text: 'El número serial no puede exceder 50 caracteres',
-                    confirmButtonColor: '#e74a3b'
-                });
-                $('#editNumeroSerial').focus();
-                return;
-            }
-        }
-
-        var formData = {
-            accion: 'actualizar',
-            id: $('#editIdDispositivo').val(),
-            tipo: tipo,
-            marca: marca,
-            serial: serial,
-            id_funcionario: $('#editIdFuncionario').val(),
-            id_visitante: $('#editIdVisitante').val()
-        };
-
-        console.log('Enviando datos:', formData);
-
-        $('#modalEditarDispositivo').modal('hide');
-
-        Swal.fire({
-            title: 'Guardando cambios...',
-            html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            showConfirmButton: false
-        });
-
-        $.ajax({
-            url: '../../Controller/ControladorDispositivo.php',
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(response) {
-                console.log('Respuesta:', response);
-                
-                if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        html: response.message || 'Dispositivo actualizado correctamente',
-                        timer: 3000,
-                        timerProgressBar: true,
-                        showConfirmButton: true,
-                        confirmButtonColor: '#1cc88a'
-                    }).then(() => {
-                        location.reload();
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'No se pudo actualizar',
-                        html: response.message.replace(/\n/g, '<br>') || 'Error al actualizar el dispositivo',
-                        confirmButtonColor: '#f6c23e',
-                        footer: '<small class="text-muted">Revise la información e intente nuevamente</small>'
-                    });
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo conectar con el servidor',
-                    confirmButtonColor: '#e74a3b',
-                    footer: '<small>Si el problema persiste, contacte al administrador</small>'
-                });
-            }
-        });
-    });
-});
-</script>
+<script src="/SEGTRACK/Public/js/javascript/js/ValidacionDispositivo.js"></script>

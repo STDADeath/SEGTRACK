@@ -52,10 +52,6 @@ try {
             $this->carpetaDebug = __DIR__ . '/Debug_Parqueadero';
         }
 
-        private function campoVacio($campo): bool {
-            return !isset($campo) || $campo === '' || trim((string)$campo) === '';
-        }
-
         // ── Crear parqueadero ─────────────────────────────────────────────────
         public function crear(array $d): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== crear parqueadero ===\n", FILE_APPEND);
@@ -166,17 +162,18 @@ try {
             ];
         }
 
-        // ── Obtener vehículos activos por tipo (para el select del guardia) ─────
-        public function obtenerVehiculosPorTipo(string $tipo): array {
-            file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== obtenerVehiculosPorTipo — Tipo: $tipo ===\n", FILE_APPEND);
+        // ── Obtener vehículos activos por tipo, excluyendo los ya ocupando espacio ─
+        public function obtenerVehiculosPorTipo(string $tipo, int $idParqueadero): array {
+            file_put_contents($this->carpetaDebug . '/debug_log.txt',
+                "=== obtenerVehiculosPorTipo — Tipo: $tipo, Parqueadero: $idParqueadero ===\n", FILE_APPEND);
 
             $tipos_validos = ['Carro', 'Moto', 'Bicicleta'];
             if (!in_array($tipo, $tipos_validos)) {
                 return ['success' => false, 'message' => "Tipo de vehículo inválido: $tipo"];
             }
 
-            $vehiculos = $this->modelo->obtenerVehiculosPorTipo($tipo);
-            return ['success' => true, 'vehiculos' => $vehiculos]; 
+            $vehiculos = $this->modelo->obtenerVehiculosPorTipo($tipo, $idParqueadero);
+            return ['success' => true, 'vehiculos' => $vehiculos];
         }
 
         // ── Ocupar espacio manualmente (guardia sin escáner) ──────────────────
@@ -246,8 +243,8 @@ try {
         }
 
     } elseif ($accion === 'cambiar_estado') {
-        $id    = isset($_POST['id'])     ? (int)$_POST['id'] : 0;
-        $estado = $_POST['estado']       ?? '';
+        $id     = isset($_POST['id'])     ? (int)$_POST['id'] : 0;
+        $estado = $_POST['estado']        ?? '';
         if ($id > 0 && in_array($estado, ['Activo', 'Inactivo'])) {
             $resultado = $controlador->cambiarEstado($id, $estado);
         } else {
@@ -270,8 +267,9 @@ try {
             : ['success' => false, 'message' => 'ID de sede no válido'];
 
     } elseif ($accion === 'obtener_vehiculos_tipo') {
-        $tipo      = trim($_POST['tipo'] ?? '');
-        $resultado = $controlador->obtenerVehiculosPorTipo($tipo);
+        $tipo           = trim($_POST['tipo']           ?? '');
+        $idParqueadero  = isset($_POST['id_parqueadero']) ? (int)$_POST['id_parqueadero'] : 0;
+        $resultado      = $controlador->obtenerVehiculosPorTipo($tipo, $idParqueadero);
 
     } elseif ($accion === 'ocupar_manual') {
         $idEspacio  = isset($_POST['id_espacio'])  ? (int)$_POST['id_espacio']  : 0;

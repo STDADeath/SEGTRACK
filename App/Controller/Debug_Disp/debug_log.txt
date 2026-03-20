@@ -3074,3 +3074,77 @@ Acción detectada: enviar_qr
 Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
 === FIN ===
 
+
+2026-03-17 00:09:47 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-03-17 00:12:29 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-03-17 00:14:17 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-03-17 00:15:48 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
+
+2026-03-18 20:13:02 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "41",
+    "tipo": "Computador",
+    "marca": "Huawei",
+    "serial": "SN65849399023",
+    "id_funcionario": "62",
+    "id_visitante": ""
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 41 ===
+=== MODELO: actualizar ID: 41 ===
+{"TipoDispositivo":"Computador","MarcaDispositivo":"Huawei","NumeroSerial":"SN65849399023","IdFuncionario":"62","IdVisitante":""}
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":1,"qr":"qr\/Qr_Dipo\/QR-DISP-41-69baf93eec216.png"}
+=== FIN ===
+
+
+2026-03-20 06:11:59 === INICIO ===
+POST recibido:
+{
+    "accion": "enviar_qr",
+    "id_dispositivo": "39"
+}
+Acción detectada: enviar_qr
+Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: andersoarebalo@gmail.com"}
+=== FIN ===
+
