@@ -154,8 +154,6 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
         </a>
     </li>
 
-
-
 </ul>
 
 <!-- CONTENIDO -->

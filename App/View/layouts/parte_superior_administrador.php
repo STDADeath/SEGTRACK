@@ -137,56 +137,20 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
 
         <hr class="sidebar-divider">
 
-        <!-- Módulo: Dispositivos -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDispositivos">
-                <i class="fas fa-fw fa-laptop"></i>
-                <span>Dispositivos</span>
-            </a>
-            <div id="collapseDispositivos" class="collapse" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Dispositivos:</h6>
-                    <a class="collapse-item" href="../Administrador/DispositivoListaADM.php">Lista de Dispositivos</a>
-                </div>
-            </div>
-        </li>
-
-        <hr class="sidebar-divider">
-
         <!-- Módulo: Parqueadero -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParqueadero">
                 <i class="fas fa-fw fa-parking"></i>
-                <span>Parqueadero</span>S
+                <span>Parqueadero</span>
             </a>
             <div id="collapseParqueadero" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Parqueadero:</h6>
-                    <a class="collapse-item" href="../Administrador/VehiculoListaADM.php">Lista Vehículos</a>
                     <a class="collapse-item" href="../Administrador/ParqueaderoAmin.php">Administrar Parqueadero</a>
                 </div>
             </div>
         </li>
 
-        <hr class="sidebar-divider">
-
-        <!-- Módulo: Administrar Personal -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePersonal">
-                <i class="fas fa-fw fa-user-shield"></i>
-                <span>Administrar Personal</span>
-            </a>
-            <div id="collapsePersonal" class="collapse" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Personal Seguridad:</h6>
-                    <a class="collapse-item" href="#">Reporte De Dotacion</a>
-                    <a class="collapse-item" href="#">Reporte De Bitacoras</a>
-                    <a class="collapse-item" href="#">Reporte De Visitante</a>
-                </div>
-            </div>
-        </li>
-
-        <hr class="sidebar-divider">
 
     </ul>
 
