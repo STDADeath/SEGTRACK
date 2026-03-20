@@ -157,7 +157,7 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParqueadero">
                 <i class="fas fa-fw fa-parking"></i>
-                <span>Parqueadero</span>
+                <span>Parqueadero</span>S
             </a>
             <div id="collapseParqueadero" class="collapse" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -187,24 +187,6 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
         </li>
 
         <hr class="sidebar-divider">
-
-        <!-- Módulo: Información de Registros -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRegistros">
-                <i class="fas fa-fw fa-clipboard-list"></i>
-                <span>Información de Registros</span>
-            </a>
-            <div id="collapseRegistros" class="collapse" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Registros:</h6>
-                    <a class="collapse-item" href="">Registros Dispositivos</a>
-                    <a class="collapse-item" href="">Registros Funcionarios</a>
-                    <a class="collapse-item" href="">Registros Ingresos</a>
-                </div>
-            </div>
-        </li>
-
-        <hr class="sidebar-divider d-none d-md-block">
 
     </ul>
 
