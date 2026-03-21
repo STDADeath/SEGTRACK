@@ -141,3 +141,188 @@ Punto 1: Preparando SQL INSERT
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdVehiculo":"29","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-29-69bda8733e905.png","FechaRegistro":"2026-03-20 15:05:07"}}
 === FIN ===
 
+
+2026-03-20 19:32:01 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "29",
+    "estado": "Inactivo"
+}
+✅ Conexión establecida correctamente
+Acción: cambiar_estado
+✅ Estado 'Inactivo' para vehículo ID: 29
+Respuesta: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-20 19:32:27 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "28",
+    "tipo": "Carro",
+    "descripcion": "Mazda color negro con franjas blancas",
+    "idsede": "74"
+}
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 28
+
+2026-03-20 19:34:39 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "28",
+    "tipo": "Carro",
+    "descripcion": "Mazda color negro con franjas blancas",
+    "idsede": "74"
+}
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 28
+
+2026-03-20 19:35:12 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Carro",
+    "descripcion": "Camaro del 97 color rojo con franjas blancas",
+    "idsede": "75"
+}
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 29
+
+2026-03-20 19:37:07 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "28",
+    "estado": "Inactivo"
+}
+✅ Conexión establecida correctamente
+Acción: cambiar_estado
+✅ Estado 'Inactivo' para vehículo ID: 28
+Respuesta: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-20 19:37:10 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "28",
+    "estado": "Activo"
+}
+✅ Conexión establecida correctamente
+Acción: cambiar_estado
+✅ Estado 'Activo' para vehículo ID: 28
+Respuesta: {"success":true,"message":"Vehículo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2026-03-20 19:37:13 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "28",
+    "estado": "Inactivo"
+}
+✅ Conexión establecida correctamente
+Acción: cambiar_estado
+✅ Estado 'Inactivo' para vehículo ID: 28
+Respuesta: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-20 19:45:44 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Carro",
+    "descripcion": "Camaro del 97 color rojo con franjas blancas y un stiker",
+    "idsede": "75"
+}
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 29
+
+2026-03-20 19:46:27 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "29",
+    "estado": "Activo"
+}
+✅ Conexión establecida correctamente
+Acción: cambiar_estado
+✅ Estado 'Activo' para vehículo ID: 29
+Respuesta: {"success":true,"message":"Vehículo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2026-03-20 19:46:36 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Carro",
+    "descripcion": "Camaro del 97 color rojo con franjas blancas y un stiker",
+    "idsede": "75"
+}
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 29
+
+2026-03-20 19:48:39 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Carro",
+    "descripcion": "Camaro del 97 color rojo con franjas blancas y un stiker",
+    "idsede": "75"
+}
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 29
+
+2026-03-20 19:51:47 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "29",
+    "tipo": "Carro",
+    "descripcion": "Camaro del 97 color rojo con franjas blancas y un stiker",
+    "idsede": "75"
+}
+⚠️ Extensión GD no disponible - QR desactivado
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 29
+⚠️ GD no disponible, QR no generado
+Respuesta: {"success":true,"message":"Vehículo actualizado correctamente","qr":null}
+=== FIN ===
+
+
+2026-03-20 19:53:52 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "28",
+    "estado": "Activo"
+}
+⚠️ Extensión GD no disponible - QR desactivado
+✅ Conexión establecida correctamente
+Acción: cambiar_estado
+✅ Estado 'Activo' para vehículo ID: 28
+Respuesta: {"success":true,"message":"Vehículo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+
+
+2026-03-20 19:54:02 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "actualizar",
+    "id": "28",
+    "tipo": "Carro",
+    "descripcion": "Mazda color negro con franjas blancas",
+    "idsede": "74"
+}
+⚠️ Extensión GD no disponible - QR desactivado
+✅ Conexión establecida correctamente
+Acción: actualizar
+✅ Vehículo actualizado ID: 28
+⚠️ GD no disponible, QR no generado
+Respuesta: {"success":true,"message":"Vehículo actualizado correctamente","qr":null}
+=== FIN ===
+

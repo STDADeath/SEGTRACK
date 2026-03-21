@@ -3225,3 +3225,127 @@ INSERT exitoso, ID: 51
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 51","data":{"IdDispositivo":"51","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-51-69bda529b451f.png"}}
 === FIN ===
 
+
+2026-03-21 01:37:29 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "51",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-21 01:37:44 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "50",
+    "tipo": "Tablet",
+    "marca": "xaomi",
+    "serial": "987654321s2",
+    "id_funcionario": "",
+    "id_visitante": "12"
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 50 ===
+=== MODELO: actualizar ID: 50 ===
+{"TipoDispositivo":"Tablet","MarcaDispositivo":"xaomi","NumeroSerial":"987654321s2","IdFuncionario":"","IdVisitante":"12"}
+
+2026-03-21 01:38:16 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "50",
+    "tipo": "Portatil",
+    "marca": "xaomi",
+    "serial": "987654321s2",
+    "id_funcionario": "",
+    "id_visitante": "12"
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 50 ===
+=== MODELO: actualizar ID: 50 ===
+{"TipoDispositivo":"Portatil","MarcaDispositivo":"xaomi","NumeroSerial":"987654321s2","IdFuncionario":"","IdVisitante":"12"}
+
+2026-03-21 01:39:33 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "50",
+    "tipo": "Tablet",
+    "marca": "xaomi",
+    "serial": "987654321s2",
+    "id_funcionario": "",
+    "id_visitante": "12"
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 50 ===
+=== MODELO: actualizar ID: 50 ===
+{"TipoDispositivo":"Tablet","MarcaDispositivo":"xaomi","NumeroSerial":"987654321s2","IdFuncionario":"","IdVisitante":"12"}
+
+2026-03-21 01:44:16 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "50",
+    "tipo": "Tablet",
+    "marca": "xaomi",
+    "serial": "987654321s2",
+    "id_funcionario": "",
+    "id_visitante": "12"
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 50 ===
+=== MODELO: actualizar ID: 50 ===
+{"TipoDispositivo":"Tablet","MarcaDispositivo":"xaomi","NumeroSerial":"987654321s2","IdFuncionario":"","IdVisitante":"12"}
+
+2026-03-21 01:44:20 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "50",
+    "tipo": "Portatil",
+    "marca": "xaomi",
+    "serial": "987654321s2",
+    "id_funcionario": "",
+    "id_visitante": "12"
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 50 ===
+=== MODELO: actualizar ID: 50 ===
+{"TipoDispositivo":"Portatil","MarcaDispositivo":"xaomi","NumeroSerial":"987654321s2","IdFuncionario":"","IdVisitante":"12"}
+
+2026-03-21 01:44:36 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "50",
+    "tipo": "Tablet",
+    "marca": "xaomi",
+    "serial": "987654321s2",
+    "id_funcionario": "",
+    "id_visitante": "12"
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 50 ===
+=== MODELO: actualizar ID: 50 ===
+{"TipoDispositivo":"Tablet","MarcaDispositivo":"xaomi","NumeroSerial":"987654321s2","IdFuncionario":"","IdVisitante":"12"}
+
+2026-03-21 01:56:14 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "49",
+    "tipo": "Computador",
+    "marca": "lenovo",
+    "serial": "987654321s",
+    "id_funcionario": "81",
+    "id_visitante": ""
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 49 ===
+=== MODELO: actualizar ID: 49 ===
+{"TipoDispositivo":"Computador","MarcaDispositivo":"lenovo","NumeroSerial":"987654321s","IdFuncionario":"81","IdVisitante":""}
