@@ -9,7 +9,6 @@ ob_start();
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-// Crear carpeta Debug_Disp si no existe
 $carpetaDebug = __DIR__ . '/Debug_Disp';
 if (!file_exists($carpetaDebug)) {
     mkdir($carpetaDebug, 0777, true);
@@ -24,11 +23,10 @@ try {
     if (!file_exists($ruta_conexion)) {
         throw new Exception("Archivo de conexión no encontrado: $ruta_conexion");
     }
-
     require_once $ruta_conexion;
 
     $conexionObj = new Conexion();
-    $conexion = $conexionObj->getConexion();
+    $conexion    = $conexionObj->getConexion();
 
     if (!isset($conexion) || !($conexion instanceof PDO)) {
         throw new Exception("La conexión no es una instancia de PDO");
@@ -52,8 +50,8 @@ try {
         private $conexion;
 
         public function __construct($conexion) {
-            $this->conexion = $conexion;
-            $this->modelo = new ModeloDispositivo($conexion);
+            $this->conexion     = $conexion;
+            $this->modelo       = new ModeloDispositivo($conexion);
             $this->carpetaDebug = __DIR__ . '/Debug_Disp';
         }
 
@@ -69,8 +67,8 @@ try {
                 }
 
                 $nombreArchivo = "QR-DISP-" . $idDispositivo . "-" . uniqid() . ".png";
-                $rutaCompleta = $rutaCarpeta . '/' . $nombreArchivo;
-                $contenidoQR = "Serial: $numeroSerial\nTipo: $tipo\nMarca: $marca";
+                $rutaCompleta  = $rutaCarpeta . '/' . $nombreArchivo;
+                $contenidoQR   = "Serial: $numeroSerial\nTipo: $tipo\nMarca: $marca";
 
                 QRcode::png($contenidoQR, $rutaCompleta, QR_ECLEVEL_H, 10);
 
@@ -89,28 +87,17 @@ try {
         public function registrarDispositivo(array $datos): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "registrarDispositivo llamado\n", FILE_APPEND);
 
-            $tipo        = $datos['TipoDispositivo'] ?? null;
-            $marca       = $datos['MarcaDispositivo'] ?? null;
-            $numeroSerial = $datos['NumeroSerial'] ?? null;
-            $otroTipo    = $datos['OtroTipoDispositivo'] ?? null;
-            $idFuncionario = $datos['IdFuncionario'] ?? null;
-            $idVisitante   = $datos['IdVisitante'] ?? null;
+            $tipo         = $datos['TipoDispositivo']     ?? null;
+            $marca        = $datos['MarcaDispositivo']    ?? null;
+            $numeroSerial = $datos['NumeroSerial']        ?? null;
+            $otroTipo     = $datos['OtroTipoDispositivo'] ?? null;
+            $idFuncionario = $datos['IdFuncionario']      ?? null;
+            $idVisitante   = $datos['IdVisitante']        ?? null;
 
-            if ($this->campoVacio($tipo)) {
-                return ['success' => false, 'message' => 'Falta el campo: Tipo de dispositivo'];
-            }
-
-            if ($this->campoVacio($marca)) {
-                return ['success' => false, 'message' => 'Falta el campo: Marca del dispositivo'];
-            }
-
-            if ($this->campoVacio($numeroSerial)) {
-                $numeroSerial = '';
-            }
-
-            if ($tipo === 'Otro' && $this->campoVacio($otroTipo)) {
-                return ['success' => false, 'message' => 'Debe especificar el tipo de dispositivo'];
-            }
+            if ($this->campoVacio($tipo))  return ['success' => false, 'message' => 'Falta el campo: Tipo de dispositivo'];
+            if ($this->campoVacio($marca)) return ['success' => false, 'message' => 'Falta el campo: Marca del dispositivo'];
+            if ($this->campoVacio($numeroSerial)) $numeroSerial = '';
+            if ($tipo === 'Otro' && $this->campoVacio($otroTipo)) return ['success' => false, 'message' => 'Debe especificar el tipo de dispositivo'];
 
             $tipoFinal = ($tipo === 'Otro') ? $otroTipo : $tipo;
 
@@ -118,37 +105,31 @@ try {
                 $idFunc = $this->campoVacio($idFuncionario) ? null : (int)$idFuncionario;
                 $idVis  = $this->campoVacio($idVisitante)   ? null : (int)$idVisitante;
 
-                // ✅ ÚNICA VALIDACIÓN DE DUPLICADO: número serial
                 if (!empty($numeroSerial)) {
                     $serialExiste = $this->modelo->existeNumeroSerial($numeroSerial);
                     if ($serialExiste['existe']) {
-                        $disp = $serialExiste['dispositivo'];
+                        $disp    = $serialExiste['dispositivo'];
                         $mensaje = "⚠️ El número serial '{$numeroSerial}' ya está registrado en otro dispositivo "
-                                . "(ID: {$disp['IdDispositivo']} - {$disp['TipoDispositivo']} {$disp['MarcaDispositivo']}).";
+                                 . "(ID: {$disp['IdDispositivo']} - {$disp['TipoDispositivo']} {$disp['MarcaDispositivo']}).";
                         file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Serial duplicado - $numeroSerial\n", FILE_APPEND);
                         return ['success' => false, 'message' => $mensaje];
                     }
                 }
 
-                // Registrar
                 $resultado = $this->modelo->registrarDispositivo($tipoFinal, $marca, $numeroSerial, $idFunc, $idVis);
 
                 if ($resultado['success']) {
                     $idDispositivo = $resultado['id'];
                     $rutaQR = $this->generarQR($idDispositivo, $tipoFinal, $marca, $numeroSerial);
-
-                    if ($rutaQR) {
-                        $this->modelo->actualizarQR($idDispositivo, $rutaQR);
-                    }
+                    if ($rutaQR) $this->modelo->actualizarQR($idDispositivo, $rutaQR);
 
                     return [
                         "success" => true,
                         "message" => "Dispositivo registrado correctamente con ID: " . $idDispositivo,
                         "data"    => ["IdDispositivo" => $idDispositivo, "QrDispositivo" => $rutaQR]
                     ];
-                } else {
-                    return ['success' => false, 'message' => 'Error al registrar en BD: ' . ($resultado['error'] ?? 'desconocido')];
                 }
+                return ['success' => false, 'message' => 'Error al registrar en BD: ' . ($resultado['error'] ?? 'desconocido')];
 
             } catch (Exception $e) {
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN: " . $e->getMessage() . "\n", FILE_APPEND);
@@ -159,63 +140,45 @@ try {
         public function actualizarDispositivo(int $id, array $datos): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== actualizarDispositivo ID: $id ===\n", FILE_APPEND);
 
-            if ($this->campoVacio($datos['TipoDispositivo'] ?? null)) {
-                return ['success' => false, 'message' => 'El tipo de dispositivo es obligatorio'];
-            }
-
-            if ($this->campoVacio($datos['MarcaDispositivo'] ?? null)) {
-                return ['success' => false, 'message' => 'La marca del dispositivo es obligatoria'];
-            }
+            if ($this->campoVacio($datos['TipoDispositivo']  ?? null)) return ['success' => false, 'message' => 'El tipo de dispositivo es obligatorio'];
+            if ($this->campoVacio($datos['MarcaDispositivo'] ?? null)) return ['success' => false, 'message' => 'La marca del dispositivo es obligatoria'];
 
             try {
-                $numeroSerial  = $datos['NumeroSerial'] ?? '';
+                $numeroSerial  = $datos['NumeroSerial']  ?? '';
                 $idFuncionario = !empty($datos['IdFuncionario']) ? (int)$datos['IdFuncionario'] : null;
                 $idVisitante   = !empty($datos['IdVisitante'])   ? (int)$datos['IdVisitante']   : null;
 
-                // ✅ ÚNICA VALIDACIÓN DE DUPLICADO: número serial (excluyendo el dispositivo actual)
                 if (!empty($numeroSerial)) {
                     $serialExiste = $this->modelo->existeNumeroSerial($numeroSerial, $id);
                     if ($serialExiste['existe']) {
-                        $disp = $serialExiste['dispositivo'];
+                        $disp    = $serialExiste['dispositivo'];
                         $mensaje = "⚠️ El número serial '{$numeroSerial}' ya está registrado en otro dispositivo "
-                                . "(ID: {$disp['IdDispositivo']} - {$disp['TipoDispositivo']} {$disp['MarcaDispositivo']}).";
+                                 . "(ID: {$disp['IdDispositivo']} - {$disp['TipoDispositivo']} {$disp['MarcaDispositivo']}).";
                         file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Serial duplicado al actualizar\n", FILE_APPEND);
                         return ['success' => false, 'message' => $mensaje];
                     }
                 }
 
-                // Guardar QR anterior para borrarlo después
                 $dispositivoAnterior = $this->modelo->obtenerPorId($id);
-                $qrAnterior = $dispositivoAnterior['QrDispositivo'] ?? null;
-
-                $resultado = $this->modelo->actualizar($id, $datos);
+                $qrAnterior          = $dispositivoAnterior['QrDispositivo'] ?? null;
+                $resultado           = $this->modelo->actualizar($id, $datos);
 
                 if ($resultado['success']) {
-                    $tipo  = $datos['TipoDispositivo'];
-                    $marca = $datos['MarcaDispositivo'];
-
+                    $tipo    = $datos['TipoDispositivo'];
+                    $marca   = $datos['MarcaDispositivo'];
                     $nuevoQR = $this->generarQR($id, $tipo, $marca, $numeroSerial);
 
                     if ($nuevoQR) {
                         $this->modelo->actualizarQR($id, $nuevoQR);
-
                         if ($qrAnterior) {
                             $rutaQrAnterior = __DIR__ . '/../../Public/' . $qrAnterior;
-                            if (file_exists($rutaQrAnterior)) {
-                                unlink($rutaQrAnterior);
-                            }
+                            if (file_exists($rutaQrAnterior)) unlink($rutaQrAnterior);
                         }
                     }
 
-                    return [
-                        'success' => true,
-                        'message' => 'Dispositivo actualizado correctamente',
-                        'rows'    => $resultado['rows'] ?? 0,
-                        'qr'      => $nuevoQR
-                    ];
-                } else {
-                    return ['success' => false, 'message' => $resultado['error'] ?? 'Error desconocido al actualizar'];
+                    return ['success' => true, 'message' => 'Dispositivo actualizado correctamente', 'rows' => $resultado['rows'] ?? 0, 'qr' => $nuevoQR];
                 }
+                return ['success' => false, 'message' => $resultado['error'] ?? 'Error desconocido al actualizar'];
 
             } catch (Exception $e) {
                 file_put_contents($this->carpetaDebug . '/debug_log.txt', "EXCEPCIÓN en actualizar: " . $e->getMessage() . "\n", FILE_APPEND);
@@ -226,13 +189,11 @@ try {
         public function cambiarEstadoDispositivo(int $id, string $nuevoEstado): array {
             try {
                 $resultado = $this->modelo->cambiarEstado($id, $nuevoEstado);
-
                 if ($resultado['success']) {
                     $mensaje = $nuevoEstado === 'Activo' ? 'activado' : 'desactivado';
                     return ['success' => true, 'message' => "Dispositivo $mensaje correctamente", 'nuevoEstado' => $nuevoEstado];
-                } else {
-                    return ['success' => false, 'message' => 'Error al cambiar el estado del dispositivo'];
                 }
+                return ['success' => false, 'message' => 'Error al cambiar el estado del dispositivo'];
             } catch (Exception $e) {
                 return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
             }
@@ -240,9 +201,9 @@ try {
 
         public function enviarQRPorCorreo(int $idDispositivo): array {
             try {
-                $rutaPHPMailer  = __DIR__ . '/../Libs/PHPMailer-master/src/PHPMailer.php';
-                $rutaSMTP       = __DIR__ . '/../Libs/PHPMailer-master/src/SMTP.php';
-                $rutaException  = __DIR__ . '/../Libs/PHPMailer-master/src/Exception.php';
+                $rutaPHPMailer = __DIR__ . '/../Libs/PHPMailer-master/src/PHPMailer.php';
+                $rutaSMTP      = __DIR__ . '/../Libs/PHPMailer-master/src/SMTP.php';
+                $rutaException = __DIR__ . '/../Libs/PHPMailer-master/src/Exception.php';
 
                 if (!file_exists($rutaPHPMailer) || !file_exists($rutaSMTP) || !file_exists($rutaException)) {
                     throw new Exception('Librerías PHPMailer no encontradas');
@@ -283,13 +244,30 @@ try {
                 $mail->Port       = 587;
                 $mail->CharSet    = 'UTF-8';
 
+                // ── Debug SMTP — guarda todo en el log ────────────────────────
+                $mail->SMTPDebug  = 2;
+                $mail->Debugoutput = function($str, $level) {
+                    file_put_contents($this->carpetaDebug . '/debug_log.txt',
+                        "[SMTP DEBUG nivel $level] $str\n", FILE_APPEND);
+                };
+
                 $mail->setFrom('seguridad.integral.segtrack@gmail.com', 'Sistema SEGTRACK');
                 $mail->addAddress($correoDestinatario, $nombreDestinatario);
                 $mail->addAttachment($rutaQR, 'QR-Dispositivo-' . $idDispositivo . '.png');
+
+                // ── Log antes de enviar ───────────────────────────────────────
+                file_put_contents($this->carpetaDebug . '/debug_log.txt',
+                    "Intentando enviar a: $correoDestinatario\nRuta QR: $rutaQR\nQR existe: " . (file_exists($rutaQR) ? 'SI' : 'NO') . "\n",
+                    FILE_APPEND);
+
+                // ── Logo ──────────────────────────────────────────────────────
                 $rutaLogo = __DIR__ . '/../../Public/img/LOGO_SEGTRACK-re-con.png';
-                    if (file_exists($rutaLogo)) {
-                        $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
-                    }
+                if (file_exists($rutaLogo)) {
+                    $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
+                    $imgLogo = "<img src='cid:logo_segtrack' alt='SEGTRACK' style='width:80px;vertical-align:middle;margin-right:10px;'>";
+                } else {
+                    $imgLogo = '';
+                }
 
                 $serialInfo = !empty($dispositivo['NumeroSerial'])
                     ? "<strong>Número Serial:</strong> {$dispositivo['NumeroSerial']}<br>"
@@ -308,7 +286,7 @@ try {
                 </style></head><body>
                 <div class='container'>
                     <div class='header'>
-                        <h1><img src='cid:logo_segtrack' alt='Logo SEGTRACK' style='width:80px;vertical-align:middle'> SEGTRACK</h1>
+                        <h1>{$imgLogo} SEGTRACK</h1>
                         <p>Sistema de Gestión de Seguridad</p>
                     </div>
                     <div class='content'>
@@ -335,19 +313,22 @@ try {
                 </div></body></html>";
 
                 $mail->send();
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "✅ Correo enviado a: $correoDestinatario\n", FILE_APPEND);
 
                 return ['success' => true, 'message' => "Código QR enviado exitosamente a: {$correoDestinatario}"];
 
             } catch (PHPMailer\PHPMailer\Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR PHPMailer: " . $e->getMessage() . "\n", FILE_APPEND);
                 return ['success' => false, 'message' => "Error PHPMailer: " . $e->getMessage()];
             } catch (Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: " . $e->getMessage() . "\n", FILE_APPEND);
                 return ['success' => false, 'message' => $e->getMessage()];
             }
         }
     }
 
     $controlador = new ControladorDispositivo($conexion);
-    $accion = $_POST['accion'] ?? 'registrar';
+    $accion      = $_POST['accion'] ?? 'registrar';
 
     file_put_contents($carpetaDebug . '/debug_log.txt', "Acción detectada: $accion\n", FILE_APPEND);
 
@@ -356,12 +337,11 @@ try {
 
     } elseif ($accion === 'actualizar') {
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-
         if ($id > 0) {
             $datos = [
-                'TipoDispositivo'  => $_POST['tipo']         ?? null,
-                'MarcaDispositivo' => $_POST['marca']        ?? null,
-                'NumeroSerial'     => $_POST['serial']       ?? null,
+                'TipoDispositivo'  => $_POST['tipo']           ?? null,
+                'MarcaDispositivo' => $_POST['marca']          ?? null,
+                'NumeroSerial'     => $_POST['serial']         ?? null,
                 'IdFuncionario'    => $_POST['id_funcionario'] ?? null,
                 'IdVisitante'      => $_POST['id_visitante']   ?? null
             ];
@@ -373,7 +353,6 @@ try {
     } elseif ($accion === 'cambiar_estado') {
         $id          = isset($_POST['id'])     ? (int)$_POST['id'] : 0;
         $nuevoEstado = $_POST['estado']        ?? '';
-
         if ($id > 0 && in_array($nuevoEstado, ['Activo', 'Inactivo'])) {
             $resultado = $controlador->cambiarEstadoDispositivo($id, $nuevoEstado);
         } else {
@@ -381,7 +360,7 @@ try {
         }
 
     } elseif ($accion === 'enviar_qr') {
-        $id = isset($_POST['id_dispositivo']) ? (int)$_POST['id_dispositivo'] : 0;
+        $id        = isset($_POST['id_dispositivo']) ? (int)$_POST['id_dispositivo'] : 0;
         $resultado = $id > 0
             ? $controlador->enviarQRPorCorreo($id)
             : ['success' => false, 'message' => 'ID de dispositivo no válido'];
@@ -397,6 +376,7 @@ try {
 
 } catch (Exception $e) {
     ob_end_clean();
+    file_put_contents($carpetaDebug . '/debug_log.txt', "ERROR GENERAL: " . $e->getMessage() . "\n=== FIN ===\n\n", FILE_APPEND);
     echo json_encode([
         'success' => false,
         'message' => 'Error del servidor: ' . $e->getMessage()

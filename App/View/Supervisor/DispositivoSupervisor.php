@@ -40,6 +40,7 @@ $sql = "SELECT
             d.*,
             f.NombreFuncionario,
             f.CargoFuncionario,
+            f.CorreoFuncionario,
             v.NombreVisitante,
             v.IdentificacionVisitante
         FROM dispositivo d
@@ -191,14 +192,25 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tbody>
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
+                            <?php
+                            $correoDisponible = $row['CorreoFuncionario'] ?? '';
+                            $tieneCorreo      = !empty($correoDisponible);
+                            ?>
                             <tr id="fila-<?= $row['IdDispositivo'] ?>"
                                 class="<?= $row['Estado'] === 'Inactivo' ? 'fila-inactiva' : '' ?>">
                                 <td class="text-center">
                                     <?php if (!empty($row['QrDispositivo'])) : ?>
-                                        <button type="button" class="btn btn-sm btn-outline-success"
+                                        <button type="button" class="btn btn-sm btn-outline-success mb-1"
                                                 onclick="verQRDispositivo('<?= htmlspecialchars($row['QrDispositivo']) ?>', <?= $row['IdDispositivo'] ?>)"
                                                 title="Ver código QR">
-                                            <i class="fas fa-qrcode me-1"></i> Ver QR
+                                            <i class="fas fa-qrcode me-1"></i> Ver
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-info <?= !$tieneCorreo ? 'disabled' : '' ?>"
+                                                onclick="<?= $tieneCorreo ? 'enviarQRPorCorreo(' . $row['IdDispositivo'] . ', \'' . htmlspecialchars($correoDisponible) . '\')' : 'return false' ?>"
+                                                title="<?= $tieneCorreo ? 'Enviar QR por correo a ' . htmlspecialchars($correoDisponible) : 'Solo funcionarios pueden recibir correo' ?>"
+                                                <?= !$tieneCorreo ? 'disabled' : '' ?>>
+                                            <i class="fas fa-envelope me-1"></i> Enviar
                                         </button>
                                     <?php else : ?>
                                         <span class="badge badge-warning">Sin QR</span>
@@ -283,7 +295,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-<a id="btnDescargarQRDispositivo" href="#" class="btn btn-success" download>
+                <a id="btnDescargarQRDispositivo" href="#" class="btn btn-success" download>
                     <i class="fas fa-download me-1"></i> Descargar QR
                 </a>
             </div>

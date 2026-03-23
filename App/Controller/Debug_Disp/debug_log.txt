@@ -3349,3 +3349,27 @@ Acción detectada: actualizar
 === actualizarDispositivo ID: 49 ===
 === MODELO: actualizar ID: 49 ===
 {"TipoDispositivo":"Computador","MarcaDispositivo":"lenovo","NumeroSerial":"987654321s","IdFuncionario":"81","IdVisitante":""}
+
+2026-03-24 00:24:07 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "52",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-03-24 00:24:12 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "51",
+    "estado": "Activo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
+=== FIN ===
+

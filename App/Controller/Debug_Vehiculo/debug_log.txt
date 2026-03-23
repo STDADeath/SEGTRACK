@@ -326,3 +326,16 @@ Acción: actualizar
 Respuesta: {"success":true,"message":"Vehículo actualizado correctamente","qr":null}
 === FIN ===
 
+
+2026-03-23 18:24:34 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "cambiar_estado",
+    "id": "29",
+    "estado": "Inactivo"
+}
+✅ Conexión establecida correctamente
+Acción: cambiar_estado
+✅ Estado 'Inactivo' para vehículo ID: 29
+Respuesta: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
