@@ -1,10 +1,3 @@
-// ============================================================
-// ValidacionDispositivo.js
-// Lógica del FORMULARIO DE REGISTRO de dispositivos +
-// Funciones globales de DispositivoLista y DispositivoSupervisor
-// ============================================================
-
-
 // ══════════════════════════════════════════════════════════════
 // SECCIÓN 1 — FORMULARIO DE REGISTRO (Dispositivos.php)
 // ══════════════════════════════════════════════════════════════

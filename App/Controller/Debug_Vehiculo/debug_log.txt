@@ -1,265 +1,20 @@
 
-2026-03-03 16:17:13 === INICIO CONTROLADOR VEHÍCULO ===
-Zona horaria: America/Bogota
-POST recibido: {
-    "TipoVehiculo": "Bicicleta",
-    "PlacaVehiculo": "NO APLICA",
-    "DescripcionVehiculo": "Bisicleta morada",
-    "TarjetaPropiedad": "tj2524567890",
-    "IdSede": "64",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "58",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-ControladorVehiculo creado
-Acción: registrar
-registrarVehiculo llamado
-Fecha servidor: 2026-03-03 16:17:13
-Respuesta: {"success":false,"message":"Error al registrar en BD: ❌ Error en registrarVehiculo: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'PlacaVehiculo' at row 1"}
-=== FIN ===
-
-
-2026-03-03 16:28:23 === INICIO CONTROLADOR VEHÍCULO ===
-Zona horaria: America/Bogota
-POST recibido: {
-    "TipoVehiculo": "Moto",
-    "PlacaVehiculo": "BGF 65F",
-    "DescripcionVehiculo": "Honda de color morada ",
-    "TarjetaPropiedad": "tj3244445566",
-    "IdSede": "64",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "58",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-ControladorVehiculo creado
-Acción: registrar
-registrarVehiculo llamado
-Fecha servidor: 2026-03-03 16:28:23
-Carpeta QR creada: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Vehiculo
-✅ QR generado: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Vehiculo/QR-VEHICULO-23-69a752778e60f.png
-Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 23","data":{"IdVehiculo":"23","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-23-69a752778e60f.png","FechaRegistro":"2026-03-03 16:28:23"}}
-=== FIN ===
-
-
-2026-03-03 23:04:24 === INICIO CONTROLADOR VEHÍCULO ===
+2026-03-22 12:20:47 === INICIO CONTROLADOR VEHÍCULO ===
 POST recibido: {
     "accion": "enviar_qr",
-    "id_vehiculo": "23",
+    "id_vehiculo": "28",
     "correo_destinatario": ""
 }
+✅ Conexión establecida correctamente
 Acción: enviar_qr
-enviarQRPorCorreo vehículo ID: 23
-Correo automático de funcionario: andersoarebalo@gmail.com
-✅ Correo enviado a: andersoarebalo@gmail.com
-Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com","esFuncionario":true,"correo":"andersoarebalo@gmail.com"}
-=== FIN ===
-
-
-2026-03-03 23:09:48 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "accion": "actualizar",
-    "id": "23",
-    "tipo": "Moto",
-    "descripcion": "Honda de color amarilla",
-    "idsede": "64"
-}
-Acción: actualizar
-Respuesta: {"success":true,"message":"Vehículo actualizado correctamente","qr":"qr\/Qr_Vehiculo\/QR-VEHICULO-23-69a7b08c14ec3.png"}
-=== FIN ===
-
-
-2026-03-03 23:47:11 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "accion": "enviar_qr",
-    "id_vehiculo": "23",
-    "correo_destinatario": ""
-}
-Acción: enviar_qr
-enviarQRPorCorreo vehículo ID: 23
-Correo automático de funcionario: andersoarebalo@gmail.com
-✅ Correo enviado a: andersoarebalo@gmail.com
-Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com","esFuncionario":true,"correo":"andersoarebalo@gmail.com"}
-=== FIN ===
-
-
-2026-03-04 00:08:12 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "accion": "cambiar_estado",
-    "id": "23",
-    "estado": "Inactivo"
-}
-Acción: cambiar_estado
-Respuesta: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
-=== FIN ===
-
-
-2026-03-12 21:43:40 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "TipoVehiculo": "Moto",
-    "PlacaVehiculo": "BGF 65F",
-    "DescripcionVehiculo": "Honda color azul",
-    "TarjetaPropiedad": "tj3244445566",
-    "IdSede": "64",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "58",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Acción: registrar
-Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 24","data":{"IdVehiculo":"24","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-24-69b379dce34ce.png","FechaRegistro":"2026-03-12 21:43:40"}}
-=== FIN ===
-
-
-2026-03-12 21:43:56 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "accion": "enviar_qr",
-    "id_vehiculo": "24",
-    "correo_destinatario": ""
-}
-Acción: enviar_qr
-enviarQRPorCorreo vehículo ID: 24
-Correo automático de funcionario: andersoarebalo@gmail.com
-✅ Correo enviado a: andersoarebalo@gmail.com
-Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com","esFuncionario":true,"correo":"andersoarebalo@gmail.com"}
-=== FIN ===
-
-
-2026-03-15 12:44:08 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "TipoVehiculo": "Moto",
-    "PlacaVehiculo": "GTR43R",
-    "DescripcionVehiculo": "Moto Honda de color rojo",
-    "TarjetaPropiedad": "tj3244445432",
-    "IdSede": "64",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "58",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Acción: registrar
-Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 25","data":{"IdVehiculo":"25","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-25-69b6efe868d4a.png","FechaRegistro":"2026-03-15 12:44:08"}}
-=== FIN ===
-
-
-2026-03-15 12:45:17 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "TipoVehiculo": "Bicicleta",
-    "PlacaVehiculo": "N-A",
-    "DescripcionVehiculo": "Bicicleta azul con morada marca Olimpus",
-    "TarjetaPropiedad": "tj3232112451",
-    "IdSede": "28",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "62",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Acción: registrar
-Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 26","data":{"IdVehiculo":"26","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-26-69b6f02de7dec.png","FechaRegistro":"2026-03-15 12:45:17"}}
-=== FIN ===
-
-
-2026-03-15 13:44:11 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "TipoVehiculo": "Moto",
-    "PlacaVehiculo": "TTT43G",
-    "DescripcionVehiculo": "kaguasaki ninja 1000",
-    "TarjetaPropiedad": "tj2445678876",
-    "IdSede": "26",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "59",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Acción: registrar
-Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 27","data":{"IdVehiculo":"27","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-27-69b6fdfb1069a.png","FechaRegistro":"2026-03-15 13:44:11"}}
-=== FIN ===
-
-
-2026-03-15 13:45:00 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "TipoVehiculo": "Moto",
-    "PlacaVehiculo": "FRT43G",
-    "DescripcionVehiculo": "Honda de color morado con rojo",
-    "TarjetaPropiedad": "tj2445678876",
-    "IdSede": "26",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "58",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Acción: registrar
-Respuesta: {"success":false,"message":"⚠️ La tarjeta 'tj2445678876' ya está registrada para un vehículo tipo 'Moto'."}
-=== FIN ===
-
-
-2026-03-15 13:45:09 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "TipoVehiculo": "Moto",
-    "PlacaVehiculo": "FRT43G",
-    "DescripcionVehiculo": "Honda de color morado con rojo",
-    "TarjetaPropiedad": "tj24454444663",
-    "IdSede": "26",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "58",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Acción: registrar
-Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 28","data":{"IdVehiculo":"28","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-28-69b6fe359a9ab.png","FechaRegistro":"2026-03-15 13:45:09"}}
-=== FIN ===
-
-
-2026-03-15 13:46:32 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "TipoVehiculo": "Carro",
-    "PlacaVehiculo": "EHO346",
-    "DescripcionVehiculo": "Renaul sandero de color rojo",
-    "TarjetaPropiedad": "tj32454176445",
-    "IdSede": "26",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "53",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Acción: registrar
-Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdVehiculo":"29","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-29-69b6fe889e40a.png","FechaRegistro":"2026-03-15 13:46:32"}}
-=== FIN ===
-
-
-2026-03-16 13:41:06 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "TipoVehiculo": "Carro",
-    "PlacaVehiculo": "FRE435",
-    "DescripcionVehiculo": "Audi rojo con franjas blancas",
-    "TarjetaPropiedad": "tj56777747488",
-    "IdSede": "29",
-    "TipoPersona": "Funcionario",
-    "IdFuncionario": "62",
-    "IdVisitante": "",
-    "accion": "registrar"
-}
-Acción: registrar
-Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 30","data":{"IdVehiculo":"30","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-30-69b84ec295b75.png","FechaRegistro":"2026-03-16 13:41:06"}}
-=== FIN ===
-
-
-2026-03-16 13:41:19 === INICIO CONTROLADOR VEHÍCULO ===
-POST recibido: {
-    "accion": "enviar_qr",
-    "id_vehiculo": "30",
-    "correo_destinatario": ""
-}
-Acción: enviar_qr
-enviarQRPorCorreo vehículo ID: 30
+enviarQRPorCorreo vehículo ID: 28
 Correo automático de funcionario: carrimorro9080@gmail.com
-Error PHPMailer: SMTP Error: Could not authenticate.
-Respuesta: {"success":false,"message":"Error PHPMailer: SMTP Error: Could not authenticate."}
+ERROR: El archivo QR no existe: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Vehiculo/QR-VEHICULO-28-69bcfc26c26fe.png
+Respuesta: {"success":false,"message":"El archivo QR no existe: C:\\xampp\\htdocs\\SEGTRACK\\App\\Controller\/..\/..\/Public\/qr\/Qr_Vehiculo\/QR-VEHICULO-28-69bcfc26c26fe.png"}
 === FIN ===
 
 
-2026-03-16 17:26:56 === INICIO CONTROLADOR VEHÍCULO ===
+2026-03-22 12:20:54 === INICIO CONTROLADOR VEHÍCULO ===
 POST recibido: {
     "accion": "enviar_qr",
     "id_vehiculo": "28",
@@ -268,21 +23,57 @@ POST recibido: {
 ✅ Conexión establecida correctamente
 Acción: enviar_qr
 enviarQRPorCorreo vehículo ID: 28
+Correo automático de funcionario: carrimorro9080@gmail.com
+ERROR: El archivo QR no existe: C:\xampp\htdocs\SEGTRACK\App\Controller/../../Public/qr/Qr_Vehiculo/QR-VEHICULO-28-69bcfc26c26fe.png
+Respuesta: {"success":false,"message":"El archivo QR no existe: C:\\xampp\\htdocs\\SEGTRACK\\App\\Controller\/..\/..\/Public\/qr\/Qr_Vehiculo\/QR-VEHICULO-28-69bcfc26c26fe.png"}
+=== FIN ===
+
+
+2026-03-23 12:23:10 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "GTR43E",
+    "DescripcionVehiculo": "Kawasaky edicion evangelion",
+    "TarjetaPropiedad": "tj324541567899",
+    "IdSede": "72",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "89",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 29
+✅ QR actualizado para vehículo ID: 29
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 29","data":{"IdVehiculo":"29","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-29-69c176fe1b148.png","FechaRegistro":"2026-03-23 12:23:10"}}
+=== FIN ===
+
+
+2026-03-23 12:23:19 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "enviar_qr",
+    "id_vehiculo": "29",
+    "correo_destinatario": ""
+}
+✅ Conexión establecida correctamente
+Acción: enviar_qr
+enviarQRPorCorreo vehículo ID: 29
 Correo automático de funcionario: andersoarebalo@gmail.com
-Error PHPMailer: SMTP Error: data not accepted.
-Respuesta: {"success":false,"message":"Error PHPMailer: SMTP Error: data not accepted."}
+✅ Correo enviado a: andersoarebalo@gmail.com
+Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com","esFuncionario":true,"correo":"andersoarebalo@gmail.com"}
 === FIN ===
 
 
-2026-03-16 18:05:59 === INICIO CONTROLADOR VEHÍCULO ===
+2026-03-23 12:24:30 === INICIO CONTROLADOR VEHÍCULO ===
 POST recibido: {
     "accion": "enviar_qr",
-    "id_vehiculo": "28",
+    "id_vehiculo": "29",
     "correo_destinatario": ""
 }
 ✅ Conexión establecida correctamente
 Acción: enviar_qr
-enviarQRPorCorreo vehículo ID: 28
+enviarQRPorCorreo vehículo ID: 29
 Correo automático de funcionario: andersoarebalo@gmail.com
 ✅ Correo enviado a: andersoarebalo@gmail.com
 Respuesta: {"success":true,"message":"Código QR enviado exitosamente a: andersoarebalo@gmail.com","esFuncionario":true,"correo":"andersoarebalo@gmail.com"}
