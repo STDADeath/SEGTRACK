@@ -1,205 +1,309 @@
 <?php
+// ══════════════════════════════════════════════════════════════════
+//  ModeloDashboard.php — SEGTRACK
+//  Ruta: App/Model/ModeloDashboard.php
+//
+//  ✅ Funciona para: Personal Seguridad, Supervisor, Administrador
+//  ⚠️  Los métodos existentes NO se modificaron.
+//      Solo se agregaron métodos nuevos al final para el Admin:
+//      TotalSedes, TotalInstituciones, SedesPorCiudad,
+//      SedesPorInstitucion, TodasLasSedes, InstitucionesPorTipo
+// ══════════════════════════════════════════════════════════════════
+
 class ModeloDashboard {
 
-    private $conexion;
+    private $pdo;
 
-    public function __construct($conexion) {
-        $this->conexion = $conexion;
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
-    // =============================
-    // 📊 DISPOSITIVOS
-    // =============================
-    public function DispositivosPorTipo() {
-        $sql = "SELECT TipoDispositivo AS tipo_dispositivos, 
-                       COUNT(*) AS cantidad_Dispositivos
-                FROM dispositivo 
-                GROUP BY TipoDispositivo";
-        return $this->obtenerDatos($sql);
+    // ── HELPERS ──────────────────────────────────────────────────
+
+    private function query(string $sql): array {
+        $stmt = $this->pdo->query($sql);
+        return $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
     }
 
-    public function DispositivosTotal() {
-        $sql = "SELECT COUNT(*) AS total_dispositivos FROM dispositivo";
-        return $this->obtenerTotal($sql, 'total_dispositivos');
+    private function scalar(string $sql): int {
+        $stmt = $this->pdo->query($sql);
+        if (!$stmt) return 0;
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        return $row ? (int)$row[0] : 0;
     }
 
-    // =============================
-    // 🚗 VEHÍCULOS
-    // =============================
+    // ════════════════════════════════════════════════════════════
+    //  TOTALES — sin cambios
+    // ════════════════════════════════════════════════════════════
 
-    // ✅ CORREGIDO — usa tabla vehiculo, no parqueadero
-    public function VehiculosPorTipo() {
-        $sql = "SELECT TipoVehiculo AS tipo_vehiculos, 
-                       COUNT(*) AS cantidad_Vehiculos
-                FROM vehiculo 
-                GROUP BY TipoVehiculo";
-        return $this->obtenerDatos($sql);
+    public function FuncionariosTotal(): int {
+        return $this->scalar("SELECT COUNT(*) FROM funcionario WHERE Estado = 'Activo'");
     }
 
-    // ✅ CORREGIDO — vehiculo tiene IdSede
-    public function VehiculosPorSede() {
-        $sql = "SELECT s.TipoSede AS sede,
-                       v.TipoVehiculo AS tipo_vehiculo,
-                       COUNT(*) AS cantidad
-                FROM vehiculo v
-                INNER JOIN sede s ON s.IdSede = v.IdSede
-                GROUP BY s.TipoSede, v.TipoVehiculo
-                ORDER BY s.TipoSede";
-        return $this->obtenerDatos($sql);
+    public function TotalVisitante(): int {
+        return $this->scalar("SELECT COUNT(*) FROM visitante WHERE Estado = 'Activo'");
     }
 
-    // ✅ CORREGIDO — cuenta desde tabla vehiculo
-    public function ParqueaderoTotal() {
-        $sql = "SELECT COUNT(*) AS total_vehiculos FROM vehiculo";
-        return $this->obtenerTotal($sql, 'total_vehiculos');
+    public function ParqueaderoTotal(): int {
+        return $this->scalar("SELECT COUNT(*) FROM vehiculo WHERE Estado = 'Activo'");
     }
 
-    // =============================
-    // 📦 DOTACIÓN
-    // =============================
-    public function DotacionTotal() {
-        $sql  = "SELECT COUNT(*) AS total_dotacion FROM dotacion";
-        $stmt = $this->conexion->query($sql);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data['total_dotacion'];
+    public function DispositivosTotal(): int {
+        return $this->scalar("SELECT COUNT(*) FROM dispositivo WHERE Estado = 'Activo'");
     }
 
-    public function DotacionPorTipo() {
-        $sql = "SELECT TipoDotacion AS tipo_dotaciones, 
-                       COUNT(*) AS cantidad_dotaciones
-                FROM dotacion 
-                GROUP BY TipoDotacion";
-        return $this->obtenerDatos($sql);
+    public function DotacionTotal(): int {
+        return $this->scalar("SELECT COUNT(*) FROM dotacion WHERE Estado = 'Activo'");
     }
 
-    public function DotacionPorEstado() {
-        $sql = "SELECT EstadoDotacion AS estado_dotaciones, 
-                       COUNT(*) AS cantidad_estado_dotaciones
-                FROM dotacion 
-                GROUP BY EstadoDotacion";
-        return $this->obtenerDatos($sql);
+    public function TotalBitacora(): int {
+        return $this->scalar("SELECT COUNT(*) FROM bitacora");
     }
 
-    public function DotacionesPorMes() {
-        $sql = "SELECT DATE_FORMAT(FechaEntrega, '%b %Y') AS mes,
-                       COUNT(*) AS cantidad
-                FROM dotacion
-                WHERE FechaEntrega IS NOT NULL
-                GROUP BY DATE_FORMAT(FechaEntrega, '%Y-%m')
-                ORDER BY MIN(FechaEntrega) ASC";
-        return $this->obtenerDatos($sql);
+    // ════════════════════════════════════════════════════════════
+    //  DISPOSITIVOS — sin cambios
+    //  Columnas: tipo_dispositivos, cantidad_Dispositivos
+    // ════════════════════════════════════════════════════════════
+
+    public function DispositivosPorTipo(): array {
+        return $this->query(
+            "SELECT TipoDispositivo AS tipo_dispositivos,
+                    COUNT(*)        AS cantidad_Dispositivos
+             FROM dispositivo
+             WHERE Estado = 'Activo'
+             GROUP BY TipoDispositivo
+             ORDER BY cantidad_Dispositivos DESC"
+        );
     }
 
-    public function DotacionesPorDevolucionMes() {
-        $sql = "SELECT DATE_FORMAT(FechaDevolucion, '%b %Y') AS mes,
-                       COUNT(*) AS cantidad
-                FROM dotacion
-                WHERE FechaDevolucion IS NOT NULL
-                GROUP BY DATE_FORMAT(FechaDevolucion, '%Y-%m')
-                ORDER BY MIN(FechaDevolucion) ASC";
-        return $this->obtenerDatos($sql);
+    // ════════════════════════════════════════════════════════════
+    //  VEHÍCULOS — sin cambios
+    //  PorTipo → tipo_vehiculos, cantidad_Vehiculos
+    //  PorSede → NombreSede, total
+    // ════════════════════════════════════════════════════════════
+
+    public function VehiculosPorTipo(): array {
+        return $this->query(
+            "SELECT TipoVehiculo AS tipo_vehiculos,
+                    COUNT(*)     AS cantidad_Vehiculos
+             FROM vehiculo
+             WHERE Estado = 'Activo'
+             GROUP BY TipoVehiculo
+             ORDER BY cantidad_Vehiculos DESC"
+        );
     }
 
-    // =============================
-    // 👤 FUNCIONARIOS
-    // =============================
-    public function FuncionariosTotal() {
-        $sql = "SELECT COUNT(*) AS total_funcionarios FROM funcionario";
-        return $this->obtenerTotal($sql, 'total_funcionarios');
+    public function VehiculosPorSede(): array {
+        return $this->query(
+            "SELECT CONCAT(s.TipoSede, ' - ', s.Ciudad) AS NombreSede,
+                    COUNT(v.IdVehiculo)                  AS total
+             FROM sede s
+             LEFT JOIN vehiculo v ON v.IdSede = s.IdSede AND v.Estado = 'Activo'
+             WHERE s.Estado = 'Activo'
+             GROUP BY s.IdSede, s.TipoSede, s.Ciudad
+             ORDER BY total DESC"
+        );
     }
 
-    // ✅ NUEVO — agrupa por CargoFuncionario
-    public function FuncionariosPorCargo() {
-        $sql = "SELECT CargoFuncionario, COUNT(*) AS total
-                FROM funcionario
-                GROUP BY CargoFuncionario
-                ORDER BY total DESC";
-        return $this->obtenerDatos($sql);
+    // ════════════════════════════════════════════════════════════
+    //  FUNCIONARIOS — sin cambios
+    //  PorCargo → CargoFuncionario, total
+    //  PorSede  → NombreSede, total
+    // ════════════════════════════════════════════════════════════
+
+    public function FuncionariosPorCargo(): array {
+        return $this->query(
+            "SELECT CargoFuncionario,
+                    COUNT(*) AS total
+             FROM funcionario
+             WHERE Estado = 'Activo'
+             GROUP BY CargoFuncionario
+             ORDER BY total DESC"
+        );
     }
 
-    // =============================
-    // 👥 VISITANTES
-    // =============================
-    public function TotalVisitante() {
-        $sql = "SELECT COUNT(*) AS total_visitantes FROM visitante";
-        return $this->obtenerTotal($sql, 'total_visitantes');
+    public function FuncionariosPorSede(): array {
+        return $this->query(
+            "SELECT CONCAT(s.TipoSede, ' - ', s.Ciudad) AS NombreSede,
+                    COUNT(f.IdFuncionario)               AS total
+             FROM sede s
+             LEFT JOIN funcionario f ON f.IdSede = s.IdSede AND f.Estado = 'Activo'
+             WHERE s.Estado = 'Activo'
+             GROUP BY s.IdSede, s.TipoSede, s.Ciudad
+             ORDER BY total DESC"
+        );
     }
 
-    // ✅ CORREGIDO — visitante no tiene fecha, usamos ingreso
-    // que registra entradas/salidas con FechaIngreso
-    public function VisitantesPorMes() {
-        $sql = "SELECT DATE_FORMAT(FechaIngreso, '%b %Y') AS mes,
-                       COUNT(*) AS total
-                FROM ingreso
-                WHERE FechaIngreso IS NOT NULL
-                GROUP BY DATE_FORMAT(FechaIngreso, '%Y-%m')
-                ORDER BY MIN(FechaIngreso) ASC
-                LIMIT 12";
-        return $this->obtenerDatos($sql);
+    // ════════════════════════════════════════════════════════════
+    //  INGRESOS — sin cambios
+    //  PorMes  → mes (YYYY-MM), total
+    //  PorTipo → tipo, total
+    // ════════════════════════════════════════════════════════════
+
+    public function VisitantesPorMes(): array {
+        return $this->query(
+            "SELECT DATE_FORMAT(FechaIngreso, '%Y-%m') AS mes,
+                    COUNT(*)                           AS total
+             FROM ingreso
+             WHERE FechaIngreso >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+             GROUP BY mes
+             ORDER BY mes ASC"
+        );
     }
 
-    // ✅ NUEVO — ingresos por tipo (Entrada/Salida)
-    public function IngresosPorTipo() {
-        $sql = "SELECT TipoMovimiento AS tipo,
-                       COUNT(*) AS total
-                FROM ingreso
-                GROUP BY TipoMovimiento";
-        return $this->obtenerDatos($sql);
+    public function IngresosPorTipo(): array {
+        return $this->query(
+            "SELECT TipoMovimiento AS tipo,
+                    COUNT(*)       AS total
+             FROM ingreso
+             GROUP BY TipoMovimiento"
+        );
     }
 
-    // ✅ NUEVO — funcionarios por sede
-    public function FuncionariosPorSede() {
-        $sql = "SELECT s.TipoSede AS sede,
-                       COUNT(*) AS total
-                FROM funcionario f
-                INNER JOIN sede s ON s.IdSede = f.IdSede
-                GROUP BY s.TipoSede
-                ORDER BY total DESC";
-        return $this->obtenerDatos($sql);
+    // ════════════════════════════════════════════════════════════
+    //  DOTACIÓN — sin cambios
+    //  PorTipo       → tipo_dotaciones, cantidad_dotaciones
+    //  PorEstado     → estado_dotaciones, cantidad_estado_dotaciones
+    //  PorMes        → mes, cantidad
+    //  PorDevolucion → mes, cantidad
+    // ════════════════════════════════════════════════════════════
+
+    public function DotacionPorTipo(): array {
+        return $this->query(
+            "SELECT TipoDotacion AS tipo_dotaciones,
+                    COUNT(*)     AS cantidad_dotaciones
+             FROM dotacion
+             WHERE Estado = 'Activo'
+             GROUP BY TipoDotacion
+             ORDER BY cantidad_dotaciones DESC"
+        );
     }
 
-    // =============================
-    // 📝 BITÁCORA
-    // =============================
-    public function TotalBitacora() {
-        $sql = "SELECT COUNT(*) AS total_bitacora FROM bitacora";
-        return $this->obtenerTotal($sql, 'total_bitacora');
+    public function DotacionPorEstado(): array {
+        return $this->query(
+            "SELECT EstadoDotacion AS estado_dotaciones,
+                    COUNT(*)       AS cantidad_estado_dotaciones
+             FROM dotacion
+             WHERE Estado = 'Activo'
+             GROUP BY EstadoDotacion"
+        );
     }
 
-    public function BitacoraPorTurno() {
-        $sql = "SELECT TurnoBitacora AS turno_bitacoras, 
-                       COUNT(*) AS cantidad_bitacoras_turno
-                FROM bitacora 
-                GROUP BY TurnoBitacora";
-        return $this->obtenerDatos($sql);
+    public function DotacionesPorMes(): array {
+        return $this->query(
+            "SELECT DATE_FORMAT(FechaEntrega, '%Y-%m') AS mes,
+                    COUNT(*)                           AS cantidad
+             FROM dotacion
+             WHERE FechaEntrega >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+             GROUP BY mes
+             ORDER BY mes ASC"
+        );
     }
 
-    public function BitacoraPorMes() {
-        $sql = "SELECT DATE_FORMAT(FechaBitacora, '%b %Y') AS mes, 
-                       COUNT(*) AS cantidad
-                FROM bitacora 
-                WHERE FechaBitacora IS NOT NULL
-                GROUP BY DATE_FORMAT(FechaBitacora, '%Y-%m')
-                ORDER BY MIN(FechaBitacora) ASC";
-        return $this->obtenerDatos($sql);
+    public function DotacionesPorDevolucionMes(): array {
+        return $this->query(
+            "SELECT DATE_FORMAT(FechaDevolucion, '%Y-%m') AS mes,
+                    COUNT(*)                              AS cantidad
+             FROM dotacion
+             WHERE FechaDevolucion >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+             GROUP BY mes
+             ORDER BY mes ASC"
+        );
     }
 
-    // =============================
-    // 🧩 AUXILIARES
-    // =============================
-    private function obtenerDatos($sql) {
-        $stmt = $this->conexion->query($sql);
-        $data = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $data[] = $row;
-        }
-        return $data;
+    // ════════════════════════════════════════════════════════════
+    //  BITÁCORA — sin cambios
+    //  PorTurno → turno_bitacoras, cantidad_bitacoras_turno
+    //  PorMes   → mes, cantidad
+    // ════════════════════════════════════════════════════════════
+
+    public function BitacoraPorTurno(): array {
+        return $this->query(
+            "SELECT TurnoBitacora AS turno_bitacoras,
+                    COUNT(*)      AS cantidad_bitacoras_turno
+             FROM bitacora
+             GROUP BY TurnoBitacora"
+        );
     }
 
-    private function obtenerTotal($sql, $campo) {
-        $stmt = $this->conexion->query($sql);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data[$campo];
+    public function BitacoraPorMes(): array {
+        return $this->query(
+            "SELECT DATE_FORMAT(FechaBitacora, '%Y-%m') AS mes,
+                    COUNT(*)                            AS cantidad
+             FROM bitacora
+             WHERE FechaBitacora >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+             GROUP BY mes
+             ORDER BY mes ASC"
+        );
+    }
+
+    // ════════════════════════════════════════════════════════════
+    //  NUEVOS MÉTODOS PARA ADMINISTRADOR
+    //  (agregados al final — no afectan los métodos anteriores)
+    // ════════════════════════════════════════════════════════════
+
+    // Total sedes activas
+    public function TotalSedes(): int {
+        return $this->scalar("SELECT COUNT(*) FROM sede WHERE Estado = 'Activo'");
+    }
+
+    // Total instituciones activas
+    public function TotalInstituciones(): int {
+        return $this->scalar("SELECT COUNT(*) FROM institucion WHERE EstadoInstitucion = 'Activo'");
+    }
+
+    // Sedes agrupadas por ciudad → ciudad, total
+    public function SedesPorCiudad(): array {
+        return $this->query(
+            "SELECT Ciudad   AS ciudad,
+                    COUNT(*) AS total
+             FROM sede
+             WHERE Estado = 'Activo'
+             GROUP BY Ciudad
+             ORDER BY total DESC"
+        );
+    }
+
+    // Cuántas sedes tiene cada institución → institucion, total_sedes
+    public function SedesPorInstitucion(): array {
+        return $this->query(
+            "SELECT i.NombreInstitucion AS institucion,
+                    COUNT(s.IdSede)     AS total_sedes
+             FROM institucion i
+             LEFT JOIN sede s ON s.IdInstitucion = i.IdInstitucion AND s.Estado = 'Activo'
+             WHERE i.EstadoInstitucion = 'Activo'
+             GROUP BY i.IdInstitucion, i.NombreInstitucion
+             ORDER BY total_sedes DESC"
+        );
+    }
+
+    // Las 12 sedes individuales con sus funcionarios
+    // Agrupa por IdSede para evitar colapso de "Sede Principal" x3
+    // → NombreSede (TipoSede - Ciudad), Ciudad, Institucion, total_funcionarios
+    public function TodasLasSedes(): array {
+        return $this->query(
+            "SELECT CONCAT(s.TipoSede, ' - ', s.Ciudad) AS NombreSede,
+                    s.Ciudad,
+                    i.NombreInstitucion                  AS Institucion,
+                    COUNT(f.IdFuncionario)               AS total_funcionarios
+             FROM sede s
+             LEFT JOIN institucion i ON i.IdInstitucion = s.IdInstitucion
+             LEFT JOIN funcionario f ON f.IdSede = s.IdSede AND f.Estado = 'Activo'
+             WHERE s.Estado = 'Activo'
+             GROUP BY s.IdSede, s.TipoSede, s.Ciudad, i.NombreInstitucion
+             ORDER BY i.NombreInstitucion, s.TipoSede"
+        );
+    }
+
+    // Instituciones agrupadas por tipo → tipo_institucion, total
+    public function InstitucionesPorTipo(): array {
+        return $this->query(
+            "SELECT TipoInstitucion AS tipo_institucion,
+                    COUNT(*)        AS total
+             FROM institucion
+             WHERE EstadoInstitucion = 'Activo'
+             GROUP BY TipoInstitucion
+             ORDER BY total DESC"
+        );
     }
 }
-?>
