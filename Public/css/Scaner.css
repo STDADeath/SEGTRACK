@@ -1,0 +1,96 @@
+/* Contenedor responsivo del lector QR */
+.qr-wrapper {
+    width: 100%;
+    max-width: 500px;
+}
+
+#qr-reader {
+    width: 100% !important;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* El video interno generado por html5-qrcode */
+#qr-reader video {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+/* El canvas interno generado por html5-qrcode */
+#qr-reader canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* Cuadro de escaneo (la región sombreada) */
+#qr-reader__scan_region {
+    min-height: unset !important;
+}
+
+#qr-reader__scan_region img {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* Botones nativos de la librería */
+#qr-reader__dashboard button {
+    font-size: 0.875rem;
+    padding: 0.4rem 1rem;
+}
+
+/* Móvil pequeño */
+@media (max-width: 400px) {
+    .qr-wrapper {
+        max-width: 100%;
+    }
+    #qr-reader__dashboard button {
+        font-size: 0.75rem;
+    }
+}
+.qr-wrapper {
+    width: 100%;
+    max-width: 500px;
+}
+#qr-reader { 
+    width: 100% !important; 
+    border-radius: 0.5rem; 
+    overflow: hidden; 
+}
+#qr-reader video { 
+    width: 100% !important; 
+    height: auto !important; 
+    object-fit: cover; 
+    border-radius: 0.5rem; 
+}
+#qr-reader canvas { 
+    width: 100% !important; 
+    height: auto !important; 
+}
+#qr-reader__scan_region { 
+    min-height: unset !important; 
+}
+#qr-reader__scan_region img { 
+    width: 100% !important; 
+    height: auto !important; 
+}
+#qr-reader__dashboard button {
+    font-size: 0.875rem;
+    padding: 0.4rem 1rem;
+}
+
+/* ===== TABLA RESPONSIVA ===== */
+@media (max-width: 575px) {
+    #tablaIngresosDT th,
+    #tablaIngresosDT td {
+        font-size: 0.78rem;
+        padding: 0.4rem 0.3rem;
+    }
+}
+
+/* ===== UTILIDADES BREAKPOINT SM ===== */
+@media (min-width: 576px) {
+    .w-sm-auto { width: auto !important; }
+    .w-sm-50   { width: 50% !important; }
+}

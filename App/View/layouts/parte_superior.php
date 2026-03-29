@@ -53,6 +53,7 @@ $fotoFallback = $baseUrl . '/Public/img/undraw_profile.svg';
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../../../Public/css/graficas.css" rel="stylesheet">
     <link href="../../../Public/css/icono.css" rel="stylesheet">
+    <link href="../../../Public/css/Scaner.css" rel="stylesheet">
 </head>
 
 <body id="page-top">

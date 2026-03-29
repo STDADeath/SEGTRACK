@@ -6,12 +6,49 @@ class VisitanteModelo {
         $this->conexion = $conexion;
     }
 
+    // ── NUEVO: Verificar duplicados ──────────────────────────────────────────
+    public function existeDuplicado(string $identificacion, string $correo = '', int $excludeId = 0): array {
+        try {
+            // Verificar identificación
+            $sql  = "SELECT IdVisitante FROM visitante WHERE IdentificacionVisitante = :identificacion";
+            $params = [':identificacion' => $identificacion];
+            if ($excludeId > 0) {
+                $sql .= " AND IdVisitante != :excludeId";
+                $params[':excludeId'] = $excludeId;
+            }
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute($params);
+            if ($stmt->fetch()) {
+                return ['duplicado' => true, 'campo' => 'identificacion', 'message' => 'Ya existe un visitante con esa identificación.'];
+            }
+
+            // Verificar correo solo si fue ingresado
+            if (!empty($correo)) {
+                $sql  = "SELECT IdVisitante FROM visitante WHERE CorreoVisitante = :correo";
+                $params = [':correo' => $correo];
+                if ($excludeId > 0) {
+                    $sql .= " AND IdVisitante != :excludeId";
+                    $params[':excludeId'] = $excludeId;
+                }
+                $stmt = $this->conexion->prepare($sql);
+                $stmt->execute($params);
+                if ($stmt->fetch()) {
+                    return ['duplicado' => true, 'campo' => 'correo', 'message' => 'Ya existe un visitante con ese correo electrónico.'];
+                }
+            }
+
+            return ['duplicado' => false];
+        } catch (PDOException $e) {
+            return ['duplicado' => false, 'error' => $e->getMessage()];
+        }
+    }
+
     public function insertar(array $datos): array {
         try {
             if (!$this->conexion) return ['success' => false, 'error' => 'Conexión no disponible'];
 
-            $sql = "INSERT INTO visitante (IdentificacionVisitante, NombreVisitante, CorreoVisitante, Estado)
-                    VALUES (:identificacion, :nombre, :correo, 'Activo')";
+            $sql  = "INSERT INTO visitante (IdentificacionVisitante, NombreVisitante, CorreoVisitante, Estado)
+                     VALUES (:identificacion, :nombre, :correo, 'Activo')";
             $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 ':identificacion' => $datos['IdentificacionVisitante'],

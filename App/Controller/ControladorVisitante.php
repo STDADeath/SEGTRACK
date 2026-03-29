@@ -13,6 +13,19 @@ class ControladorVisitante {
         return !isset($arr[$campo]) || trim($arr[$campo]) === "";
     }
 
+    // ── NUEVO: Verificar duplicados vía AJAX ────────────────────────────────
+    public function verificarDuplicado(array $datos): array {
+        $identificacion = trim($datos['IdentificacionVisitante'] ?? '');
+        $correo         = trim($datos['CorreoVisitante'] ?? '');
+        $excludeId      = (int)($datos['excludeId'] ?? 0);
+
+        if (empty($identificacion) && empty($correo)) {
+            return ['duplicado' => false];
+        }
+
+        return $this->modelo->existeDuplicado($identificacion, $correo, $excludeId);
+    }
+
     public function registrarVisitante(array $datos): array {
         foreach (['IdentificacionVisitante', 'NombreVisitante'] as $campo) {
             if ($this->campoVacio($datos, $campo)) {
@@ -21,16 +34,23 @@ class ControladorVisitante {
         }
 
         $id = trim($datos['IdentificacionVisitante']);
-        if (!preg_match('/^\d{6,10}$/', $id) && !preg_match('/^[A-Za-z0-9\-]{4,20}$/', $id)) {
-            return ['success' => false, 'message' => 'Identificación inválida. CC: 6-10 dígitos. CE: 4-20 caracteres alfanuméricos.'];
+        if (!preg_match('/^\d{6,11}$/', $id)) {
+            return ['success' => false, 'message' => 'Identificación inválida. Ingrese solo números (6 a 11 dígitos).'];
         }
 
         if (!preg_match('/^[a-zA-ZÀ-ÿ\s]{3,100}$/u', trim($datos['NombreVisitante']))) {
             return ['success' => false, 'message' => 'El nombre solo debe contener letras (mínimo 3 caracteres).'];
         }
 
-        if (!empty($datos['CorreoVisitante']) && !filter_var($datos['CorreoVisitante'], FILTER_VALIDATE_EMAIL)) {
+        $correo = trim($datos['CorreoVisitante'] ?? '');
+        if (!empty($correo) && !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
             return ['success' => false, 'message' => 'El correo electrónico no es válido.'];
+        }
+
+        // ── Verificar duplicados antes de insertar ──────────────────────────
+        $duplicado = $this->modelo->existeDuplicado($id, $correo);
+        if ($duplicado['duplicado']) {
+            return ['success' => false, 'message' => $duplicado['message']];
         }
 
         try {
@@ -84,6 +104,9 @@ try {
     switch ($accion) {
         case 'registrar':
             echo json_encode($controlador->registrarVisitante($_POST));
+            break;
+        case 'verificar':                                          // ← NUEVO
+            echo json_encode($controlador->verificarDuplicado($_POST));
             break;
         case 'mostrar':
             echo json_encode($controlador->mostrarVisitantes());

@@ -15,11 +15,11 @@
                     <i class="fas fa-qrcode me-2"></i>Escanear Código QR
                 </h5>
 
-                <div class="d-flex justify-content-center mb-3">
-                    <div id="qr-reader" style="width: 100%; max-width: 500px;"></div>
+                <div class="qr-wrapper mx-auto mb-3">
+                    <div id="qr-reader"></div>
                 </div>
 
-                <div class="mt-4 w-50 mx-auto">
+                <div class="mt-4 mx-auto" style="max-width: 320px;">
                     <label for="tipoMovimiento" class="form-label fw-semibold text-secondary">
                         Tipo de movimiento
                     </label>
@@ -77,29 +77,29 @@
             <!-- ===== FIN MENSAJES ===== -->
 
             <!-- ===== TABLA ===== -->
-            <div class="bg-white p-4 rounded-4 shadow-sm">
+            <div class="bg-white p-3 p-md-4 rounded-4 shadow-sm">
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-3">
                     <h5 class="fw-semibold text-secondary mb-0">
                         <i class="fas fa-list me-2"></i>Lista de Movimientos de Dispositivos
                     </h5>
                     <a href="/SEGTRACK/App/Controller/DispositivoIngresoPDF.php?accion=pdf"
                        target="_blank"
-                       class="btn btn-danger shadow-sm fw-semibold">
+                       class="btn btn-danger shadow-sm fw-semibold w-100 w-sm-auto">
                         <i class="fas fa-file-pdf me-2"></i>Descargar PDF
                     </a>
                 </div>
 
                 <div class="table-responsive">
-                    <table id="tablaDispositivosDT" class="table table-hover align-middle text-center mb-0">
+                    <table id="tablaDispositivosDT" class="table table-hover align-middle text-center mb-0 small">
                         <thead class="bg-primary text-white">
                             <tr>
-                                <th>Tipo</th>
-                                <th>Marca</th>
-                                <th>Serial</th>
-                                <th>Funcionario</th>
-                                <th>Tipo Movimiento</th>
-                                <th>Fecha Ingreso</th>
+                                <th class="text-nowrap">Tipo</th>
+                                <th class="text-nowrap d-none d-md-table-cell">Marca</th>
+                                <th class="text-nowrap d-none d-lg-table-cell">Serial</th>
+                                <th class="text-nowrap">Funcionario</th>
+                                <th class="text-nowrap">Movimiento</th>
+                                <th class="text-nowrap d-none d-md-table-cell">Fecha</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
