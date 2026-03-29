@@ -20,35 +20,28 @@ const AppDev = {
     }
 };
 
-
 // ========================================
 // MENSAJES EN PANTALLA
 // ========================================
 
 function mostrarMensaje(esExito, texto) {
-
     const exito = document.getElementById("mensajeExito");
     const error = document.getElementById("mensajeError");
-
     if (!exito || !error) return;
-
     exito.classList.toggle("d-none", !esExito);
     error.classList.toggle("d-none", esExito);
     (esExito ? exito : error).textContent = texto;
-
     setTimeout(() => {
         exito.classList.add("d-none");
         error.classList.add("d-none");
     }, 5000);
 }
 
-
 // ========================================
 // MOSTRAR CARD CON FOTO Y DATOS DISPOSITIVO
 // ========================================
 
 function mostrarDispositivo(data) {
-
     const card    = document.getElementById("cardDispositivo");
     const foto    = document.getElementById("fotoFuncionario");
     const nombre  = document.getElementById("nombreFuncionario");
@@ -61,7 +54,6 @@ function mostrarDispositivo(data) {
 
     if (!card) return;
 
-    // Foto del funcionario
     foto.onerror = () => { foto.src = AppDev.config.avatarDefault; };
     foto.src = (data.foto && data.foto.trim() !== "" && data.foto !== "NULL")
         ? AppDev.config.rutaFotos + data.foto.trim()
@@ -80,10 +72,8 @@ function mostrarDispositivo(data) {
     tipomov.className   = "badge fs-5 px-4 py-2 mb-2 " +
         (data.tipo_mov === "Entrada" ? "bg-success" : "bg-danger");
 
-    // Limpiar timer anterior
     if (AppDev._timerCard) clearTimeout(AppDev._timerCard);
 
-    // Mostrar con fade in
     card.classList.remove("d-none");
     card.style.transition = "opacity 0.4s ease";
     card.style.opacity    = "0";
@@ -91,68 +81,47 @@ function mostrarDispositivo(data) {
         requestAnimationFrame(() => { card.style.opacity = "1"; });
     });
 
-    // Ocultar con fade out
     AppDev._timerCard = setTimeout(() => {
         card.style.opacity = "0";
         setTimeout(() => card.classList.add("d-none"), 400);
     }, AppDev.config.tiempoCard);
 }
 
-
 // ========================================
 // ENVIAR QR AL SERVIDOR
 // ========================================
 
 async function enviarQr(qr, tipo) {
-
     if (AppDev.btnCapturar) AppDev.btnCapturar.disabled = true;
-
     try {
-
         const res = await fetch(AppDev.config.urlControlador, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                qr_codigo: qr,
-                tipoMovimiento: tipo
-            })
+            body: JSON.stringify({ qr_codigo: qr, tipoMovimiento: tipo })
         });
-
         const data = await res.json();
-
         mostrarMensaje(data.success, data.message);
-
         if (data.success) {
             if (AppDev.table) AppDev.table.ajax.reload(null, false);
             if (data.data)    mostrarDispositivo(data.data);
         }
-
     } catch (e) {
-
         console.error("Error enviarQr:", e);
         mostrarMensaje(false, "Error de conexión.");
-
     } finally {
-
         if (AppDev.btnCapturar) AppDev.btnCapturar.disabled = false;
-
     }
 }
-
 
 // ========================================
 // CUANDO SE DETECTA UN QR
 // ========================================
 
 function onScanQR(qr) {
-
     qr = qr.trim();
-
     if (!qr || AppDev.escaneando || qr === AppDev.ultimaLectura) return;
-
     AppDev.escaneando    = true;
     AppDev.ultimaLectura = qr;
-
     enviarQr(qr, AppDev.tipoMovimiento.value).finally(() => {
         setTimeout(() => {
             AppDev.escaneando    = false;
@@ -161,51 +130,117 @@ function onScanQR(qr) {
     });
 }
 
+// ========================================
+// ACTUALIZAR BOTÓN SEGÚN ESTADO CÁMARA  ← NUEVO
+// ========================================
+
+function actualizarBoton(camaraActiva) {
+    const btn = AppDev.btnCapturar;
+    if (!btn) return;
+    if (camaraActiva) {
+        btn.classList.replace("btn-primary", "btn-danger");
+        btn.innerHTML = '<i class="fas fa-times me-2"></i>Cancelar Cámara';
+    } else {
+        btn.classList.replace("btn-danger", "btn-primary");
+        btn.innerHTML = '<i class="fas fa-camera me-2"></i>Capturar Código QR';
+    }
+}
 
 // ========================================
 // INICIAR CÁMARA
 // ========================================
 
 async function iniciarCamara() {
-
     if (AppDev.qrReader) return;
+
+    // Paso 1: pedir permiso explícito primero
+    try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+    } catch {
+        mostrarMensaje(false, "Permiso de cámara denegado. Habilítalo en la barra del navegador.");
+        return;
+    }
 
     AppDev.qrReader = new Html5Qrcode("qr-reader");
 
     try {
-
         const devices = await Html5Qrcode.getCameras();
-
         if (!devices || devices.length === 0) {
             mostrarMensaje(false, "No se detectaron cámaras.");
+            AppDev.qrReader.clear();
+            AppDev.qrReader = null;
             return;
         }
 
-        const droidcam = devices.find(d =>
-            d.label.toLowerCase().includes("droid")
-        );
-
-        const cameraId = droidcam ? droidcam.id : devices[0].id;
+        const camara =
+            devices.find(d => d.label.toLowerCase().includes("back"))    ||
+            devices.find(d => d.label.toLowerCase().includes("rear"))    ||
+            devices.find(d => d.label.toLowerCase().includes("trasera")) ||
+            devices.find(d => d.label.toLowerCase().includes("droid"))   ||
+            devices[0];
 
         await AppDev.qrReader.start(
-            cameraId,
-            {
-                fps: AppDev.config.fps,
-                qrbox: {
-                    width:  AppDev.config.qrboxSize,
-                    height: AppDev.config.qrboxSize
-                }
-            },
+            camara.id,
+            { fps: AppDev.config.fps, qrbox: { width: AppDev.config.qrboxSize, height: AppDev.config.qrboxSize } },
             onScanQR,
             () => {}
         );
 
+        actualizarBoton(true); // ← NUEVO
+
     } catch (error) {
-        console.error("Error iniciando cámara:", error);
-        mostrarMensaje(false, "No se pudo iniciar la cámara.");
+        console.error("Error iniciando por deviceId:", error);
+
+        // Fallback con facingMode
+        try {
+            await AppDev.qrReader.start(
+                { facingMode: "environment" },
+                { fps: AppDev.config.fps, qrbox: { width: AppDev.config.qrboxSize, height: AppDev.config.qrboxSize } },
+                onScanQR,
+                () => {}
+            );
+
+            actualizarBoton(true); // ← NUEVO
+
+        } catch (error2) {
+            console.error("Fallback también falló:", error2);
+            mostrarMensaje(false, "No se pudo iniciar la cámara: " + error2.message);
+            AppDev.qrReader.clear();
+            AppDev.qrReader = null;
+        }
     }
 }
 
+// ========================================
+// DETENER CÁMARA  ← NUEVO
+// ========================================
+
+async function detenerCamara() {
+    if (!AppDev.qrReader) return;
+    try {
+        await AppDev.qrReader.stop();
+        AppDev.qrReader.clear();
+    } catch (e) {
+        console.error("Error deteniendo cámara:", e);
+    } finally {
+        AppDev.qrReader      = null;
+        AppDev.escaneando    = false;
+        AppDev.ultimaLectura = null;
+        actualizarBoton(false);
+    }
+}
+
+// ========================================
+// ALTERNAR CÁMARA (un solo botón)  ← NUEVO
+// ========================================
+
+async function toggleCamara() {
+    if (AppDev.qrReader) {
+        await detenerCamara();
+    } else {
+        await iniciarCamara();
+    }
+}
 
 // ========================================
 // INICIALIZACIÓN
@@ -219,32 +254,22 @@ document.addEventListener("DOMContentLoaded", () => {
     AppDev.mensajeError   = document.getElementById("mensajeError");
 
     AppDev.table = $("#tablaDispositivosDT").DataTable({
-
         ajax: {
             url: AppDev.config.urlControlador,
             dataSrc: json => json.data || []
         },
-
         columns: [
             { data: "TipoDispositivo"  },
             { data: "MarcaDispositivo" },
             { data: "NumeroSerial"     },
             { data: "NombreFuncionario"},
             { data: "TipoMovimiento"   },
-            {
-                data: "FechaIngreso",
-                render: d => new Date(d).toLocaleString('es-ES')
-            }
+            { data: "FechaIngreso", render: d => new Date(d).toLocaleString('es-ES') }
         ],
-
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-        },
-
+        language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
         order: [[5, 'desc']]
     });
 
     if (AppDev.btnCapturar)
-        AppDev.btnCapturar.addEventListener("click", iniciarCamara);
-
+        AppDev.btnCapturar.addEventListener("click", toggleCamara); // ← CAMBIADO
 });

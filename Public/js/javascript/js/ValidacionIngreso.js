@@ -57,7 +57,6 @@ function mostrarFuncionario(data) {
 
     if (!card) return;
 
-    // Foto: usa la ruta de la BD o avatar por defecto
     foto.onerror = () => { foto.src = App.config.avatarDefault; };
     foto.src = (data.foto && data.foto.trim() !== "" && data.foto !== "NULL")
         ? App.config.rutaFotos + data.foto.trim()
@@ -73,10 +72,8 @@ function mostrarFuncionario(data) {
     tipo.className   = "badge fs-6 px-3 py-2 mb-2 " +
         (data.tipo === "Entrada" ? "bg-success" : "bg-danger");
 
-    // Limpiar timer anterior
     if (App._timerCard) clearTimeout(App._timerCard);
 
-    // Mostrar con fade in
     card.classList.remove("d-none");
     card.style.transition = "opacity 0.4s ease";
     card.style.opacity    = "0";
@@ -84,7 +81,6 @@ function mostrarFuncionario(data) {
         requestAnimationFrame(() => { card.style.opacity = "1"; });
     });
 
-    // Ocultar con fade out
     App._timerCard = setTimeout(() => {
         card.style.opacity = "0";
         setTimeout(() => card.classList.add("d-none"), 400);
@@ -156,6 +152,22 @@ function onScanQR(qr) {
 
 
 // ========================================
+// ACTUALIZAR BOTÓN SEGÚN ESTADO CÁMARA
+// ========================================
+
+function actualizarBoton(camaraActiva) {
+    const btn = App.btnCapturar;
+    if (camaraActiva) {
+        btn.classList.replace("btn-primary", "btn-danger");
+        btn.innerHTML = '<i class="fas fa-times me-2"></i>Cancelar Cámara';
+    } else {
+        btn.classList.replace("btn-danger", "btn-primary");
+        btn.innerHTML = '<i class="fas fa-camera me-2"></i>Capturar Código QR';
+    }
+}
+
+
+// ========================================
 // INICIAR CÁMARA
 // ========================================
 
@@ -163,25 +175,43 @@ async function iniciarCamara() {
 
     if (App.qrReader) return;
 
+    // Paso 1: pedir permiso explícito primero
+    try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+    } catch (permiso) {
+        mostrarMensaje(false, "Permiso de cámara denegado. Habilítalo en la barra del navegador.");
+        return;
+    }
+
     App.qrReader = new Html5Qrcode("qr-reader");
 
     try {
 
+        // Paso 2: listar cámaras con permiso ya concedido
         const devices = await Html5Qrcode.getCameras();
+
+        console.log("Cámaras detectadas:", devices);
 
         if (!devices || devices.length === 0) {
             mostrarMensaje(false, "No se detectaron cámaras.");
+            App.qrReader.clear();
+            App.qrReader = null;
             return;
         }
 
-        const droidcam = devices.find(d =>
-            d.label.toLowerCase().includes("droid")
-        );
+        // Paso 3: elegir la mejor cámara disponible
+        const camara =
+            devices.find(d => d.label.toLowerCase().includes("back"))    ||
+            devices.find(d => d.label.toLowerCase().includes("rear"))    ||
+            devices.find(d => d.label.toLowerCase().includes("trasera")) ||
+            devices.find(d => d.label.toLowerCase().includes("droid"))   ||
+            devices[0];
 
-        const cameraId = droidcam ? droidcam.id : devices[0].id;
+        console.log("Usando cámara:", camara);
 
+        // Paso 4: iniciar con deviceId real
         await App.qrReader.start(
-            cameraId,
+            camara.id,
             {
                 fps: App.config.fps,
                 qrbox: {
@@ -193,9 +223,77 @@ async function iniciarCamara() {
             () => {}
         );
 
+        actualizarBoton(true);
+
     } catch (error) {
-        console.error("Error iniciando cámara:", error);
-        mostrarMensaje(false, "No se pudo iniciar la cámara.");
+
+        console.error("Error iniciando por deviceId:", error);
+
+        // Paso 5: fallback con facingMode
+        try {
+
+            await App.qrReader.start(
+                { facingMode: "environment" },
+                {
+                    fps: App.config.fps,
+                    qrbox: {
+                        width:  App.config.qrboxSize,
+                        height: App.config.qrboxSize
+                    }
+                },
+                onScanQR,
+                () => {}
+            );
+
+            actualizarBoton(true);
+
+        } catch (error2) {
+
+            console.error("Fallback también falló:", error2);
+            mostrarMensaje(false, "No se pudo iniciar la cámara: " + error2.message);
+            App.qrReader.clear();
+            App.qrReader = null;
+
+        }
+    }
+}
+
+
+// ========================================
+// DETENER CÁMARA
+// ========================================
+
+async function detenerCamara() {
+
+    if (!App.qrReader) return;
+
+    try {
+
+        await App.qrReader.stop();
+        App.qrReader.clear();
+
+    } catch (e) {
+        console.error("Error deteniendo cámara:", e);
+    } finally {
+
+        App.qrReader      = null;
+        App.escaneando    = false;
+        App.ultimaLectura = null;
+        actualizarBoton(false);
+
+    }
+}
+
+
+// ========================================
+// ALTERNAR CÁMARA (un solo botón)
+// ========================================
+
+async function toggleCamara() {
+    if (App.qrReader) {
+        await detenerCamara();
+    } else {
+        await iniciarCamara();
     }
 }
 
@@ -267,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (App.btnCapturar)
-        App.btnCapturar.addEventListener("click", iniciarCamara);
+        App.btnCapturar.addEventListener("click", toggleCamara);
 
     if (App.btnDescargarPDF)
         App.btnDescargarPDF.addEventListener("click", descargarPDF);

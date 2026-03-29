@@ -29,9 +29,9 @@
                     </select>
                 </div>
 
-                <button id="btnCapturar" class="btn btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
-                    <i class="fas fa-camera me-2"></i>Capturar Código QR
-                </button>
+            <button id="btnCapturar" class="btn btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
+    <i class="fas fa-camera me-2"></i>Capturar Código QR
+            </button>
 
             </div>
             <!-- ===== FIN ESCANER QR ===== -->

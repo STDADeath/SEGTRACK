@@ -20,6 +20,10 @@ const AppPark = {
     }
 };
 
+// ========================================
+// MENSAJES EN PANTALLA
+// ========================================
+
 function mostrarMensaje(esExito, texto) {
     const exito = document.getElementById("mensajeExito");
     const error = document.getElementById("mensajeError");
@@ -32,6 +36,10 @@ function mostrarMensaje(esExito, texto) {
         error.classList.add("d-none");
     }, 5000);
 }
+
+// ========================================
+// MOSTRAR CARD CON DATOS DEL VEHÍCULO
+// ========================================
 
 function mostrarVehiculo(data) {
     const card    = document.getElementById("cardVehiculo");
@@ -46,7 +54,6 @@ function mostrarVehiculo(data) {
 
     if (!card) return;
 
-    // Igual que dispositivos
     foto.onerror = () => { foto.src = AppPark.config.avatarDefault; };
     foto.src = (data.foto && data.foto.trim() !== "" && data.foto !== "NULL")
         ? AppPark.config.rutaFotos + data.foto.trim()
@@ -83,6 +90,10 @@ function mostrarVehiculo(data) {
     }, AppPark.config.tiempoCard);
 }
 
+// ========================================
+// ENVIAR QR AL SERVIDOR
+// ========================================
+
 async function enviarQr(qr, tipo) {
     if (AppPark.btnCapturar) AppPark.btnCapturar.disabled = true;
     try {
@@ -108,6 +119,10 @@ async function enviarQr(qr, tipo) {
     }
 }
 
+// ========================================
+// CUANDO SE DETECTA UN QR
+// ========================================
+
 function onScanQR(qr) {
     qr = qr.trim();
     if (!qr || AppPark.escaneando || qr === AppPark.ultimaLectura) return;
@@ -121,28 +136,121 @@ function onScanQR(qr) {
     });
 }
 
+// ========================================
+// ACTUALIZAR BOTÓN SEGÚN ESTADO CÁMARA
+// ========================================
+
+function actualizarBoton(camaraActiva) {
+    const btn = AppPark.btnCapturar;
+    if (!btn) return;
+    if (camaraActiva) {
+        btn.classList.replace("btn-primary", "btn-danger");
+        btn.innerHTML = '<i class="fas fa-times me-2"></i>Cancelar Cámara';
+    } else {
+        btn.classList.replace("btn-danger", "btn-primary");
+        btn.innerHTML = '<i class="fas fa-camera me-2"></i>Capturar Código QR';
+    }
+}
+
+// ========================================
+// INICIAR CÁMARA
+// ========================================
+
 async function iniciarCamara() {
     if (AppPark.qrReader) return;
+
+    // Paso 1: pedir permiso explícito primero
+    try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+    } catch {
+        mostrarMensaje(false, "Permiso de cámara denegado. Habilítalo en la barra del navegador.");
+        return;
+    }
+
     AppPark.qrReader = new Html5Qrcode("qr-reader");
+
     try {
         const devices = await Html5Qrcode.getCameras();
         if (!devices || devices.length === 0) {
             mostrarMensaje(false, "No se detectaron cámaras.");
+            AppPark.qrReader.clear();
+            AppPark.qrReader = null;
             return;
         }
-        const droidcam = devices.find(d => d.label.toLowerCase().includes("droid"));
-        const cameraId = droidcam ? droidcam.id : devices[0].id;
+
+        const camara =
+            devices.find(d => d.label.toLowerCase().includes("back"))    ||
+            devices.find(d => d.label.toLowerCase().includes("rear"))    ||
+            devices.find(d => d.label.toLowerCase().includes("trasera")) ||
+            devices.find(d => d.label.toLowerCase().includes("droid"))   ||
+            devices[0];
+
         await AppPark.qrReader.start(
-            cameraId,
+            camara.id,
             { fps: AppPark.config.fps, qrbox: { width: AppPark.config.qrboxSize, height: AppPark.config.qrboxSize } },
             onScanQR,
             () => {}
         );
+
+        actualizarBoton(true);
+
     } catch (error) {
-        console.error("Error iniciando cámara:", error);
-        mostrarMensaje(false, "No se pudo iniciar la cámara.");
+        console.error("Error iniciando por deviceId:", error);
+
+        // Fallback con facingMode
+        try {
+            await AppPark.qrReader.start(
+                { facingMode: "environment" },
+                { fps: AppPark.config.fps, qrbox: { width: AppPark.config.qrboxSize, height: AppPark.config.qrboxSize } },
+                onScanQR,
+                () => {}
+            );
+
+            actualizarBoton(true);
+
+        } catch (error2) {
+            console.error("Fallback también falló:", error2);
+            mostrarMensaje(false, "No se pudo iniciar la cámara: " + error2.message);
+            AppPark.qrReader.clear();
+            AppPark.qrReader = null;
+        }
     }
 }
+
+// ========================================
+// DETENER CÁMARA
+// ========================================
+
+async function detenerCamara() {
+    if (!AppPark.qrReader) return;
+    try {
+        await AppPark.qrReader.stop();
+        AppPark.qrReader.clear();
+    } catch (e) {
+        console.error("Error deteniendo cámara:", e);
+    } finally {
+        AppPark.qrReader      = null;
+        AppPark.escaneando    = false;
+        AppPark.ultimaLectura = null;
+        actualizarBoton(false);
+    }
+}
+
+// ========================================
+// ALTERNAR CÁMARA (un solo botón)
+// ========================================
+
+async function toggleCamara() {
+    if (AppPark.qrReader) {
+        await detenerCamara();
+    } else {
+        await iniciarCamara();
+    }
+}
+
+// ========================================
+// INICIALIZACIÓN
+// ========================================
 
 document.addEventListener("DOMContentLoaded", () => {
     AppPark.tipoMovimiento = document.getElementById("tipoMovimiento");
@@ -172,5 +280,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (AppPark.btnCapturar)
-        AppPark.btnCapturar.addEventListener("click", iniciarCamara);
+        AppPark.btnCapturar.addEventListener("click", toggleCamara); // ← CAMBIADO
 });
