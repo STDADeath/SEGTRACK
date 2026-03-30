@@ -339,3 +339,66 @@ Acción: cambiar_estado
 Respuesta: {"success":true,"message":"Vehículo desactivado correctamente","nuevoEstado":"Inactivo"}
 === FIN ===
 
+
+2026-03-29 21:55:08 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "ASD245",
+    "DescripcionVehiculo": "Moto AKT NKD 125",
+    "TarjetaPropiedad": "TP-963258741",
+    "IdSede": "70",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "96",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 30
+✅ QR actualizado para vehículo ID: 30
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 30","data":{"IdVehiculo":"30","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-30-69c9e60c7890c.png","FechaRegistro":"2026-03-29 21:55:08"}}
+=== FIN ===
+
+
+2026-03-29 21:56:35 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "FVS15S",
+    "DescripcionVehiculo": "Chevrolet Spark GT color rojo modelo 2020",
+    "TarjetaPropiedad": "TP-556677889",
+    "IdSede": "75",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "94",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 31
+✅ QR actualizado para vehículo ID: 31
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 31","data":{"IdVehiculo":"31","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-31-69c9e66322afd.png","FechaRegistro":"2026-03-29 21:56:35"}}
+=== FIN ===
+
+
+2026-03-29 21:59:45 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "ABDS",
+    "DescripcionVehiculo": "Bicicleta GW ",
+    "TarjetaPropiedad": "TP-998877665",
+    "IdSede": "71",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "97",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 32
+✅ QR actualizado para vehículo ID: 32
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente con ID: 32","data":{"IdVehiculo":"32","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-32-69c9e7212b818.png","FechaRegistro":"2026-03-29 21:59:45"}}
+=== FIN ===
+

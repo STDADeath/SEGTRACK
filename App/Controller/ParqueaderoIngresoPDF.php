@@ -55,7 +55,7 @@ class ParqueaderoIngresoPDF extends FPDF {
         $this->SetFont('Arial', 'B', 16);
         $this->SetTextColor(...$this->blanco);
         $this->SetXY($xText, 10);
-        $this->Cell($wText, 9, 'REPORTE DE CONTROL DE VEHÍCULOS', 0, 1, 'L');
+        $this->Cell($wText, 9, 'REPORTE DE CONTROL DE VEHICULOS', 0, 1, 'L');
 
         // Subtítulo
         $this->SetFont('Arial', '', 8.5);
@@ -188,7 +188,7 @@ class ParqueaderoIngresoPDF extends FPDF {
         $this->SetFont('Arial', 'B', 8);
         $this->SetTextColor(...$this->grisOscuro);
         $this->SetX($this->ml + 5.5);
-        $this->Cell(0, 5.5, 'DETALLE DE MOVIMIENTOS DE VEHÍCULOS', 0, 1, 'L');
+        $this->Cell(0, 5.5, 'DETALLE DE MOVIMIENTOS DE VEHICULOS', 0, 1, 'L');
         $this->Ln(3);
 
         // Anchos: #(8) | QR(18) | Dueño(30) | Placa(22) | Tipo(22) | Descripción(30) | Espacio(18) | Fecha(resto)

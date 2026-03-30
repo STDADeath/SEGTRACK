@@ -3373,3 +3373,77 @@ Acción detectada: cambiar_estado
 Respuesta final: {"success":true,"message":"Dispositivo activado correctamente","nuevoEstado":"Activo"}
 === FIN ===
 
+
+2026-03-30 05:00:58 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN-784512369",
+    "IdFuncionario": "96",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: SN-784512369
+INSERT exitoso, ID: 53
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 53","data":{"IdDispositivo":"53","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-53-69c9e76b046a5.png"}}
+=== FIN ===
+
+
+2026-03-30 05:01:19 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "sasumg",
+    "NumeroSerial": "SN-159753486",
+    "IdFuncionario": "95",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: sasumg, Serial: SN-159753486
+INSERT exitoso, ID: 54
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 54","data":{"IdDispositivo":"54","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-54-69c9e77fa85ec.png"}}
+=== FIN ===
+
+
+2026-03-30 05:01:45 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Computador",
+    "MarcaDispositivo": "Apple",
+    "NumeroSerial": "SN-784512361",
+    "IdFuncionario": "98",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Computador, Marca: Apple, Serial: SN-784512361
+INSERT exitoso, ID: 55
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 55","data":{"IdDispositivo":"55","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-55-69c9e7995375a.png"}}
+=== FIN ===
+
+
+2026-03-30 05:02:11 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "SN-784512369",
+    "IdFuncionario": "96",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+ERROR: Serial duplicado - SN-784512369
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'SN-784512369' ya est\u00e1 registrado en otro dispositivo (ID: 53 - Portatil lenovo)."}
+=== FIN ===
+
