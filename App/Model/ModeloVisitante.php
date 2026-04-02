@@ -6,11 +6,12 @@ class VisitanteModelo {
         $this->conexion = $conexion;
     }
 
-    // ── NUEVO: Verificar duplicados ──────────────────────────────────────────
+    // ══════════════════════════════════════════════
+    // VERIFICAR DUPLICADOS
+    // ══════════════════════════════════════════════
     public function existeDuplicado(string $identificacion, string $correo = '', int $excludeId = 0): array {
         try {
-            // Verificar identificación
-            $sql  = "SELECT IdVisitante FROM visitante WHERE IdentificacionVisitante = :identificacion";
+            $sql    = "SELECT IdVisitante FROM visitante WHERE IdentificacionVisitante = :identificacion";
             $params = [':identificacion' => $identificacion];
             if ($excludeId > 0) {
                 $sql .= " AND IdVisitante != :excludeId";
@@ -22,9 +23,8 @@ class VisitanteModelo {
                 return ['duplicado' => true, 'campo' => 'identificacion', 'message' => 'Ya existe un visitante con esa identificación.'];
             }
 
-            // Verificar correo solo si fue ingresado
             if (!empty($correo)) {
-                $sql  = "SELECT IdVisitante FROM visitante WHERE CorreoVisitante = :correo";
+                $sql    = "SELECT IdVisitante FROM visitante WHERE CorreoVisitante = :correo";
                 $params = [':correo' => $correo];
                 if ($excludeId > 0) {
                     $sql .= " AND IdVisitante != :excludeId";
@@ -43,6 +43,9 @@ class VisitanteModelo {
         }
     }
 
+    // ══════════════════════════════════════════════
+    // INSERTAR
+    // ══════════════════════════════════════════════
     public function insertar(array $datos): array {
         try {
             if (!$this->conexion) return ['success' => false, 'error' => 'Conexión no disponible'];
@@ -65,6 +68,9 @@ class VisitanteModelo {
         }
     }
 
+    // ══════════════════════════════════════════════
+    // OBTENER TODOS
+    // ══════════════════════════════════════════════
     public function obtenerTodos(array $filtros = [], array $params = []): array {
         try {
             $where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
@@ -77,6 +83,9 @@ class VisitanteModelo {
         }
     }
 
+    // ══════════════════════════════════════════════
+    // OBTENER POR ID
+    // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
         try {
             $stmt = $this->conexion->prepare("SELECT * FROM visitante WHERE IdVisitante = ?");
@@ -87,6 +96,9 @@ class VisitanteModelo {
         }
     }
 
+    // ══════════════════════════════════════════════
+    // ACTUALIZAR
+    // ══════════════════════════════════════════════
     public function actualizar(int $id, array $datos): array {
         try {
             $sql = "UPDATE visitante SET
@@ -104,6 +116,23 @@ class VisitanteModelo {
             return ['success' => $resultado, 'rows' => $stmt->rowCount()];
         } catch (PDOException $e) {
             return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    // ══════════════════════════════════════════════
+    // CAMBIAR ESTADO
+    // ══════════════════════════════════════════════
+    public function cambiarEstado(int $id, string $estado): array {
+        try {
+            $stmt      = $this->conexion->prepare("UPDATE visitante SET Estado = ? WHERE IdVisitante = ?");
+            $resultado = $stmt->execute([$estado, $id]);
+            return [
+                'success' => $resultado,
+                'message' => $resultado ? "Visitante $estado correctamente" : 'No se pudo cambiar el estado',
+                'rows'    => $stmt->rowCount()
+            ];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }

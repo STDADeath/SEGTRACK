@@ -13,7 +13,9 @@ class ControladorVisitante {
         return !isset($arr[$campo]) || trim($arr[$campo]) === "";
     }
 
-    // ── NUEVO: Verificar duplicados vía AJAX ────────────────────────────────
+    // ══════════════════════════════════════════════
+    // VERIFICAR DUPLICADOS
+    // ══════════════════════════════════════════════
     public function verificarDuplicado(array $datos): array {
         $identificacion = trim($datos['IdentificacionVisitante'] ?? '');
         $correo         = trim($datos['CorreoVisitante'] ?? '');
@@ -26,6 +28,9 @@ class ControladorVisitante {
         return $this->modelo->existeDuplicado($identificacion, $correo, $excludeId);
     }
 
+    // ══════════════════════════════════════════════
+    // REGISTRAR
+    // ══════════════════════════════════════════════
     public function registrarVisitante(array $datos): array {
         foreach (['IdentificacionVisitante', 'NombreVisitante'] as $campo) {
             if ($this->campoVacio($datos, $campo)) {
@@ -47,7 +52,6 @@ class ControladorVisitante {
             return ['success' => false, 'message' => 'El correo electrónico no es válido.'];
         }
 
-        // ── Verificar duplicados antes de insertar ──────────────────────────
         $duplicado = $this->modelo->existeDuplicado($id, $correo);
         if ($duplicado['duplicado']) {
             return ['success' => false, 'message' => $duplicado['message']];
@@ -63,6 +67,9 @@ class ControladorVisitante {
         }
     }
 
+    // ══════════════════════════════════════════════
+    // MOSTRAR CON FILTROS
+    // ══════════════════════════════════════════════
     public function mostrarVisitantes(): array {
         $filtros = [];
         $params  = [];
@@ -83,15 +90,31 @@ class ControladorVisitante {
         return $this->modelo->obtenerTodos($filtros, $params);
     }
 
+    // ══════════════════════════════════════════════
+    // OBTENER POR ID
+    // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
         return $this->modelo->obtenerPorId($id);
     }
 
+    // ══════════════════════════════════════════════
+    // ACTUALIZAR
+    // ══════════════════════════════════════════════
     public function actualizar(int $id, array $datos): array {
         return $this->modelo->actualizar($id, $datos);
     }
+
+    // ══════════════════════════════════════════════
+    // CAMBIAR ESTADO
+    // ══════════════════════════════════════════════
+    public function cambiarEstado(int $id, string $estado): array {
+        return $this->modelo->cambiarEstado($id, $estado);
+    }
 }
 
+// ════════════════════════════════════════════════
+// RUTEO
+// ════════════════════════════════════════════════
 try {
     if (!isset($conexion)) throw new Exception("Conexión no disponible");
 
@@ -105,7 +128,7 @@ try {
         case 'registrar':
             echo json_encode($controlador->registrarVisitante($_POST));
             break;
-        case 'verificar':                                          // ← NUEVO
+        case 'verificar':
             echo json_encode($controlador->verificarDuplicado($_POST));
             break;
         case 'mostrar':
@@ -116,6 +139,14 @@ try {
             break;
         case 'actualizar':
             echo json_encode($controlador->actualizar($id, $_POST));
+            break;
+        case 'cambiar_estado':
+            $nuevo = $_POST['nuevoEstado'] ?? '';
+            if (!in_array($nuevo, ['Activo', 'Inactivo'])) {
+                echo json_encode(['success' => false, 'message' => 'Estado no válido']);
+                break;
+            }
+            echo json_encode($controlador->cambiarEstado($id, $nuevo));
             break;
         default:
             echo json_encode(['success' => false, 'message' => 'Acción no reconocida']);
