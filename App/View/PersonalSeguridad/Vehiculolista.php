@@ -9,8 +9,8 @@ $conn     = $conexion->getConexion();
 $filtros = [];
 $params  = [];
 
-$filtros[] = "v.Estado = :estado";
-$params[':estado'] = 'Activo';
+// Estado siempre Activo en lista admin
+$filtros[] = "v.Estado = 'Activo'";
 
 if (!empty($_GET['tipo'])) {
     $filtros[] = "v.TipoVehiculo = :tipo";
@@ -32,9 +32,16 @@ if (!empty($_GET['sede'])) {
     $filtros[] = "v.IdSede = :sede";
     $params[':sede'] = $_GET['sede'];
 }
+
+// ── FIX: cada condición en su propio elemento del array ──────────────────────
 if (!empty($_GET['propietario'])) {
-    if ($_GET['propietario'] === 'Funcionario')    $filtros[] = "v.IdFuncionario IS NOT NULL";
-    elseif ($_GET['propietario'] === 'Visitante')  $filtros[] = "v.IdVisitante IS NOT NULL";
+    if ($_GET['propietario'] === 'Funcionario') {
+        $filtros[] = "v.IdFuncionario IS NOT NULL";
+        $filtros[] = "v.IdVisitante IS NULL";
+    } elseif ($_GET['propietario'] === 'Visitante') {
+        $filtros[] = "v.IdVisitante IS NOT NULL";
+        $filtros[] = "v.IdFuncionario IS NULL";
+    }
 }
 
 $where = "WHERE " . implode(" AND ", $filtros);
@@ -42,7 +49,8 @@ $where = "WHERE " . implode(" AND ", $filtros);
 $sql = "SELECT v.*,
                s.TipoSede, s.Ciudad,
                f.NombreFuncionario,
-               vis.NombreVisitante
+               vis.NombreVisitante,
+               vis.CorreoVisitante
         FROM vehiculo v
         LEFT JOIN sede        s   ON v.IdSede        = s.IdSede
         LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
@@ -55,7 +63,7 @@ $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Sedes para filtros y modal
-$sqlSedes = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
+$sqlSedes  = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
 $stmtSedes = $conn->prepare($sqlSedes);
 $stmtSedes->execute();
 $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
@@ -89,9 +97,9 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         </label>
                         <select name="tipo" id="tipo" class="form-control">
                             <option value="">Todos</option>
-                            <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>>🚲 Bicicleta</option>
-                            <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>>🏍️ Moto</option>
-                            <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>>🚗 Carro</option>
+                            <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>> Bicicleta</option>
+                            <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>> Moto</option>
+                            <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>> Carro</option>
                         </select>
                     </div>
 
@@ -145,8 +153,8 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         </label>
                         <select name="propietario" id="propietario" class="form-control">
                             <option value="">Todos</option>
-                            <option value="Funcionario" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Funcionario') ? 'selected' : '' ?>>👔 Funcionario</option>
-                            <option value="Visitante"   <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Visitante')   ? 'selected' : '' ?>>🧑 Visitante</option>
+                            <option value="Funcionario" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Funcionario') ? 'selected' : '' ?>> Funcionario</option>
+                            <option value="Visitante"   <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Visitante')   ? 'selected' : '' ?>> Visitante</option>
                         </select>
                     </div>
 
@@ -196,7 +204,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                         </button>
                                         <br>
                                         <button type="button" class="btn btn-sm btn-outline-info mt-1"
-                                                onclick="manejarEnvioQR(<?= $row['IdVehiculo'] ?>, '<?= htmlspecialchars($row['PlacaVehiculo']) ?>', <?= !empty($row['IdFuncionario']) ? 'true' : 'false' ?>)"
+                                                onclick="manejarEnvioQR(<?= $row['IdVehiculo'] ?>, '<?= htmlspecialchars($row['PlacaVehiculo']) ?>', <?= !empty($row['IdFuncionario']) ? 'true' : 'false' ?>, '<?= htmlspecialchars($row['CorreoVisitante'] ?? '') ?>')"
                                                 title="Enviar QR por correo">
                                             <i class="fas fa-envelope me-1"></i> Enviar
                                         </button>

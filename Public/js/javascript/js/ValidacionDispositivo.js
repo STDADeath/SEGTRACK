@@ -410,7 +410,7 @@ function enviarQRPorCorreo(idDispositivo, correoDestinatario) {
         Swal.fire({
             icon: 'warning',
             title: 'Sin correo registrado',
-            html: 'Este dispositivo no tiene un correo electrónico asociado.<br><small class="text-muted">Por ahora solo funcionarios pueden recibir correos.</small>',
+            html: 'Este dispositivo no tiene un correo electrónico asociado.<br><small class="text-muted">Ni el funcionario ni el visitante tienen correo registrado.</small>',
             confirmButtonColor: '#3085d6'
         });
         return;

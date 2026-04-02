@@ -17,9 +17,6 @@ class ModeloParqueadero {
     // MÉTODOS ADMIN — Gestión de parqueaderos
     // ══════════════════════════════════════════════════════════════════════════
 
-    /**
-     * Verifica si ya existe parqueadero para esa sede
-     */
     public function existeParqueaderoPorSede(int $idSede, ?int $excluirId = null): bool {
         try {
             if (!$this->conexion) return false;
@@ -42,9 +39,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Crea un parqueadero y genera sus espacios individuales
-     */
     public function crearParqueadero(int $idSede, int $total, int $carros, int $motos, int $bicis): array {
         try {
             file_put_contents($this->debugPath,
@@ -92,9 +86,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Genera espacios numerados por tipo para un parqueadero
-     */
     private function generarEspacios(int $idParqueadero, int $carros, int $motos, int $bicis): void {
         file_put_contents($this->debugPath,
             "=== MODELO: generarEspacios — Parqueadero: $idParqueadero, Carros: $carros, Motos: $motos, Bicis: $bicis ===\n",
@@ -119,9 +110,6 @@ class ModeloParqueadero {
         file_put_contents($this->debugPath, "$total espacios generados correctamente\n", FILE_APPEND);
     }
 
-    /**
-     * Actualiza un parqueadero y ajusta sus espacios
-     */
     public function actualizarParqueadero(int $id, int $total, int $carros, int $motos, int $bicis): array {
         try {
             file_put_contents($this->debugPath,
@@ -182,9 +170,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Ajusta espacios de un tipo (agrega o elimina solo los LIBRES)
-     */
     private function ajustarEspacios(int $idParqueadero, string $tipo, int $anterior, int $nuevo): void {
         $diferencia = $nuevo - $anterior;
         file_put_contents($this->debugPath,
@@ -230,9 +215,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Renumera espacios de corrido (1, 2, 3…)
-     */
     private function renumerarEspacios(int $idParqueadero): void {
         file_put_contents($this->debugPath, "=== MODELO: renumerarEspacios Parqueadero: $idParqueadero ===\n", FILE_APPEND);
 
@@ -252,9 +234,6 @@ class ModeloParqueadero {
         file_put_contents($this->debugPath, count($espacios) . " espacios renumerados\n", FILE_APPEND);
     }
 
-    /**
-     * Cambia el estado del parqueadero (Activo <-> Inactivo)
-     */
     public function cambiarEstado(int $id, string $nuevoEstado): array {
         try {
             if (!$this->conexion) {
@@ -283,9 +262,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Obtiene todos los parqueaderos con conteo de espacios libres/ocupados
-     */
     public function obtenerTodos(): array {
         try {
             if (!$this->conexion) return [];
@@ -309,9 +285,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Obtiene un parqueadero por su ID
-     */
     public function obtenerPorId(int $id): ?array {
         try {
             if (!$this->conexion) return null;
@@ -327,9 +300,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Obtiene espacios individuales de un parqueadero (admin — modal ver espacios)
-     */
     public function obtenerEspacios(int $idParqueadero): array {
         try {
             if (!$this->conexion) return [];
@@ -352,9 +322,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Resumen de espacios por tipo (Carro, Moto, Bicicleta)
-     */
     public function obtenerResumenEspacios(int $idParqueadero): array {
         try {
             if (!$this->conexion) return [];
@@ -381,9 +348,6 @@ class ModeloParqueadero {
     // MÉTODOS GUARDIA — Vista de espacios y gestión manual
     // ══════════════════════════════════════════════════════════════════════════
 
-    /**
-     * Obtiene las sedes activas que tienen parqueadero configurado
-     */
     public function obtenerSedesConParqueadero(): array {
         try {
             if (!$this->conexion) return [];
@@ -403,9 +367,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Obtiene el parqueadero activo de una sede con datos de la sede
-     */
     public function obtenerParqueaderoPorSede(int $idSede): ?array {
         try {
             if (!$this->conexion) return null;
@@ -434,9 +395,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Obtiene espacios con detalle completo incluyendo propietario del vehículo
-     */
     public function obtenerEspaciosDetalle(int $idParqueadero): array {
         try {
             if (!$this->conexion) return [];
@@ -463,11 +421,7 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Obtiene vehículos activos filtrados por tipo, excluyendo los que ya
-     * ocupan un espacio en el parqueadero indicado.
-     * Si $idParqueadero = 0 devuelve todos (sin filtro de ocupación).
-     */
+    // ── MODIFICADO: excluye vehículos ocupando espacio en CUALQUIER parqueadero
     public function obtenerVehiculosPorTipo(string $tipo, int $idParqueadero = 0): array {
         try {
             if (!$this->conexion) return [];
@@ -476,42 +430,29 @@ class ModeloParqueadero {
                 "=== MODELO: obtenerVehiculosPorTipo — Tipo: $tipo, Parqueadero: $idParqueadero ===\n",
                 FILE_APPEND);
 
-            if ($idParqueadero > 0) {
-                // Excluir vehículos que ya están asignados a un espacio Ocupado
-                // en este parqueadero específico
-                $sql = "SELECT v.IdVehiculo, v.PlacaVehiculo, v.TipoVehiculo, v.DescripcionVehiculo,
-                               f.NombreFuncionario, vis.NombreVisitante
-                        FROM vehiculo v
-                        LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
-                        LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
-                        WHERE v.TipoVehiculo = :tipo
-                          AND v.Estado = 'Activo'
-                          AND v.IdVehiculo NOT IN (
-                              SELECT ep.IdVehiculo
-                              FROM espacio_parqueadero ep
-                              WHERE ep.IdParqueadero = :idp
-                                AND ep.Estado        = 'Ocupado'
-                                AND ep.IdVehiculo    IS NOT NULL
-                          )
-                        ORDER BY v.PlacaVehiculo ASC";
-                $stmt = $this->conexion->prepare($sql);
-                $stmt->execute([':tipo' => $tipo, ':idp' => $idParqueadero]);
-            } else {
-                $sql = "SELECT v.IdVehiculo, v.PlacaVehiculo, v.TipoVehiculo, v.DescripcionVehiculo,
-                               f.NombreFuncionario, vis.NombreVisitante
-                        FROM vehiculo v
-                        LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
-                        LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
-                        WHERE v.TipoVehiculo = :tipo AND v.Estado = 'Activo'
-                        ORDER BY v.PlacaVehiculo ASC";
-                $stmt = $this->conexion->prepare($sql);
-                $stmt->execute([':tipo' => $tipo]);
-            }
+            // Se excluyen los vehículos que YA ocupan un espacio en CUALQUIER
+            // parqueadero — un vehículo físicamente solo puede estar en un lugar.
+            $sql = "SELECT v.IdVehiculo, v.PlacaVehiculo, v.TipoVehiculo, v.DescripcionVehiculo,
+                           f.NombreFuncionario, vis.NombreVisitante
+                    FROM vehiculo v
+                    LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
+                    LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                    WHERE v.TipoVehiculo = :tipo
+                      AND v.Estado = 'Activo'
+                      AND v.IdVehiculo NOT IN (
+                          SELECT ep.IdVehiculo
+                          FROM espacio_parqueadero ep
+                          WHERE ep.Estado     = 'Ocupado'
+                            AND ep.IdVehiculo IS NOT NULL
+                      )
+                    ORDER BY v.PlacaVehiculo ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':tipo' => $tipo]);
 
             $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             file_put_contents($this->debugPath,
-                count($resultado) . " vehículos disponibles de tipo $tipo (excluidos los ya ocupando espacio)\n",
+                count($resultado) . " vehículos disponibles de tipo $tipo (excluidos los ya ocupando cualquier espacio)\n",
                 FILE_APPEND);
             return $resultado;
 
@@ -521,9 +462,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Ocupa un espacio manualmente
-     */
     public function ocuparEspacio(int $idEspacio, int $idVehiculo): array {
         try {
             file_put_contents($this->debugPath,
@@ -532,6 +470,16 @@ class ModeloParqueadero {
 
             if (!$this->conexion) {
                 return ['success' => false, 'error' => 'Conexión no disponible'];
+            }
+
+            // Verificar que el vehículo no esté ya en otro parqueadero
+            $sqlVerificar = "SELECT COUNT(*) FROM espacio_parqueadero
+                             WHERE IdVehiculo = :idv AND Estado = 'Ocupado'";
+            $stmtV = $this->conexion->prepare($sqlVerificar);
+            $stmtV->execute([':idv' => $idVehiculo]);
+            if ((int)$stmtV->fetchColumn() > 0) {
+                file_put_contents($this->debugPath, "Vehículo $idVehiculo ya está en otro parqueadero\n", FILE_APPEND);
+                return ['success' => false, 'error' => 'Este vehículo ya se encuentra en otro parqueadero'];
             }
 
             $sql  = "UPDATE espacio_parqueadero
@@ -560,9 +508,6 @@ class ModeloParqueadero {
         }
     }
 
-    /**
-     * Libera un espacio manualmente
-     */
     public function liberarEspacio(int $idEspacio): array {
         try {
             file_put_contents($this->debugPath,
@@ -598,6 +543,5 @@ class ModeloParqueadero {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
-
 }
 ?>

@@ -214,9 +214,11 @@ try {
                 require_once $rutaPHPMailer;
 
                 $sql = "SELECT d.IdDispositivo, d.TipoDispositivo, d.MarcaDispositivo, d.NumeroSerial,
-                               d.QrDispositivo, f.NombreFuncionario, f.CorreoFuncionario
+                               d.QrDispositivo, f.NombreFuncionario, f.CorreoFuncionario,
+                               v.NombreVisitante, v.CorreoVisitante
                         FROM dispositivo d
                         LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
+                        LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
                         WHERE d.IdDispositivo = :id AND d.Estado = 'Activo'";
 
                 $stmt = $this->conexion->prepare($sql);
@@ -225,10 +227,19 @@ try {
 
                 if (!$dispositivo) throw new Exception('Dispositivo no encontrado o inactivo');
 
-                $correoDestinatario = $dispositivo['CorreoFuncionario'] ?? null;
-                $nombreDestinatario = $dispositivo['NombreFuncionario'] ?? null;
+                // ── Determinar destinatario: funcionario tiene prioridad, si no visitante ──
+                if (!empty($dispositivo['CorreoFuncionario'])) {
+                    $correoDestinatario = $dispositivo['CorreoFuncionario'];
+                    $nombreDestinatario = $dispositivo['NombreFuncionario'];
+                } elseif (!empty($dispositivo['CorreoVisitante'])) {
+                    $correoDestinatario = $dispositivo['CorreoVisitante'];
+                    $nombreDestinatario = $dispositivo['NombreVisitante'];
+                } else {
+                    $correoDestinatario = null;
+                    $nombreDestinatario = null;
+                }
 
-                if (!$correoDestinatario) throw new Exception('No se encontró correo electrónico del funcionario');
+                if (!$correoDestinatario) throw new Exception('No se encontró correo electrónico del funcionario ni del visitante');
                 if (empty($dispositivo['QrDispositivo'])) throw new Exception('Este dispositivo no tiene código QR generado');
 
                 $rutaQR = __DIR__ . '/../../Public/' . $dispositivo['QrDispositivo'];

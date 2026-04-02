@@ -1,7 +1,5 @@
 // ============================================================
 // ValidacionVehiculo.js
-// Lógica del FORMULARIO DE REGISTRO de vehículos +
-// Funciones globales de VehiculoLista y VehiculoSupervisor
 // ============================================================
 
 
@@ -32,13 +30,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 60000);
     }
 
-    // ── Validación en tiempo real: PLACA (máx 7) ─────────────────────────────
+    // ── Validación en tiempo real: PLACA ─────────────────────────────────────
     const inputPlaca = document.getElementById('PlacaVehiculo');
     if (inputPlaca) {
         inputPlaca.addEventListener('input', function (e) {
-            let valor = e.target.value.toUpperCase().replace(/[^A-Z0-9 -]/g, '');
+            let valor = e.target.value.toUpperCase().replace(/[^a-zA-Z\u00C0-\u024F0-9 \-]/gi, '');
             if (valor.length > 7) valor = valor.substring(0, 7);
             e.target.value = valor;
+
+            const tipoVehiculo = document.getElementById('TipoVehiculo')?.value || '';
+            if (tipoVehiculo === 'Bicicleta' && (valor === '' || valor === 'N-A' || valor === 'N A')) {
+                e.target.classList.remove('is-valid', 'is-invalid');
+                return;
+            }
 
             if (valor.length === 0) {
                 e.target.classList.remove('is-valid', 'is-invalid');
@@ -52,11 +56,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ── Validación en tiempo real: TARJETA (mín 11, máx 20) ──────────────────
+    // ── Validación en tiempo real: TARJETA ────────────────────────────────────
     const inputTarjeta = document.getElementById('TarjetaPropiedad');
     if (inputTarjeta) {
         inputTarjeta.addEventListener('input', function (e) {
-            let valor = e.target.value.replace(/[^a-zA-Z0-9 -]/g, '');
+            let valor = e.target.value.replace(/[^a-zA-Z\u00C0-\u024F0-9 \-]/g, '');
             if (valor.length > 20) valor = valor.substring(0, 20);
             e.target.value = valor;
 
@@ -68,6 +72,29 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 e.target.classList.remove('is-valid');
                 e.target.classList.add('is-invalid');
+            }
+        });
+    }
+
+    // ── Autocompletar placa cuando se selecciona Bicicleta ───────────────────
+    const selectTipo = document.getElementById('TipoVehiculo');
+    if (selectTipo && inputPlaca) {
+        selectTipo.addEventListener('change', function () {
+            if (this.value === 'Bicicleta') {
+                inputPlaca.value        = 'N-A';
+                inputPlaca.readOnly     = true;
+                inputPlaca.style.cursor = 'not-allowed';
+                inputPlaca.classList.add('bg-light');
+                inputPlaca.classList.remove('is-invalid');
+                inputPlaca.classList.add('is-valid');
+            } else {
+                if (inputPlaca.readOnly) {
+                    inputPlaca.value = '';
+                    inputPlaca.classList.remove('is-valid', 'is-invalid');
+                }
+                inputPlaca.readOnly     = false;
+                inputPlaca.style.cursor = '';
+                inputPlaca.classList.remove('bg-light');
             }
         });
     }
@@ -95,30 +122,34 @@ document.addEventListener('DOMContentLoaded', function () {
         const idFuncionario = document.getElementById('IdFuncionario')?.value.trim() || '';
         const idVisitante   = document.getElementById('IdVisitante')?.value.trim()  || '';
 
-        const regexPlacaTarjeta = /^[a-zA-Z0-9 -]+$/;
-        const regexDescripcion  = /^[a-zA-Z0-9 .,-]+$/;
+        const regexPlacaTarjeta = /^[a-zA-Z\u00C0-\u024F0-9 \-]+$/;
+        const regexDescripcion  = /^[a-zA-Z\u00C0-\u024F0-9 .,\-]+$/;
         const regexIdSede       = /^\d+$/;
 
         if (!tipoVehiculo) {
             Swal.fire({ icon: 'error', title: 'Campo obligatorio', text: 'Debe seleccionar un tipo de vehículo', confirmButtonColor: '#e74a3b' });
             return;
         }
+
         if (!placa) {
             Swal.fire({ icon: 'error', title: 'Campo obligatorio', text: 'La placa del vehículo es obligatoria', confirmButtonColor: '#e74a3b' });
             return;
         }
-        if (placa.length < 3) {
-            Swal.fire({ icon: 'error', title: 'Placa muy corta', text: 'La placa debe tener al menos 3 caracteres', confirmButtonColor: '#e74a3b' });
-            return;
-        }
-        if (placa.length > 7) {
-            Swal.fire({ icon: 'error', title: 'Placa muy larga', text: 'La placa no puede tener más de 7 caracteres', confirmButtonColor: '#e74a3b' });
-            return;
+        if (tipoVehiculo !== 'Bicicleta') {
+            if (placa.length < 3) {
+                Swal.fire({ icon: 'error', title: 'Placa muy corta', text: 'La placa debe tener al menos 3 caracteres', confirmButtonColor: '#e74a3b' });
+                return;
+            }
+            if (placa.length > 7) {
+                Swal.fire({ icon: 'error', title: 'Placa muy larga', text: 'La placa no puede tener más de 7 caracteres', confirmButtonColor: '#e74a3b' });
+                return;
+            }
         }
         if (!regexPlacaTarjeta.test(placa)) {
-            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', html: 'La placa solo puede contener:<br>• Letras (A-Z)<br>• Números (0-9)<br>• Espacios<br>• Guiones (-)', confirmButtonColor: '#e74a3b' });
+            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', html: 'La placa solo puede contener:<br>• Letras (incluyendo tildes y ñ)<br>• Números (0-9)<br>• Espacios<br>• Guiones (-)', confirmButtonColor: '#e74a3b' });
             return;
         }
+
         if (!descripcion) {
             Swal.fire({ icon: 'error', title: 'Campo obligatorio', text: 'La descripción del vehículo es obligatoria', confirmButtonColor: '#e74a3b' });
             return;
@@ -128,9 +159,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         if (!regexDescripcion.test(descripcion)) {
-            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', text: 'La descripción contiene caracteres no válidos', confirmButtonColor: '#e74a3b' });
+            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', text: 'La descripción contiene caracteres no válidos. Use solo letras, números, espacios, puntos, comas y guiones.', confirmButtonColor: '#e74a3b' });
             return;
         }
+
         if (!tarjeta) {
             Swal.fire({ icon: 'error', title: 'Campo obligatorio', text: 'La tarjeta de propiedad es obligatoria', confirmButtonColor: '#e74a3b' });
             return;
@@ -144,9 +176,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         if (!regexPlacaTarjeta.test(tarjeta)) {
-            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', html: 'La tarjeta solo puede contener:<br>• Letras<br>• Números<br>• Espacios<br>• Guiones', confirmButtonColor: '#e74a3b' });
+            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', html: 'La tarjeta solo puede contener:<br>• Letras (incluyendo tildes y ñ)<br>• Números<br>• Espacios<br>• Guiones', confirmButtonColor: '#e74a3b' });
             return;
         }
+
         if (!regexIdSede.test(idSede)) {
             Swal.fire({ icon: 'error', title: 'ID de Sede inválido', text: 'Debe seleccionar una sede válida', confirmButtonColor: '#e74a3b' });
             return;
@@ -194,6 +227,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         form.reset();
                         document.getElementById('PlacaVehiculo')?.classList.remove('is-valid', 'is-invalid');
                         document.getElementById('TarjetaPropiedad')?.classList.remove('is-valid', 'is-invalid');
+                        const ip = document.getElementById('PlacaVehiculo');
+                        if (ip) { ip.readOnly = false; ip.style.cursor = ''; ip.classList.remove('bg-light'); }
                         document.getElementById('divFuncionario')?.classList.add('d-none');
                         document.getElementById('divVisitante')?.classList.add('d-none');
                         location.reload();
@@ -229,21 +264,33 @@ $(document).ready(function () {
 
     // ── DataTable — Administrador ─────────────────────────────────────────────
     if ($('#TablaVehiculos').length) {
+        if ($.fn.DataTable.isDataTable('#TablaVehiculos')) {
+            $('#TablaVehiculos').DataTable().destroy();
+        }
         $('#TablaVehiculos').DataTable({
             language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
             pageLength: 10,
             responsive: true,
-            order: [[0, 'desc']]
+            order: [[0, 'desc']],
+            // Desactivar búsqueda interna para no interferir con filtros PHP
+            searching: false,
+            orderClasses: false
         });
     }
 
     // ── DataTable — Supervisor ────────────────────────────────────────────────
     if ($('#TablaVehiculoSupervisor').length) {
+        if ($.fn.DataTable.isDataTable('#TablaVehiculoSupervisor')) {
+            $('#TablaVehiculoSupervisor').DataTable().destroy();
+        }
         $('#TablaVehiculoSupervisor').DataTable({
             language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
             pageLength: 10,
             responsive: true,
-            order: [[0, 'asc']]
+            order: [[0, 'asc']],
+            // Desactivar búsqueda interna para no interferir con filtros PHP
+            searching: false,
+            orderClasses: false
         });
     }
 
@@ -253,7 +300,7 @@ $(document).ready(function () {
         const tipo        = $('#editTipoVehiculo').val();
         const descripcion = $('#editDescripcionVehiculo').val().trim();
         const idsede      = $('#editIdSede').val();
-        const regexDesc   = /^[a-zA-Z0-9 .,-]+$/;
+        const regexDesc   = /^[a-zA-Z\u00C0-\u024F0-9 .,\-]+$/;
 
         if (!id || !tipo || !idsede) {
             Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Complete el Tipo de Vehículo y la Sede', confirmButtonColor: '#f6c23e' });
@@ -342,7 +389,7 @@ $(document).ready(function () {
         $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
     });
 
-    // ── Confirmar eliminación (Vehiculo.php) ──────────────────────────────────
+    // ── Confirmar eliminación ─────────────────────────────────────────────────
     $('#btnConfirmarEliminarVehiculo').on('click', function () {
         if (!window.vehiculoIdAEliminar) return;
 
@@ -376,7 +423,6 @@ $(document).ready(function () {
 // SECCIÓN 4 — FUNCIONES GLOBALES (Lista + Supervisor)
 // ══════════════════════════════════════════════════════════════
 
-// ── Ver QR ────────────────────────────────────────────────────────────────────
 function verQRVehiculo(rutaQR, idVehiculo) {
     var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
     $('#qrVehiculoId').text(idVehiculo);
@@ -385,8 +431,7 @@ function verQRVehiculo(rutaQR, idVehiculo) {
     $('#modalVerQRVehiculo').modal('show');
 }
 
-// ── Manejo de envío de QR (funcionario = automático / visitante = pide correo) ─
-function manejarEnvioQR(idVehiculo, placa, esFuncionario) {
+function manejarEnvioQR(idVehiculo, placa, esFuncionario, correoVisitante) {
     if (esFuncionario) {
         Swal.fire({
             title: '📧 Enviar Código QR',
@@ -402,10 +447,26 @@ function manejarEnvioQR(idVehiculo, placa, esFuncionario) {
         }).then(function (result) {
             if (result.isConfirmed) enviarQRVehiculo(idVehiculo, '', placa);
         });
+    } else if (correoVisitante) {
+        Swal.fire({
+            title: '📧 Enviar Código QR',
+            html: `<p>Se enviará el QR al <strong>correo registrado</strong> del visitante:</p>
+                   <p class="text-primary fw-bold">${correoVisitante}</p>
+                   <small class="text-muted">Placa: ${placa}</small>`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '<i class="fas fa-paper-plane"></i> Enviar',
+            cancelButtonText: '<i class="fas fa-times"></i> Cancelar',
+            reverseButtons: true
+        }).then(function (result) {
+            if (result.isConfirmed) enviarQRVehiculo(idVehiculo, '', placa);
+        });
     } else {
         Swal.fire({
             title: '📧 Enviar Código QR',
-            html: `<p class="mb-3">Ingresa el correo donde deseas recibir el QR del vehículo:</p>
+            html: `<p class="mb-3">El visitante no tiene correo registrado. Ingresa el correo destinatario:</p>
                    <p class="text-primary fw-bold">Placa: ${placa}</p>
                    <input type="email" id="correoInput" class="swal2-input" placeholder="ejemplo@correo.com" style="width:80%;">`,
             icon: 'question',
@@ -427,7 +488,6 @@ function manejarEnvioQR(idVehiculo, placa, esFuncionario) {
     }
 }
 
-// ── Envío real del QR por correo ──────────────────────────────────────────────
 function enviarQRVehiculo(idVehiculo, correoDestinatario, placa) {
     Swal.fire({
         title: 'Enviando correo...',
@@ -466,7 +526,6 @@ function enviarQRVehiculo(idVehiculo, correoDestinatario, placa) {
     });
 }
 
-// ── Cargar datos modal editar ─────────────────────────────────────────────────
 function cargarDatosEdicionVehiculo(row) {
     $('#editIdVehiculo').val(row.IdVehiculo);
     $('#editTipoVehiculo').val(row.TipoVehiculo);
@@ -490,7 +549,6 @@ function cargarDatosEdicionVehiculo(row) {
     $('#modalEditarVehiculo').modal('show');
 }
 
-// ── Confirmar cambio de estado — Supervisor ───────────────────────────────────
 function confirmarCambioEstadoVehiculo(id, estado) {
     window.vehiculoACambiarEstado = id;
     window.estadoActualVehiculo   = estado;
@@ -513,7 +571,6 @@ function confirmarCambioEstadoVehiculo(id, estado) {
     }, 100);
 }
 
-// ── Confirmar eliminación ─────────────────────────────────────────────────────
 function confirmarEliminacionVehiculo(id) {
     window.vehiculoIdAEliminar = id;
     $('#confirmarEliminarModalVehiculo').modal('show');
