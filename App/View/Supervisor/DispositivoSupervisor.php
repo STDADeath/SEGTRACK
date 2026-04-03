@@ -59,7 +59,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container-fluid px-4 py-4">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-laptop me-2"></i>Dispositivos Registrados</h1>
-        <a href="./Dispositivos.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="./DispoSuperRegis.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus me-1"></i> Nuevo Dispositivo
         </a>
     </div>
@@ -153,8 +153,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </label>
                         <select name="estado" id="estado" class="form-control">
                             <option value="">Todos</option>
-                            <option value="Activo"   <?= (isset($_GET['estado']) && $_GET['estado'] == 'Activo')   ? 'selected' : '' ?>>✅ Activo</option>
-                            <option value="Inactivo" <?= (isset($_GET['estado']) && $_GET['estado'] == 'Inactivo') ? 'selected' : '' ?>>❌ Inactivo</option>
+                            <option value="Activo"   <?= (isset($_GET['estado']) && $_GET['estado'] == 'Activo')   ? 'selected' : '' ?>>Activo</option>
+                            <option value="Inactivo" <?= (isset($_GET['estado']) && $_GET['estado'] == 'Inactivo') ? 'selected' : '' ?>>Inactivo</option>
                         </select>
                     </div>
 

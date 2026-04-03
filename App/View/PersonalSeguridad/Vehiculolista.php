@@ -152,8 +152,8 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         </label>
                         <select name="propietario" id="propietario" class="form-control">
                             <option value="">Todos</option>
-                            <option value="Funcionario" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Funcionario') ? 'selected' : '' ?>>👔 Funcionario</option>
-                            <option value="Visitante"   <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Visitante')   ? 'selected' : '' ?>>🧑 Visitante</option>
+                            <option value="Funcionario" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Funcionario') ? 'selected' : '' ?>> Funcionario</option>
+                            <option value="Visitante"   <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Visitante')   ? 'selected' : '' ?>> Visitante</option>
                         </select>
                     </div>
 
@@ -228,8 +228,6 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                 <!-- Visitante -->
                                 <td>
                                     <?php if (!empty($row['NombreVisitante'])) : ?>
-                                        <span class="badge bg-info text-dark">
-                                            <i class="fas fa-user me-1"></i>
                                             <?= htmlspecialchars($row['NombreVisitante']) ?>
                                         </span>
                                     <?php else : ?>
