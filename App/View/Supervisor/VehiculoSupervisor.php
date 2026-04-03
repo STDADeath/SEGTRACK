@@ -104,6 +104,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                             <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>> Bicicleta</option>
                             <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>> Moto</option>
                             <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>> Carro</option>
+                            <option value="Otro"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Otro')      ? 'selected' : '' ?>> Otro</option>
                         </select>
                     </div>
 
@@ -157,8 +158,8 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         </label>
                         <select name="propietario" id="propietario" class="form-control">
                             <option value="">Todos</option>
-                            <option value="Funcionario" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Funcionario') ? 'selected' : '' ?>> Funcionario</option>
-                            <option value="Visitante"   <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Visitante')   ? 'selected' : '' ?>> Visitante</option>
+                            <option value="Funcionario" <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Funcionario') ? 'selected' : '' ?>>👔 Funcionario</option>
+                            <option value="Visitante"   <?= (isset($_GET['propietario']) && $_GET['propietario'] == 'Visitante')   ? 'selected' : '' ?>>🧑 Visitante</option>
                         </select>
                     </div>
 
@@ -254,6 +255,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
                                 </td>
+
                                 <!-- Visitante -->
                                 <td>
                                     <?php if (!empty($row['NombreVisitante'])) : ?>
@@ -390,9 +392,16 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Propietario <small class="text-muted">(No editable)</small></label>
-                        <input type="text" id="editPropietarioDisabled" class="form-control bg-light" disabled>
+                    <!-- ✅ Campos Funcionario y Visitante separados -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Funcionario <small class="text-muted">(No editable)</small></label>
+                            <input type="text" id="editFuncionarioDisabled" class="form-control bg-light" disabled>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Visitante <small class="text-muted">(No editable)</small></label>
+                            <input type="text" id="editVisitanteDisabled" class="form-control bg-light" disabled>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -106,7 +106,8 @@ document.addEventListener('DOMContentLoaded', function () {
 // ══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form');
+    // ✅ FIX: apunta solo al formulario de registro, no a cualquier <form>
+    const form = document.getElementById('formRegistroVehiculo');
 
     if (!form) return;
 
@@ -272,7 +273,6 @@ $(document).ready(function () {
             pageLength: 10,
             responsive: true,
             order: [[0, 'desc']],
-            // Desactivar búsqueda interna para no interferir con filtros PHP
             searching: false,
             orderClasses: false
         });
@@ -288,7 +288,6 @@ $(document).ready(function () {
             pageLength: 10,
             responsive: true,
             order: [[0, 'asc']],
-            // Desactivar búsqueda interna para no interferir con filtros PHP
             searching: false,
             orderClasses: false
         });
@@ -526,6 +525,7 @@ function enviarQRVehiculo(idVehiculo, correoDestinatario, placa) {
     });
 }
 
+// ✅ FIX: campos Funcionario y Visitante separados en el modal de edición
 function cargarDatosEdicionVehiculo(row) {
     $('#editIdVehiculo').val(row.IdVehiculo);
     $('#editTipoVehiculo').val(row.TipoVehiculo);
@@ -534,13 +534,9 @@ function cargarDatosEdicionVehiculo(row) {
     $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
     $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
 
-    if (row.NombreFuncionario) {
-        $('#editPropietarioDisabled').val('Funcionario: ' + row.NombreFuncionario);
-    } else if (row.NombreVisitante) {
-        $('#editPropietarioDisabled').val('Visitante: ' + row.NombreVisitante);
-    } else {
-        $('#editPropietarioDisabled').val('Sin asignar');
-    }
+    // ✅ FIX: dos campos independientes en lugar de uno combinado
+    $('#editFuncionarioDisabled').val(row.NombreFuncionario || 'No aplica');
+    $('#editVisitanteDisabled').val(row.NombreVisitante || 'No aplica');
 
     var fechaHora = row.FechaDeVehiculo;
     if (fechaHora) fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
