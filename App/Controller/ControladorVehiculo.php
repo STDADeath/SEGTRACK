@@ -74,23 +74,31 @@ try {
             $IdVisitante         = $datos['IdVisitante']         ?? null;
             $FechaDeVehiculo     = date('Y-m-d H:i:s');
 
-            if ($this->campoVacio($TipoVehiculo))     return ['success' => false, 'message' => 'Falta el campo: Tipo de vehículo'];
-            if ($this->campoVacio($PlacaVehiculo))    return ['success' => false, 'message' => 'Falta el campo: Placa del vehículo'];
+            if ($this->campoVacio($TipoVehiculo))        return ['success' => false, 'message' => 'Falta el campo: Tipo de vehículo'];
+            if ($this->campoVacio($PlacaVehiculo))       return ['success' => false, 'message' => 'Falta el campo: Placa del vehículo'];
             if ($this->campoVacio($DescripcionVehiculo)) return ['success' => false, 'message' => 'Falta el campo: Descripción'];
-            if ($this->campoVacio($TarjetaPropiedad)) return ['success' => false, 'message' => 'Falta el campo: Tarjeta de propiedad'];
-            if ($this->campoVacio($IdSede))           return ['success' => false, 'message' => 'Falta el campo: Sede'];
-            if ($this->campoVacio($TipoPersona))      return ['success' => false, 'message' => 'Debe seleccionar si el vehículo es de un Funcionario o Visitante'];
+            if ($this->campoVacio($TarjetaPropiedad))    return ['success' => false, 'message' => 'Falta el campo: Tarjeta de propiedad'];
+            if ($this->campoVacio($IdSede))              return ['success' => false, 'message' => 'Falta el campo: Sede'];
+            if ($this->campoVacio($TipoPersona))         return ['success' => false, 'message' => 'Debe seleccionar si el vehículo es de un Funcionario o Visitante'];
             if ($TipoPersona === 'Funcionario' && $this->campoVacio($IdFuncionario)) return ['success' => false, 'message' => 'Debe seleccionar el funcionario'];
             if ($TipoPersona === 'Visitante'   && $this->campoVacio($IdVisitante))   return ['success' => false, 'message' => 'Debe seleccionar el visitante'];
 
             if ($TipoPersona === 'Funcionario') $IdVisitante   = null;
             if ($TipoPersona === 'Visitante')   $IdFuncionario = null;
 
+            // Normalizar placa de bicicleta siempre a "N-A"
+            if ($TipoVehiculo === 'Bicicleta') {
+                $PlacaVehiculo = 'N-A';
+            }
+
             try {
-                $placaExiste = $this->modelo->existePlaca($PlacaVehiculo);
-                if ($placaExiste['existe']) {
-                    $v = $placaExiste['vehiculo'];
-                    return ['success' => false, 'message' => "⚠️ La placa '{$PlacaVehiculo}' ya está registrada para un vehículo tipo '{$v['TipoVehiculo']}'."];
+                // ── Validar placa duplicada SOLO si NO es bicicleta (N-A puede repetirse)
+                if ($TipoVehiculo !== 'Bicicleta') {
+                    $placaExiste = $this->modelo->existePlaca($PlacaVehiculo);
+                    if ($placaExiste['existe']) {
+                        $v = $placaExiste['vehiculo'];
+                        return ['success' => false, 'message' => "⚠️ La placa '{$PlacaVehiculo}' ya está registrada para un vehículo tipo '{$v['TipoVehiculo']}'."];
+                    }
                 }
 
                 $tarjetaExiste = $this->modelo->existeTarjetaPropiedad($TarjetaPropiedad);
@@ -112,7 +120,7 @@ try {
 
                     return [
                         'success' => true,
-                        'message' => "Vehículo registrado correctamente con ID: $idVehiculo",
+                        'message' => "Vehículo registrado correctamente",
                         'data'    => ['IdVehiculo' => $idVehiculo, 'QrVehiculo' => $rutaQR, 'FechaRegistro' => $FechaDeVehiculo]
                     ];
                 }
@@ -164,41 +172,50 @@ try {
             }
         }
 
+        // ── NUEVO: Obtener funcionarios y visitantes por sede ─────────────────
+        public function obtenerPersonasPorSede(int $idSede): array {
+            try {
+                $funcionarios = $this->modelo->obtenerFuncionariosPorSede($idSede);
+                $visitantes   = $this->modelo->obtenerVisitantesPorSede($idSede);
+                return [
+                    'success'      => true,
+                    'funcionarios' => $funcionarios,
+                    'visitantes'   => $visitantes
+                ];
+            } catch (Exception $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
         // ── Enviar QR por correo ──────────────────────────────────────────────
-        // 🆕 LÓGICA: Si el vehículo tiene IdFuncionario → usa CorreoFuncionario
-        //            automáticamente. Si tiene IdVisitante → usa el correo
-        //            que llega en el POST (ingresado manualmente).
         public function enviarQRPorCorreo(int $idVehiculo, string $correoManual = ''): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "enviarQRPorCorreo vehículo ID: $idVehiculo\n", FILE_APPEND);
 
             try {
-                // Obtener vehículo
                 $vehiculo = $this->modelo->obtenerPorId($idVehiculo);
                 if (!$vehiculo)                       throw new Exception('Vehículo no encontrado');
                 if ($vehiculo['Estado'] !== 'Activo') throw new Exception('El vehículo no está activo');
                 if (empty($vehiculo['QrVehiculo']))   throw new Exception('Este vehículo no tiene código QR generado');
 
-                // ── 🆕 Determinar correo destino ──────────────────────────────
                 $correoDestino = '';
-                $nombreDestino = '';
                 $esFuncionario = !empty($vehiculo['IdFuncionario']);
 
                 if ($esFuncionario) {
-                    // Obtener correo automáticamente desde la tabla funcionario
                     $correoDestino = $this->modelo->obtenerCorreoFuncionarioPorVehiculo($idVehiculo);
                     if (empty($correoDestino)) throw new Exception('El funcionario asociado no tiene correo registrado');
                     file_put_contents($this->carpetaDebug . '/debug_log.txt', "Correo automático de funcionario: $correoDestino\n", FILE_APPEND);
                 } else {
-                    // Visitante: usar correo ingresado manualmente
-                    $correoDestino = trim($correoManual);
-                    if (empty($correoDestino)) throw new Exception('Debe ingresar el correo del destinatario');
+                    $correoDestino = $this->modelo->obtenerCorreoVisitantePorVehiculo($idVehiculo);
+                    file_put_contents($this->carpetaDebug . '/debug_log.txt', "Correo visitante en BD: " . ($correoDestino ?? 'ninguno') . "\n", FILE_APPEND);
+                    if (empty($correoDestino)) {
+                        $correoDestino = trim($correoManual);
+                    }
+                    if (empty($correoDestino)) throw new Exception('El visitante no tiene correo registrado. Ingresa uno manualmente.');
                 }
 
-                // Validar formato del correo (aplica en ambos casos)
                 if (!filter_var($correoDestino, FILTER_VALIDATE_EMAIL))
                     throw new Exception('El correo electrónico no es válido: ' . $correoDestino);
 
-                // ── Cargar PHPMailer ──────────────────────────────────────────
                 $rutaPHPMailer = __DIR__ . '/../Libs/PHPMailer-master/src/PHPMailer.php';
                 $rutaSMTP      = __DIR__ . '/../Libs/PHPMailer-master/src/SMTP.php';
                 $rutaException = __DIR__ . '/../Libs/PHPMailer-master/src/Exception.php';
@@ -213,7 +230,6 @@ try {
                 $rutaQR = __DIR__ . '/../../Public/' . $vehiculo['QrVehiculo'];
                 if (!file_exists($rutaQR)) throw new Exception('El archivo QR no existe: ' . $rutaQR);
 
-                // ── Configurar y enviar correo ────────────────────────────────
                 $mail = new PHPMailer\PHPMailer\PHPMailer(true);
                 $mail->isSMTP();
                 $mail->Host       = 'smtp.gmail.com';
@@ -228,9 +244,9 @@ try {
                 $mail->addAddress($correoDestino);
                 $mail->addAttachment($rutaQR, 'QR-Vehiculo-' . $idVehiculo . '.png');
                 $rutaLogo = __DIR__ . '/../../Public/img/LOGO_SEGTRACK-re-con.png';
-                    if (file_exists($rutaLogo)) {
-                        $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
-                    }
+                if (file_exists($rutaLogo)) {
+                    $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
+                }
 
                 $mail->isHTML(true);
                 $mail->Subject = 'Código QR - Vehículo Registrado';
@@ -296,8 +312,7 @@ try {
             }
         }
 
-        // ── 🆕 Verificar si un vehículo pertenece a un funcionario ──────────
-        // Usado por el frontend para saber si debe pedir correo o no.
+        // ── Verificar tipo de propietario ─────────────────────────────────────
         public function obtenerTipoPropietario(int $idVehiculo): array {
             try {
                 $vehiculo = $this->modelo->obtenerPorId($idVehiculo);
@@ -345,8 +360,6 @@ try {
             : ['success' => false, 'message' => 'ID de vehículo no válido'];
 
     } elseif ($accion === 'enviar_qr') {
-        // 🆕 correo_destinatario solo es obligatorio si es Visitante;
-        //    para Funcionario el controlador lo obtiene automáticamente
         $id     = isset($_POST['id_vehiculo']) ? (int)$_POST['id_vehiculo'] : 0;
         $correo = $_POST['correo_destinatario'] ?? '';
         $resultado = $id > 0
@@ -354,11 +367,17 @@ try {
             : ['success' => false, 'message' => 'ID de vehículo no válido'];
 
     } elseif ($accion === 'obtener_tipo_propietario') {
-        // 🆕 Acción auxiliar: el JS la llama para saber si pedir correo o no
         $id        = isset($_POST['id_vehiculo']) ? (int)$_POST['id_vehiculo'] : 0;
         $resultado = $id > 0
             ? $controlador->obtenerTipoPropietario($id)
             : ['success' => false, 'message' => 'ID no válido'];
+
+    // ── NUEVO ─────────────────────────────────────────────────────────────────
+    } elseif ($accion === 'obtener_personas_por_sede') {
+        $idSede    = isset($_POST['id_sede']) ? (int)$_POST['id_sede'] : 0;
+        $resultado = $idSede > 0
+            ? $controlador->obtenerPersonasPorSede($idSede)
+            : ['success' => false, 'message' => 'ID de sede no válido'];
 
     } else {
         $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];

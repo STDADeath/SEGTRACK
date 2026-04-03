@@ -10,18 +10,7 @@ $sqlSedes  = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' 
 $stmtSedes = $conn->prepare($sqlSedes);
 $stmtSedes->execute();
 $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
-
-// Funcionarios activos
-$sqlFuncionarios  = "SELECT IdFuncionario, NombreFuncionario FROM funcionario WHERE Estado = 'Activo' ORDER BY NombreFuncionario ASC";
-$stmtFuncionarios = $conn->prepare($sqlFuncionarios);
-$stmtFuncionarios->execute();
-$funcionarios = $stmtFuncionarios->fetchAll(PDO::FETCH_ASSOC);
-
-// Visitantes activos
-$sqlVisitantes  = "SELECT IdVisitante, NombreVisitante FROM visitante WHERE Estado = 'Activo' ORDER BY NombreVisitante ASC";
-$stmtVisitantes = $conn->prepare($sqlVisitantes);
-$stmtVisitantes->execute();
-$visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
+// Ya NO se precargan funcionarios ni visitantes — se cargan dinámicamente por sede
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -63,7 +52,6 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
                             </div>
 
                             <!-- Placa -->
-                            <!-- ✅ FIX: maxlength=7 (varchar(7) en BD), pattern sin \s -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Placa <span class="text-danger">*</span>
@@ -84,7 +72,6 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
                         </div>
 
                         <!-- Descripción -->
-                        <!-- ✅ FIX: pattern sin \s -->
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
                                 Descripción <span class="text-danger">*</span>
@@ -103,7 +90,6 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="row">
                             <!-- Tarjeta de Propiedad -->
-                            <!-- ✅ FIX: pattern sin \s -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
                                     Tarjeta de Propiedad <span class="text-danger">*</span>
@@ -155,6 +141,9 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
                                     <?php endforeach; ?>
                                 </select>
                             </div>
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i> Al seleccionar la sede se cargarán sus funcionarios y visitantes
+                            </small>
                         </div>
 
                         <!-- Tipo de Propietario -->
@@ -164,8 +153,8 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
                             </label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                                <select class="form-select" name="TipoPersona" id="TipoPersona" required>
-                                    <option value="">Seleccione tipo de propietario...</option>
+                                <select class="form-select" name="TipoPersona" id="TipoPersona" required disabled>
+                                    <option value="">Primero seleccione una sede...</option>
                                     <option value="Funcionario">Funcionario</option>
                                     <option value="Visitante">Visitante</option>
                                 </select>
@@ -184,11 +173,6 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
                                 <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
                                 <select class="form-select" name="IdFuncionario" id="IdFuncionario">
                                     <option value="">Seleccione un funcionario...</option>
-                                    <?php foreach ($funcionarios as $f) : ?>
-                                        <option value="<?= $f['IdFuncionario'] ?>">
-                                            <?= htmlspecialchars($f['NombreFuncionario']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -202,11 +186,6 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 <select class="form-select" name="IdVisitante" id="IdVisitante">
                                     <option value="">Seleccione un visitante...</option>
-                                    <?php foreach ($visitantes as $v) : ?>
-                                        <option value="<?= $v['IdVisitante'] ?>">
-                                            <?= htmlspecialchars($v['NombreVisitante']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -242,6 +221,82 @@ $visitantes = $stmtVisitantes->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <script>
+// ── Filtrar funcionarios/visitantes al cambiar sede ──────────────────────────
+document.getElementById('IdSede').addEventListener('change', function () {
+    const idSede     = this.value;
+    const selTipo    = document.getElementById('TipoPersona');
+    const selF       = document.getElementById('IdFuncionario');
+    const selV       = document.getElementById('IdVisitante');
+    const divF       = document.getElementById('divFuncionario');
+    const divV       = document.getElementById('divVisitante');
+
+    // Resetear todo al cambiar de sede
+    selTipo.value    = '';
+    selTipo.disabled = true;
+    selF.innerHTML   = '<option value="">Seleccione un funcionario...</option>';
+    selV.innerHTML   = '<option value="">Seleccione un visitante...</option>';
+    divF.classList.add('d-none');
+    divV.classList.add('d-none');
+    selF.required    = false;
+    selV.required    = false;
+
+    if (!idSede) {
+        selTipo.innerHTML = '<option value="">Primero seleccione una sede...</option>'
+                          + '<option value="Funcionario">Funcionario</option>'
+                          + '<option value="Visitante">Visitante</option>';
+        return;
+    }
+
+    // Mostrar carga
+    selTipo.innerHTML = '<option value="">Cargando personas...</option>';
+
+    const formData = new FormData();
+    formData.append('accion',  'obtener_personas_por_sede');
+    formData.append('id_sede', idSede);
+
+    fetch('../../Controller/ControladorVehiculo.php', { method: 'POST', body: formData })
+        .then(r => r.json())
+        .then(data => {
+            // Restaurar opciones del select tipo
+            selTipo.innerHTML = '<option value="">Seleccione tipo de propietario...</option>'
+                              + '<option value="Funcionario">Funcionario</option>'
+                              + '<option value="Visitante">Visitante</option>';
+            selTipo.disabled = false;
+
+            if (!data.success) {
+                Swal.fire({ icon: 'warning', title: 'Aviso', text: data.message, confirmButtonColor: '#f6c23e' });
+                return;
+            }
+
+            // Poblar funcionarios
+            if (data.funcionarios.length === 0) {
+                selF.innerHTML = '<option value="" disabled>Sin funcionarios en esta sede</option>';
+            } else {
+                selF.innerHTML = '<option value="">Seleccione un funcionario...</option>';
+                data.funcionarios.forEach(f => {
+                    selF.innerHTML += `<option value="${f.IdFuncionario}">${f.NombreFuncionario}</option>`;
+                });
+            }
+
+            // Poblar visitantes
+            if (data.visitantes.length === 0) {
+                selV.innerHTML = '<option value="" disabled>Sin visitantes en esta sede</option>';
+            } else {
+                selV.innerHTML = '<option value="">Seleccione un visitante...</option>';
+                data.visitantes.forEach(v => {
+                    selV.innerHTML += `<option value="${v.IdVisitante}">${v.NombreVisitante}</option>`;
+                });
+            }
+        })
+        .catch(() => {
+            selTipo.innerHTML = '<option value="">Seleccione tipo de propietario...</option>'
+                              + '<option value="Funcionario">Funcionario</option>'
+                              + '<option value="Visitante">Visitante</option>';
+            selTipo.disabled = false;
+            Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudieron cargar las personas de la sede', confirmButtonColor: '#e74a3b' });
+        });
+});
+
 // ── Mostrar/ocultar select según tipo de propietario ─────────────────────────
 document.getElementById('TipoPersona').addEventListener('change', function () {
     const divF = document.getElementById('divFuncionario');

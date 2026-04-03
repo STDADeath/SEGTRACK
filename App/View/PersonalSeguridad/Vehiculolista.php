@@ -32,9 +32,14 @@ if (!empty($_GET['sede'])) {
     $filtros[] = "v.IdSede = :sede";
     $params[':sede'] = $_GET['sede'];
 }
+
+// ── FIX: filtro propietario corregido ────────────────────────────────────────
 if (!empty($_GET['propietario'])) {
-    if ($_GET['propietario'] === 'Funcionario')    $filtros[] = "v.IdFuncionario IS NOT NULL";
-    elseif ($_GET['propietario'] === 'Visitante')  $filtros[] = "v.IdVisitante IS NOT NULL";
+    if ($_GET['propietario'] === 'Funcionario') {
+        $filtros[] = "v.IdFuncionario IS NOT NULL AND v.IdVisitante IS NULL";
+    } elseif ($_GET['propietario'] === 'Visitante') {
+        $filtros[] = "v.IdVisitante IS NOT NULL AND v.IdFuncionario IS NULL";
+    }
 }
 
 $where = "WHERE " . implode(" AND ", $filtros);
@@ -42,7 +47,8 @@ $where = "WHERE " . implode(" AND ", $filtros);
 $sql = "SELECT v.*,
                s.TipoSede, s.Ciudad,
                f.NombreFuncionario,
-               vis.NombreVisitante
+               vis.NombreVisitante,
+               vis.CorreoVisitante
         FROM vehiculo v
         LEFT JOIN sede        s   ON v.IdSede        = s.IdSede
         LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
@@ -89,9 +95,10 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         </label>
                         <select name="tipo" id="tipo" class="form-control">
                             <option value="">Todos</option>
-                            <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>>🚲 Bicicleta</option>
-                            <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>>🏍️ Moto</option>
-                            <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>>🚗 Carro</option>
+                            <option value="Bicicleta" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Bicicleta') ? 'selected' : '' ?>> Bicicleta</option>
+                            <option value="Moto"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Moto')      ? 'selected' : '' ?>> Moto</option>
+                            <option value="Carro"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Carro')     ? 'selected' : '' ?>> Carro</option>
+                            <option value="Otro"      <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Otro')      ? 'selected' : '' ?>> Otro</option>
                         </select>
                     </div>
 
@@ -177,7 +184,8 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         <th>Descripción</th>
                         <th>Tarjeta Propiedad</th>
                         <th>Fecha Registro</th>
-                        <th>Propietario</th>
+                        <th>Funcionario</th>
+                        <th>Visitante</th>
                         <th>Sede</th>
                         <th>Acciones</th>
                     </tr>
@@ -196,7 +204,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                         </button>
                                         <br>
                                         <button type="button" class="btn btn-sm btn-outline-info mt-1"
-                                                onclick="manejarEnvioQR(<?= $row['IdVehiculo'] ?>, '<?= htmlspecialchars($row['PlacaVehiculo']) ?>', <?= !empty($row['IdFuncionario']) ? 'true' : 'false' ?>)"
+                                                onclick="manejarEnvioQR(<?= $row['IdVehiculo'] ?>, '<?= htmlspecialchars($row['PlacaVehiculo']) ?>', <?= !empty($row['IdFuncionario']) ? 'true' : 'false' ?>, '<?= htmlspecialchars($row['CorreoVisitante'] ?? '') ?>')"
                                                 title="Enviar QR por correo">
                                             <i class="fas fa-envelope me-1"></i> Enviar
                                         </button>
@@ -209,17 +217,23 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= htmlspecialchars($row['DescripcionVehiculo']) ?></td>
                                 <td><?= htmlspecialchars($row['TarjetaPropiedad']) ?></td>
                                 <td><?= htmlspecialchars($row['FechaDeVehiculo']) ?></td>
-                                <!-- Propietario -->
+                                <!-- Funcionario -->
                                 <td>
                                     <?php if (!empty($row['NombreFuncionario'])) : ?>
                                         <?= htmlspecialchars($row['NombreFuncionario']) ?>
-                                    <?php elseif (!empty($row['NombreVisitante'])) : ?>
+                                    <?php else : ?>
+                                        <span class="badge bg-info text-white">No aplica</span>
+                                    <?php endif; ?>
+                                </td>
+                                <!-- Visitante -->
+                                <td>
+                                    <?php if (!empty($row['NombreVisitante'])) : ?>
                                         <span class="badge bg-info text-dark">
                                             <i class="fas fa-user me-1"></i>
                                             <?= htmlspecialchars($row['NombreVisitante']) ?>
                                         </span>
                                     <?php else : ?>
-                                        <span class="badge bg-secondary">Sin asignar</span>
+                                        <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
                                 </td>
                                 <!-- Sede -->
@@ -242,7 +256,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="9" class="text-center py-4">
+                            <td colspan="10" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay vehículos activos registrados con los filtros seleccionados</p>
                             </td>
@@ -331,9 +345,15 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Propietario <small class="text-muted">(No editable)</small></label>
-                        <input type="text" id="editPropietarioDisabled" class="form-control bg-light" disabled>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Funcionario <small class="text-muted">(No editable)</small></label>
+                            <input type="text" id="editFuncionarioDisabled" class="form-control bg-light" disabled>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Visitante <small class="text-muted">(No editable)</small></label>
+                            <input type="text" id="editVisitanteDisabled" class="form-control bg-light" disabled>
+                        </div>
                     </div>
                 </form>
             </div>

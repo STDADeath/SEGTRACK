@@ -6,7 +6,6 @@ class ModeloVehiculo {
     private $logPath;
 
     public function __construct() {
-        // ✅ CORREGIDO: apunta a Debug_Vehiculo del controlador (antes era vehiculo_dispositivo que no existe)
         $this->logPath = __DIR__ . '/../Controller/Debug_Vehiculo/debug_log.txt';
 
         $carpetaDebug = dirname($this->logPath);
@@ -268,6 +267,38 @@ class ModeloVehiculo {
         }
     }
 
+    // ── NUEVO: Funcionarios filtrados por sede ────────────────────────────────
+    public function obtenerFuncionariosPorSede(int $idSede): array {
+        try {
+            $sql  = "SELECT IdFuncionario, NombreFuncionario 
+                     FROM funcionario 
+                     WHERE IdSede = :idSede AND Estado = 'Activo' 
+                     ORDER BY NombreFuncionario ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':idSede' => $idSede]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerFuncionariosPorSede: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
+        }
+    }
+
+    // ── NUEVO: Visitantes filtrados por sede ──────────────────────────────────
+    public function obtenerVisitantesPorSede(int $idSede): array {
+        try {
+            $sql  = "SELECT IdVisitante, NombreVisitante 
+                     FROM visitante 
+                     WHERE IdSede = :idSede AND Estado = 'Activo' 
+                     ORDER BY NombreVisitante ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':idSede' => $idSede]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerVisitantesPorSede: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
+        }
+    }
+
     public function obtenerCorreoFuncionarioPorVehiculo(int $idVehiculo): ?string {
         try {
             $sql = "SELECT f.CorreoFuncionario
@@ -281,6 +312,23 @@ class ModeloVehiculo {
             return $row['CorreoFuncionario'] ?? null;
         } catch (PDOException $e) {
             file_put_contents($this->logPath, "❌ Error en obtenerCorreoFuncionarioPorVehiculo: " . $e->getMessage() . "\n", FILE_APPEND);
+            return null;
+        }
+    }
+
+    public function obtenerCorreoVisitantePorVehiculo(int $idVehiculo): ?string {
+        try {
+            $sql = "SELECT v2.CorreoVisitante
+                    FROM vehiculo v
+                    INNER JOIN visitante v2 ON v.IdVisitante = v2.IdVisitante
+                    WHERE v.IdVehiculo = :id
+                    LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idVehiculo]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['CorreoVisitante'] ?? null;
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerCorreoVisitantePorVehiculo: " . $e->getMessage() . "\n", FILE_APPEND);
             return null;
         }
     }

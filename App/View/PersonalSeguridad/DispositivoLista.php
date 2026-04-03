@@ -40,7 +40,8 @@ $sql = "SELECT
             d.*,
             f.NombreFuncionario,
             f.CorreoFuncionario,
-            v.NombreVisitante
+            v.NombreVisitante,
+            v.CorreoVisitante
         FROM dispositivo d
         LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
         LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
@@ -149,8 +150,10 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
                             <?php
-                            $correoDisponible = $row['CorreoFuncionario'] ?? '';
-                            $tieneCorreo      = !empty($correoDisponible);
+                            $correoDisponible = !empty($row['CorreoFuncionario'])
+                                ? $row['CorreoFuncionario']
+                                : ($row['CorreoVisitante'] ?? '');
+                            $tieneCorreo = !empty($correoDisponible);
                             ?>
                             <tr id="fila-<?= $row['IdDispositivo'] ?>">
                                 <td class="text-center">
@@ -163,7 +166,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <button type="button"
                                                 class="btn btn-sm btn-outline-info <?= !$tieneCorreo ? 'disabled' : '' ?>"
                                                 onclick="enviarQRPorCorreo(<?= $row['IdDispositivo'] ?>, '<?= htmlspecialchars($correoDisponible) ?>')"
-                                                title="<?= $tieneCorreo ? 'Enviar QR por correo' : 'Solo funcionarios pueden recibir correo' ?>"
+                                                title="<?= $tieneCorreo ? 'Enviar QR por correo' : 'No hay correo registrado' ?>"
                                                 <?= !$tieneCorreo ? 'disabled' : '' ?>>
                                             <i class="fas fa-envelope me-1"></i> Enviar
                                         </button>
