@@ -138,3 +138,7 @@
 2026-03-30 04:50:29 - Foto guardada para funcionario 98: qr/Fotos/FOTO-FUNC-98-69c9e4f543aa9.jpg
 2026-03-30 04:50:29 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-98-69c9e4f54552d.png
 2026-03-30 04:50:32 - Correo enviado correctamente a carlos.ramirez.seg@gmail.com
+2026-04-03 08:10:10 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-99-69cf59c203ce3.jpg
+2026-04-03 08:10:10 - Foto guardada para funcionario 99: qr/Fotos/FOTO-FUNC-99-69cf59c203ce3.jpg
+2026-04-03 08:10:10 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC--69cf59c2056e1.png
+2026-04-03 08:10:13 - Correo enviado correctamente a Carrimorro8080@gmail.com

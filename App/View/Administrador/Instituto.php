@@ -123,10 +123,6 @@ if (isset($_GET['IdInstitucion']) && is_numeric($_GET['IdInstitucion'])) {
                             <option value="">Seleccione tipo...</option>
                             <option value="Universidad" <?php echo ($modoEdicion && $institucion['TipoInstitucion'] == 'Universidad') ? 'selected' : ''; ?>>Universidad</option>
                             <option value="Colegio"     <?php echo ($modoEdicion && $institucion['TipoInstitucion'] == 'Colegio')     ? 'selected' : ''; ?>>Colegio</option>
-                            <option value="Empresa"     <?php echo ($modoEdicion && $institucion['TipoInstitucion'] == 'Empresa')     ? 'selected' : ''; ?>>Empresa</option>
-                            <option value="ONG"         <?php echo ($modoEdicion && $institucion['TipoInstitucion'] == 'ONG')         ? 'selected' : ''; ?>>ONG</option>
-                            <option value="Hospital"    <?php echo ($modoEdicion && $institucion['TipoInstitucion'] == 'Hospital')    ? 'selected' : ''; ?>>Hospital</option>
-                            <option value="Otro"        <?php echo ($modoEdicion && $institucion['TipoInstitucion'] == 'Otro')        ? 'selected' : ''; ?>>Otro</option>
                         </select>
                     </div>
 

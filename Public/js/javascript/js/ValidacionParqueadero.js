@@ -1,10 +1,3 @@
-// ============================================================
-// ValidacionParqueadero.js
-// Lógica JS del módulo Parqueadero
-// Admin (ParqueaderoAdmin.php) + Guardia (ParqueaderoGuardia.php)
-// ============================================================
-
-
 // ══════════════════════════════════════════════════════════════
 // SECCIÓN 1 — ADMINISTRADOR (ParqueaderoAdmin.php)
 // ══════════════════════════════════════════════════════════════

@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_superior_supervisor.php'; ?>
 <?php require_once(__DIR__ . "/../../Core/conexion.php"); ?>
 
 <?php
@@ -20,7 +20,7 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
             <!-- Header -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-car me-2"></i>Registrar Vehículo</h1>
-                <a href="./VehiculoLista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+                <a href="./VehiculoSupervisor.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
                     <i class="fas fa-list me-1"></i> Ver Vehículos
                 </a>
             </div>
@@ -174,7 +174,7 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
 
                         <!-- Botones -->
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='./VehiculoLista.php'">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='./VehiSuperRegis.php'">
                                 <i class="fas fa-arrow-left me-1"></i> Volver
                             </button>
                             <button type="submit" class="btn btn-primary">
@@ -308,4 +308,4 @@ document.getElementById('TipoPersona').addEventListener('change', function () {
 
 <script src="../../../Public/js/javascript/js/ValidacionVehiculo.js"></script>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>

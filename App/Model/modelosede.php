@@ -1,6 +1,9 @@
 <?php
 // ======================================================================
 // MODELO: ModeloSede
+// Responsabilidad: SOLO consultas SQL preparadas, sin lógica de negocio.
+// La validación de duplicados, respuestas JSON y decisiones
+// son responsabilidad del ControladorSede.
 // ======================================================================
 
 require_once __DIR__ . "/../Core/Conexion.php";
@@ -17,23 +20,11 @@ class ModeloSede
 
     // ══════════════════════════════════════════════════════
     // REGISTRAR SEDE
+    // Inserta una nueva sede. Retorna true si se insertó.
     // ══════════════════════════════════════════════════════
     public function registrarSede($tipoSede, $ciudad, $idInstitucion)
     {
         try {
-            $checkSql = "SELECT IdSede FROM sede
-                         WHERE TipoSede = :tipo AND Ciudad = :ciudad
-                         LIMIT 1";
-            $check = $this->conexion->prepare($checkSql);
-            $check->execute([':tipo' => $tipoSede, ':ciudad' => $ciudad]);
-
-            if ($check->fetch()) {
-                return [
-                    'success' => false,
-                    'message' => 'Ya existe una sede con ese nombre en esa ciudad.'
-                ];
-            }
-
             $sql = "INSERT INTO sede (TipoSede, Ciudad, IdInstitucion, Estado)
                     VALUES (:tipo, :ciudad, :institucion, 'Activo')";
 
@@ -43,20 +34,39 @@ class ModeloSede
             $stmt->bindParam(':institucion', $idInstitucion, PDO::PARAM_INT);
             $stmt->execute();
 
-            return ['success' => true, 'message' => 'Sede registrada exitosamente.'];
+            return $stmt->rowCount() > 0;
 
         } catch (PDOException $e) {
-            if ($e->getCode() == 23000) {
-                return ['success' => false,
-                        'message' => 'La institución seleccionada no existe.'];
-            }
             error_log("Error PDO (registrar sede): " . $e->getMessage());
-            return ['success' => false, 'message' => 'Error inesperado al registrar.'];
+            return false;
+        }
+    }
+
+    // ══════════════════════════════════════════════════════
+    // VERIFICAR SI YA EXISTE UNA SEDE CON ESE TIPO Y CIUDAD
+    // Retorna true si ya existe (el controlador decide qué hacer).
+    // ══════════════════════════════════════════════════════
+    public function existeSede($tipoSede, $ciudad)
+    {
+        try {
+            $sql = "SELECT IdSede FROM sede
+                    WHERE TipoSede = :tipo AND Ciudad = :ciudad
+                    LIMIT 1";
+
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':tipo' => $tipoSede, ':ciudad' => $ciudad]);
+            return $stmt->fetch() !== false;
+
+        } catch (PDOException $e) {
+            error_log("Error PDO (existeSede): " . $e->getMessage());
+            return false;
         }
     }
 
     // ══════════════════════════════════════════════════════
     // EDITAR SEDE
+    // Actualiza TipoSede, Ciudad e IdInstitucion.
+    // Retorna true si se actualizó al menos una fila.
     // ══════════════════════════════════════════════════════
     public function editarSede($idSede, $tipoSede, $ciudad, $idInstitucion)
     {
@@ -74,12 +84,11 @@ class ModeloSede
             $stmt->bindParam(':id',          $idSede,        PDO::PARAM_INT);
             $stmt->execute();
 
-            return ['success' => true, 'message' => 'Sede actualizada exitosamente.'];
+            return $stmt->rowCount() > 0;
 
         } catch (PDOException $e) {
             error_log("Error PDO (editar sede): " . $e->getMessage());
-            return ['success' => false,
-                    'message' => 'Error inesperado al editar la sede.'];
+            return false;
         }
     }
 
@@ -97,7 +106,7 @@ class ModeloSede
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':id', $idSede, PDO::PARAM_INT);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 
         } catch (PDOException $e) {
             error_log("Error (obtener sede por ID): " . $e->getMessage());
@@ -106,42 +115,45 @@ class ModeloSede
     }
 
     // ══════════════════════════════════════════════════════
-    // CAMBIAR ESTADO (toggle Activo / Inactivo)
+    // OBTENER ESTADO ACTUAL DE UNA SEDE
+    // Solo devuelve el campo Estado para que el controlador
+    // calcule el nuevo estado y llame a actualizarEstado().
     // ══════════════════════════════════════════════════════
-    public function cambiarEstado($idSede)
+    public function obtenerEstado($idSede)
     {
         try {
-            $sqlSelect = "SELECT Estado FROM sede WHERE IdSede = :id LIMIT 1";
-            $stmt = $this->conexion->prepare($sqlSelect);
+            $sql  = "SELECT Estado FROM sede WHERE IdSede = :id LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':id', $idSede, PDO::PARAM_INT);
             $stmt->execute();
-            $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$data) {
-                return ['success' => false, 'message' => 'Sede no encontrada.'];
-            }
-
-            $nuevoEstado = ($data['Estado'] === 'Activo') ? 'Inactivo' : 'Activo';
-
-            $sqlUpdate = "UPDATE sede SET Estado = :estado WHERE IdSede = :id";
-            $update    = $this->conexion->prepare($sqlUpdate);
-            $exito     = $update->execute([':estado' => $nuevoEstado, ':id' => $idSede]);
-
-            if ($exito) {
-                return ['success' => true,
-                        'message' => 'Estado cambiado a ' . $nuevoEstado . '.'];
-            }
-            return ['success' => false, 'message' => 'Error al actualizar el estado.'];
+            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $fila ? $fila['Estado'] : null;
 
         } catch (PDOException $e) {
-            error_log("Error (cambiar estado sede): " . $e->getMessage());
-            return ['success' => false,
-                    'message' => 'Error de servidor al cambiar estado.'];
+            error_log("Error (obtenerEstado sede): " . $e->getMessage());
+            return null;
         }
     }
 
     // ══════════════════════════════════════════════════════
-    // OBTENER INSTITUCIONES
+    // ACTUALIZAR ESTADO
+    // ══════════════════════════════════════════════════════
+    public function actualizarEstado($idSede, $nuevoEstado)
+    {
+        try {
+            $sql  = "UPDATE sede SET Estado = :estado WHERE IdSede = :id";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':estado' => $nuevoEstado, ':id' => $idSede]);
+            return $stmt->rowCount() > 0;
+
+        } catch (PDOException $e) {
+            error_log("Error (actualizarEstado sede): " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // ══════════════════════════════════════════════════════
+    // OBTENER INSTITUCIONES (para formularios)
     // ══════════════════════════════════════════════════════
     public function obtenerInstituciones()
     {
@@ -161,25 +173,43 @@ class ModeloSede
     }
 
     // ══════════════════════════════════════════════════════
-    // OBTENER TODAS LAS SEDES (con JOIN para la tabla lista)
+    // OBTENER TODAS LAS SEDES
     // ══════════════════════════════════════════════════════
-    public function obtenerSedes()
+    public function obtenerSedes($tipo = '', $ciudad = '', $estado = '')
     {
         try {
-            $query = "SELECT
-                          s.IdSede,
-                          s.TipoSede,
-                          s.Ciudad,
-                          s.Estado,
-                          s.IdInstitucion,
-                          i.NombreInstitucion
-                      FROM sede s
-                      INNER JOIN institucion i
-                             ON i.IdInstitucion = s.IdInstitucion
-                      ORDER BY s.TipoSede ASC";
+            $filtros = [];
+            $params  = [];
 
-            $stmt = $this->conexion->prepare($query);
-            $stmt->execute();
+            if ($tipo !== '') {
+                $filtros[] = "s.TipoSede LIKE :tipo";
+                $params[':tipo'] = '%' . $tipo . '%';
+            }
+            if ($ciudad !== '') {
+                $filtros[] = "s.Ciudad LIKE :ciudad";
+                $params[':ciudad'] = '%' . $ciudad . '%';
+            }
+            if ($estado !== '') {
+                $filtros[] = "s.Estado = :estado";
+                $params[':estado'] = $estado;
+            }
+
+            $where = $filtros ? "WHERE " . implode(" AND ", $filtros) : "";
+
+            $sql = "SELECT
+                        s.IdSede,
+                        s.TipoSede,
+                        s.Ciudad,
+                        s.Estado,
+                        s.IdInstitucion,
+                        i.NombreInstitucion
+                    FROM sede s
+                    INNER JOIN institucion i ON i.IdInstitucion = s.IdInstitucion
+                    $where
+                    ORDER BY s.TipoSede ASC";
+
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
@@ -189,16 +219,15 @@ class ModeloSede
     }
 
     // ══════════════════════════════════════════════════════
-    // ✅ OBTENER SEDES ACTIVAS — solo para selects/formularios
-    // Retorna IdSede y NombreSede (solo TipoSede, sin ciudad)
-    // Filtra únicamente las sedes con Estado = 'Activo'
+    // OBTENER SEDES ACTIVAS 
     // ══════════════════════════════════════════════════════
     public function obtenerSedesActivas()
     {
         try {
             $sql = "SELECT
                         IdSede,
-                        TipoSede AS NombreSede
+                        TipoSede      AS NombreSede,
+                        IdInstitucion
                     FROM sede
                     WHERE Estado = 'Activo'
                     ORDER BY TipoSede ASC";

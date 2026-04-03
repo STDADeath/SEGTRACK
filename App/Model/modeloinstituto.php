@@ -24,10 +24,6 @@ class ModeloInstituto
 
     // ══════════════════════════════════════════════════════
     // INSERTAR nueva institución
-    // Recibe array con todos los campos del formulario.
-    // DireccionInstitucion es obligatoria en BD (No nulo),
-    // si viene vacía se guarda string vacío '' en lugar de NULL.
-    // Detecta NIT duplicado con código PDO 23000.
     // ══════════════════════════════════════════════════════
     public function insertarInstituto(array $datos)
     {
@@ -70,8 +66,6 @@ class ModeloInstituto
 
     // ══════════════════════════════════════════════════════
     // LISTAR todas las instituciones
-    // Retorna todos los campos incluyendo DireccionInstitucion
-    // para que la tabla de la vista lo muestre correctamente.
     // ══════════════════════════════════════════════════════
     public function listarInstitutos()
     {
@@ -99,8 +93,6 @@ class ModeloInstituto
 
     // ══════════════════════════════════════════════════════
     // OBTENER una institución por ID
-    // Retorna todos los campos del registro o false si no existe.
-    // Usado para precargar datos en formulario/modal de edición.
     // ══════════════════════════════════════════════════════
     public function obtenerInstitutoPorId($id)
     {
@@ -119,9 +111,6 @@ class ModeloInstituto
 
     // ══════════════════════════════════════════════════════
     // EDITAR institución existente
-    // Actualiza todos los campos incluida DireccionInstitucion.
-    // Este era el método que no guardaba la dirección porque
-    // le faltaba el campo en el UPDATE y manejaba mal el NULL.
     // ══════════════════════════════════════════════════════
     public function editarInstituto(array $datos)
     {

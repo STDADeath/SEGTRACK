@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../layouts/parte_superior_administrador.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
 <?php require_once(__DIR__ . "/../../Core/conexion.php"); ?>
 <?php require_once(__DIR__ . "/../../Model/ModeloParqueadero.php"); ?>
 
@@ -448,4 +448,4 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
 
 <script src="/SEGTRACK/Public/js/javascript/js/ValidacionParqueadero.js"></script>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

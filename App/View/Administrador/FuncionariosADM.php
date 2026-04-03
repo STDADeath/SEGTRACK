@@ -1,9 +1,11 @@
 <?php
-require_once __DIR__ . '/../layouts/parte_superior_administrador.php';
+require_once __DIR__ . '/../layouts/parte_superior_Administrador.php';
 require_once __DIR__ . "/../../Controller/ControladorSede.php";
 
 $controladorSede = new ControladorSede();
 $sedes           = $controladorSede->obtenerSedesActivas();
+// ✅ NUEVO: cargar instituciones para el selector en cascada
+$instituciones   = $controladorSede->obtenerInstituciones();
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -122,7 +124,6 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                     class="form-control border-primary shadow-sm">
                                     <option value="">Seleccione...</option>
                                     <option value="Funcionario">Funcionario</option>
-                                    
                                 </select>
                                 <div class="invalid-feedback">Este campo es obligatorio.</div>
                             </div>
@@ -138,24 +139,17 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                 <div class="invalid-feedback">Mínimo 3 letras, solo caracteres válidos.</div>
                             </div>
 
-                            <!-- SEDE -->
+                            <!-- ✅ NUEVO: INSTITUCIÓN (selector en cascada) -->
                             <div class="col-md-4 mb-3">
-                                <label for="IdSede" class="form-label">Sede *</label>
-                                <select id="IdSede" name="IdSede"
+                                <label for="IdInstitucion" class="form-label">Institución *</label>
+                                <select id="IdInstitucion" name="IdInstitucion"
                                     class="form-control border-primary shadow-sm">
-
-                                    <option value="">Seleccione...</option>
-
-                                    <?php if (!empty($sedes)): ?>
-                                        <?php foreach ($sedes as $sede): ?>
-                                            <option value="<?= htmlspecialchars($sede['IdSede']) ?>">
-                                                <?= htmlspecialchars($sede['NombreSede']) ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <option value="" disabled>No hay sedes activas disponibles</option>
-                                    <?php endif; ?>
-
+                                    <option value="">Seleccione institución...</option>
+                                    <?php foreach ($instituciones as $inst): ?>
+                                        <option value="<?= htmlspecialchars($inst['IdInstitucion']) ?>">
+                                            <?= htmlspecialchars($inst['NombreInstitucion']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                                 <div class="invalid-feedback">Este campo es obligatorio.</div>
                             </div>
@@ -163,6 +157,17 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                         </div>
 
                         <div class="row">
+
+                            <!-- ✅ NUEVO: SEDE (se carga según institución seleccionada) -->
+                            <div class="col-md-4 mb-3">
+                                <label for="IdSede" class="form-label">Sede *</label>
+                                <select id="IdSede" name="IdSede"
+                                    class="form-control border-primary shadow-sm"
+                                    disabled>
+                                    <option value="">Primero seleccione una institución...</option>
+                                </select>
+                                <div class="invalid-feedback">Este campo es obligatorio.</div>
+                            </div>
 
                             <!-- TELÉFONO -->
                             <div class="col-md-4 mb-3">
@@ -187,6 +192,10 @@ $sedes           = $controladorSede->obtenerSedesActivas();
                                     placeholder="Ej: 10024567891">
                                 <div class="invalid-feedback">Debe tener entre 8 y 10 dígitos.</div>
                             </div>
+
+                        </div>
+
+                        <div class="row">
 
                             <!-- CORREO -->
                             <div class="col-md-4 mb-3">
@@ -216,8 +225,25 @@ $sedes           = $controladorSede->obtenerSedesActivas();
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior_administrador.php'; ?>
+<!-- ✅ NUEVO: JSON de sedes para el cascada en JS (sin petición AJAX extra) -->
+<script>
+    // Todas las sedes activas indexadas por IdInstitucion
+    // El JS las filtra según la institución seleccionada
+    const SEDES_POR_INSTITUCION = <?php
+        $sedesPorInst = [];
+        foreach ($sedes as $sede) {
+            $idInst = (int)$sede['IdInstitucion'];
+            $sedesPorInst[$idInst][] = [
+                'IdSede'     => $sede['IdSede'],
+                'NombreSede' => $sede['NombreSede']
+            ];
+        }
+        echo json_encode($sedesPorInst, JSON_UNESCAPED_UNICODE);
+    ?>;
+</script>
+
+<?php require_once __DIR__ . '/../layouts/parte_inferior_Administrador.php'; ?>
 
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../../../Public/js/javascript/js/Funcionarios.js"></script>
+<script src="../../../Public/js/javascript/js/Funcionario.js"></script>

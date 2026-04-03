@@ -3447,3 +3447,22 @@ ERROR: Serial duplicado - SN-784512369
 Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'SN-784512369' ya est\u00e1 registrado en otro dispositivo (ID: 53 - Portatil lenovo)."}
 === FIN ===
 
+
+2026-04-03 08:30:40 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "987654321s2",
+    "IdFuncionario": "99",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: 987654321s2
+INSERT exitoso, ID: 56
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 56","data":{"IdDispositivo":"56","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-56-69cf5e901fccb.png"}}
+=== FIN ===
+

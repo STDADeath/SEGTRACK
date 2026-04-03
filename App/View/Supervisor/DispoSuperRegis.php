@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_superior_supervisor.php'; ?>
 <?php require_once(__DIR__ . "/../../Core/conexion.php");?>
 
 <?php
@@ -159,4 +159,4 @@ $visitantes = $stmtVis->fetchAll(PDO::FETCH_ASSOC);
 <!-- Script de validación externo -->
 <script src="../../../Public/js/javascript/js/ValidacionDispositivo.js"></script>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
