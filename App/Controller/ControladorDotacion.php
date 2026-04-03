@@ -26,13 +26,16 @@ class ControladorDotacion {
                 return ['success' => false, 'message' => "Formato de fecha inválido en $campo"];
             }
             if (!empty($datos[$campo])) {
-                $fecha = DateTime::createFromFormat('Y-m-d\TH:i', $datos[$campo]);
+                $fecha         = DateTime::createFromFormat('Y-m-d\TH:i', $datos[$campo]);
                 $datos[$campo] = $fecha->format('Y-m-d H:i:s');
             }
         }
         return ['success' => true];
     }
 
+    // ══════════════════════════════════════════════
+    // REGISTRAR
+    // ══════════════════════════════════════════════
     public function registrarDotacion(array $datos): array {
         foreach (['EstadoDotacion', 'TipoDotacion', 'FechaEntrega', 'IdFuncionario'] as $campo) {
             if ($this->campoVacio($datos, $campo)) {
@@ -54,7 +57,10 @@ class ControladorDotacion {
         }
     }
 
-    public function mostrarDotaciones(): array  {
+    // ══════════════════════════════════════════════
+    // MOSTRAR CON FILTROS
+    // ══════════════════════════════════════════════
+    public function mostrarDotaciones(): array {
         $filtros = [];
         $params  = [];
 
@@ -70,21 +76,50 @@ class ControladorDotacion {
             $filtros[]              = "f.NombreFuncionario LIKE :funcionario";
             $params[':funcionario'] = '%' . $_POST['funcionario'] . '%';
         }
+        if (!empty($_POST['estadoReg'])) {
+            $filtros[]            = "d.Estado = :estadoReg";
+            $params[':estadoReg'] = $_POST['estadoReg'];
+        }
 
         return $this->modelo->obtenerTodos($filtros, $params);
     }
-    public function obtenerPorId(int $id): ?array { return $this->modelo->obtenerPorId($id); }
 
+    // ══════════════════════════════════════════════
+    // OBTENER POR ID
+    // ══════════════════════════════════════════════
+    public function obtenerPorId(int $id): ?array {
+        return $this->modelo->obtenerPorId($id);
+    }
+
+    // ══════════════════════════════════════════════
+    // ACTUALIZAR
+    // ══════════════════════════════════════════════
     public function actualizarDotacion(int $id, array $datos): array {
         $val = $this->convertirFecha($datos, ['FechaEntrega', 'FechaDevolucion']);
         if (!$val['success']) return $val;
         return $this->modelo->actualizar($id, $datos);
     }
 
-    public function eliminarDotacion(int $id): array { return $this->modelo->eliminar($id); }
+    // ══════════════════════════════════════════════
+    // ELIMINAR
+    // ══════════════════════════════════════════════
+    public function eliminarDotacion(int $id): array {
+        return $this->modelo->eliminar($id);
+    }
 
-    // Llama a obtenerFuncionarios() — todos los activos
-    public function obtenerFuncionarios(): array { return $this->modelo->obtenerFuncionarios(); }
+    // ══════════════════════════════════════════════
+    // FUNCIONARIOS (dropdown)
+    // ══════════════════════════════════════════════
+    public function obtenerFuncionarios(): array {
+        return $this->modelo->obtenerFuncionarios();
+    }
+
+    // ══════════════════════════════════════════════
+    // CAMBIAR ESTADO
+    // ══════════════════════════════════════════════
+    public function cambiarEstado(int $id, string $estado): array {
+        return $this->modelo->cambiarEstado($id, $estado);
+    }
 }
 
 // ════════════════════════════════════════════════
@@ -115,8 +150,16 @@ try {
         case 'eliminar':
             echo json_encode($controlador->eliminarDotacion($id));
             break;
-        case 'personal_seguridad': // ← el JS envía este valor
-        case 'funcionarios':       // ← por si acaso
+        case 'cambiar_estado':
+            $nuevo = $_POST['nuevoEstado'] ?? '';
+            if (!in_array($nuevo, ['Activo', 'Inactivo'])) {
+                echo json_encode(['success' => false, 'message' => 'Estado no válido']);
+                break;
+            }
+            echo json_encode($controlador->cambiarEstado($id, $nuevo));
+            break;
+        case 'personal_seguridad':
+        case 'funcionarios':
             echo json_encode($controlador->obtenerFuncionarios());
             break;
         default:

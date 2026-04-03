@@ -23,7 +23,7 @@ class DotacionModelo {
                         (:estado, :tipo, :novedad,
                          :fechaDevolucion, :fechaEntrega, 'Activo', :funcionario)";
 
-            $stmt = $this->conexion->prepare($sql);
+            $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 ':estado'          => $datos['EstadoDotacion'],
                 ':tipo'            => $datos['TipoDotacion'],
@@ -99,7 +99,7 @@ class DotacionModelo {
                         IdFuncionario   = ?
                     WHERE IdDotacion = ?";
 
-            $stmt = $this->conexion->prepare($sql);
+            $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 $datos['EstadoDotacion'],
                 $datos['TipoDotacion'],
@@ -122,8 +122,8 @@ class DotacionModelo {
     // ══════════════════════════════════════════════
     public function eliminar(int $id): array {
         try {
-            $sql  = "DELETE FROM dotacion WHERE IdDotacion = ?";
-            $stmt = $this->conexion->prepare($sql);
+            $sql       = "DELETE FROM dotacion WHERE IdDotacion = ?";
+            $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([$id]);
             return ['success' => $resultado, 'rows' => $stmt->rowCount()];
 
@@ -150,6 +150,23 @@ class DotacionModelo {
 
         } catch (PDOException $e) {
             return [];
+        }
+    }
+
+    // ══════════════════════════════════════════════
+    // CAMBIAR ESTADO
+    // ══════════════════════════════════════════════
+    public function cambiarEstado(int $id, string $estado): array {
+        try {
+            $stmt      = $this->conexion->prepare("UPDATE dotacion SET Estado = ? WHERE IdDotacion = ?");
+            $resultado = $stmt->execute([$estado, $id]);
+            return [
+                'success' => $resultado,
+                'message' => $resultado ? "Dotación $estado correctamente" : 'No se pudo cambiar el estado',
+                'rows'    => $stmt->rowCount()
+            ];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }

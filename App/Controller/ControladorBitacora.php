@@ -11,10 +11,6 @@ class ControladorBitacora {
         $this->modelo = new BitacoraModelo($conexion);
     }
 
-    // ──────────────────────────────────────────────
-    // HELPERS PRIVADOS
-    // ──────────────────────────────────────────────
-
     private function campoVacio(array $data, string $campo): bool {
         return empty(trim($data[$campo] ?? ""));
     }
@@ -75,9 +71,9 @@ class ControladorBitacora {
         return 'uploads/bitacoras/' . $nombreArchivo;
     }
 
-    // ──────────────────────────────────────────────
-    // REGISTRAR BITÁCORA
-    // ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════
+    // REGISTRAR
+    // ══════════════════════════════════════════════
     public function registrarBitacora(array $data): array {
         $obligatorios = ['TurnoBitacora', 'NovedadesBitacora', 'FechaBitacora', 'IdFuncionario', 'TieneVisitante'];
 
@@ -120,9 +116,9 @@ class ControladorBitacora {
         }
     }
 
-    // ──────────────────────────────────────────────
-    // OBTENER TODAS LAS BITÁCORAS (con filtros)
-    // ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════
+    // MOSTRAR CON FILTROS
+    // ══════════════════════════════════════════════
     public function mostrarBitacoras(): array {
         $filtros = [];
         $params  = [];
@@ -139,20 +135,28 @@ class ControladorBitacora {
             $filtros[]              = "f.NombreFuncionario LIKE :funcionario";
             $params[':funcionario'] = '%' . $_POST['funcionario'] . '%';
         }
+        if (!empty($_POST['visitante'])) {
+            $filtros[]             = "v.NombreVisitante LIKE :visitante";
+            $params[':visitante']  = '%' . $_POST['visitante'] . '%';
+        }
+        if (!empty($_POST['estadoReg'])) {
+            $filtros[]             = "b.Estado = :estadoReg";
+            $params[':estadoReg']  = $_POST['estadoReg'];
+        }
 
         return $this->modelo->obtenerBitacoras($filtros, $params);
     }
 
-    // ──────────────────────────────────────────────
-    // OBTENER BITÁCORA POR ID
-    // ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════
+    // OBTENER POR ID
+    // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
         return $this->modelo->obtenerPorId($id);
     }
 
-    // ──────────────────────────────────────────────
-    // ACTUALIZAR BITÁCORA
-    // ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════
+    // ACTUALIZAR
+    // ══════════════════════════════════════════════
     public function actualizar(int $id, array $data): array {
         $validacion = $this->validarFechas($data, ['FechaBitacora']);
         if (!$validacion['success']) return $validacion;
@@ -164,9 +168,16 @@ class ControladorBitacora {
         return $this->modelo->actualizar($id, $data);
     }
 
-    // ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════
+    // CAMBIAR ESTADO
+    // ══════════════════════════════════════════════
+    public function cambiarEstado(int $id, string $estado): array {
+        return $this->modelo->cambiarEstado($id, $estado);
+    }
+
+    // ══════════════════════════════════════════════
     // DROPDOWNS
-    // ──────────────────────────────────────────────
+    // ══════════════════════════════════════════════
     public function obtenerPersonalSeguridad(): array {
         return $this->modelo->obtenerPersonalSeguridad();
     }
@@ -204,6 +215,14 @@ try {
             break;
         case 'actualizar':
             echo json_encode($controlador->actualizar($id, $_POST));
+            break;
+        case 'cambiar_estado':
+            $nuevo = $_POST['nuevoEstado'] ?? '';
+            if (!in_array($nuevo, ['Activo', 'Inactivo'])) {
+                echo json_encode(['success' => false, 'message' => 'Estado no válido']);
+                break;
+            }
+            echo json_encode($controlador->cambiarEstado($id, $nuevo));
             break;
         case 'personal_seguridad':
             echo json_encode($controlador->obtenerPersonalSeguridad());

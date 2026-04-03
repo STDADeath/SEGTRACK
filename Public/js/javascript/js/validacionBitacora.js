@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const fechaActualConHora = `${ahora.getFullYear()}-${pad(ahora.getMonth()+1)}-${pad(ahora.getDate())}T${pad(ahora.getHours())}:${pad(ahora.getMinutes())}`;
 
     const inputFecha = document.getElementById('FechaBitacora');
-    if (inputFecha) {
+    if (inputFecha) {   
         inputFecha.setAttribute('min', fechaMinimaDelDia);
         inputFecha.value = fechaActualConHora;
     }

@@ -25,8 +25,7 @@ class BitacoraModelo {
                          :reporte, 'Activo',
                          :funcionario, :ingreso, :dispositivo, :visitante)";
 
-            $stmt = $this->conexion->prepare($sql);
-
+            $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 ':turno'       => $datos['TurnoBitacora'],
                 ':novedades'   => $datos['NovedadesBitacora'],
@@ -48,8 +47,7 @@ class BitacoraModelo {
     }
 
     // ══════════════════════════════════════════════
-    // OBTENER TODAS (JOIN completo con funcionario,
-    // visitante y dispositivo)
+    // OBTENER TODAS
     // ══════════════════════════════════════════════
     public function obtenerBitacoras(array $filtros = [], array $params = []): array {
         try {
@@ -133,7 +131,7 @@ class BitacoraModelo {
 
             $params[] = $id;
 
-            $stmt = $this->conexion->prepare($sql);
+            $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute($params);
 
             return ['success' => $resultado, 'rows' => $stmt->rowCount()];
@@ -186,7 +184,6 @@ class BitacoraModelo {
 
     // ══════════════════════════════════════════════
     // DISPOSITIVOS ACTIVOS (dropdown)
-    // Filtra por IdVisitante si se envía
     // ══════════════════════════════════════════════
     public function obtenerDispositivos(?int $idVisitante = null): array {
         try {
@@ -217,6 +214,23 @@ class BitacoraModelo {
 
         } catch (PDOException $e) {
             return [];
+        }
+    }
+
+    // ══════════════════════════════════════════════
+    // CAMBIAR ESTADO
+    // ══════════════════════════════════════════════
+    public function cambiarEstado(int $id, string $estado): array {
+        try {
+            $stmt      = $this->conexion->prepare("UPDATE bitacora SET Estado = ? WHERE IdBitacora = ?");
+            $resultado = $stmt->execute([$estado, $id]);
+            return [
+                'success' => $resultado,
+                'message' => $resultado ? "Bitácora $estado correctamente" : 'No se pudo cambiar el estado',
+                'rows'    => $stmt->rowCount()
+            ];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }
