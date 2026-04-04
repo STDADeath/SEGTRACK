@@ -43,14 +43,17 @@ class DotacionModelo {
     }
 
     // ══════════════════════════════════════════════
-    // OBTENER TODAS (JOIN con funcionario)
+    // OBTENER TODAS
+    // Incluye CargoFuncionario para distinguir supervisor
+    // de personal de seguridad en la vista
     // ══════════════════════════════════════════════
     public function obtenerTodos(array $filtros = [], array $params = []): array {
         try {
             $where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
 
             $sql = "SELECT d.*,
-                           CONCAT(f.NombreFuncionario) AS NombreFuncionario
+                           f.NombreFuncionario,
+                           f.CargoFuncionario
                     FROM   dotacion d
                     LEFT JOIN funcionario f ON f.IdFuncionario = d.IdFuncionario
                     $where
@@ -71,7 +74,8 @@ class DotacionModelo {
     public function obtenerPorId(int $id): ?array {
         try {
             $sql = "SELECT d.*,
-                           f.NombreFuncionario
+                           f.NombreFuncionario,
+                           f.CargoFuncionario
                     FROM   dotacion d
                     LEFT JOIN funcionario f ON f.IdFuncionario = d.IdFuncionario
                     WHERE  d.IdDotacion = ?";
@@ -133,14 +137,13 @@ class DotacionModelo {
     }
 
     // ══════════════════════════════════════════════
-    // SUPERVISORES ACTIVOS (dropdown)
-    // Retorna supervisores con CargoFuncionario = 'Supervisor' y Estado = 'Activo'
-    // Si en tu BD el cargo se llama distinto, ajusta el WHERE de CargoFuncionario
+    // FUNCIONARIOS ACTIVOS (dropdown)
     // ══════════════════════════════════════════════
     public function obtenerFuncionarios(): array {
         try {
             $sql = "SELECT   IdFuncionario,
-                             NombreFuncionario AS NombreCompleto
+                             NombreFuncionario AS NombreCompleto,
+                             CargoFuncionario
                     FROM     funcionario
                     WHERE    CargoFuncionario IN ('Supervisor', 'Personal Seguridad')
                       AND    Estado = 'Activo'

@@ -16,18 +16,13 @@ esperarDependencias(function () {
     let estadoActualDotacion      = null;
 
     // ══════════════════════════════════════════════
-    // HELPER: fecha actual en tiempo real (string para inputs)
+    // HELPER: fecha actual en tiempo real
     // ══════════════════════════════════════════════
     function getFechaActualConHora() {
         const ahora = new Date();
         return `${ahora.getFullYear()}-${pad(ahora.getMonth()+1)}-${pad(ahora.getDate())}T${pad(ahora.getHours())}:${pad(ahora.getMinutes())}`;
     }
 
-    // ══════════════════════════════════════════════
-    // HELPER: "ahora" truncado a minutos para comparaciones
-    // FIX: evita que los segundos transcurridos invaliden
-    //      una fecha que el input muestra como igual a la actual
-    // ══════════════════════════════════════════════
     function getAhoraTruncado() {
         const ahora = new Date();
         ahora.setSeconds(0, 0);
@@ -35,7 +30,7 @@ esperarDependencias(function () {
     }
 
     // ══════════════════════════════════════════════
-    // FECHAS INICIALES (formulario ingreso)
+    // FECHAS INICIALES
     // ══════════════════════════════════════════════
     const inputEntrega    = document.getElementById('FechaEntrega');
     const inputDevolucion = document.getElementById('FechaDevolucion');
@@ -48,7 +43,6 @@ esperarDependencias(function () {
         inputDevolucion.setAttribute('min', getFechaActualConHora());
     }
 
-    // Actualizar min cada minuto para que no quede desactualizado
     setInterval(function () {
         const nueva = getFechaActualConHora();
         if (inputEntrega)    inputEntrega.setAttribute('min', nueva);
@@ -56,7 +50,7 @@ esperarDependencias(function () {
     }, 60000);
 
     // ══════════════════════════════════════════════
-    // CARGAR SUPERVISORES (dropdown del formulario)
+    // CARGAR SUPERVISORES
     // ══════════════════════════════════════════════
     function cargarSupervisores() {
         const select = document.getElementById('IdFuncionario');
@@ -95,8 +89,7 @@ esperarDependencias(function () {
     }
 
     // ══════════════════════════════════════════════
-    // VALIDACIONES EN TIEMPO REAL (formulario ingreso)
-    // FIX: se usa getAhoraTruncado() en todas las comparaciones
+    // VALIDACIONES EN TIEMPO REAL
     // ══════════════════════════════════════════════
     if (inputEntrega) {
         inputEntrega.addEventListener('change', function () {
@@ -146,8 +139,7 @@ esperarDependencias(function () {
     });
 
     // ══════════════════════════════════════════════
-    // ENVÍO DEL FORMULARIO INGRESO
-    // FIX: ahoraSubmit usa getAhoraTruncado() para comparar por minuto
+    // ENVÍO DEL FORMULARIO
     // ══════════════════════════════════════════════
     const form = document.getElementById('formIngresarDotacionSupervisor');
     if (form) {
@@ -160,7 +152,7 @@ esperarDependencias(function () {
             const fechaEnt    = document.getElementById('FechaEntrega').value;
             const fechaDev    = document.getElementById('FechaDevolucion')?.value;
             const funcionario = document.getElementById('IdFuncionario').value;
-            const ahoraSubmit = getAhoraTruncado(); // FIX: truncado a minutos
+            const ahoraSubmit = getAhoraTruncado();
 
             if (!estado) {
                 Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el estado', confirmButtonColor:'#e74a3b' });
@@ -219,14 +211,8 @@ esperarDependencias(function () {
                         form.reset();
                         document.querySelectorAll('.is-invalid').forEach(function (el) { el.classList.remove('is-invalid'); });
                         const nuevaFecha = getFechaActualConHora();
-                        if (inputEntrega) {
-                            inputEntrega.setAttribute('min', nuevaFecha);
-                            inputEntrega.value = nuevaFecha;
-                        }
-                        if (inputDevolucion) {
-                            inputDevolucion.setAttribute('min', nuevaFecha);
-                            inputDevolucion.value = '';
-                        }
+                        if (inputEntrega)    { inputEntrega.setAttribute('min', nuevaFecha); inputEntrega.value = nuevaFecha; }
+                        if (inputDevolucion) { inputDevolucion.setAttribute('min', nuevaFecha); inputDevolucion.value = ''; }
                         cargarSupervisores();
                     });
                 } else {
@@ -285,6 +271,26 @@ esperarDependencias(function () {
     }
 
     // ══════════════════════════════════════════════
+    // HELPER: renderizar columnas de personas
+    // Supervisor  → muestra nombre con ícono de corbata
+    // Personal Seguridad → muestra nombre con ícono de escudo
+    // Cualquier otro / nulo → "No aplica" en la columna correspondiente
+    // ══════════════════════════════════════════════
+    function celdaSupervisor(row) {
+        if (row.CargoFuncionario === 'Supervisor' && row.NombreFuncionario) {
+            return `<i class="fas fa-user-tie text-primary mr-1"></i>${row.NombreFuncionario}`;
+        }
+        return '<span class="text-muted fst-italic">No aplica</span>';
+    }
+
+    function celdaPersonalSeguridad(row) {
+        if (row.CargoFuncionario === 'Personal Seguridad' && row.NombreFuncionario) {
+            return `<i class="fas fa-user-shield text-info mr-1"></i>${row.NombreFuncionario}`;
+        }
+        return '<span class="text-muted fst-italic">No aplica</span>';
+    }
+
+    // ══════════════════════════════════════════════
     // CARGAR DOTACIONES (lista)
     // ══════════════════════════════════════════════
     function cargarDotacionesSupervisor() {
@@ -314,7 +320,7 @@ esperarDependencias(function () {
                 }
 
                 if (!Array.isArray(res) || res.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="9" class="text-center py-5">
+                    tbody.innerHTML = `<tr><td colspan="10" class="text-center py-5">
                         <i class="fas fa-exclamation-circle fa-2x text-muted mb-2 d-block"></i>
                         <span class="text-muted">No hay dotaciones registradas con los filtros seleccionados</span>
                     </td></tr>`;
@@ -334,10 +340,8 @@ esperarDependencias(function () {
                         </td>
                         <td class="text-nowrap">${formatFechaDot(row.FechaEntrega)}</td>
                         <td class="text-nowrap">${formatFechaDot(row.FechaDevolucion)}</td>
-                        <td>
-                            <i class="fas fa-user-shield text-primary mr-1"></i>
-                            ${row.NombreFuncionario ?? '—'}
-                        </td>
+                        <td>${celdaSupervisor(row)}</td>
+                        <td>${celdaPersonalSeguridad(row)}</td>
                         <td>
                             <span class="badge bg-${row.Estado === 'Activo' ? 'success' : 'secondary'}">
                                 ${row.Estado ?? ''}
@@ -370,12 +374,12 @@ esperarDependencias(function () {
                     pageLength: 10,
                     responsive: true,
                     order: [[0, 'desc']],
-                    columnDefs: [{ orderable: false, targets: [8] }]
+                    columnDefs: [{ orderable: false, targets: [9] }]
                 });
             },
             error: function () {
                 const tbody = document.getElementById('cuerpoTablaDotacionSupervisor');
-                if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-danger">
+                if (tbody) tbody.innerHTML = `<tr><td colspan="10" class="text-center py-4 text-danger">
                     <i class="fas fa-exclamation-triangle mr-2"></i>Error al cargar los datos
                 </td></tr>`;
                 $('#contadorDotaciones').text('Error');
@@ -407,8 +411,14 @@ esperarDependencias(function () {
         $('#editNovedadDotacion').val(row.NovedadDotacion ?? '');
         $('#editFechaEntrega').val(fechaParaInput(row.FechaEntrega));
         $('#editFechaDevolucion').val(fechaParaInput(row.FechaDevolucion));
-        $('#editNombreFuncionario').val(row.NombreFuncionario ?? '');
+        $('#editNombreFuncionario').val(row.NombreFuncionario ?? 'Sin asignar');
         $('#editIdFuncionario').val(row.IdFuncionario);
+
+        // Mostrar badge con el cargo en el modal
+        const cargo = row.CargoFuncionario ?? '';
+        const badgeClass = cargo === 'Supervisor' ? 'badge-primary' : cargo === 'Personal Seguridad' ? 'badge-info' : 'badge-secondary';
+        const badgeText  = cargo || 'Sin cargo';
+        $('#editCargoBadge').removeClass('badge-primary badge-info badge-secondary').addClass(badgeClass).text(badgeText);
     };
 
     $('#btnGuardarEdicionDotacion').on('click', function () {
@@ -525,7 +535,6 @@ esperarDependencias(function () {
 
     // ══════════════════════════════════════════════
     // CARGA INICIAL
-    // Solo carga la tabla si el elemento existe (página lista)
     // ══════════════════════════════════════════════
     if (document.getElementById('cuerpoTablaDotacionSupervisor')) {
         cargarDotacionesSupervisor();

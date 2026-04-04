@@ -49,7 +49,7 @@
 
                 <div class="col-md-3 mb-3">
                     <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
-                        <i class="fas fa-user-shield mr-1 text-primary"></i>Personal Seguridad
+                        <i class="fas fa-user-tie mr-1 text-primary"></i>Supervisor
                     </label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -100,6 +100,7 @@
                         <th>Novedad</th>
                         <th>Fecha Entrega</th>
                         <th>Fecha Devolución</th>
+                        <th>Supervisor</th>
                         <th>Personal Seguridad</th>
                         <th>Estado Registro</th>
                         <th>Acciones</th>
@@ -107,7 +108,7 @@
                 </thead>
                 <tbody id="cuerpoTablaDotacionSupervisor">
                     <tr>
-                        <td colspan="9" class="text-center py-4">
+                        <td colspan="10" class="text-center py-4">
                             <i class="fas fa-spinner fa-spin fa-2x text-muted mb-2 d-block"></i>
                             <span class="text-muted">Cargando...</span>
                         </td>
@@ -169,10 +170,13 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label font-weight-bold">
-                            Personal Seguridad <small class="text-muted">(Solo lectura)</small>
+                            Registrado por <small class="text-muted">(Solo lectura)</small>
                         </label>
                         <input type="text" id="editNombreFuncionario" class="form-control bg-light" readonly>
                         <input type="hidden" id="editIdFuncionario">
+                    </div>
+                    <div class="col-md-6 mb-3 d-flex align-items-end">
+                        <span id="editCargoBadge" class="badge badge-info" style="font-size:0.85rem;"></span>
                     </div>
                 </div>
             </div>
