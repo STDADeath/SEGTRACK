@@ -103,7 +103,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- ══════════════════════════════════════════════════════
-     CARD FILTROS — estilos idénticos a VehiculoLista.php
+     CARD FILTROS
 ══════════════════════════════════════════════════════ -->
 <div class="card shadow mb-4">
     <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
@@ -184,7 +184,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                         <i class="fas fa-building mr-1 text-primary"></i>Sede
                     </label>
-                    <select name="sede" class="form-control">
+                    <select name="sede" class="form-control"
+                            data-selected="<?= htmlspecialchars($_GET['sede'] ?? '') ?>">
                         <option value="">Todas</option>
                         <?php foreach ($sedesFiltro as $idS => $nombreS) : ?>
                             <option value="<?= $idS ?>"
@@ -236,8 +237,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-            <?php if (!empty($result)) : ?>
-                <?php foreach ($result as $row) : ?>
+            <?php foreach ($result as $row) : ?>
                 <?php
                     $idFunc     = (int)$row['IdFuncionario'];
                     $idSede     = (int)$row['IdSede'];
@@ -281,9 +281,9 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <!-- Estado -->
                     <td class="text-center">
                         <?php if ($row['Estado'] === 'Activo'): ?>
-                            <span class="badge bg-success px-3 py-2">Activo</span>
+                            <span class="badge bg-success px-3 py-2" style="color:#fff;">Activo</span>
                         <?php else: ?>
-                            <span class="badge bg-secondary px-3 py-2">Inactivo</span>
+                            <span class="badge bg-primary px-3 py-2" style="color:#fff;">Inactivo</span>
                         <?php endif; ?>
                     </td>
 
@@ -306,15 +306,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </button>
                     </td>
                 </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="10" class="text-center py-4">
-                        <i class="fas fa-exclamation-circle fa-2x text-muted mb-2 d-block"></i>
-                        <p class="text-muted mb-0">No hay funcionarios registrados con los filtros seleccionados</p>
-                    </td>
-                </tr>
-            <?php endif; ?>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
@@ -478,13 +470,11 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <link rel="stylesheet" href="../../../Public/css/Tablas.css">
 
 <!-- JS -->
-<script src="../../../Public/js/javascript/js/FuncionariosLista.js"></script>
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
 <script>
     const SEDES_POR_INSTITUCION_LISTA = <?php
@@ -499,3 +489,6 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($sedesPorInstLista, JSON_UNESCAPED_UNICODE);
     ?>;
 </script>
+
+<!-- JS propio — debe ir DESPUÉS de jQuery, Bootstrap y DataTables -->
+<script src="../../../Public/js/javascript/js/FuncionariosLista.js"></script>

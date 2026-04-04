@@ -136,12 +136,12 @@ class ControladorBitacora {
             $params[':funcionario'] = '%' . $_POST['funcionario'] . '%';
         }
         if (!empty($_POST['visitante'])) {
-            $filtros[]             = "v.NombreVisitante LIKE :visitante";
-            $params[':visitante']  = '%' . $_POST['visitante'] . '%';
+            $filtros[]            = "v.NombreVisitante LIKE :visitante";
+            $params[':visitante'] = '%' . $_POST['visitante'] . '%';
         }
         if (!empty($_POST['estadoReg'])) {
-            $filtros[]             = "b.Estado = :estadoReg";
-            $params[':estadoReg']  = $_POST['estadoReg'];
+            $filtros[]            = "b.Estado = :estadoReg";
+            $params[':estadoReg'] = $_POST['estadoReg'];
         }
 
         return $this->modelo->obtenerBitacoras($filtros, $params);
@@ -178,6 +178,10 @@ class ControladorBitacora {
     // ══════════════════════════════════════════════
     // DROPDOWNS
     // ══════════════════════════════════════════════
+    public function obtenerSupervisores(): array {
+        return $this->modelo->obtenerSupervisores();
+    }
+
     public function obtenerPersonalSeguridad(): array {
         return $this->modelo->obtenerPersonalSeguridad();
     }
@@ -224,6 +228,11 @@ try {
             }
             echo json_encode($controlador->cambiarEstado($id, $nuevo));
             break;
+        // Dropdown para formulario de SUPERVISOR
+        case 'supervisores':
+            echo json_encode($controlador->obtenerSupervisores());
+            break;
+        // Dropdown para formulario de PERSONAL DE SEGURIDAD
         case 'personal_seguridad':
             echo json_encode($controlador->obtenerPersonalSeguridad());
             break;

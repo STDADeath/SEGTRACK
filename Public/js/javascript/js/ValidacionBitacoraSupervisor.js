@@ -1,5 +1,6 @@
 // ============================================================
 // ValidacionBitacoraSupervisor.js
+// Unifica: lista de bitácoras + columnas Supervisor / Personal Seguridad
 // ============================================================
 
 function esperarDependencias(cb) {
@@ -14,7 +15,7 @@ esperarDependencias(function () {
     let estadoActualBitacora      = null;
 
     // ══════════════════════════════════════════════
-    // HELPERS
+    // HELPERS DE FORMATO
     // ══════════════════════════════════════════════
     function colorTurnoBit(turno) {
         const c = { 'Jornada mañana': 'warning', 'Jornada tarde': 'info', 'Jornada noche': 'dark' };
@@ -42,14 +43,38 @@ esperarDependencias(function () {
     }
 
     // ══════════════════════════════════════════════
+    // HELPERS DE CELDAS: Supervisor / Personal Seguridad
+    // Muestra el nombre si el cargo coincide, "N/A" si no.
+    // Requiere que el servidor envíe CargoFuncionario en el JSON
+    // (ver ModeloBitacora.php → obtenerBitacoras / obtenerPorId).
+    // ══════════════════════════════════════════════
+    function celdaSupervisor(row) {
+        const nombre = row.NombreFuncionario ?? '—';
+        const cargo  = (row.CargoFuncionario ?? '').trim();
+        if (cargo === 'Supervisor') {
+            return `<span><i class="fas fa-user-tie text-primary mr-1"></i>${nombre}</span>`;
+        }
+        return `<span class="text-muted fst-italic">N/A</span>`;
+    }
+
+    function celdaPersonalSeguridad(row) {
+        const nombre = row.NombreFuncionario ?? '—';
+        const cargo  = (row.CargoFuncionario ?? '').trim();
+        if (cargo === 'Personal Seguridad') {
+            return `<span><i class="fas fa-user-shield text-success mr-1"></i>${nombre}</span>`;
+        }
+        return `<span class="text-muted fst-italic">N/A</span>`;
+    }
+
+    // ══════════════════════════════════════════════
     // CARGAR BITÁCORAS
     // ══════════════════════════════════════════════
     function cargarBitacorasSupervisor() {
-        const turno      = $('#filtroTurno').val()       || '';
-        const fecha      = $('#filtroFecha').val()       || '';
-        const funcionario = $('#filtroFuncionario').val() || '';
-        const visitante  = $('#filtroVisitante').val()   || '';
-        const estado     = $('#filtroEstado').val()      || '';
+        const turno       = $('#filtroTurno').val()        || '';
+        const fecha       = $('#filtroFecha').val()        || '';
+        const funcionario = $('#filtroFuncionario').val()  || '';
+        const visitante   = $('#filtroVisitante').val()    || '';
+        const estado      = $('#filtroEstado').val()       || '';
 
         $.ajax({
             url:  '/SEGTRACK/App/Controller/ControladorBitacora.php',
@@ -73,7 +98,7 @@ esperarDependencias(function () {
                 }
 
                 if (!Array.isArray(res) || res.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="10" class="text-center py-5">
+                    tbody.innerHTML = `<tr><td colspan="11" class="text-center py-5">
                         <i class="fas fa-exclamation-circle fa-2x text-muted mb-2 d-block"></i>
                         <span class="text-muted">No hay bitácoras registradas con los filtros seleccionados</span>
                     </td></tr>`;
@@ -82,6 +107,7 @@ esperarDependencias(function () {
                 }
 
                 tbody.innerHTML = res.map(function (row) {
+
                     const visitanteHtml = row.NombreVisitante
                         ? `<small><i class="fas fa-user text-success mr-1"></i>${row.NombreVisitante}</small>`
                         : `<span class="badge badge-info">No aplica</span>`;
@@ -106,10 +132,8 @@ esperarDependencias(function () {
                             </span>
                         </td>
                         <td class="text-nowrap">${formatFechaBit(row.FechaBitacora)}</td>
-                        <td>
-                            <i class="fas fa-user-shield text-primary mr-1"></i>
-                            ${row.NombreFuncionario ?? '—'}
-                        </td>
+                        <td>${celdaSupervisor(row)}</td>
+                        <td>${celdaPersonalSeguridad(row)}</td>
                         <td>${visitanteHtml}</td>
                         <td>${dispositivoHtml}</td>
                         <td>${pdfHtml}</td>
@@ -140,17 +164,18 @@ esperarDependencias(function () {
                 const total = res.length;
                 $('#contadorBitacoras').text(total + ' registro' + (total !== 1 ? 's' : ''));
 
+                // 11 columnas: # turno novedad fecha supervisor personal visitante dispositivo pdf estado acciones
                 tablaBitacoraSupervisorDT = $('#TablaBitacoraSupervisor').DataTable({
                     language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
                     pageLength: 10,
                     responsive: true,
                     order: [[0, 'desc']],
-                    columnDefs: [{ orderable: false, targets: [7, 9] }]
+                    columnDefs: [{ orderable: false, targets: [8, 10] }]
                 });
             },
             error: function () {
                 const tbody = document.getElementById('cuerpoTablaBitacoraSupervisor');
-                if (tbody) tbody.innerHTML = `<tr><td colspan="10" class="text-center py-4 text-danger">
+                if (tbody) tbody.innerHTML = `<tr><td colspan="11" class="text-center py-4 text-danger">
                     <i class="fas fa-exclamation-triangle mr-2"></i>Error al cargar los datos
                 </td></tr>`;
                 $('#contadorBitacoras').text('Error');
@@ -190,6 +215,17 @@ esperarDependencias(function () {
         $('#editNombreDispositivoBit').val(row.NombreDispositivo ?? 'No aplica');
         $('#editIdDispositivoBit').val(row.IdDispositivo ?? '');
 
+        // Badge de cargo para contexto visual en el modal
+        const cargo      = (row.CargoFuncionario ?? '').trim();
+        const badgeColor = cargo === 'Supervisor' ? 'primary' : 'success';
+        const badgeIcono = cargo === 'Supervisor' ? 'fa-user-tie' : 'fa-user-shield';
+        const badgeLabel = cargo || 'Sin cargo';
+        $('#editCargoBadge').html(
+            `<span class="badge bg-${badgeColor} ms-1">
+                <i class="fas ${badgeIcono} me-1"></i>${badgeLabel}
+             </span>`
+        );
+
         if (row.ReporteBitacora) {
             $('#editPdfActual').html(
                 `<a href="/SEGTRACK/Public/${row.ReporteBitacora}" target="_blank"
@@ -203,24 +239,22 @@ esperarDependencias(function () {
     };
 
     $('#btnGuardarEdicionBitacora').on('click', function () {
-        const id       = $('#editIdBitacora').val();
-        const turno    = $('#editTurnoBitacora').val();
-        const fecha    = $('#editFechaBitacora').val();
-        const novedad  = $('#editNovedadesBitacora').val().trim();
-        const idFun    = $('#editIdFuncionarioBit').val();
+        const id      = $('#editIdBitacora').val();
+        const turno   = $('#editTurnoBitacora').val();
+        const fecha   = $('#editFechaBitacora').val();
+        const novedad = $('#editNovedadesBitacora').val().trim();
+        const idFun   = $('#editIdFuncionarioBit').val();
 
         if (!turno || !fecha || !idFun) {
             Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Turno, fecha y funcionario son obligatorios.', confirmButtonColor: '#f6c23e' });
             return;
         }
-
         if (novedad.length > 0 && novedad.length < 10) {
             Swal.fire({ icon: 'warning', title: 'Novedades muy cortas', text: 'Las novedades deben tener al menos 10 caracteres.', confirmButtonColor: '#f6c23e' });
             return;
         }
 
         $('#modalEditarBitacora').modal('hide');
-
         Swal.fire({
             title: 'Guardando cambios...',
             html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i>',
@@ -237,8 +271,8 @@ esperarDependencias(function () {
                 FechaBitacora:     fecha,
                 NovedadesBitacora: novedad,
                 IdFuncionario:     idFun,
-                IdVisitante:       $('#editIdVisitanteBit').val()   || '',
-                IdDispositivo:     $('#editIdDispositivoBit').val()  || ''
+                IdVisitante:       $('#editIdVisitanteBit').val()  || '',
+                IdDispositivo:     $('#editIdDispositivoBit').val() || ''
             },
             dataType: 'json',
             success: function (r) {

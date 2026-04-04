@@ -2,9 +2,20 @@
 require_once __DIR__ . "/../Core/conexion.php";
 require_once __DIR__ . "/../Model/ModeloDotacion.php";
 
+// ══════════════════════════════════════════════════════════
+// ZONA HORARIA: Colombia (UTC-5)
+// ══════════════════════════════════════════════════════════
+date_default_timezone_set('America/Bogota');
+
 class ControladorDotacion {
 
     private DotacionModelo $modelo;
+
+    // Margen de tolerancia en minutos hacia el pasado.
+    // Absorbe diferencias de timezone, latencia de red y segundos transcurridos.
+    // El frontend ya impide seleccionar fechas pasadas, así que este margen
+    // solo aplica como red de seguridad en el backend.
+    private const MARGEN_MINUTOS = 10;
 
     public function __construct($conexion) {
         $this->modelo = new DotacionModelo($conexion);
@@ -14,23 +25,34 @@ class ControladorDotacion {
         return !isset($array[$campo]) || trim($array[$campo]) === "";
     }
 
-    private function fechaValida(?string $fecha): bool {
-        if (empty($fecha)) return true;
-        $d = DateTime::createFromFormat('Y-m-d\TH:i', $fecha);
-        return $d && $d->format('Y-m-d\TH:i') === $fecha;
+    // Parsea cualquier variante de fecha que pueda llegar del POST
+    private function parsearFecha(string $fecha): ?DateTime {
+        foreach (['Y-m-d\TH:i', 'Y-m-d H:i:s', 'Y-m-d H:i'] as $formato) {
+            $d = DateTime::createFromFormat($formato, $fecha);
+            if ($d !== false) return $d;
+        }
+        return null;
     }
 
+    // Convierte las fechas al formato de BD 'Y-m-d H:i:s'
     private function convertirFecha(array &$datos, array $campos): array {
         foreach ($campos as $campo) {
-            if (isset($datos[$campo]) && !$this->fechaValida($datos[$campo])) {
-                return ['success' => false, 'message' => "Formato de fecha inválido en $campo"];
+            if (empty($datos[$campo])) continue;
+            $d = $this->parsearFecha($datos[$campo]);
+            if ($d === null) {
+                return ['success' => false, 'message' => "Formato de fecha inválido en $campo: " . $datos[$campo]];
             }
-            if (!empty($datos[$campo])) {
-                $fecha         = DateTime::createFromFormat('Y-m-d\TH:i', $datos[$campo]);
-                $datos[$campo] = $fecha->format('Y-m-d H:i:s');
-            }
+            $datos[$campo] = $d->format('Y-m-d H:i:s');
         }
         return ['success' => true];
+    }
+
+    // Devuelve "ahora menos MARGEN_MINUTOS" para la comparación
+    // Así una fecha del minuto actual siempre pasa la validación
+    private function limiteInferior(): DateTime {
+        $limite = new DateTime();
+        $limite->modify('-' . self::MARGEN_MINUTOS . ' minutes');
+        return $limite;
     }
 
     // ══════════════════════════════════════════════
@@ -42,8 +64,37 @@ class ControladorDotacion {
                 return ['success' => false, 'message' => "Falta el campo: $campo"];
             }
         }
+
+        // Convertir fechas al formato de BD
         $val = $this->convertirFecha($datos, ['FechaEntrega', 'FechaDevolucion']);
         if (!$val['success']) return $val;
+
+        // Límite inferior = ahora - 10 minutos (absorbe diferencias de timezone/latencia)
+        $limite = $this->limiteInferior();
+
+        $fechaEntrega = $this->parsearFecha($datos['FechaEntrega']);
+        if ($fechaEntrega === null) {
+            return ['success' => false, 'message' => 'No se pudo interpretar la fecha de entrega'];
+        }
+
+        if ($fechaEntrega < $limite) {
+            return ['success' => false, 'message' => 'La fecha de entrega no puede ser anterior a la hora actual'];
+        }
+
+        // Validar FechaDevolucion
+        if (!empty($datos['FechaDevolucion'])) {
+            $fechaDev = $this->parsearFecha($datos['FechaDevolucion']);
+            if ($fechaDev === null) {
+                return ['success' => false, 'message' => 'No se pudo interpretar la fecha de devolución'];
+            }
+
+            if ($fechaDev < $limite) {
+                return ['success' => false, 'message' => 'La fecha de devolución no puede ser anterior a la hora actual'];
+            }
+            if ($fechaDev < $fechaEntrega) {
+                return ['success' => false, 'message' => 'La fecha de devolución no puede ser anterior a la fecha de entrega'];
+            }
+        }
 
         try {
             $res = $this->modelo->insertar($datos);
@@ -108,7 +159,7 @@ class ControladorDotacion {
     }
 
     // ══════════════════════════════════════════════
-    // FUNCIONARIOS (dropdown)
+    // FUNCIONARIOS / SUPERVISORES (dropdown)
     // ══════════════════════════════════════════════
     public function obtenerFuncionarios(): array {
         return $this->modelo->obtenerFuncionarios();
@@ -158,12 +209,13 @@ try {
             }
             echo json_encode($controlador->cambiarEstado($id, $nuevo));
             break;
+        case 'supervisores':
         case 'personal_seguridad':
         case 'funcionarios':
             echo json_encode($controlador->obtenerFuncionarios());
             break;
         default:
-            echo json_encode(['success' => false, 'message' => 'Acción no reconocida']);
+            echo json_encode(['success' => false, 'message' => 'Acción no reconocida: ' . htmlspecialchars($accion ?? '')]);
             break;
     }
 

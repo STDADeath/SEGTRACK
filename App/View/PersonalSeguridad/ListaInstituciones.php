@@ -146,7 +146,7 @@ sort($tiposUnicos);
                                 <td>
                                     <?= !empty($fila['DireccionInstitucion'])
                                         ? htmlspecialchars($fila['DireccionInstitucion'])
-                                        : '<span class="badge bg-secondary">Sin dirección</span>' ?>
+                                        : '<span class="badge bg-secondary" style="color:#fff;">Sin dirección</span>' ?>
                                 </td>
                                 <!-- Badge de estado -->
                                 <td>

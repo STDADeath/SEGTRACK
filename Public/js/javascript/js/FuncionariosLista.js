@@ -9,12 +9,19 @@ const urlControlador = "../../Controller/ControladorFuncionarios.php";
 $(document).ready(function () {
 
     // ========================================
-    // DATATABLE
+    // DATATABLE — corregido TN/18
     // ========================================
     $('#tablaFuncionarios').DataTable({
         pageLength: 10,
+        destroy: true,
         order: [[2, "asc"]],
-        columnDefs: [{ targets: [0, 9], orderable: false }]
+        columnDefs: [
+            { targets: [0, 9], orderable: false }
+        ],
+        language: {
+            emptyTable: "No hay funcionarios registrados con los filtros seleccionados",
+            zeroRecords: "No se encontraron resultados"
+        }
     });
 
     // ========================================

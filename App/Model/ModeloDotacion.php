@@ -50,7 +50,7 @@ class DotacionModelo {
             $where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
 
             $sql = "SELECT d.*,
-                           f.NombreFuncionario
+                           CONCAT(f.NombreFuncionario) AS NombreFuncionario
                     FROM   dotacion d
                     LEFT JOIN funcionario f ON f.IdFuncionario = d.IdFuncionario
                     $where
@@ -133,14 +133,16 @@ class DotacionModelo {
     }
 
     // ══════════════════════════════════════════════
-    // PERSONAL DE SEGURIDAD ACTIVO (dropdown)
+    // SUPERVISORES ACTIVOS (dropdown)
+    // Retorna supervisores con CargoFuncionario = 'Supervisor' y Estado = 'Activo'
+    // Si en tu BD el cargo se llama distinto, ajusta el WHERE de CargoFuncionario
     // ══════════════════════════════════════════════
     public function obtenerFuncionarios(): array {
         try {
             $sql = "SELECT   IdFuncionario,
                              NombreFuncionario AS NombreCompleto
                     FROM     funcionario
-                    WHERE    CargoFuncionario = 'Personal Seguridad'
+                    WHERE    CargoFuncionario IN ('Supervisor', 'Personal Seguridad')
                       AND    Estado = 'Activo'
                     ORDER BY NombreFuncionario ASC";
 

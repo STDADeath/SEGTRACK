@@ -48,6 +48,7 @@ class BitacoraModelo {
 
     // ══════════════════════════════════════════════
     // OBTENER TODAS
+    // Incluye CargoFuncionario para distinguir Supervisor / Personal Seguridad
     // ══════════════════════════════════════════════
     public function obtenerBitacoras(array $filtros = [], array $params = []): array {
         try {
@@ -55,6 +56,7 @@ class BitacoraModelo {
 
             $sql = "SELECT b.*,
                            f.NombreFuncionario,
+                           f.CargoFuncionario,
                            v.NombreVisitante,
                            CONCAT(d.TipoDispositivo, ' - ', d.MarcaDispositivo) AS NombreDispositivo
                     FROM   bitacora b
@@ -80,6 +82,7 @@ class BitacoraModelo {
         try {
             $sql = "SELECT b.*,
                            f.NombreFuncionario,
+                           f.CargoFuncionario,
                            v.NombreVisitante,
                            CONCAT(d.TipoDispositivo, ' - ', d.MarcaDispositivo) AS NombreDispositivo
                     FROM   bitacora b
@@ -142,7 +145,28 @@ class BitacoraModelo {
     }
 
     // ══════════════════════════════════════════════
-    // PERSONAL DE SEGURIDAD (dropdown)
+    // SUPERVISORES ACTIVOS (dropdown formulario supervisor)
+    // ══════════════════════════════════════════════
+    public function obtenerSupervisores(): array {
+        try {
+            $sql = "SELECT   IdFuncionario,
+                             NombreFuncionario AS NombreCompleto
+                    FROM     funcionario
+                    WHERE    CargoFuncionario = 'Supervisor'
+                      AND    Estado = 'Activo'
+                    ORDER BY NombreFuncionario ASC";
+
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    // ══════════════════════════════════════════════
+    // PERSONAL DE SEGURIDAD (dropdown formulario personal)
     // ══════════════════════════════════════════════
     public function obtenerPersonalSeguridad(): array {
         try {
