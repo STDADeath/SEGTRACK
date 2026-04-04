@@ -48,11 +48,24 @@ class ControladorDotacion {
     }
 
     // Devuelve "ahora menos MARGEN_MINUTOS" para la comparación
-    // Así una fecha del minuto actual siempre pasa la validación
     private function limiteInferior(): DateTime {
         $limite = new DateTime();
         $limite->modify('-' . self::MARGEN_MINUTOS . ' minutes');
         return $limite;
+    }
+
+    // ══════════════════════════════════════════════
+    // ROL DE SESIÓN ACTIVO
+    // Ajusta el key según tu variable de sesión real
+    // ══════════════════════════════════════════════
+    private function getRolSesion(): string {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        // ⚠️ Cambia 'CargoFuncionario' por el key real que usas en $_SESSION
+        return $_SESSION['CargoFuncionario'] ?? '';
+    }
+
+    private function esPersonalSeguridad(): bool {
+        return $this->getRolSesion() === 'Personal Seguridad';
     }
 
     // ══════════════════════════════════════════════
@@ -65,11 +78,9 @@ class ControladorDotacion {
             }
         }
 
-        // Convertir fechas al formato de BD
         $val = $this->convertirFecha($datos, ['FechaEntrega', 'FechaDevolucion']);
         if (!$val['success']) return $val;
 
-        // Límite inferior = ahora - 10 minutos (absorbe diferencias de timezone/latencia)
         $limite = $this->limiteInferior();
 
         $fechaEntrega = $this->parsearFecha($datos['FechaEntrega']);
@@ -81,13 +92,11 @@ class ControladorDotacion {
             return ['success' => false, 'message' => 'La fecha de entrega no puede ser anterior a la hora actual'];
         }
 
-        // Validar FechaDevolucion
         if (!empty($datos['FechaDevolucion'])) {
             $fechaDev = $this->parsearFecha($datos['FechaDevolucion']);
             if ($fechaDev === null) {
                 return ['success' => false, 'message' => 'No se pudo interpretar la fecha de devolución'];
             }
-
             if ($fechaDev < $limite) {
                 return ['success' => false, 'message' => 'La fecha de devolución no puede ser anterior a la hora actual'];
             }
@@ -110,24 +119,39 @@ class ControladorDotacion {
 
     // ══════════════════════════════════════════════
     // MOSTRAR CON FILTROS
+    // Si el usuario es Personal de Seguridad,
+    // se fuerza d.Estado = 'Activo' sin importar
+    // lo que venga del POST (seguridad en backend).
     // ══════════════════════════════════════════════
     public function mostrarDotaciones(): array {
         $filtros = [];
         $params  = [];
 
+        // ── Filtro de estado de dotación (Buen estado / Regular / Dañado) ──
         if (!empty($_POST['estado'])) {
             $filtros[]         = "d.EstadoDotacion = :estado";
             $params[':estado'] = $_POST['estado'];
         }
+
+        // ── Filtro de tipo ──
         if (!empty($_POST['tipo'])) {
             $filtros[]       = "d.TipoDotacion = :tipo";
             $params[':tipo'] = $_POST['tipo'];
         }
+
+        // ── Filtro de funcionario ──
         if (!empty($_POST['funcionario'])) {
             $filtros[]              = "f.NombreFuncionario LIKE :funcionario";
             $params[':funcionario'] = '%' . $_POST['funcionario'] . '%';
         }
-        if (!empty($_POST['estadoReg'])) {
+
+        // ── Filtro de estado del registro (Activo / Inactivo) ──
+        // Personal de Seguridad: siempre forzado a 'Activo' (no negociable)
+        // Otros roles: respetan lo que venga en POST o muestran todos
+        if ($this->esPersonalSeguridad()) {
+            $filtros[]            = "d.Estado = :estadoReg";
+            $params[':estadoReg'] = 'Activo';
+        } elseif (!empty($_POST['estadoReg'])) {
             $filtros[]            = "d.Estado = :estadoReg";
             $params[':estadoReg'] = $_POST['estadoReg'];
         }
@@ -137,9 +161,17 @@ class ControladorDotacion {
 
     // ══════════════════════════════════════════════
     // OBTENER POR ID
+    // Personal de Seguridad solo puede ver el registro
+    // si su Estado es 'Activo'
     // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
-        return $this->modelo->obtenerPorId($id);
+        $registro = $this->modelo->obtenerPorId($id);
+
+        if ($registro && $this->esPersonalSeguridad() && ($registro['Estado'] ?? '') !== 'Activo') {
+            return null; // No exponer registros inactivos
+        }
+
+        return $registro;
     }
 
     // ══════════════════════════════════════════════

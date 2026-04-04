@@ -16,7 +16,7 @@
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-md-3">
-                    <label class="form-label">Estado</label>
+                    <label class="form-label">Estado Dotación</label>
                     <select id="filtroEstado" class="form-select">
                         <option value="">Todos</option>
                         <option value="Buen estado">Buen estado</option>
@@ -35,7 +35,7 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label">Personal de Seguridad</label>
+                    <label class="form-label">Funcionario</label>
                     <input type="text" id="filtroFuncionario" class="form-control" placeholder="Buscar por nombre...">
                 </div>
                 <div class="col-md-3 d-flex align-items-end gap-2">
@@ -55,12 +55,19 @@
             <table id="tablaDotacionesDT" class="table table-bordered table-hover table-striped align-middle text-center" width="100%" cellspacing="0">
                 <thead class="table-dark">
                     <tr>
-                        <th>#</th><th>Estado</th><th>Tipo</th><th>Novedad</th>
-                        <th>Fecha Entrega</th><th>Fecha Devolución</th><th>Personal Seguridad</th><th>Estado Registro</th>
+                        <th>#</th>
+                        <th>Estado</th>
+                        <th>Tipo</th>
+                        <th>Novedad</th>
+                        <th>Fecha Entrega</th>
+                        <th>Fecha Devolución</th>
+                        <th>Supervisor</th>
+                        <th>Personal Seguridad</th>
+                        <th>Estado Registro</th>
                     </tr>
                 </thead>
                 <tbody id="cuerpoTabla">
-                    <tr><td colspan="8" class="text-center py-4">
+                    <tr><td colspan="9" class="text-center py-4">
                         <i class="fas fa-spinner fa-spin fa-2x text-muted mb-2 d-block"></i>
                         <span class="text-muted">Cargando...</span>
                     </td></tr>

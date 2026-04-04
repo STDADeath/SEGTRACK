@@ -102,12 +102,23 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
 
     <hr class="sidebar-divider">
 
-    <li class="nav-item">
-        <a class="nav-link" href="../Supervisor/BitacoraListaSUP.php">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Bitácoras</span>
-        </a>
-    </li>
+   <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Control Bitácora</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Bitácora</h6>
+                    <a class="collapse-item" href="../Supervisor/BitacoraSup.php">Registro de Bitácora</a>
+                    <a class="collapse-item" href="../Supervisor/BitacoraListaSUP.php">Ingreso Bitácora</a>
+                    <div class="collapse-divider"></div>
+                    <h6 class="collapse-header">Dotación</h6>
+                    <a class="collapse-item" href="../Supervisor/DotacionSup.php">Ingresar Dotación</a>
+                    <a class="collapse-item" href="../Supervisor/DotacionListaSup.php">Registro de Dotación</a>
+                </div>
+            </div>
+        </li>
 
     <hr class="sidebar-divider">
 

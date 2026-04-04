@@ -3,25 +3,41 @@ document.addEventListener('DOMContentLoaded', function () {
     const pad = n => String(n).padStart(2, '0');
 
     // ══════════════════════════════════════════════
-    // 1. FECHAS INICIALES
+    // 1. HELPER: fecha actual en tiempo real
     // ══════════════════════════════════════════════
-    const ahora = new Date();
-    const fechaMinimaDelDia  = `${ahora.getFullYear()}-${pad(ahora.getMonth()+1)}-${pad(ahora.getDate())}T00:00`;
-    const fechaActualConHora = `${ahora.getFullYear()}-${pad(ahora.getMonth()+1)}-${pad(ahora.getDate())}T${pad(ahora.getHours())}:${pad(ahora.getMinutes())}`;
+    function getFechaActualConHora() {
+        const ahora = new Date();
+        return `${ahora.getFullYear()}-${pad(ahora.getMonth()+1)}-${pad(ahora.getDate())}T${pad(ahora.getHours())}:${pad(ahora.getMinutes())}`;
+    }
 
+    function getAhoraTruncado() {
+        const ahora = new Date();
+        ahora.setSeconds(0, 0);
+        return ahora;
+    }
+
+    // ══════════════════════════════════════════════
+    // 2. FECHAS INICIALES
+    // ══════════════════════════════════════════════
     const inputEntrega    = document.getElementById('FechaEntrega');
     const inputDevolucion = document.getElementById('FechaDevolucion');
 
     if (inputEntrega) {
-        inputEntrega.setAttribute('min', fechaMinimaDelDia);
-        inputEntrega.value = fechaActualConHora;
+        inputEntrega.setAttribute('min', getFechaActualConHora());
+        inputEntrega.value = getFechaActualConHora();
     }
     if (inputDevolucion) {
-        inputDevolucion.setAttribute('min', fechaMinimaDelDia);
+        inputDevolucion.setAttribute('min', getFechaActualConHora());
     }
 
+    setInterval(function () {
+        const nueva = getFechaActualConHora();
+        if (inputEntrega)    inputEntrega.setAttribute('min', nueva);
+        if (inputDevolucion) inputDevolucion.setAttribute('min', nueva);
+    }, 60000);
+
     // ══════════════════════════════════════════════
-    // 2. CARGAR PERSONAL DE SEGURIDAD
+    // 3. CARGAR PERSONAL DE SEGURIDAD
     // ══════════════════════════════════════════════
     function cargarPersonalSeguridad() {
         const select = document.getElementById('IdFuncionario');
@@ -58,15 +74,15 @@ document.addEventListener('DOMContentLoaded', function () {
     cargarPersonalSeguridad();
 
     // ══════════════════════════════════════════════
-    // 3. VALIDACIONES EN TIEMPO REAL
+    // 4. VALIDACIONES EN TIEMPO REAL
     // ══════════════════════════════════════════════
-
     if (inputEntrega) {
         inputEntrega.addEventListener('change', function () {
-            const sel = new Date(this.value); const hoy = new Date(); hoy.setHours(0,0,0,0);
-            if (sel < hoy) {
-                Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de entrega no puede ser anterior al día de hoy', confirmButtonColor:'#f6c23e' });
-                this.value = fechaActualConHora; this.classList.add('is-invalid');
+            const sel   = new Date(this.value);
+            const ahora = getAhoraTruncado();
+            if (sel < ahora) {
+                Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de entrega no puede ser anterior a la hora actual', confirmButtonColor:'#f6c23e' });
+                this.value = getFechaActualConHora(); this.classList.add('is-invalid');
             } else {
                 this.classList.remove('is-invalid');
                 if (inputDevolucion) inputDevolucion.setAttribute('min', this.value);
@@ -76,9 +92,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (inputDevolucion) {
         inputDevolucion.addEventListener('change', function () {
-            const dev = new Date(this.value); const ent = new Date(inputEntrega?.value); const hoy = new Date(); hoy.setHours(0,0,0,0);
-            if (dev < hoy) {
-                Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de devolución no puede ser anterior al día de hoy', confirmButtonColor:'#f6c23e' });
+            const dev   = new Date(this.value);
+            const ent   = new Date(inputEntrega?.value);
+            const ahora = getAhoraTruncado();
+            if (dev < ahora) {
+                Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de devolución no puede ser anterior a la hora actual', confirmButtonColor:'#f6c23e' });
                 this.value = ''; this.classList.add('is-invalid');
             } else if (inputEntrega?.value && dev < ent) {
                 Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de devolución no puede ser anterior a la fecha de entrega', confirmButtonColor:'#f6c23e' });
@@ -105,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ══════════════════════════════════════════════
-    // 4. ENVÍO DEL FORMULARIO
+    // 5. ENVÍO DEL FORMULARIO
     // ══════════════════════════════════════════════
     const form = document.getElementById('formIngresarDotacion');
     if (form) {
@@ -118,20 +136,28 @@ document.addEventListener('DOMContentLoaded', function () {
             const fechaEnt    = document.getElementById('FechaEntrega').value;
             const fechaDev    = document.getElementById('FechaDevolucion')?.value;
             const funcionario = document.getElementById('IdFuncionario').value;
-            const hoy         = new Date(); hoy.setHours(0,0,0,0);
+            const ahoraSubmit = getAhoraTruncado();
 
-            if (!estado)           { Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el estado',                   confirmButtonColor:'#e74a3b' }); document.getElementById('EstadoDotacion').classList.add('is-invalid'); return; }
-            if (!tipo)             { Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el tipo',                    confirmButtonColor:'#e74a3b' }); document.getElementById('TipoDotacion').classList.add('is-invalid'); return; }
-            if (novedad.length<10) { Swal.fire({ icon:'error', title:'Novedad muy corta', text:'La novedad debe tener al menos 10 caracteres', confirmButtonColor:'#e74a3b' }); document.getElementById('NovedadDotacion').classList.add('is-invalid'); return; }
-            if (!fechaEnt || new Date(fechaEnt) < hoy) { Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha de entrega es obligatoria y no puede ser anterior a hoy', confirmButtonColor:'#e74a3b' }); document.getElementById('FechaEntrega').classList.add('is-invalid'); return; }
+            if (!estado)           { Swal.fire({ icon:'error', title:'Campo requerido',   text:'Debe seleccionar el estado',                    confirmButtonColor:'#e74a3b' }); document.getElementById('EstadoDotacion').classList.add('is-invalid'); return; }
+            if (!tipo)             { Swal.fire({ icon:'error', title:'Campo requerido',   text:'Debe seleccionar el tipo',                     confirmButtonColor:'#e74a3b' }); document.getElementById('TipoDotacion').classList.add('is-invalid'); return; }
+            if (novedad.length<10) { Swal.fire({ icon:'error', title:'Novedad muy corta', text:'La novedad debe tener al menos 10 caracteres',  confirmButtonColor:'#e74a3b' }); document.getElementById('NovedadDotacion').classList.add('is-invalid'); return; }
+
+            if (!fechaEnt || new Date(fechaEnt) < ahoraSubmit) {
+                Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha de entrega es obligatoria y no puede ser anterior a la hora actual', confirmButtonColor:'#e74a3b' });
+                document.getElementById('FechaEntrega').classList.add('is-invalid'); return;
+            }
             if (fechaDev) {
                 const dev = new Date(fechaDev); const ent = new Date(fechaEnt);
-                if (dev < hoy || dev < ent) { Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha de devolución debe ser posterior a la de entrega y a hoy', confirmButtonColor:'#e74a3b' }); document.getElementById('FechaDevolucion').classList.add('is-invalid'); return; }
+                if (dev < ahoraSubmit || dev < ent) {
+                    Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha de devolución debe ser posterior a la de entrega y a la hora actual', confirmButtonColor:'#e74a3b' });
+                    document.getElementById('FechaDevolucion').classList.add('is-invalid'); return;
+                }
             }
             if (!funcionario) { Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el personal de seguridad', confirmButtonColor:'#e74a3b' }); document.getElementById('IdFuncionario').classList.add('is-invalid'); return; }
 
-            const btn = form.querySelector('button[type=submit]');
+            const btn      = form.querySelector('button[type=submit]');
             const original = btn.innerHTML;
+            btn.disabled   = true;
 
             Swal.fire({ title:'Procesando...', html:'<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Registrando dotación', allowOutsideClick:false, allowEscapeKey:false, showConfirmButton:false });
 
@@ -140,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             try {
                 const response = await fetch('../../Controller/ControladorDotacion.php', { method:'POST', body:formData });
-                const data = await response.json();
+                const data     = await response.json();
                 Swal.close();
 
                 if (data.success) {
@@ -148,8 +174,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(() => {
                         form.reset();
                         document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-                        const n = new Date();
-                        if (inputEntrega) inputEntrega.value = `${n.getFullYear()}-${pad(n.getMonth()+1)}-${pad(n.getDate())}T${pad(n.getHours())}:${pad(n.getMinutes())}`;
+                        const nuevaFecha = getFechaActualConHora();
+                        if (inputEntrega)    { inputEntrega.setAttribute('min', nuevaFecha); inputEntrega.value = nuevaFecha; }
+                        if (inputDevolucion) { inputDevolucion.setAttribute('min', nuevaFecha); inputDevolucion.value = ''; }
                         cargarPersonalSeguridad();
                     });
                 } else {
@@ -165,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ══════════════════════════════════════════════
-    // 5. LISTA — botones de filtro
+    // 6. LISTA — botones de filtro
     // ══════════════════════════════════════════════
     const btnFiltrar = document.getElementById('btnFiltrar');
     const btnLimpiar = document.getElementById('btnLimpiar');
@@ -183,8 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
 }); // fin DOMContentLoaded
 
 // ══════════════════════════════════════════════
-// 6. FUNCIONES DE LA LISTA (fuera del DOMContentLoaded
-//    para que sean globales y el DataTable pueda usarlas)
+// 7. FUNCIONES DE LA LISTA
 // ══════════════════════════════════════════════
 let tablaDataTable = null;
 
@@ -204,6 +230,20 @@ function formatFecha(fecha) {
     return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 }
 
+function celdaSupervisor(row) {
+    if (row.CargoFuncionario === 'Supervisor' && row.NombreFuncionario) {
+        return `<i class="fas fa-user-tie text-primary me-1"></i>${row.NombreFuncionario}`;
+    }
+    return '<span class="text-muted fst-italic">No aplica</span>';
+}
+
+function celdaPersonalSeguridad(row) {
+    if (row.CargoFuncionario === 'Personal Seguridad' && row.NombreFuncionario) {
+        return `<i class="fas fa-user-shield text-info me-1"></i>${row.NombreFuncionario}`;
+    }
+    return '<span class="text-muted fst-italic">No aplica</span>';
+}
+
 function cargarDotaciones() {
     const filtroEstado      = document.getElementById('filtroEstado');
     const filtroTipo        = document.getElementById('filtroTipo');
@@ -213,7 +253,11 @@ function cargarDotaciones() {
     fetch('../../Controller/ControladorDotacion.php', {
         method:  'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body:    `accion=mostrar&estado=${encodeURIComponent(filtroEstado.value)}&tipo=${encodeURIComponent(filtroTipo.value)}&funcionario=${encodeURIComponent(filtroFuncionario.value)}`
+        body:    `accion=mostrar`
+            + `&estado=${encodeURIComponent(filtroEstado.value)}`
+            + `&tipo=${encodeURIComponent(filtroTipo.value)}`
+            + `&funcionario=${encodeURIComponent(filtroFuncionario.value)}`
+            + `&estadoReg=Activo`  // ← siempre filtra solo Activos
     })
     .then(r => r.json())
     .then(res => {
@@ -223,7 +267,7 @@ function cargarDotaciones() {
         if (tablaDataTable) { tablaDataTable.destroy(); tablaDataTable = null; }
 
         if (!Array.isArray(res) || res.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-5">
+            tbody.innerHTML = `<tr><td colspan="9" class="text-center py-5">
                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2 d-block"></i>
                 <span class="text-muted">No hay dotaciones registradas</span>
             </td></tr>`;
@@ -236,10 +280,13 @@ function cargarDotaciones() {
                 <td class="fw-bold text-muted">${row.IdDotacion}</td>
                 <td><span class="badge bg-${colorEstado(row.EstadoDotacion)}">${row.EstadoDotacion}</span></td>
                 <td><span class="badge bg-${colorTipo(row.TipoDotacion)}">${row.TipoDotacion}</span></td>
-                <td class="text-start" style="max-width:220px;"><span title="${row.NovedadDotacion??''}">${(row.NovedadDotacion??'').substring(0,60)}${(row.NovedadDotacion??'').length>60?'...':''}</span></td>
+                <td class="text-start" style="max-width:220px;">
+                    <span title="${row.NovedadDotacion??''}">${(row.NovedadDotacion??'').substring(0,60)}${(row.NovedadDotacion??'').length>60?'...':''}</span>
+                </td>
                 <td class="text-nowrap">${formatFecha(row.FechaEntrega)}</td>
                 <td class="text-nowrap">${formatFecha(row.FechaDevolucion)}</td>
-                <td><i class="fas fa-user-shield text-primary me-1"></i>${row.NombreFuncionario??'—'}</td>
+                <td>${celdaSupervisor(row)}</td>
+                <td>${celdaPersonalSeguridad(row)}</td>
                 <td><span class="badge bg-${row.Estado==='Activo'?'success':'secondary'}">${row.Estado??''}</span></td>
             </tr>
         `).join('');
@@ -255,6 +302,6 @@ function cargarDotaciones() {
     .catch(err => {
         console.error('Error:', err);
         const tbody = document.getElementById('cuerpoTabla');
-        if (tbody) tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Error al cargar los datos</td></tr>`;
+        if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Error al cargar los datos</td></tr>`;
     });
 }
