@@ -571,3 +571,4 @@ function confirmarEliminacionVehiculo(id) {
     window.vehiculoIdAEliminar = id;
     $('#confirmarEliminarModalVehiculo').modal('show');
 }
+

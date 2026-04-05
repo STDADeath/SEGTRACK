@@ -39,28 +39,136 @@ esperarDependencias(function () {
 
     // ── Limpiar modal crear al abrirlo ────────────────────────────────────────
     $('#modalCrearParqueadero').on('show.bs.modal', function () {
-        $('#crearIdSede').val('').removeClass('is-valid is-invalid');
+        // CORREGIDO: NO se resetea el select de institución para conservar las opciones PHP
+        // Solo se limpia la selección activa
+        $('#crearInstitucion').val('').removeClass('is-valid is-invalid');
+        $('#crearIdSede').val('').removeClass('is-valid is-invalid').prop('disabled', true);
+        $('#crearIdSede').html('<option value="">Primero seleccione una institución...</option>');
+        $('#crearSedeInfo').text('');
         $('#crearCarros, #crearMotos, #crearBicis').val(0).removeClass('is-valid is-invalid');
         $('#crearTotal').text('0');
     });
 
+    // ══ Al cambiar institución en modal CREAR, cargar sedes ═══════════════════
+    // CORREGIDO: se usa $(document).on para garantizar que funcione aunque
+    // el modal se haya renderizado antes de que el JS se ejecute
+    $(document).on('change', '#crearInstitucion', function () {
+        var idInst = $(this).val();
+        var $selectSede  = $('#crearIdSede');
+        var $sedeInfo    = $('#crearSedeInfo');
+
+        if (!idInst) {
+            $selectSede.html('<option value="">Primero seleccione una institución...</option>').prop('disabled', true);
+            $sedeInfo.text('');
+            return;
+        }
+
+        // Mostrar estado de carga
+        $selectSede.html('<option value="">Cargando sedes...</option>').prop('disabled', true);
+        $sedeInfo.text('');
+
+        $.ajax({
+            url: '../../Controller/ControladorParqueadero.php',
+            type: 'POST',
+            data: {
+                accion: 'obtener_sedes_por_institucion',
+                id_institucion: idInst
+            },
+            dataType: 'json',
+            timeout: 10000,
+            success: function (r) {
+                if (r.success && r.sedes && r.sedes.length > 0) {
+                    var opts = '<option value="">Seleccione una sede...</option>';
+                    $.each(r.sedes, function (i, s) {
+                        opts += '<option value="' + s.IdSede + '">' +
+                                s.TipoSede + ' — ' + s.Ciudad + '</option>';
+                    });
+                    $selectSede.html(opts).prop('disabled', false);
+                    $sedeInfo.html(
+                        '<span class="text-success"><i class="fas fa-check-circle me-1"></i>' +
+                        r.sedes.length + ' sede(s) disponible(s)</span>'
+                    );
+                } else {
+                    $selectSede.html('<option value="">No hay sedes disponibles para esta institución</option>').prop('disabled', true);
+                    $sedeInfo.html(
+                        '<span class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>' +
+                        'Sin sedes activas o todas ya tienen parqueadero</span>'
+                    );
+                }
+            },
+            error: function (xhr, status) {
+                $selectSede.html('<option value="">Error al cargar sedes</option>').prop('disabled', true);
+                $sedeInfo.html(
+                    '<span class="text-danger"><i class="fas fa-times-circle me-1"></i>' +
+                    'Error de conexión al servidor</span>'
+                );
+                console.error('Error AJAX obtener_sedes_por_institucion:', status, xhr.responseText);
+            }
+        });
+    });
+
+    // ══ Filtro por institución en la vista principal (Admin) ══════════════════
+    $(document).on('change', '#filtroInstitucion', function () {
+        var idInst = $(this).val();
+
+        if (idInst) {
+            // Filtrar tarjetas
+            $('.tarjeta-parqueadero').each(function () {
+                $(this).toggle($(this).data('institucion') == idInst);
+            });
+            // Filtrar filas de la tabla
+            $('#TablaParqueaderos tbody tr').each(function () {
+                $(this).toggle($(this).data('institucion') == idInst);
+            });
+        } else {
+            $('.tarjeta-parqueadero').show();
+            $('#TablaParqueaderos tbody tr').show();
+        }
+    });
+
     // ══ CREAR parqueadero ═════════════════════════════════════════════════════
-    $('#btnCrearParqueadero').on('click', function () {
+    $(document).on('click', '#btnCrearParqueadero', function () {
+        var institucion = $('#crearInstitucion').val();
         var sede   = $('#crearIdSede').val();
         var carros = parseInt($('#crearCarros').val()) || 0;
         var motos  = parseInt($('#crearMotos').val())  || 0;
         var bicis  = parseInt($('#crearBicis').val())  || 0;
         var total  = carros + motos + bicis;
 
+        // Validar institución
+        if (!institucion) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Institución requerida',
+                text: 'Debe seleccionar una institución antes de continuar',
+                confirmButtonColor: '#f6c23e'
+            });
+            $('#crearInstitucion').addClass('is-invalid');
+            return;
+        }
+        $('#crearInstitucion').removeClass('is-invalid').addClass('is-valid');
+
+        // Validar sede
         if (!sede) {
-            Swal.fire({ icon: 'warning', title: 'Sede requerida', text: 'Debe seleccionar una sede antes de continuar', confirmButtonColor: '#f6c23e' });
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sede requerida',
+                text: 'Debe seleccionar una sede antes de continuar',
+                confirmButtonColor: '#f6c23e'
+            });
             $('#crearIdSede').addClass('is-invalid');
             return;
         }
         $('#crearIdSede').removeClass('is-invalid').addClass('is-valid');
 
+        // Validar espacios
         if (total <= 0) {
-            Swal.fire({ icon: 'warning', title: 'Sin espacios definidos', html: 'Debe asignar al menos <strong>1 espacio</strong> en alguno de los tipos de vehículo.', confirmButtonColor: '#f6c23e' });
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sin espacios definidos',
+                html: 'Debe asignar al menos <strong>1 espacio</strong> en alguno de los tipos de vehículo.',
+                confirmButtonColor: '#f6c23e'
+            });
             return;
         }
 
@@ -68,25 +176,52 @@ esperarDependencias(function () {
         Swal.fire({
             title: 'Creando parqueadero...',
             html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Generando ' + total + ' espacios, por favor espere',
-            allowOutsideClick: false, allowEscapeKey: false, showConfirmButton: false
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false
         });
 
         $.ajax({
             url: '../../Controller/ControladorParqueadero.php',
             type: 'POST',
-            data: { accion: 'crear', IdSede: sede, Carros: carros, Motos: motos, Bicis: bicis },
+            data: {
+                accion: 'crear',
+                IdSede: sede,
+                Carros: carros,
+                Motos:  motos,
+                Bicis:  bicis
+            },
             dataType: 'json',
             timeout: 30000,
             success: function (r) {
                 if (r.success) {
-                    Swal.fire({ icon: 'success', title: '¡Parqueadero creado!', text: r.message, timer: 3000, timerProgressBar: true, confirmButtonText: 'Entendido', confirmButtonColor: '#1cc88a' })
-                        .then(function () { location.reload(); });
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Parqueadero creado!',
+                        text: r.message,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        confirmButtonText: 'Entendido',
+                        confirmButtonColor: '#1cc88a'
+                    }).then(function () { location.reload(); });
                 } else {
-                    Swal.fire({ icon: 'error', title: 'No se pudo crear', text: r.message, confirmButtonColor: '#e74a3b' });
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No se pudo crear',
+                        text: r.message,
+                        confirmButtonColor: '#e74a3b'
+                    });
                 }
             },
             error: function (xhr, status) {
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: status === 'timeout' ? 'La solicitud tardó demasiado.' : 'No se pudo conectar con el servidor.', confirmButtonColor: '#e74a3b' });
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: status === 'timeout'
+                        ? 'La solicitud tardó demasiado. Intente nuevamente.'
+                        : 'No se pudo conectar con el servidor.',
+                    confirmButtonColor: '#e74a3b'
+                });
             }
         });
     });
@@ -110,7 +245,7 @@ esperarDependencias(function () {
     };
 
     // ══ GUARDAR EDICIÓN ═══════════════════════════════════════════════════════
-    $('#btnEditarParqueadero').on('click', function () {
+    $(document).on('click', '#btnEditarParqueadero', function () {
         var id     = $('#editIdParqueadero').val();
         var carros = parseInt($('#editCarros').val()) || 0;
         var motos  = parseInt($('#editMotos').val())  || 0;
@@ -141,8 +276,11 @@ esperarDependencias(function () {
             timeout: 30000,
             success: function (r) {
                 if (r.success) {
-                    Swal.fire({ icon: 'success', title: '¡Actualizado!', text: r.message, timer: 3000, timerProgressBar: true, confirmButtonText: 'Entendido', confirmButtonColor: '#1cc88a' })
-                        .then(function () { location.reload(); });
+                    Swal.fire({
+                        icon: 'success', title: '¡Actualizado!', text: r.message,
+                        timer: 3000, timerProgressBar: true,
+                        confirmButtonText: 'Entendido', confirmButtonColor: '#1cc88a'
+                    }).then(function () { location.reload(); });
                 } else {
                     Swal.fire({
                         icon: 'error', title: 'No se pudo actualizar',
@@ -153,7 +291,11 @@ esperarDependencias(function () {
                 }
             },
             error: function (xhr, status) {
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: status === 'timeout' ? 'La solicitud tardó demasiado.' : 'No se pudo conectar con el servidor.', confirmButtonColor: '#e74a3b' });
+                Swal.fire({
+                    icon: 'error', title: 'Error de conexión',
+                    text: status === 'timeout' ? 'La solicitud tardó demasiado.' : 'No se pudo conectar con el servidor.',
+                    confirmButtonColor: '#e74a3b'
+                });
             }
         });
     });
@@ -193,12 +335,12 @@ esperarDependencias(function () {
         var colores = { 'Carro': 'text-primary', 'Moto': 'text-warning', 'Bicicleta': 'text-success' };
         var html    = '';
 
-        tipos.forEach(function (tipo) {
-            var delTipo  = espacios.filter(function (e) { return e.TipoVehiculo === tipo; });
+        $.each(tipos, function (i, tipo) {
+            var delTipo  = $.grep(espacios, function (e) { return e.TipoVehiculo === tipo; });
             if (delTipo.length === 0) return;
 
-            var libres   = delTipo.filter(function (e) { return e.Estado === 'Libre'; }).length;
-            var ocupados = delTipo.filter(function (e) { return e.Estado === 'Ocupado'; }).length;
+            var libres   = $.grep(delTipo, function (e) { return e.Estado === 'Libre'; }).length;
+            var ocupados = $.grep(delTipo, function (e) { return e.Estado === 'Ocupado'; }).length;
 
             html += '<div class="mb-4">' +
                 '<h6 class="font-weight-bold ' + colores[tipo] + ' border-bottom pb-2 mb-3">' +
@@ -207,7 +349,7 @@ esperarDependencias(function () {
                 '<span class="ml-1 badge badge-danger">' + ocupados + ' ocupados</span>' +
                 '</h6><div class="row">';
 
-            delTipo.forEach(function (e) {
+            $.each(delTipo, function (j, e) {
                 var libre   = e.Estado === 'Libre';
                 var bgColor = libre ? '#e8f5e9' : '#ffebee';
                 var border  = libre ? '#4caf50' : '#f44336';
@@ -257,7 +399,7 @@ esperarDependencias(function () {
         }, 100);
     };
 
-    $('#btnConfirmarEstado').on('click', function () {
+    $(document).on('click', '#btnConfirmarEstado', function () {
         if (!parqueaderoACambiar) return;
 
         var nuevo = estadoActual === 'Activo' ? 'Inactivo' : 'Activo';
@@ -276,8 +418,10 @@ esperarDependencias(function () {
             dataType: 'json',
             success: function (r) {
                 if (r.success) {
-                    Swal.fire({ icon: 'success', title: '¡Éxito!', text: r.message, timer: 2000, timerProgressBar: true, showConfirmButton: false })
-                        .then(function () { location.reload(); });
+                    Swal.fire({
+                        icon: 'success', title: '¡Éxito!', text: r.message,
+                        timer: 2000, timerProgressBar: true, showConfirmButton: false
+                    }).then(function () { location.reload(); });
                 } else {
                     Swal.fire({ icon: 'error', title: 'Error', text: r.message, confirmButtonColor: '#e74a3b' });
                 }
@@ -326,13 +470,67 @@ document.addEventListener('DOMContentLoaded', function () {
         var idParqueaderoActual = null;
         var intervaloRefresco   = null;
 
+        // ══ Al cambiar institución, cargar sedes con parqueadero ══════════════
+        $(document).on('change', '#selectInstitucion', function () {
+            var idInst = $(this).val();
+            var $selectSede = $('#selectSede');
+
+            idSedeActual = null;
+            idParqueaderoActual = null;
+            if (intervaloRefresco) clearInterval(intervaloRefresco);
+            $('#contenidoParqueadero').hide();
+            $('#estadoInicial').show();
+            $('#badgeSedeSel').hide();
+            $('#btnRefrescar').hide();
+
+            if (!idInst) {
+                $selectSede.html('<option value="">-- Primero seleccione institución --</option>').prop('disabled', true);
+                return;
+            }
+
+            $selectSede.html('<option value="">Cargando sedes...</option>').prop('disabled', true);
+
+            $.ajax({
+                url: '../../Controller/ControladorParqueadero.php',
+                type: 'POST',
+                data: {
+                    accion: 'obtener_sedes_parqueadero_por_institucion',
+                    id_institucion: idInst
+                },
+                dataType: 'json',
+                timeout: 10000,
+                success: function (r) {
+                    if (r.success && r.sedes && r.sedes.length > 0) {
+                        var opts = '<option value="">-- Seleccione una sede --</option>';
+                        $.each(r.sedes, function (i, s) {
+                            opts += '<option value="' + s.IdSede + '">' +
+                                s.TipoSede + ' — ' + s.Ciudad + '</option>';
+                        });
+                        $selectSede.html(opts).prop('disabled', false);
+                    } else {
+                        $selectSede.html('<option value="">No hay sedes con parqueadero activo</option>').prop('disabled', true);
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Sin sedes',
+                            text: 'Esta institución no tiene sedes con parqueadero activo configurado',
+                            confirmButtonColor: '#4e73df'
+                        });
+                    }
+                },
+                error: function () {
+                    $selectSede.html('<option value="">Error al cargar sedes</option>').prop('disabled', true);
+                }
+            });
+        });
+
         // ── Cargar parqueadero al dar clic en Ver Parqueadero ─────────────────
-        $('#btnCargarSede').on('click', function () {
+        $(document).on('click', '#btnCargarSede', function () {
             var idSede = $('#selectSede').val();
             if (!idSede) {
                 Swal.fire({
-                    icon: 'warning', title: 'Seleccione una sede',
-                    text: 'Debe seleccionar la sede donde se encuentra',
+                    icon: 'warning',
+                    title: 'Seleccione una sede',
+                    text: 'Debe seleccionar la institución y la sede donde se encuentra',
                     confirmButtonColor: '#f6c23e'
                 });
                 return;
@@ -341,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // ── Botón refrescar ───────────────────────────────────────────────────
-        $('#btnRefrescar').on('click', function () {
+        $(document).on('click', '#btnRefrescar', function () {
             if (idSedeActual) cargarDatosSede(idSedeActual, true);
         });
 
@@ -380,7 +578,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#estadoInicial').hide();
                         $('#contenidoParqueadero').show();
 
-                        // Auto-refresco cada 30 segundos
                         if (intervaloRefresco) clearInterval(intervaloRefresco);
                         intervaloRefresco = setInterval(function () {
                             cargarDatosSede(idSedeActual, true);
@@ -388,7 +585,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     } else {
                         Swal.fire({
-                            icon: 'warning', title: 'Sin parqueadero',
+                            icon: 'warning',
+                            title: 'Sin parqueadero',
                             text: r.message || 'Esta sede no tiene parqueadero activo',
                             confirmButtonColor: '#f6c23e'
                         });
@@ -398,7 +596,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 error: function () {
                     Swal.fire({
-                        icon: 'error', title: 'Error de conexión',
+                        icon: 'error',
+                        title: 'Error de conexión',
                         text: 'No se pudo cargar la información del parqueadero',
                         confirmButtonColor: '#e74a3b'
                     });
@@ -409,9 +608,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // ── Renderizar tarjetas de resumen ────────────────────────────────────
         function renderizarResumen(resumen, parqueadero) {
             var total    = parseInt(parqueadero.CantidadParqueadero) || 0;
-            var libres   = resumen.reduce(function (a, r) { return a + parseInt(r.Libres); }, 0);
-            var ocupados = resumen.reduce(function (a, r) { return a + parseInt(r.Ocupados); }, 0);
-            var pct      = total > 0 ? Math.round((ocupados / total) * 100) : 0;
+            var libres   = 0;
+            var ocupados = 0;
+            $.each(resumen, function (i, r) {
+                libres   += parseInt(r.Libres);
+                ocupados += parseInt(r.Ocupados);
+            });
+            var pct        = total > 0 ? Math.round((ocupados / total) * 100) : 0;
             var colorBarra = pct >= 90 ? 'bg-danger' : (pct >= 60 ? 'bg-warning' : 'bg-success');
 
             var iconos  = { 'Carro': 'fa-car', 'Moto': 'fa-motorcycle', 'Bicicleta': 'fa-bicycle' };
@@ -420,7 +623,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var html = '';
 
-            // Tarjeta total general
             html += '<div class="col-xl-3 col-md-6 mb-4">' +
                 '<div class="card shadow h-100 border-left-secondary"><div class="card-body">' +
                 '<div class="row no-gutters align-items-center">' +
@@ -436,8 +638,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 '<small class="text-danger font-weight-bold">' + ocupados + ' ocupados</small>' +
                 '</div></div></div></div>';
 
-            // Tarjetas por tipo
-            resumen.forEach(function (r) {
+            $.each(resumen, function (i, r) {
                 var icono  = iconos[r.TipoVehiculo]  || 'fa-car';
                 var color  = colores[r.TipoVehiculo] || 'text-primary';
                 var border = bgCards[r.TipoVehiculo] || 'border-left-primary';
@@ -470,12 +671,12 @@ document.addEventListener('DOMContentLoaded', function () {
             var colores = { 'Carro': 'text-primary', 'Moto': 'text-warning', 'Bicicleta': 'text-success' };
             var html    = '';
 
-            tipos.forEach(function (tipo) {
-                var delTipo  = espacios.filter(function (e) { return e.TipoVehiculo === tipo; });
+            $.each(tipos, function (i, tipo) {
+                var delTipo  = $.grep(espacios, function (e) { return e.TipoVehiculo === tipo; });
                 if (delTipo.length === 0) return;
 
-                var libres   = delTipo.filter(function (e) { return e.Estado === 'Libre'; }).length;
-                var ocupados = delTipo.filter(function (e) { return e.Estado === 'Ocupado'; }).length;
+                var libres   = $.grep(delTipo, function (e) { return e.Estado === 'Libre'; }).length;
+                var ocupados = $.grep(delTipo, function (e) { return e.Estado === 'Ocupado'; }).length;
 
                 html += '<div class="mb-5">' +
                     '<h6 class="font-weight-bold ' + colores[tipo] + ' border-bottom pb-2 mb-3">' +
@@ -484,7 +685,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     '<span class="ml-1 badge badge-danger">' + ocupados + ' ocupados</span>' +
                     '</h6><div class="row">';
 
-                delTipo.forEach(function (e) {
+                $.each(delTipo, function (j, e) {
                     var libre       = e.Estado === 'Libre';
                     var bgColor     = libre ? '#e8f5e9' : '#ffebee';
                     var borderCol   = libre ? '#4caf50' : '#f44336';
@@ -532,7 +733,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (!html) html = '<div class="alert alert-info">No hay espacios registrados en este parqueadero.</div>';
-
             $('#gridEspacios').html(html);
         }
 
@@ -554,13 +754,18 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 url: '../../Controller/ControladorParqueadero.php',
                 type: 'POST',
-                data: { accion: 'obtener_vehiculos_tipo', tipo: tipoVehiculo, id_parqueadero: idParqueaderoActual || 0 },
+                data: {
+                    accion: 'obtener_vehiculos_tipo',
+                    tipo: tipoVehiculo,
+                    id_parqueadero: idParqueaderoActual || 0,
+                    id_sede: idSedeActual || 0
+                },
                 dataType: 'json',
                 timeout: 10000,
                 success: function (r) {
                     if (r.success && r.vehiculos && r.vehiculos.length > 0) {
                         var opts = '<option value="">-- Seleccione un vehículo --</option>';
-                        r.vehiculos.forEach(function (v) {
+                        $.each(r.vehiculos, function (i, v) {
                             var propietario   = v.NombreFuncionario || v.NombreVisitante || 'Sin propietario';
                             var identificador = v.PlacaVehiculo
                                 ? v.PlacaVehiculo
@@ -571,12 +776,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                 identificador + ' — ' + propietario + '</option>';
                         });
                         $('#selectVehiculo').html(opts);
-                        $('#ocuparSelectInfo').text(r.vehiculos.length + ' vehículo(s) disponible(s)');
+                        $('#ocuparSelectInfo').text(r.vehiculos.length + ' vehículo(s) disponible(s) en esta sede');
                     } else {
-                        $('#selectVehiculo').html('<option value="">Sin vehículos de este tipo registrados</option>');
+                        $('#selectVehiculo').html('<option value="">Sin vehículos registrados en esta sede</option>');
                         $('#ocuparSelectInfo').html(
                             '<span class="text-danger"><i class="fas fa-exclamation-circle mr-1"></i>' +
-                            'No hay ' + tipoVehiculo.toLowerCase() + 's activos registrados</span>'
+                            'No hay ' + tipoVehiculo.toLowerCase() + 's registrados para personas de esta sede</span>'
                         );
                     }
                 },
@@ -586,12 +791,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         };
 
-        // Al cambiar el select — mostrar detalle del vehículo
         $(document).on('change', '#selectVehiculo', function () {
-            var selected      = $(this).find('option:selected');
-            var idVeh         = $(this).val();
+            var selected = $(this).find('option:selected');
+            var idVeh    = $(this).val();
             if (idVeh) {
-                $('#detallePropietario').text(selected.data('propietario')   || '');
+                $('#detallePropietario').text(selected.data('propietario')    || '');
                 $('#detalleIdentificador').text(selected.data('identificador') || '');
                 $('#ocuparDetalleVehiculo').show();
                 $('#btnConfirmarOcupar').prop('disabled', false);
@@ -602,7 +806,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Confirmar OCUPAR
-        $('#btnConfirmarOcupar').on('click', function () {
+        $(document).on('click', '#btnConfirmarOcupar', function () {
             var idEspacio  = $('#ocuparIdEspacio').val();
             var idVehiculo = $('#selectVehiculo').val();
 
@@ -643,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         // Confirmar LIBERAR
-        $('#btnConfirmarLiberar').on('click', function () {
+        $(document).on('click', '#btnConfirmarLiberar', function () {
             var idEspacio = $('#liberarIdEspacio').val();
 
             $('#modalLiberarEspacio').modal('hide');
@@ -669,17 +873,5 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // ── Limpiar al cerrar modales ─────────────────────────────────────────
-        $('#modalOcuparEspacio').on('hidden.bs.modal', function () {
-            $('#selectVehiculo').html('<option value="">-- Seleccione un vehículo --</option>');
-            $('#ocuparDetalleVehiculo').hide();
-            $('#ocuparSelectInfo').text('');
-            $('#btnConfirmarOcupar').prop('disabled', true);
-        });
-
-        $('#modalLiberarEspacio').on('hidden.bs.modal', function () {
-            $('#btnConfirmarLiberar').prop('disabled', false);
-        });
-
-    }); 
-}); 
+    }); // fin esperarJQuery
+}); // fin DOMContentLoaded
