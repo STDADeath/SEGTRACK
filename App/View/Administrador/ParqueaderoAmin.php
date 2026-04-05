@@ -1,18 +1,23 @@
 <?php require_once __DIR__ . '/../layouts/parte_superior_administrador.php'; ?>
-<?php
-// CORREGIDO: se garantiza el orden correcto de los require_once
-require_once(__DIR__ . "/../../Core/conexion.php");
-require_once(__DIR__ . "/../../Model/ModeloParqueadero.php");
+<?php require_once(__DIR__ . "/../../Core/conexion.php"); ?>
+<?php require_once(__DIR__ . "/../../Model/ModeloParqueadero.php"); ?>
 
+<?php
 $conexionObj = new Conexion();
 $conn        = $conexionObj->getConexion();
 $modelo      = new ModeloParqueadero($conn);
 
-// Instituciones activas — si este array llega vacío revisa Debug_Parqueadero/debug_log.txt
-$instituciones = $modelo->obtenerInstituciones();
+// Sedes activas
+$sqlSedes = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
+$stmtS    = $conn->prepare($sqlSedes);
+$stmtS->execute();
+$sedes = $stmtS->fetchAll(PDO::FETCH_ASSOC);
 
 // Todos los parqueaderos con resumen de ocupación
 $parqueaderos = $modelo->obtenerTodos();
+
+// IDs de sedes que ya tienen parqueadero (para deshabilitarlas en el form crear)
+$sedesConParqueadero = array_column($parqueaderos, 'IdSede');
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -28,40 +33,9 @@ $parqueaderos = $modelo->obtenerTodos();
         </button>
     </div>
 
-    <!-- ── Filtro por Institución ──────────────────────────────────────────── -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-light">
-            <h6 class="m-0 font-weight-bold text-primary">
-                <i class="fas fa-university me-2"></i>Filtrar por Institución
-            </h6>
-        </div>
-        <div class="card-body">
-            <div class="row g-3 align-items-end">
-                <div class="col-md-5">
-                    <label class="form-label fw-semibold">Institución</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-university"></i></span>
-                        <select class="form-select" id="filtroInstitucion">
-                            <option value="">-- Todas las instituciones --</option>
-                            <?php if (!empty($instituciones)) : ?>
-                                <?php foreach ($instituciones as $inst) : ?>
-                                    <option value="<?= htmlspecialchars($inst['IdInstitucion']) ?>">
-                                        <?= htmlspecialchars($inst['NombreInstitucion']) ?> — <?= htmlspecialchars($inst['TipoInstitucion']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <option value="" disabled>No hay instituciones activas</option>
-                            <?php endif; ?>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- ── Tarjetas resumen por sede ───────────────────────────────────────── -->
     <?php if (count($parqueaderos) > 0) : ?>
-        <div class="row mb-4" id="tarjetasParqueaderos">
+        <div class="row mb-4">
             <?php foreach ($parqueaderos as $p) :
                 $pct        = $p['CantidadParqueadero'] > 0
                             ? round(($p['EspaciosOcupados'] / $p['CantidadParqueadero']) * 100) : 0;
@@ -69,11 +43,8 @@ $parqueaderos = $modelo->obtenerTodos();
                 $resumen    = $modelo->obtenerResumenEspacios((int)$p['IdParqueadero']);
                 $resMap     = [];
                 foreach ($resumen as $r) $resMap[$r['TipoVehiculo']] = $r;
-                // CORREGIDO: usar ?? '' para evitar undefined index si IdInstitucion no viene
-                $idInstTarjeta = $p['IdInstitucion'] ?? '';
             ?>
-                <div class="col-xl-4 col-md-6 mb-4 tarjeta-parqueadero"
-                     data-institucion="<?= htmlspecialchars($idInstTarjeta) ?>">
+                <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card shadow h-100">
                         <!-- Cabecera de tarjeta -->
                         <div class="card-header d-flex justify-content-between align-items-center py-2
@@ -88,14 +59,6 @@ $parqueaderos = $modelo->obtenerTodos();
                         </div>
 
                         <div class="card-body">
-                            <!-- Nombre de institución -->
-                            <div class="mb-2">
-                                <small class="text-muted">
-                                    <i class="fas fa-university me-1"></i>
-                                    <?= htmlspecialchars($p['NombreInstitucion'] ?? 'Sin institución') ?>
-                                </small>
-                            </div>
-
                             <!-- Barra de ocupación -->
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
@@ -194,7 +157,6 @@ $parqueaderos = $modelo->obtenerTodos();
                    id="TablaParqueaderos">
                 <thead class="table-dark">
                     <tr>
-                        <th>Institución</th>
                         <th>Sede</th>
                         <th><i class="fas fa-car me-1"></i>Carros</th>
                         <th><i class="fas fa-motorcycle me-1"></i>Motos</th>
@@ -208,12 +170,7 @@ $parqueaderos = $modelo->obtenerTodos();
                 </thead>
                 <tbody>
                     <?php foreach ($parqueaderos as $p) : ?>
-                        <tr id="fila-<?= $p['IdParqueadero'] ?>"
-                            data-institucion="<?= htmlspecialchars($p['IdInstitucion'] ?? '') ?>">
-                            <td class="text-start">
-                                <i class="fas fa-university text-info me-1"></i>
-                                <?= htmlspecialchars($p['NombreInstitucion'] ?? 'N/A') ?>
-                            </td>
+                        <tr id="fila-<?= $p['IdParqueadero'] ?>">
                             <td class="text-start">
                                 <i class="fas fa-map-marker-alt text-primary me-1"></i>
                                 <?= htmlspecialchars($p['TipoSede']) ?> — <?= htmlspecialchars($p['Ciudad']) ?>
@@ -271,48 +228,25 @@ $parqueaderos = $modelo->obtenerTodos();
             <div class="modal-body">
                 <form id="formCrearParqueadero">
 
-                    <!-- Selector de Institución -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
-                            Institución <span class="text-danger">*</span>
-                        </label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-university"></i></span>
-                            <select class="form-select" id="crearInstitucion" required>
-                                <option value="">Seleccione una institución...</option>
-                                <?php if (!empty($instituciones)) : ?>
-                                    <?php foreach ($instituciones as $inst) : ?>
-                                        <option value="<?= htmlspecialchars($inst['IdInstitucion']) ?>">
-                                            <?= htmlspecialchars($inst['NombreInstitucion']) ?> — <?= htmlspecialchars($inst['TipoInstitucion']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
-                                    <option value="" disabled>No hay instituciones activas disponibles</option>
-                                <?php endif; ?>
-                            </select>
-                        </div>
-                        <div class="invalid-feedback">Debe seleccionar una institución</div>
-                        <?php if (empty($instituciones)) : ?>
-                            <small class="text-danger">
-                                <i class="fas fa-exclamation-triangle me-1"></i>
-                                No se encontraron instituciones activas. Verifique que existan registros con estado "Activo" en la tabla institución.
-                            </small>
-                        <?php endif; ?>
-                    </div>
-
-                    <!-- Selector de Sede (se carga dinámicamente) -->
                     <div class="mb-4">
                         <label class="form-label fw-semibold">
                             Sede <span class="text-danger">*</span>
                         </label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-building"></i></span>
-                            <select class="form-select" name="IdSede" id="crearIdSede" required disabled>
-                                <option value="">Primero seleccione una institución...</option>
+                            <select class="form-select" name="IdSede" id="crearIdSede" required>
+                                <option value="">Seleccione una sede...</option>
+                                <?php foreach ($sedes as $s) : ?>
+                                    <option value="<?= $s['IdSede'] ?>"
+                                        <?= in_array($s['IdSede'], $sedesConParqueadero)
+                                            ? 'disabled title="Esta sede ya tiene parqueadero configurado"' : '' ?>>
+                                        <?= htmlspecialchars($s['TipoSede']) ?> — <?= htmlspecialchars($s['Ciudad']) ?>
+                                        <?= in_array($s['IdSede'], $sedesConParqueadero) ? ' (Ya configurada)' : '' ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="invalid-feedback">Debe seleccionar una sede</div>
-                        <small class="text-muted" id="crearSedeInfo"></small>
                     </div>
 
                     <div class="alert alert-info py-2 mb-3">
@@ -368,8 +302,7 @@ $parqueaderos = $modelo->obtenerTodos();
                 <button class="btn btn-secondary" data-dismiss="modal">
                     <i class="fas fa-times me-1"></i>Cancelar
                 </button>
-                <button class="btn btn-primary" id="btnCrearParqueadero"
-                        <?= empty($instituciones) ? 'disabled title="No hay instituciones activas"' : '' ?>>
+                <button class="btn btn-primary" id="btnCrearParqueadero">
                     <i class="fas fa-save me-1"></i>Crear Parqueadero
                 </button>
             </div>
