@@ -48,7 +48,7 @@ class BitacoraModelo {
 
     // ══════════════════════════════════════════════
     // OBTENER TODAS
-    // Incluye CargoFuncionario para distinguir Supervisor / Personal Seguridad
+    // TipoRol viene de la tabla usuario (alias CargoFuncionario para compatibilidad con JS)
     // ══════════════════════════════════════════════
     public function obtenerBitacoras(array $filtros = [], array $params = []): array {
         try {
@@ -56,11 +56,12 @@ class BitacoraModelo {
 
             $sql = "SELECT b.*,
                            f.NombreFuncionario,
-                           f.CargoFuncionario,
+                           u.TipoRol AS CargoFuncionario,
                            v.NombreVisitante,
                            CONCAT(d.TipoDispositivo, ' - ', d.MarcaDispositivo) AS NombreDispositivo
                     FROM   bitacora b
                     LEFT JOIN funcionario f ON f.IdFuncionario = b.IdFuncionario
+                    LEFT JOIN usuario     u ON u.IdFuncionario = f.IdFuncionario
                     LEFT JOIN visitante   v ON v.IdVisitante   = b.IdVisitante
                     LEFT JOIN dispositivo d ON d.IdDispositivo = b.IdDispositivo
                     $where
@@ -77,16 +78,18 @@ class BitacoraModelo {
 
     // ══════════════════════════════════════════════
     // OBTENER POR ID
+    // TipoRol viene de la tabla usuario (alias CargoFuncionario para compatibilidad con JS)
     // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
         try {
             $sql = "SELECT b.*,
                            f.NombreFuncionario,
-                           f.CargoFuncionario,
+                           u.TipoRol AS CargoFuncionario,
                            v.NombreVisitante,
                            CONCAT(d.TipoDispositivo, ' - ', d.MarcaDispositivo) AS NombreDispositivo
                     FROM   bitacora b
                     LEFT JOIN funcionario f ON f.IdFuncionario = b.IdFuncionario
+                    LEFT JOIN usuario     u ON u.IdFuncionario = f.IdFuncionario
                     LEFT JOIN visitante   v ON v.IdVisitante   = b.IdVisitante
                     LEFT JOIN dispositivo d ON d.IdDispositivo = b.IdDispositivo
                     WHERE  b.IdBitacora = ?";
@@ -145,16 +148,18 @@ class BitacoraModelo {
     }
 
     // ══════════════════════════════════════════════
-    // SUPERVISORES ACTIVOS (dropdown formulario supervisor)
+    // SUPERVISORES ACTIVOS
+    // Filtrado por TipoRol = 'Supervisor' desde tabla usuario
     // ══════════════════════════════════════════════
     public function obtenerSupervisores(): array {
         try {
-            $sql = "SELECT   IdFuncionario,
-                             NombreFuncionario AS NombreCompleto
-                    FROM     funcionario
-                    WHERE    CargoFuncionario = 'Supervisor'
-                      AND    Estado = 'Activo'
-                    ORDER BY NombreFuncionario ASC";
+            $sql = "SELECT   f.IdFuncionario,
+                             f.NombreFuncionario AS NombreCompleto
+                    FROM     funcionario f
+                    INNER JOIN usuario u ON u.IdFuncionario = f.IdFuncionario
+                    WHERE    u.TipoRol = 'Supervisor'
+                      AND    u.Estado  = 'Activo'
+                    ORDER BY f.NombreFuncionario ASC";
 
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
@@ -166,16 +171,18 @@ class BitacoraModelo {
     }
 
     // ══════════════════════════════════════════════
-    // PERSONAL DE SEGURIDAD (dropdown formulario personal)
+    // PERSONAL DE SEGURIDAD
+    // Filtrado por TipoRol = 'Personal Seguridad' desde tabla usuario
     // ══════════════════════════════════════════════
     public function obtenerPersonalSeguridad(): array {
         try {
-            $sql = "SELECT   IdFuncionario,
-                             NombreFuncionario AS NombreCompleto
-                    FROM     funcionario
-                    WHERE    CargoFuncionario = 'Personal Seguridad'
-                      AND    Estado = 'Activo'
-                    ORDER BY NombreFuncionario ASC";
+            $sql = "SELECT   f.IdFuncionario,
+                             f.NombreFuncionario AS NombreCompleto
+                    FROM     funcionario f
+                    INNER JOIN usuario u ON u.IdFuncionario = f.IdFuncionario
+                    WHERE    u.TipoRol = 'Personal Seguridad'
+                      AND    u.Estado  = 'Activo'
+                    ORDER BY f.NombreFuncionario ASC";
 
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();

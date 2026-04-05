@@ -37,7 +37,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 60000);
 
     // ══════════════════════════════════════════════
-    // 3. CARGAR PERSONAL DE SEGURIDAD
+    // 3. CARGAR PERSONAL DE SEGURIDAD (dropdown)
+    // Filtrado por TipoRol = 'Personal Seguridad'
+    // desde tabla usuario via controlador
     // ══════════════════════════════════════════════
     function cargarPersonalSeguridad() {
         const select = document.getElementById('IdFuncionario');
@@ -51,23 +53,29 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(r => r.json())
         .then(res => {
-            select.innerHTML = '<option value="" disabled selected>-- Seleccione personal --</option>';
+            select.innerHTML = '<option value="" disabled selected>-- Seleccione personal de seguridad --</option>';
             if (!Array.isArray(res) || res.length === 0) {
                 select.innerHTML += '<option value="" disabled>Sin personal disponible</option>';
-                if (msgDiv) { msgDiv.textContent = 'No hay personal de seguridad activo registrado.'; msgDiv.className = 'form-text text-warning'; }
+                if (msgDiv) {
+                    msgDiv.textContent = 'No hay personal de seguridad activo registrado.';
+                    msgDiv.className   = 'form-text text-warning';
+                }
                 return;
             }
             res.forEach(item => {
-                const opt = document.createElement('option');
-                opt.value = item.IdFuncionario;
-                opt.textContent = item.NombreCompleto;
+                const opt       = document.createElement('option');
+                opt.value       = item.IdFuncionario;
+                opt.textContent = item.NombreCompleto; // solo el nombre
                 select.appendChild(opt);
             });
             if (msgDiv) msgDiv.textContent = '';
         })
         .catch(() => {
             select.innerHTML = '<option value="" disabled selected>Error al cargar personal</option>';
-            if (msgDiv) { msgDiv.textContent = 'No se pudo conectar con el servidor.'; msgDiv.className = 'form-text text-danger'; }
+            if (msgDiv) {
+                msgDiv.textContent = 'No se pudo conectar con el servidor.';
+                msgDiv.className   = 'form-text text-danger';
+            }
         });
     }
 
@@ -82,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const ahora = getAhoraTruncado();
             if (sel < ahora) {
                 Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de entrega no puede ser anterior a la hora actual', confirmButtonColor:'#f6c23e' });
-                this.value = getFechaActualConHora(); this.classList.add('is-invalid');
+                this.value = getFechaActualConHora();
+                this.classList.add('is-invalid');
             } else {
                 this.classList.remove('is-invalid');
                 if (inputDevolucion) inputDevolucion.setAttribute('min', this.value);
@@ -97,11 +106,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const ahora = getAhoraTruncado();
             if (dev < ahora) {
                 Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de devolución no puede ser anterior a la hora actual', confirmButtonColor:'#f6c23e' });
-                this.value = ''; this.classList.add('is-invalid');
+                this.value = '';
+                this.classList.add('is-invalid');
             } else if (inputEntrega?.value && dev < ent) {
                 Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de devolución no puede ser anterior a la fecha de entrega', confirmButtonColor:'#f6c23e' });
-                this.value = ''; this.classList.add('is-invalid');
-            } else { this.classList.remove('is-invalid'); }
+                this.value = '';
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+            }
         });
     }
 
@@ -111,15 +124,20 @@ document.addEventListener('DOMContentLoaded', function () {
             const txt = this.value.trim();
             if (txt.length > 0 && txt.length < 10) {
                 Swal.fire({ icon:'warning', title:'Texto muy corto', text:'La novedad debe tener al menos 10 caracteres', confirmButtonColor:'#f6c23e' });
-                this.classList.add('is-invalid'); this.focus();
-            } else { this.classList.remove('is-invalid'); }
+                this.classList.add('is-invalid');
+                this.focus();
+            } else {
+                this.classList.remove('is-invalid');
+            }
         });
     }
 
     ['EstadoDotacion', 'TipoDotacion', 'IdFuncionario'].forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
-        el.addEventListener('change', function () { this.classList.toggle('is-invalid', !this.value); });
+        el.addEventListener('change', function () {
+            this.classList.toggle('is-invalid', !this.value);
+        });
     });
 
     // ══════════════════════════════════════════════
@@ -138,28 +156,44 @@ document.addEventListener('DOMContentLoaded', function () {
             const funcionario = document.getElementById('IdFuncionario').value;
             const ahoraSubmit = getAhoraTruncado();
 
-            if (!estado)           { Swal.fire({ icon:'error', title:'Campo requerido',   text:'Debe seleccionar el estado',                    confirmButtonColor:'#e74a3b' }); document.getElementById('EstadoDotacion').classList.add('is-invalid'); return; }
-            if (!tipo)             { Swal.fire({ icon:'error', title:'Campo requerido',   text:'Debe seleccionar el tipo',                     confirmButtonColor:'#e74a3b' }); document.getElementById('TipoDotacion').classList.add('is-invalid'); return; }
-            if (novedad.length<10) { Swal.fire({ icon:'error', title:'Novedad muy corta', text:'La novedad debe tener al menos 10 caracteres',  confirmButtonColor:'#e74a3b' }); document.getElementById('NovedadDotacion').classList.add('is-invalid'); return; }
-
+            if (!estado) {
+                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el estado', confirmButtonColor:'#e74a3b' });
+                document.getElementById('EstadoDotacion').classList.add('is-invalid'); return;
+            }
+            if (!tipo) {
+                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el tipo', confirmButtonColor:'#e74a3b' });
+                document.getElementById('TipoDotacion').classList.add('is-invalid'); return;
+            }
+            if (novedad.length < 10) {
+                Swal.fire({ icon:'error', title:'Novedad muy corta', text:'La novedad debe tener al menos 10 caracteres', confirmButtonColor:'#e74a3b' });
+                document.getElementById('NovedadDotacion').classList.add('is-invalid'); return;
+            }
             if (!fechaEnt || new Date(fechaEnt) < ahoraSubmit) {
                 Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha de entrega es obligatoria y no puede ser anterior a la hora actual', confirmButtonColor:'#e74a3b' });
                 document.getElementById('FechaEntrega').classList.add('is-invalid'); return;
             }
             if (fechaDev) {
-                const dev = new Date(fechaDev); const ent = new Date(fechaEnt);
+                const dev = new Date(fechaDev);
+                const ent = new Date(fechaEnt);
                 if (dev < ahoraSubmit || dev < ent) {
                     Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha de devolución debe ser posterior a la de entrega y a la hora actual', confirmButtonColor:'#e74a3b' });
                     document.getElementById('FechaDevolucion').classList.add('is-invalid'); return;
                 }
             }
-            if (!funcionario) { Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el personal de seguridad', confirmButtonColor:'#e74a3b' }); document.getElementById('IdFuncionario').classList.add('is-invalid'); return; }
+            if (!funcionario) {
+                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el personal de seguridad', confirmButtonColor:'#e74a3b' });
+                document.getElementById('IdFuncionario').classList.add('is-invalid'); return;
+            }
 
             const btn      = form.querySelector('button[type=submit]');
             const original = btn.innerHTML;
             btn.disabled   = true;
 
-            Swal.fire({ title:'Procesando...', html:'<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Registrando dotación', allowOutsideClick:false, allowEscapeKey:false, showConfirmButton:false });
+            Swal.fire({
+                title: 'Procesando...',
+                html:  '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Registrando dotación',
+                allowOutsideClick: false, allowEscapeKey: false, showConfirmButton: false
+            });
 
             const formData = new FormData(form);
             formData.append('accion', 'registrar');
@@ -170,8 +204,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 Swal.close();
 
                 if (data.success) {
-                    Swal.fire({ icon:'success', title:'¡Dotación registrada!', text:'La dotación fue guardada correctamente', timer:3000, timerProgressBar:true, showConfirmButton:true, confirmButtonColor:'#1cc88a', confirmButtonText:'Entendido' })
-                    .then(() => {
+                    Swal.fire({
+                        icon: 'success', title: '¡Dotación registrada!',
+                        text: 'La dotación fue guardada correctamente',
+                        timer: 3000, timerProgressBar: true,
+                        showConfirmButton: true, confirmButtonColor: '#1cc88a', confirmButtonText: 'Entendido'
+                    }).then(() => {
                         form.reset();
                         document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
                         const nuevaFecha = getFechaActualConHora();
@@ -180,13 +218,24 @@ document.addEventListener('DOMContentLoaded', function () {
                         cargarPersonalSeguridad();
                     });
                 } else {
-                    Swal.fire({ icon:'warning', title:'No se pudo registrar', html:(data.message||'Error').replace(/\n/g,'<br>'), confirmButtonColor:'#f6c23e', confirmButtonText:'Entendido', footer:'<small class="text-muted">Revise la información e intente nuevamente</small>' });
+                    Swal.fire({
+                        icon: 'warning', title: 'No se pudo registrar',
+                        html: (data.message || 'Error').replace(/\n/g, '<br>'),
+                        confirmButtonColor: '#f6c23e', confirmButtonText: 'Entendido',
+                        footer: '<small class="text-muted">Revise la información e intente nuevamente</small>'
+                    });
                 }
             } catch (error) {
                 Swal.close();
-                Swal.fire({ icon:'error', title:'Error de conexión', html:'No se pudo conectar al servidor.<br>Intente nuevamente.', confirmButtonColor:'#e74a3b', footer:'<small>Si el problema persiste, contacte al administrador</small>' });
+                Swal.fire({
+                    icon: 'error', title: 'Error de conexión',
+                    html: 'No se pudo conectar al servidor.<br>Intente nuevamente.',
+                    confirmButtonColor: '#e74a3b',
+                    footer: '<small>Si el problema persiste, contacte al administrador</small>'
+                });
             } finally {
-                btn.innerHTML = original; btn.disabled = false;
+                btn.innerHTML = original;
+                btn.disabled  = false;
             }
         });
     }
@@ -230,6 +279,7 @@ function formatFecha(fecha) {
     return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 }
 
+// CargoFuncionario = alias de u.TipoRol desde el modelo
 function celdaSupervisor(row) {
     if (row.CargoFuncionario === 'Supervisor' && row.NombreFuncionario) {
         return `<i class="fas fa-user-tie text-primary me-1"></i>${row.NombreFuncionario}`;
@@ -257,7 +307,7 @@ function cargarDotaciones() {
             + `&estado=${encodeURIComponent(filtroEstado.value)}`
             + `&tipo=${encodeURIComponent(filtroTipo.value)}`
             + `&funcionario=${encodeURIComponent(filtroFuncionario.value)}`
-            + `&estadoReg=Activo`  // ← siempre filtra solo Activos
+            + `&estadoReg=Activo`
     })
     .then(r => r.json())
     .then(res => {
@@ -281,27 +331,29 @@ function cargarDotaciones() {
                 <td><span class="badge bg-${colorEstado(row.EstadoDotacion)}">${row.EstadoDotacion}</span></td>
                 <td><span class="badge bg-${colorTipo(row.TipoDotacion)}">${row.TipoDotacion}</span></td>
                 <td class="text-start" style="max-width:220px;">
-                    <span title="${row.NovedadDotacion??''}">${(row.NovedadDotacion??'').substring(0,60)}${(row.NovedadDotacion??'').length>60?'...':''}</span>
+                    <span title="${row.NovedadDotacion ?? ''}">${(row.NovedadDotacion ?? '').substring(0,60)}${(row.NovedadDotacion ?? '').length > 60 ? '...' : ''}</span>
                 </td>
                 <td class="text-nowrap">${formatFecha(row.FechaEntrega)}</td>
                 <td class="text-nowrap">${formatFecha(row.FechaDevolucion)}</td>
                 <td>${celdaSupervisor(row)}</td>
                 <td>${celdaPersonalSeguridad(row)}</td>
-                <td><span class="badge bg-${row.Estado==='Activo'?'success':'secondary'}">${row.Estado??''}</span></td>
+                <td><span class="badge bg-${row.Estado === 'Activo' ? 'success' : 'secondary'}">${row.Estado ?? ''}</span></td>
             </tr>
         `).join('');
 
         const total = res.length;
-        document.getElementById('contadorRegistros').textContent = `${total} registro${total!==1?'s':''}`;
+        document.getElementById('contadorRegistros').textContent = `${total} registro${total !== 1 ? 's' : ''}`;
 
         tablaDataTable = $('#tablaDotacionesDT').DataTable({
-            language: { url:"https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
-            pageLength: 10, responsive: true, order: [[0,"desc"]]
+            language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
+            pageLength: 10, responsive: true, order: [[0, "desc"]]
         });
     })
     .catch(err => {
         console.error('Error:', err);
         const tbody = document.getElementById('cuerpoTabla');
-        if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Error al cargar los datos</td></tr>`;
+        if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>Error al cargar los datos
+        </td></tr>`;
     });
 }

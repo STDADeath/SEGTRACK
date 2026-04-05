@@ -11,10 +11,6 @@ class ControladorDotacion {
 
     private DotacionModelo $modelo;
 
-    // Margen de tolerancia en minutos hacia el pasado.
-    // Absorbe diferencias de timezone, latencia de red y segundos transcurridos.
-    // El frontend ya impide seleccionar fechas pasadas, así que este margen
-    // solo aplica como red de seguridad en el backend.
     private const MARGEN_MINUTOS = 10;
 
     public function __construct($conexion) {
@@ -25,7 +21,6 @@ class ControladorDotacion {
         return !isset($array[$campo]) || trim($array[$campo]) === "";
     }
 
-    // Parsea cualquier variante de fecha que pueda llegar del POST
     private function parsearFecha(string $fecha): ?DateTime {
         foreach (['Y-m-d\TH:i', 'Y-m-d H:i:s', 'Y-m-d H:i'] as $formato) {
             $d = DateTime::createFromFormat($formato, $fecha);
@@ -34,7 +29,6 @@ class ControladorDotacion {
         return null;
     }
 
-    // Convierte las fechas al formato de BD 'Y-m-d H:i:s'
     private function convertirFecha(array &$datos, array $campos): array {
         foreach ($campos as $campo) {
             if (empty($datos[$campo])) continue;
@@ -47,7 +41,6 @@ class ControladorDotacion {
         return ['success' => true];
     }
 
-    // Devuelve "ahora menos MARGEN_MINUTOS" para la comparación
     private function limiteInferior(): DateTime {
         $limite = new DateTime();
         $limite->modify('-' . self::MARGEN_MINUTOS . ' minutes');
@@ -56,12 +49,11 @@ class ControladorDotacion {
 
     // ══════════════════════════════════════════════
     // ROL DE SESIÓN ACTIVO
-    // Ajusta el key según tu variable de sesión real
+    // Lee TipoRol desde $_SESSION
     // ══════════════════════════════════════════════
     private function getRolSesion(): string {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        // ⚠️ Cambia 'CargoFuncionario' por el key real que usas en $_SESSION
-        return $_SESSION['CargoFuncionario'] ?? '';
+        return $_SESSION['TipoRol'] ?? '';
     }
 
     private function esPersonalSeguridad(): bool {
@@ -119,35 +111,27 @@ class ControladorDotacion {
 
     // ══════════════════════════════════════════════
     // MOSTRAR CON FILTROS
-    // Si el usuario es Personal de Seguridad,
-    // se fuerza d.Estado = 'Activo' sin importar
-    // lo que venga del POST (seguridad en backend).
+    // Personal Seguridad: forzado a ver solo Activos
     // ══════════════════════════════════════════════
     public function mostrarDotaciones(): array {
         $filtros = [];
         $params  = [];
 
-        // ── Filtro de estado de dotación (Buen estado / Regular / Dañado) ──
         if (!empty($_POST['estado'])) {
             $filtros[]         = "d.EstadoDotacion = :estado";
             $params[':estado'] = $_POST['estado'];
         }
 
-        // ── Filtro de tipo ──
         if (!empty($_POST['tipo'])) {
             $filtros[]       = "d.TipoDotacion = :tipo";
             $params[':tipo'] = $_POST['tipo'];
         }
 
-        // ── Filtro de funcionario ──
         if (!empty($_POST['funcionario'])) {
             $filtros[]              = "f.NombreFuncionario LIKE :funcionario";
             $params[':funcionario'] = '%' . $_POST['funcionario'] . '%';
         }
 
-        // ── Filtro de estado del registro (Activo / Inactivo) ──
-        // Personal de Seguridad: siempre forzado a 'Activo' (no negociable)
-        // Otros roles: respetan lo que venga en POST o muestran todos
         if ($this->esPersonalSeguridad()) {
             $filtros[]            = "d.Estado = :estadoReg";
             $params[':estadoReg'] = 'Activo';
@@ -161,14 +145,13 @@ class ControladorDotacion {
 
     // ══════════════════════════════════════════════
     // OBTENER POR ID
-    // Personal de Seguridad solo puede ver el registro
-    // si su Estado es 'Activo'
+    // Personal Seguridad solo ve registros Activos
     // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
         $registro = $this->modelo->obtenerPorId($id);
 
         if ($registro && $this->esPersonalSeguridad() && ($registro['Estado'] ?? '') !== 'Activo') {
-            return null; // No exponer registros inactivos
+            return null;
         }
 
         return $registro;
@@ -191,10 +174,19 @@ class ControladorDotacion {
     }
 
     // ══════════════════════════════════════════════
-    // FUNCIONARIOS / SUPERVISORES (dropdown)
+    // PERSONAL DE SEGURIDAD (dropdown admin)
+    // TipoRol = 'Personal Seguridad'
     // ══════════════════════════════════════════════
     public function obtenerFuncionarios(): array {
         return $this->modelo->obtenerFuncionarios();
+    }
+
+    // ══════════════════════════════════════════════
+    // SUPERVISORES (dropdown vista supervisor)
+    // TipoRol = 'Supervisor'
+    // ══════════════════════════════════════════════
+    public function obtenerSupervisores(): array {
+        return $this->modelo->obtenerSupervisores();
     }
 
     // ══════════════════════════════════════════════
@@ -241,11 +233,18 @@ try {
             }
             echo json_encode($controlador->cambiarEstado($id, $nuevo));
             break;
-        case 'supervisores':
+
+        // ── Dropdown admin: Personal Seguridad ──
         case 'personal_seguridad':
         case 'funcionarios':
             echo json_encode($controlador->obtenerFuncionarios());
             break;
+
+        // ── Dropdown supervisor: Supervisores ──
+        case 'supervisores':
+            echo json_encode($controlador->obtenerSupervisores());
+            break;
+
         default:
             echo json_encode(['success' => false, 'message' => 'Acción no reconocida: ' . htmlspecialchars($accion ?? '')]);
             break;

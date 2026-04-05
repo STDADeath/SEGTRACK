@@ -1,6 +1,7 @@
 // ============================================================
 // ValidacionBitacoraSupervisor.js
 // Unifica: registro de bitácora + lista con columnas Supervisor / Personal Seguridad
+// Filtrado por TipoRol desde tabla usuario (no CargoFuncionario de funcionario)
 // ============================================================
 
 function esperarDependencias(cb) {
@@ -52,6 +53,8 @@ esperarDependencias(function () {
 
     // ══════════════════════════════════════════════
     // HELPERS DE CELDAS (lista)
+    // Usan row.CargoFuncionario que ahora viene como alias
+    // de u.TipoRol desde el modelo (JOIN con tabla usuario)
     // ══════════════════════════════════════════════
     function colorTurnoBit(turno) {
         const c = { 'Jornada mañana': 'warning', 'Jornada tarde': 'info', 'Jornada noche': 'dark' };
@@ -59,19 +62,37 @@ esperarDependencias(function () {
     }
 
     function celdaSupervisor(row) {
-        const cargo = (row.CargoFuncionario ?? '').trim();
-        if (cargo === 'Supervisor' && row.NombreFuncionario) {
+        // CargoFuncionario es alias de u.TipoRol (valor: 'Supervisor')
+        const rol = (row.CargoFuncionario ?? '').trim();
+        if (rol === 'Supervisor' && row.NombreFuncionario) {
             return `<span><i class="fas fa-user-tie text-primary mr-1"></i>${row.NombreFuncionario}</span>`;
         }
         return '<span class="text-muted fst-italic">No aplica</span>';
     }
 
     function celdaPersonalSeguridad(row) {
-        const cargo = (row.CargoFuncionario ?? '').trim();
-        if (cargo === 'Personal Seguridad' && row.NombreFuncionario) {
+        // CargoFuncionario es alias de u.TipoRol (valor: 'Personal Seguridad')
+        const rol = (row.CargoFuncionario ?? '').trim();
+        if (rol === 'Personal Seguridad' && row.NombreFuncionario) {
             return `<span><i class="fas fa-user-shield text-success mr-1"></i>${row.NombreFuncionario}</span>`;
         }
         return '<span class="text-muted fst-italic">No aplica</span>';
+    }
+
+    // ══════════════════════════════════════════════
+    // BADGE DE ROL (modal editar)
+    // Usa u.TipoRol (alias CargoFuncionario) para el badge
+    // ══════════════════════════════════════════════
+    function buildBadgeRol(tipoRol) {
+        const mapa = {
+            'Supervisor':        { color: 'primary', icono: 'fa-user-tie',    label: 'Supervisor'        },
+            'Personal Seguridad':{ color: 'success', icono: 'fa-user-shield', label: 'Personal Seguridad'},
+            'Administrador':     { color: 'danger',  icono: 'fa-user-cog',    label: 'Administrador'     }
+        };
+        const cfg = mapa[tipoRol] ?? { color: 'secondary', icono: 'fa-user', label: tipoRol || 'Sin rol' };
+        return `<span class="badge bg-${cfg.color} mt-1">
+                    <i class="fas ${cfg.icono} me-1"></i>${cfg.label}
+                </span>`;
     }
 
     // ══════════════════════════════════════════════
@@ -102,6 +123,7 @@ esperarDependencias(function () {
 
     // ══════════════════════════════════════════════
     // CARGAR SUPERVISORES (dropdown registro)
+    // Acción 'supervisores' → modelo filtra por u.TipoRol = 'Supervisor'
     // ══════════════════════════════════════════════
     function cargarSupervisores() {
         const select = document.getElementById('IdFuncionario');
@@ -556,6 +578,8 @@ esperarDependencias(function () {
 
     // ══════════════════════════════════════════════
     // MODAL EDITAR
+    // El badge usa row.CargoFuncionario (alias de u.TipoRol)
+    // a través de buildBadgeRol()
     // ══════════════════════════════════════════════
     window.abrirModalEditarBitacora = function (row) {
         $('#editIdBitacora').val(row.IdBitacora);
@@ -570,15 +594,9 @@ esperarDependencias(function () {
         $('#editNombreDispositivoBit').val(row.NombreDispositivo || 'No aplica');
         $('#editIdDispositivoBit').val(row.IdDispositivo ?? '');
 
-        const cargo      = (row.CargoFuncionario ?? '').trim();
-        const badgeColor = cargo === 'Supervisor' ? 'primary' : 'success';
-        const badgeIcono = cargo === 'Supervisor' ? 'fa-user-tie' : 'fa-user-shield';
-        const badgeLabel = cargo || 'Sin cargo';
-        $('#editCargoBadge').html(
-            `<span class="badge bg-${badgeColor} mt-1">
-                <i class="fas ${badgeIcono} me-1"></i>${badgeLabel}
-             </span>`
-        );
+        // Badge de rol — usa u.TipoRol (alias CargoFuncionario)
+        const tipoRol = (row.CargoFuncionario ?? '').trim();
+        $('#editCargoBadge').html(buildBadgeRol(tipoRol));
 
         if (row.ReporteBitacora) {
             $('#editPdfActual').html(
@@ -704,7 +722,6 @@ esperarDependencias(function () {
 
     // ══════════════════════════════════════════════
     // CARGA INICIAL
-    // Solo ejecuta la tabla si el elemento existe (página lista)
     // ══════════════════════════════════════════════
     if (document.getElementById('cuerpoTablaBitacoraSupervisor')) {
         cargarBitacorasSupervisor();

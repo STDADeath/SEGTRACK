@@ -44,8 +44,7 @@ class DotacionModelo {
 
     // ══════════════════════════════════════════════
     // OBTENER TODAS
-    // Incluye CargoFuncionario para distinguir supervisor
-    // de personal de seguridad en la vista
+    // TipoRol viene de tabla usuario (alias CargoFuncionario)
     // ══════════════════════════════════════════════
     public function obtenerTodos(array $filtros = [], array $params = []): array {
         try {
@@ -53,9 +52,10 @@ class DotacionModelo {
 
             $sql = "SELECT d.*,
                            f.NombreFuncionario,
-                           f.CargoFuncionario
+                           u.TipoRol AS CargoFuncionario
                     FROM   dotacion d
                     LEFT JOIN funcionario f ON f.IdFuncionario = d.IdFuncionario
+                    LEFT JOIN usuario     u ON u.IdFuncionario = f.IdFuncionario
                     $where
                     ORDER  BY d.IdDotacion DESC";
 
@@ -70,14 +70,16 @@ class DotacionModelo {
 
     // ══════════════════════════════════════════════
     // OBTENER POR ID
+    // TipoRol viene de tabla usuario (alias CargoFuncionario)
     // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
         try {
             $sql = "SELECT d.*,
                            f.NombreFuncionario,
-                           f.CargoFuncionario
+                           u.TipoRol AS CargoFuncionario
                     FROM   dotacion d
                     LEFT JOIN funcionario f ON f.IdFuncionario = d.IdFuncionario
+                    LEFT JOIN usuario     u ON u.IdFuncionario = f.IdFuncionario
                     WHERE  d.IdDotacion = ?";
 
             $stmt = $this->conexion->prepare($sql);
@@ -126,8 +128,7 @@ class DotacionModelo {
     // ══════════════════════════════════════════════
     public function eliminar(int $id): array {
         try {
-            $sql       = "DELETE FROM dotacion WHERE IdDotacion = ?";
-            $stmt      = $this->conexion->prepare($sql);
+            $stmt      = $this->conexion->prepare("DELETE FROM dotacion WHERE IdDotacion = ?");
             $resultado = $stmt->execute([$id]);
             return ['success' => $resultado, 'rows' => $stmt->rowCount()];
 
@@ -137,17 +138,43 @@ class DotacionModelo {
     }
 
     // ══════════════════════════════════════════════
-    // FUNCIONARIOS ACTIVOS (dropdown)
+    // PERSONAL DE SEGURIDAD ACTIVO (dropdown admin)
+    // Filtrado por TipoRol = 'Personal Seguridad'
     // ══════════════════════════════════════════════
     public function obtenerFuncionarios(): array {
         try {
-            $sql = "SELECT   IdFuncionario,
-                             NombreFuncionario AS NombreCompleto,
-                             CargoFuncionario
-                    FROM     funcionario
-                    WHERE    CargoFuncionario IN ('Supervisor', 'Personal Seguridad')
-                      AND    Estado = 'Activo'
-                    ORDER BY NombreFuncionario ASC";
+            $sql = "SELECT   f.IdFuncionario,
+                             f.NombreFuncionario AS NombreCompleto,
+                             u.TipoRol AS CargoFuncionario
+                    FROM     funcionario f
+                    INNER JOIN usuario u ON u.IdFuncionario = f.IdFuncionario
+                    WHERE    u.TipoRol = 'Personal Seguridad'
+                      AND    u.Estado  = 'Activo'
+                    ORDER BY f.NombreFuncionario ASC";
+
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    // ══════════════════════════════════════════════
+    // SUPERVISORES ACTIVOS (dropdown supervisor)
+    // Filtrado por TipoRol = 'Supervisor'
+    // ══════════════════════════════════════════════
+    public function obtenerSupervisores(): array {
+        try {
+            $sql = "SELECT   f.IdFuncionario,
+                             f.NombreFuncionario AS NombreCompleto,
+                             u.TipoRol AS CargoFuncionario
+                    FROM     funcionario f
+                    INNER JOIN usuario u ON u.IdFuncionario = f.IdFuncionario
+                    WHERE    u.TipoRol = 'Supervisor'
+                      AND    u.Estado  = 'Activo'
+                    ORDER BY f.NombreFuncionario ASC";
 
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();

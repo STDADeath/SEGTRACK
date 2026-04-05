@@ -228,11 +228,9 @@ try {
             }
             echo json_encode($controlador->cambiarEstado($id, $nuevo));
             break;
-        // Dropdown para formulario de SUPERVISOR
         case 'supervisores':
             echo json_encode($controlador->obtenerSupervisores());
             break;
-        // Dropdown para formulario de PERSONAL DE SEGURIDAD
         case 'personal_seguridad':
             echo json_encode($controlador->obtenerPersonalSeguridad());
             break;

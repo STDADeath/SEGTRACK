@@ -10,13 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const fechaActualConHora = `${ahora.getFullYear()}-${pad(ahora.getMonth()+1)}-${pad(ahora.getDate())}T${pad(ahora.getHours())}:${pad(ahora.getMinutes())}`;
 
     const inputFecha = document.getElementById('FechaBitacora');
-    if (inputFecha) {   
+    if (inputFecha) {
         inputFecha.setAttribute('min', fechaMinimaDelDia);
         inputFecha.value = fechaActualConHora;
     }
 
     // ══════════════════════════════════════════════
     // 2. CARGAR PERSONAL DE SEGURIDAD
+    // Ahora filtrado por TipoRol = 'Personal Seguridad' en tabla usuario
     // ══════════════════════════════════════════════
     function cargarPersonalSeguridad() {
         const select = document.getElementById('IdFuncionario');
@@ -326,6 +327,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const btn      = form.querySelector('button[type=submit]');
             const original = btn.innerHTML;
+            btn.disabled   = true;
+            btn.innerHTML  = '<i class="fas fa-spinner fa-spin me-1"></i> Registrando...';
 
             Swal.fire({
                 title: 'Procesando...',
@@ -427,7 +430,7 @@ function cargarBitacoras() {
                + `&turno=${encodeURIComponent(filtroTurno.value)}`
                + `&fecha=${encodeURIComponent(filtroFecha.value)}`
                + `&funcionario=${encodeURIComponent(filtroFuncionario.value)}`
-               + `&estadoReg=Activo`  // ← Personal de Seguridad solo ve Activos
+               + `&estadoReg=Activo`
     })
     .then(r => r.json())
     .then(res => {

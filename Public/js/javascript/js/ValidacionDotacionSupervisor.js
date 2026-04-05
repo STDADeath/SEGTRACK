@@ -1,5 +1,7 @@
 // ============================================================
 // ValidacionDotacionSupervisor.js
+// Registro de dotación + lista con columnas Supervisor / Personal Seguridad
+// Filtrado por TipoRol desde tabla usuario (alias CargoFuncionario)
 // ============================================================
 
 function esperarDependencias(cb) {
@@ -16,7 +18,7 @@ esperarDependencias(function () {
     let estadoActualDotacion      = null;
 
     // ══════════════════════════════════════════════
-    // HELPER: fecha actual en tiempo real
+    // HELPERS DE FECHA
     // ══════════════════════════════════════════════
     function getFechaActualConHora() {
         const ahora = new Date();
@@ -29,8 +31,76 @@ esperarDependencias(function () {
         return ahora;
     }
 
+    function formatFecha(fecha) {
+        if (!fecha) return '<span class="badge badge-light border">Sin fecha</span>';
+        const d = new Date(fecha);
+        return pad(d.getDate()) + '/' +
+               pad(d.getMonth()+1) + '/' +
+               d.getFullYear() + ' ' +
+               pad(d.getHours()) + ':' +
+               pad(d.getMinutes());
+    }
+
+    function fechaParaInput(fecha) {
+        if (!fecha) return '';
+        const d = new Date(fecha);
+        return d.getFullYear() + '-' +
+               pad(d.getMonth()+1) + '-' +
+               pad(d.getDate()) + 'T' +
+               pad(d.getHours()) + ':' +
+               pad(d.getMinutes());
+    }
+
     // ══════════════════════════════════════════════
-    // FECHAS INICIALES
+    // HELPERS DE CELDAS (lista)
+    // CargoFuncionario = alias de u.TipoRol desde el modelo
+    // ══════════════════════════════════════════════
+    function colorEstado(estado) {
+        const c = { 'Buen estado': 'success', 'Regular': 'warning', 'Dañado': 'danger' };
+        return c[estado] ?? 'secondary';
+    }
+
+    function colorTipo(tipo) {
+        const c = { 'Uniforme': 'info', 'Equipo': 'primary', 'Herramienta': 'warning', 'Otro': 'secondary' };
+        return c[tipo] ?? 'secondary';
+    }
+
+    function celdaSupervisor(row) {
+        // CargoFuncionario es alias de u.TipoRol (valor: 'Supervisor')
+        const rol = (row.CargoFuncionario ?? '').trim();
+        if (rol === 'Supervisor' && row.NombreFuncionario) {
+            return `<span><i class="fas fa-user-tie text-primary mr-1"></i>${row.NombreFuncionario}</span>`;
+        }
+        return '<span class="text-muted fst-italic">No aplica</span>';
+    }
+
+    function celdaPersonalSeguridad(row) {
+        // CargoFuncionario es alias de u.TipoRol (valor: 'Personal Seguridad')
+        const rol = (row.CargoFuncionario ?? '').trim();
+        if (rol === 'Personal Seguridad' && row.NombreFuncionario) {
+            return `<span><i class="fas fa-user-shield text-success mr-1"></i>${row.NombreFuncionario}</span>`;
+        }
+        return '<span class="text-muted fst-italic">No aplica</span>';
+    }
+
+    // ══════════════════════════════════════════════
+    // BADGE DE ROL (modal editar)
+    // Usa u.TipoRol (alias CargoFuncionario)
+    // ══════════════════════════════════════════════
+    function buildBadgeRol(tipoRol) {
+        const mapa = {
+            'Supervisor':         { color: 'primary', icono: 'fa-user-tie',    label: 'Supervisor'         },
+            'Personal Seguridad': { color: 'success', icono: 'fa-user-shield', label: 'Personal Seguridad' },
+            'Administrador':      { color: 'danger',  icono: 'fa-user-cog',    label: 'Administrador'      }
+        };
+        const cfg = mapa[tipoRol] ?? { color: 'secondary', icono: 'fa-user', label: tipoRol || 'Sin rol' };
+        return `<span class="badge bg-${cfg.color} mt-1">
+                    <i class="fas ${cfg.icono} me-1"></i>${cfg.label}
+                </span>`;
+    }
+
+    // ══════════════════════════════════════════════
+    // FECHAS INICIALES (formulario registro)
     // ══════════════════════════════════════════════
     const inputEntrega    = document.getElementById('FechaEntrega');
     const inputDevolucion = document.getElementById('FechaDevolucion');
@@ -50,7 +120,8 @@ esperarDependencias(function () {
     }, 60000);
 
     // ══════════════════════════════════════════════
-    // CARGAR SUPERVISORES
+    // CARGAR SUPERVISORES (dropdown registro)
+    // Acción 'supervisores' → modelo filtra por u.TipoRol = 'Supervisor'
     // ══════════════════════════════════════════════
     function cargarSupervisores() {
         const select = document.getElementById('IdFuncionario');
@@ -60,14 +131,17 @@ esperarDependencias(function () {
         fetch('/SEGTRACK/App/Controller/ControladorDotacion.php', {
             method:  'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body:    'accion=funcionarios'
+            body:    'accion=supervisores'
         })
         .then(r => r.json())
         .then(res => {
             select.innerHTML = '<option value="" disabled selected>-- Seleccione supervisor --</option>';
             if (!Array.isArray(res) || res.length === 0) {
                 select.innerHTML += '<option value="" disabled>Sin supervisores disponibles</option>';
-                if (msgDiv) { msgDiv.textContent = 'No hay supervisores activos registrados.'; msgDiv.className = 'form-text text-warning'; }
+                if (msgDiv) {
+                    msgDiv.textContent = 'No hay supervisores activos registrados.';
+                    msgDiv.className   = 'form-text text-warning';
+                }
                 return;
             }
             res.forEach(function (item) {
@@ -80,7 +154,10 @@ esperarDependencias(function () {
         })
         .catch(function () {
             select.innerHTML = '<option value="" disabled selected>Error al cargar supervisores</option>';
-            if (msgDiv) { msgDiv.textContent = 'No se pudo conectar con el servidor.'; msgDiv.className = 'form-text text-danger'; }
+            if (msgDiv) {
+                msgDiv.textContent = 'No se pudo conectar con el servidor.';
+                msgDiv.className   = 'form-text text-danger';
+            }
         });
     }
 
@@ -89,14 +166,14 @@ esperarDependencias(function () {
     }
 
     // ══════════════════════════════════════════════
-    // VALIDACIONES EN TIEMPO REAL
+    // VALIDACIONES EN TIEMPO REAL (registro)
     // ══════════════════════════════════════════════
     if (inputEntrega) {
         inputEntrega.addEventListener('change', function () {
             const sel   = new Date(this.value);
             const ahora = getAhoraTruncado();
             if (sel < ahora) {
-                Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de entrega no puede ser anterior a la hora actual', confirmButtonColor:'#f6c23e' });
+                Swal.fire({ icon: 'warning', title: 'Fecha inválida', text: 'La fecha de entrega no puede ser anterior a la hora actual', confirmButtonColor: '#f6c23e' });
                 this.value = getFechaActualConHora();
                 this.classList.add('is-invalid');
             } else {
@@ -112,12 +189,16 @@ esperarDependencias(function () {
             const ent   = new Date(inputEntrega?.value);
             const ahora = getAhoraTruncado();
             if (dev < ahora) {
-                Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de devolución no puede ser anterior a la hora actual', confirmButtonColor:'#f6c23e' });
-                this.value = ''; this.classList.add('is-invalid');
+                Swal.fire({ icon: 'warning', title: 'Fecha inválida', text: 'La fecha de devolución no puede ser anterior a la hora actual', confirmButtonColor: '#f6c23e' });
+                this.value = '';
+                this.classList.add('is-invalid');
             } else if (inputEntrega?.value && dev < ent) {
-                Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha de devolución no puede ser anterior a la fecha de entrega', confirmButtonColor:'#f6c23e' });
-                this.value = ''; this.classList.add('is-invalid');
-            } else { this.classList.remove('is-invalid'); }
+                Swal.fire({ icon: 'warning', title: 'Fecha inválida', text: 'La fecha de devolución no puede ser anterior a la fecha de entrega', confirmButtonColor: '#f6c23e' });
+                this.value = '';
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+            }
         });
     }
 
@@ -126,20 +207,25 @@ esperarDependencias(function () {
         txtNovedad.addEventListener('blur', function () {
             const txt = this.value.trim();
             if (txt.length > 0 && txt.length < 10) {
-                Swal.fire({ icon:'warning', title:'Texto muy corto', text:'La novedad debe tener al menos 10 caracteres', confirmButtonColor:'#f6c23e' });
-                this.classList.add('is-invalid'); this.focus();
-            } else { this.classList.remove('is-invalid'); }
+                Swal.fire({ icon: 'warning', title: 'Texto muy corto', text: 'La novedad debe tener al menos 10 caracteres', confirmButtonColor: '#f6c23e' });
+                this.classList.add('is-invalid');
+                this.focus();
+            } else {
+                this.classList.remove('is-invalid');
+            }
         });
     }
 
     ['EstadoDotacion', 'TipoDotacion', 'IdFuncionario'].forEach(function (id) {
         const el = document.getElementById(id);
         if (!el) return;
-        el.addEventListener('change', function () { this.classList.toggle('is-invalid', !this.value); });
+        el.addEventListener('change', function () {
+            this.classList.toggle('is-invalid', !this.value);
+        });
     });
 
     // ══════════════════════════════════════════════
-    // ENVÍO DEL FORMULARIO
+    // ENVÍO DEL FORMULARIO REGISTRO
     // ══════════════════════════════════════════════
     const form = document.getElementById('formIngresarDotacionSupervisor');
     if (form) {
@@ -155,30 +241,31 @@ esperarDependencias(function () {
             const ahoraSubmit = getAhoraTruncado();
 
             if (!estado) {
-                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el estado', confirmButtonColor:'#e74a3b' });
+                Swal.fire({ icon: 'error', title: 'Campo requerido', text: 'Debe seleccionar el estado', confirmButtonColor: '#e74a3b' });
                 document.getElementById('EstadoDotacion').classList.add('is-invalid'); return;
             }
             if (!tipo) {
-                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el tipo', confirmButtonColor:'#e74a3b' });
+                Swal.fire({ icon: 'error', title: 'Campo requerido', text: 'Debe seleccionar el tipo', confirmButtonColor: '#e74a3b' });
                 document.getElementById('TipoDotacion').classList.add('is-invalid'); return;
             }
             if (novedad.length < 10) {
-                Swal.fire({ icon:'error', title:'Novedad muy corta', text:'La novedad debe tener al menos 10 caracteres', confirmButtonColor:'#e74a3b' });
+                Swal.fire({ icon: 'error', title: 'Novedad muy corta', text: 'La novedad debe tener al menos 10 caracteres', confirmButtonColor: '#e74a3b' });
                 document.getElementById('NovedadDotacion').classList.add('is-invalid'); return;
             }
             if (!fechaEnt || new Date(fechaEnt) < ahoraSubmit) {
-                Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha de entrega es obligatoria y no puede ser anterior a la hora actual', confirmButtonColor:'#e74a3b' });
+                Swal.fire({ icon: 'error', title: 'Fecha inválida', text: 'La fecha de entrega es obligatoria y no puede ser anterior a la hora actual', confirmButtonColor: '#e74a3b' });
                 document.getElementById('FechaEntrega').classList.add('is-invalid'); return;
             }
             if (fechaDev) {
-                const dev = new Date(fechaDev); const ent = new Date(fechaEnt);
+                const dev = new Date(fechaDev);
+                const ent = new Date(fechaEnt);
                 if (dev < ahoraSubmit || dev < ent) {
-                    Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha de devolución debe ser posterior a la de entrega y a la hora actual', confirmButtonColor:'#e74a3b' });
+                    Swal.fire({ icon: 'error', title: 'Fecha inválida', text: 'La fecha de devolución debe ser posterior a la de entrega y a la hora actual', confirmButtonColor: '#e74a3b' });
                     document.getElementById('FechaDevolucion').classList.add('is-invalid'); return;
                 }
             }
             if (!funcionario) {
-                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el supervisor', confirmButtonColor:'#e74a3b' });
+                Swal.fire({ icon: 'error', title: 'Campo requerido', text: 'Debe seleccionar el supervisor', confirmButtonColor: '#e74a3b' });
                 document.getElementById('IdFuncionario').classList.add('is-invalid'); return;
             }
 
@@ -196,7 +283,7 @@ esperarDependencias(function () {
             formData.append('accion', 'registrar');
 
             try {
-                const response = await fetch('/SEGTRACK/App/Controller/ControladorDotacion.php', { method:'POST', body:formData });
+                const response = await fetch('/SEGTRACK/App/Controller/ControladorDotacion.php', { method: 'POST', body: formData });
                 const data     = await response.json();
                 Swal.close();
 
@@ -232,82 +319,30 @@ esperarDependencias(function () {
                     footer: '<small>Si el problema persiste, contacte al administrador</small>'
                 });
             } finally {
-                btn.innerHTML = original; btn.disabled = false;
+                btn.innerHTML = original;
+                btn.disabled  = false;
             }
         });
-    }
-
-    // ══════════════════════════════════════════════
-    // HELPERS (lista)
-    // ══════════════════════════════════════════════
-    function colorEstadoDot(estado) {
-        const c = { 'Buen estado': 'success', 'Regular': 'warning', 'Dañado': 'danger' };
-        return c[estado] ?? 'secondary';
-    }
-
-    function colorTipoDot(tipo) {
-        const c = { 'Uniforme': 'info text-dark', 'Equipo': 'primary', 'Herramienta': 'warning text-dark', 'Otro': 'secondary' };
-        return c[tipo] ?? 'secondary';
-    }
-
-    function formatFechaDot(fecha) {
-        if (!fecha) return '<span class="badge bg-info text-white">Sin fecha</span>';
-        const d = new Date(fecha);
-        return String(d.getDate()).padStart(2,'0') + '/' +
-               String(d.getMonth()+1).padStart(2,'0') + '/' +
-               d.getFullYear() + ' ' +
-               String(d.getHours()).padStart(2,'0') + ':' +
-               String(d.getMinutes()).padStart(2,'0');
-    }
-
-    function fechaParaInput(fecha) {
-        if (!fecha) return '';
-        const d = new Date(fecha);
-        return d.getFullYear() + '-' +
-               String(d.getMonth()+1).padStart(2,'0') + '-' +
-               String(d.getDate()).padStart(2,'0') + 'T' +
-               String(d.getHours()).padStart(2,'0') + ':' +
-               String(d.getMinutes()).padStart(2,'0');
-    }
-
-    // ══════════════════════════════════════════════
-    // HELPER: renderizar columnas de personas
-    // Supervisor  → muestra nombre con ícono de corbata
-    // Personal Seguridad → muestra nombre con ícono de escudo
-    // Cualquier otro / nulo → "No aplica" en la columna correspondiente
-    // ══════════════════════════════════════════════
-    function celdaSupervisor(row) {
-        if (row.CargoFuncionario === 'Supervisor' && row.NombreFuncionario) {
-            return `<i class="fas fa-user-tie text-primary mr-1"></i>${row.NombreFuncionario}`;
-        }
-        return '<span class="text-muted fst-italic">No aplica</span>';
-    }
-
-    function celdaPersonalSeguridad(row) {
-        if (row.CargoFuncionario === 'Personal Seguridad' && row.NombreFuncionario) {
-            return `<i class="fas fa-user-shield text-info mr-1"></i>${row.NombreFuncionario}`;
-        }
-        return '<span class="text-muted fst-italic">No aplica</span>';
     }
 
     // ══════════════════════════════════════════════
     // CARGAR DOTACIONES (lista)
     // ══════════════════════════════════════════════
     function cargarDotacionesSupervisor() {
-        const filtroEstado         = $('#filtroEstado').val()         || '';
-        const filtroTipo           = $('#filtroTipo').val()           || '';
-        const filtroFuncionario    = $('#filtroFuncionario').val()    || '';
-        const filtroEstadoRegistro = $('#filtroEstadoRegistro').val() || '';
+        const estado      = $('#filtroEstado').val()          || '';
+        const tipo        = $('#filtroTipo').val()            || '';
+        const funcionario = $('#filtroFuncionario').val()     || '';
+        const estadoReg   = $('#filtroEstadoRegistro').val()  || '';
 
         $.ajax({
             url:  '/SEGTRACK/App/Controller/ControladorDotacion.php',
             type: 'POST',
             data: {
-                accion:      'mostrar',
-                estado:      filtroEstado,
-                tipo:        filtroTipo,
-                funcionario: filtroFuncionario,
-                estadoReg:   filtroEstadoRegistro
+                accion:    'mostrar',
+                estado:    estado,
+                tipo:      tipo,
+                funcionario: funcionario,
+                estadoReg: estadoReg
             },
             dataType: 'json',
             success: function (res) {
@@ -331,15 +366,15 @@ esperarDependencias(function () {
                 tbody.innerHTML = res.map(function (row) {
                     return `<tr class="${row.Estado === 'Inactivo' ? 'fila-inactiva' : ''}">
                         <td class="fw-bold text-muted">${row.IdDotacion}</td>
-                        <td><span class="badge bg-${colorEstadoDot(row.EstadoDotacion)}">${row.EstadoDotacion}</span></td>
-                        <td><span class="badge bg-${colorTipoDot(row.TipoDotacion)}">${row.TipoDotacion}</span></td>
+                        <td><span class="badge bg-${colorEstado(row.EstadoDotacion)}">${row.EstadoDotacion}</span></td>
+                        <td><span class="badge bg-${colorTipo(row.TipoDotacion)}">${row.TipoDotacion}</span></td>
                         <td class="text-start" style="max-width:220px;">
                             <span title="${row.NovedadDotacion ?? ''}">
                                 ${(row.NovedadDotacion ?? '').substring(0, 60)}${(row.NovedadDotacion ?? '').length > 60 ? '...' : ''}
                             </span>
                         </td>
-                        <td class="text-nowrap">${formatFechaDot(row.FechaEntrega)}</td>
-                        <td class="text-nowrap">${formatFechaDot(row.FechaDevolucion)}</td>
+                        <td class="text-nowrap">${formatFecha(row.FechaEntrega)}</td>
+                        <td class="text-nowrap">${formatFecha(row.FechaDevolucion)}</td>
                         <td>${celdaSupervisor(row)}</td>
                         <td>${celdaPersonalSeguridad(row)}</td>
                         <td>
@@ -402,6 +437,7 @@ esperarDependencias(function () {
 
     // ══════════════════════════════════════════════
     // MODAL EDITAR
+    // El badge usa row.CargoFuncionario (alias de u.TipoRol)
     // ══════════════════════════════════════════════
     window.abrirModalEditarDotacion = function (row) {
         $('#editIdDotacion').val(row.IdDotacion);
@@ -411,14 +447,12 @@ esperarDependencias(function () {
         $('#editNovedadDotacion').val(row.NovedadDotacion ?? '');
         $('#editFechaEntrega').val(fechaParaInput(row.FechaEntrega));
         $('#editFechaDevolucion').val(fechaParaInput(row.FechaDevolucion));
-        $('#editNombreFuncionario').val(row.NombreFuncionario ?? 'Sin asignar');
+        $('#editNombreFuncionario').val(row.NombreFuncionario ?? '');
         $('#editIdFuncionario').val(row.IdFuncionario);
 
-        // Mostrar badge con el cargo en el modal
-        const cargo = row.CargoFuncionario ?? '';
-        const badgeClass = cargo === 'Supervisor' ? 'badge-primary' : cargo === 'Personal Seguridad' ? 'badge-info' : 'badge-secondary';
-        const badgeText  = cargo || 'Sin cargo';
-        $('#editCargoBadge').removeClass('badge-primary badge-info badge-secondary').addClass(badgeClass).text(badgeText);
+        // Badge de rol — usa u.TipoRol (alias CargoFuncionario)
+        const tipoRol = (row.CargoFuncionario ?? '').trim();
+        $('#editCargoBadge').html(buildBadgeRol(tipoRol));
     };
 
     $('#btnGuardarEdicionDotacion').on('click', function () {
@@ -431,12 +465,18 @@ esperarDependencias(function () {
         const idFun    = $('#editIdFuncionario').val();
 
         if (!estado || !tipo || !fechaEnt || !idFun) {
-            Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Complete todos los campos obligatorios.', confirmButtonColor: '#f6c23e' });
+            Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Estado, tipo, fecha de entrega y funcionario son obligatorios.', confirmButtonColor: '#f6c23e' });
             return;
         }
         if (novedad.length > 0 && novedad.length < 10) {
             Swal.fire({ icon: 'warning', title: 'Novedad muy corta', text: 'La novedad debe tener al menos 10 caracteres.', confirmButtonColor: '#f6c23e' });
             return;
+        }
+        if (fechaDev) {
+            if (new Date(fechaDev) < new Date(fechaEnt)) {
+                Swal.fire({ icon: 'warning', title: 'Fecha inválida', text: 'La fecha de devolución no puede ser anterior a la fecha de entrega.', confirmButtonColor: '#f6c23e' });
+                return;
+            }
         }
 
         $('#modalEditarDotacion').modal('hide');
@@ -452,7 +492,7 @@ esperarDependencias(function () {
                 TipoDotacion:    tipo,
                 NovedadDotacion: novedad,
                 FechaEntrega:    fechaEnt,
-                FechaDevolucion: fechaDev,
+                FechaDevolucion: fechaDev || '',
                 IdFuncionario:   idFun
             },
             dataType: 'json',
@@ -534,7 +574,7 @@ esperarDependencias(function () {
     });
 
     // ══════════════════════════════════════════════
-    // CARGA INICIAL
+    // CARGA INICIAL (lista)
     // ══════════════════════════════════════════════
     if (document.getElementById('cuerpoTablaDotacionSupervisor')) {
         cargarDotacionesSupervisor();
