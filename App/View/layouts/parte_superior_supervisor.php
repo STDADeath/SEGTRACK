@@ -43,25 +43,24 @@ if ($usuario['TipoRol'] !== 'Supervisor') {
 // ==============================
 // 🌐 BASE URL
 // ==============================
-$baseUrl = "http://" . $_SERVER['HTTP_HOST'] . "/SEGTRACK";
+$baseUrl = rtrim(
+    str_replace('\\', '/',
+        dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))))
+    ), '/'
+);
 
 // ==============================
-// 🖼️ FOTO PERFIL (FIX REAL)
+// 🖼️ FOTO PERFIL
 // ==============================
 $fotoFallback = $baseUrl . "/Public/img/undraw_profile.svg";
-$fotoPerfil = $fotoFallback;
+$fotoPerfil   = $fotoFallback;
 
 if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL') {
+    $rutaBD     = $usuario['FotoFuncionario'];
+    $rutaFisica = $_SERVER['DOCUMENT_ROOT'] . str_replace('/', DIRECTORY_SEPARATOR, $baseUrl) . '/Public/' . $rutaBD;
 
-    // Ruta que viene de la BD
-    $rutaBD = $usuario['FotoFuncionario'];
-
-    // Ruta física en el servidor
-    $rutaFisica = $_SERVER['DOCUMENT_ROOT'] . "/SEGTRACK/Public/" . $rutaBD;
-
-    // Validar si existe el archivo
     if (file_exists($rutaFisica)) {
-        $fotoPerfil = $baseUrl . "/Public/" . $rutaBD;
+        $fotoPerfil = $baseUrl . '/Public/' . htmlspecialchars($rutaBD);
     }
 }
 ?>
@@ -70,9 +69,12 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
 <html lang="es">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SEGTRACK | Supervisor</title>
 
     <link href="../../../Public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../../../Public/css/graficas.css" rel="stylesheet">
     <link href="../../../Public/css/icono.css" rel="stylesheet">
@@ -81,142 +83,220 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
 <body id="page-top">
 <div id="wrapper">
 
-<!-- SIDEBAR -->
+<!-- ══════════ SIDEBAR ══════════ -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <a class="sidebar-brand d-flex align-items-center justify-content-center"
         href="../Supervisor/DasboardSupervisor.php">
         <div class="sidebar-brand-icon">
-            <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" id="logo">
+            <img src="../../../Public/img/LOGO_SEGTRACK-con.ico" alt="Logo" id="logo">
         </div>
     </a>
 
     <hr class="sidebar-divider">
 
+    <!-- Módulo: Funcionarios -->
     <li class="nav-item">
-        <a class="nav-link" href="../Supervisor/FuncionarioListaSUP.php">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFuncionarios"
+           aria-expanded="false" aria-controls="collapseFuncionarios">
             <i class="fas fa-fw fa-user"></i>
             <span>Funcionarios</span>
         </a>
-    </li>
-
-    <hr class="sidebar-divider">
-
-   <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>Control Bitácora</span>
-            </a>
-            <div id="collapseUtilities" class="collapse" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Bitácora</h6>
-                    <a class="collapse-item" href="../Supervisor/BitacoraSup.php">Registro de Bitácora</a>
-                    <a class="collapse-item" href="../Supervisor/BitacoraListaSUP.php">Ingreso Bitácora</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Dotación</h6>
-                    <a class="collapse-item" href="../Supervisor/DotacionSup.php">Ingresar Dotación</a>
-                    <a class="collapse-item" href="../Supervisor/DotacionListaSup.php">Registro de Dotación</a>
-                </div>
+        <div id="collapseFuncionarios" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Funcionarios:</h6>
+                <a class="collapse-item" href="../Supervisor/FuncionarioListaSUP.php">Lista de Funcionarios</a>
             </div>
-        </li>
-
-    <hr class="sidebar-divider">
-
-    <li class="nav-item">
-        <a class="nav-link" href="../Supervisor/VehiculoSupervisor.php">
-            <i class="fas fa-car"></i>
-            <span>Vehiculos</span>
-        </a>
+        </div>
     </li>
 
     <hr class="sidebar-divider">
 
+    <!-- Módulo: Control Bitácora -->
     <li class="nav-item">
-        <a class="nav-link" href="../Supervisor/DispositivoSupervisor.php">
-            <i class="fas fa-laptop"></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+           aria-expanded="false" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Control Bitácora</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Bitácora</h6>
+                <a class="collapse-item" href="../Supervisor/BitacoraSup.php">Registro de Bitácora</a>
+                <a class="collapse-item" href="../Supervisor/BitacoraListaSUP.php">Ingreso Bitácora</a>
+                <div class="collapse-divider"></div>
+                <h6 class="collapse-header">Dotación</h6>
+                <a class="collapse-item" href="../Supervisor/DotacionSup.php">Ingresar Dotación</a>
+                <a class="collapse-item" href="../Supervisor/DotacionListaSup.php">Registro de Dotación</a>
+            </div>
+        </div>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <!-- Módulo: Vehículos -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVehiculos"
+           aria-expanded="false" aria-controls="collapseVehiculos">
+            <i class="fas fa-fw fa-car"></i>
+            <span>Vehículos</span>
+        </a>
+        <div id="collapseVehiculos" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Vehículos:</h6>
+                <a class="collapse-item" href="../Supervisor/VehiculoSupervisor.php">Lista Vehículo</a>
+            </div>
+        </div>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <!-- Módulo: Dispositivos -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDispositivos"
+           aria-expanded="false" aria-controls="collapseDispositivos">
+            <i class="fas fa-fw fa-laptop"></i>
             <span>Dispositivos</span>
         </a>
+        <div id="collapseDispositivos" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Dispositivos:</h6>
+                <a class="collapse-item" href="../Supervisor/DispositivoSupervisor.php">Lista de Dispositivos</a>
+            </div>
+        </div>
     </li>
 
     <hr class="sidebar-divider">
 
+    <!-- Módulo: Visitantes -->
     <li class="nav-item">
-        <a class="nav-link" href="../Supervisor/VisitanteListaSUP.php">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisitantes"
+           aria-expanded="false" aria-controls="collapseVisitantes">
             <i class="fas fa-fw fa-users"></i>
             <span>Visitantes</span>
         </a>
+        <div id="collapseVisitantes" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Visitantes:</h6>
+                <a class="collapse-item" href="../Supervisor/VisitanteListaSUP.php">Lista de Visitantes</a>
+            </div>
+        </div>
     </li>
 
     <hr class="sidebar-divider">
 
+    <!-- Módulo: Sedes -->
     <li class="nav-item">
-        <a class="nav-link" href="../Supervisor/SedeLista.php">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSedes"
+           aria-expanded="false" aria-controls="collapseSedes">
             <i class="fas fa-fw fa-building"></i>
             <span>Sedes</span>
         </a>
+        <div id="collapseSedes" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Sedes:</h6>
+                <a class="collapse-item" href="../Supervisor/SedeLista.php">Lista de Sedes</a>
+            </div>
+        </div>
     </li>
 
     <hr class="sidebar-divider">
 
+    <!-- Módulo: Institutos -->
     <li class="nav-item">
-        <a class="nav-link" href="../Supervisor/InstitutosListaSUP.php">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInstitutos"
+           aria-expanded="false" aria-controls="collapseInstitutos">
             <i class="fas fa-fw fa-university"></i>
             <span>Institutos</span>
         </a>
+        <div id="collapseInstitutos" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Institutos:</h6>
+                <a class="collapse-item" href="../Supervisor/InstitutosListaSUP.php">Lista de Institutos</a>
+            </div>
+        </div>
     </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
 
 </ul>
 
-<!-- CONTENIDO -->
+<!-- ══════════ CONTENT WRAPPER ══════════ -->
 <div id="content-wrapper" class="d-flex flex-column">
 <div id="content">
 
-<!-- TOPBAR -->
+<!-- ══════════ TOPBAR ══════════ -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
 
-<ul class="navbar-nav ml-auto">
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
 
-<li class="nav-item dropdown no-arrow">
+    <ul class="navbar-nav ml-auto">
 
-<a class="nav-link dropdown-toggle"
-    href="#"
-    id="userDropdown"
-    data-toggle="dropdown"
-    role="button"
-    aria-haspopup="true"
-    aria-expanded="false"
-    style="display:flex;align-items:center;gap:10px;">
+        <li class="nav-item dropdown no-arrow d-sm-none">
+            <a class="nav-link dropdown-toggle" href="#"
+                id="searchDropdown" data-toggle="dropdown">
+                <i class="fas fa-search fa-fw"></i>
+            </a>
+        </li>
 
-    <div style="text-align:right;">
-        <div style="font-size:13px;font-weight:600;">
-            <?= htmlspecialchars($usuario['NombreFuncionario']) ?>
-        </div>
-        <div style="font-size:11px;color:#777;">
-            <?= htmlspecialchars($usuario['TipoRol']) ?>
-        </div>
-    </div>
+        <!-- Perfil con foto -->
+        <li class="nav-item dropdown no-arrow">
 
-    <img class="img-profile rounded-circle"
-        style="width:42px;height:42px;object-fit:cover;border:2px solid #e0e0e0;"
-        src="<?= $fotoPerfil ?>"
-        onerror="this.src='<?= $fotoFallback ?>'">
-</a>
+            <a class="nav-link dropdown-toggle" href="#"
+                id="userDropdown" data-toggle="dropdown"
+                role="button" aria-haspopup="true" aria-expanded="false"
+                style="display:flex;align-items:center;gap:10px;">
 
-<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-     aria-labelledby="userDropdown">
+                <div style="text-align:right;line-height:1.3;">
+                    <div style="font-size:13px;font-weight:600;color:#333;">
+                        <?= htmlspecialchars($usuario['NombreFuncionario']) ?>
+                    </div>
+                    <div style="font-size:11px;color:#888;">
+                        <?= htmlspecialchars($usuario['TipoRol']) ?>
+                    </div>
+                </div>
 
-    <div class="dropdown-divider"></div>
+                <img class="img-profile rounded-circle"
+                    style="width:42px;height:42px;object-fit:cover;
+                           border:2px solid #e0e0e0;flex-shrink:0;"
+                    src="<?= $fotoPerfil ?>"
+                    onerror="this.src='<?= $fotoFallback ?>'">
+            </a>
 
-    <a class="dropdown-item" href="../Login/logout.php">
-        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-        Cerrar sesión
-    </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
 
-</div>
+                <!-- Foto grande + nombre en el dropdown -->
+                <div class="text-center" style="padding:16px 12px 12px;">
+                    <img src="<?= $fotoPerfil ?>"
+                        style="width:72px;height:72px;object-fit:cover;
+                               border-radius:50%;border:2px solid #4e73df;
+                               display:block;margin:0 auto;"
+                        onerror="this.src='<?= $fotoFallback ?>'">
 
-</li>
-</ul>
+                    <div style="margin-top:10px;font-size:13px;font-weight:600;color:#333;">
+                        <?= htmlspecialchars($usuario['NombreFuncionario']) ?>
+                    </div>
+
+                    <div style="margin-top:3px;font-size:11px;color:#777;">
+                        <?= htmlspecialchars($usuario['TipoRol']) ?>
+                    </div>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
+                <a class="dropdown-item" href="../Login/logout.php">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Cerrar sesión
+                </a>
+
+            </div>
+        </li>
+
+    </ul>
 </nav>
 
-<!-- 🔥 IMPORTANTE -->
+<!-- 🔥 IMPORTANTE: inicio del contenido de cada página -->
 <div class="container-fluid">

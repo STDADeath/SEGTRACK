@@ -1,6 +1,6 @@
 // ============================================================
 // ValidacionBitacoraSupervisor.js
-// Unifica: lista de bitácoras + columnas Supervisor / Personal Seguridad
+// Unifica: registro de bitácora + lista con columnas Supervisor / Personal Seguridad
 // ============================================================
 
 function esperarDependencias(cb) {
@@ -10,16 +10,24 @@ function esperarDependencias(cb) {
 
 esperarDependencias(function () {
 
+    const pad = n => String(n).padStart(2, '0');
+
     let tablaBitacoraSupervisorDT = null;
     let bitacoraACambiar          = null;
     let estadoActualBitacora      = null;
 
     // ══════════════════════════════════════════════
-    // HELPERS DE FORMATO
+    // HELPERS DE FECHA
     // ══════════════════════════════════════════════
-    function colorTurnoBit(turno) {
-        const c = { 'Jornada mañana': 'warning', 'Jornada tarde': 'info', 'Jornada noche': 'dark' };
-        return c[turno] ?? 'secondary';
+    function getFechaActualConHora() {
+        const ahora = new Date();
+        return `${ahora.getFullYear()}-${pad(ahora.getMonth()+1)}-${pad(ahora.getDate())}T${pad(ahora.getHours())}:${pad(ahora.getMinutes())}`;
+    }
+
+    function getAhoraTruncado() {
+        const ahora = new Date();
+        ahora.setSeconds(0, 0);
+        return ahora;
     }
 
     function formatFechaBit(fecha) {
@@ -43,38 +51,388 @@ esperarDependencias(function () {
     }
 
     // ══════════════════════════════════════════════
-    // HELPERS DE CELDAS: Supervisor / Personal Seguridad
-    // Muestra el nombre si el cargo coincide, "N/A" si no.
-    // Requiere que el servidor envíe CargoFuncionario en el JSON
-    // (ver ModeloBitacora.php → obtenerBitacoras / obtenerPorId).
+    // HELPERS DE CELDAS (lista)
     // ══════════════════════════════════════════════
+    function colorTurnoBit(turno) {
+        const c = { 'Jornada mañana': 'warning', 'Jornada tarde': 'info', 'Jornada noche': 'dark' };
+        return c[turno] ?? 'secondary';
+    }
+
     function celdaSupervisor(row) {
-        const nombre = row.NombreFuncionario ?? '—';
-        const cargo  = (row.CargoFuncionario ?? '').trim();
-        if (cargo === 'Supervisor') {
-            return `<span><i class="fas fa-user-tie text-primary mr-1"></i>${nombre}</span>`;
+        const cargo = (row.CargoFuncionario ?? '').trim();
+        if (cargo === 'Supervisor' && row.NombreFuncionario) {
+            return `<span><i class="fas fa-user-tie text-primary mr-1"></i>${row.NombreFuncionario}</span>`;
         }
-        return `<span class="text-muted fst-italic">N/A</span>`;
+        return '<span class="text-muted fst-italic">No aplica</span>';
     }
 
     function celdaPersonalSeguridad(row) {
-        const nombre = row.NombreFuncionario ?? '—';
-        const cargo  = (row.CargoFuncionario ?? '').trim();
-        if (cargo === 'Personal Seguridad') {
-            return `<span><i class="fas fa-user-shield text-success mr-1"></i>${nombre}</span>`;
+        const cargo = (row.CargoFuncionario ?? '').trim();
+        if (cargo === 'Personal Seguridad' && row.NombreFuncionario) {
+            return `<span><i class="fas fa-user-shield text-success mr-1"></i>${row.NombreFuncionario}</span>`;
         }
-        return `<span class="text-muted fst-italic">N/A</span>`;
+        return '<span class="text-muted fst-italic">No aplica</span>';
     }
 
     // ══════════════════════════════════════════════
-    // CARGAR BITÁCORAS
+    // FECHA INICIAL (formulario registro)
+    // ══════════════════════════════════════════════
+    const inputFecha = document.getElementById('FechaBitacora');
+
+    if (inputFecha) {
+        inputFecha.setAttribute('min', getFechaActualConHora());
+        inputFecha.value = getFechaActualConHora();
+
+        setInterval(function () {
+            inputFecha.setAttribute('min', getFechaActualConHora());
+        }, 60000);
+
+        inputFecha.addEventListener('change', function () {
+            const sel   = new Date(this.value);
+            const ahora = getAhoraTruncado();
+            if (sel < ahora) {
+                Swal.fire({ icon:'warning', title:'Fecha inválida', text:'La fecha no puede ser anterior a la hora actual', confirmButtonColor:'#f6c23e' });
+                this.value = getFechaActualConHora();
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+    }
+
+    // ══════════════════════════════════════════════
+    // CARGAR SUPERVISORES (dropdown registro)
+    // ══════════════════════════════════════════════
+    function cargarSupervisores() {
+        const select = document.getElementById('IdFuncionario');
+        const msgDiv = document.getElementById('msgPersonal');
+        if (!select) return;
+
+        fetch('/SEGTRACK/App/Controller/ControladorBitacora.php', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body:    'accion=supervisores'
+        })
+        .then(r => r.json())
+        .then(res => {
+            select.innerHTML = '<option value="" disabled selected>-- Seleccione supervisor --</option>';
+            if (!Array.isArray(res) || res.length === 0) {
+                select.innerHTML += '<option value="" disabled>Sin supervisores disponibles</option>';
+                if (msgDiv) { msgDiv.textContent = 'No hay supervisores activos registrados.'; msgDiv.className = 'form-text text-warning'; }
+                return;
+            }
+            res.forEach(function (item) {
+                const opt       = document.createElement('option');
+                opt.value       = item.IdFuncionario;
+                opt.textContent = item.NombreCompleto;
+                select.appendChild(opt);
+            });
+            if (msgDiv) msgDiv.textContent = '';
+        })
+        .catch(function () {
+            select.innerHTML = '<option value="" disabled selected>Error al cargar supervisores</option>';
+            if (msgDiv) { msgDiv.textContent = 'No se pudo conectar con el servidor.'; msgDiv.className = 'form-text text-danger'; }
+        });
+    }
+
+    if (document.getElementById('IdFuncionario')) {
+        cargarSupervisores();
+    }
+
+    // ══════════════════════════════════════════════
+    // CARGAR VISITANTES
+    // ══════════════════════════════════════════════
+    function cargarVisitantes() {
+        const select = document.getElementById('IdVisitante');
+        const msgDiv = document.getElementById('msgVisitante');
+        if (!select) return;
+
+        fetch('/SEGTRACK/App/Controller/ControladorBitacora.php', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body:    'accion=visitantes'
+        })
+        .then(r => r.json())
+        .then(res => {
+            select.innerHTML = '<option value="" disabled selected>-- Seleccione visitante --</option>';
+            if (!Array.isArray(res) || res.length === 0) {
+                select.innerHTML += '<option value="" disabled>Sin visitantes disponibles</option>';
+                if (msgDiv) { msgDiv.textContent = 'No hay visitantes activos registrados.'; msgDiv.className = 'form-text text-warning'; }
+                return;
+            }
+            res.forEach(function (item) {
+                const opt       = document.createElement('option');
+                opt.value       = item.IdVisitante;
+                opt.textContent = item.NombreCompleto;
+                select.appendChild(opt);
+            });
+            if (msgDiv) msgDiv.textContent = '';
+        })
+        .catch(function () {
+            if (msgDiv) { msgDiv.textContent = 'No se pudo cargar visitantes.'; msgDiv.className = 'form-text text-danger'; }
+        });
+    }
+
+    // ══════════════════════════════════════════════
+    // CARGAR DISPOSITIVOS (filtrado por visitante)
+    // ══════════════════════════════════════════════
+    function cargarDispositivos(idVisitante) {
+        const select = document.getElementById('IdDispositivo');
+        const msgDiv = document.getElementById('msgDispositivo');
+        if (!select) return;
+
+        select.innerHTML = '<option value="" disabled selected>Cargando...</option>';
+
+        const body = idVisitante
+            ? `accion=dispositivos&IdVisitante=${encodeURIComponent(idVisitante)}`
+            : 'accion=dispositivos';
+
+        fetch('/SEGTRACK/App/Controller/ControladorBitacora.php', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body:    body
+        })
+        .then(r => r.json())
+        .then(res => {
+            select.innerHTML = '<option value="" disabled selected>-- Seleccione dispositivo --</option>';
+            if (!Array.isArray(res) || res.length === 0) {
+                select.innerHTML += '<option value="" disabled>Sin dispositivos disponibles</option>';
+                if (msgDiv) { msgDiv.textContent = 'No hay dispositivos activos para este visitante.'; msgDiv.className = 'form-text text-warning'; }
+                return;
+            }
+            res.forEach(function (item) {
+                const opt       = document.createElement('option');
+                opt.value       = item.IdDispositivo;
+                opt.textContent = item.NombreCompleto;
+                select.appendChild(opt);
+            });
+            if (msgDiv) msgDiv.textContent = '';
+        })
+        .catch(function () {
+            select.innerHTML = '<option value="" disabled selected>Error al cargar dispositivos</option>';
+            if (msgDiv) { msgDiv.textContent = 'No se pudo cargar dispositivos.'; msgDiv.className = 'form-text text-danger'; }
+        });
+    }
+
+    // ══════════════════════════════════════════════
+    // LÓGICA CONDICIONAL: visitante / dispositivo
+    // ══════════════════════════════════════════════
+    const selTieneVisitante  = document.getElementById('TieneVisitante');
+    const selTraeDispositivo = document.getElementById('TraeDispositivo');
+    const selVisitante       = document.getElementById('IdVisitante');
+    const contVisitante      = document.getElementById('VisitanteContainer');
+    const contDispositivo    = document.getElementById('DispositivoContainer');
+
+    if (selTieneVisitante) {
+        selTieneVisitante.addEventListener('change', function () {
+            if (this.value === 'si') {
+                contVisitante.style.display = '';
+                cargarVisitantes();
+            } else {
+                contVisitante.style.display   = 'none';
+                contDispositivo.style.display = 'none';
+                if (selVisitante)       selVisitante.value       = '';
+                if (selTraeDispositivo) selTraeDispositivo.value = '';
+                const selDev = document.getElementById('IdDispositivo');
+                if (selDev) selDev.value = '';
+            }
+        });
+    }
+
+    if (selTraeDispositivo) {
+        selTraeDispositivo.addEventListener('change', function () {
+            if (this.value === 'si') {
+                contDispositivo.style.display = '';
+                cargarDispositivos(selVisitante ? selVisitante.value : null);
+            } else {
+                contDispositivo.style.display = 'none';
+                const selDev = document.getElementById('IdDispositivo');
+                if (selDev) selDev.value = '';
+            }
+        });
+    }
+
+    if (selVisitante) {
+        selVisitante.addEventListener('change', function () {
+            if (selTraeDispositivo && selTraeDispositivo.value === 'si') {
+                cargarDispositivos(this.value);
+            }
+        });
+    }
+
+    // ══════════════════════════════════════════════
+    // PDF: preview y botón quitar
+    // ══════════════════════════════════════════════
+    const inputPDF     = document.getElementById('ReportePDF');
+    const pdfPreview   = document.getElementById('pdfPreview');
+    const pdfNombre    = document.getElementById('pdfNombre');
+    const btnQuitarPDF = document.getElementById('btnQuitarPDF');
+
+    if (inputPDF) {
+        inputPDF.addEventListener('change', function () {
+            const archivo = this.files[0];
+            if (!archivo) { if (pdfPreview) pdfPreview.style.display = 'none'; return; }
+            if (archivo.type !== 'application/pdf') {
+                Swal.fire({ icon:'warning', title:'Archivo inválido', text:'Solo se permiten archivos PDF.', confirmButtonColor:'#f6c23e' });
+                this.value = ''; if (pdfPreview) pdfPreview.style.display = 'none'; return;
+            }
+            if (archivo.size > 5 * 1024 * 1024) {
+                Swal.fire({ icon:'warning', title:'Archivo muy grande', text:'El PDF no debe superar los 5 MB.', confirmButtonColor:'#f6c23e' });
+                this.value = ''; if (pdfPreview) pdfPreview.style.display = 'none'; return;
+            }
+            if (pdfNombre)  pdfNombre.textContent    = archivo.name;
+            if (pdfPreview) pdfPreview.style.display = '';
+        });
+    }
+
+    if (btnQuitarPDF) {
+        btnQuitarPDF.addEventListener('click', function () {
+            if (inputPDF)   inputPDF.value = '';
+            if (pdfPreview) pdfPreview.style.display = 'none';
+        });
+    }
+
+    // ══════════════════════════════════════════════
+    // VALIDACIONES EN TIEMPO REAL (registro)
+    // ══════════════════════════════════════════════
+    const txtNovedad = document.getElementById('NovedadesBitacora');
+    if (txtNovedad) {
+        txtNovedad.addEventListener('blur', function () {
+            const txt = this.value.trim();
+            if (txt.length > 0 && txt.length < 10) {
+                Swal.fire({ icon:'warning', title:'Texto muy corto', text:'Las novedades deben tener al menos 10 caracteres', confirmButtonColor:'#f6c23e' });
+                this.classList.add('is-invalid'); this.focus();
+            } else { this.classList.remove('is-invalid'); }
+        });
+    }
+
+    ['TurnoBitacora', 'IdFuncionario', 'TieneVisitante'].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', function () { this.classList.toggle('is-invalid', !this.value); });
+    });
+
+    // ══════════════════════════════════════════════
+    // ENVÍO DEL FORMULARIO REGISTRO
+    // ══════════════════════════════════════════════
+    const form = document.getElementById('formRegistrarBitacoraSupervisor');
+    if (form) {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const turno          = document.getElementById('TurnoBitacora').value;
+            const fecha          = document.getElementById('FechaBitacora').value;
+            const novedad        = document.getElementById('NovedadesBitacora').value.trim();
+            const funcionario    = document.getElementById('IdFuncionario').value;
+            const tieneVisitante = document.getElementById('TieneVisitante').value;
+            const ahoraSubmit    = getAhoraTruncado();
+
+            if (!turno) {
+                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el turno', confirmButtonColor:'#e74a3b' });
+                document.getElementById('TurnoBitacora').classList.add('is-invalid'); return;
+            }
+            if (!fecha || new Date(fecha) < ahoraSubmit) {
+                Swal.fire({ icon:'error', title:'Fecha inválida', text:'La fecha es obligatoria y no puede ser anterior a la hora actual', confirmButtonColor:'#e74a3b' });
+                document.getElementById('FechaBitacora').classList.add('is-invalid'); return;
+            }
+            if (novedad.length < 10) {
+                Swal.fire({ icon:'error', title:'Novedades muy cortas', text:'Las novedades deben tener al menos 10 caracteres', confirmButtonColor:'#e74a3b' });
+                document.getElementById('NovedadesBitacora').classList.add('is-invalid'); return;
+            }
+            if (!funcionario) {
+                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el supervisor', confirmButtonColor:'#e74a3b' });
+                document.getElementById('IdFuncionario').classList.add('is-invalid'); return;
+            }
+            if (!tieneVisitante) {
+                Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe indicar si hay visitante', confirmButtonColor:'#e74a3b' });
+                document.getElementById('TieneVisitante').classList.add('is-invalid'); return;
+            }
+            if (tieneVisitante === 'si') {
+                const visitante = document.getElementById('IdVisitante').value;
+                if (!visitante) {
+                    Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el visitante', confirmButtonColor:'#e74a3b' });
+                    document.getElementById('IdVisitante').classList.add('is-invalid'); return;
+                }
+                const traeDispositivo = document.getElementById('TraeDispositivo').value;
+                if (!traeDispositivo) {
+                    Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe indicar si el visitante trae dispositivo', confirmButtonColor:'#e74a3b' });
+                    document.getElementById('TraeDispositivo').classList.add('is-invalid'); return;
+                }
+                if (traeDispositivo === 'si') {
+                    const dispositivo = document.getElementById('IdDispositivo').value;
+                    if (!dispositivo) {
+                        Swal.fire({ icon:'error', title:'Campo requerido', text:'Debe seleccionar el dispositivo', confirmButtonColor:'#e74a3b' });
+                        document.getElementById('IdDispositivo').classList.add('is-invalid'); return;
+                    }
+                }
+            }
+
+            const btn      = form.querySelector('button[type=submit]');
+            const original = btn.innerHTML;
+            btn.disabled   = true;
+
+            Swal.fire({
+                title: 'Procesando...',
+                html:  '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Registrando bitácora',
+                allowOutsideClick: false, allowEscapeKey: false, showConfirmButton: false
+            });
+
+            const formData = new FormData(form);
+            formData.append('accion', 'registrar');
+
+            try {
+                const response = await fetch('/SEGTRACK/App/Controller/ControladorBitacora.php', { method:'POST', body:formData });
+                const data     = await response.json();
+                Swal.close();
+
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success', title: '¡Bitácora registrada!',
+                        text: 'La bitácora fue guardada correctamente',
+                        timer: 3000, timerProgressBar: true,
+                        showConfirmButton: true, confirmButtonColor: '#1cc88a',
+                        confirmButtonText: 'Entendido'
+                    }).then(function () {
+                        form.reset();
+                        document.querySelectorAll('.is-invalid').forEach(function (el) { el.classList.remove('is-invalid'); });
+                        if (contVisitante)   contVisitante.style.display   = 'none';
+                        if (contDispositivo) contDispositivo.style.display = 'none';
+                        if (pdfPreview)      pdfPreview.style.display      = 'none';
+                        const nuevaFecha = getFechaActualConHora();
+                        if (inputFecha) { inputFecha.setAttribute('min', nuevaFecha); inputFecha.value = nuevaFecha; }
+                        cargarSupervisores();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'warning', title: 'No se pudo registrar',
+                        html: (data.message || 'Error').replace(/\n/g, '<br>'),
+                        confirmButtonColor: '#f6c23e', confirmButtonText: 'Entendido',
+                        footer: '<small class="text-muted">Revise la información e intente nuevamente</small>'
+                    });
+                }
+            } catch (error) {
+                Swal.close();
+                Swal.fire({
+                    icon: 'error', title: 'Error de conexión',
+                    html: 'No se pudo conectar al servidor.<br>Intente nuevamente.',
+                    confirmButtonColor: '#e74a3b',
+                    footer: '<small>Si el problema persiste, contacte al administrador</small>'
+                });
+            } finally {
+                btn.innerHTML = original; btn.disabled = false;
+            }
+        });
+    }
+
+    // ══════════════════════════════════════════════
+    // CARGAR BITÁCORAS (lista)
     // ══════════════════════════════════════════════
     function cargarBitacorasSupervisor() {
-        const turno       = $('#filtroTurno').val()        || '';
-        const fecha       = $('#filtroFecha').val()        || '';
-        const funcionario = $('#filtroFuncionario').val()  || '';
-        const visitante   = $('#filtroVisitante').val()    || '';
-        const estado      = $('#filtroEstado').val()       || '';
+        const turno       = $('#filtroTurno').val()       || '';
+        const fecha       = $('#filtroFecha').val()       || '';
+        const funcionario = $('#filtroFuncionario').val() || '';
+        const visitante   = $('#filtroVisitante').val()   || '';
+        const estado      = $('#filtroEstado').val()      || '';
 
         $.ajax({
             url:  '/SEGTRACK/App/Controller/ControladorBitacora.php',
@@ -110,25 +468,25 @@ esperarDependencias(function () {
 
                     const visitanteHtml = row.NombreVisitante
                         ? `<small><i class="fas fa-user text-success mr-1"></i>${row.NombreVisitante}</small>`
-                        : `<span class="badge badge-info">No aplica</span>`;
+                        : `<span class="badge badge-light border">No aplica</span>`;
 
                     const dispositivoHtml = row.NombreDispositivo
                         ? `<small><i class="fas fa-laptop text-secondary mr-1"></i>${row.NombreDispositivo}</small>`
-                        : `<span class="badge badge-info">No aplica</span>`;
+                        : `<span class="badge badge-light border">No aplica</span>`;
 
                     const pdfHtml = row.ReporteBitacora
                         ? `<a href="/SEGTRACK/Public/${row.ReporteBitacora}" target="_blank"
                               class="btn btn-sm btn-outline-danger" title="Ver PDF">
                               <i class="fas fa-file-pdf"></i> Ver
                            </a>`
-                        : `<span class="badge badge-info">Sin PDF</span>`;
+                        : `<span class="badge badge-light border">Sin PDF</span>`;
 
                     return `<tr class="${row.Estado === 'Inactivo' ? 'fila-inactiva' : ''}">
                         <td class="fw-bold text-muted">${row.IdBitacora}</td>
                         <td><span class="badge bg-${colorTurnoBit(row.TurnoBitacora)}">${row.TurnoBitacora}</span></td>
-                        <td class="text-start" style="max-width:220px;">
+                        <td class="text-start" style="max-width:200px;">
                             <span title="${row.NovedadesBitacora ?? ''}">
-                                ${(row.NovedadesBitacora ?? '').substring(0, 60)}${(row.NovedadesBitacora ?? '').length > 60 ? '...' : ''}
+                                ${(row.NovedadesBitacora ?? '').substring(0, 55)}${(row.NovedadesBitacora ?? '').length > 55 ? '...' : ''}
                             </span>
                         </td>
                         <td class="text-nowrap">${formatFechaBit(row.FechaBitacora)}</td>
@@ -164,7 +522,6 @@ esperarDependencias(function () {
                 const total = res.length;
                 $('#contadorBitacoras').text(total + ' registro' + (total !== 1 ? 's' : ''));
 
-                // 11 columnas: # turno novedad fecha supervisor personal visitante dispositivo pdf estado acciones
                 tablaBitacoraSupervisorDT = $('#TablaBitacoraSupervisor').DataTable({
                     language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
                     pageLength: 10,
@@ -186,9 +543,7 @@ esperarDependencias(function () {
     // ══════════════════════════════════════════════
     // BOTONES FILTRAR / LIMPIAR
     // ══════════════════════════════════════════════
-    $('#btnFiltrar').on('click', function () {
-        cargarBitacorasSupervisor();
-    });
+    $('#btnFiltrar').on('click', function () { cargarBitacorasSupervisor(); });
 
     $('#btnLimpiar').on('click', function () {
         $('#filtroTurno').val('');
@@ -210,18 +565,17 @@ esperarDependencias(function () {
         $('#editNovedadesBitacora').val(row.NovedadesBitacora ?? '');
         $('#editNombreFuncionarioBit').val(row.NombreFuncionario ?? '');
         $('#editIdFuncionarioBit').val(row.IdFuncionario);
-        $('#editNombreVisitanteBit').val(row.NombreVisitante ?? 'No aplica');
+        $('#editNombreVisitanteBit').val(row.NombreVisitante || 'No aplica');
         $('#editIdVisitanteBit').val(row.IdVisitante ?? '');
-        $('#editNombreDispositivoBit').val(row.NombreDispositivo ?? 'No aplica');
+        $('#editNombreDispositivoBit').val(row.NombreDispositivo || 'No aplica');
         $('#editIdDispositivoBit').val(row.IdDispositivo ?? '');
 
-        // Badge de cargo para contexto visual en el modal
         const cargo      = (row.CargoFuncionario ?? '').trim();
         const badgeColor = cargo === 'Supervisor' ? 'primary' : 'success';
         const badgeIcono = cargo === 'Supervisor' ? 'fa-user-tie' : 'fa-user-shield';
         const badgeLabel = cargo || 'Sin cargo';
         $('#editCargoBadge').html(
-            `<span class="badge bg-${badgeColor} ms-1">
+            `<span class="badge bg-${badgeColor} mt-1">
                 <i class="fas ${badgeIcono} me-1"></i>${badgeLabel}
              </span>`
         );
@@ -255,11 +609,7 @@ esperarDependencias(function () {
         }
 
         $('#modalEditarBitacora').modal('hide');
-        Swal.fire({
-            title: 'Guardando cambios...',
-            html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i>',
-            allowOutsideClick: false, showConfirmButton: false
-        });
+        Swal.fire({ title: 'Guardando cambios...', html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i>', allowOutsideClick: false, showConfirmButton: false });
 
         $.ajax({
             url:  '/SEGTRACK/App/Controller/ControladorBitacora.php',
@@ -324,11 +674,7 @@ esperarDependencias(function () {
         const nuevo = estadoActualBitacora === 'Activo' ? 'Inactivo' : 'Activo';
         $('#modalCambiarEstadoBitacora').modal('hide');
 
-        Swal.fire({
-            title: 'Procesando...',
-            html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i>',
-            allowOutsideClick: false, showConfirmButton: false
-        });
+        Swal.fire({ title: 'Procesando...', html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i>', allowOutsideClick: false, showConfirmButton: false });
 
         $.ajax({
             url:  '/SEGTRACK/App/Controller/ControladorBitacora.php',
@@ -358,7 +704,10 @@ esperarDependencias(function () {
 
     // ══════════════════════════════════════════════
     // CARGA INICIAL
+    // Solo ejecuta la tabla si el elemento existe (página lista)
     // ══════════════════════════════════════════════
-    cargarBitacorasSupervisor();
+    if (document.getElementById('cuerpoTablaBitacoraSupervisor')) {
+        cargarBitacorasSupervisor();
+    }
 
 }); // fin esperarDependencias

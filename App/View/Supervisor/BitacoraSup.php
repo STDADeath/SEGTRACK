@@ -67,17 +67,17 @@
                             </div>
                         </div>
 
-                        <!-- Personal de Seguridad + ¿Hay visitante? -->
+                        <!-- Supervisor + ¿Hay visitante? -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">
-                                    Personal de Seguridad <span class="text-danger">*</span>
+                                    Supervisor <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-user-shield"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
                                     <select id="IdFuncionario" name="IdFuncionario"
                                             class="form-select" required>
-                                        <option value="" disabled selected>Cargando personal...</option>
+                                        <option value="" disabled selected>Cargando supervisores...</option>
                                     </select>
                                 </div>
                                 <div id="msgPersonal" class="form-text"></div>
@@ -199,6 +199,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/SEGTRACK/Public/js/javascript/js/ValidacionBitacoraSupervisorRegistro.js"></script>
+<script src="/SEGTRACK/Public/js/javascript/js/ValidacionBitacoraSupervisor.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>

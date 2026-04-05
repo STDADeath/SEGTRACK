@@ -122,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Cuando cambia el visitante → recargar dispositivos
     const selIdVisitante = document.getElementById('IdVisitante');
     if (selIdVisitante) {
         selIdVisitante.addEventListener('change', function () {
@@ -424,7 +423,11 @@ function cargarBitacoras() {
     fetch('../../Controller/ControladorBitacora.php', {
         method:  'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body:    `accion=mostrar&turno=${encodeURIComponent(filtroTurno.value)}&fecha=${encodeURIComponent(filtroFecha.value)}&funcionario=${encodeURIComponent(filtroFuncionario.value)}`
+        body:    `accion=mostrar`
+               + `&turno=${encodeURIComponent(filtroTurno.value)}`
+               + `&fecha=${encodeURIComponent(filtroFecha.value)}`
+               + `&funcionario=${encodeURIComponent(filtroFuncionario.value)}`
+               + `&estadoReg=Activo`  // ← Personal de Seguridad solo ve Activos
     })
     .then(r => r.json())
     .then(res => {

@@ -2,14 +2,14 @@
 
 <div class="container-fluid px-4 py-4">
 
-    <!-- ── Header ──────────────────────────────────────────────────────────── -->
+    <!-- ── Header ── -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-book me-2"></i>Bitácoras Registradas
         </h1>
     </div>
 
-    <!-- ── Filtros ─────────────────────────────────────────────────────────── -->
+    <!-- ── Filtros ── -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">
@@ -43,7 +43,7 @@
 
                 <div class="col-md-2 mb-3">
                     <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
-                        <i class="fas fa-user-shield mr-1 text-primary"></i>Personal Seguridad
+                        <i class="fas fa-user-tie mr-1 text-primary"></i>Funcionario
                     </label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -89,23 +89,22 @@
         </div>
     </div>
 
-    <!-- ── Tabla ───────────────────────────────────────────────────────────── -->
+    <!-- ── Tabla ── -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Bitácoras</h6>
-            <span class="badge badge-primary" id="contadorBitacoras" style="font-size:0.85rem;">
-                Cargando...
-            </span>
+            <span class="badge badge-primary" id="contadorBitacoras" style="font-size:0.85rem;">Cargando...</span>
         </div>
         <div class="card-body table-responsive">
             <table class="table table-bordered table-hover table-striped align-middle text-center"
-                   id="TablaBitacoraSupervisor">
+                   id="TablaBitacoraSupervisor" style="width:100%;">
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
                         <th>Turno</th>
                         <th>Novedades</th>
                         <th>Fecha y Hora</th>
+                        <th>Supervisor</th>
                         <th>Personal Seguridad</th>
                         <th>Visitante</th>
                         <th>Dispositivo</th>
@@ -116,7 +115,7 @@
                 </thead>
                 <tbody id="cuerpoTablaBitacoraSupervisor">
                     <tr>
-                        <td colspan="10" class="text-center py-4">
+                        <td colspan="11" class="text-center py-4">
                             <i class="fas fa-spinner fa-spin fa-2x text-muted mb-2 d-block"></i>
                             <span class="text-muted">Cargando...</span>
                         </td>
@@ -128,7 +127,7 @@
 
 </div>
 
-<!-- ══ MODAL EDITAR BITÁCORA ══════════════════════════════════════════════ -->
+<!-- ══ MODAL EDITAR ══ -->
 <div class="modal fade" id="modalEditarBitacora" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -163,11 +162,16 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label font-weight-bold">
-                            Personal Seguridad <small class="text-muted">(Solo lectura)</small>
+                            Registrado por <small class="text-muted">(Solo lectura)</small>
                         </label>
                         <input type="text" id="editNombreFuncionarioBit" class="form-control bg-light" readonly>
                         <input type="hidden" id="editIdFuncionarioBit">
                     </div>
+                    <div class="col-md-6 mb-3 d-flex align-items-end">
+                        <div id="editCargoBadge"></div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label font-weight-bold">
                             Visitante <small class="text-muted">(Solo lectura)</small>
@@ -175,8 +179,6 @@
                         <input type="text" id="editNombreVisitanteBit" class="form-control bg-light" readonly>
                         <input type="hidden" id="editIdVisitanteBit">
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label font-weight-bold">
                             Dispositivo <small class="text-muted">(Solo lectura)</small>
@@ -184,6 +186,8 @@
                         <input type="text" id="editNombreDispositivoBit" class="form-control bg-light" readonly>
                         <input type="hidden" id="editIdDispositivoBit">
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label font-weight-bold">
                             PDF Actual <small class="text-muted">(Solo lectura)</small>
@@ -204,7 +208,7 @@
     </div>
 </div>
 
-<!-- ══ MODAL CAMBIO DE ESTADO ═════════════════════════════════════════════ -->
+<!-- ══ MODAL CAMBIO DE ESTADO ══ -->
 <div class="modal fade" id="modalCambiarEstadoBitacora" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
