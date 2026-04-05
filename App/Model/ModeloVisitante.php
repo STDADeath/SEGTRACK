@@ -50,13 +50,17 @@ class VisitanteModelo {
         try {
             if (!$this->conexion) return ['success' => false, 'error' => 'Conexión no disponible'];
 
-            $sql  = "INSERT INTO visitante (IdentificacionVisitante, NombreVisitante, CorreoVisitante, Estado)
-                     VALUES (:identificacion, :nombre, :correo, 'Activo')";
+            $sql  = "INSERT INTO visitante 
+                        (IdentificacionVisitante, NombreVisitante, CorreoVisitante, Estado, IdSede)
+                     VALUES 
+                        (:identificacion, :nombre, :correo, 'Activo', :idSede)";
+
             $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 ':identificacion' => $datos['IdentificacionVisitante'],
                 ':nombre'         => $datos['NombreVisitante'],
                 ':correo'         => $datos['CorreoVisitante'] ?? null,
+                ':idSede'         => (int)$datos['IdSede'],
             ]);
 
             return $resultado
@@ -74,7 +78,12 @@ class VisitanteModelo {
     public function obtenerTodos(array $filtros = [], array $params = []): array {
         try {
             $where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
-            $sql   = "SELECT * FROM visitante $where ORDER BY IdVisitante DESC";
+            $sql   = "SELECT v.*, s.TipoSede, s.Ciudad, i.NombreInstitucion
+                      FROM visitante v
+                      LEFT JOIN sede s ON v.IdSede = s.IdSede
+                      LEFT JOIN institucion i ON s.IdInstitucion = i.IdInstitucion
+                      $where
+                      ORDER BY v.IdVisitante DESC";
             $stmt  = $this->conexion->prepare($sql);
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -88,7 +97,13 @@ class VisitanteModelo {
     // ══════════════════════════════════════════════
     public function obtenerPorId(int $id): ?array {
         try {
-            $stmt = $this->conexion->prepare("SELECT * FROM visitante WHERE IdVisitante = ?");
+            $stmt = $this->conexion->prepare(
+                "SELECT v.*, s.TipoSede, s.Ciudad, s.IdInstitucion, i.NombreInstitucion
+                 FROM visitante v
+                 LEFT JOIN sede s ON v.IdSede = s.IdSede
+                 LEFT JOIN institucion i ON s.IdInstitucion = i.IdInstitucion
+                 WHERE v.IdVisitante = ?"
+            );
             $stmt->execute([$id]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
         } catch (PDOException $e) {
@@ -104,13 +119,15 @@ class VisitanteModelo {
             $sql = "UPDATE visitante SET
                         IdentificacionVisitante = ?,
                         NombreVisitante         = ?,
-                        CorreoVisitante         = ?
+                        CorreoVisitante         = ?,
+                        IdSede                  = ?
                     WHERE IdVisitante = ?";
             $stmt      = $this->conexion->prepare($sql);
             $resultado = $stmt->execute([
                 $datos['IdentificacionVisitante'],
                 $datos['NombreVisitante'],
                 $datos['CorreoVisitante'] ?? null,
+                (int)$datos['IdSede'],
                 $id,
             ]);
             return ['success' => $resultado, 'rows' => $stmt->rowCount()];
@@ -133,6 +150,42 @@ class VisitanteModelo {
             ];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    // ══════════════════════════════════════════════
+    // OBTENER INSTITUCIONES ACTIVAS
+    // ══════════════════════════════════════════════
+    public function obtenerInstituciones(): array {
+        try {
+            $stmt = $this->conexion->prepare(
+                "SELECT IdInstitucion, NombreInstitucion 
+                 FROM institucion 
+                 WHERE EstadoInstitucion = 'Activo' 
+                 ORDER BY NombreInstitucion"
+            );
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    // ══════════════════════════════════════════════
+    // OBTENER SEDES POR INSTITUCIÓN
+    // ══════════════════════════════════════════════
+    public function obtenerSedesPorInstitucion(int $idInstitucion): array {
+        try {
+            $stmt = $this->conexion->prepare(
+                "SELECT IdSede, TipoSede, Ciudad 
+                 FROM sede 
+                 WHERE IdInstitucion = :id AND Estado = 'Activo'
+                 ORDER BY Ciudad"
+            );
+            $stmt->execute([':id' => $idInstitucion]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
         }
     }
 }

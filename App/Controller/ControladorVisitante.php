@@ -32,10 +32,14 @@ class ControladorVisitante {
     // REGISTRAR
     // ══════════════════════════════════════════════
     public function registrarVisitante(array $datos): array {
-        foreach (['IdentificacionVisitante', 'NombreVisitante'] as $campo) {
+        foreach (['IdentificacionVisitante', 'NombreVisitante', 'IdSede'] as $campo) {
             if ($this->campoVacio($datos, $campo)) {
                 return ['success' => false, 'message' => "Falta el campo: $campo"];
             }
+        }
+
+        if (!is_numeric($datos['IdSede']) || (int)$datos['IdSede'] <= 0) {
+            return ['success' => false, 'message' => 'Debe seleccionar una sede válida.'];
         }
 
         $id = trim($datos['IdentificacionVisitante']);
@@ -68,23 +72,59 @@ class ControladorVisitante {
     }
 
     // ══════════════════════════════════════════════
-    // MOSTRAR CON FILTROS
+    // PREPARAR DATOS PARA LA VISTA LISTA
+    // Retorna $visitantes e $instituciones listos
+    // para ser usados directamente en VisitanteLista.php
+    // ══════════════════════════════════════════════
+    public function prepararLista(): array {
+        $filtros = [];
+        $params  = [];
+
+        if (!empty($_GET['identificacion'])) {
+            $filtros[]                 = "v.IdentificacionVisitante LIKE :identificacion";
+            $params[':identificacion'] = '%' . $_GET['identificacion'] . '%';
+        }
+        if (!empty($_GET['nombre'])) {
+            $filtros[]         = "v.NombreVisitante LIKE :nombre";
+            $params[':nombre'] = '%' . $_GET['nombre'] . '%';
+        }
+        if (!empty($_GET['estado'])) {
+            $filtros[]         = "v.Estado = :estado";
+            $params[':estado'] = $_GET['estado'];
+        }
+        if (!empty($_GET['idInstitucion'])) {
+            $filtros[]                = "s.IdInstitucion = :idInstitucion";
+            $params[':idInstitucion'] = (int)$_GET['idInstitucion'];
+        }
+
+        return [
+            'visitantes'   => $this->modelo->obtenerTodos($filtros, $params),
+            'instituciones' => $this->modelo->obtenerInstituciones(),
+        ];
+    }
+
+    // ══════════════════════════════════════════════
+    // MOSTRAR CON FILTROS (para llamadas AJAX)
     // ══════════════════════════════════════════════
     public function mostrarVisitantes(): array {
         $filtros = [];
         $params  = [];
 
         if (!empty($_POST['identificacion'])) {
-            $filtros[]                 = "IdentificacionVisitante LIKE :identificacion";
+            $filtros[]                 = "v.IdentificacionVisitante LIKE :identificacion";
             $params[':identificacion'] = '%' . $_POST['identificacion'] . '%';
         }
         if (!empty($_POST['nombre'])) {
-            $filtros[]         = "NombreVisitante LIKE :nombre";
+            $filtros[]         = "v.NombreVisitante LIKE :nombre";
             $params[':nombre'] = '%' . $_POST['nombre'] . '%';
         }
         if (!empty($_POST['estado'])) {
-            $filtros[]         = "Estado = :estado";
+            $filtros[]         = "v.Estado = :estado";
             $params[':estado'] = $_POST['estado'];
+        }
+        if (!empty($_POST['idInstitucion'])) {
+            $filtros[]                = "s.IdInstitucion = :idInstitucion";
+            $params[':idInstitucion'] = (int)$_POST['idInstitucion'];
         }
 
         return $this->modelo->obtenerTodos($filtros, $params);
@@ -110,10 +150,24 @@ class ControladorVisitante {
     public function cambiarEstado(int $id, string $estado): array {
         return $this->modelo->cambiarEstado($id, $estado);
     }
+
+    // ══════════════════════════════════════════════
+    // OBTENER INSTITUCIONES
+    // ══════════════════════════════════════════════
+    public function obtenerInstituciones(): array {
+        return $this->modelo->obtenerInstituciones();
+    }
+
+    // ══════════════════════════════════════════════
+    // OBTENER SEDES POR INSTITUCIÓN
+    // ══════════════════════════════════════════════
+    public function obtenerSedes(int $idInstitucion): array {
+        return $this->modelo->obtenerSedesPorInstitucion($idInstitucion);
+    }
 }
 
 // ════════════════════════════════════════════════
-// RUTEO
+// RUTEO (solo cuando se llama vía AJAX/POST)
 // ════════════════════════════════════════════════
 try {
     if (!isset($conexion)) throw new Exception("Conexión no disponible");
@@ -147,6 +201,17 @@ try {
                 break;
             }
             echo json_encode($controlador->cambiarEstado($id, $nuevo));
+            break;
+        case 'obtener_instituciones':
+            echo json_encode($controlador->obtenerInstituciones());
+            break;
+        case 'obtener_sedes':
+            $idInstitucion = (int)($_POST['IdInstitucion'] ?? 0);
+            if ($idInstitucion <= 0) {
+                echo json_encode(['success' => false, 'message' => 'ID de institución inválido']);
+                break;
+            }
+            echo json_encode(['success' => true, 'sedes' => $controlador->obtenerSedes($idInstitucion)]);
             break;
         default:
             echo json_encode(['success' => false, 'message' => 'Acción no reconocida']);
