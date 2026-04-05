@@ -2,42 +2,110 @@
 
 class ModeloIngreso {
     private $pdo;
+    private $logPath;
 
     public function __construct() {
         require_once __DIR__ . '/../Core/conexion.php';
         $conexionObj = new Conexion();
         $this->pdo   = $conexionObj->getConexion();
+        $this->logPath = __DIR__ . '/../Controller/Debug_Func/qr_debug.txt';
 
         if (!$this->pdo) {
             die(json_encode(['success' => false, 'message' => 'Conexión fallida']));
         }
     }
 
-    public function buscarFuncionarioPorQr($qrCodigo) {
-
-        // Intento 1: formato "ID: 12"
-        if (preg_match('/ID:\s*(\d+)/i', $qrCodigo, $match)) {
-            $id   = (int)$match[1];
-            $sql  = "SELECT * FROM funcionario WHERE IdFuncionario = ? LIMIT 1";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC) ?: false;
-        }
-
-        // Intento 2: buscar por QrCodigoFuncionario directo
-        $sql  = "SELECT * FROM funcionario 
-                 WHERE QrCodigoFuncionario = ? 
-                 AND Estado = 'Activo' 
-                 LIMIT 1";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([trim($qrCodigo)]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) return $result;
-
-        return false;
+    private function log($msg) {
+        file_put_contents(
+            $this->logPath,
+            date('Y-m-d H:i:s') . " - $msg\n",
+            FILE_APPEND
+        );
     }
 
-    // Registra un ingreso o salida del funcionario.
+    public function buscarFuncionarioPorQr($qrCodigo) {
+
+        // ── LOG: ver exactamente qué llega del escáner ──────────
+        $this->log("=== QR RAW HEX: " . bin2hex($qrCodigo));
+        $this->log("=== QR TEXTO:   " . $qrCodigo);
+
+        // Normalizar: quitar \r, espacios sobrantes
+        $qrNormalizado = trim(str_replace("\r", "", $qrCodigo));
+
+        $this->log("=== QR NORMALIZADO: " . $qrNormalizado);
+
+        // ── CASO 1: QR contiene texto con "ID: 12" ───────────────
+        if (preg_match('/ID:\s*(\d+)/i', $qrNormalizado, $match)) {
+
+            $id = (int)$match[1];
+            $this->log("ID extraído del QR: $id");
+
+            if ($id <= 0) {
+                $this->log("ERROR: ID extraído es 0 o negativo");
+                return ['encontrado' => false, 'inactivo' => false];
+            }
+
+            $stmtExiste = $this->pdo->prepare(
+                "SELECT IdFuncionario, Estado FROM funcionario WHERE IdFuncionario = ? LIMIT 1"
+            );
+            $stmtExiste->execute([$id]);
+            $existe = $stmtExiste->fetch(PDO::FETCH_ASSOC);
+
+            $this->log("Resultado BD por ID: " . json_encode($existe));
+
+            if (!$existe) {
+                $this->log("Funcionario ID $id no existe en BD");
+                return ['encontrado' => false, 'inactivo' => false];
+            }
+
+            if ($existe['Estado'] !== 'Activo') {
+                $this->log("Funcionario ID $id está INACTIVO");
+                return ['encontrado' => true, 'inactivo' => true];
+            }
+
+            $stmt = $this->pdo->prepare(
+                "SELECT * FROM funcionario WHERE IdFuncionario = ? AND Estado = 'Activo' LIMIT 1"
+            );
+            $stmt->execute([$id]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($row) {
+                $this->log("Funcionario encontrado y activo: " . $row['NombreFuncionario']);
+                return array_merge($row, ['encontrado' => true, 'inactivo' => false]);
+            }
+
+            return ['encontrado' => false, 'inactivo' => false];
+        }
+
+        // ── CASO 2: QR es un código simple sin "ID: X" ──────────
+        $this->log("No se encontró patrón ID: en el QR, intentando búsqueda directa");
+
+        $stmtExiste = $this->pdo->prepare(
+            "SELECT IdFuncionario, Estado FROM funcionario WHERE QrCodigoFuncionario = ? LIMIT 1"
+        );
+        $stmtExiste->execute([$qrNormalizado]);
+        $existe = $stmtExiste->fetch(PDO::FETCH_ASSOC);
+
+        $this->log("Resultado BD por QrCodigo directo: " . json_encode($existe));
+
+        if (!$existe) {
+            return ['encontrado' => false, 'inactivo' => false];
+        }
+
+        if ($existe['Estado'] !== 'Activo') {
+            return ['encontrado' => true, 'inactivo' => true];
+        }
+
+        $stmt = $this->pdo->prepare(
+            "SELECT * FROM funcionario WHERE QrCodigoFuncionario = ? AND Estado = 'Activo' LIMIT 1"
+        );
+        $stmt->execute([$qrNormalizado]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row
+            ? array_merge($row, ['encontrado' => true, 'inactivo' => false])
+            : ['encontrado' => false, 'inactivo' => false];
+    }
 
     public function registrarIngreso($idFuncionario, $idSede, $tipoMovimiento = 'Entrada') {
 
@@ -54,8 +122,6 @@ class ModeloIngreso {
             $idFuncionario
         ]);
     }
-
-    // Lista todos los ingresos de funcionarios
 
     public function listarIngresos() {
 

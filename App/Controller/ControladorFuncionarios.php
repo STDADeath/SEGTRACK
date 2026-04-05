@@ -53,12 +53,10 @@ try {
         // ║               HELPERS PRIVADOS                      ║
         // ╚══════════════════════════════════════════════════════╝
 
-        // ── Escribe un mensaje en el log de debug ──────────────
         private function log($msg) {
             file_put_contents($this->logPath, date('Y-m-d H:i:s') . " - $msg\n", FILE_APPEND);
         }
 
-        // ── Verifica si un campo está vacío o no existe ────────
         private function campoVacio($campo): bool {
             return !isset($campo) || trim($campo) === '';
         }
@@ -66,10 +64,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║   OBTENER NOMBRE DE SEDE E INSTITUCIÓN POR IdSede   ║
         // ╚══════════════════════════════════════════════════════╝
-        // ✅ CAMBIO: ahora retorna un array con 'sede' e 'institucion'
-        //    para poder incluir ambos datos en el QR y en el correo.
-        //    Hace un JOIN entre sede e institucion para obtener
-        //    NombreInstitucion en la misma consulta.
         private function obtenerInfoSede(int $idSede): array {
             try {
                 $sql = "SELECT s.TipoSede, i.NombreInstitucion
@@ -95,9 +89,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               GUARDAR FOTO                          ║
         // ╚══════════════════════════════════════════════════════╝
-        // Guarda la foto en Public/qr/Fotos/
-        // Acepta archivo subido ($_FILES) o foto de cámara (base64)
-        // Retorna la ruta relativa o null si no hay foto
         private function guardarFoto(int $idFuncionario): ?string {
 
             try {
@@ -165,15 +156,16 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               GENERAR QR                            ║
         // ╚══════════════════════════════════════════════════════╝
-        // ✅ CAMBIO: ahora recibe $institucion además de $sede
-        //    para incluir ambos datos en el contenido del QR.
-        //    Contenido del QR: ID, Nombre, Cargo, Estado, Institución, Sede
+        // ✅ CAMBIO: se eliminó el ID del contenido del QR
+        //    y se reordenaron los datos:
+        //    Nombre → Cargo → Institución → Sede → Estado
         private function generarQR(
+            int    $idFuncionario,
             string $nombre,
             string $cargo,
             string $estado,
             string $sede,
-            string $institucion   // ✅ NUEVO parámetro
+            string $institucion
         ): ?string {
 
             try {
@@ -188,14 +180,14 @@ try {
                 $nombreArchivo = "QR-FUNC-" . $idFuncionario . "-" . uniqid() . ".png";
                 $rutaCompleta  = $rutaCarpeta . '/' . $nombreArchivo;
 
-                // ✅ CAMBIO: se agrega Institución al contenido del QR
+                // ✅ CAMBIO: sin ID, datos en orden limpio
                 $contenidoQR =
-                    "ID: $idFuncionario\n"           .
-                    "Nombre: $nombre\n"              .
-                    "Cargo: $cargo\n"                .
-                    "Estado: $estado\n"              .
-                    "Institución: $institucion\n"    .
-                    "Sede: $sede";
+                    "ID: $idFuncionario\n"        .
+                    "Nombre: $nombre\n"           .
+                    "Cargo: $cargo\n"             .
+                    "Institución: $institucion\n" .
+                    "Sede: $sede\n"               .
+                    "Estado: $estado";
 
                 ob_start();
                 QRcode::png($contenidoQR, false, QR_ECLEVEL_H, 10, 2);
@@ -221,9 +213,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               TEMPLATE HTML DEL CORREO             ║
         // ╚══════════════════════════════════════════════════════╝
-        // ✅ CAMBIO: se agregaron los parámetros $sede e $institucion
-        //    para mostrarlos en la sección de datos del funcionario
-        //    dentro del cuerpo del correo HTML.
         private function generarHTMLCorreo(
             string $nombre,
             string $cargo,
@@ -231,8 +220,8 @@ try {
             string $correo,
             string $qrBase64,
             string $asunto,
-            string $sede,          // ✅ NUEVO
-            string $institucion    // ✅ NUEVO
+            string $sede,
+            string $institucion
         ): string {
 
             $qrImgHtml = $qrBase64
@@ -310,17 +299,10 @@ try {
                     </p>
                     <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Nombre:</strong> {$nombre}</p>
                     <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Cargo:</strong> {$cargo}</p>
+                    <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Institución:</strong> {$institucion}</p>
+                    <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Sede:</strong> {$sede}</p>
                     <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Documento:</strong> {$documento}</p>
                     <p style='margin:5px 0; font-size:14px; color:#333;'><strong>Correo:</strong> {$correo}</p>
-
-                    <!-- ✅ NUEVO: Institución y Sede en el cuerpo del correo -->
-                    <p style='margin:5px 0; font-size:14px; color:#333;'>
-                      <strong>Institución:</strong> {$institucion}
-                    </p>
-                    <p style='margin:5px 0; font-size:14px; color:#333;'>
-                      <strong>Sede:</strong> {$sede}
-                    </p>
-
                     <p style='margin:5px 0; font-size:14px; color:#333;'>
                       <strong>Estado:</strong>
                       <span style='background:#e8f5e9; color:#2e7d32; padding:2px 10px;
@@ -350,8 +332,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               ENVIAR CORREO CON QR                  ║
         // ╚══════════════════════════════════════════════════════╝
-        // ✅ CAMBIO: se agregan $sede e $institucion como parámetros
-        //    para pasarlos al template HTML del correo.
         private function enviarCorreoConQR(
             string $correo,
             string $nombre,
@@ -359,8 +339,8 @@ try {
             string $documento,
             string $rutaQR,
             string $asunto       = 'Bienvenido a SEGTRACK — Su Código QR',
-            string $sede         = '',     // ✅ NUEVO
-            string $institucion  = ''      // ✅ NUEVO
+            string $sede         = '',
+            string $institucion  = ''
         ): bool {
 
             try {
@@ -377,13 +357,11 @@ try {
                 $mail->setFrom('seguridad.integral.segtrack@gmail.com', 'SEGTRACK - Administración');
                 $mail->addAddress($correo, $nombre);
 
-                // Logo embebido en el HTML del correo
                 $rutaLogo = realpath(__DIR__ . '/../../Public/img/LOGO_SEGTRACK-re-con.ico');
                 if ($rutaLogo && file_exists($rutaLogo)) {
                     $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
                 }
 
-                // QR adjunto y embebido
                 $rutaFisicaQR = realpath(__DIR__ . '/../../Public/' . $rutaQR);
                 $qrBase64     = '';
 
@@ -397,7 +375,6 @@ try {
                 $mail->isHTML(true);
                 $mail->Subject = '=?UTF-8?B?' . base64_encode($asunto) . '?=';
 
-                // ✅ CAMBIO: se pasan $sede e $institucion al generador de HTML
                 $mail->Body = $this->generarHTMLCorreo(
                     $nombre, $cargo, $documento, $correo,
                     $qrBase64, $asunto, $sede, $institucion
@@ -405,11 +382,12 @@ try {
 
                 $mail->AltBody =
                     "Hola $nombre,\n\n"             .
+                    "Nombre: $nombre\n"             .
                     "Cargo: $cargo\n"               .
+                    "Institución: $institucion\n"   .
+                    "Sede: $sede\n"                 .
                     "Documento: $documento\n"       .
-                    "Correo: $correo\n"             .
-                    "Institución: $institucion\n"   .  // ✅ NUEVO en texto plano
-                    "Sede: $sede\n\n"               .  // ✅ NUEVO en texto plano
+                    "Correo: $correo\n\n"           .
                     "Has sido registrado en SEGTRACK.\n\nAtentamente,\nEquipo SEGTRACK";
 
                 $mail->send();
@@ -426,8 +404,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               REGISTRAR FUNCIONARIO                 ║
         // ╚══════════════════════════════════════════════════════╝
-        // ✅ CAMBIO: se usa obtenerInfoSede() para obtener sede
-        //    e institución juntos, y se pasan al QR y al correo.
         public function registrarFuncionario(array $datos): array {
 
             $cargo     = trim($datos['CargoFuncionario']    ?? '');
@@ -453,19 +429,16 @@ try {
 
                 $id = $resultado['id'];
 
-                // ---- GUARDAR FOTO ----
                 $rutaFoto = $this->guardarFoto($id);
                 if ($rutaFoto) {
                     $this->modelo->actualizarFotoFuncionario($id, $rutaFoto);
                     $this->log("Foto guardada para funcionario $id: $rutaFoto");
                 }
 
-                // ✅ CAMBIO: obtener sede e institución juntos con obtenerInfoSede()
                 $infoSede   = $this->obtenerInfoSede((int)$sede);
                 $nombreSede = $infoSede['sede'];
                 $nombreInst = $infoSede['institucion'];
 
-                // ---- GENERAR QR con Nombre, Cargo, Estado, Institución, Sede ----
                 $qr = $this->generarQR(
                     $id, $nombre, $cargo, 'Activo', $nombreSede, $nombreInst
                 );
@@ -473,7 +446,6 @@ try {
                 if ($qr) {
                     $this->modelo->ActualizarQrFuncionario($id, $qr);
 
-                    // ✅ CAMBIO: se pasan sede e institución al correo
                     $this->enviarCorreoConQR(
                         $correo, $nombre, $cargo, $documento, $qr,
                         '¡Bienvenido a SEGTRACK! — Su Código QR de Acceso',
@@ -500,8 +472,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               ACTUALIZAR FUNCIONARIO                ║
         // ╚══════════════════════════════════════════════════════╝
-        // ✅ CAMBIO: usa obtenerInfoSede() para incluir institución
-        //    en el QR regenerado y en el correo de actualización.
         public function actualizarFuncionario(int $id, array $datos): array {
 
             if ($id <= 0) {
@@ -513,7 +483,6 @@ try {
 
             if ($resultado['success']) {
 
-                // Eliminar QR anterior del servidor
                 if ($rutaAnterior) {
                     $rutaFisica = realpath(__DIR__ . '/../../Public/' . $rutaAnterior);
                     if ($rutaFisica && file_exists($rutaFisica)) {
@@ -527,22 +496,18 @@ try {
                 $correo    = trim($datos['CorreoFuncionario']    ?? '');
                 $idSede    = (int)($datos['IdSede']              ?? 0);
 
-                // Obtener estado actual desde BD
                 $funcionario = $this->modelo->obtenerPorId($id);
                 $estado      = $funcionario['Estado'] ?? 'Activo';
 
-                // ✅ CAMBIO: obtener sede e institución juntos
                 $infoSede   = $this->obtenerInfoSede($idSede);
                 $nombreSede = $infoSede['sede'];
                 $nombreInst = $infoSede['institucion'];
 
-                // Regenerar QR con datos actualizados incluyendo institución
                 $qr = $this->generarQR($id, $nombre, $cargo, $estado, $nombreSede, $nombreInst);
 
                 if ($qr) {
                     $this->modelo->ActualizarQrFuncionario($id, $qr);
 
-                    // ✅ CAMBIO: se pasan sede e institución al correo
                     $this->enviarCorreoConQR(
                         $correo, $nombre, $cargo, $documento, $qr,
                         'SEGTRACK — Tu Código QR ha sido actualizado',
@@ -565,7 +530,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               CAMBIAR ESTADO                        ║
         // ╚══════════════════════════════════════════════════════╝
-        // Cambia el estado del funcionario (Activo / Inactivo)
         public function cambiarEstado(int $id, string $estado): array {
 
             if (!in_array($estado, ['Activo', 'Inactivo'])) {
@@ -582,8 +546,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               REGENERAR QR                          ║
         // ╚══════════════════════════════════════════════════════╝
-        // ✅ CAMBIO: usa obtenerInfoSede() para incluir institución
-        //    en el QR regenerado y en el correo de reenvío.
         public function actualizarQR(int $id): array {
 
             if ($id <= 0) {
@@ -595,7 +557,6 @@ try {
                 return ['success' => false, 'message' => 'Funcionario no encontrado'];
             }
 
-            // Eliminar QR anterior
             $rutaAnterior = $this->modelo->obtenerQrActual($id);
             if ($rutaAnterior) {
                 $rutaFisica = realpath(__DIR__ . '/../../Public/' . $rutaAnterior);
@@ -604,20 +565,18 @@ try {
                 }
             }
 
-            // ✅ CAMBIO: obtener sede e institución juntos
             $infoSede   = $this->obtenerInfoSede((int)($funcionario['IdSede'] ?? 0));
             $nombreSede = $infoSede['sede'];
             $nombreInst = $infoSede['institucion'];
             $estado     = $funcionario['Estado'] ?? 'Activo';
 
-            // Regenerar QR con todos los datos actuales
             $qr = $this->generarQR(
                 $id,
                 $funcionario['NombreFuncionario'],
                 $funcionario['CargoFuncionario'],
                 $estado,
                 $nombreSede,
-                $nombreInst  // ✅ NUEVO
+                $nombreInst
             );
 
             if (!$qr) {
@@ -626,7 +585,6 @@ try {
 
             $this->modelo->ActualizarQrFuncionario($id, $qr);
 
-            // ✅ CAMBIO: se pasan sede e institución al correo
             $this->enviarCorreoConQR(
                 $funcionario['CorreoFuncionario'],
                 $funcionario['NombreFuncionario'],
@@ -649,8 +607,6 @@ try {
         // ╔══════════════════════════════════════════════════════╗
         // ║               ENVIAR QR POR CORREO                  ║
         // ╚══════════════════════════════════════════════════════╝
-        // ✅ CAMBIO: usa obtenerInfoSede() para incluir institución
-        //    y sede en el correo reenviado sin regenerar QR.
         public function enviarQRPorCorreo(int $idFuncionario): array {
 
             $this->log("=== enviarQRPorCorreo llamado para ID: $idFuncionario ===");
@@ -689,7 +645,6 @@ try {
                     throw new \Exception('El archivo QR no existe en el servidor. Ruta: ' . $rutaQR);
                 }
 
-                // ✅ CAMBIO: obtener sede e institución para el correo reenviado
                 $infoSede   = $this->obtenerInfoSede((int)($funcionario['IdSede'] ?? 0));
                 $nombreSede = $infoSede['sede'];
                 $nombreInst = $infoSede['institucion'];
@@ -701,8 +656,8 @@ try {
                     $funcionario['DocumentoFuncionario'],
                     $rutaQR,
                     'SEGTRACK — Tu Código QR de Acceso',
-                    $nombreSede,   // ✅ NUEVO
-                    $nombreInst    // ✅ NUEVO
+                    $nombreSede,
+                    $nombreInst
                 );
 
                 if ($enviado) {

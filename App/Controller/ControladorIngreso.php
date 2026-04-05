@@ -7,9 +7,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-
 require_once __DIR__ . "/../Model/ModeloIngreso.php";
-
 
 class ControladorIngreso {
 
@@ -26,14 +24,23 @@ class ControladorIngreso {
         $tipoMovimiento = $input['tipoMovimiento'] ?? 'Entrada';
 
         if (!$qrCodigo) {
-            return $this->responder(false, 'Código QR no recibido');
+            return $this->responder(false, 'Código QR no recibido', null, 'sin_qr');
         }
 
-        $funcionario = $this->modelo->buscarFuncionarioPorQr($qrCodigo);
+        $resultado = $this->modelo->buscarFuncionarioPorQr($qrCodigo);
 
-        if (!$funcionario) {
-            return $this->responder(false, 'Funcionario no encontrado');
+        // Funcionario no existe en absoluto
+        if (!$resultado['encontrado']) {
+            return $this->responder(false, 'Funcionario no encontrado', null, 'no_encontrado');
         }
+
+        // Funcionario existe pero está inactivo
+        if ($resultado['inactivo']) {
+            return $this->responder(false, 'Funcionario inactivo. No tiene permiso de acceso.', null, 'inactivo');
+        }
+
+        // Funcionario activo — registrar movimiento
+        $funcionario = $resultado;
 
         $exito = $this->modelo->registrarIngreso(
             $funcionario['IdFuncionario'],
@@ -42,7 +49,7 @@ class ControladorIngreso {
         );
 
         if (!$exito) {
-            return $this->responder(false, 'No se pudo registrar el movimiento');
+            return $this->responder(false, 'No se pudo registrar el movimiento', null, 'error_bd');
         }
 
         return $this->responder(true, "$tipoMovimiento registrada correctamente", [
@@ -63,19 +70,19 @@ class ControladorIngreso {
         exit;
     }
 
-    private function responder($success, $message, $data = null) {
+    private function responder($success, $message, $data = null, $codigo = null) {
 
         ob_clean();
         echo json_encode([
             'success' => $success,
             'message' => $message,
+            'codigo'  => $codigo,   // para que el JS pueda distinguir el tipo de error
             'data'    => $data
         ], JSON_UNESCAPED_UNICODE);
 
         exit;
     }
 }
-
 
 try {
 
@@ -92,6 +99,7 @@ try {
     echo json_encode([
         'success' => false,
         'message' => 'Error del servidor: ' . $e->getMessage(),
+        'codigo'  => 'error_servidor',
         'data'    => null
     ], JSON_UNESCAPED_UNICODE);
     exit;

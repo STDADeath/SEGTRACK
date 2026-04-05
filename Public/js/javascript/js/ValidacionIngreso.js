@@ -43,6 +43,32 @@ function mostrarMensaje(esExito, texto) {
 
 
 // ========================================
+// ALERTA ESPECIAL FUNCIONARIO INACTIVO
+// ========================================
+
+function mostrarAlertaInactivo() {
+
+    // Si SweetAlert2 está disponible usarlo, si no caer a alert nativo
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Acceso denegado',
+            text: 'Este funcionario está inactivo y no tiene permiso de acceso.',
+            confirmButtonColor: '#e74a3b',
+            confirmButtonText: 'Entendido',
+            timer: 5000,
+            timerProgressBar: true
+        });
+    } else {
+        alert('⛔ Funcionario inactivo. No tiene permiso de acceso.');
+    }
+
+    // También mostrar en el banner de error de la página
+    mostrarMensaje(false, '⛔ Funcionario inactivo. No tiene permiso de acceso.');
+}
+
+
+// ========================================
 // MOSTRAR CARD CON FOTO DEL FUNCIONARIO
 // ========================================
 
@@ -108,6 +134,12 @@ async function enviarQr(qr, tipo) {
         });
 
         const data = await res.json();
+
+        // Caso especial: funcionario inactivo
+        if (!data.success && data.codigo === 'inactivo') {
+            mostrarAlertaInactivo();
+            return;
+        }
 
         mostrarMensaje(data.success, data.message);
 
@@ -175,7 +207,6 @@ async function iniciarCamara() {
 
     if (App.qrReader) return;
 
-    // Paso 1: pedir permiso explícito primero
     try {
         await navigator.mediaDevices.getUserMedia({ video: true });
     } catch (permiso) {
@@ -187,10 +218,7 @@ async function iniciarCamara() {
 
     try {
 
-        // Paso 2: listar cámaras con permiso ya concedido
         const devices = await Html5Qrcode.getCameras();
-
-        console.log("Cámaras detectadas:", devices);
 
         if (!devices || devices.length === 0) {
             mostrarMensaje(false, "No se detectaron cámaras.");
@@ -199,7 +227,6 @@ async function iniciarCamara() {
             return;
         }
 
-        // Paso 3: elegir la mejor cámara disponible
         const camara =
             devices.find(d => d.label.toLowerCase().includes("back"))    ||
             devices.find(d => d.label.toLowerCase().includes("rear"))    ||
@@ -207,17 +234,11 @@ async function iniciarCamara() {
             devices.find(d => d.label.toLowerCase().includes("droid"))   ||
             devices[0];
 
-        console.log("Usando cámara:", camara);
-
-        // Paso 4: iniciar con deviceId real
         await App.qrReader.start(
             camara.id,
             {
                 fps: App.config.fps,
-                qrbox: {
-                    width:  App.config.qrboxSize,
-                    height: App.config.qrboxSize
-                }
+                qrbox: { width: App.config.qrboxSize, height: App.config.qrboxSize }
             },
             onScanQR,
             () => {}
@@ -227,19 +248,13 @@ async function iniciarCamara() {
 
     } catch (error) {
 
-        console.error("Error iniciando por deviceId:", error);
-
-        // Paso 5: fallback con facingMode
         try {
 
             await App.qrReader.start(
                 { facingMode: "environment" },
                 {
                     fps: App.config.fps,
-                    qrbox: {
-                        width:  App.config.qrboxSize,
-                        height: App.config.qrboxSize
-                    }
+                    qrbox: { width: App.config.qrboxSize, height: App.config.qrboxSize }
                 },
                 onScanQR,
                 () => {}
@@ -249,7 +264,6 @@ async function iniciarCamara() {
 
         } catch (error2) {
 
-            console.error("Fallback también falló:", error2);
             mostrarMensaje(false, "No se pudo iniciar la cámara: " + error2.message);
             App.qrReader.clear();
             App.qrReader = null;
@@ -268,25 +282,21 @@ async function detenerCamara() {
     if (!App.qrReader) return;
 
     try {
-
         await App.qrReader.stop();
         App.qrReader.clear();
-
     } catch (e) {
         console.error("Error deteniendo cámara:", e);
     } finally {
-
         App.qrReader      = null;
         App.escaneando    = false;
         App.ultimaLectura = null;
         actualizarBoton(false);
-
     }
 }
 
 
 // ========================================
-// ALTERNAR CÁMARA (un solo botón)
+// ALTERNAR CÁMARA
 // ========================================
 
 async function toggleCamara() {
@@ -322,7 +332,6 @@ async function descargarPDF() {
         mostrarMensaje(true, "PDF descargado correctamente.");
 
     } catch (e) {
-        console.error(e);
         mostrarMensaje(false, "No se pudo descargar el PDF.");
     }
 }

@@ -1,0 +1,137 @@
+2026-04-05 20:13:04 - === QR RAW HEX: 49443a200a4e6f6d6272653a203130300a436172676f3a2076616c656e74696e610a45737461646f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2053616e204d696775656c204e6f7274650a536564653a2041637469766f
+2026-04-05 20:13:04 - === QR TEXTO:   ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 20:13:04 - === QR NORMALIZADO: ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 20:13:04 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-05 20:13:04 - Resultado BD por QrCodigo directo: false
+2026-04-05 20:18:23 - === QR RAW HEX: 49443a200a4e6f6d6272653a203130300a436172676f3a2076616c656e74696e610a45737461646f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2053616e204d696775656c204e6f7274650a536564653a2041637469766f
+2026-04-05 20:18:23 - === QR TEXTO:   ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 20:18:23 - === QR NORMALIZADO: ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 20:18:23 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-05 20:18:23 - Resultado BD por QrCodigo directo: false
+2026-04-05 21:36:34 - === QR RAW HEX: 49443a200a4e6f6d6272653a203130300a436172676f3a2076616c656e74696e610a45737461646f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2053616e204d696775656c204e6f7274650a536564653a2041637469766f
+2026-04-05 21:36:34 - === QR TEXTO:   ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:36:34 - === QR NORMALIZADO: ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:36:34 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-05 21:36:34 - Resultado BD por QrCodigo directo: false
+2026-04-05 21:36:36 - === QR RAW HEX: 49443a200a4e6f6d6272653a203130300a436172676f3a2076616c656e74696e610a45737461646f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2053616e204d696775656c204e6f7274650a536564653a2041637469766f
+2026-04-05 21:36:36 - === QR TEXTO:   ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:36:36 - === QR NORMALIZADO: ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:36:36 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-05 21:36:36 - Resultado BD por QrCodigo directo: false
+2026-04-05 21:36:55 - === QR RAW HEX: 49443a200a4e6f6d6272653a203130300a436172676f3a2076616c656e74696e610a45737461646f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2053616e204d696775656c204e6f7274650a536564653a2041637469766f
+2026-04-05 21:36:55 - === QR TEXTO:   ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:36:55 - === QR NORMALIZADO: ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:36:55 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-05 21:36:55 - Resultado BD por QrCodigo directo: false
+2026-04-05 21:38:36 - === QR RAW HEX: 49443a200a4e6f6d6272653a203130300a436172676f3a2076616c656e74696e610a45737461646f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2053616e204d696775656c204e6f7274650a536564653a2041637469766f
+2026-04-05 21:38:36 - === QR TEXTO:   ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:38:36 - === QR NORMALIZADO: ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:38:36 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-05 21:38:36 - Resultado BD por QrCodigo directo: false
+2026-04-05 21:38:45 - === QR RAW HEX: 49443a200a4e6f6d6272653a203130300a436172676f3a2076616c656e74696e610a45737461646f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2053616e204d696775656c204e6f7274650a536564653a2041637469766f
+2026-04-05 21:38:45 - === QR TEXTO:   ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:38:45 - === QR NORMALIZADO: ID: 
+Nombre: 100
+Cargo: valentina
+Estado: Funcionario
+Institución: San Miguel Norte
+Sede: Activo
+2026-04-05 21:38:45 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-05 21:38:45 - Resultado BD por QrCodigo directo: false
+2026-04-05 21:40:42 - === QR RAW HEX: 49443a203130310a4e6f6d6272653a2044616e69656c610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f6c6567696f204e7565766f20486f72697a6f6e74650a536564653a20436f6c6567696f204e7565766f20486f72697a6f6e7465206e6f7274650a45737461646f3a2041637469766f
+2026-04-05 21:40:42 - === QR TEXTO:   ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-05 21:40:42 - === QR NORMALIZADO: ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-05 21:40:42 - ID extraído del QR: 101
+2026-04-05 21:40:42 - Resultado BD por ID: {"IdFuncionario":101,"Estado":"Activo"}
+2026-04-05 21:40:42 - Funcionario encontrado y activo: Daniela
+2026-04-05 21:40:57 - === QR RAW HEX: 49443a203130310a4e6f6d6272653a2044616e69656c610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f6c6567696f204e7565766f20486f72697a6f6e74650a536564653a20436f6c6567696f204e7565766f20486f72697a6f6e7465206e6f7274650a45737461646f3a2041637469766f
+2026-04-05 21:40:57 - === QR TEXTO:   ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-05 21:40:57 - === QR NORMALIZADO: ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-05 21:40:57 - ID extraído del QR: 101
+2026-04-05 21:40:57 - Resultado BD por ID: {"IdFuncionario":101,"Estado":"Activo"}
+2026-04-05 21:40:57 - Funcionario encontrado y activo: Daniela

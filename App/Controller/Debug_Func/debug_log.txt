@@ -142,3 +142,9 @@
 2026-04-03 08:10:10 - Foto guardada para funcionario 99: qr/Fotos/FOTO-FUNC-99-69cf59c203ce3.jpg
 2026-04-03 08:10:10 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC--69cf59c2056e1.png
 2026-04-03 08:10:13 - Correo enviado correctamente a Carrimorro8080@gmail.com
+2026-04-05 19:56:38 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC--69d2a2562bcae.png
+2026-04-05 19:56:41 - Correo enviado correctamente a valentiana@gmail.com
+2026-04-05 21:39:41 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-101-69d2ba7dda89a.jpg
+2026-04-05 21:39:41 - Foto guardada para funcionario 101: qr/Fotos/FOTO-FUNC-101-69d2ba7dda89a.jpg
+2026-04-05 21:39:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-101-69d2ba7ddca40.png
+2026-04-05 21:39:45 - Correo enviado correctamente a valent2ina@gmail.com
