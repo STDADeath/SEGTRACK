@@ -135,3 +135,220 @@ Estado: Activo
 2026-04-05 21:40:57 - ID extraído del QR: 101
 2026-04-05 21:40:57 - Resultado BD por ID: {"IdFuncionario":101,"Estado":"Activo"}
 2026-04-05 21:40:57 - Funcionario encontrado y activo: Daniela
+2026-04-06 02:38:19 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:38:19 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:38:19 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:38:19 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:38:19 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:38:22 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:38:22 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:38:22 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:38:22 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:38:22 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:38:24 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:38:24 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:38:24 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:38:24 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:38:24 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:39:25 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:39:25 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:39:25 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:39:25 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:39:25 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:39:49 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:39:49 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:39:49 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:39:49 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:39:49 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:39:50 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:39:50 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:39:50 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:39:50 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:39:50 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:39:52 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:39:52 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:39:52 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:39:52 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:39:52 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:40:43 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:40:43 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:40:43 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:40:43 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:40:43 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:41:32 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:41:32 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:41:32 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:41:32 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:41:32 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:41:33 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:41:33 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:41:33 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:41:33 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:41:33 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:41:35 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:41:35 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:41:35 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:41:35 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:41:35 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:43:17 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:43:17 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:43:17 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 02:43:17 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 02:43:17 - Resultado BD por QrCodigo directo: false
+2026-04-06 02:43:58 - === QR RAW HEX: 49443a203130310a4e6f6d6272653a2044616e69656c610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f6c6567696f204e7565766f20486f72697a6f6e74650a536564653a20436f6c6567696f204e7565766f20486f72697a6f6e7465206e6f7274650a45737461646f3a2041637469766f
+2026-04-06 02:43:58 - === QR TEXTO:   ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-06 02:43:58 - === QR NORMALIZADO: ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-06 02:43:58 - ID extraído del QR: 101
+2026-04-06 02:43:58 - Resultado BD por ID: {"IdFuncionario":101,"Estado":"Activo"}
+2026-04-06 02:43:58 - Funcionario encontrado y activo: Daniela
+2026-04-06 03:14:52 - === QR RAW HEX: 49443a203130310a4e6f6d6272653a2044616e69656c610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f6c6567696f204e7565766f20486f72697a6f6e74650a536564653a20436f6c6567696f204e7565766f20486f72697a6f6e7465206e6f7274650a45737461646f3a2041637469766f
+2026-04-06 03:14:52 - === QR TEXTO:   ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-06 03:14:52 - === QR NORMALIZADO: ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-06 03:14:52 - ID extraído del QR: 101
+2026-04-06 03:14:52 - Resultado BD por ID: {"IdFuncionario":101,"Estado":"Activo"}
+2026-04-06 03:14:52 - Funcionario encontrado y activo: Daniela
+2026-04-06 03:15:21 - === QR RAW HEX: 49443a203130310a4e6f6d6272653a2044616e69656c610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f6c6567696f204e7565766f20486f72697a6f6e74650a536564653a20436f6c6567696f204e7565766f20486f72697a6f6e7465206e6f7274650a45737461646f3a2041637469766f
+2026-04-06 03:15:21 - === QR TEXTO:   ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-06 03:15:21 - === QR NORMALIZADO: ID: 101
+Nombre: Daniela
+Cargo: Funcionario
+Institución: Colegio Nuevo Horizonte
+Sede: Colegio Nuevo Horizonte norte
+Estado: Activo
+2026-04-06 03:15:21 - ID extraído del QR: 101
+2026-04-06 03:15:21 - Resultado BD por ID: {"IdFuncionario":101,"Estado":"Activo"}
+2026-04-06 03:15:21 - Funcionario encontrado y activo: Daniela
+2026-04-06 03:15:27 - === QR RAW HEX: 4e6f6d6272653a20536361726c6574206a6173736f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a2043656e74726f2045647563617469766f2053616e204d696775656c0a536564653a2053616e204d696775656c204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 03:15:27 - === QR TEXTO:   Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 03:15:27 - === QR NORMALIZADO: Nombre: Scarlet jasson
+Cargo: Funcionario
+Institución: Centro Educativo San Miguel
+Sede: San Miguel Norte
+Estado: Activo
+2026-04-06 03:15:27 - No se encontró patrón ID: en el QR, intentando búsqueda directa
+2026-04-06 03:15:27 - Resultado BD por QrCodigo directo: false

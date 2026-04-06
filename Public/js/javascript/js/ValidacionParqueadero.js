@@ -9,12 +9,10 @@ function esperarDependencias(cb) {
 
 esperarDependencias(function () {
 
-    // ── Calcular total en tiempo real (CREAR) ─────────────────────────────────
     $(document).on('input', '.contador-tipo', function () {
         actualizarTotal('crearCarros', 'crearMotos', 'crearBicis', 'crearTotal');
     });
 
-    // ── Calcular total en tiempo real (EDITAR) ────────────────────────────────
     $(document).on('input', '.contador-editar', function () {
         actualizarTotal('editCarros', 'editMotos', 'editBicis', 'editTotal');
     });
@@ -26,7 +24,6 @@ esperarDependencias(function () {
         $('#' + idTotal).text(c + m + b);
     }
 
-    // ── Validar valores no negativos ──────────────────────────────────────────
     $(document).on('input', '.contador-tipo, .contador-editar', function () {
         var val = parseInt($(this).val());
         if (isNaN(val) || val < 0) {
@@ -37,14 +34,13 @@ esperarDependencias(function () {
         }
     });
 
-    // ── Limpiar modal crear al abrirlo ────────────────────────────────────────
     $('#modalCrearParqueadero').on('show.bs.modal', function () {
         $('#crearIdSede').val('').removeClass('is-valid is-invalid');
         $('#crearCarros, #crearMotos, #crearBicis').val(0).removeClass('is-valid is-invalid');
         $('#crearTotal').text('0');
     });
 
-    // ══ CREAR parqueadero ═════════════════════════════════════════════════════
+    // CREAR parqueadero
     $('#btnCrearParqueadero').on('click', function () {
         var sede   = $('#crearIdSede').val();
         var carros = parseInt($('#crearCarros').val()) || 0;
@@ -61,6 +57,12 @@ esperarDependencias(function () {
 
         if (total <= 0) {
             Swal.fire({ icon: 'warning', title: 'Sin espacios definidos', html: 'Debe asignar al menos <strong>1 espacio</strong> en alguno de los tipos de vehículo.', confirmButtonColor: '#f6c23e' });
+            return;
+        }
+
+        var sedeOption = $('#crearIdSede option:selected');
+        if (sedeOption.prop('disabled')) {
+            Swal.fire({ icon: 'error', title: 'Sede no disponible', text: 'Esta sede ya tiene un parqueadero configurado', confirmButtonColor: '#e74a3b' });
             return;
         }
 
@@ -91,7 +93,7 @@ esperarDependencias(function () {
         });
     });
 
-    // ══ Abrir modal EDITAR ════════════════════════════════════════════════════
+    // Abrir modal EDITAR
     window.abrirModalEditar = function (p) {
         $('#editIdParqueadero').val(p.IdParqueadero);
         $('#editNombreSede').text((p.TipoSede || '') + ' — ' + (p.Ciudad || ''));
@@ -109,7 +111,7 @@ esperarDependencias(function () {
         $('#modalEditarParqueadero').modal('show');
     };
 
-    // ══ GUARDAR EDICIÓN ═══════════════════════════════════════════════════════
+    // GUARDAR EDICIÓN
     $('#btnEditarParqueadero').on('click', function () {
         var id     = $('#editIdParqueadero').val();
         var carros = parseInt($('#editCarros').val()) || 0;
@@ -158,7 +160,7 @@ esperarDependencias(function () {
         });
     });
 
-    // ══ VER espacios (Admin) ══════════════════════════════════════════════════
+    // VER espacios (Admin)
     window.verEspacios = function (idParqueadero, nombreSede) {
         $('#verEspaciosNombreSede').text(nombreSede);
         $('#verEspaciosContenido').html(
@@ -231,7 +233,7 @@ esperarDependencias(function () {
         $('#verEspaciosContenido').html(html || '<div class="alert alert-info">Sin espacios registrados.</div>');
     }
 
-    // ══ CAMBIO DE ESTADO (Admin) ══════════════════════════════════════════════
+    // CAMBIO DE ESTADO (Admin)
     var parqueaderoACambiar = null;
     var estadoActual        = null;
 
@@ -294,7 +296,6 @@ esperarDependencias(function () {
         $('#btnConfirmarEstado').prop('disabled', false).html('<i class="fas fa-check mr-1"></i>Confirmar');
     });
 
-    // ── DataTable ─────────────────────────────────────────────────────────────
     if ($('#TablaParqueaderos').length) {
         $('#TablaParqueaderos').DataTable({
             language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
@@ -312,7 +313,6 @@ esperarDependencias(function () {
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Solo ejecutar si estamos en la vista del guardia
     if (!document.getElementById('selectSede')) return;
 
     function esperarJQuery(cb) {
@@ -326,7 +326,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var idParqueaderoActual = null;
         var intervaloRefresco   = null;
 
-        // ── Cargar parqueadero al dar clic en Ver Parqueadero ─────────────────
         $('#btnCargarSede').on('click', function () {
             var idSede = $('#selectSede').val();
             if (!idSede) {
@@ -340,12 +339,10 @@ document.addEventListener('DOMContentLoaded', function () {
             cargarDatosSede(parseInt(idSede));
         });
 
-        // ── Botón refrescar ───────────────────────────────────────────────────
         $('#btnRefrescar').on('click', function () {
             if (idSedeActual) cargarDatosSede(idSedeActual, true);
         });
 
-        // ── Función principal: cargar datos de la sede ────────────────────────
         function cargarDatosSede(idSede, silencioso) {
             idSedeActual = idSede;
 
@@ -380,7 +377,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#estadoInicial').hide();
                         $('#contenidoParqueadero').show();
 
-                        // Auto-refresco cada 30 segundos
                         if (intervaloRefresco) clearInterval(intervaloRefresco);
                         intervaloRefresco = setInterval(function () {
                             cargarDatosSede(idSedeActual, true);
@@ -406,7 +402,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // ── Renderizar tarjetas de resumen ────────────────────────────────────
         function renderizarResumen(resumen, parqueadero) {
             var total    = parseInt(parqueadero.CantidadParqueadero) || 0;
             var libres   = resumen.reduce(function (a, r) { return a + parseInt(r.Libres); }, 0);
@@ -420,7 +415,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var html = '';
 
-            // Tarjeta total general
             html += '<div class="col-xl-3 col-md-6 mb-4">' +
                 '<div class="card shadow h-100 border-left-secondary"><div class="card-body">' +
                 '<div class="row no-gutters align-items-center">' +
@@ -436,7 +430,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 '<small class="text-danger font-weight-bold">' + ocupados + ' ocupados</small>' +
                 '</div></div></div></div>';
 
-            // Tarjetas por tipo
             resumen.forEach(function (r) {
                 var icono  = iconos[r.TipoVehiculo]  || 'fa-car';
                 var color  = colores[r.TipoVehiculo] || 'text-primary';
@@ -463,7 +456,6 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#tarjetasResumen').html(html);
         }
 
-        // ── Renderizar grid de espacios ───────────────────────────────────────
         function renderizarGrid(espacios) {
             var tipos   = ['Carro', 'Moto', 'Bicicleta'];
             var iconos  = { 'Carro': 'fa-car', 'Moto': 'fa-motorcycle', 'Bicicleta': 'fa-bicycle' };
@@ -536,7 +528,6 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#gridEspacios').html(html);
         }
 
-        // ── Abrir modal OCUPAR manualmente ────────────────────────────────────
         var iconosTipo = { 'Carro': 'fa-car', 'Moto': 'fa-motorcycle', 'Bicicleta': 'fa-bicycle' };
 
         window.abrirOcupar = function (idEspacio, numEspacio, tipoVehiculo) {
@@ -586,7 +577,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         };
 
-        // Al cambiar el select — mostrar detalle del vehículo
         $(document).on('change', '#selectVehiculo', function () {
             var selected      = $(this).find('option:selected');
             var idVeh         = $(this).val();
@@ -601,7 +591,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Confirmar OCUPAR
         $('#btnConfirmarOcupar').on('click', function () {
             var idEspacio  = $('#ocuparIdEspacio').val();
             var idVehiculo = $('#selectVehiculo').val();
@@ -634,7 +623,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // ── Abrir modal LIBERAR ───────────────────────────────────────────────
         window.abrirLiberar = function (idEspacio, numEspacio, placa) {
             $('#liberarIdEspacio').val(idEspacio);
             $('#liberarNumEspacio').text(numEspacio);
@@ -642,7 +630,6 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#modalLiberarEspacio').modal('show');
         };
 
-        // Confirmar LIBERAR
         $('#btnConfirmarLiberar').on('click', function () {
             var idEspacio = $('#liberarIdEspacio').val();
 
@@ -669,7 +656,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // ── Limpiar al cerrar modales ─────────────────────────────────────────
         $('#modalOcuparEspacio').on('hidden.bs.modal', function () {
             $('#selectVehiculo').html('<option value="">-- Seleccione un vehículo --</option>');
             $('#ocuparDetalleVehiculo').hide();
@@ -682,4 +668,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     }); 
-}); 
+});

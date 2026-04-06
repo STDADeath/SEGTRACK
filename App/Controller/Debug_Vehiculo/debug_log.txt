@@ -547,3 +547,190 @@ Punto 1: Preparando SQL INSERT
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"34","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-34-69cf5dcf371e1.png","FechaRegistro":"2026-04-03 01:27:27"}}
 === FIN ===
 
+
+2026-04-05 19:08:49 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "31"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:08:54 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:08:56 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:08:58 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "31"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:09:00 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "33"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:09:02 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:09:10 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "30"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:09:13 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:09:16 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "31"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:07 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:09 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "30"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:11 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:16 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:22 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "30"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:27 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:30 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "31"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:32 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "33"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+

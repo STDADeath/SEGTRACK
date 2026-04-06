@@ -179,6 +179,7 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Visitantes:</h6>
                 <a class="collapse-item" href="../Supervisor/VisitanteListaSUP.php">Lista de Visitantes</a>
+                <a class="collapse-item" href="../Supervisor/VisitanteSup.php">Registrar Visitante</a>
             </div>
         </div>
     </li>

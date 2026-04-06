@@ -267,7 +267,23 @@ class ModeloVehiculo {
         }
     }
 
-    // ── NUEVO: Funcionarios filtrados por sede ────────────────────────────────
+    // ── Sedes filtradas por institución (NUEVO) ───────────────────────────────
+    public function obtenerSedesPorInstitucion(int $idInstitucion): array {
+        try {
+            $sql  = "SELECT IdSede, TipoSede, Ciudad 
+                     FROM sede 
+                     WHERE IdInstitucion = :idInstitucion AND Estado = 'Activo' 
+                     ORDER BY TipoSede ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':idInstitucion' => $idInstitucion]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            file_put_contents($this->logPath, "❌ Error en obtenerSedesPorInstitucion: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
+        }
+    }
+
+    // ── Funcionarios filtrados por sede ───────────────────────────────────────
     public function obtenerFuncionariosPorSede(int $idSede): array {
         try {
             $sql  = "SELECT IdFuncionario, NombreFuncionario 
@@ -283,7 +299,7 @@ class ModeloVehiculo {
         }
     }
 
-    // ── NUEVO: Visitantes filtrados por sede ──────────────────────────────────
+    // ── Visitantes filtrados por sede ─────────────────────────────────────────
     public function obtenerVisitantesPorSede(int $idSede): array {
         try {
             $sql  = "SELECT IdVisitante, NombreVisitante 

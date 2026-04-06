@@ -6,7 +6,7 @@
 error_reporting(0);
 ini_set('display_errors', 0);
 
-require_once __DIR__ . '/../Model/modelosede.php';
+require_once __DIR__ . '/../Model/ModeloSede.php';
 
 class ControladorSede
 {
@@ -34,8 +34,7 @@ class ControladorSede
     }
 
     // ══════════════════════════════════════════════════════
-    // ✅ OBTENER SEDES ACTIVAS — para selects en formularios
-    // Retorna IdSede + NombreSede solo de sedes Activas
+    // OBTENER SEDES ACTIVAS (para selects en formularios)
     // ══════════════════════════════════════════════════════
     public function obtenerSedesActivas()
     {
@@ -97,7 +96,11 @@ class ControladorSede
                     'message' => 'La ciudad solo debe contener letras.'];
         }
 
-        return $this->modelo->editarSede($idSede, $tipoSede, $ciudad, $institucion);
+        $resultado = $this->modelo->editarSede($idSede, $tipoSede, $ciudad, $institucion);
+        return [
+            'success' => $resultado,
+            'message' => $resultado ? 'Sede actualizada correctamente' : 'Error al actualizar la sede'
+        ];
     }
 
     // ══════════════════════════════════════════════════════
@@ -115,10 +118,13 @@ class ControladorSede
     // ══════════════════════════════════════════════════════
     public function cambiarEstado($idSede)
     {
+        $idSede = intval($idSede);
+        if ($idSede <= 0) {
+            return ['success' => false, 'message' => 'ID de sede inválido'];
+        }
         return $this->modelo->cambiarEstado($idSede);
     }
 }
-
 
 // ══════════════════════════════════════════════════════
 // PUNTO DE ENTRADA AJAX

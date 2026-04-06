@@ -2,14 +2,14 @@
 
 <div class="container-fluid px-4 py-4">
 
-    <!-- ── Header ──────────────────────────────────────────────────────────── -->
+    <!-- ── Header ── -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-user-friends me-2"></i>Visitantes Registrados
         </h1>
     </div>
 
-    <!-- ── Filtros ─────────────────────────────────────────────────────────── -->
+    <!-- ── Filtros ── -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">
@@ -70,29 +70,30 @@
         </div>
     </div>
 
-    <!-- ── Tabla ───────────────────────────────────────────────────────────── -->
+    <!-- ── Tabla ── -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Visitantes</h6>
-            <span class="badge badge-primary" id="contadorVisitantes" style="font-size:0.85rem;">
-                Cargando...
-            </span>
+            <span class="badge badge-primary" id="contadorVisitantes" style="font-size:0.85rem;">Cargando...</span>
         </div>
         <div class="card-body table-responsive">
             <table class="table table-bordered table-hover table-striped align-middle text-center"
-                   id="TablaVisitanteSupervisor">
+                   id="TablaVisitanteSupervisor" style="width:100%;">
                 <thead class="table-dark">
                     <tr>
+                        <th>#</th>
                         <th>Identificación</th>
                         <th>Nombre</th>
                         <th>Correo</th>
+                        <th>Institución</th>
+                        <th>Sede</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="cuerpoTablaVisitanteSupervisor">
                     <tr>
-                        <td colspan="5" class="text-center py-4">
+                        <td colspan="8" class="text-center py-4">
                             <i class="fas fa-spinner fa-spin fa-2x text-muted mb-2 d-block"></i>
                             <span class="text-muted">Cargando...</span>
                         </td>
@@ -104,19 +105,21 @@
 
 </div>
 
-<!-- ══ MODAL EDITAR VISITANTE ═════════════════════════════════════════════ -->
+<!-- ══ MODAL EDITAR ══ -->
 <div class="modal fade" id="modalEditarVisitante" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">
-                    <i class="fas fa-edit mr-2"></i>Editar Visitante — <span id="editIdVisitanteLabel"></span>
+                    <i class="fas fa-edit mr-2"></i>Editar Visitante #<span id="editIdVisitanteLabel"></span>
                 </h5>
                 <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="editIdVisitante">
+
                 <div class="row">
+                    <!-- Identificación: solo lectura -->
                     <div class="col-md-6 mb-3">
                         <label class="form-label font-weight-bold">
                             Identificación <small class="text-muted">(Solo lectura)</small>
@@ -124,21 +127,57 @@
                         <input type="text" id="editIdentificacionVisitante"
                                class="form-control bg-light" readonly>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label font-weight-bold">Nombre Completo</label>
-                        <input type="text" id="editNombreVisitante" class="form-control"
-                               placeholder="Nombre del visitante">
-                    </div>
-                </div>
-                <div class="row">
+                    <!-- Nombre: EDITABLE -->
                     <div class="col-md-6 mb-3">
                         <label class="form-label font-weight-bold">
-                            Correo Electrónico <span class="text-muted">(opcional)</span>
+                            Nombre Completo <span class="text-danger">*</span>
                         </label>
-                        <input type="email" id="editCorreoVisitante" class="form-control"
-                               placeholder="correo@ejemplo.com">
+                        <input type="text" id="editNombreVisitante"
+                               class="form-control border-primary"
+                               placeholder="Nombre del visitante">
+                        <div class="invalid-feedback">Solo letras, mínimo 3 caracteres.</div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <!-- Correo: editable -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">
+                            Correo Electrónico <small class="text-muted">(opcional)</small>
+                        </label>
+                        <input type="email" id="editCorreoVisitante"
+                               class="form-control border-primary"
+                               placeholder="correo@ejemplo.com">
+                        <div class="invalid-feedback">Ingrese un correo válido.</div>
+                    </div>
+                    <!-- Institución -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">
+                            Institución <span class="text-danger">*</span>
+                        </label>
+                        <select id="editIdInstitucion" class="form-control border-primary">
+                            <option value="">Seleccione institución...</option>
+                        </select>
+                        <div class="invalid-feedback">Este campo es obligatorio.</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Sede -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">
+                            Sede <span class="text-danger">*</span>
+                        </label>
+                        <select id="editIdSede" class="form-control border-primary" disabled>
+                            <option value="">Primero seleccione una institución...</option>
+                        </select>
+                        <div id="editSpinnerSede" class="mt-1 text-muted small d-none">
+                            <i class="fas fa-spinner fa-spin me-1"></i> Cargando sedes...
+                        </div>
+                        <div class="invalid-feedback">Este campo es obligatorio.</div>
+                    </div>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-dismiss="modal">
@@ -152,7 +191,7 @@
     </div>
 </div>
 
-<!-- ══ MODAL CAMBIO DE ESTADO ═════════════════════════════════════════════ -->
+<!-- ══ MODAL CAMBIO DE ESTADO ══ -->
 <div class="modal fade" id="modalCambiarEstadoVisitante" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -184,4 +223,5 @@
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/SEGTRACK/Public/js/javascript/js/ValidacionVisitanteSupervisor.js"></script>

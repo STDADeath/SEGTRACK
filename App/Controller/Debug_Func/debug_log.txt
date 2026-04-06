@@ -148,3 +148,11 @@
 2026-04-05 21:39:41 - Foto guardada para funcionario 101: qr/Fotos/FOTO-FUNC-101-69d2ba7dda89a.jpg
 2026-04-05 21:39:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-101-69d2ba7ddca40.png
 2026-04-05 21:39:45 - Correo enviado correctamente a valent2ina@gmail.com
+2026-04-06 01:47:57 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-102-69d2f4ada848e.jpg
+2026-04-06 01:47:57 - Foto guardada para funcionario 102: qr/Fotos/FOTO-FUNC-102-69d2f4ada848e.jpg
+2026-04-06 01:47:57 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-102-69d2f4ada9614.png
+2026-04-06 01:48:01 - Correo enviado correctamente a nomasjodas21@gmail.com
+2026-04-06 02:04:55 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-103-69d2f8a78a530.jpg
+2026-04-06 02:04:55 - Foto guardada para funcionario 103: qr/Fotos/FOTO-FUNC-103-69d2f8a78a530.jpg
+2026-04-06 02:04:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-103-69d2f8a78b7fa.png
+2026-04-06 02:04:58 - Correo enviado correctamente a nomasjodas21@gmail.com

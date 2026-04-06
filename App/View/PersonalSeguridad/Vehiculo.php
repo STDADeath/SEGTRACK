@@ -5,19 +5,17 @@
 $conexionObj = new Conexion();
 $conn        = $conexionObj->getConexion();
 
-// Sedes activas
-$sqlSedes  = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
-$stmtSedes = $conn->prepare($sqlSedes);
-$stmtSedes->execute();
-$sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
-// Ya NO se precargan funcionarios ni visitantes — se cargan dinámicamente por sede
+// Solo instituciones activas — sedes y personas se cargan dinámicamente
+$sqlInstituciones = "SELECT IdInstitucion, NombreInstitucion FROM institucion WHERE EstadoInstitucion = 'Activo' ORDER BY NombreInstitucion ASC";
+$stmtInst         = $conn->prepare($sqlInstituciones);
+$stmtInst->execute();
+$instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
         <div class="col-lg-8">
 
-            <!-- Header -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-car me-2"></i>Registrar Vehículo</h1>
                 <a href="./VehiculoLista.php" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
@@ -25,7 +23,6 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                 </a>
             </div>
 
-            <!-- Form Card -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-primary">
                     <h6 class="m-0 font-weight-bold text-white">Información del Vehículo</h6>
@@ -119,25 +116,38 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
 
-                        <!-- Sede -->
+                        <!-- ── PASO 1: Institución ─────────────────────────────────── -->
+                        <div class="mb-3">
+                            <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                                <i class="fas fa-university mr-1 text-primary"></i>Institución <span class="text-danger">*</span>
+                            </label>
+                            <select name="IdInstitucion" id="IdInstitucion" class="form-control" required>
+                                <option value="">Seleccione una institución...</option>
+                                <?php foreach ($instituciones as $inst) : ?>
+                                    <option value="<?= $inst['IdInstitucion'] ?>">
+                                        <?= htmlspecialchars($inst['NombreInstitucion']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i> Al seleccionar la institución se cargarán sus sedes
+                            </small>
+                        </div>
+
+                        <!-- ── PASO 2: Sede (dinámica por institución) ─────────────── -->
                         <div class="mb-3">
                             <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                                 <i class="fas fa-building mr-1 text-primary"></i>Sede <span class="text-danger">*</span>
                             </label>
-                            <select name="IdSede" id="IdSede" class="form-control" required>
-                                <option value="">Seleccione una sede...</option>
-                                <?php foreach ($sedes as $sede) : ?>
-                                    <option value="<?= $sede['IdSede'] ?>">
-                                        <?= htmlspecialchars($sede['TipoSede']) ?> — <?= htmlspecialchars($sede['Ciudad']) ?>
-                                    </option>
-                                <?php endforeach; ?>
+                            <select name="IdSede" id="IdSede" class="form-control" required disabled>
+                                <option value="">Primero seleccione una institución...</option>
                             </select>
                             <small class="form-text text-muted">
                                 <i class="fas fa-info-circle"></i> Al seleccionar la sede se cargarán sus funcionarios y visitantes
                             </small>
                         </div>
 
-                        <!-- Tipo de Propietario -->
+                        <!-- ── PASO 3: Tipo de Propietario ────────────────────────── -->
                         <div class="mb-3">
                             <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                                 <i class="fas fa-user-tag mr-1 text-primary"></i>Tipo de Propietario <span class="text-danger">*</span>
@@ -152,7 +162,7 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                             </small>
                         </div>
 
-                        <!-- Select Funcionario -->
+                        <!-- ── PASO 4a: Funcionario ───────────────────────────────── -->
                         <div class="mb-3 d-none" id="divFuncionario">
                             <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                                 <i class="fas fa-user-tie mr-1 text-primary"></i>Funcionario <span class="text-danger">*</span>
@@ -162,7 +172,7 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                             </select>
                         </div>
 
-                        <!-- Select Visitante -->
+                        <!-- ── PASO 4b: Visitante ─────────────────────────────────── -->
                         <div class="mb-3 d-none" id="divVisitante">
                             <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                                 <i class="fas fa-user mr-1 text-primary"></i>Visitante <span class="text-danger">*</span>
@@ -203,7 +213,57 @@ $sedes = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <script>
-// ── Filtrar funcionarios/visitantes al cambiar sede ──────────────────────────
+// ── PASO 1 → 2: Cargar sedes al cambiar institución ──────────────────────────
+document.getElementById('IdInstitucion').addEventListener('change', function () {
+    const idInstitucion = this.value;
+    const selSede  = document.getElementById('IdSede');
+    const selTipo  = document.getElementById('TipoPersona');
+    const selF     = document.getElementById('IdFuncionario');
+    const selV     = document.getElementById('IdVisitante');
+    const divF     = document.getElementById('divFuncionario');
+    const divV     = document.getElementById('divVisitante');
+
+    // Resetear cascada completa
+    selSede.innerHTML = '<option value="">Primero seleccione una institución...</option>';
+    selSede.disabled  = true;
+    selTipo.value     = '';
+    selTipo.disabled  = true;
+    selF.innerHTML    = '<option value="">Seleccione un funcionario...</option>';
+    selV.innerHTML    = '<option value="">Seleccione un visitante...</option>';
+    divF.classList.add('d-none');
+    divV.classList.add('d-none');
+    selF.required = false;
+    selV.required = false;
+
+    if (!idInstitucion) return;
+
+    selSede.innerHTML = '<option value="">Cargando sedes...</option>';
+
+    const formData = new FormData();
+    formData.append('accion',         'obtener_sedes_por_institucion');
+    formData.append('id_institucion', idInstitucion);
+
+    fetch('../../Controller/ControladorVehiculo.php', { method: 'POST', body: formData })
+        .then(r => r.json())
+        .then(data => {
+            if (!data.success || data.sedes.length === 0) {
+                selSede.innerHTML = '<option value="">Sin sedes disponibles</option>';
+                Swal.fire({ icon: 'warning', title: 'Sin sedes', text: 'Esta institución no tiene sedes activas registradas', confirmButtonColor: '#f6c23e' });
+                return;
+            }
+            selSede.innerHTML = '<option value="">Seleccione una sede...</option>';
+            data.sedes.forEach(s => {
+                selSede.innerHTML += `<option value="${s.IdSede}">${s.TipoSede} — ${s.Ciudad}</option>`;
+            });
+            selSede.disabled = false;
+        })
+        .catch(() => {
+            selSede.innerHTML = '<option value="">Error al cargar sedes</option>';
+            Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudieron cargar las sedes', confirmButtonColor: '#e74a3b' });
+        });
+});
+
+//  Cargar personas al cambiar sede ──────────────────────────────
 document.getElementById('IdSede').addEventListener('change', function () {
     const idSede  = this.value;
     const selTipo = document.getElementById('TipoPersona');
@@ -212,24 +272,17 @@ document.getElementById('IdSede').addEventListener('change', function () {
     const divF    = document.getElementById('divFuncionario');
     const divV    = document.getElementById('divVisitante');
 
-    // Resetear todo al cambiar de sede
     selTipo.value    = '';
     selTipo.disabled = true;
     selF.innerHTML   = '<option value="">Seleccione un funcionario...</option>';
     selV.innerHTML   = '<option value="">Seleccione un visitante...</option>';
     divF.classList.add('d-none');
     divV.classList.add('d-none');
-    selF.required    = false;
-    selV.required    = false;
+    selF.required = false;
+    selV.required = false;
 
-    if (!idSede) {
-        selTipo.innerHTML = '<option value="">Primero seleccione una sede...</option>'
-                          + '<option value="Funcionario">Funcionario</option>'
-                          + '<option value="Visitante">Visitante</option>';
-        return;
-    }
+    if (!idSede) return;
 
-    // Mostrar carga
     selTipo.innerHTML = '<option value="">Cargando personas...</option>';
 
     const formData = new FormData();
@@ -249,7 +302,6 @@ document.getElementById('IdSede').addEventListener('change', function () {
                 return;
             }
 
-            // Poblar funcionarios
             if (data.funcionarios.length === 0) {
                 selF.innerHTML = '<option value="" disabled>Sin funcionarios en esta sede</option>';
             } else {
@@ -259,7 +311,6 @@ document.getElementById('IdSede').addEventListener('change', function () {
                 });
             }
 
-            // Poblar visitantes
             if (data.visitantes.length === 0) {
                 selV.innerHTML = '<option value="" disabled>Sin visitantes en esta sede</option>';
             } else {
@@ -278,7 +329,7 @@ document.getElementById('IdSede').addEventListener('change', function () {
         });
 });
 
-// ── Mostrar/ocultar select según tipo de propietario ─────────────────────────
+// Mostrar/ocultar según tipo propietario en el registro de vehículos ──────────────────────
 document.getElementById('TipoPersona').addEventListener('change', function () {
     const divF = document.getElementById('divFuncionario');
     const divV = document.getElementById('divVisitante');
