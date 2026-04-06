@@ -7,13 +7,15 @@ $conexionObj = new Conexion();
 $conn        = $conexionObj->getConexion();
 $modelo      = new ModeloParqueadero($conn);
 
-// Sedes que tienen parqueadero activo configurado
+// Obtener instituciones que tienen parqueadero activo
+$instituciones = $modelo->obtenerInstitucionesConParqueadero();
+
+// Obtener todas las sedes con parqueadero activo (para respaldo)
 $sedes = $modelo->obtenerSedesConParqueadero();
 ?>
 
 <div class="container-fluid px-4 py-4">
 
-    <!-- ── Header ──────────────────────────────────────────────────────────── -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-parking me-2"></i>Control de Parqueadero
@@ -23,37 +25,47 @@ $sedes = $modelo->obtenerSedesConParqueadero();
         </span>
     </div>
 
-    <!-- ── Selector de sede ─────────────────────────────────────────────────── -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 font-weight-bold text-primary">
-                <i class="fas fa-building me-2"></i>Seleccione su Sede
+                <i class="fas fa-building me-2"></i>Seleccione su Institución y Sede
             </h6>
         </div>
         <div class="card-body">
-            <?php if (count($sedes) === 0) : ?>
+            <?php if (count($instituciones) === 0) : ?>
                 <div class="alert alert-warning mb-0">
                     <i class="fas fa-exclamation-triangle me-2"></i>
-                    No hay sedes con parqueadero activo configurado. Contacte al administrador.
+                    No hay instituciones con parqueadero activo configurado. Contacte al administrador.
                 </div>
             <?php else : ?>
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold">Sede donde se encuentra</label>
+                        <label class="form-label fw-semibold">Institución</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-building"></i></span>
-                            <select class="form-select" id="selectSede">
-                                <option value="">-- Seleccione una sede --</option>
-                                <?php foreach ($sedes as $s) : ?>
-                                    <option value="<?= $s['IdSede'] ?>">
-                                        <?= htmlspecialchars($s['TipoSede']) ?> — <?= htmlspecialchars($s['Ciudad']) ?>
+                            <span class="input-group-text"><i class="fas fa-university"></i></span>
+                            <select class="form-select" id="selectInstitucion">
+                                <option value="">-- Seleccione una institución --</option>
+                                <?php foreach ($instituciones as $inst) : ?>
+                                    <option value="<?= $inst['IdInstitucion'] ?>">
+                                        <?= htmlspecialchars($inst['NombreInstitucion']) ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
+                    
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Sede donde se encuentra</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-building"></i></span>
+                            <select class="form-select" id="selectSede" disabled>
+                                <option value="">Primero seleccione una institución...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="col-md-2">
-                        <button class="btn btn-primary w-100" id="btnCargarSede">
+                        <button class="btn btn-primary w-100" id="btnCargarSede" disabled>
                             <i class="fas fa-search me-1"></i> Ver Parqueadero
                         </button>
                     </div>
@@ -67,13 +79,8 @@ $sedes = $modelo->obtenerSedesConParqueadero();
         </div>
     </div>
 
-    <!-- ── Contenido del parqueadero (se carga dinámicamente) ──────────────── -->
     <div id="contenidoParqueadero" style="display:none;">
-
-        <!-- Tarjetas resumen por tipo -->
         <div class="row mb-4" id="tarjetasResumen"></div>
-
-        <!-- Grid de espacios -->
         <div class="card shadow mb-4">
             <div class="card-header py-3 bg-light d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">
@@ -91,18 +98,16 @@ $sedes = $modelo->obtenerSedesConParqueadero();
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- ── Estado inicial (antes de seleccionar sede) ───────────────────────── -->
     <div id="estadoInicial" class="text-center py-5">
         <i class="fas fa-parking fa-4x text-muted mb-3"></i>
-        <p class="text-muted fs-5">Seleccione una sede para ver los espacios disponibles</p>
+        <p class="text-muted fs-5">Seleccione una institución y sede para ver los espacios disponibles</p>
     </div>
 
 </div>
 
-<!-- ══ MODAL OCUPAR ESPACIO MANUALMENTE ════════════════════════════════════ -->
+<!-- MODAL OCUPAR ESPACIO -->
 <div class="modal fade" id="modalOcuparEspacio" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -169,7 +174,7 @@ $sedes = $modelo->obtenerSedesConParqueadero();
     </div>
 </div>
 
-<!-- ══ MODAL LIBERAR ESPACIO ══════════════════════════════════════════════════ -->
+<!-- MODAL LIBERAR ESPACIO -->
 <div class="modal fade" id="modalLiberarEspacio" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -208,6 +213,63 @@ $sedes = $modelo->obtenerSedesConParqueadero();
         </div>
     </div>
 </div>
+
+<script>
+const sedesPorInstitucion = {};
+
+<?php foreach ($instituciones as $inst) : ?>
+sedesPorInstitucion[<?= $inst['IdInstitucion'] ?>] = <?= json_encode($modelo->obtenerSedesPorInstitucion($inst['IdInstitucion'])) ?>;
+<?php endforeach; ?>
+
+const selectInstitucion = document.getElementById('selectInstitucion');
+const selectSede = document.getElementById('selectSede');
+const btnCargarSede = document.getElementById('btnCargarSede');
+
+function cargarSedesPorInstitucion() {
+    const idInstitucion = selectInstitucion.value;
+    
+    if (!idInstitucion) {
+        selectSede.innerHTML = '<option value="">Primero seleccione una institución...</option>';
+        selectSede.disabled = true;
+        btnCargarSede.disabled = true;
+        return;
+    }
+    
+    const sedes = sedesPorInstitucion[idInstitucion] || [];
+    
+    if (sedes.length === 0) {
+        selectSede.innerHTML = '<option value="">No hay sedes disponibles para esta institución</option>';
+        selectSede.disabled = true;
+        btnCargarSede.disabled = true;
+        return;
+    }
+    
+    let options = '<option value="">-- Seleccione una sede --</option>';
+    sedes.forEach(sede => {
+        options += `<option value="${sede.IdSede}">
+            ${sede.TipoSede} — ${sede.Ciudad}
+        </option>`;
+    });
+    
+    selectSede.innerHTML = options;
+    selectSede.disabled = false;
+    btnCargarSede.disabled = false;
+}
+
+selectInstitucion.addEventListener('change', function() {
+    cargarSedesPorInstitucion();
+    document.getElementById('contenidoParqueadero').style.display = 'none';
+    document.getElementById('estadoInicial').style.display = 'block';
+    document.getElementById('badgeSedeSel').style.display = 'none';
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    selectInstitucion.value = '';
+    selectSede.innerHTML = '<option value="">Primero seleccione una institución...</option>';
+    selectSede.disabled = true;
+    btnCargarSede.disabled = true;
+});
+</script>
 
 <script src="/SEGTRACK/Public/js/javascript/js/ValidacionParqueadero.js"></script>
 

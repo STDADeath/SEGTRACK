@@ -348,6 +348,47 @@ class ModeloParqueadero {
     // MÉTODOS GUARDIA — Vista de espacios y gestión manual
     // ══════════════════════════════════════════════════════════════════════════
 
+    public function obtenerInstitucionesConParqueadero(): array {
+        try {
+            if (!$this->conexion) return [];
+
+            $sql = "SELECT DISTINCT i.IdInstitucion, i.NombreInstitucion
+                    FROM institucion i
+                    INNER JOIN sede s ON i.IdInstitucion = s.IdInstitucion
+                    INNER JOIN parqueadero p ON s.IdSede = p.IdSede
+                    WHERE s.Estado = 'Activo' AND p.Estado = 'Activo'
+                    ORDER BY i.NombreInstitucion ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en obtenerInstitucionesConParqueadero: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
+        }
+    }
+
+    public function obtenerSedesPorInstitucion(int $idInstitucion): array {
+        try {
+            if (!$this->conexion) return [];
+
+            $sql = "SELECT s.IdSede, s.TipoSede, s.Ciudad
+                    FROM sede s
+                    INNER JOIN parqueadero p ON s.IdSede = p.IdSede
+                    WHERE s.IdInstitucion = :id_inst
+                      AND s.Estado = 'Activo' 
+                      AND p.Estado = 'Activo'
+                    ORDER BY s.TipoSede ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id_inst' => $idInstitucion]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            file_put_contents($this->debugPath, "ERROR en obtenerSedesPorInstitucion: " . $e->getMessage() . "\n", FILE_APPEND);
+            return [];
+        }
+    }
+
     public function obtenerSedesConParqueadero(): array {
         try {
             if (!$this->conexion) return [];
@@ -421,7 +462,6 @@ class ModeloParqueadero {
         }
     }
 
-    // ── MODIFICADO: excluye vehículos ocupando espacio en CUALQUIER parqueadero
     public function obtenerVehiculosPorTipo(string $tipo, int $idParqueadero = 0): array {
         try {
             if (!$this->conexion) return [];
@@ -430,8 +470,6 @@ class ModeloParqueadero {
                 "=== MODELO: obtenerVehiculosPorTipo — Tipo: $tipo, Parqueadero: $idParqueadero ===\n",
                 FILE_APPEND);
 
-            // Se excluyen los vehículos que YA ocupan un espacio en CUALQUIER
-            // parqueadero — un vehículo físicamente solo puede estar en un lugar.
             $sql = "SELECT v.IdVehiculo, v.PlacaVehiculo, v.TipoVehiculo, v.DescripcionVehiculo,
                            f.NombreFuncionario, vis.NombreVisitante
                     FROM vehiculo v
@@ -472,7 +510,6 @@ class ModeloParqueadero {
                 return ['success' => false, 'error' => 'Conexión no disponible'];
             }
 
-            // Verificar que el vehículo no esté ya en otro parqueadero
             $sqlVerificar = "SELECT COUNT(*) FROM espacio_parqueadero
                              WHERE IdVehiculo = :idv AND Estado = 'Ocupado'";
             $stmtV = $this->conexion->prepare($sqlVerificar);

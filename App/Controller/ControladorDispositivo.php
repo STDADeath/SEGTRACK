@@ -17,8 +17,6 @@ if (!file_exists($carpetaDebug)) {
 file_put_contents($carpetaDebug . '/debug_log.txt', "\n" . date('Y-m-d H:i:s') . " === INICIO ===\n", FILE_APPEND);
 
 try {
-    file_put_contents($carpetaDebug . '/debug_log.txt', "POST recibido:\n" . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
-
     $ruta_conexion = __DIR__ . '/../Core/conexion.php';
     if (!file_exists($ruta_conexion)) {
         throw new Exception("Archivo de conexión no encontrado: $ruta_conexion");
@@ -84,26 +82,66 @@ try {
             }
         }
 
+        // ════════════════════════════════════════════════════════════
+        // MÉTODOS PARA CASCADA
+        // ════════════════════════════════════════════════════════════
+
+        public function obtenerInstituciones(): array {
+            return $this->modelo->obtenerInstituciones();
+        }
+
+        public function obtenerSedesPorInstitucion(int $idInstitucion): array {
+            $sedes = $this->modelo->obtenerSedesPorInstitucion($idInstitucion);
+            return ['success' => true, 'sedes' => $sedes];
+        }
+
+        public function obtenerFuncionariosPorSede(int $idSede): array {
+            $funcionarios = $this->modelo->obtenerFuncionariosPorSede($idSede);
+            return ['success' => true, 'funcionarios' => $funcionarios];
+        }
+
+        public function obtenerVisitantesPorSede(int $idSede): array {
+            $visitantes = $this->modelo->obtenerVisitantesPorSede($idSede);
+            return ['success' => true, 'visitantes' => $visitantes];
+        }
+
+        // ════════════════════════════════════════════════════════════
+        // REGISTRAR DISPOSITIVO
+        // ════════════════════════════════════════════════════════════
         public function registrarDispositivo(array $datos): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "registrarDispositivo llamado\n", FILE_APPEND);
 
-            $tipo         = $datos['TipoDispositivo']     ?? null;
-            $marca        = $datos['MarcaDispositivo']    ?? null;
-            $numeroSerial = $datos['NumeroSerial']        ?? null;
-            $otroTipo     = $datos['OtroTipoDispositivo'] ?? null;
-            $idFuncionario = $datos['IdFuncionario']      ?? null;
-            $idVisitante   = $datos['IdVisitante']        ?? null;
+            $tipo          = $datos['TipoDispositivo']     ?? null;
+            $marca         = $datos['MarcaDispositivo']    ?? null;
+            $numeroSerial  = $datos['NumeroSerial']        ?? null;
+            $otroTipo      = $datos['OtroTipoDispositivo'] ?? null;
+            $idFuncionario = $datos['IdFuncionario']       ?? null;
+            $idVisitante   = $datos['IdVisitante']         ?? null;
 
             if ($this->campoVacio($tipo))  return ['success' => false, 'message' => 'Falta el campo: Tipo de dispositivo'];
             if ($this->campoVacio($marca)) return ['success' => false, 'message' => 'Falta el campo: Marca del dispositivo'];
-            if ($this->campoVacio($numeroSerial)) $numeroSerial = '';
-            if ($tipo === 'Otro' && $this->campoVacio($otroTipo)) return ['success' => false, 'message' => 'Debe especificar el tipo de dispositivo'];
+            
+            if ($tipo === 'Otro' && $this->campoVacio($otroTipo)) {
+                return ['success' => false, 'message' => 'Debe especificar el tipo de dispositivo'];
+            }
+
+            $tieneFuncionario = !$this->campoVacio($idFuncionario);
+            $tieneVisitante   = !$this->campoVacio($idVisitante);
+            
+            if (!$tieneFuncionario && !$tieneVisitante) {
+                return ['success' => false, 'message' => 'Debe seleccionar un funcionario o un visitante'];
+            }
+            
+            if ($tieneFuncionario && $tieneVisitante) {
+                return ['success' => false, 'message' => 'No puede seleccionar funcionario y visitante al mismo tiempo'];
+            }
 
             $tipoFinal = ($tipo === 'Otro') ? $otroTipo : $tipo;
+            $numeroSerial = $numeroSerial ?: '';
 
             try {
-                $idFunc = $this->campoVacio($idFuncionario) ? null : (int)$idFuncionario;
-                $idVis  = $this->campoVacio($idVisitante)   ? null : (int)$idVisitante;
+                $idFunc = $tieneFuncionario ? (int)$idFuncionario : null;
+                $idVis  = $tieneVisitante   ? (int)$idVisitante   : null;
 
                 if (!empty($numeroSerial)) {
                     $serialExiste = $this->modelo->existeNumeroSerial($numeroSerial);
@@ -111,7 +149,6 @@ try {
                         $disp    = $serialExiste['dispositivo'];
                         $mensaje = "⚠️ El número serial '{$numeroSerial}' ya está registrado en otro dispositivo "
                                  . "(ID: {$disp['IdDispositivo']} - {$disp['TipoDispositivo']} {$disp['MarcaDispositivo']}).";
-                        file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Serial duplicado - $numeroSerial\n", FILE_APPEND);
                         return ['success' => false, 'message' => $mensaje];
                     }
                 }
@@ -137,11 +174,18 @@ try {
             }
         }
 
+        // ════════════════════════════════════════════════════════════
+        // ACTUALIZAR DISPOSITIVO
+        // ════════════════════════════════════════════════════════════
         public function actualizarDispositivo(int $id, array $datos): array {
             file_put_contents($this->carpetaDebug . '/debug_log.txt', "=== actualizarDispositivo ID: $id ===\n", FILE_APPEND);
 
-            if ($this->campoVacio($datos['TipoDispositivo']  ?? null)) return ['success' => false, 'message' => 'El tipo de dispositivo es obligatorio'];
-            if ($this->campoVacio($datos['MarcaDispositivo'] ?? null)) return ['success' => false, 'message' => 'La marca del dispositivo es obligatoria'];
+            if ($this->campoVacio($datos['TipoDispositivo']  ?? null)) {
+                return ['success' => false, 'message' => 'El tipo de dispositivo es obligatorio'];
+            }
+            if ($this->campoVacio($datos['MarcaDispositivo'] ?? null)) {
+                return ['success' => false, 'message' => 'La marca del dispositivo es obligatoria'];
+            }
 
             try {
                 $numeroSerial  = $datos['NumeroSerial']  ?? '';
@@ -154,14 +198,22 @@ try {
                         $disp    = $serialExiste['dispositivo'];
                         $mensaje = "⚠️ El número serial '{$numeroSerial}' ya está registrado en otro dispositivo "
                                  . "(ID: {$disp['IdDispositivo']} - {$disp['TipoDispositivo']} {$disp['MarcaDispositivo']}).";
-                        file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR: Serial duplicado al actualizar\n", FILE_APPEND);
                         return ['success' => false, 'message' => $mensaje];
                     }
                 }
 
                 $dispositivoAnterior = $this->modelo->obtenerPorId($id);
                 $qrAnterior          = $dispositivoAnterior['QrDispositivo'] ?? null;
-                $resultado           = $this->modelo->actualizar($id, $datos);
+                
+                $datosActualizar = [
+                    'TipoDispositivo'  => $datos['TipoDispositivo'],
+                    'MarcaDispositivo' => $datos['MarcaDispositivo'],
+                    'NumeroSerial'     => $numeroSerial,
+                    'IdFuncionario'    => $idFuncionario,
+                    'IdVisitante'      => $idVisitante,
+                ];
+                
+                $resultado = $this->modelo->actualizar($id, $datosActualizar);
 
                 if ($resultado['success']) {
                     $tipo    = $datos['TipoDispositivo'];
@@ -227,7 +279,6 @@ try {
 
                 if (!$dispositivo) throw new Exception('Dispositivo no encontrado o inactivo');
 
-                // ── Determinar destinatario: funcionario tiene prioridad, si no visitante ──
                 if (!empty($dispositivo['CorreoFuncionario'])) {
                     $correoDestinatario = $dispositivo['CorreoFuncionario'];
                     $nombreDestinatario = $dispositivo['NombreFuncionario'];
@@ -235,11 +286,9 @@ try {
                     $correoDestinatario = $dispositivo['CorreoVisitante'];
                     $nombreDestinatario = $dispositivo['NombreVisitante'];
                 } else {
-                    $correoDestinatario = null;
-                    $nombreDestinatario = null;
+                    throw new Exception('No se encontró correo electrónico del funcionario ni del visitante');
                 }
 
-                if (!$correoDestinatario) throw new Exception('No se encontró correo electrónico del funcionario ni del visitante');
                 if (empty($dispositivo['QrDispositivo'])) throw new Exception('Este dispositivo no tiene código QR generado');
 
                 $rutaQR = __DIR__ . '/../../Public/' . $dispositivo['QrDispositivo'];
@@ -255,8 +304,7 @@ try {
                 $mail->Port       = 587;
                 $mail->CharSet    = 'UTF-8';
 
-                // ── Debug SMTP — guarda todo en el log ────────────────────────
-                $mail->SMTPDebug  = 2;
+                $mail->SMTPDebug   = 0;
                 $mail->Debugoutput = function($str, $level) {
                     file_put_contents($this->carpetaDebug . '/debug_log.txt',
                         "[SMTP DEBUG nivel $level] $str\n", FILE_APPEND);
@@ -266,12 +314,6 @@ try {
                 $mail->addAddress($correoDestinatario, $nombreDestinatario);
                 $mail->addAttachment($rutaQR, 'QR-Dispositivo-' . $idDispositivo . '.png');
 
-                // ── Log antes de enviar ───────────────────────────────────────
-                file_put_contents($this->carpetaDebug . '/debug_log.txt',
-                    "Intentando enviar a: $correoDestinatario\nRuta QR: $rutaQR\nQR existe: " . (file_exists($rutaQR) ? 'SI' : 'NO') . "\n",
-                    FILE_APPEND);
-
-                // ── Logo ──────────────────────────────────────────────────────
                 $rutaLogo = __DIR__ . '/../../Public/img/LOGO_SEGTRACK-re-con.png';
                 if (file_exists($rutaLogo)) {
                     $mail->addEmbeddedImage($rutaLogo, 'logo_segtrack');
@@ -338,9 +380,13 @@ try {
         }
     }
 
+    // ════════════════════════════════════════════════════════════
+    // ROUTER
+    // ════════════════════════════════════════════════════════════
     $controlador = new ControladorDispositivo($conexion);
     $accion      = $_POST['accion'] ?? 'registrar';
 
+    file_put_contents($carpetaDebug . '/debug_log.txt', "POST recibido:\n" . json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND);
     file_put_contents($carpetaDebug . '/debug_log.txt', "Acción detectada: $accion\n", FILE_APPEND);
 
     if ($accion === 'registrar') {
@@ -354,7 +400,7 @@ try {
                 'MarcaDispositivo' => $_POST['marca']          ?? null,
                 'NumeroSerial'     => $_POST['serial']         ?? null,
                 'IdFuncionario'    => $_POST['id_funcionario'] ?? null,
-                'IdVisitante'      => $_POST['id_visitante']   ?? null
+                'IdVisitante'      => $_POST['id_visitante']   ?? null,
             ];
             $resultado = $controlador->actualizarDispositivo($id, $datos);
         } else {
@@ -375,6 +421,21 @@ try {
         $resultado = $id > 0
             ? $controlador->enviarQRPorCorreo($id)
             : ['success' => false, 'message' => 'ID de dispositivo no válido'];
+
+    } elseif ($accion === 'obtener_instituciones') {
+        $resultado = $controlador->obtenerInstituciones();
+
+    } elseif ($accion === 'obtener_sedes_por_institucion') {
+        $idInst    = isset($_POST['id_institucion']) ? (int)$_POST['id_institucion'] : 0;
+        $resultado = $controlador->obtenerSedesPorInstitucion($idInst);
+
+    } elseif ($accion === 'obtener_funcionarios_por_sede') {
+        $idSede    = isset($_POST['id_sede']) ? (int)$_POST['id_sede'] : 0;
+        $resultado = $controlador->obtenerFuncionariosPorSede($idSede);
+
+    } elseif ($accion === 'obtener_visitantes_por_sede') {
+        $idSede    = isset($_POST['id_sede']) ? (int)$_POST['id_sede'] : 0;
+        $resultado = $controlador->obtenerVisitantesPorSede($idSede);
 
     } else {
         $resultado = ['success' => false, 'message' => 'Acción no reconocida: ' . $accion];

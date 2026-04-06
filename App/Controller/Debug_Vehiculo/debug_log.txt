@@ -601,3 +601,328 @@ Punto 1: Preparando SQL INSERT
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"36","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-36-69cf4b6359359.png","FechaRegistro":"2026-04-03 00:08:51"}}
 === FIN ===
 
+
+2026-04-05 19:09:54 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "30"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:01 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:10 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:10:58 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "30"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:12:18 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:12:21 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:13:46 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "30"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:17:00 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:19:17 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":false,"message":"Acción no reconocida: obtener_sedes_por_institucion"}
+=== FIN ===
+
+
+2026-04-05 19:56:35 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":77,"TipoSede":"San Miguel Norte","Ciudad":"Bogota"},{"IdSede":78,"TipoSede":"San Miguel Sur","Ciudad":"Norte bogota"},{"IdSede":76,"TipoSede":"Sede Principal","Ciudad":"soacha"}]}
+=== FIN ===
+
+
+2026-04-05 19:56:37 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "77"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+❌ Error en obtenerVisitantesPorSede: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'IdSede' in 'where clause'
+Respuesta: {"success":true,"funcionarios":[],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-05 19:56:42 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "78"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+❌ Error en obtenerVisitantesPorSede: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'IdSede' in 'where clause'
+Respuesta: {"success":true,"funcionarios":[],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-05 19:56:47 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":68,"TipoSede":"Instituto  Andino Sur","Ciudad":"barranquilla"},{"IdSede":69,"TipoSede":"Instituto Andino Norte","Ciudad":"Bogota"},{"IdSede":67,"TipoSede":"Sede Principal","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-05 19:56:48 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "68"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+❌ Error en obtenerVisitantesPorSede: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'IdSede' in 'where clause'
+Respuesta: {"success":true,"funcionarios":[],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-05 19:56:53 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "31"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":75,"TipoSede":"caribe Colombiano Central","Ciudad":"Bogota"},{"IdSede":74,"TipoSede":"caribe Colombiano Norte","Ciudad":"Medellin"},{"IdSede":73,"TipoSede":"Sede Principal","Ciudad":"Medellin"}]}
+=== FIN ===
+
+
+2026-04-05 19:56:54 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "74"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+❌ Error en obtenerVisitantesPorSede: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'IdSede' in 'where clause'
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":95,"NombreFuncionario":"Diana Marcela Torres López"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-05 20:02:27 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "N-A",
+    "DescripcionVehiculo": "Bisicleta morada con rojo",
+    "TarjetaPropiedad": "tj324541456453333",
+    "IdInstitucion": "31",
+    "IdSede": "74",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "95",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 35
+✅ QR actualizado para vehículo ID: 35
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"35","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-35-69d30623a4a59.png","FechaRegistro":"2026-04-05 20:02:27"}}
+=== FIN ===
+
+
+2026-04-05 20:03:19 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":68,"TipoSede":"Instituto  Andino Sur","Ciudad":"barranquilla"},{"IdSede":69,"TipoSede":"Instituto Andino Norte","Ciudad":"Bogota"},{"IdSede":67,"TipoSede":"Sede Principal","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-05 20:03:20 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "68"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+❌ Error en obtenerVisitantesPorSede: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'IdSede' in 'where clause'
+Respuesta: {"success":true,"funcionarios":[],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-05 20:07:12 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":77,"TipoSede":"San Miguel Norte","Ciudad":"Bogota"},{"IdSede":78,"TipoSede":"San Miguel Sur","Ciudad":"Norte bogota"},{"IdSede":76,"TipoSede":"Sede Principal","Ciudad":"soacha"}]}
+=== FIN ===
+
+
+2026-04-05 20:07:18 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "33"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":79,"TipoSede":"Sede Principal norte","Ciudad":"Bogota toberin"}]}
+=== FIN ===
+
+
+2026-04-05 20:07:21 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "79"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+❌ Error en obtenerVisitantesPorSede: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'IdSede' in 'where clause'
+Respuesta: {"success":true,"funcionarios":[],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-05 20:07:29 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":77,"TipoSede":"San Miguel Norte","Ciudad":"Bogota"},{"IdSede":78,"TipoSede":"San Miguel Sur","Ciudad":"Norte bogota"},{"IdSede":76,"TipoSede":"Sede Principal","Ciudad":"soacha"}]}
+=== FIN ===
+
+
+2026-04-05 20:07:31 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "77"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+❌ Error en obtenerVisitantesPorSede: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'IdSede' in 'where clause'
+Respuesta: {"success":true,"funcionarios":[],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-05 20:07:35 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "31"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":75,"TipoSede":"caribe Colombiano Central","Ciudad":"Bogota"},{"IdSede":74,"TipoSede":"caribe Colombiano Norte","Ciudad":"Medellin"},{"IdSede":73,"TipoSede":"Sede Principal","Ciudad":"Medellin"}]}
+=== FIN ===
+
+
+2026-04-05 20:07:38 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "74"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+❌ Error en obtenerVisitantesPorSede: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'IdSede' in 'where clause'
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":95,"NombreFuncionario":"Diana Marcela Torres López"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-05 20:07:44 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "EHO343",
+    "DescripcionVehiculo": "Camaro del 98 con color rojos y franjas blancas",
+    "TarjetaPropiedad": "tj252552125567899",
+    "IdInstitucion": "31",
+    "IdSede": "74",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "95",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 36
+✅ QR actualizado para vehículo ID: 36
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"36","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-36-69d3076020f39.png","FechaRegistro":"2026-04-05 20:07:44"}}
+=== FIN ===
+

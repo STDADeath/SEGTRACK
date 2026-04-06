@@ -7,9 +7,15 @@ $conexionObj = new Conexion();
 $conn        = $conexionObj->getConexion();
 $modelo      = new ModeloParqueadero($conn);
 
-// Sedes activas
-$sqlSedes = "SELECT IdSede, TipoSede, Ciudad FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
-$stmtS    = $conn->prepare($sqlSedes);
+// Obtener todas las instituciones (sin filtro de Estado si no existe)
+$sqlInstituciones = "SELECT IdInstitucion, NombreInstitucion FROM institucion ORDER BY NombreInstitucion ASC";
+$stmtInst = $conn->prepare($sqlInstituciones);
+$stmtInst->execute();
+$instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
+
+// Todas las sedes (para el filtro dinámico por JS)
+$sqlSedes = "SELECT IdSede, TipoSede, Ciudad, IdInstitucion FROM sede WHERE Estado = 'Activo' ORDER BY TipoSede ASC";
+$stmtS = $conn->prepare($sqlSedes);
 $stmtS->execute();
 $sedes = $stmtS->fetchAll(PDO::FETCH_ASSOC);
 
@@ -228,22 +234,33 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
             <div class="modal-body">
                 <form id="formCrearParqueadero">
 
+                    <!-- Select de Institución -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            Institución <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-university"></i></span>
+                            <select class="form-select" id="crearIdInstitucion" required>
+                                <option value="">Seleccione una institución...</option>
+                                <?php foreach ($instituciones as $inst) : ?>
+                                    <option value="<?= $inst['IdInstitucion'] ?>">
+                                        <?= htmlspecialchars($inst['NombreInstitucion']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Select de Sede (se llena dinámicamente según institución) -->
                     <div class="mb-4">
                         <label class="form-label fw-semibold">
                             Sede <span class="text-danger">*</span>
                         </label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-building"></i></span>
-                            <select class="form-select" name="IdSede" id="crearIdSede" required>
-                                <option value="">Seleccione una sede...</option>
-                                <?php foreach ($sedes as $s) : ?>
-                                    <option value="<?= $s['IdSede'] ?>"
-                                        <?= in_array($s['IdSede'], $sedesConParqueadero)
-                                            ? 'disabled title="Esta sede ya tiene parqueadero configurado"' : '' ?>>
-                                        <?= htmlspecialchars($s['TipoSede']) ?> — <?= htmlspecialchars($s['Ciudad']) ?>
-                                        <?= in_array($s['IdSede'], $sedesConParqueadero) ? ' (Ya configurada)' : '' ?>
-                                    </option>
-                                <?php endforeach; ?>
+                            <select class="form-select" name="IdSede" id="crearIdSede" required disabled>
+                                <option value="">Primero seleccione una institución...</option>
                             </select>
                         </div>
                         <div class="invalid-feedback">Debe seleccionar una sede</div>
@@ -445,6 +462,60 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
         </div>
     </div>
 </div>
+
+<script>
+// Datos de sedes para filtrar por institución
+const sedesData = <?= json_encode($sedes) ?>;
+const sedesConParqueadero = <?= json_encode($sedesConParqueadero) ?>;
+
+// Función para cargar sedes según la institución seleccionada
+function cargarSedesPorInstitucion(idInstitucion) {
+    const selectSede = document.getElementById('crearIdSede');
+    
+    if (!idInstitucion) {
+        selectSede.innerHTML = '<option value="">Primero seleccione una institución...</option>';
+        selectSede.disabled = true;
+        return;
+    }
+    
+    // Filtrar sedes por institución
+    const sedesFiltradas = sedesData.filter(sede => sede.IdInstitucion == idInstitucion);
+    
+    if (sedesFiltradas.length === 0) {
+        selectSede.innerHTML = '<option value="">No hay sedes disponibles para esta institución</option>';
+        selectSede.disabled = true;
+        return;
+    }
+    
+    // Construir opciones del select
+    let options = '<option value="">Seleccione una sede...</option>';
+    sedesFiltradas.forEach(sede => {
+        const yaConfigurada = sedesConParqueadero.includes(sede.IdSede);
+        const disabledText = yaConfigurada ? 'disabled title="Esta sede ya tiene parqueadero configurado"' : '';
+        const warningText = yaConfigurada ? ' (Ya configurada)' : '';
+        options += `<option value="${sede.IdSede}" ${disabledText}>
+            ${sede.TipoSede} — ${sede.Ciudad}${warningText}
+        </option>`;
+    });
+    
+    selectSede.innerHTML = options;
+    selectSede.disabled = false;
+}
+
+// Event listener para cuando cambie la institución
+document.getElementById('crearIdInstitucion').addEventListener('change', function() {
+    cargarSedesPorInstitucion(this.value);
+});
+
+// Limpiar selects al abrir el modal
+$('#modalCrearParqueadero').on('show.bs.modal', function() {
+    document.getElementById('crearIdInstitucion').value = '';
+    document.getElementById('crearIdSede').innerHTML = '<option value="">Primero seleccione una institución...</option>';
+    document.getElementById('crearIdSede').disabled = true;
+    $('#crearCarros, #crearMotos, #crearBicis').val(0).removeClass('is-valid is-invalid');
+    $('#crearTotal').text('0');
+});
+</script>
 
 <script src="/SEGTRACK/Public/js/javascript/js/ValidacionParqueadero.js"></script>
 

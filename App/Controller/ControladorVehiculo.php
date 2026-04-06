@@ -172,7 +172,29 @@ try {
             }
         }
 
-        // ── NUEVO: Obtener funcionarios y visitantes por sede ─────────────────
+        // ── Obtener sedes por institución ─────────────────────────────────────
+        // ✅ NUEVO: acción que faltaba en el router
+        public function obtenerSedesPorInstitucion(int $idInstitucion): array {
+            try {
+                $sedes = $this->modelo->obtenerSedesPorInstitucion($idInstitucion);
+                if (empty($sedes)) {
+                    return [
+                        'success' => false,
+                        'sedes'   => [],
+                        'message' => 'Esta institución no tiene sedes activas registradas'
+                    ];
+                }
+                return [
+                    'success' => true,
+                    'sedes'   => $sedes
+                ];
+            } catch (Exception $e) {
+                file_put_contents($this->carpetaDebug . '/debug_log.txt', "ERROR obtenerSedesPorInstitucion: " . $e->getMessage() . "\n", FILE_APPEND);
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
+        // ── Obtener funcionarios y visitantes por sede ────────────────────────
         public function obtenerPersonasPorSede(int $idSede): array {
             try {
                 $funcionarios = $this->modelo->obtenerFuncionariosPorSede($idSede);
@@ -372,7 +394,13 @@ try {
             ? $controlador->obtenerTipoPropietario($id)
             : ['success' => false, 'message' => 'ID no válido'];
 
-    // ── NUEVO ─────────────────────────────────────────────────────────────────
+    // ✅ CORREGIDO: acción para cargar sedes por institución (faltaba en el router original)
+    } elseif ($accion === 'obtener_sedes_por_institucion') {
+        $idInstitucion = isset($_POST['id_institucion']) ? (int)$_POST['id_institucion'] : 0;
+        $resultado = $idInstitucion > 0
+            ? $controlador->obtenerSedesPorInstitucion($idInstitucion)
+            : ['success' => false, 'message' => 'ID de institución no válido'];
+
     } elseif ($accion === 'obtener_personas_por_sede') {
         $idSede    = isset($_POST['id_sede']) ? (int)$_POST['id_sede'] : 0;
         $resultado = $idSede > 0

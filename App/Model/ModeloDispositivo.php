@@ -14,11 +14,20 @@ class ModeloDispositivo {
     }
 
     /**
-     * Registra un nuevo dispositivo en la base de datos
+     * REGISTRAR - Solo guarda IdFuncionario o IdVisitante
      */
-    public function registrarDispositivo(string $tipo, string $marca, string $numeroSerial, ?int $idFuncionario, ?int $idVisitante): array {
+    public function registrarDispositivo(
+        string $tipo,
+        string $marca,
+        string $numeroSerial,
+        ?int   $idFuncionario,
+        ?int   $idVisitante
+    ): array {
         try {
-            file_put_contents($this->debugPath, "=== MODELO: registrarDispositivo ===\nTipo: $tipo, Marca: $marca, Serial: $numeroSerial\n", FILE_APPEND);
+            file_put_contents($this->debugPath,
+                "=== MODELO: registrarDispositivo ===\nTipo: $tipo, Marca: $marca, Serial: $numeroSerial\nFuncionario: $idFuncionario, Visitante: $idVisitante\n",
+                FILE_APPEND
+            );
 
             if (!$this->conexion) {
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
@@ -31,11 +40,11 @@ class ModeloDispositivo {
 
             $stmt   = $this->conexion->prepare($sql);
             $params = [
-                ':tipo'       => $tipo,
-                ':marca'      => $marca,
-                ':serial'     => $numeroSerial ?: null,
-                ':funcionario'=> $idFuncionario ?: null,
-                ':visitante'  => $idVisitante   ?: null
+                ':tipo'        => $tipo,
+                ':marca'       => $marca,
+                ':serial'      => $numeroSerial ?: null,
+                ':funcionario' => $idFuncionario,
+                ':visitante'   => $idVisitante,
             ];
 
             $resultado = $stmt->execute($params);
@@ -77,18 +86,31 @@ class ModeloDispositivo {
     }
 
     /**
-     * Obtiene todos los dispositivos ACTIVOS con nombres
+     * Obtiene todos los dispositivos ACTIVOS
      */
     public function obtenerTodos(): array {
         try {
             if (!$this->conexion) return [];
 
-            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante
-                     FROM dispositivo d
-                     LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                     LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
-                     WHERE d.Estado = 'Activo'
-                     ORDER BY d.IdDispositivo DESC";
+            $sql = "SELECT 
+                        d.*,
+                        f.NombreFuncionario,
+                        f.CorreoFuncionario,
+                        v.NombreVisitante,
+                        v.CorreoVisitante,
+                        COALESCE(s_func.TipoSede, s_vis.TipoSede) AS TipoSede,
+                        COALESCE(s_func.Ciudad, s_vis.Ciudad) AS CiudadSede,
+                        COALESCE(i_func.NombreInstitucion, i_vis.NombreInstitucion) AS NombreInstitucion
+                    FROM dispositivo d
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario AND f.Estado = 'Activo'
+                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante AND v.Estado = 'Activo'
+                    LEFT JOIN sede s_func ON f.IdSede = s_func.IdSede
+                    LEFT JOIN sede s_vis  ON v.IdSede = s_vis.IdSede
+                    LEFT JOIN institucion i_func ON s_func.IdInstitucion = i_func.IdInstitucion
+                    LEFT JOIN institucion i_vis  ON s_vis.IdInstitucion = i_vis.IdInstitucion
+                    WHERE d.Estado = 'Activo'
+                    ORDER BY d.IdDispositivo DESC";
+                    
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -100,17 +122,32 @@ class ModeloDispositivo {
     }
 
     /**
-     * Obtiene todos los dispositivos (activos e inactivos) con nombres
+     * Obtiene todos los dispositivos (activos e inactivos)
      */
     public function obtenerTodosConEstado(): array {
         try {
             if (!$this->conexion) return [];
 
-            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante
-                     FROM dispositivo d
-                     LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                     LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
-                     ORDER BY CASE WHEN d.Estado = 'Activo' THEN 1 ELSE 2 END, d.IdDispositivo DESC";
+            $sql = "SELECT 
+                        d.*,
+                        f.NombreFuncionario,
+                        f.CorreoFuncionario,
+                        v.NombreVisitante,
+                        v.CorreoVisitante,
+                        COALESCE(s_func.TipoSede, s_vis.TipoSede) AS TipoSede,
+                        COALESCE(s_func.Ciudad, s_vis.Ciudad) AS CiudadSede,
+                        COALESCE(i_func.NombreInstitucion, i_vis.NombreInstitucion) AS NombreInstitucion
+                    FROM dispositivo d
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario AND f.Estado = 'Activo'
+                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante AND v.Estado = 'Activo'
+                    LEFT JOIN sede s_func ON f.IdSede = s_func.IdSede
+                    LEFT JOIN sede s_vis  ON v.IdSede = s_vis.IdSede
+                    LEFT JOIN institucion i_func ON s_func.IdInstitucion = i_func.IdInstitucion
+                    LEFT JOIN institucion i_vis  ON s_vis.IdInstitucion = i_vis.IdInstitucion
+                    ORDER BY 
+                        CASE WHEN d.Estado = 'Activo' THEN 1 ELSE 2 END,
+                        d.IdDispositivo DESC";
+                    
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -128,11 +165,24 @@ class ModeloDispositivo {
         try {
             if (!$this->conexion) return null;
 
-            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante
-                     FROM dispositivo d
-                     LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                     LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
-                     WHERE d.IdDispositivo = :id";
+            $sql = "SELECT 
+                        d.*,
+                        f.NombreFuncionario,
+                        f.CorreoFuncionario,
+                        v.NombreVisitante,
+                        v.CorreoVisitante,
+                        COALESCE(s_func.TipoSede, s_vis.TipoSede) AS TipoSede,
+                        COALESCE(s_func.Ciudad, s_vis.Ciudad) AS CiudadSede,
+                        COALESCE(i_func.NombreInstitucion, i_vis.NombreInstitucion) AS NombreInstitucion
+                    FROM dispositivo d
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario AND f.Estado = 'Activo'
+                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante AND v.Estado = 'Activo'
+                    LEFT JOIN sede s_func ON f.IdSede = s_func.IdSede
+                    LEFT JOIN sede s_vis  ON v.IdSede = s_vis.IdSede
+                    LEFT JOIN institucion i_func ON s_func.IdInstitucion = i_func.IdInstitucion
+                    LEFT JOIN institucion i_vis  ON s_vis.IdInstitucion = i_vis.IdInstitucion
+                    WHERE d.IdDispositivo = :id";
+                    
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':id' => $idDispositivo]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
@@ -143,61 +193,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * Obtiene solo la ruta QR de un dispositivo
-     */
-    public function obtenerQR(int $idDispositivo): ?string {
-        try {
-            if (!$this->conexion) return null;
-
-            $sql  = "SELECT QrDispositivo FROM dispositivo WHERE IdDispositivo = :id";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idDispositivo]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $resultado['QrDispositivo'] ?? null;
-
-        } catch (PDOException $e) {
-            return null;
-        }
-    }
-
-    /**
-     * Obtiene todos los funcionarios activos
-     */
-    public function obtenerFuncionarios(): array {
-        try {
-            if (!$this->conexion) return [];
-
-            $sql  = "SELECT IdFuncionario, NombreFuncionario FROM funcionario WHERE Estado = 'Activo' ORDER BY NombreFuncionario ASC";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-            file_put_contents($this->debugPath, "ERROR en obtenerFuncionarios: " . $e->getMessage() . "\n", FILE_APPEND);
-            return [];
-        }
-    }
-
-    /**
-     * Obtiene todos los visitantes activos
-     */
-    public function obtenerVisitantes(): array {
-        try {
-            if (!$this->conexion) return [];
-
-            $sql  = "SELECT IdVisitante, NombreVisitante FROM visitante WHERE Estado = 'Activo' ORDER BY NombreVisitante ASC";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-            file_put_contents($this->debugPath, "ERROR en obtenerVisitantes: " . $e->getMessage() . "\n", FILE_APPEND);
-            return [];
-        }
-    }
-
-    /**
-     * Actualiza los datos del dispositivo
+     * ACTUALIZAR dispositivo
      */
     public function actualizar(int $idDispositivo, array $datos): array {
         try {
@@ -217,23 +213,13 @@ class ModeloDispositivo {
 
             $stmt = $this->conexion->prepare($sql);
 
-            $idFunc = null;
-            if (isset($datos['IdFuncionario']) && $datos['IdFuncionario'] !== '' && $datos['IdFuncionario'] !== null) {
-                $idFunc = (int)$datos['IdFuncionario'];
-            }
-
-            $idVis = null;
-            if (isset($datos['IdVisitante']) && $datos['IdVisitante'] !== '' && $datos['IdVisitante'] !== null) {
-                $idVis = (int)$datos['IdVisitante'];
-            }
-
             $params = [
-                ':tipo'       => $datos['TipoDispositivo']  ?? null,
-                ':marca'      => $datos['MarcaDispositivo'] ?? null,
-                ':serial'     => !empty($datos['NumeroSerial']) ? $datos['NumeroSerial'] : null,
-                ':funcionario'=> $idFunc,
-                ':visitante'  => $idVis,
-                ':id'         => $idDispositivo
+                ':tipo'        => $datos['TipoDispositivo']  ?? null,
+                ':marca'       => $datos['MarcaDispositivo'] ?? null,
+                ':serial'      => !empty($datos['NumeroSerial']) ? $datos['NumeroSerial'] : null,
+                ':funcionario' => $datos['IdFuncionario'] ?? null,
+                ':visitante'   => $datos['IdVisitante'] ?? null,
+                ':id'          => $idDispositivo
             ];
 
             $resultado = $stmt->execute($params);
@@ -253,7 +239,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * Cambia el estado del dispositivo (Activo <-> Inactivo)
+     * Cambia el estado del dispositivo
      */
     public function cambiarEstado(int $idDispositivo, string $nuevoEstado): array {
         try {
@@ -277,25 +263,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * Verifica si existe un dispositivo
-     */
-    public function existe(int $idDispositivo): bool {
-        try {
-            if (!$this->conexion) return false;
-
-            $sql  = "SELECT 1 FROM dispositivo WHERE IdDispositivo = :id LIMIT 1";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idDispositivo]);
-            return $stmt->rowCount() > 0;
-
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    /**
-     * ✅ Verifica si un número serial ya existe (excluyendo un ID para edición)
-     * Esta es la ÚNICA validación de duplicado que se mantiene.
+     * Verifica si existe un número serial
      */
     public function existeNumeroSerial(string $numeroSerial, ?int $excluirId = null): array {
         try {
@@ -304,17 +272,17 @@ class ModeloDispositivo {
             }
 
             if ($excluirId !== null) {
-                $sql  = "SELECT IdDispositivo, TipoDispositivo, MarcaDispositivo
-                         FROM dispositivo
-                         WHERE NumeroSerial = :serial AND IdDispositivo != :id
-                         LIMIT 1";
+                $sql = "SELECT IdDispositivo, TipoDispositivo, MarcaDispositivo
+                        FROM dispositivo
+                        WHERE NumeroSerial = :serial AND IdDispositivo != :id
+                        LIMIT 1";
                 $stmt = $this->conexion->prepare($sql);
                 $stmt->execute([':serial' => $numeroSerial, ':id' => $excluirId]);
             } else {
-                $sql  = "SELECT IdDispositivo, TipoDispositivo, MarcaDispositivo
-                         FROM dispositivo
-                         WHERE NumeroSerial = :serial
-                         LIMIT 1";
+                $sql = "SELECT IdDispositivo, TipoDispositivo, MarcaDispositivo
+                        FROM dispositivo
+                        WHERE NumeroSerial = :serial
+                        LIMIT 1";
                 $stmt = $this->conexion->prepare($sql);
                 $stmt->execute([':serial' => $numeroSerial]);
             }
@@ -330,6 +298,66 @@ class ModeloDispositivo {
         } catch (PDOException $e) {
             file_put_contents($this->debugPath, "ERROR en existeNumeroSerial: " . $e->getMessage() . "\n", FILE_APPEND);
             return ['existe' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // MÉTODOS PARA CASCADA
+    // ════════════════════════════════════════════════════════════════
+
+    public function obtenerInstituciones(): array {
+        try {
+            $sql = "SELECT IdInstitucion, NombreInstitucion 
+                    FROM institucion 
+                    WHERE EstadoInstitucion = 'Activo' 
+                    ORDER BY NombreInstitucion ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public function obtenerSedesPorInstitucion(int $idInstitucion): array {
+        try {
+            $sql = "SELECT IdSede, TipoSede, Ciudad 
+                    FROM sede 
+                    WHERE IdInstitucion = :id AND Estado = 'Activo'
+                    ORDER BY TipoSede ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idInstitucion]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public function obtenerFuncionariosPorSede(int $idSede): array {
+        try {
+            $sql = "SELECT IdFuncionario, NombreFuncionario 
+                    FROM funcionario 
+                    WHERE IdSede = :id AND Estado = 'Activo'
+                    ORDER BY NombreFuncionario ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idSede]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public function obtenerVisitantesPorSede(int $idSede): array {
+        try {
+            $sql = "SELECT IdVisitante, NombreVisitante 
+                    FROM visitante 
+                    WHERE IdSede = :id AND Estado = 'Activo'
+                    ORDER BY NombreVisitante ASC";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':id' => $idSede]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
         }
     }
 }

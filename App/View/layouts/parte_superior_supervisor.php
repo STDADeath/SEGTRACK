@@ -18,7 +18,6 @@
 
     <!-- CSS del template -->
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../../../Public/css/styles.css" rel="stylesheet">
     <link href="../../../Public/css/graficas.css" rel="stylesheet">
     <link href="../../../Public/css/icono.css" rel="stylesheet">
 
