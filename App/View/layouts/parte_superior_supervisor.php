@@ -217,6 +217,20 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
             </div>
         </div>
     </li>
+     <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Tabla de ingreso</span>
+            </a>
+            <div id="collapsePages" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Escanear QR</h6>
+                    <a class="collapse-item" href="../Supervisor/IngresoSupervisor.php">Ingreso Funcionario</a>
+                    <a class="collapse-item" href="../Supervisor/IngresoDispositivoSupervisor.php">Ingreso Dispositivo</a>
+                    <a class="collapse-item" href="../Supervisor/IngresoParquederoSupervisor.php">Ingreso Parqueadero</a>
+                </div>
+            </div>
+        </li>
 
     <hr class="sidebar-divider d-none d-md-block">
 

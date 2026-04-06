@@ -1,25 +1,25 @@
-<?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_superior_supervisor.php'; ?>
 
-<div class="container py-4">
+<div class="container py-5">
     <div class="card border-0 shadow-lg rounded-4 bg-light">
-        <div class="card-body px-3 px-md-4 py-4 py-md-5">
+        <div class="card-body px-4 py-5">
 
-            <h4 class="text-center fw-bold text-primary mb-4">
+            <h4 class="text-center fw-bold text-primary mb-5">
                 <i class="fas fa-id-card-alt me-2"></i>Control de Ingreso de Funcionarios
             </h4>
 
             <!-- ===== ESCANER QR ===== -->
             <div class="text-center mb-4">
 
-                <h5 class="fw-semibold mb-3 text-secondary">
+                <h5 class="fw-semibold mb-4 text-secondary">
                     <i class="fas fa-qrcode me-2"></i>Escanear Código QR
                 </h5>
 
-                <div class="mx-auto mb-3" style="width: 100%; max-width: 400px;">
-                    <div id="qr-reader" style="width: 100%;"></div>
+                <div class="qr-wrapper mx-auto mb-3">
+                    <div id="qr-reader"></div>
                 </div>
 
-                <div class="mt-3 mx-auto" style="max-width: 100%; width: 320px;">
+                <div class="mt-4 mx-auto" style="max-width: 320px;">
                     <label for="tipoMovimiento" class="form-label fw-semibold text-secondary">
                         Tipo de movimiento
                     </label>
@@ -29,29 +29,27 @@
                     </select>
                 </div>
 
-                <div class="mt-3 px-3 px-md-0">
-                    <button id="btnCapturar" class="btn btn-primary px-4 py-2 shadow-sm fw-semibold w-100" style="max-width: 320px;">
-                        <i class="fas fa-camera me-2"></i>Capturar Código QR
-                    </button>
-                </div>
+            <button id="btnCapturar" class="btn btn-primary mt-4 px-4 py-2 shadow-sm fw-semibold">
+    <i class="fas fa-camera me-2"></i>Capturar Código QR
+            </button>
 
             </div>
             <!-- ===== FIN ESCANER QR ===== -->
 
             <!-- ===== CARD FOTO FUNCIONARIO ===== -->
             <div id="cardFuncionario" class="d-none mb-4">
-                <div class="card border-0 shadow rounded-4 mx-auto" style="max-width: 450px; width: 100%;">
-                    <div class="card-body text-center py-4 px-3">
+                <div class="card border-0 shadow rounded-4 mx-auto" style="max-width: 450px;">
+                    <div class="card-body text-center py-4 px-4">
 
                         <img id="fotoFuncionario"
                              src=""
                              alt="Foto Funcionario"
                              class="rounded-circle mb-3 border border-4 border-primary shadow"
-                             style="width: 160px; height: 160px; object-fit: cover;">
+                             style="width: 220px; height: 220px; object-fit: cover;">
 
-                        <h5 id="nombreFuncionario" class="fw-bold text-primary mb-1 fs-5"></h5>
+                        <h5 id="nombreFuncionario" class="fw-bold text-primary mb-1 fs-4"></h5>
                         <p  id="cargoFuncionario"  class="text-muted mb-2"></p>
-                        <span id="tipoFuncionario" class="badge fs-6 px-3 py-2 mb-2"></span>
+                        <span id="tipoFuncionario" class="badge fs-5 px-4 py-2 mb-2"></span>
                         <p   id="fechaFuncionario" class="text-muted small mt-1 mb-0"></p>
 
                     </div>
@@ -60,7 +58,7 @@
             <!-- ===== FIN CARD FOTO FUNCIONARIO ===== -->
 
             <!-- ===== MENSAJES ===== -->
-            <div class="mb-4 px-2">
+            <div class="mb-4">
                 <div id="mensajeExito" class="alert alert-success text-center d-none mb-3 shadow-sm fw-semibold"></div>
                 <div id="mensajeError"  class="alert alert-danger  text-center d-none mb-3 shadow-sm fw-semibold"></div>
             </div>
@@ -104,6 +102,6 @@
 <!-- QR Scanner -->
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
 
 <script src="../../../Public/js/javascript/js/ValidacionIngreso.js"></script>
