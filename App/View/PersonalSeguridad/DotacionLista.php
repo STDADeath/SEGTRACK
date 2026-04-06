@@ -10,23 +10,34 @@
     </div>
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-light">
-            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-filter me-1"></i> Filtrar Dotaciones</h6>
+        <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-filter mr-2"></i>Filtrar Dotaciones
+            </h6>
+            <button type="button" id="btnLimpiar" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-broom mr-1"></i>Limpiar filtros
+            </button>
         </div>
         <div class="card-body">
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <label class="form-label">Estado Dotación</label>
-                    <select id="filtroEstado" class="form-select">
+            <div class="row align-items-end">
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-check-circle mr-1 text-primary"></i>Estado Dotación
+                    </label>
+                    <select id="filtroEstado" class="form-control">
                         <option value="">Todos</option>
                         <option value="Buen estado">Buen estado</option>
                         <option value="Regular">Regular</option>
                         <option value="Dañado">Dañado</option>
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label">Tipo</label>
-                    <select id="filtroTipo" class="form-select">
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-tag mr-1 text-primary"></i>Tipo
+                    </label>
+                    <select id="filtroTipo" class="form-control">
                         <option value="">Todos</option>
                         <option value="Uniforme">Uniforme</option>
                         <option value="Equipo">Equipo</option>
@@ -34,14 +45,27 @@
                         <option value="Otro">Otro</option>
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label">Funcionario</label>
-                    <input type="text" id="filtroFuncionario" class="form-control" placeholder="Buscar por nombre...">
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-user-tie mr-1 text-primary"></i>Funcionario
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input type="text" id="filtroFuncionario" class="form-control"
+                               placeholder="Buscar por nombre...">
+                    </div>
                 </div>
-                <div class="col-md-3 d-flex align-items-end gap-2">
-                    <button type="button" id="btnFiltrar" class="btn btn-primary"><i class="fas fa-filter me-1"></i> Filtrar</button>
-                    <button type="button" id="btnLimpiar" class="btn btn-secondary"><i class="fas fa-broom me-1"></i> Limpiar</button>
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label d-block invisible">.</label>
+                    <button type="button" id="btnFiltrar" class="btn btn-primary btn-block">
+                        <i class="fas fa-search mr-1"></i>Filtrar
+                    </button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -49,7 +73,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Dotaciones Registradas</h6>
-            <span class="badge bg-primary" id="contadorRegistros">0 registros</span>
+            <span class="badge badge-primary" id="contadorRegistros" style="font-size:0.85rem;">Cargando...</span>
         </div>
         <div class="card-body table-responsive">
             <table id="tablaDotacionesDT" class="table table-bordered table-hover table-striped align-middle text-center" width="100%" cellspacing="0">

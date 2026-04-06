@@ -13,17 +13,22 @@
 
     <!-- Filtros -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-light">
+        <div class="card-header py-3 bg-light d-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">
-                <i class="fas fa-filter me-1"></i> Filtrar Bitácoras
+                <i class="fas fa-filter mr-2"></i>Filtrar Bitácoras
             </h6>
+            <button type="button" id="btnLimpiar" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-broom mr-1"></i>Limpiar filtros
+            </button>
         </div>
         <div class="card-body">
-            <div class="row g-3">
+            <div class="row align-items-end">
 
-                <div class="col-md-3">
-                    <label for="filtroTurno" class="form-label">Turno</label>
-                    <select id="filtroTurno" class="form-select">
+                <div class="col-md-3 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-clock mr-1 text-primary"></i>Turno
+                    </label>
+                    <select id="filtroTurno" class="form-control">
                         <option value="">Todos</option>
                         <option value="Jornada mañana">Jornada mañana</option>
                         <option value="Jornada tarde">Jornada tarde</option>
@@ -31,22 +36,30 @@
                     </select>
                 </div>
 
-                <div class="col-md-3">
-                    <label for="filtroFecha" class="form-label">Fecha</label>
+                <div class="col-md-3 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-calendar mr-1 text-primary"></i>Fecha
+                    </label>
                     <input type="date" id="filtroFecha" class="form-control">
                 </div>
 
-                <div class="col-md-3">
-                    <label for="filtroFuncionario" class="form-label">Personal de Seguridad</label>
-                    <input type="text" id="filtroFuncionario" class="form-control" placeholder="Buscar por nombre...">
+                <div class="col-md-3 mb-3">
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-user-shield mr-1 text-primary"></i>Personal de Seguridad
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input type="text" id="filtroFuncionario" class="form-control"
+                               placeholder="Buscar por nombre...">
+                    </div>
                 </div>
 
-                <div class="col-md-3 d-flex align-items-end gap-2">
-                    <button type="button" id="btnFiltrar" class="btn btn-primary">
-                        <i class="fas fa-filter me-1"></i> Filtrar
-                    </button>
-                    <button type="button" id="btnLimpiar" class="btn btn-secondary">
-                        <i class="fas fa-broom me-1"></i> Limpiar
+                <div class="col-md-3 mb-3">
+                    <label class="form-label d-block invisible">.</label>
+                    <button type="button" id="btnFiltrar" class="btn btn-primary btn-block">
+                        <i class="fas fa-search mr-1"></i>Filtrar
                     </button>
                 </div>
 
@@ -58,7 +71,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 bg-light d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Lista de Bitácoras Registradas</h6>
-            <span class="badge bg-primary" id="contadorRegistros">0 registros</span>
+            <span class="badge badge-primary" id="contadorRegistros" style="font-size:0.85rem;">Cargando...</span>
         </div>
         <div class="card-body table-responsive">
             <table id="tablaBitacorasDT"
