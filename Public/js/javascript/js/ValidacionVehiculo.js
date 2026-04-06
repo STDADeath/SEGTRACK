@@ -1,6 +1,9 @@
 // ============================================================
 // ValidacionVehiculo.js
 // ============================================================
+// NOTA: Este archivo usa jQuery para los modales de Bootstrap y DataTables.
+// Asegúrese de que jQuery esté cargado ANTES de este archivo en el HTML.
+// ============================================================
 
 
 // ══════════════════════════════════════════════════════════════
@@ -106,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // ══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', function () {
-    // ✅ FIX: apunta solo al formulario de registro, no a cualquier <form>
     const form = document.getElementById('formRegistroVehiculo');
 
     if (!form) return;
@@ -259,163 +261,179 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // ══════════════════════════════════════════════════════════════
 // SECCIÓN 3 — INICIALIZACIÓN jQuery (Lista + Supervisor)
+// ✅ Se usa window.addEventListener para esperar que jQuery esté listo
 // ══════════════════════════════════════════════════════════════
 
-$(document).ready(function () {
-
-    // ── DataTable — Administrador ─────────────────────────────────────────────
-    if ($('#TablaVehiculos').length) {
-        if ($.fn.DataTable.isDataTable('#TablaVehiculos')) {
-            $('#TablaVehiculos').DataTable().destroy();
-        }
-        $('#TablaVehiculos').DataTable({
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
-            pageLength: 10,
-            responsive: true,
-            order: [[0, 'desc']],
-            searching: false,
-            orderClasses: false
-        });
+function inicializarJQuery() {
+    if (typeof jQuery === 'undefined') {
+        // jQuery aún no está listo, reintentamos en 100ms
+        setTimeout(inicializarJQuery, 100);
+        return;
     }
 
-    // ── DataTable — Supervisor ────────────────────────────────────────────────
-    if ($('#TablaVehiculoSupervisor').length) {
-        if ($.fn.DataTable.isDataTable('#TablaVehiculoSupervisor')) {
-            $('#TablaVehiculoSupervisor').DataTable().destroy();
-        }
-        $('#TablaVehiculoSupervisor').DataTable({
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
-            pageLength: 10,
-            responsive: true,
-            order: [[0, 'asc']],
-            searching: false,
-            orderClasses: false
-        });
-    }
+    (function ($) {
 
-    // ── Guardar cambios — modal editar ────────────────────────────────────────
-    $('#btnGuardarCambiosVehiculo').on('click', function () {
-        const id          = $('#editIdVehiculo').val();
-        const tipo        = $('#editTipoVehiculo').val();
-        const descripcion = $('#editDescripcionVehiculo').val().trim();
-        const idsede      = $('#editIdSede').val();
-        const regexDesc   = /^[a-zA-Z\u00C0-\u024F0-9 .,\-]+$/;
-
-        if (!id || !tipo || !idsede) {
-            Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Complete el Tipo de Vehículo y la Sede', confirmButtonColor: '#f6c23e' });
-            return;
-        }
-        if (!descripcion || descripcion.length < 5) {
-            Swal.fire({ icon: 'warning', title: 'Descripción inválida', text: 'La descripción debe tener al menos 5 caracteres', confirmButtonColor: '#f6c23e' });
-            return;
-        }
-        if (!regexDesc.test(descripcion)) {
-            Swal.fire({ icon: 'error', title: 'Caracteres inválidos', text: 'La descripción contiene caracteres no válidos', confirmButtonColor: '#e74a3b' });
-            return;
-        }
-
-        $('#modalEditarVehiculo').modal('hide');
-        Swal.fire({
-            title: 'Guardando cambios...',
-            html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
-            allowOutsideClick: false, allowEscapeKey: false, showConfirmButton: false
-        });
-
-        $.ajax({
-            url: '../../Controller/ControladorVehiculo.php',
-            type: 'POST',
-            data: { accion: 'actualizar', id, tipo, descripcion, idsede },
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    Swal.fire({
-                        icon: 'success', title: '¡Actualizado!',
-                        text: 'Vehículo actualizado correctamente',
-                        timer: 2000, timerProgressBar: true,
-                        showConfirmButton: true, confirmButtonColor: '#1cc88a'
-                    }).then(function () { location.reload(); });
-                } else {
-                    Swal.fire({
-                        icon: 'error', title: 'Error',
-                        html: response.message.replace(/\n/g, '<br>'),
-                        confirmButtonColor: '#e74a3b'
-                    });
-                }
-            },
-            error: function () {
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo conectar con el servidor', confirmButtonColor: '#e74a3b' });
+        // ── DataTable — Administrador ─────────────────────────────────────────
+        if ($('#TablaVehiculos').length) {
+            if ($.fn.DataTable.isDataTable('#TablaVehiculos')) {
+                $('#TablaVehiculos').DataTable().destroy();
             }
-        });
-    });
+            $('#TablaVehiculos').DataTable({
+                language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
+                pageLength: 10,
+                responsive: true,
+                order: [[0, 'desc']],
+                searching: false,
+                orderClasses: false
+            });
+        }
 
-    $('#modalEditarVehiculo').on('hidden.bs.modal', function () {
-        $('#btnGuardarCambiosVehiculo').prop('disabled', false).html('Guardar Cambios');
-    });
-
-    // ── Confirmar cambio de estado — Supervisor ───────────────────────────────
-    $('#btnConfirmarCambioEstadoVehiculo').on('click', function () {
-        if (!window.vehiculoACambiarEstado) return;
-
-        const nuevoEstado = window.estadoActualVehiculo === 'Activo' ? 'Inactivo' : 'Activo';
-        $('#modalCambiarEstadoVehiculo').modal('hide');
-        Swal.fire({ title: 'Procesando...', text: 'Por favor espere', allowOutsideClick: false, didOpen: function () { Swal.showLoading(); } });
-
-        $.ajax({
-            url: '../../Controller/ControladorVehiculo.php',
-            type: 'POST',
-            data: { accion: 'cambiar_estado', id: window.vehiculoACambiarEstado, estado: nuevoEstado },
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    Swal.fire({
-                        icon: 'success', title: '¡Éxito!',
-                        text: response.message || 'Estado cambiado correctamente',
-                        timer: 2000, showConfirmButton: false
-                    }).then(function () { location.reload(); });
-                } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: response.message || 'No se pudo cambiar el estado' });
-                }
-            },
-            error: function () {
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo cambiar el estado del vehículo' });
+        // ── DataTable — Supervisor ────────────────────────────────────────────
+        if ($('#TablaVehiculoSupervisor').length) {
+            if ($.fn.DataTable.isDataTable('#TablaVehiculoSupervisor')) {
+                $('#TablaVehiculoSupervisor').DataTable().destroy();
             }
-        });
-    });
+            $('#TablaVehiculoSupervisor').DataTable({
+                language: { url: 'https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json' },
+                pageLength: 10,
+                responsive: true,
+                order: [[0, 'asc']],
+                searching: false,
+                orderClasses: false
+            });
+        }
 
-    $('#modalCambiarEstadoVehiculo').on('hidden.bs.modal', function () {
-        window.vehiculoACambiarEstado = null;
-        window.estadoActualVehiculo   = null;
-        $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
-    });
+        // ── Guardar cambios — modal editar ────────────────────────────────────
+        $('#btnGuardarCambiosVehiculo').on('click', function () {
+            const id          = $('#editIdVehiculo').val();
+            const tipo        = $('#editTipoVehiculo').val();
+            const descripcion = $('#editDescripcionVehiculo').val().trim();
+            const idsede      = $('#editIdSede').val();
+            const regexDesc   = /^[a-zA-Z\u00C0-\u024F0-9 .,\-]+$/;
 
-    // ── Confirmar eliminación ─────────────────────────────────────────────────
-    $('#btnConfirmarEliminarVehiculo').on('click', function () {
-        if (!window.vehiculoIdAEliminar) return;
+            if (!id || !tipo || !idsede) {
+                Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Complete el Tipo de Vehículo y la Sede', confirmButtonColor: '#f6c23e' });
+                return;
+            }
+            if (!descripcion || descripcion.length < 5) {
+                Swal.fire({ icon: 'warning', title: 'Descripción inválida', text: 'La descripción debe tener al menos 5 caracteres', confirmButtonColor: '#f6c23e' });
+                return;
+            }
+            if (!regexDesc.test(descripcion)) {
+                Swal.fire({ icon: 'error', title: 'Caracteres inválidos', text: 'La descripción contiene caracteres no válidos', confirmButtonColor: '#e74a3b' });
+                return;
+            }
 
-        $.ajax({
-            url: '../../Controller/ControladorVehiculo.php',
-            type: 'POST',
-            data: { accion: 'eliminar', id: window.vehiculoIdAEliminar },
-            dataType: 'json',
-            success: function (response) {
-                $('#confirmarEliminarModalVehiculo').modal('hide');
-                if (response.success) {
-                    Swal.fire({ icon: 'success', title: 'Eliminado', text: '✅ Vehículo eliminado correctamente' })
-                        .then(function () {
-                            $('#fila-' + window.vehiculoIdAEliminar).fadeOut(400, function () { $(this).remove(); });
+            $('#modalEditarVehiculo').modal('hide');
+            Swal.fire({
+                title: 'Guardando cambios...',
+                html: '<i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><br>Por favor espere',
+                allowOutsideClick: false, allowEscapeKey: false, showConfirmButton: false
+            });
+
+            $.ajax({
+                url: '../../Controller/ControladorVehiculo.php',
+                type: 'POST',
+                data: { accion: 'actualizar', id, tipo, descripcion, idsede },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success', title: '¡Actualizado!',
+                            text: 'Vehículo actualizado correctamente',
+                            timer: 2000, timerProgressBar: true,
+                            showConfirmButton: true, confirmButtonColor: '#1cc88a'
+                        }).then(function () { location.reload(); });
+                    } else {
+                        Swal.fire({
+                            icon: 'error', title: 'Error',
+                            html: response.message.replace(/\n/g, '<br>'),
+                            confirmButtonColor: '#e74a3b'
                         });
-                } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: '❌ Error: ' + response.message });
+                    }
+                },
+                error: function () {
+                    Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo conectar con el servidor', confirmButtonColor: '#e74a3b' });
                 }
-            },
-            error: function () {
-                $('#confirmarEliminarModalVehiculo').modal('hide');
-                Swal.fire({ icon: 'error', title: 'Error de conexión', text: '❌ Error al intentar eliminar el vehículo' });
-            }
+            });
         });
-    });
 
-});
+        $('#modalEditarVehiculo').on('hidden.bs.modal', function () {
+            $('#btnGuardarCambiosVehiculo').prop('disabled', false).html('Guardar Cambios');
+        });
+
+        // ── Confirmar cambio de estado — Supervisor ───────────────────────────
+        $('#btnConfirmarCambioEstadoVehiculo').on('click', function () {
+            if (!window.vehiculoACambiarEstado) return;
+
+            const nuevoEstado = window.estadoActualVehiculo === 'Activo' ? 'Inactivo' : 'Activo';
+            $('#modalCambiarEstadoVehiculo').modal('hide');
+            Swal.fire({ title: 'Procesando...', text: 'Por favor espere', allowOutsideClick: false, didOpen: function () { Swal.showLoading(); } });
+
+            $.ajax({
+                url: '../../Controller/ControladorVehiculo.php',
+                type: 'POST',
+                data: { accion: 'cambiar_estado', id: window.vehiculoACambiarEstado, estado: nuevoEstado },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success', title: '¡Éxito!',
+                            text: response.message || 'Estado cambiado correctamente',
+                            timer: 2000, showConfirmButton: false
+                        }).then(function () { location.reload(); });
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Error', text: response.message || 'No se pudo cambiar el estado' });
+                    }
+                },
+                error: function () {
+                    Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo cambiar el estado del vehículo' });
+                }
+            });
+        });
+
+        $('#modalCambiarEstadoVehiculo').on('hidden.bs.modal', function () {
+            window.vehiculoACambiarEstado = null;
+            window.estadoActualVehiculo   = null;
+            $('#btnConfirmarCambioEstadoVehiculo').prop('disabled', false).html('Confirmar');
+        });
+
+        // ── Confirmar eliminación ─────────────────────────────────────────────
+        $('#btnConfirmarEliminarVehiculo').on('click', function () {
+            if (!window.vehiculoIdAEliminar) return;
+
+            $.ajax({
+                url: '../../Controller/ControladorVehiculo.php',
+                type: 'POST',
+                data: { accion: 'eliminar', id: window.vehiculoIdAEliminar },
+                dataType: 'json',
+                success: function (response) {
+                    $('#confirmarEliminarModalVehiculo').modal('hide');
+                    if (response.success) {
+                        Swal.fire({ icon: 'success', title: 'Eliminado', text: '✅ Vehículo eliminado correctamente' })
+                            .then(function () {
+                                $('#fila-' + window.vehiculoIdAEliminar).fadeOut(400, function () { $(this).remove(); });
+                            });
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Error', text: '❌ Error: ' + response.message });
+                    }
+                },
+                error: function () {
+                    $('#confirmarEliminarModalVehiculo').modal('hide');
+                    Swal.fire({ icon: 'error', title: 'Error de conexión', text: '❌ Error al intentar eliminar el vehículo' });
+                }
+            });
+        });
+
+    })(jQuery);
+}
+
+// ✅ Ejecutar cuando el DOM esté listo, con fallback por si jQuery carga después
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarJQuery);
+} else {
+    inicializarJQuery();
+}
 
 
 // ══════════════════════════════════════════════════════════════
@@ -424,10 +442,18 @@ $(document).ready(function () {
 
 function verQRVehiculo(rutaQR, idVehiculo) {
     var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
-    $('#qrVehiculoId').text(idVehiculo);
-    $('#qrImagenVehiculo').attr('src', rutaCompleta);
-    $('#btnDescargarQRVehiculo').attr('href', rutaCompleta).attr('download', 'QR-Vehiculo-' + idVehiculo + '.png');
-    $('#modalVerQRVehiculo').modal('show');
+    document.getElementById('qrVehiculoId').textContent = idVehiculo;
+    document.getElementById('qrImagenVehiculo').setAttribute('src', rutaCompleta);
+    var btnDescargar = document.getElementById('btnDescargarQRVehiculo');
+    btnDescargar.setAttribute('href', rutaCompleta);
+    btnDescargar.setAttribute('download', 'QR-Vehiculo-' + idVehiculo + '.png');
+    // Bootstrap modal via jQuery (requerido por Bootstrap 4/5)
+    if (typeof jQuery !== 'undefined') {
+        jQuery('#modalVerQRVehiculo').modal('show');
+    } else {
+        var modal = new bootstrap.Modal(document.getElementById('modalVerQRVehiculo'));
+        modal.show();
+    }
 }
 
 function manejarEnvioQR(idVehiculo, placa, esFuncionario, correoVisitante) {
@@ -494,55 +520,62 @@ function enviarQRVehiculo(idVehiculo, correoDestinatario, placa) {
         allowOutsideClick: false, allowEscapeKey: false, showConfirmButton: false
     });
 
-    $.ajax({
-        url: '../../Controller/ControladorVehiculo.php',
-        type: 'POST',
-        data: { accion: 'enviar_qr', id_vehiculo: idVehiculo, correo_destinatario: correoDestinatario },
-        dataType: 'json',
-        timeout: 30000,
-        success: function (response) {
-            if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Correo enviado!',
-                    html: `<p>${response.message}</p><small class="text-muted">Placa: <strong>${placa}</strong></small>`,
-                    timer: 4000,
-                    timerProgressBar: true,
-                    confirmButtonColor: '#1cc88a'
-                });
-            } else {
-                Swal.fire({ icon: 'error', title: 'Error al enviar', text: response.message, confirmButtonColor: '#e74a3b' });
-            }
-        },
-        error: function (xhr, status) {
+    // ✅ Usar fetch en lugar de $.ajax para evitar dependencia de jQuery aquí
+    const formData = new FormData();
+    formData.append('accion', 'enviar_qr');
+    formData.append('id_vehiculo', idVehiculo);
+    formData.append('correo_destinatario', correoDestinatario);
+
+    fetch('../../Controller/ControladorVehiculo.php', {
+        method: 'POST',
+        body: formData,
+        signal: AbortSignal.timeout(30000)
+    })
+    .then(r => r.json())
+    .then(response => {
+        if (response.success) {
             Swal.fire({
-                icon: 'error',
-                title: 'Error de conexión',
-                text: status === 'timeout' ? 'La solicitud tardó demasiado.' : 'No se pudo conectar con el servidor.',
-                confirmButtonColor: '#e74a3b'
+                icon: 'success',
+                title: '¡Correo enviado!',
+                html: `<p>${response.message}</p><small class="text-muted">Placa: <strong>${placa}</strong></small>`,
+                timer: 4000,
+                timerProgressBar: true,
+                confirmButtonColor: '#1cc88a'
             });
+        } else {
+            Swal.fire({ icon: 'error', title: 'Error al enviar', text: response.message, confirmButtonColor: '#e74a3b' });
         }
+    })
+    .catch(() => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error de conexión',
+            text: 'No se pudo conectar con el servidor o la solicitud tardó demasiado.',
+            confirmButtonColor: '#e74a3b'
+        });
     });
 }
 
-// ✅ FIX: campos Funcionario y Visitante separados en el modal de edición
 function cargarDatosEdicionVehiculo(row) {
-    $('#editIdVehiculo').val(row.IdVehiculo);
-    $('#editTipoVehiculo').val(row.TipoVehiculo);
-    $('#editDescripcionVehiculo').val(row.DescripcionVehiculo);
-    $('#editIdSede').val(row.IdSede);
-    $('#editPlacaVehiculoDisabled').val(row.PlacaVehiculo);
-    $('#editTarjetaPropiedadDisabled').val(row.TarjetaPropiedad);
-
-    // ✅ FIX: dos campos independientes en lugar de uno combinado
-    $('#editFuncionarioDisabled').val(row.NombreFuncionario || 'No aplica');
-    $('#editVisitanteDisabled').val(row.NombreVisitante || 'No aplica');
+    document.getElementById('editIdVehiculo').value                = row.IdVehiculo;
+    document.getElementById('editTipoVehiculo').value              = row.TipoVehiculo;
+    document.getElementById('editDescripcionVehiculo').value       = row.DescripcionVehiculo;
+    document.getElementById('editIdSede').value                    = row.IdSede;
+    document.getElementById('editPlacaVehiculoDisabled').value     = row.PlacaVehiculo;
+    document.getElementById('editTarjetaPropiedadDisabled').value  = row.TarjetaPropiedad;
+    document.getElementById('editFuncionarioDisabled').value       = row.NombreFuncionario || 'No aplica';
+    document.getElementById('editVisitanteDisabled').value         = row.NombreVisitante   || 'No aplica';
 
     var fechaHora = row.FechaDeVehiculo;
     if (fechaHora) fechaHora = fechaHora.replace(' ', 'T').substring(0, 16);
-    $('#editFechaDeVehiculoDisabled').val(fechaHora);
+    document.getElementById('editFechaDeVehiculoDisabled').value = fechaHora;
 
-    $('#modalEditarVehiculo').modal('show');
+    if (typeof jQuery !== 'undefined') {
+        jQuery('#modalEditarVehiculo').modal('show');
+    } else {
+        var modal = new bootstrap.Modal(document.getElementById('modalEditarVehiculo'));
+        modal.show();
+    }
 }
 
 function confirmarCambioEstadoVehiculo(id, estado) {
@@ -554,10 +587,23 @@ function confirmarCambioEstadoVehiculo(id, estado) {
     var colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
     var icono       = nuevoEstado === 'Activo' ? 'fa-lock-open' : 'fa-lock';
 
-    $('#headerCambioEstadoVehiculo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
-    $('#tituloCambioEstadoVehiculo').html('<i class="fas ' + icono + ' me-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Vehículo');
-    $('#mensajeCambioEstadoVehiculo').html('¿Está seguro que desea <strong>' + accion + '</strong> este vehículo?');
-    $('#modalCambiarEstadoVehiculo').modal('show');
+    var headerEl = document.getElementById('headerCambioEstadoVehiculo');
+    if (headerEl) {
+        headerEl.classList.remove('bg-success', 'bg-warning');
+        headerEl.classList.add(colorHeader, 'text-white');
+    }
+    var tituloEl = document.getElementById('tituloCambioEstadoVehiculo');
+    if (tituloEl) tituloEl.innerHTML = '<i class="fas ' + icono + ' me-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Vehículo';
+
+    var mensajeEl = document.getElementById('mensajeCambioEstadoVehiculo');
+    if (mensajeEl) mensajeEl.innerHTML = '¿Está seguro que desea <strong>' + accion + '</strong> este vehículo?';
+
+    if (typeof jQuery !== 'undefined') {
+        jQuery('#modalCambiarEstadoVehiculo').modal('show');
+    } else {
+        var modal = new bootstrap.Modal(document.getElementById('modalCambiarEstadoVehiculo'));
+        modal.show();
+    }
 
     setTimeout(function () {
         var toggleLabel = document.getElementById('toggleEstadoVisualVehiculo');
@@ -569,6 +615,10 @@ function confirmarCambioEstadoVehiculo(id, estado) {
 
 function confirmarEliminacionVehiculo(id) {
     window.vehiculoIdAEliminar = id;
-    $('#confirmarEliminarModalVehiculo').modal('show');
+    if (typeof jQuery !== 'undefined') {
+        jQuery('#confirmarEliminarModalVehiculo').modal('show');
+    } else {
+        var modal = new bootstrap.Modal(document.getElementById('confirmarEliminarModalVehiculo'));
+        modal.show();
+    }
 }
-

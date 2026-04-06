@@ -14,28 +14,41 @@ class ModeloDispositivo {
     }
 
     /**
-     * Registra un nuevo dispositivo en la base de datos
+     * ACTUALIZADO — Registra un nuevo dispositivo incluyendo Institución y Sede
      */
-    public function registrarDispositivo(string $tipo, string $marca, string $numeroSerial, ?int $idFuncionario, ?int $idVisitante): array {
+    public function registrarDispositivo(
+        string $tipo,
+        string $marca,
+        string $numeroSerial,
+        ?int   $idFuncionario,
+        ?int   $idVisitante,
+        ?int   $idInstitucion,   // NUEVO
+        ?int   $idSede           // NUEVO
+    ): array {
         try {
-            file_put_contents($this->debugPath, "=== MODELO: registrarDispositivo ===\nTipo: $tipo, Marca: $marca, Serial: $numeroSerial\n", FILE_APPEND);
+            file_put_contents($this->debugPath,
+                "=== MODELO: registrarDispositivo ===\nTipo: $tipo, Marca: $marca, Serial: $numeroSerial\nInstitucion: $idInstitucion, Sede: $idSede\n",
+                FILE_APPEND
+            );
 
             if (!$this->conexion) {
                 return ['success' => false, 'error' => 'Conexión a la base de datos no disponible'];
             }
 
             $sql = "INSERT INTO dispositivo 
-                        (TipoDispositivo, MarcaDispositivo, NumeroSerial, IdFuncionario, IdVisitante, QrDispositivo, Estado)
+                        (TipoDispositivo, MarcaDispositivo, NumeroSerial, IdFuncionario, IdVisitante, IdInstitucion, IdSede, QrDispositivo, Estado)
                     VALUES 
-                        (:tipo, :marca, :serial, :funcionario, :visitante, '', 'Activo')";
+                        (:tipo, :marca, :serial, :funcionario, :visitante, :institucion, :sede, '', 'Activo')";
 
             $stmt   = $this->conexion->prepare($sql);
             $params = [
-                ':tipo'       => $tipo,
-                ':marca'      => $marca,
-                ':serial'     => $numeroSerial ?: null,
-                ':funcionario'=> $idFuncionario ?: null,
-                ':visitante'  => $idVisitante   ?: null
+                ':tipo'        => $tipo,
+                ':marca'       => $marca,
+                ':serial'      => $numeroSerial ?: null,
+                ':funcionario' => $idFuncionario ?: null,
+                ':visitante'   => $idVisitante   ?: null,
+                ':institucion' => $idInstitucion ?: null,   // NUEVO
+                ':sede'        => $idSede        ?: null,   // NUEVO
             ];
 
             $resultado = $stmt->execute($params);
@@ -83,10 +96,13 @@ class ModeloDispositivo {
         try {
             if (!$this->conexion) return [];
 
-            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante
+            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante,
+                            i.NombreInstitucion, s.TipoSede
                      FROM dispositivo d
-                     LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                     LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
+                     LEFT JOIN funcionario f ON d.IdFuncionario  = f.IdFuncionario
+                     LEFT JOIN visitante   v ON d.IdVisitante    = v.IdVisitante
+                     LEFT JOIN institucion i ON d.IdInstitucion  = i.IdInstitucion
+                     LEFT JOIN sede        s ON d.IdSede         = s.IdSede
                      WHERE d.Estado = 'Activo'
                      ORDER BY d.IdDispositivo DESC";
             $stmt = $this->conexion->prepare($sql);
@@ -106,10 +122,13 @@ class ModeloDispositivo {
         try {
             if (!$this->conexion) return [];
 
-            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante
+            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante,
+                            i.NombreInstitucion, s.TipoSede
                      FROM dispositivo d
-                     LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                     LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
+                     LEFT JOIN funcionario f ON d.IdFuncionario  = f.IdFuncionario
+                     LEFT JOIN visitante   v ON d.IdVisitante    = v.IdVisitante
+                     LEFT JOIN institucion i ON d.IdInstitucion  = i.IdInstitucion
+                     LEFT JOIN sede        s ON d.IdSede         = s.IdSede
                      ORDER BY CASE WHEN d.Estado = 'Activo' THEN 1 ELSE 2 END, d.IdDispositivo DESC";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
@@ -128,10 +147,13 @@ class ModeloDispositivo {
         try {
             if (!$this->conexion) return null;
 
-            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante
+            $sql  = "SELECT d.*, f.NombreFuncionario, v.NombreVisitante,
+                            i.NombreInstitucion, s.TipoSede
                      FROM dispositivo d
-                     LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                     LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
+                     LEFT JOIN funcionario f ON d.IdFuncionario  = f.IdFuncionario
+                     LEFT JOIN visitante   v ON d.IdVisitante    = v.IdVisitante
+                     LEFT JOIN institucion i ON d.IdInstitucion  = i.IdInstitucion
+                     LEFT JOIN sede        s ON d.IdSede         = s.IdSede
                      WHERE d.IdDispositivo = :id";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':id' => $idDispositivo]);
@@ -197,7 +219,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * Actualiza los datos del dispositivo
+     * ACTUALIZADO — Actualiza los datos del dispositivo incluyendo Institución y Sede
      */
     public function actualizar(int $idDispositivo, array $datos): array {
         try {
@@ -212,7 +234,9 @@ class ModeloDispositivo {
                         MarcaDispositivo = :marca,
                         NumeroSerial     = :serial,
                         IdFuncionario    = :funcionario,
-                        IdVisitante      = :visitante
+                        IdVisitante      = :visitante,
+                        IdInstitucion    = :institucion,
+                        IdSede           = :sede
                     WHERE IdDispositivo = :id";
 
             $stmt = $this->conexion->prepare($sql);
@@ -227,13 +251,26 @@ class ModeloDispositivo {
                 $idVis = (int)$datos['IdVisitante'];
             }
 
+            // ── NUEVO ─────────────────────────────────────────────────────────
+            $idInst = null;
+            if (isset($datos['IdInstitucion']) && $datos['IdInstitucion'] !== '' && $datos['IdInstitucion'] !== null) {
+                $idInst = (int)$datos['IdInstitucion'];
+            }
+
+            $idSed = null;
+            if (isset($datos['IdSede']) && $datos['IdSede'] !== '' && $datos['IdSede'] !== null) {
+                $idSed = (int)$datos['IdSede'];
+            }
+
             $params = [
-                ':tipo'       => $datos['TipoDispositivo']  ?? null,
-                ':marca'      => $datos['MarcaDispositivo'] ?? null,
-                ':serial'     => !empty($datos['NumeroSerial']) ? $datos['NumeroSerial'] : null,
-                ':funcionario'=> $idFunc,
-                ':visitante'  => $idVis,
-                ':id'         => $idDispositivo
+                ':tipo'        => $datos['TipoDispositivo']  ?? null,
+                ':marca'       => $datos['MarcaDispositivo'] ?? null,
+                ':serial'      => !empty($datos['NumeroSerial']) ? $datos['NumeroSerial'] : null,
+                ':funcionario' => $idFunc,
+                ':visitante'   => $idVis,
+                ':institucion' => $idInst,  // NUEVO
+                ':sede'        => $idSed,   // NUEVO
+                ':id'          => $idDispositivo
             ];
 
             $resultado = $stmt->execute($params);
@@ -294,8 +331,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * ✅ Verifica si un número serial ya existe (excluyendo un ID para edición)
-     * Esta es la ÚNICA validación de duplicado que se mantiene.
+     * Verifica si un número serial ya existe (excluyendo un ID para edición)
      */
     public function existeNumeroSerial(string $numeroSerial, ?int $excluirId = null): array {
         try {

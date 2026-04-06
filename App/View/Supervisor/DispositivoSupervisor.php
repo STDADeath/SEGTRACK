@@ -33,19 +33,34 @@ if (!empty($_GET['serial'])) {
     $filtros[] = "d.NumeroSerial LIKE :serial";
     $params[':serial'] = '%' . $_GET['serial'] . '%';
 }
+// ── NUEVO: Filtro por institución ──────────────────────────────────────────────
+if (!empty($_GET['institucion'])) {
+    $filtros[] = "d.IdInstitucion = :institucion";
+    $params[':institucion'] = $_GET['institucion'];
+}
+// ── NUEVO: Filtro por sede ─────────────────────────────────────────────────────
+if (!empty($_GET['sede'])) {
+    $filtros[] = "d.IdSede = :sede";
+    $params[':sede'] = $_GET['sede'];
+}
 
 $where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros) : "";
 
+// ── NUEVO: JOINs con institucion y sede ────────────────────────────────────────
 $sql = "SELECT
             d.*,
             f.NombreFuncionario,
             f.CargoFuncionario,
             f.CorreoFuncionario,
             v.NombreVisitante,
-            v.IdentificacionVisitante
+            v.IdentificacionVisitante,
+            i.NombreInstitucion,
+            s.TipoSede
         FROM dispositivo d
-        LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-        LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
+        LEFT JOIN funcionario f ON d.IdFuncionario  = f.IdFuncionario
+        LEFT JOIN visitante   v ON d.IdVisitante    = v.IdVisitante
+        LEFT JOIN institucion i ON d.IdInstitucion  = i.IdInstitucion
+        LEFT JOIN sede        s ON d.IdSede         = s.IdSede
         $where
         ORDER BY
             CASE WHEN d.Estado = 'Activo' THEN 1 ELSE 2 END,
@@ -54,6 +69,12 @@ $sql = "SELECT
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// ── Cargar instituciones para el filtro ────────────────────────────────────────
+$sqlInstituciones = "SELECT IdInstitucion, NombreInstitucion FROM institucion WHERE EstadoInstitucion = 'Activo' ORDER BY NombreInstitucion ASC";
+$stmtInst = $conn->prepare($sqlInstituciones);
+$stmtInst->execute();
+$instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -147,6 +168,48 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
 
+                    <!-- ── NUEVO: Institución ────────────────────────────────── -->
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-university mr-1 text-primary"></i>Institución
+                        </label>
+                        <select name="institucion" id="filtroInstitucion" class="form-control">
+                            <option value="">Todas</option>
+                            <?php foreach ($instituciones as $inst) : ?>
+                                <option value="<?= $inst['IdInstitucion'] ?>"
+                                    <?= (isset($_GET['institucion']) && $_GET['institucion'] == $inst['IdInstitucion']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($inst['NombreInstitucion']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <!-- ── NUEVO: Sede (carga dinámica) ─────────────────────── -->
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-map-marker-alt mr-1 text-primary"></i>Sede
+                        </label>
+                        <select name="sede" id="filtroSede" class="form-control">
+                            <option value="">Todas</option>
+                            <?php
+                            if (!empty($_GET['institucion'])) {
+                                $sqlSedes = "SELECT IdSede, TipoSede FROM sede WHERE IdInstitucion = :id AND Estado = 'Activo' ORDER BY TipoSede ASC";
+                                $stmtSede = $conn->prepare($sqlSedes);
+                                $stmtSede->execute([':id' => $_GET['institucion']]);
+                                $sedesFiltro = $stmtSede->fetchAll(PDO::FETCH_ASSOC);
+                                foreach ($sedesFiltro as $sed) :
+                            ?>
+                                <option value="<?= $sed['IdSede'] ?>"
+                                    <?= (isset($_GET['sede']) && $_GET['sede'] == $sed['IdSede']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($sed['TipoSede']) ?>
+                                </option>
+                            <?php
+                                endforeach;
+                            }
+                            ?>
+                        </select>
+                    </div>
+
                     <div class="col-md-1 mb-3">
                         <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                             <i class="fas fa-toggle-on mr-1 text-primary"></i>Estado
@@ -185,6 +248,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>N° Serial</th>
                         <th>Funcionario</th>
                         <th>Visitante</th>
+                        <th>Institución</th>  <!-- NUEVO -->
+                        <th>Sede</th>         <!-- NUEVO -->
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -239,6 +304,26 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
                                 </td>
+                                <!-- ── NUEVO: Institución ─────────────────────── -->
+                                <td>
+                                    <?php if (!empty($row['NombreInstitucion'])) : ?>
+                                        <span class="badge badge-primary" style="font-size:0.8em;">
+                                            <i class="fas fa-university mr-1"></i><?= htmlspecialchars($row['NombreInstitucion']) ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <span class="badge bg-secondary text-white">Sin asignar</span>
+                                    <?php endif; ?>
+                                </td>
+                                <!-- ── NUEVO: Sede ────────────────────────────── -->
+                                <td>
+                                    <?php if (!empty($row['TipoSede'])) : ?>
+                                        <span class="badge badge-info" style="font-size:0.8em;">
+                                            <i class="fas fa-map-marker-alt mr-1"></i><?= htmlspecialchars($row['TipoSede']) ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <span class="badge bg-secondary text-white">Sin asignar</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="text-center">
                                     <?php if ($row['Estado'] === 'Activo') : ?>
                                         <span class="badge badge-success badge-estado">Activo</span>
@@ -266,7 +351,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="8" class="text-center py-4">
+                            <td colspan="10" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay dispositivos registrados con los filtros seleccionados</p>
                             </td>
@@ -338,6 +423,20 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <label class="form-label">Número Serial <small class="text-muted">(Solo lectura)</small></label>
                             <input type="text" id="editNumeroSerial" class="form-control bg-light" readonly
                                    placeholder="Sin número serial">
+                        </div>
+                    </div>
+
+                    <!-- ── NUEVO: Institución y Sede en modal editar ─────────── -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Institución <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editNombreInstitucion" class="form-control bg-light" readonly>
+                            <input type="hidden" id="editIdInstitucion" name="id_institucion">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Sede <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editTipoSede" class="form-control bg-light" readonly>
+                            <input type="hidden" id="editIdSede" name="id_sede">
                         </div>
                     </div>
 

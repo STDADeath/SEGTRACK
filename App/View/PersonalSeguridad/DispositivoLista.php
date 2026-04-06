@@ -33,24 +33,45 @@ if (!empty($_GET['serial'])) {
     $filtros[] = "d.NumeroSerial LIKE :serial";
     $params[':serial'] = '%' . $_GET['serial'] . '%';
 }
+// ── NUEVO: Filtro por institución ──────────────────────────────────────────────
+if (!empty($_GET['institucion'])) {
+    $filtros[] = "d.IdInstitucion = :institucion";
+    $params[':institucion'] = $_GET['institucion'];
+}
+// ── NUEVO: Filtro por sede ─────────────────────────────────────────────────────
+if (!empty($_GET['sede'])) {
+    $filtros[] = "d.IdSede = :sede";
+    $params[':sede'] = $_GET['sede'];
+}
 
 $where = "WHERE " . implode(" AND ", $filtros);
 
+// ── NUEVO: JOINs con institucion y sede ────────────────────────────────────────
 $sql = "SELECT
             d.*,
             f.NombreFuncionario,
             f.CorreoFuncionario,
             v.NombreVisitante,
-            v.CorreoVisitante
+            v.CorreoVisitante,
+            i.NombreInstitucion,
+            s.TipoSede
         FROM dispositivo d
-        LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-        LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
+        LEFT JOIN funcionario f ON d.IdFuncionario  = f.IdFuncionario
+        LEFT JOIN visitante   v ON d.IdVisitante    = v.IdVisitante
+        LEFT JOIN institucion i ON d.IdInstitucion  = i.IdInstitucion
+        LEFT JOIN sede        s ON d.IdSede         = s.IdSede
         $where
         ORDER BY d.IdDispositivo DESC";
 
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// ── Cargar instituciones para el filtro ────────────────────────────────────────
+$sqlInstituciones = "SELECT IdInstitucion, NombreInstitucion FROM institucion WHERE EstadoInstitucion = 'Activo' ORDER BY NombreInstitucion ASC";
+$stmtInst = $conn->prepare($sqlInstituciones);
+$stmtInst->execute();
+$instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container-fluid px-4 py-4">
@@ -67,7 +88,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h6 class="m-0 font-weight-bold text-primary">
                 <i class="fas fa-filter mr-2"></i>Filtrar Dispositivos
             </h6>
-            <a href="Dispositivolista.php" class="btn btn-sm btn-outline-secondary">
+            <a href="DispositivoLista.php" class="btn btn-sm btn-outline-secondary">
                 <i class="fas fa-broom mr-1"></i>Limpiar filtros
             </a>
         </div>
@@ -75,20 +96,20 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <form method="get">
                 <div class="row align-items-end">
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                         <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                             <i class="fas fa-laptop mr-1 text-primary"></i>Tipo
                         </label>
                         <select name="tipo" id="tipo" class="form-control">
                             <option value="">Todos</option>
-                            <option value="Portatil"   <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Portatil')   ? 'selected' : '' ?>> Portátil</option>
-                            <option value="Tablet"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Tablet')     ? 'selected' : '' ?>> Tablet</option>
-                            <option value="Computador" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Computador') ? 'selected' : '' ?>> Computador</option>
-                            <option value="Otro"       <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Otro')       ? 'selected' : '' ?>> Otro</option>
+                            <option value="Portatil"   <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Portatil')   ? 'selected' : '' ?>>Portátil</option>
+                            <option value="Tablet"     <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Tablet')     ? 'selected' : '' ?>>Tablet</option>
+                            <option value="Computador" <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Computador') ? 'selected' : '' ?>>Computador</option>
+                            <option value="Otro"       <?= (isset($_GET['tipo']) && $_GET['tipo'] == 'Otro')       ? 'selected' : '' ?>>Otro</option>
                         </select>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                         <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                             <i class="fas fa-tag mr-1 text-primary"></i>Marca
                         </label>
@@ -102,7 +123,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                         <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                             <i class="fas fa-barcode mr-1 text-primary"></i>Número Serial
                         </label>
@@ -116,7 +137,50 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <!-- ── NUEVO: Filtro Institución ────────────────────────── -->
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-university mr-1 text-primary"></i>Institución
+                        </label>
+                        <select name="institucion" id="filtroInstitucion" class="form-control">
+                            <option value="">Todas</option>
+                            <?php foreach ($instituciones as $inst) : ?>
+                                <option value="<?= $inst['IdInstitucion'] ?>"
+                                    <?= (isset($_GET['institucion']) && $_GET['institucion'] == $inst['IdInstitucion']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($inst['NombreInstitucion']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <!-- ── NUEVO: Filtro Sede (carga dinámica) ──────────────── -->
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-map-marker-alt mr-1 text-primary"></i>Sede
+                        </label>
+                        <select name="sede" id="filtroSede" class="form-control">
+                            <option value="">Todas</option>
+                            <?php
+                            // Si hay una institución seleccionada, cargar sus sedes
+                            if (!empty($_GET['institucion'])) {
+                                $sqlSedes = "SELECT IdSede, TipoSede FROM sede WHERE IdInstitucion = :id AND Estado = 'Activo' ORDER BY TipoSede ASC";
+                                $stmtSede = $conn->prepare($sqlSedes);
+                                $stmtSede->execute([':id' => $_GET['institucion']]);
+                                $sedesFiltro = $stmtSede->fetchAll(PDO::FETCH_ASSOC);
+                                foreach ($sedesFiltro as $sed) :
+                            ?>
+                                <option value="<?= $sed['IdSede'] ?>"
+                                    <?= (isset($_GET['sede']) && $_GET['sede'] == $sed['IdSede']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($sed['TipoSede']) ?>
+                                </option>
+                            <?php
+                                endforeach;
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
                         <label class="form-label d-block invisible">.</label>
                         <button type="submit" class="btn btn-primary btn-block">
                             <i class="fas fa-search mr-1"></i>Filtrar
@@ -143,6 +207,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>Número Serial</th>
                         <th>Funcionario</th>
                         <th>Visitante</th>
+                        <th>Institución</th>  <!-- NUEVO -->
+                        <th>Sede</th>         <!-- NUEVO -->
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -197,6 +263,26 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge bg-info text-white">No aplica</span>
                                     <?php endif; ?>
                                 </td>
+                                <!-- ── NUEVO: Institución ─────────────────────── -->
+                                <td>
+                                    <?php if (!empty($row['NombreInstitucion'])) : ?>
+                                        <span class="badge badge-primary" style="font-size:0.8em;">
+                                            <i class="fas fa-university mr-1"></i><?= htmlspecialchars($row['NombreInstitucion']) ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <span class="badge bg-secondary text-white">Sin asignar</span>
+                                    <?php endif; ?>
+                                </td>
+                                <!-- ── NUEVO: Sede ────────────────────────────── -->
+                                <td>
+                                    <?php if (!empty($row['TipoSede'])) : ?>
+                                        <span class="badge badge-info" style="font-size:0.8em;">
+                                            <i class="fas fa-map-marker-alt mr-1"></i><?= htmlspecialchars($row['TipoSede']) ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <span class="badge bg-secondary text-white">Sin asignar</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-sm btn-outline-primary"
                                         onclick='cargarDatosEdicionDispositivo(<?= json_encode($row) ?>)'
@@ -209,7 +295,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="7" class="text-center py-4">
+                            <td colspan="9" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay dispositivos activos registrados con los filtros seleccionados</p>
                             </td>
@@ -290,6 +376,20 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                        placeholder="Ej: SN123456789" maxlength="50">
                             </div>
                             <small class="text-muted">Campo opcional - Solo letras, números, guiones (-) y guiones bajos (_)</small>
+                        </div>
+                    </div>
+
+                    <!-- ── NUEVO: Institución y Sede en modal editar ─────────────── -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Institución <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editNombreInstitucion" class="form-control bg-light" readonly>
+                            <input type="hidden" id="editIdInstitucion" name="id_institucion">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Sede <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editTipoSede" class="form-control bg-light" readonly>
+                            <input type="hidden" id="editIdSede" name="id_sede">
                         </div>
                     </div>
 
