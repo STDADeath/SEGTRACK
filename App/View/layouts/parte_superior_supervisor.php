@@ -105,6 +105,7 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
         <div id="collapseFuncionarios" class="collapse" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Funcionarios:</h6>
+                <a class="collapse-item" href="../Supervisor/FuncionarioSUP.php">Registrar Funcionarios</a>
                 <a class="collapse-item" href="../Supervisor/FuncionarioListaSUP.php">Lista de Funcionarios</a>
             </div>
         </div>

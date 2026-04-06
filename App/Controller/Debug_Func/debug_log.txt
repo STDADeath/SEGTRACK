@@ -372,3 +372,7 @@
 2026-04-06 09:49:18 - Foto guardada para funcionario 156: qr/Fotos/FOTO-FUNC-156-69d3657ebf317.jpg
 2026-04-06 09:49:19 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-156-69d3657ec0644.png
 2026-04-06 09:49:21 - Correo enviado correctamente a lorena.beltran@yahoo.com
+2026-04-06 20:49:04 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-157-69d4002004eaa.jpg
+2026-04-06 20:49:04 - Foto guardada para funcionario 157: qr/Fotos/FOTO-FUNC-157-69d4002004eaa.jpg
+2026-04-06 20:49:04 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-157-69d40020087a4.png
+2026-04-06 20:49:06 - Correo enviado correctamente a valentia2na@gmail.com

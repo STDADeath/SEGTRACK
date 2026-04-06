@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../layouts/parte_superior_Supervisor.php';
+require_once __DIR__ . '/../layouts/parte_superior_supervisor.php';
 require_once __DIR__ . "/../../Controller/ControladorSede.php";
 
 $controladorSede = new ControladorSede();
@@ -242,7 +242,7 @@ $instituciones   = $controladorSede->obtenerInstituciones();
     ?>;
 </script>
 
-<?php require_once __DIR__ . '/../layouts/parte_inferior_Supervisor.php'; ?>
+<?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
 
 <script src="../../../Public/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
