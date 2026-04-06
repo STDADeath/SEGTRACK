@@ -18,25 +18,38 @@ class ModeloSede
     // ══════════════════════════════════════════════════════
     // REGISTRAR SEDE
     // ══════════════════════════════════════════════════════
-    public function registrarSede($tipoSede, $ciudad, $idInstitucion)
-    {
-        try {
-            $sql = "INSERT INTO sede (TipoSede, Ciudad, IdInstitucion, Estado)
-                    VALUES (:tipo, :ciudad, :institucion, 'Activo')";
-
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(':tipo',        $tipoSede,      PDO::PARAM_STR);
-            $stmt->bindParam(':ciudad',      $ciudad,        PDO::PARAM_STR);
-            $stmt->bindParam(':institucion', $idInstitucion, PDO::PARAM_INT);
-            $stmt->execute();
-
-            return $stmt->rowCount() > 0;
-
-        } catch (PDOException $e) {
-            error_log("Error PDO (registrar sede): " . $e->getMessage());
-            return false;
+   public function registrarSede($tipoSede, $ciudad, $idInstitucion)
+{
+    try {
+        // ✅ VERIFICAR DUPLICADO ANTES DE INSERTAR
+        if ($this->existeSede($tipoSede, $ciudad)) {
+            return [
+                'success' => false,
+                'message' => 'Ya existe una sede con ese tipo y ciudad.'
+            ];
         }
+
+        $sql = "INSERT INTO sede (TipoSede, Ciudad, IdInstitucion, Estado)
+                VALUES (:tipo, :ciudad, :institucion, 'Activo')";
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':tipo',        $tipoSede,      PDO::PARAM_STR);
+        $stmt->bindParam(':ciudad',      $ciudad,        PDO::PARAM_STR);
+        $stmt->bindParam(':institucion', $idInstitucion, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // ✅ RETORNAR ARRAY, NO BOOL
+        if ($stmt->rowCount() > 0) {
+            return ['success' => true, 'message' => 'Sede registrada correctamente.'];
+        } else {
+            return ['success' => false, 'message' => 'No se pudo registrar la sede.'];
+        }
+
+    } catch (PDOException $e) {
+        error_log("Error PDO (registrar sede): " . $e->getMessage());
+        return ['success' => false, 'message' => 'Error en la base de datos.'];
     }
+}
 
     // ══════════════════════════════════════════════════════
     // VERIFICAR SI YA EXISTE UNA SEDE
@@ -62,29 +75,43 @@ class ModeloSede
     // EDITAR SEDE
     // ══════════════════════════════════════════════════════
     public function editarSede($idSede, $tipoSede, $ciudad, $idInstitucion)
-    {
-        try {
-            $sql = "UPDATE sede
-                    SET TipoSede      = :tipo,
-                        Ciudad        = :ciudad,
-                        IdInstitucion = :institucion
-                    WHERE IdSede = :id";
+{
+    try {
+        // ✅ VERIFICAR DUPLICADO EXCLUYENDO LA SEDE ACTUAL
+        $sqlCheck = "SELECT IdSede FROM sede
+                     WHERE TipoSede = :tipo AND Ciudad = :ciudad AND IdSede != :id
+                     LIMIT 1";
+        $stmtCheck = $this->conexion->prepare($sqlCheck);
+        $stmtCheck->execute([':tipo' => $tipoSede, ':ciudad' => $ciudad, ':id' => $idSede]);
 
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(':tipo',        $tipoSede,      PDO::PARAM_STR);
-            $stmt->bindParam(':ciudad',      $ciudad,        PDO::PARAM_STR);
-            $stmt->bindParam(':institucion', $idInstitucion, PDO::PARAM_INT);
-            $stmt->bindParam(':id',          $idSede,        PDO::PARAM_INT);
-            $stmt->execute();
-
-            return $stmt->rowCount() > 0;
-
-        } catch (PDOException $e) {
-            error_log("Error PDO (editar sede): " . $e->getMessage());
-            return false;
+        if ($stmtCheck->fetch()) {
+            return [
+                'success' => false,
+                'message' => 'Ya existe otra sede con ese tipo y ciudad.'
+            ];
         }
-    }
 
+        $sql = "UPDATE sede
+                SET TipoSede      = :tipo,
+                    Ciudad        = :ciudad,
+                    IdInstitucion = :institucion
+                WHERE IdSede = :id";
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':tipo',        $tipoSede,      PDO::PARAM_STR);
+        $stmt->bindParam(':ciudad',      $ciudad,        PDO::PARAM_STR);
+        $stmt->bindParam(':institucion', $idInstitucion, PDO::PARAM_INT);
+        $stmt->bindParam(':id',          $idSede,        PDO::PARAM_INT);
+        $stmt->execute();
+
+        // ✅ rowCount() puede ser 0 si no hubo cambios reales — igual es éxito
+        return ['success' => true, 'message' => 'Sede actualizada correctamente.'];
+
+    } catch (PDOException $e) {
+        error_log("Error PDO (editar sede): " . $e->getMessage());
+        return ['success' => false, 'message' => 'Error en la base de datos.'];
+    }
+}
     // ══════════════════════════════════════════════════════
     // OBTENER SEDE POR ID
     // ══════════════════════════════════════════════════════

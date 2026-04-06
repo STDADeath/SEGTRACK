@@ -1,18 +1,4 @@
 <?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
-<?php require_once(__DIR__ . "/../../Core/conexion.php");?>
-
-<?php
-// Obtener funcionarios, visitantes, instituciones activos
-$conexion = new Conexion();
-$conn = $conexion->getConexion();
-
-// Obtener instituciones activas
-// Funcionarios y visitantes se cargan dinámicamente según la sede seleccionada
-$sqlInstituciones = "SELECT IdInstitucion, NombreInstitucion FROM institucion WHERE EstadoInstitucion = 'Activo' ORDER BY NombreInstitucion ASC";
-$stmtInst = $conn->prepare($sqlInstituciones);
-$stmtInst->execute();
-$instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
-?>
 
 <div class="container-fluid px-4 py-4">
     <div class="row justify-content-center">
@@ -32,9 +18,9 @@ $instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="card-body">
                     <form id="formDispositivo" method="POST">
+                        
+                        <!-- Tipo de Dispositivo -->
                         <div class="row">
-
-                            <!-- Tipo de Dispositivo -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                                     <i class="fas fa-desktop mr-1 text-primary"></i>Tipo de Dispositivo <span class="text-danger">*</span>
@@ -77,26 +63,23 @@ $instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
 
-                        <!-- ══════════════════════════════════════ -->
-                        <!-- Institución y Sede                     -->
-                        <!-- ══════════════════════════════════════ -->
+                        <!-- ════════════════════════════════════════════════════════════
+                             CASCADA: Institución → Sede → Funcionario / Visitante
+                             ════════════════════════════════════════════════════════════ -->
+
+                        <!-- Institución -->
                         <div class="row">
-                            <!-- Institución -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                                     <i class="fas fa-university mr-1 text-primary"></i>Institución <span class="text-danger">*</span>
                                 </label>
                                 <select name="IdInstitucion" id="IdInstitucion" class="form-control" required>
-                                    <option value="">Seleccione una institución...</option>
-                                    <?php foreach ($instituciones as $inst) : ?>
-                                        <option value="<?= $inst['IdInstitucion'] ?>">
-                                            <?= htmlspecialchars($inst['NombreInstitucion']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
+                                    <option value="">Cargando instituciones...</option>
                                 </select>
+                                <small class="text-muted">Seleccione la institución para cargar las sedes.</small>
                             </div>
 
-                            <!-- Sede (carga dinámica según institución) -->
+                            <!-- Sede (dinámica) -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                                     <i class="fas fa-map-marker-alt mr-1 text-primary"></i>Sede <span class="text-danger">*</span>
@@ -104,19 +87,19 @@ $instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
                                 <select name="IdSede" id="IdSede" class="form-control" required disabled>
                                     <option value="">Primero seleccione una institución...</option>
                                 </select>
-                                <small class="text-muted" id="sedeHint">Las sedes se cargan según la institución seleccionada</small>
+                                <small class="text-muted">Seleccione la sede para cargar funcionarios y visitantes.</small>
                             </div>
                         </div>
 
-                        <!-- ¿Pertenece a visitante? -->
+                        <!-- ¿Pertenece a funcionario o visitante? -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
                                     <i class="fas fa-user mr-1 text-primary"></i>¿A quién pertenece el dispositivo?
                                 </label>
                                 <select id="TieneVisitante" name="TieneVisitante" class="form-control">
-                                    <option value="no" selected>(Funcionario)</option>
-                                    <option value="si">(Visitante)</option>
+                                    <option value="no" selected>Funcionario</option>
+                                    <option value="si">Visitante</option>
                                 </select>
                             </div>
                         </div>
@@ -130,7 +113,7 @@ $instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
                                 <select name="IdFuncionario" id="IdFuncionario" class="form-control" disabled>
                                     <option value="">Primero seleccione una sede...</option>
                                 </select>
-                                <small class="text-muted">Los funcionarios se filtran según la sede seleccionada</small>
+                                <small class="text-muted">Los funcionarios se filtran según la sede seleccionada.</small>
                             </div>
                         </div>
 
@@ -143,7 +126,7 @@ $instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
                                 <select name="IdVisitante" id="IdVisitante" class="form-control" disabled>
                                     <option value="">Primero seleccione una sede...</option>
                                 </select>
-                                <small class="text-muted">Los visitantes se filtran según la sede seleccionada</small>
+                                <small class="text-muted">Los visitantes se filtran según la sede seleccionada.</small>
                             </div>
                         </div>
 
@@ -171,10 +154,7 @@ $instituciones = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- Librería SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Script de validación externo -->
 <script src="../../../Public/js/javascript/js/ValidacionDispositivo.js?v=<?= time() ?>"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>

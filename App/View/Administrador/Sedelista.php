@@ -163,10 +163,10 @@ foreach ($todasSedes as $s) {
                             <td class="text-center">
                                 <?php if ($fila['Estado'] === 'Activo') : ?>
                                     <span id="badge-estado-<?= $fila['IdSede'] ?>"
-                                          class="badge bg-success text-white px-3 py-2">Activo</span>
+                                          class="badge bg-success text-white px-3 py-2 estado-badge">Activo</span>
                                 <?php else : ?>
                                     <span id="badge-estado-<?= $fila['IdSede'] ?>"
-                                          class="badge text-white px-3 py-2"
+                                          class="badge text-white px-3 py-2 estado-badge"
                                           style="background-color:#60a5fa;">Inactivo</span>
                                 <?php endif; ?>
                             </td>
@@ -283,7 +283,77 @@ foreach ($todasSedes as $s) {
 <script src="../../../Public/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../../Public/js/javascript/js/ValidacionSedeLista.js"></script>
-<script >
+
+<script>
 const urlControladorSede    = "../../Controller/ControladorSede.php";
 const SEDES_POR_INSTITUCION = <?= json_encode($sedesPorInstitucion, JSON_UNESCAPED_UNICODE) ?>;
+</script>
+
+<!-- LÓGICA DE CASCADA PARA FILTROS (Agregada) -->
+<script>
+$(document).ready(function () {
+    const $institutoSelect = $('#filtroInstituto');
+    const $sedeSelect = $('#filtroSede');
+    const sedesPorInstitucion = window.SEDES_POR_INSTITUCION || {};
+
+    function actualizarSelectSede(institutoId, selectedSedeId = '') {
+        $sedeSelect.empty();
+        $sedeSelect.append('<option value="">Todas</option>');
+
+        if (!institutoId) return;
+
+        const sedes = sedesPorInstitucion[institutoId];
+        if (!sedes || sedes.length === 0) return;
+
+        sedes.forEach(sede => {
+            const option = $('<option>', {
+                value: sede.IdSede,
+                text: sede.NombreSede
+            });
+            if (selectedSedeId && sede.IdSede == selectedSedeId) {
+                option.attr('selected', 'selected');
+            }
+            $sedeSelect.append(option);
+        });
+    }
+
+    $institutoSelect.on('change', function () {
+        actualizarSelectSede($(this).val(), '');
+    });
+
+    // Inicializar al cargar la página
+    const institutoInicial = $institutoSelect.val();
+    const sedeSeleccionada = $sedeSelect.data('selected');
+    if (institutoInicial) {
+        actualizarSelectSede(institutoInicial, sedeSeleccionada);
+    }
+});
+</script><script>
+$(document).ready(function () {
+    const $institutoSelect = $('#filtroInstituto');
+    const $sedeSelect = $('#filtroSede');
+    const sedesPorInstitucion = window.SEDES_POR_INSTITUCION || {};
+
+    function actualizarSelectSede(institutoId, selectedSedeId = '') {
+        $sedeSelect.empty();
+        $sedeSelect.append('<option value="">Todas</option>');
+        if (!institutoId) return;
+        const sedes = sedesPorInstitucion[institutoId];
+        if (!sedes || sedes.length === 0) return;
+        sedes.forEach(sede => {
+            const option = $('<option>', { value: sede.IdSede, text: sede.NombreSede });
+            if (selectedSedeId && sede.IdSede == selectedSedeId) option.attr('selected', 'selected');
+            $sedeSelect.append(option);
+        });
+    }
+
+    $institutoSelect.on('change', function () {
+        actualizarSelectSede($(this).val(), '');
+    });
+
+    // Inicializar al cargar
+    const institutoInicial = $institutoSelect.val();
+    const sedeSeleccionada = $sedeSelect.data('selected');
+    if (institutoInicial) actualizarSelectSede(institutoInicial, sedeSeleccionada);
+});
 </script>

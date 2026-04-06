@@ -3466,3 +3466,811 @@ INSERT exitoso, ID: 56
 Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 56","data":{"IdDispositivo":"56","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-56-69cf5e901fccb.png"}}
 === FIN ===
 
+
+2026-04-06 11:15:57 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:17:30 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "36"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogot\u00e1"},{"IdSede":88,"TipoSede":"Sede Norte  Asturias","Ciudad":"Bogot\u00e1"},{"IdSede":86,"TipoSede":"Sede Principal Asturias","Ciudad":"Bogota"}]}
+=== FIN ===
+
+
+2026-04-06 11:17:31 === INICIO ===
+
+2026-04-06 11:17:31 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":112,"NombreFuncionario":"Andr\u00e9s Felipe S\u00e1nchez Torres"},{"IdFuncionario":110,"NombreFuncionario":"Carlos Andr\u00e9s Rodr\u00edguez L\u00f3pez"},{"IdFuncionario":114,"NombreFuncionario":"Diego Alejandro G\u00f3mez Ruiz"},{"IdFuncionario":109,"NombreFuncionario":"Juan David P\u00e9rez G\u00f3mez"},{"IdFuncionario":111,"NombreFuncionario":"Luis Fernando Mart\u00ednez D\u00edaz"},{"IdFuncionario":113,"NombreFuncionario":"Miguel \u00c1ngel Ram\u00edrez Castro"},{"IdFuncionario":153,"NombreFuncionario":"Patricia Cifuentes L\u00f3pez"},{"IdFuncionario":149,"NombreFuncionario":"Sandra Pineda Duarte"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:17:39 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "HP",
+    "NumeroSerial": "SN123456789",
+    "IdFuncionario": "112",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: HP, Serial: SN123456789
+Funcionario: 112, Visitante: 
+INSERT exitoso, ID: 57
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 57","data":{"IdDispositivo":"57","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-57-69d37a33cf89a.png"}}
+=== FIN ===
+
+
+2026-04-06 11:17:43 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:18:24 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "36"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogot\u00e1"},{"IdSede":88,"TipoSede":"Sede Norte  Asturias","Ciudad":"Bogot\u00e1"},{"IdSede":86,"TipoSede":"Sede Principal Asturias","Ciudad":"Bogota"}]}
+=== FIN ===
+
+
+2026-04-06 11:18:25 === INICIO ===
+
+2026-04-06 11:18:25 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "88"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":154,"NombreFuncionario":"\u00c1ngela Buitrago R\u00edos"},{"IdFuncionario":119,"NombreFuncionario":"Camilo Andr\u00e9s Vega Pardo"},{"IdFuncionario":150,"NombreFuncionario":"Claudia Le\u00f3n Cardona"},{"IdFuncionario":117,"NombreFuncionario":"Daniel Esteban Ortiz Rojas"},{"IdFuncionario":155,"NombreFuncionario":"Diana Barreto G\u00f3mez"},{"IdFuncionario":118,"NombreFuncionario":"Jorge Luis Morales Silva"},{"IdFuncionario":116,"NombreFuncionario":"Nicol\u00e1s Castro Mendoza"},{"IdFuncionario":151,"NombreFuncionario":"Paola Salgado Cruz"},{"IdFuncionario":115,"NombreFuncionario":"Sebasti\u00e1n Herrera Vargas"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "88"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:18:32 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Dell",
+    "NumeroSerial": "DL987654321",
+    "IdFuncionario": "155",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Dell, Serial: DL987654321
+Funcionario: 155, Visitante: 
+INSERT exitoso, ID: 58
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 58","data":{"IdDispositivo":"58","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-58-69d37a68ea665.png"}}
+=== FIN ===
+
+
+2026-04-06 11:18:36 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:18:53 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "36"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogot\u00e1"},{"IdSede":88,"TipoSede":"Sede Norte  Asturias","Ciudad":"Bogot\u00e1"},{"IdSede":86,"TipoSede":"Sede Principal Asturias","Ciudad":"Bogota"}]}
+=== FIN ===
+
+
+2026-04-06 11:18:54 === INICIO ===
+
+2026-04-06 11:18:54 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "86"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":107,"NombreFuncionario":"Andres camilo carrillo Jaimes"},{"IdFuncionario":120,"NombreFuncionario":"Kevin Alexander Torres Le\u00f3n"},{"IdFuncionario":156,"NombreFuncionario":"Lorena Beltr\u00e1n Castillo"},{"IdFuncionario":152,"NombreFuncionario":"M\u00f3nica Parra Ni\u00f1o"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "86"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:19:02 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "Samsung",
+    "NumeroSerial": "SM-T515XZ",
+    "IdFuncionario": "120",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: Samsung, Serial: SM-T515XZ
+Funcionario: 120, Visitante: 
+INSERT exitoso, ID: 59
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 59","data":{"IdDispositivo":"59","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-59-69d37a87023ca.png"}}
+=== FIN ===
+
+
+2026-04-06 11:19:03 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:19:18 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "34"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":91,"TipoSede":"Sede Centro  UNICOLOMBIA","Ciudad":"Bogot\u00e1"},{"IdSede":90,"TipoSede":"Sede Norte UNICOLOMBIA","Ciudad":"Bogot\u00e1"},{"IdSede":89,"TipoSede":"Sede Principal UNICOLOMBIA","Ciudad":"Bogot\u00e1"}]}
+=== FIN ===
+
+
+2026-04-06 11:19:19 === INICIO ===
+
+2026-04-06 11:19:19 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "91"
+}
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "91"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":122,"NombreFuncionario":"Alejandro Quintero Salazar"},{"IdFuncionario":140,"NombreFuncionario":"Angie Paola Ortiz Rojas"},{"IdFuncionario":123,"NombreFuncionario":"Brayan Stiven C\u00e1rdenas Gil"},{"IdFuncionario":121,"NombreFuncionario":"Cristian David Rinc\u00f3n Pe\u00f1a"},{"IdFuncionario":124,"NombreFuncionario":"Esteban Giraldo Ospina"},{"IdFuncionario":147,"NombreFuncionario":"Estefan\u00eda Giraldo Ospina"},{"IdFuncionario":143,"NombreFuncionario":"Karen Tatiana Torres Le\u00f3n"},{"IdFuncionario":144,"NombreFuncionario":"Lina Marcela Rinc\u00f3n Pe\u00f1a"}]}
+=== FIN ===
+
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:19:23 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Lenovo",
+    "NumeroSerial": "LN564738291",
+    "IdFuncionario": "144",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Lenovo, Serial: LN564738291
+Funcionario: 144, Visitante: 
+INSERT exitoso, ID: 60
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 60","data":{"IdDispositivo":"60","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-60-69d37a9bf3b4b.png"}}
+=== FIN ===
+
+
+2026-04-06 11:19:24 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:19:45 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "34"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":91,"TipoSede":"Sede Centro  UNICOLOMBIA","Ciudad":"Bogot\u00e1"},{"IdSede":90,"TipoSede":"Sede Norte UNICOLOMBIA","Ciudad":"Bogot\u00e1"},{"IdSede":89,"TipoSede":"Sede Principal UNICOLOMBIA","Ciudad":"Bogot\u00e1"}]}
+=== FIN ===
+
+
+2026-04-06 11:19:46 === INICIO ===
+
+2026-04-06 11:19:46 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "90"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":145,"NombreFuncionario":"Adriana Quintero Salazar"},{"IdFuncionario":141,"NombreFuncionario":"Diana Carolina Morales Silva"},{"IdFuncionario":148,"NombreFuncionario":"Tatiana Mej\u00eda Hoyos"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "90"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:19:51 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Computador",
+    "MarcaDispositivo": "ASUS",
+    "NumeroSerial": "AS99887766",
+    "IdFuncionario": "148",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Computador, Marca: ASUS, Serial: AS99887766
+Funcionario: 148, Visitante: 
+INSERT exitoso, ID: 61
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 61","data":{"IdDispositivo":"61","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-61-69d37ab7a7218.png"}}
+=== FIN ===
+
+
+2026-04-06 11:19:52 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:20:06 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "34"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":91,"TipoSede":"Sede Centro  UNICOLOMBIA","Ciudad":"Bogot\u00e1"},{"IdSede":90,"TipoSede":"Sede Norte UNICOLOMBIA","Ciudad":"Bogot\u00e1"},{"IdSede":89,"TipoSede":"Sede Principal UNICOLOMBIA","Ciudad":"Bogot\u00e1"}]}
+=== FIN ===
+
+
+2026-04-06 11:20:07 === INICIO ===
+
+2026-04-06 11:20:07 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "89"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":108,"NombreFuncionario":"Anderson Estiben Moreno Pinzon"},{"IdFuncionario":125,"NombreFuncionario":"Juli\u00e1n Andr\u00e9s Mej\u00eda Hoyos"},{"IdFuncionario":142,"NombreFuncionario":"Juliana Andrea Vega Pardo"},{"IdFuncionario":126,"NombreFuncionario":"\u00d3scar Javier Pineda Duarte"},{"IdFuncionario":146,"NombreFuncionario":"Yuliana C\u00e1rdenas Gil"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "89"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:20:12 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Acer",
+    "NumeroSerial": "AC11223344",
+    "IdFuncionario": "126",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Acer, Serial: AC11223344
+Funcionario: 126, Visitante: 
+INSERT exitoso, ID: 62
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 62","data":{"IdDispositivo":"62","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-62-69d37accbedbb.png"}}
+=== FIN ===
+
+
+2026-04-06 11:20:13 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:20:28 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "36"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogot\u00e1"},{"IdSede":88,"TipoSede":"Sede Norte  Asturias","Ciudad":"Bogot\u00e1"},{"IdSede":86,"TipoSede":"Sede Principal Asturias","Ciudad":"Bogota"}]}
+=== FIN ===
+
+
+2026-04-06 11:20:29 === INICIO ===
+
+2026-04-06 11:20:29 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":112,"NombreFuncionario":"Andr\u00e9s Felipe S\u00e1nchez Torres"},{"IdFuncionario":110,"NombreFuncionario":"Carlos Andr\u00e9s Rodr\u00edguez L\u00f3pez"},{"IdFuncionario":114,"NombreFuncionario":"Diego Alejandro G\u00f3mez Ruiz"},{"IdFuncionario":109,"NombreFuncionario":"Juan David P\u00e9rez G\u00f3mez"},{"IdFuncionario":111,"NombreFuncionario":"Luis Fernando Mart\u00ednez D\u00edaz"},{"IdFuncionario":113,"NombreFuncionario":"Miguel \u00c1ngel Ram\u00edrez Castro"},{"IdFuncionario":153,"NombreFuncionario":"Patricia Cifuentes L\u00f3pez"},{"IdFuncionario":149,"NombreFuncionario":"Sandra Pineda Duarte"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:20:33 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "Apple",
+    "NumeroSerial": "IPAD998877",
+    "IdFuncionario": "114",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: Apple, Serial: IPAD998877
+Funcionario: 114, Visitante: 
+INSERT exitoso, ID: 63
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 63","data":{"IdDispositivo":"63","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-63-69d37ae1d415e.png"}}
+=== FIN ===
+
+
+2026-04-06 11:20:35 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:20:51 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "36"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogot\u00e1"},{"IdSede":88,"TipoSede":"Sede Norte  Asturias","Ciudad":"Bogot\u00e1"},{"IdSede":86,"TipoSede":"Sede Principal Asturias","Ciudad":"Bogota"}]}
+=== FIN ===
+
+
+2026-04-06 11:20:53 === INICIO ===
+
+2026-04-06 11:20:53 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "86"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":107,"NombreFuncionario":"Andres camilo carrillo Jaimes"},{"IdFuncionario":120,"NombreFuncionario":"Kevin Alexander Torres Le\u00f3n"},{"IdFuncionario":156,"NombreFuncionario":"Lorena Beltr\u00e1n Castillo"},{"IdFuncionario":152,"NombreFuncionario":"M\u00f3nica Parra Ni\u00f1o"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "86"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:20:58 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "87"
+}
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":112,"NombreFuncionario":"Andr\u00e9s Felipe S\u00e1nchez Torres"},{"IdFuncionario":110,"NombreFuncionario":"Carlos Andr\u00e9s Rodr\u00edguez L\u00f3pez"},{"IdFuncionario":114,"NombreFuncionario":"Diego Alejandro G\u00f3mez Ruiz"},{"IdFuncionario":109,"NombreFuncionario":"Juan David P\u00e9rez G\u00f3mez"},{"IdFuncionario":111,"NombreFuncionario":"Luis Fernando Mart\u00ednez D\u00edaz"},{"IdFuncionario":113,"NombreFuncionario":"Miguel \u00c1ngel Ram\u00edrez Castro"},{"IdFuncionario":153,"NombreFuncionario":"Patricia Cifuentes L\u00f3pez"},{"IdFuncionario":149,"NombreFuncionario":"Sandra Pineda Duarte"}]}
+=== FIN ===
+
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:21:01 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "HP",
+    "NumeroSerial": "HP44556677",
+    "IdFuncionario": "113",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: HP, Serial: HP44556677
+Funcionario: 113, Visitante: 
+INSERT exitoso, ID: 64
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 64","data":{"IdDispositivo":"64","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-64-69d37afd99571.png"}}
+=== FIN ===
+
+
+2026-04-06 11:21:02 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:21:09 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:21:33 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "36"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogot\u00e1"},{"IdSede":88,"TipoSede":"Sede Norte  Asturias","Ciudad":"Bogot\u00e1"},{"IdSede":86,"TipoSede":"Sede Principal Asturias","Ciudad":"Bogota"}]}
+=== FIN ===
+
+
+2026-04-06 11:21:35 === INICIO ===
+
+2026-04-06 11:21:35 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "88"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":154,"NombreFuncionario":"\u00c1ngela Buitrago R\u00edos"},{"IdFuncionario":119,"NombreFuncionario":"Camilo Andr\u00e9s Vega Pardo"},{"IdFuncionario":150,"NombreFuncionario":"Claudia Le\u00f3n Cardona"},{"IdFuncionario":117,"NombreFuncionario":"Daniel Esteban Ortiz Rojas"},{"IdFuncionario":155,"NombreFuncionario":"Diana Barreto G\u00f3mez"},{"IdFuncionario":118,"NombreFuncionario":"Jorge Luis Morales Silva"},{"IdFuncionario":116,"NombreFuncionario":"Nicol\u00e1s Castro Mendoza"},{"IdFuncionario":151,"NombreFuncionario":"Paola Salgado Cruz"},{"IdFuncionario":115,"NombreFuncionario":"Sebasti\u00e1n Herrera Vargas"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "88"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:21:36 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogot\u00e1 Alterna","Ciudad":"Bogot\u00e1"},{"IdSede":83,"TipoSede":"Sede Bogot\u00e1 Centro","Ciudad":"Bogot\u00e1"},{"IdSede":84,"TipoSede":"Sede Bogot\u00e1 Norte","Ciudad":"Bogot\u00e1"}]}
+=== FIN ===
+
+
+2026-04-06 11:21:38 === INICIO ===
+
+2026-04-06 11:21:38 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "85"
+}
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "85"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":135,"NombreFuncionario":"Daniela Alejandra S\u00e1nchez Torres"},{"IdFuncionario":130,"NombreFuncionario":"Hern\u00e1n Dar\u00edo Cifuentes L\u00f3pez"},{"IdFuncionario":131,"NombreFuncionario":"Mar\u00eda Fernanda G\u00f3mez P\u00e9rez"},{"IdFuncionario":106,"NombreFuncionario":"Michael David Montoya Pasachoa"},{"IdFuncionario":127,"NombreFuncionario":"Ricardo Le\u00f3n Cardona"},{"IdFuncionario":138,"NombreFuncionario":"Sara Sof\u00eda Herrera Vargas"}]}
+=== FIN ===
+
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:21:41 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "HP",
+    "NumeroSerial": "MT55667788",
+    "IdFuncionario": "127",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: HP, Serial: MT55667788
+Funcionario: 127, Visitante: 
+INSERT exitoso, ID: 65
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 65","data":{"IdDispositivo":"65","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-65-69d37b258c560.png"}}
+=== FIN ===
+
+
+2026-04-06 11:21:42 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:22:06 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogot\u00e1 Alterna","Ciudad":"Bogot\u00e1"},{"IdSede":83,"TipoSede":"Sede Bogot\u00e1 Centro","Ciudad":"Bogot\u00e1"},{"IdSede":84,"TipoSede":"Sede Bogot\u00e1 Norte","Ciudad":"Bogot\u00e1"}]}
+=== FIN ===
+
+
+2026-04-06 11:22:07 === INICIO ===
+
+2026-04-06 11:22:07 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "84"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":134,"NombreFuncionario":"Paula Andrea Mart\u00ednez D\u00edaz"},{"IdFuncionario":137,"NombreFuncionario":"Valentina G\u00f3mez Ruiz"},{"IdFuncionario":129,"NombreFuncionario":"Wilson Fernando Parra Ni\u00f1o"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "84"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:22:09 === INICIO ===
+
+2026-04-06 11:22:09 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "83"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":136,"NombreFuncionario":"Camila Andrea Ram\u00edrez Castro"},{"IdFuncionario":128,"NombreFuncionario":"Edwin Mauricio Salgado Cruz"},{"IdFuncionario":132,"NombreFuncionario":"Laura Daniela Rodr\u00edguez L\u00f3pez"},{"IdFuncionario":139,"NombreFuncionario":"Natalia Castro Mendoza"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "83"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 11:22:13 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "Lenovo",
+    "NumeroSerial": "LN5647382521512",
+    "IdFuncionario": "139",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: Lenovo, Serial: LN5647382521512
+Funcionario: 139, Visitante: 
+INSERT exitoso, ID: 66
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 66","data":{"IdDispositivo":"66","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-66-69d37b45a66a3.png"}}
+=== FIN ===
+
+
+2026-04-06 11:22:14 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:54:33 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-06 11:54:39 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "36"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogot\u00e1"},{"IdSede":88,"TipoSede":"Sede Norte  Asturias","Ciudad":"Bogot\u00e1"},{"IdSede":86,"TipoSede":"Sede Principal Asturias","Ciudad":"Bogota"}]}
+=== FIN ===
+
+
+2026-04-06 11:54:40 === INICIO ===
+
+2026-04-06 11:54:40 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":112,"NombreFuncionario":"Andr\u00e9s Felipe S\u00e1nchez Torres"},{"IdFuncionario":110,"NombreFuncionario":"Carlos Andr\u00e9s Rodr\u00edguez L\u00f3pez"},{"IdFuncionario":114,"NombreFuncionario":"Diego Alejandro G\u00f3mez Ruiz"},{"IdFuncionario":109,"NombreFuncionario":"Juan David P\u00e9rez G\u00f3mez"},{"IdFuncionario":111,"NombreFuncionario":"Luis Fernando Mart\u00ednez D\u00edaz"},{"IdFuncionario":113,"NombreFuncionario":"Miguel \u00c1ngel Ram\u00edrez Castro"},{"IdFuncionario":153,"NombreFuncionario":"Patricia Cifuentes L\u00f3pez"},{"IdFuncionario":149,"NombreFuncionario":"Sandra Pineda Duarte"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[{"IdVisitante":27,"NombreVisitante":"Laura Camila Rodr\u00edguez D\u00edaz"}]}
+=== FIN ===
+
+
+2026-04-06 11:54:42 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[{"IdVisitante":27,"NombreVisitante":"Laura Camila Rodr\u00edguez D\u00edaz"}]}
+=== FIN ===
+
+
+2026-04-06 11:54:43 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "lenovo",
+    "NumeroSerial": "114121s4f4524",
+    "IdFuncionario": "",
+    "IdVisitante": "27"
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: lenovo, Serial: 114121s4f4524
+Funcionario: , Visitante: 27
+INSERT exitoso, ID: 67
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 67","data":{"IdDispositivo":"67","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-67-69d382e3cbce1.png"}}
+=== FIN ===
+
+
+2026-04-06 11:54:45 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+

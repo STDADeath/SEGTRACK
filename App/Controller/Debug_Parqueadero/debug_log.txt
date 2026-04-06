@@ -2482,3 +2482,668 @@ Parqueadero encontrado ID: 28
 Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":28,"CantidadParqueadero":30,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":20,"Estado":"Activo","IdSede":70,"TipoSede":"Colegio Nuevo Horizonte norte","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":129,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":130,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":131,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":132,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":133,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":134,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":135,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":136,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":137,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":138,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":139,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Ocupado","IdParqueadero":28,"IdVehiculo":32,"PlacaVehiculo":"ABDS","TipoVehiculoRegistrado":"Bicicleta","DescripcionVehiculo":"Bicicleta GW ","NombreFuncionario":"Juan Sebastián Pérez Castro","NombreVisitante":null},{"IdEspacio":140,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":141,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":142,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":143,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":144,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":145,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":146,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":147,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":148,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":149,"NumeroEspacio":21,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":150,"NumeroEspacio":22,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":151,"NumeroEspacio":23,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":152,"NumeroEspacio":24,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":153,"NumeroEspacio":25,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":154,"NumeroEspacio":26,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":155,"NumeroEspacio":27,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":156,"NumeroEspacio":28,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":157,"NumeroEspacio":29,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":158,"NumeroEspacio":30,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":28,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":20,"Libres":"19","Ocupados":"1"}]}
 === FIN ===
 
+
+2026-04-06 09:03:03 === INICIO ===
+POST recibido:
+{
+    "accion": "crear",
+    "IdSede": "87",
+    "Carros": "10",
+    "Motos": "5",
+    "Bicis": "5"
+}
+Acción detectada: crear
+=== crear parqueadero ===
+=== MODELO: crearParqueadero ===
+Sede: 87, Total: 20, Carros: 10, Motos: 5, Bicis: 5
+INSERT exitoso, ID: 29
+=== MODELO: generarEspacios — Parqueadero: 29, Carros: 10, Motos: 5, Bicis: 5 ===
+20 espacios generados correctamente
+COMMIT exitoso — Parqueadero 29 creado
+Respuesta final: {"success":true,"message":"Parqueadero creado correctamente con ID: 29","data":{"IdParqueadero":29}}
+=== FIN ===
+
+
+2026-04-06 09:03:22 === INICIO ===
+POST recibido:
+{
+    "accion": "crear",
+    "IdSede": "88",
+    "Carros": "5",
+    "Motos": "20",
+    "Bicis": "5"
+}
+Acción detectada: crear
+=== crear parqueadero ===
+=== MODELO: crearParqueadero ===
+Sede: 88, Total: 30, Carros: 5, Motos: 20, Bicis: 5
+INSERT exitoso, ID: 30
+=== MODELO: generarEspacios — Parqueadero: 30, Carros: 5, Motos: 20, Bicis: 5 ===
+30 espacios generados correctamente
+COMMIT exitoso — Parqueadero 30 creado
+Respuesta final: {"success":true,"message":"Parqueadero creado correctamente con ID: 30","data":{"IdParqueadero":30}}
+=== FIN ===
+
+
+2026-04-06 09:03:50 === INICIO ===
+POST recibido:
+{
+    "accion": "crear",
+    "IdSede": "91",
+    "Carros": "5",
+    "Motos": "5",
+    "Bicis": "10"
+}
+Acción detectada: crear
+=== crear parqueadero ===
+=== MODELO: crearParqueadero ===
+Sede: 91, Total: 20, Carros: 5, Motos: 5, Bicis: 10
+INSERT exitoso, ID: 31
+=== MODELO: generarEspacios — Parqueadero: 31, Carros: 5, Motos: 5, Bicis: 10 ===
+20 espacios generados correctamente
+COMMIT exitoso — Parqueadero 31 creado
+Respuesta final: {"success":true,"message":"Parqueadero creado correctamente con ID: 31","data":{"IdParqueadero":31}}
+=== FIN ===
+
+
+2026-04-06 09:04:12 === INICIO ===
+POST recibido:
+{
+    "accion": "crear",
+    "IdSede": "89",
+    "Carros": "5",
+    "Motos": "10",
+    "Bicis": "5"
+}
+Acción detectada: crear
+=== crear parqueadero ===
+=== MODELO: crearParqueadero ===
+Sede: 89, Total: 20, Carros: 5, Motos: 10, Bicis: 5
+INSERT exitoso, ID: 32
+=== MODELO: generarEspacios — Parqueadero: 32, Carros: 5, Motos: 10, Bicis: 5 ===
+20 espacios generados correctamente
+COMMIT exitoso — Parqueadero 32 creado
+Respuesta final: {"success":true,"message":"Parqueadero creado correctamente con ID: 32","data":{"IdParqueadero":32}}
+=== FIN ===
+
+
+2026-04-06 09:04:26 === INICIO ===
+POST recibido:
+{
+    "accion": "crear",
+    "IdSede": "85",
+    "Carros": "5",
+    "Motos": "5",
+    "Bicis": "10"
+}
+Acción detectada: crear
+=== crear parqueadero ===
+=== MODELO: crearParqueadero ===
+Sede: 85, Total: 20, Carros: 5, Motos: 5, Bicis: 10
+INSERT exitoso, ID: 33
+=== MODELO: generarEspacios — Parqueadero: 33, Carros: 5, Motos: 5, Bicis: 10 ===
+20 espacios generados correctamente
+COMMIT exitoso — Parqueadero 33 creado
+Respuesta final: {"success":true,"message":"Parqueadero creado correctamente con ID: 33","data":{"IdParqueadero":33}}
+=== FIN ===
+
+
+2026-04-06 09:04:40 === INICIO ===
+POST recibido:
+{
+    "accion": "crear",
+    "IdSede": "84",
+    "Carros": "5",
+    "Motos": "10",
+    "Bicis": "5"
+}
+Acción detectada: crear
+=== crear parqueadero ===
+=== MODELO: crearParqueadero ===
+Sede: 84, Total: 20, Carros: 5, Motos: 10, Bicis: 5
+INSERT exitoso, ID: 34
+=== MODELO: generarEspacios — Parqueadero: 34, Carros: 5, Motos: 10, Bicis: 5 ===
+20 espacios generados correctamente
+COMMIT exitoso — Parqueadero 34 creado
+Respuesta final: {"success":true,"message":"Parqueadero creado correctamente con ID: 34","data":{"IdParqueadero":34}}
+=== FIN ===
+
+
+2026-04-06 11:47:24 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 87 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 87 ===
+Parqueadero encontrado ID: 29
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":29,"CantidadParqueadero":20,"CantidadCarros":10,"CantidadMotos":5,"CantidadBicicletas":5,"Estado":"Activo","IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":159,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":160,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":161,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":162,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":163,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":164,"NumeroEspacio":6,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":165,"NumeroEspacio":7,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":166,"NumeroEspacio":8,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":167,"NumeroEspacio":9,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":168,"NumeroEspacio":10,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":169,"NumeroEspacio":11,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":170,"NumeroEspacio":12,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":171,"NumeroEspacio":13,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":172,"NumeroEspacio":14,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":173,"NumeroEspacio":15,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":174,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":175,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":176,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":177,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":178,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":10,"Libres":"10","Ocupados":"0"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":5,"Libres":"5","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:47:25 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Carro",
+    "id_parqueadero": "29"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 29 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 29 ===
+5 vehículos disponibles de tipo Carro (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":35,"PlacaVehiculo":"ABC123","TipoVehiculo":"Carro","DescripcionVehiculo":"Chevrolet Spark rojo modelo 2020","NombreFuncionario":"Andrés Felipe Sánchez Torres","NombreVisitante":null},{"IdVehiculo":38,"PlacaVehiculo":"DEF456","TipoVehiculo":"Carro","DescripcionVehiculo":"Toyota Hilux blanca modelo 2019","NombreFuncionario":"Nicolás Castro Mendoza","NombreVisitante":null},{"IdVehiculo":40,"PlacaVehiculo":"GHI789","TipoVehiculo":"Carro","DescripcionVehiculo":"Kia Rio gris modelo 2021","NombreFuncionario":"Wilson Fernando Parra Niño","NombreVisitante":null},{"IdVehiculo":43,"PlacaVehiculo":"MNO345","TipoVehiculo":"Carro","DescripcionVehiculo":"Renault Logan plateado modelo 2017","NombreFuncionario":"Edwin Mauricio Salgado Cruz","NombreVisitante":null},{"IdVehiculo":44,"PlacaVehiculo":"PQR678","TipoVehiculo":"Carro","DescripcionVehiculo":"Mazda CX-5 negra modelo 2023","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:47:31 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "159",
+    "id_vehiculo": "35"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 159, IdVehiculo: 35 ===
+=== MODELO: ocuparEspacio — IdEspacio: 159, IdVehiculo: 35 ===
+Espacio 159 ocupado correctamente por vehículo 35
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:47:34 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 87 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 87 ===
+Parqueadero encontrado ID: 29
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":29,"CantidadParqueadero":20,"CantidadCarros":10,"CantidadMotos":5,"CantidadBicicletas":5,"Estado":"Activo","IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":159,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":35,"PlacaVehiculo":"ABC123","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Chevrolet Spark rojo modelo 2020","NombreFuncionario":"Andrés Felipe Sánchez Torres","NombreVisitante":null},{"IdEspacio":160,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":161,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":162,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":163,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":164,"NumeroEspacio":6,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":165,"NumeroEspacio":7,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":166,"NumeroEspacio":8,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":167,"NumeroEspacio":9,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":168,"NumeroEspacio":10,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":169,"NumeroEspacio":11,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":170,"NumeroEspacio":12,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":171,"NumeroEspacio":13,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":172,"NumeroEspacio":14,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":173,"NumeroEspacio":15,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":174,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":175,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":176,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":177,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":178,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":10,"Libres":"9","Ocupados":"1"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":5,"Libres":"5","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:47:34 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Carro",
+    "id_parqueadero": "29"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 29 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 29 ===
+4 vehículos disponibles de tipo Carro (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":38,"PlacaVehiculo":"DEF456","TipoVehiculo":"Carro","DescripcionVehiculo":"Toyota Hilux blanca modelo 2019","NombreFuncionario":"Nicolás Castro Mendoza","NombreVisitante":null},{"IdVehiculo":40,"PlacaVehiculo":"GHI789","TipoVehiculo":"Carro","DescripcionVehiculo":"Kia Rio gris modelo 2021","NombreFuncionario":"Wilson Fernando Parra Niño","NombreVisitante":null},{"IdVehiculo":43,"PlacaVehiculo":"MNO345","TipoVehiculo":"Carro","DescripcionVehiculo":"Renault Logan plateado modelo 2017","NombreFuncionario":"Edwin Mauricio Salgado Cruz","NombreVisitante":null},{"IdVehiculo":44,"PlacaVehiculo":"PQR678","TipoVehiculo":"Carro","DescripcionVehiculo":"Mazda CX-5 negra modelo 2023","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:47:37 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "168",
+    "id_vehiculo": "38"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 168, IdVehiculo: 38 ===
+=== MODELO: ocuparEspacio — IdEspacio: 168, IdVehiculo: 38 ===
+Espacio 168 ocupado correctamente por vehículo 38
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:47:39 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 87 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 87 ===
+Parqueadero encontrado ID: 29
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":29,"CantidadParqueadero":20,"CantidadCarros":10,"CantidadMotos":5,"CantidadBicicletas":5,"Estado":"Activo","IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":159,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":35,"PlacaVehiculo":"ABC123","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Chevrolet Spark rojo modelo 2020","NombreFuncionario":"Andrés Felipe Sánchez Torres","NombreVisitante":null},{"IdEspacio":160,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":161,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":162,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":163,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":164,"NumeroEspacio":6,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":165,"NumeroEspacio":7,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":166,"NumeroEspacio":8,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":167,"NumeroEspacio":9,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":168,"NumeroEspacio":10,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":38,"PlacaVehiculo":"DEF456","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Toyota Hilux blanca modelo 2019","NombreFuncionario":"Nicolás Castro Mendoza","NombreVisitante":null},{"IdEspacio":169,"NumeroEspacio":11,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":170,"NumeroEspacio":12,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":171,"NumeroEspacio":13,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":172,"NumeroEspacio":14,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":173,"NumeroEspacio":15,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":174,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":175,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":176,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":177,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":178,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":10,"Libres":"8","Ocupados":"2"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":5,"Libres":"5","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:47:40 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Carro",
+    "id_parqueadero": "29"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 29 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 29 ===
+3 vehículos disponibles de tipo Carro (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":40,"PlacaVehiculo":"GHI789","TipoVehiculo":"Carro","DescripcionVehiculo":"Kia Rio gris modelo 2021","NombreFuncionario":"Wilson Fernando Parra Niño","NombreVisitante":null},{"IdVehiculo":43,"PlacaVehiculo":"MNO345","TipoVehiculo":"Carro","DescripcionVehiculo":"Renault Logan plateado modelo 2017","NombreFuncionario":"Edwin Mauricio Salgado Cruz","NombreVisitante":null},{"IdVehiculo":44,"PlacaVehiculo":"PQR678","TipoVehiculo":"Carro","DescripcionVehiculo":"Mazda CX-5 negra modelo 2023","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:47:43 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "163",
+    "id_vehiculo": "43"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 163, IdVehiculo: 43 ===
+=== MODELO: ocuparEspacio — IdEspacio: 163, IdVehiculo: 43 ===
+Espacio 163 ocupado correctamente por vehículo 43
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:47:46 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 87 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 87 ===
+Parqueadero encontrado ID: 29
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":29,"CantidadParqueadero":20,"CantidadCarros":10,"CantidadMotos":5,"CantidadBicicletas":5,"Estado":"Activo","IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":159,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":35,"PlacaVehiculo":"ABC123","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Chevrolet Spark rojo modelo 2020","NombreFuncionario":"Andrés Felipe Sánchez Torres","NombreVisitante":null},{"IdEspacio":160,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":161,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":162,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":163,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":43,"PlacaVehiculo":"MNO345","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Renault Logan plateado modelo 2017","NombreFuncionario":"Edwin Mauricio Salgado Cruz","NombreVisitante":null},{"IdEspacio":164,"NumeroEspacio":6,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":165,"NumeroEspacio":7,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":166,"NumeroEspacio":8,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":167,"NumeroEspacio":9,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":168,"NumeroEspacio":10,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":38,"PlacaVehiculo":"DEF456","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Toyota Hilux blanca modelo 2019","NombreFuncionario":"Nicolás Castro Mendoza","NombreVisitante":null},{"IdEspacio":169,"NumeroEspacio":11,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":170,"NumeroEspacio":12,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":171,"NumeroEspacio":13,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":172,"NumeroEspacio":14,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":173,"NumeroEspacio":15,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":174,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":175,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":176,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":177,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":178,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":10,"Libres":"7","Ocupados":"3"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":5,"Libres":"5","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:47:47 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Moto",
+    "id_parqueadero": "29"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Moto, Parqueadero: 29 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Moto, Parqueadero: 29 ===
+2 vehículos disponibles de tipo Moto (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":41,"PlacaVehiculo":"JKL12B","TipoVehiculo":"Moto","DescripcionVehiculo":"AKT NKD azul modelo 2018","NombreFuncionario":"Lorena Beltrán Castillo","NombreVisitante":null},{"IdVehiculo":36,"PlacaVehiculo":"XYZ45A","TipoVehiculo":"Moto","DescripcionVehiculo":"Yamaha FZ negra modelo 2022","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:47:48 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "169",
+    "id_vehiculo": "41"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 169, IdVehiculo: 41 ===
+=== MODELO: ocuparEspacio — IdEspacio: 169, IdVehiculo: 41 ===
+Espacio 169 ocupado correctamente por vehículo 41
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:47:51 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 87 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 87 ===
+Parqueadero encontrado ID: 29
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":29,"CantidadParqueadero":20,"CantidadCarros":10,"CantidadMotos":5,"CantidadBicicletas":5,"Estado":"Activo","IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":159,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":35,"PlacaVehiculo":"ABC123","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Chevrolet Spark rojo modelo 2020","NombreFuncionario":"Andrés Felipe Sánchez Torres","NombreVisitante":null},{"IdEspacio":160,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":161,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":162,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":163,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":43,"PlacaVehiculo":"MNO345","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Renault Logan plateado modelo 2017","NombreFuncionario":"Edwin Mauricio Salgado Cruz","NombreVisitante":null},{"IdEspacio":164,"NumeroEspacio":6,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":165,"NumeroEspacio":7,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":166,"NumeroEspacio":8,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":167,"NumeroEspacio":9,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":168,"NumeroEspacio":10,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":38,"PlacaVehiculo":"DEF456","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Toyota Hilux blanca modelo 2019","NombreFuncionario":"Nicolás Castro Mendoza","NombreVisitante":null},{"IdEspacio":169,"NumeroEspacio":11,"TipoVehiculo":"Moto","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":41,"PlacaVehiculo":"JKL12B","TipoVehiculoRegistrado":"Moto","DescripcionVehiculo":"AKT NKD azul modelo 2018","NombreFuncionario":"Lorena Beltrán Castillo","NombreVisitante":null},{"IdEspacio":170,"NumeroEspacio":12,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":171,"NumeroEspacio":13,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":172,"NumeroEspacio":14,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":173,"NumeroEspacio":15,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":174,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":175,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":176,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":177,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":178,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":10,"Libres":"7","Ocupados":"3"},{"TipoVehiculo":"Moto","Total":5,"Libres":"4","Ocupados":"1"},{"TipoVehiculo":"Bicicleta","Total":5,"Libres":"5","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:47:51 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Moto",
+    "id_parqueadero": "29"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Moto, Parqueadero: 29 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Moto, Parqueadero: 29 ===
+1 vehículos disponibles de tipo Moto (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":36,"PlacaVehiculo":"XYZ45A","TipoVehiculo":"Moto","DescripcionVehiculo":"Yamaha FZ negra modelo 2022","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:47:53 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "173",
+    "id_vehiculo": "36"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 173, IdVehiculo: 36 ===
+=== MODELO: ocuparEspacio — IdEspacio: 173, IdVehiculo: 36 ===
+Espacio 173 ocupado correctamente por vehículo 36
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:47:56 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 87 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 87 ===
+Parqueadero encontrado ID: 29
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":29,"CantidadParqueadero":20,"CantidadCarros":10,"CantidadMotos":5,"CantidadBicicletas":5,"Estado":"Activo","IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":159,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":35,"PlacaVehiculo":"ABC123","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Chevrolet Spark rojo modelo 2020","NombreFuncionario":"Andrés Felipe Sánchez Torres","NombreVisitante":null},{"IdEspacio":160,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":161,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":162,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":163,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":43,"PlacaVehiculo":"MNO345","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Renault Logan plateado modelo 2017","NombreFuncionario":"Edwin Mauricio Salgado Cruz","NombreVisitante":null},{"IdEspacio":164,"NumeroEspacio":6,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":165,"NumeroEspacio":7,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":166,"NumeroEspacio":8,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":167,"NumeroEspacio":9,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":168,"NumeroEspacio":10,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":38,"PlacaVehiculo":"DEF456","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Toyota Hilux blanca modelo 2019","NombreFuncionario":"Nicolás Castro Mendoza","NombreVisitante":null},{"IdEspacio":169,"NumeroEspacio":11,"TipoVehiculo":"Moto","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":41,"PlacaVehiculo":"JKL12B","TipoVehiculoRegistrado":"Moto","DescripcionVehiculo":"AKT NKD azul modelo 2018","NombreFuncionario":"Lorena Beltrán Castillo","NombreVisitante":null},{"IdEspacio":170,"NumeroEspacio":12,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":171,"NumeroEspacio":13,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":172,"NumeroEspacio":14,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":173,"NumeroEspacio":15,"TipoVehiculo":"Moto","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":36,"PlacaVehiculo":"XYZ45A","TipoVehiculoRegistrado":"Moto","DescripcionVehiculo":"Yamaha FZ negra modelo 2022","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null},{"IdEspacio":174,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":175,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":176,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":177,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":178,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":10,"Libres":"7","Ocupados":"3"},{"TipoVehiculo":"Moto","Total":5,"Libres":"3","Ocupados":"2"},{"TipoVehiculo":"Bicicleta","Total":5,"Libres":"5","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:47:57 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Bicicleta",
+    "id_parqueadero": "29"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Bicicleta, Parqueadero: 29 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Bicicleta, Parqueadero: 29 ===
+3 vehículos disponibles de tipo Bicicleta (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":37,"PlacaVehiculo":"N-A","TipoVehiculo":"Bicicleta","DescripcionVehiculo":"Bicicleta GW Hawk rin 29 negra y roja","NombreFuncionario":"Lorena Beltrán Castillo","NombreVisitante":null},{"IdVehiculo":39,"PlacaVehiculo":"N-A","TipoVehiculo":"Bicicleta","DescripcionVehiculo":"Bicicleta Todo Terreno azul rin 27.5","NombreFuncionario":"María Fernanda Gómez Pérez","NombreVisitante":null},{"IdVehiculo":42,"PlacaVehiculo":"N-A","TipoVehiculo":"Bicicleta","DescripcionVehiculo":"Bicicleta BMX freestyle negra","NombreFuncionario":"Juliana Andrea Vega Pardo","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:47:59 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "175",
+    "id_vehiculo": "39"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 175, IdVehiculo: 39 ===
+=== MODELO: ocuparEspacio — IdEspacio: 175, IdVehiculo: 39 ===
+Espacio 175 ocupado correctamente por vehículo 39
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:48:02 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 87 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 87 ===
+Parqueadero encontrado ID: 29
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":29,"CantidadParqueadero":20,"CantidadCarros":10,"CantidadMotos":5,"CantidadBicicletas":5,"Estado":"Activo","IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":159,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":35,"PlacaVehiculo":"ABC123","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Chevrolet Spark rojo modelo 2020","NombreFuncionario":"Andrés Felipe Sánchez Torres","NombreVisitante":null},{"IdEspacio":160,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":161,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":162,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":163,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":43,"PlacaVehiculo":"MNO345","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Renault Logan plateado modelo 2017","NombreFuncionario":"Edwin Mauricio Salgado Cruz","NombreVisitante":null},{"IdEspacio":164,"NumeroEspacio":6,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":165,"NumeroEspacio":7,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":166,"NumeroEspacio":8,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":167,"NumeroEspacio":9,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":168,"NumeroEspacio":10,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":38,"PlacaVehiculo":"DEF456","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Toyota Hilux blanca modelo 2019","NombreFuncionario":"Nicolás Castro Mendoza","NombreVisitante":null},{"IdEspacio":169,"NumeroEspacio":11,"TipoVehiculo":"Moto","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":41,"PlacaVehiculo":"JKL12B","TipoVehiculoRegistrado":"Moto","DescripcionVehiculo":"AKT NKD azul modelo 2018","NombreFuncionario":"Lorena Beltrán Castillo","NombreVisitante":null},{"IdEspacio":170,"NumeroEspacio":12,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":171,"NumeroEspacio":13,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":172,"NumeroEspacio":14,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":173,"NumeroEspacio":15,"TipoVehiculo":"Moto","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":36,"PlacaVehiculo":"XYZ45A","TipoVehiculoRegistrado":"Moto","DescripcionVehiculo":"Yamaha FZ negra modelo 2022","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null},{"IdEspacio":174,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":175,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":39,"PlacaVehiculo":"N-A","TipoVehiculoRegistrado":"Bicicleta","DescripcionVehiculo":"Bicicleta Todo Terreno azul rin 27.5","NombreFuncionario":"María Fernanda Gómez Pérez","NombreVisitante":null},{"IdEspacio":176,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":177,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":178,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":10,"Libres":"7","Ocupados":"3"},{"TipoVehiculo":"Moto","Total":5,"Libres":"3","Ocupados":"2"},{"TipoVehiculo":"Bicicleta","Total":5,"Libres":"4","Ocupados":"1"}]}
+=== FIN ===
+
+
+2026-04-06 11:48:02 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Bicicleta",
+    "id_parqueadero": "29"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Bicicleta, Parqueadero: 29 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Bicicleta, Parqueadero: 29 ===
+2 vehículos disponibles de tipo Bicicleta (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":37,"PlacaVehiculo":"N-A","TipoVehiculo":"Bicicleta","DescripcionVehiculo":"Bicicleta GW Hawk rin 29 negra y roja","NombreFuncionario":"Lorena Beltrán Castillo","NombreVisitante":null},{"IdVehiculo":42,"PlacaVehiculo":"N-A","TipoVehiculo":"Bicicleta","DescripcionVehiculo":"Bicicleta BMX freestyle negra","NombreFuncionario":"Juliana Andrea Vega Pardo","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:48:04 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "178",
+    "id_vehiculo": "42"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 178, IdVehiculo: 42 ===
+=== MODELO: ocuparEspacio — IdEspacio: 178, IdVehiculo: 42 ===
+Espacio 178 ocupado correctamente por vehículo 42
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:48:06 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "87"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 87 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 87 ===
+Parqueadero encontrado ID: 29
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":29,"CantidadParqueadero":20,"CantidadCarros":10,"CantidadMotos":5,"CantidadBicicletas":5,"Estado":"Activo","IdSede":87,"TipoSede":"Sede Chapinero","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":159,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":35,"PlacaVehiculo":"ABC123","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Chevrolet Spark rojo modelo 2020","NombreFuncionario":"Andrés Felipe Sánchez Torres","NombreVisitante":null},{"IdEspacio":160,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":161,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":162,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":163,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":43,"PlacaVehiculo":"MNO345","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Renault Logan plateado modelo 2017","NombreFuncionario":"Edwin Mauricio Salgado Cruz","NombreVisitante":null},{"IdEspacio":164,"NumeroEspacio":6,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":165,"NumeroEspacio":7,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":166,"NumeroEspacio":8,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":167,"NumeroEspacio":9,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":168,"NumeroEspacio":10,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":38,"PlacaVehiculo":"DEF456","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Toyota Hilux blanca modelo 2019","NombreFuncionario":"Nicolás Castro Mendoza","NombreVisitante":null},{"IdEspacio":169,"NumeroEspacio":11,"TipoVehiculo":"Moto","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":41,"PlacaVehiculo":"JKL12B","TipoVehiculoRegistrado":"Moto","DescripcionVehiculo":"AKT NKD azul modelo 2018","NombreFuncionario":"Lorena Beltrán Castillo","NombreVisitante":null},{"IdEspacio":170,"NumeroEspacio":12,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":171,"NumeroEspacio":13,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":172,"NumeroEspacio":14,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":173,"NumeroEspacio":15,"TipoVehiculo":"Moto","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":36,"PlacaVehiculo":"XYZ45A","TipoVehiculoRegistrado":"Moto","DescripcionVehiculo":"Yamaha FZ negra modelo 2022","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null},{"IdEspacio":174,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":175,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":39,"PlacaVehiculo":"N-A","TipoVehiculoRegistrado":"Bicicleta","DescripcionVehiculo":"Bicicleta Todo Terreno azul rin 27.5","NombreFuncionario":"María Fernanda Gómez Pérez","NombreVisitante":null},{"IdEspacio":176,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":177,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":29,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":178,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Ocupado","IdParqueadero":29,"IdVehiculo":42,"PlacaVehiculo":"N-A","TipoVehiculoRegistrado":"Bicicleta","DescripcionVehiculo":"Bicicleta BMX freestyle negra","NombreFuncionario":"Juliana Andrea Vega Pardo","NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":10,"Libres":"7","Ocupados":"3"},{"TipoVehiculo":"Moto","Total":5,"Libres":"3","Ocupados":"2"},{"TipoVehiculo":"Bicicleta","Total":5,"Libres":"3","Ocupados":"2"}]}
+=== FIN ===
+
+
+2026-04-06 11:48:13 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "91"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 91 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 91 ===
+Parqueadero encontrado ID: 31
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":31,"CantidadParqueadero":20,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":10,"Estado":"Activo","IdSede":91,"TipoSede":"Sede Centro  UNICOLOMBIA","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":209,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":210,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":211,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":212,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":213,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":214,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":215,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":216,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":217,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":218,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":219,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":220,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":221,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":222,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":223,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":224,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":225,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":226,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":227,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":228,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":10,"Libres":"10","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:48:14 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Carro",
+    "id_parqueadero": "31"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 31 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 31 ===
+2 vehículos disponibles de tipo Carro (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":40,"PlacaVehiculo":"GHI789","TipoVehiculo":"Carro","DescripcionVehiculo":"Kia Rio gris modelo 2021","NombreFuncionario":"Wilson Fernando Parra Niño","NombreVisitante":null},{"IdVehiculo":44,"PlacaVehiculo":"PQR678","TipoVehiculo":"Carro","DescripcionVehiculo":"Mazda CX-5 negra modelo 2023","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:48:16 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "209",
+    "id_vehiculo": "40"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 209, IdVehiculo: 40 ===
+=== MODELO: ocuparEspacio — IdEspacio: 209, IdVehiculo: 40 ===
+Espacio 209 ocupado correctamente por vehículo 40
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:48:18 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "91"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 91 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 91 ===
+Parqueadero encontrado ID: 31
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":31,"CantidadParqueadero":20,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":10,"Estado":"Activo","IdSede":91,"TipoSede":"Sede Centro  UNICOLOMBIA","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":209,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":31,"IdVehiculo":40,"PlacaVehiculo":"GHI789","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Kia Rio gris modelo 2021","NombreFuncionario":"Wilson Fernando Parra Niño","NombreVisitante":null},{"IdEspacio":210,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":211,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":212,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":213,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":214,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":215,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":216,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":217,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":218,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":219,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":220,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":221,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":222,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":223,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":224,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":225,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":226,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":227,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":228,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"4","Ocupados":"1"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":10,"Libres":"10","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:48:49 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "91"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 91 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 91 ===
+Parqueadero encontrado ID: 31
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":31,"CantidadParqueadero":20,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":10,"Estado":"Activo","IdSede":91,"TipoSede":"Sede Centro  UNICOLOMBIA","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":209,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":31,"IdVehiculo":40,"PlacaVehiculo":"GHI789","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Kia Rio gris modelo 2021","NombreFuncionario":"Wilson Fernando Parra Niño","NombreVisitante":null},{"IdEspacio":210,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":211,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":212,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":213,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":214,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":215,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":216,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":217,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":218,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":219,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":220,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":221,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":222,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":223,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":224,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":225,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":226,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":227,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":228,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"4","Ocupados":"1"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":10,"Libres":"10","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:49:20 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "91"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 91 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 91 ===
+Parqueadero encontrado ID: 31
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":31,"CantidadParqueadero":20,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":10,"Estado":"Activo","IdSede":91,"TipoSede":"Sede Centro  UNICOLOMBIA","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":209,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":31,"IdVehiculo":40,"PlacaVehiculo":"GHI789","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Kia Rio gris modelo 2021","NombreFuncionario":"Wilson Fernando Parra Niño","NombreVisitante":null},{"IdEspacio":210,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":211,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":212,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":213,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":214,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":215,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":216,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":217,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":218,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":219,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":220,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":221,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":222,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":223,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":224,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":225,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":226,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":227,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":228,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":31,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"4","Ocupados":"1"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":10,"Libres":"10","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:49:43 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Moto",
+    "id_parqueadero": "31"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Moto, Parqueadero: 31 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Moto, Parqueadero: 31 ===
+0 vehículos disponibles de tipo Moto (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[]}
+=== FIN ===
+
+
+2026-04-06 11:49:49 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "85"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 85 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 85 ===
+Parqueadero encontrado ID: 33
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":33,"CantidadParqueadero":20,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":10,"Estado":"Activo","IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":249,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":250,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":251,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":252,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":253,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":254,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":255,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":256,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":257,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":258,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":259,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":260,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":261,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":262,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":263,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":264,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":265,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":266,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":267,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":268,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":10,"Libres":"10","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:49:50 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Carro",
+    "id_parqueadero": "33"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 33 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Carro, Parqueadero: 33 ===
+1 vehículos disponibles de tipo Carro (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":44,"PlacaVehiculo":"PQR678","TipoVehiculo":"Carro","DescripcionVehiculo":"Mazda CX-5 negra modelo 2023","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:49:51 === INICIO ===
+POST recibido:
+{
+    "accion": "ocupar_manual",
+    "id_espacio": "250",
+    "id_vehiculo": "44"
+}
+Acción detectada: ocupar_manual
+=== ocuparManual — Espacio: 250, IdVehiculo: 44 ===
+=== MODELO: ocuparEspacio — IdEspacio: 250, IdVehiculo: 44 ===
+Espacio 250 ocupado correctamente por vehículo 44
+Respuesta final: {"success":true,"message":"Espacio asignado correctamente"}
+=== FIN ===
+
+
+2026-04-06 11:49:54 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "85"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 85 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 85 ===
+Parqueadero encontrado ID: 33
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":33,"CantidadParqueadero":20,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":10,"Estado":"Activo","IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":249,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":250,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":33,"IdVehiculo":44,"PlacaVehiculo":"PQR678","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Mazda CX-5 negra modelo 2023","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null},{"IdEspacio":251,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":252,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":253,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":254,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":255,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":256,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":257,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":258,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":259,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":260,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":261,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":262,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":263,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":264,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":265,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":266,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":267,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":268,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"4","Ocupados":"1"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":10,"Libres":"10","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:49:54 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Moto",
+    "id_parqueadero": "33"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Moto, Parqueadero: 33 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Moto, Parqueadero: 33 ===
+0 vehículos disponibles de tipo Moto (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[]}
+=== FIN ===
+
+
+2026-04-06 11:49:57 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_vehiculos_tipo",
+    "tipo": "Bicicleta",
+    "id_parqueadero": "33"
+}
+Acción detectada: obtener_vehiculos_tipo
+=== obtenerVehiculosPorTipo — Tipo: Bicicleta, Parqueadero: 33 ===
+=== MODELO: obtenerVehiculosPorTipo — Tipo: Bicicleta, Parqueadero: 33 ===
+1 vehículos disponibles de tipo Bicicleta (excluidos los ya ocupando cualquier espacio)
+Respuesta final: {"success":true,"vehiculos":[{"IdVehiculo":37,"PlacaVehiculo":"N-A","TipoVehiculo":"Bicicleta","DescripcionVehiculo":"Bicicleta GW Hawk rin 29 negra y roja","NombreFuncionario":"Lorena Beltrán Castillo","NombreVisitante":null}]}
+=== FIN ===
+
+
+2026-04-06 11:50:24 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "85"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 85 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 85 ===
+Parqueadero encontrado ID: 33
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":33,"CantidadParqueadero":20,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":10,"Estado":"Activo","IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":249,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":250,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":33,"IdVehiculo":44,"PlacaVehiculo":"PQR678","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Mazda CX-5 negra modelo 2023","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null},{"IdEspacio":251,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":252,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":253,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":254,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":255,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":256,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":257,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":258,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":259,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":260,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":261,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":262,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":263,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":264,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":265,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":266,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":267,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":268,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"4","Ocupados":"1"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":10,"Libres":"10","Ocupados":"0"}]}
+=== FIN ===
+
+
+2026-04-06 11:50:55 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sede",
+    "id_sede": "85"
+}
+Acción detectada: obtener_sede
+=== obtenerDatosSede — Sede: 85 ===
+=== MODELO: obtenerParqueaderoPorSede — Sede: 85 ===
+Parqueadero encontrado ID: 33
+Respuesta final: {"success":true,"parqueadero":{"IdParqueadero":33,"CantidadParqueadero":20,"CantidadCarros":5,"CantidadMotos":5,"CantidadBicicletas":10,"Estado":"Activo","IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},"espacios":[{"IdEspacio":249,"NumeroEspacio":1,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":250,"NumeroEspacio":2,"TipoVehiculo":"Carro","Estado":"Ocupado","IdParqueadero":33,"IdVehiculo":44,"PlacaVehiculo":"PQR678","TipoVehiculoRegistrado":"Carro","DescripcionVehiculo":"Mazda CX-5 negra modelo 2023","NombreFuncionario":"Ángela Buitrago Ríos","NombreVisitante":null},{"IdEspacio":251,"NumeroEspacio":3,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":252,"NumeroEspacio":4,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":253,"NumeroEspacio":5,"TipoVehiculo":"Carro","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":254,"NumeroEspacio":6,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":255,"NumeroEspacio":7,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":256,"NumeroEspacio":8,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":257,"NumeroEspacio":9,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":258,"NumeroEspacio":10,"TipoVehiculo":"Moto","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":259,"NumeroEspacio":11,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":260,"NumeroEspacio":12,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":261,"NumeroEspacio":13,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":262,"NumeroEspacio":14,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":263,"NumeroEspacio":15,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":264,"NumeroEspacio":16,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":265,"NumeroEspacio":17,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":266,"NumeroEspacio":18,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":267,"NumeroEspacio":19,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null},{"IdEspacio":268,"NumeroEspacio":20,"TipoVehiculo":"Bicicleta","Estado":"Libre","IdParqueadero":33,"IdVehiculo":null,"PlacaVehiculo":null,"TipoVehiculoRegistrado":null,"DescripcionVehiculo":null,"NombreFuncionario":null,"NombreVisitante":null}],"resumen":[{"TipoVehiculo":"Carro","Total":5,"Libres":"4","Ocupados":"1"},{"TipoVehiculo":"Moto","Total":5,"Libres":"5","Ocupados":"0"},{"TipoVehiculo":"Bicicleta","Total":10,"Libres":"10","Ocupados":"0"}]}
+=== FIN ===
+

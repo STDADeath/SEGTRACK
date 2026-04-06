@@ -400,3 +400,1523 @@ Estado: Activo
 2026-04-06 06:20:00 - ID extraído del QR: 105
 2026-04-06 06:20:00 - Resultado BD por ID: {"IdFuncionario":105,"Estado":"Activo"}
 2026-04-06 06:20:00 - Funcionario encontrado y activo: Valentina  Diaz
+2026-04-06 11:40:36 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:40:36 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:40:36 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:40:36 - ID extraído del QR: 106
+2026-04-06 11:40:36 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-06 11:40:36 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-06 11:40:40 - === QR RAW HEX: 49443a203130370a4e6f6d6272653a20416e647265732063616d696c6f2063617272696c6c6f204a61696d65730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:40:40 - === QR TEXTO:   ID: 107
+Nombre: Andres camilo carrillo Jaimes
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:40:40 - === QR NORMALIZADO: ID: 107
+Nombre: Andres camilo carrillo Jaimes
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:40:40 - ID extraído del QR: 107
+2026-04-06 11:40:40 - Resultado BD por ID: {"IdFuncionario":107,"Estado":"Activo"}
+2026-04-06 11:40:40 - Funcionario encontrado y activo: Andres camilo carrillo Jaimes
+2026-04-06 11:40:42 - === QR RAW HEX: 49443a203130380a4e6f6d6272653a20416e646572736f6e204573746962656e204d6f72656e6f2050696e7a6f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:40:42 - === QR TEXTO:   ID: 108
+Nombre: Anderson Estiben Moreno Pinzon
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:40:42 - === QR NORMALIZADO: ID: 108
+Nombre: Anderson Estiben Moreno Pinzon
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:40:42 - ID extraído del QR: 108
+2026-04-06 11:40:42 - Resultado BD por ID: {"IdFuncionario":108,"Estado":"Activo"}
+2026-04-06 11:40:42 - Funcionario encontrado y activo: Anderson Estiben Moreno Pinzon
+2026-04-06 11:40:43 - === QR RAW HEX: 49443a203130390a4e6f6d6272653a204a75616e2044617669642050c3a972657a2047c3b36d657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:40:43 - === QR TEXTO:   ID: 109
+Nombre: Juan David Pérez Gómez
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:43 - === QR NORMALIZADO: ID: 109
+Nombre: Juan David Pérez Gómez
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:43 - ID extraído del QR: 109
+2026-04-06 11:40:43 - Resultado BD por ID: {"IdFuncionario":109,"Estado":"Activo"}
+2026-04-06 11:40:43 - Funcionario encontrado y activo: Juan David Pérez Gómez
+2026-04-06 11:40:46 - === QR RAW HEX: 49443a203131300a4e6f6d6272653a204361726c6f7320416e6472c3a97320526f6472c3ad6775657a204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:40:46 - === QR TEXTO:   ID: 110
+Nombre: Carlos Andrés Rodríguez López
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:46 - === QR NORMALIZADO: ID: 110
+Nombre: Carlos Andrés Rodríguez López
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:46 - ID extraído del QR: 110
+2026-04-06 11:40:46 - Resultado BD por ID: {"IdFuncionario":110,"Estado":"Activo"}
+2026-04-06 11:40:46 - Funcionario encontrado y activo: Carlos Andrés Rodríguez López
+2026-04-06 11:40:48 - === QR RAW HEX: 49443a203131310a4e6f6d6272653a204c756973204665726e616e646f204d617274c3ad6e657a2044c3ad617a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:40:48 - === QR TEXTO:   ID: 111
+Nombre: Luis Fernando Martínez Díaz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:48 - === QR NORMALIZADO: ID: 111
+Nombre: Luis Fernando Martínez Díaz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:48 - ID extraído del QR: 111
+2026-04-06 11:40:48 - Resultado BD por ID: {"IdFuncionario":111,"Estado":"Activo"}
+2026-04-06 11:40:48 - Funcionario encontrado y activo: Luis Fernando Martínez Díaz
+2026-04-06 11:40:50 - === QR RAW HEX: 49443a203131320a4e6f6d6272653a20416e6472c3a9732046656c6970652053c3a16e6368657a20546f727265730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:40:50 - === QR TEXTO:   ID: 112
+Nombre: Andrés Felipe Sánchez Torres
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:50 - === QR NORMALIZADO: ID: 112
+Nombre: Andrés Felipe Sánchez Torres
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:50 - ID extraído del QR: 112
+2026-04-06 11:40:50 - Resultado BD por ID: {"IdFuncionario":112,"Estado":"Activo"}
+2026-04-06 11:40:50 - Funcionario encontrado y activo: Andrés Felipe Sánchez Torres
+2026-04-06 11:40:51 - === QR RAW HEX: 49443a203131330a4e6f6d6272653a204d696775656c20c3816e67656c2052616dc3ad72657a2043617374726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:40:51 - === QR TEXTO:   ID: 113
+Nombre: Miguel Ángel Ramírez Castro
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:51 - === QR NORMALIZADO: ID: 113
+Nombre: Miguel Ángel Ramírez Castro
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:40:51 - ID extraído del QR: 113
+2026-04-06 11:40:51 - Resultado BD por ID: {"IdFuncionario":113,"Estado":"Activo"}
+2026-04-06 11:40:51 - Funcionario encontrado y activo: Miguel Ángel Ramírez Castro
+2026-04-06 11:40:53 - === QR RAW HEX: 49443a203131350a4e6f6d6272653a2053656261737469c3a16e2048657272657261205661726761730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:40:53 - === QR TEXTO:   ID: 115
+Nombre: Sebastián Herrera Vargas
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:40:53 - === QR NORMALIZADO: ID: 115
+Nombre: Sebastián Herrera Vargas
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:40:53 - ID extraído del QR: 115
+2026-04-06 11:40:53 - Resultado BD por ID: {"IdFuncionario":115,"Estado":"Activo"}
+2026-04-06 11:40:53 - Funcionario encontrado y activo: Sebastián Herrera Vargas
+2026-04-06 11:40:55 - === QR RAW HEX: 49443a203131360a4e6f6d6272653a204e69636f6cc3a1732043617374726f204d656e646f7a610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:40:55 - === QR TEXTO:   ID: 116
+Nombre: Nicolás Castro Mendoza
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:40:55 - === QR NORMALIZADO: ID: 116
+Nombre: Nicolás Castro Mendoza
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:40:55 - ID extraído del QR: 116
+2026-04-06 11:40:55 - Resultado BD por ID: {"IdFuncionario":116,"Estado":"Activo"}
+2026-04-06 11:40:55 - Funcionario encontrado y activo: Nicolás Castro Mendoza
+2026-04-06 11:40:57 - === QR RAW HEX: 49443a203131370a4e6f6d6272653a2044616e69656c204573746562616e204f7274697a20526f6a61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:40:57 - === QR TEXTO:   ID: 117
+Nombre: Daniel Esteban Ortiz Rojas
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:40:57 - === QR NORMALIZADO: ID: 117
+Nombre: Daniel Esteban Ortiz Rojas
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:40:57 - ID extraído del QR: 117
+2026-04-06 11:40:57 - Resultado BD por ID: {"IdFuncionario":117,"Estado":"Activo"}
+2026-04-06 11:40:57 - Funcionario encontrado y activo: Daniel Esteban Ortiz Rojas
+2026-04-06 11:40:58 - === QR RAW HEX: 49443a203131380a4e6f6d6272653a204a6f726765204c756973204d6f72616c65732053696c76610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:40:58 - === QR TEXTO:   ID: 118
+Nombre: Jorge Luis Morales Silva
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:40:58 - === QR NORMALIZADO: ID: 118
+Nombre: Jorge Luis Morales Silva
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:40:58 - ID extraído del QR: 118
+2026-04-06 11:40:58 - Resultado BD por ID: {"IdFuncionario":118,"Estado":"Activo"}
+2026-04-06 11:40:58 - Funcionario encontrado y activo: Jorge Luis Morales Silva
+2026-04-06 11:41:03 - === QR RAW HEX: 49443a203132300a4e6f6d6272653a204b6576696e20416c6578616e64657220546f72726573204c65c3b36e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:41:03 - === QR TEXTO:   ID: 120
+Nombre: Kevin Alexander Torres León
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:41:03 - === QR NORMALIZADO: ID: 120
+Nombre: Kevin Alexander Torres León
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:41:03 - ID extraído del QR: 120
+2026-04-06 11:41:03 - Resultado BD por ID: {"IdFuncionario":120,"Estado":"Activo"}
+2026-04-06 11:41:03 - Funcionario encontrado y activo: Kevin Alexander Torres León
+2026-04-06 11:41:04 - === QR RAW HEX: 49443a203132320a4e6f6d6272653a20416c656a616e64726f205175696e7465726f2053616c617a61720a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:41:04 - === QR TEXTO:   ID: 122
+Nombre: Alejandro Quintero Salazar
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:04 - === QR NORMALIZADO: ID: 122
+Nombre: Alejandro Quintero Salazar
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:04 - ID extraído del QR: 122
+2026-04-06 11:41:04 - Resultado BD por ID: {"IdFuncionario":122,"Estado":"Activo"}
+2026-04-06 11:41:04 - Funcionario encontrado y activo: Alejandro Quintero Salazar
+2026-04-06 11:41:06 - === QR RAW HEX: 49443a203132330a4e6f6d6272653a2042726179616e2053746976656e2043c3a17264656e61732047696c0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:41:06 - === QR TEXTO:   ID: 123
+Nombre: Brayan Stiven Cárdenas Gil
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:06 - === QR NORMALIZADO: ID: 123
+Nombre: Brayan Stiven Cárdenas Gil
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:06 - ID extraído del QR: 123
+2026-04-06 11:41:06 - Resultado BD por ID: {"IdFuncionario":123,"Estado":"Activo"}
+2026-04-06 11:41:06 - Funcionario encontrado y activo: Brayan Stiven Cárdenas Gil
+2026-04-06 11:41:08 - === QR RAW HEX: 49443a203132340a4e6f6d6272653a204573746562616e20476972616c646f204f7370696e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:41:08 - === QR TEXTO:   ID: 124
+Nombre: Esteban Giraldo Ospina
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:08 - === QR NORMALIZADO: ID: 124
+Nombre: Esteban Giraldo Ospina
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:08 - ID extraído del QR: 124
+2026-04-06 11:41:08 - Resultado BD por ID: {"IdFuncionario":124,"Estado":"Activo"}
+2026-04-06 11:41:08 - Funcionario encontrado y activo: Esteban Giraldo Ospina
+2026-04-06 11:41:10 - === QR RAW HEX: 49443a203132350a4e6f6d6272653a204a756c69c3a16e20416e6472c3a973204d656ac3ad6120486f796f730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:41:10 - === QR TEXTO:   ID: 125
+Nombre: Julián Andrés Mejía Hoyos
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:10 - === QR NORMALIZADO: ID: 125
+Nombre: Julián Andrés Mejía Hoyos
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:10 - ID extraído del QR: 125
+2026-04-06 11:41:10 - Resultado BD por ID: {"IdFuncionario":125,"Estado":"Activo"}
+2026-04-06 11:41:10 - Funcionario encontrado y activo: Julián Andrés Mejía Hoyos
+2026-04-06 11:41:11 - === QR RAW HEX: 49443a203132360a4e6f6d6272653a20c39373636172204a61766965722050696e656461204475617274650a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:41:11 - === QR TEXTO:   ID: 126
+Nombre: Óscar Javier Pineda Duarte
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:11 - === QR NORMALIZADO: ID: 126
+Nombre: Óscar Javier Pineda Duarte
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:11 - ID extraído del QR: 126
+2026-04-06 11:41:11 - Resultado BD por ID: {"IdFuncionario":126,"Estado":"Activo"}
+2026-04-06 11:41:11 - Funcionario encontrado y activo: Óscar Javier Pineda Duarte
+2026-04-06 11:41:13 - === QR RAW HEX: 49443a203132370a4e6f6d6272653a205269636172646f204c65c3b36e20436172646f6e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:41:13 - === QR TEXTO:   ID: 127
+Nombre: Ricardo León Cardona
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:41:13 - === QR NORMALIZADO: ID: 127
+Nombre: Ricardo León Cardona
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:41:13 - ID extraído del QR: 127
+2026-04-06 11:41:13 - Resultado BD por ID: {"IdFuncionario":127,"Estado":"Activo"}
+2026-04-06 11:41:13 - Funcionario encontrado y activo: Ricardo León Cardona
+2026-04-06 11:41:14 - === QR RAW HEX: 49443a203132380a4e6f6d6272653a20456477696e204d6175726963696f2053616c6761646f204372757a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-06 11:41:14 - === QR TEXTO:   ID: 128
+Nombre: Edwin Mauricio Salgado Cruz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:41:14 - === QR NORMALIZADO: ID: 128
+Nombre: Edwin Mauricio Salgado Cruz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:41:14 - ID extraído del QR: 128
+2026-04-06 11:41:14 - Resultado BD por ID: {"IdFuncionario":128,"Estado":"Activo"}
+2026-04-06 11:41:14 - Funcionario encontrado y activo: Edwin Mauricio Salgado Cruz
+2026-04-06 11:41:16 - === QR RAW HEX: 49443a203132390a4e6f6d6272653a2057696c736f6e204665726e616e646f205061727261204e69c3b16f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 11:41:16 - === QR TEXTO:   ID: 129
+Nombre: Wilson Fernando Parra Niño
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:41:16 - === QR NORMALIZADO: ID: 129
+Nombre: Wilson Fernando Parra Niño
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:41:16 - ID extraído del QR: 129
+2026-04-06 11:41:16 - Resultado BD por ID: {"IdFuncionario":129,"Estado":"Activo"}
+2026-04-06 11:41:16 - Funcionario encontrado y activo: Wilson Fernando Parra Niño
+2026-04-06 11:41:26 - === QR RAW HEX: 49443a203133310a4e6f6d6272653a204d6172c3ad61204665726e616e64612047c3b36d657a2050c3a972657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:41:26 - === QR TEXTO:   ID: 131
+Nombre: María Fernanda Gómez Pérez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:41:26 - === QR NORMALIZADO: ID: 131
+Nombre: María Fernanda Gómez Pérez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:41:26 - ID extraído del QR: 131
+2026-04-06 11:41:26 - Resultado BD por ID: {"IdFuncionario":131,"Estado":"Activo"}
+2026-04-06 11:41:26 - Funcionario encontrado y activo: María Fernanda Gómez Pérez
+2026-04-06 11:41:30 - === QR RAW HEX: 49443a203133320a4e6f6d6272653a204c617572612044616e69656c6120526f6472c3ad6775657a204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-06 11:41:30 - === QR TEXTO:   ID: 132
+Nombre: Laura Daniela Rodríguez López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:41:30 - === QR NORMALIZADO: ID: 132
+Nombre: Laura Daniela Rodríguez López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:41:30 - ID extraído del QR: 132
+2026-04-06 11:41:30 - Resultado BD por ID: {"IdFuncionario":132,"Estado":"Activo"}
+2026-04-06 11:41:30 - Funcionario encontrado y activo: Laura Daniela Rodríguez López
+2026-04-06 11:41:33 - === QR RAW HEX: 49443a203133330a4e6f6d6272653a205061756c6120416e64726561204d617274c3ad6e657a2044c3ad617a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 11:41:33 - === QR TEXTO:   ID: 133
+Nombre: Paula Andrea Martínez Díaz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:41:33 - === QR NORMALIZADO: ID: 133
+Nombre: Paula Andrea Martínez Díaz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:41:33 - ID extraído del QR: 133
+2026-04-06 11:41:33 - Resultado BD por ID: false
+2026-04-06 11:41:33 - Funcionario ID 133 no existe en BD
+2026-04-06 11:41:36 - === QR RAW HEX: 49443a203133340a4e6f6d6272653a205061756c6120416e64726561204d617274c3ad6e657a2044c3ad617a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 11:41:36 - === QR TEXTO:   ID: 134
+Nombre: Paula Andrea Martínez Díaz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:41:36 - === QR NORMALIZADO: ID: 134
+Nombre: Paula Andrea Martínez Díaz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:41:36 - ID extraído del QR: 134
+2026-04-06 11:41:36 - Resultado BD por ID: {"IdFuncionario":134,"Estado":"Activo"}
+2026-04-06 11:41:36 - Funcionario encontrado y activo: Paula Andrea Martínez Díaz
+2026-04-06 11:41:39 - === QR RAW HEX: 49443a203133350a4e6f6d6272653a2044616e69656c6120416c656a616e6472612053c3a16e6368657a20546f727265730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:41:39 - === QR TEXTO:   ID: 135
+Nombre: Daniela Alejandra Sánchez Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:41:39 - === QR NORMALIZADO: ID: 135
+Nombre: Daniela Alejandra Sánchez Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:41:39 - ID extraído del QR: 135
+2026-04-06 11:41:39 - Resultado BD por ID: {"IdFuncionario":135,"Estado":"Activo"}
+2026-04-06 11:41:39 - Funcionario encontrado y activo: Daniela Alejandra Sánchez Torres
+2026-04-06 11:41:43 - === QR RAW HEX: 49443a203133370a4e6f6d6272653a2056616c656e74696e612047c3b36d657a205275697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 11:41:43 - === QR TEXTO:   ID: 137
+Nombre: Valentina Gómez Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:41:43 - === QR NORMALIZADO: ID: 137
+Nombre: Valentina Gómez Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:41:43 - ID extraído del QR: 137
+2026-04-06 11:41:43 - Resultado BD por ID: {"IdFuncionario":137,"Estado":"Activo"}
+2026-04-06 11:41:43 - Funcionario encontrado y activo: Valentina Gómez Ruiz
+2026-04-06 11:41:46 - === QR RAW HEX: 49443a203133380a4e6f6d6272653a205361726120536f66c3ad612048657272657261205661726761730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:41:46 - === QR TEXTO:   ID: 138
+Nombre: Sara Sofía Herrera Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:41:46 - === QR NORMALIZADO: ID: 138
+Nombre: Sara Sofía Herrera Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:41:46 - ID extraído del QR: 138
+2026-04-06 11:41:46 - Resultado BD por ID: {"IdFuncionario":138,"Estado":"Activo"}
+2026-04-06 11:41:46 - Funcionario encontrado y activo: Sara Sofía Herrera Vargas
+2026-04-06 11:41:49 - === QR RAW HEX: 49443a203133390a4e6f6d6272653a204e6174616c69612043617374726f204d656e646f7a610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-06 11:41:49 - === QR TEXTO:   ID: 139
+Nombre: Natalia Castro Mendoza
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:41:49 - === QR NORMALIZADO: ID: 139
+Nombre: Natalia Castro Mendoza
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:41:49 - ID extraído del QR: 139
+2026-04-06 11:41:49 - Resultado BD por ID: {"IdFuncionario":139,"Estado":"Activo"}
+2026-04-06 11:41:49 - Funcionario encontrado y activo: Natalia Castro Mendoza
+2026-04-06 11:41:51 - === QR RAW HEX: 49443a203134300a4e6f6d6272653a20416e6769652050616f6c61204f7274697a20526f6a61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:41:51 - === QR TEXTO:   ID: 140
+Nombre: Angie Paola Ortiz Rojas
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:52 - === QR NORMALIZADO: ID: 140
+Nombre: Angie Paola Ortiz Rojas
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:52 - ID extraído del QR: 140
+2026-04-06 11:41:52 - Resultado BD por ID: {"IdFuncionario":140,"Estado":"Activo"}
+2026-04-06 11:41:52 - Funcionario encontrado y activo: Angie Paola Ortiz Rojas
+2026-04-06 11:41:54 - === QR RAW HEX: 49443a203134310a4e6f6d6272653a204469616e61204361726f6c696e61204d6f72616c65732053696c76610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465204e6f72746520554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:41:54 - === QR TEXTO:   ID: 141
+Nombre: Diana Carolina Morales Silva
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:54 - === QR NORMALIZADO: ID: 141
+Nombre: Diana Carolina Morales Silva
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:54 - ID extraído del QR: 141
+2026-04-06 11:41:54 - Resultado BD por ID: {"IdFuncionario":141,"Estado":"Activo"}
+2026-04-06 11:41:54 - Funcionario encontrado y activo: Diana Carolina Morales Silva
+2026-04-06 11:41:57 - === QR RAW HEX: 49443a203134320a4e6f6d6272653a204a756c69616e6120416e64726561205665676120506172646f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:41:57 - === QR TEXTO:   ID: 142
+Nombre: Juliana Andrea Vega Pardo
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:57 - === QR NORMALIZADO: ID: 142
+Nombre: Juliana Andrea Vega Pardo
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:41:57 - ID extraído del QR: 142
+2026-04-06 11:41:57 - Resultado BD por ID: {"IdFuncionario":142,"Estado":"Activo"}
+2026-04-06 11:41:57 - Funcionario encontrado y activo: Juliana Andrea Vega Pardo
+2026-04-06 11:42:00 - === QR RAW HEX: 49443a203134330a4e6f6d6272653a204b6172656e2054617469616e6120546f72726573204c65c3b36e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:42:00 - === QR TEXTO:   ID: 143
+Nombre: Karen Tatiana Torres León
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:00 - === QR NORMALIZADO: ID: 143
+Nombre: Karen Tatiana Torres León
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:00 - ID extraído del QR: 143
+2026-04-06 11:42:00 - Resultado BD por ID: {"IdFuncionario":143,"Estado":"Activo"}
+2026-04-06 11:42:00 - Funcionario encontrado y activo: Karen Tatiana Torres León
+2026-04-06 11:42:02 - === QR RAW HEX: 49443a203134340a4e6f6d6272653a204c696e61204d617263656c612052696e63c3b36e205065c3b1610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:42:02 - === QR TEXTO:   ID: 144
+Nombre: Lina Marcela Rincón Peña
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:02 - === QR NORMALIZADO: ID: 144
+Nombre: Lina Marcela Rincón Peña
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:02 - ID extraído del QR: 144
+2026-04-06 11:42:02 - Resultado BD por ID: {"IdFuncionario":144,"Estado":"Activo"}
+2026-04-06 11:42:02 - Funcionario encontrado y activo: Lina Marcela Rincón Peña
+2026-04-06 11:42:05 - === QR RAW HEX: 49443a203134350a4e6f6d6272653a2041647269616e61205175696e7465726f2053616c617a61720a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465204e6f72746520554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:42:05 - === QR TEXTO:   ID: 145
+Nombre: Adriana Quintero Salazar
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:05 - === QR NORMALIZADO: ID: 145
+Nombre: Adriana Quintero Salazar
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:05 - ID extraído del QR: 145
+2026-04-06 11:42:05 - Resultado BD por ID: {"IdFuncionario":145,"Estado":"Activo"}
+2026-04-06 11:42:05 - Funcionario encontrado y activo: Adriana Quintero Salazar
+2026-04-06 11:42:07 - === QR RAW HEX: 49443a203134360a4e6f6d6272653a2059756c69616e612043c3a17264656e61732047696c0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:42:07 - === QR TEXTO:   ID: 146
+Nombre: Yuliana Cárdenas Gil
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:07 - === QR NORMALIZADO: ID: 146
+Nombre: Yuliana Cárdenas Gil
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:07 - ID extraído del QR: 146
+2026-04-06 11:42:07 - Resultado BD por ID: {"IdFuncionario":146,"Estado":"Activo"}
+2026-04-06 11:42:07 - Funcionario encontrado y activo: Yuliana Cárdenas Gil
+2026-04-06 11:42:09 - === QR RAW HEX: 49443a203134370a4e6f6d6272653a204573746566616ec3ad6120476972616c646f204f7370696e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:42:09 - === QR TEXTO:   ID: 147
+Nombre: Estefanía Giraldo Ospina
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:09 - === QR NORMALIZADO: ID: 147
+Nombre: Estefanía Giraldo Ospina
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:09 - ID extraído del QR: 147
+2026-04-06 11:42:09 - Resultado BD por ID: {"IdFuncionario":147,"Estado":"Activo"}
+2026-04-06 11:42:09 - Funcionario encontrado y activo: Estefanía Giraldo Ospina
+2026-04-06 11:42:11 - === QR RAW HEX: 49443a203134380a4e6f6d6272653a2054617469616e61204d656ac3ad6120486f796f730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465204e6f72746520554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:42:11 - === QR TEXTO:   ID: 148
+Nombre: Tatiana Mejía Hoyos
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:11 - === QR NORMALIZADO: ID: 148
+Nombre: Tatiana Mejía Hoyos
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:42:11 - ID extraído del QR: 148
+2026-04-06 11:42:11 - Resultado BD por ID: {"IdFuncionario":148,"Estado":"Activo"}
+2026-04-06 11:42:11 - Funcionario encontrado y activo: Tatiana Mejía Hoyos
+2026-04-06 11:42:14 - === QR RAW HEX: 49443a203134390a4e6f6d6272653a2053616e6472612050696e656461204475617274650a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:42:14 - === QR TEXTO:   ID: 149
+Nombre: Sandra Pineda Duarte
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:42:14 - === QR NORMALIZADO: ID: 149
+Nombre: Sandra Pineda Duarte
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:42:14 - ID extraído del QR: 149
+2026-04-06 11:42:14 - Resultado BD por ID: {"IdFuncionario":149,"Estado":"Activo"}
+2026-04-06 11:42:14 - Funcionario encontrado y activo: Sandra Pineda Duarte
+2026-04-06 11:42:16 - === QR RAW HEX: 49443a203135300a4e6f6d6272653a20436c6175646961204c65c3b36e20436172646f6e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:42:16 - === QR TEXTO:   ID: 150
+Nombre: Claudia León Cardona
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:42:16 - === QR NORMALIZADO: ID: 150
+Nombre: Claudia León Cardona
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:42:16 - ID extraído del QR: 150
+2026-04-06 11:42:16 - Resultado BD por ID: {"IdFuncionario":150,"Estado":"Activo"}
+2026-04-06 11:42:16 - Funcionario encontrado y activo: Claudia León Cardona
+2026-04-06 11:42:18 - === QR RAW HEX: 49443a203135310a4e6f6d6272653a2050616f6c612053616c6761646f204372757a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:42:18 - === QR TEXTO:   ID: 151
+Nombre: Paola Salgado Cruz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:42:18 - === QR NORMALIZADO: ID: 151
+Nombre: Paola Salgado Cruz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:42:18 - ID extraído del QR: 151
+2026-04-06 11:42:18 - Resultado BD por ID: {"IdFuncionario":151,"Estado":"Activo"}
+2026-04-06 11:42:18 - Funcionario encontrado y activo: Paola Salgado Cruz
+2026-04-06 11:42:20 - === QR RAW HEX: 49443a203135320a4e6f6d6272653a204dc3b36e696361205061727261204e69c3b16f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:42:20 - === QR TEXTO:   ID: 152
+Nombre: Mónica Parra Niño
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:42:20 - === QR NORMALIZADO: ID: 152
+Nombre: Mónica Parra Niño
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:42:20 - ID extraído del QR: 152
+2026-04-06 11:42:20 - Resultado BD por ID: {"IdFuncionario":152,"Estado":"Activo"}
+2026-04-06 11:42:20 - Funcionario encontrado y activo: Mónica Parra Niño
+2026-04-06 11:42:23 - === QR RAW HEX: 49443a203135330a4e6f6d6272653a2050617472696369612043696675656e746573204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:42:23 - === QR TEXTO:   ID: 153
+Nombre: Patricia Cifuentes López
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:42:23 - === QR NORMALIZADO: ID: 153
+Nombre: Patricia Cifuentes López
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:42:23 - ID extraído del QR: 153
+2026-04-06 11:42:23 - Resultado BD por ID: {"IdFuncionario":153,"Estado":"Activo"}
+2026-04-06 11:42:23 - Funcionario encontrado y activo: Patricia Cifuentes López
+2026-04-06 11:42:25 - === QR RAW HEX: 49443a203135340a4e6f6d6272653a20c3816e67656c6120427569747261676f2052c3ad6f730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:42:25 - === QR TEXTO:   ID: 154
+Nombre: Ángela Buitrago Ríos
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:42:25 - === QR NORMALIZADO: ID: 154
+Nombre: Ángela Buitrago Ríos
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:42:25 - ID extraído del QR: 154
+2026-04-06 11:42:25 - Resultado BD por ID: {"IdFuncionario":154,"Estado":"Activo"}
+2026-04-06 11:42:25 - Funcionario encontrado y activo: Ángela Buitrago Ríos
+2026-04-06 11:42:28 - === QR RAW HEX: 49443a203135350a4e6f6d6272653a204469616e61204261727265746f2047c3b36d657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:42:28 - === QR TEXTO:   ID: 155
+Nombre: Diana Barreto Gómez
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:42:28 - === QR NORMALIZADO: ID: 155
+Nombre: Diana Barreto Gómez
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:42:28 - ID extraído del QR: 155
+2026-04-06 11:42:28 - Resultado BD por ID: {"IdFuncionario":155,"Estado":"Activo"}
+2026-04-06 11:42:28 - Funcionario encontrado y activo: Diana Barreto Gómez
+2026-04-06 11:42:31 - === QR RAW HEX: 49443a203135360a4e6f6d6272653a204c6f72656e612042656c7472c3a16e2043617374696c6c6f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:42:31 - === QR TEXTO:   ID: 156
+Nombre: Lorena Beltrán Castillo
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:42:31 - === QR NORMALIZADO: ID: 156
+Nombre: Lorena Beltrán Castillo
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:42:31 - ID extraído del QR: 156
+2026-04-06 11:42:31 - Resultado BD por ID: {"IdFuncionario":156,"Estado":"Activo"}
+2026-04-06 11:42:31 - Funcionario encontrado y activo: Lorena Beltrán Castillo
+2026-04-06 11:43:00 - === QR RAW HEX: 49443a203135360a4e6f6d6272653a204c6f72656e612042656c7472c3a16e2043617374696c6c6f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:43:00 - === QR TEXTO:   ID: 156
+Nombre: Lorena Beltrán Castillo
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:43:00 - === QR NORMALIZADO: ID: 156
+Nombre: Lorena Beltrán Castillo
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:43:00 - ID extraído del QR: 156
+2026-04-06 11:43:00 - Resultado BD por ID: {"IdFuncionario":156,"Estado":"Activo"}
+2026-04-06 11:43:00 - Funcionario encontrado y activo: Lorena Beltrán Castillo
+2026-04-06 11:43:06 - === QR RAW HEX: 49443a203135350a4e6f6d6272653a204469616e61204261727265746f2047c3b36d657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:43:06 - === QR TEXTO:   ID: 155
+Nombre: Diana Barreto Gómez
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:43:06 - === QR NORMALIZADO: ID: 155
+Nombre: Diana Barreto Gómez
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:43:06 - ID extraído del QR: 155
+2026-04-06 11:43:06 - Resultado BD por ID: {"IdFuncionario":155,"Estado":"Activo"}
+2026-04-06 11:43:06 - Funcionario encontrado y activo: Diana Barreto Gómez
+2026-04-06 11:43:08 - === QR RAW HEX: 49443a203135340a4e6f6d6272653a20c3816e67656c6120427569747261676f2052c3ad6f730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:43:08 - === QR TEXTO:   ID: 154
+Nombre: Ángela Buitrago Ríos
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:43:08 - === QR NORMALIZADO: ID: 154
+Nombre: Ángela Buitrago Ríos
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:43:08 - ID extraído del QR: 154
+2026-04-06 11:43:08 - Resultado BD por ID: {"IdFuncionario":154,"Estado":"Activo"}
+2026-04-06 11:43:08 - Funcionario encontrado y activo: Ángela Buitrago Ríos
+2026-04-06 11:43:10 - === QR RAW HEX: 49443a203135330a4e6f6d6272653a2050617472696369612043696675656e746573204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:43:10 - === QR TEXTO:   ID: 153
+Nombre: Patricia Cifuentes López
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:43:10 - === QR NORMALIZADO: ID: 153
+Nombre: Patricia Cifuentes López
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:43:10 - ID extraído del QR: 153
+2026-04-06 11:43:10 - Resultado BD por ID: {"IdFuncionario":153,"Estado":"Activo"}
+2026-04-06 11:43:10 - Funcionario encontrado y activo: Patricia Cifuentes López
+2026-04-06 11:43:12 - === QR RAW HEX: 49443a203135320a4e6f6d6272653a204dc3b36e696361205061727261204e69c3b16f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:43:12 - === QR TEXTO:   ID: 152
+Nombre: Mónica Parra Niño
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:43:12 - === QR NORMALIZADO: ID: 152
+Nombre: Mónica Parra Niño
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:43:12 - ID extraído del QR: 152
+2026-04-06 11:43:12 - Resultado BD por ID: {"IdFuncionario":152,"Estado":"Activo"}
+2026-04-06 11:43:12 - Funcionario encontrado y activo: Mónica Parra Niño
+2026-04-06 11:43:14 - === QR RAW HEX: 49443a203135310a4e6f6d6272653a2050616f6c612053616c6761646f204372757a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:43:14 - === QR TEXTO:   ID: 151
+Nombre: Paola Salgado Cruz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:43:14 - === QR NORMALIZADO: ID: 151
+Nombre: Paola Salgado Cruz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:43:14 - ID extraído del QR: 151
+2026-04-06 11:43:14 - Resultado BD por ID: {"IdFuncionario":151,"Estado":"Activo"}
+2026-04-06 11:43:14 - Funcionario encontrado y activo: Paola Salgado Cruz
+2026-04-06 11:43:16 - === QR RAW HEX: 49443a203135300a4e6f6d6272653a20436c6175646961204c65c3b36e20436172646f6e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:43:16 - === QR TEXTO:   ID: 150
+Nombre: Claudia León Cardona
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:43:16 - === QR NORMALIZADO: ID: 150
+Nombre: Claudia León Cardona
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:43:16 - ID extraído del QR: 150
+2026-04-06 11:43:16 - Resultado BD por ID: {"IdFuncionario":150,"Estado":"Activo"}
+2026-04-06 11:43:16 - Funcionario encontrado y activo: Claudia León Cardona
+2026-04-06 11:43:18 - === QR RAW HEX: 49443a203134390a4e6f6d6272653a2053616e6472612050696e656461204475617274650a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:43:18 - === QR TEXTO:   ID: 149
+Nombre: Sandra Pineda Duarte
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:43:18 - === QR NORMALIZADO: ID: 149
+Nombre: Sandra Pineda Duarte
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:43:18 - ID extraído del QR: 149
+2026-04-06 11:43:18 - Resultado BD por ID: {"IdFuncionario":149,"Estado":"Activo"}
+2026-04-06 11:43:18 - Funcionario encontrado y activo: Sandra Pineda Duarte
+2026-04-06 11:43:20 - === QR RAW HEX: 49443a203134380a4e6f6d6272653a2054617469616e61204d656ac3ad6120486f796f730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465204e6f72746520554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:43:20 - === QR TEXTO:   ID: 148
+Nombre: Tatiana Mejía Hoyos
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:20 - === QR NORMALIZADO: ID: 148
+Nombre: Tatiana Mejía Hoyos
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:20 - ID extraído del QR: 148
+2026-04-06 11:43:20 - Resultado BD por ID: {"IdFuncionario":148,"Estado":"Activo"}
+2026-04-06 11:43:20 - Funcionario encontrado y activo: Tatiana Mejía Hoyos
+2026-04-06 11:43:21 - === QR RAW HEX: 49443a203134370a4e6f6d6272653a204573746566616ec3ad6120476972616c646f204f7370696e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:43:21 - === QR TEXTO:   ID: 147
+Nombre: Estefanía Giraldo Ospina
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:21 - === QR NORMALIZADO: ID: 147
+Nombre: Estefanía Giraldo Ospina
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:21 - ID extraído del QR: 147
+2026-04-06 11:43:21 - Resultado BD por ID: {"IdFuncionario":147,"Estado":"Activo"}
+2026-04-06 11:43:21 - Funcionario encontrado y activo: Estefanía Giraldo Ospina
+2026-04-06 11:43:23 - === QR RAW HEX: 49443a203134360a4e6f6d6272653a2059756c69616e612043c3a17264656e61732047696c0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:43:23 - === QR TEXTO:   ID: 146
+Nombre: Yuliana Cárdenas Gil
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:23 - === QR NORMALIZADO: ID: 146
+Nombre: Yuliana Cárdenas Gil
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:23 - ID extraído del QR: 146
+2026-04-06 11:43:23 - Resultado BD por ID: {"IdFuncionario":146,"Estado":"Activo"}
+2026-04-06 11:43:23 - Funcionario encontrado y activo: Yuliana Cárdenas Gil
+2026-04-06 11:43:26 - === QR RAW HEX: 49443a203134350a4e6f6d6272653a2041647269616e61205175696e7465726f2053616c617a61720a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465204e6f72746520554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:43:26 - === QR TEXTO:   ID: 145
+Nombre: Adriana Quintero Salazar
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:26 - === QR NORMALIZADO: ID: 145
+Nombre: Adriana Quintero Salazar
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:26 - ID extraído del QR: 145
+2026-04-06 11:43:26 - Resultado BD por ID: {"IdFuncionario":145,"Estado":"Activo"}
+2026-04-06 11:43:26 - Funcionario encontrado y activo: Adriana Quintero Salazar
+2026-04-06 11:43:32 - === QR RAW HEX: 49443a203134330a4e6f6d6272653a204b6172656e2054617469616e6120546f72726573204c65c3b36e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:43:32 - === QR TEXTO:   ID: 143
+Nombre: Karen Tatiana Torres León
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:32 - === QR NORMALIZADO: ID: 143
+Nombre: Karen Tatiana Torres León
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:32 - ID extraído del QR: 143
+2026-04-06 11:43:32 - Resultado BD por ID: {"IdFuncionario":143,"Estado":"Activo"}
+2026-04-06 11:43:32 - Funcionario encontrado y activo: Karen Tatiana Torres León
+2026-04-06 11:43:34 - === QR RAW HEX: 49443a203134320a4e6f6d6272653a204a756c69616e6120416e64726561205665676120506172646f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:43:34 - === QR TEXTO:   ID: 142
+Nombre: Juliana Andrea Vega Pardo
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:34 - === QR NORMALIZADO: ID: 142
+Nombre: Juliana Andrea Vega Pardo
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:34 - ID extraído del QR: 142
+2026-04-06 11:43:34 - Resultado BD por ID: {"IdFuncionario":142,"Estado":"Activo"}
+2026-04-06 11:43:34 - Funcionario encontrado y activo: Juliana Andrea Vega Pardo
+2026-04-06 11:43:37 - === QR RAW HEX: 49443a203134310a4e6f6d6272653a204469616e61204361726f6c696e61204d6f72616c65732053696c76610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465204e6f72746520554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:43:37 - === QR TEXTO:   ID: 141
+Nombre: Diana Carolina Morales Silva
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:37 - === QR NORMALIZADO: ID: 141
+Nombre: Diana Carolina Morales Silva
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Norte UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:37 - ID extraído del QR: 141
+2026-04-06 11:43:37 - Resultado BD por ID: {"IdFuncionario":141,"Estado":"Activo"}
+2026-04-06 11:43:37 - Funcionario encontrado y activo: Diana Carolina Morales Silva
+2026-04-06 11:43:40 - === QR RAW HEX: 49443a203134300a4e6f6d6272653a20416e6769652050616f6c61204f7274697a20526f6a61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:43:40 - === QR TEXTO:   ID: 140
+Nombre: Angie Paola Ortiz Rojas
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:40 - === QR NORMALIZADO: ID: 140
+Nombre: Angie Paola Ortiz Rojas
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:43:40 - ID extraído del QR: 140
+2026-04-06 11:43:40 - Resultado BD por ID: {"IdFuncionario":140,"Estado":"Activo"}
+2026-04-06 11:43:40 - Funcionario encontrado y activo: Angie Paola Ortiz Rojas
+2026-04-06 11:43:42 - === QR RAW HEX: 49443a203133390a4e6f6d6272653a204e6174616c69612043617374726f204d656e646f7a610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-06 11:43:42 - === QR TEXTO:   ID: 139
+Nombre: Natalia Castro Mendoza
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:43:42 - === QR NORMALIZADO: ID: 139
+Nombre: Natalia Castro Mendoza
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:43:42 - ID extraído del QR: 139
+2026-04-06 11:43:42 - Resultado BD por ID: {"IdFuncionario":139,"Estado":"Activo"}
+2026-04-06 11:43:42 - Funcionario encontrado y activo: Natalia Castro Mendoza
+2026-04-06 11:43:45 - === QR RAW HEX: 49443a203133380a4e6f6d6272653a205361726120536f66c3ad612048657272657261205661726761730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:43:45 - === QR TEXTO:   ID: 138
+Nombre: Sara Sofía Herrera Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:43:45 - === QR NORMALIZADO: ID: 138
+Nombre: Sara Sofía Herrera Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:43:45 - ID extraído del QR: 138
+2026-04-06 11:43:45 - Resultado BD por ID: {"IdFuncionario":138,"Estado":"Activo"}
+2026-04-06 11:43:45 - Funcionario encontrado y activo: Sara Sofía Herrera Vargas
+2026-04-06 11:43:46 - === QR RAW HEX: 49443a203133370a4e6f6d6272653a2056616c656e74696e612047c3b36d657a205275697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 11:43:46 - === QR TEXTO:   ID: 137
+Nombre: Valentina Gómez Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:43:46 - === QR NORMALIZADO: ID: 137
+Nombre: Valentina Gómez Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:43:46 - ID extraído del QR: 137
+2026-04-06 11:43:46 - Resultado BD por ID: {"IdFuncionario":137,"Estado":"Activo"}
+2026-04-06 11:43:46 - Funcionario encontrado y activo: Valentina Gómez Ruiz
+2026-04-06 11:43:48 - === QR RAW HEX: 49443a203133360a4e6f6d6272653a2043616d696c6120416e647265612052616dc3ad72657a2043617374726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-06 11:43:48 - === QR TEXTO:   ID: 136
+Nombre: Camila Andrea Ramírez Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:43:48 - === QR NORMALIZADO: ID: 136
+Nombre: Camila Andrea Ramírez Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:43:48 - ID extraído del QR: 136
+2026-04-06 11:43:48 - Resultado BD por ID: {"IdFuncionario":136,"Estado":"Activo"}
+2026-04-06 11:43:48 - Funcionario encontrado y activo: Camila Andrea Ramírez Castro
+2026-04-06 11:43:50 - === QR RAW HEX: 49443a203133350a4e6f6d6272653a2044616e69656c6120416c656a616e6472612053c3a16e6368657a20546f727265730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:43:50 - === QR TEXTO:   ID: 135
+Nombre: Daniela Alejandra Sánchez Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:43:50 - === QR NORMALIZADO: ID: 135
+Nombre: Daniela Alejandra Sánchez Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:43:50 - ID extraído del QR: 135
+2026-04-06 11:43:50 - Resultado BD por ID: {"IdFuncionario":135,"Estado":"Activo"}
+2026-04-06 11:43:50 - Funcionario encontrado y activo: Daniela Alejandra Sánchez Torres
+2026-04-06 11:43:54 - === QR RAW HEX: 49443a203133340a4e6f6d6272653a205061756c6120416e64726561204d617274c3ad6e657a2044c3ad617a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 11:43:54 - === QR TEXTO:   ID: 134
+Nombre: Paula Andrea Martínez Díaz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:43:54 - === QR NORMALIZADO: ID: 134
+Nombre: Paula Andrea Martínez Díaz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:43:54 - ID extraído del QR: 134
+2026-04-06 11:43:54 - Resultado BD por ID: {"IdFuncionario":134,"Estado":"Activo"}
+2026-04-06 11:43:54 - Funcionario encontrado y activo: Paula Andrea Martínez Díaz
+2026-04-06 11:43:57 - === QR RAW HEX: 49443a203133330a4e6f6d6272653a205061756c6120416e64726561204d617274c3ad6e657a2044c3ad617a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 11:43:57 - === QR TEXTO:   ID: 133
+Nombre: Paula Andrea Martínez Díaz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:43:57 - === QR NORMALIZADO: ID: 133
+Nombre: Paula Andrea Martínez Díaz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:43:57 - ID extraído del QR: 133
+2026-04-06 11:43:57 - Resultado BD por ID: false
+2026-04-06 11:43:57 - Funcionario ID 133 no existe en BD
+2026-04-06 11:43:59 - === QR RAW HEX: 49443a203133320a4e6f6d6272653a204c617572612044616e69656c6120526f6472c3ad6775657a204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-06 11:43:59 - === QR TEXTO:   ID: 132
+Nombre: Laura Daniela Rodríguez López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:43:59 - === QR NORMALIZADO: ID: 132
+Nombre: Laura Daniela Rodríguez López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:43:59 - ID extraído del QR: 132
+2026-04-06 11:43:59 - Resultado BD por ID: {"IdFuncionario":132,"Estado":"Activo"}
+2026-04-06 11:43:59 - Funcionario encontrado y activo: Laura Daniela Rodríguez López
+2026-04-06 11:44:01 - === QR RAW HEX: 49443a203133310a4e6f6d6272653a204d6172c3ad61204665726e616e64612047c3b36d657a2050c3a972657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:44:01 - === QR TEXTO:   ID: 131
+Nombre: María Fernanda Gómez Pérez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:44:01 - === QR NORMALIZADO: ID: 131
+Nombre: María Fernanda Gómez Pérez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:44:01 - ID extraído del QR: 131
+2026-04-06 11:44:01 - Resultado BD por ID: {"IdFuncionario":131,"Estado":"Activo"}
+2026-04-06 11:44:01 - Funcionario encontrado y activo: María Fernanda Gómez Pérez
+2026-04-06 11:44:04 - === QR RAW HEX: 49443a203133300a4e6f6d6272653a204865726ec3a16e20446172c3ad6f2043696675656e746573204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:44:04 - === QR TEXTO:   ID: 130
+Nombre: Hernán Darío Cifuentes López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:44:04 - === QR NORMALIZADO: ID: 130
+Nombre: Hernán Darío Cifuentes López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:44:04 - ID extraído del QR: 130
+2026-04-06 11:44:04 - Resultado BD por ID: {"IdFuncionario":130,"Estado":"Activo"}
+2026-04-06 11:44:04 - Funcionario encontrado y activo: Hernán Darío Cifuentes López
+2026-04-06 11:44:06 - === QR RAW HEX: 49443a203132390a4e6f6d6272653a2057696c736f6e204665726e616e646f205061727261204e69c3b16f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-06 11:44:06 - === QR TEXTO:   ID: 129
+Nombre: Wilson Fernando Parra Niño
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:44:06 - === QR NORMALIZADO: ID: 129
+Nombre: Wilson Fernando Parra Niño
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-06 11:44:06 - ID extraído del QR: 129
+2026-04-06 11:44:06 - Resultado BD por ID: {"IdFuncionario":129,"Estado":"Activo"}
+2026-04-06 11:44:06 - Funcionario encontrado y activo: Wilson Fernando Parra Niño
+2026-04-06 11:44:09 - === QR RAW HEX: 49443a203132380a4e6f6d6272653a20456477696e204d6175726963696f2053616c6761646f204372757a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-06 11:44:09 - === QR TEXTO:   ID: 128
+Nombre: Edwin Mauricio Salgado Cruz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:44:09 - === QR NORMALIZADO: ID: 128
+Nombre: Edwin Mauricio Salgado Cruz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-06 11:44:09 - ID extraído del QR: 128
+2026-04-06 11:44:09 - Resultado BD por ID: {"IdFuncionario":128,"Estado":"Activo"}
+2026-04-06 11:44:09 - Funcionario encontrado y activo: Edwin Mauricio Salgado Cruz
+2026-04-06 11:44:11 - === QR RAW HEX: 49443a203132370a4e6f6d6272653a205269636172646f204c65c3b36e20436172646f6e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:44:11 - === QR TEXTO:   ID: 127
+Nombre: Ricardo León Cardona
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:44:11 - === QR NORMALIZADO: ID: 127
+Nombre: Ricardo León Cardona
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:44:11 - ID extraído del QR: 127
+2026-04-06 11:44:11 - Resultado BD por ID: {"IdFuncionario":127,"Estado":"Activo"}
+2026-04-06 11:44:11 - Funcionario encontrado y activo: Ricardo León Cardona
+2026-04-06 11:44:14 - === QR RAW HEX: 49443a203132360a4e6f6d6272653a20c39373636172204a61766965722050696e656461204475617274650a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:44:14 - === QR TEXTO:   ID: 126
+Nombre: Óscar Javier Pineda Duarte
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:14 - === QR NORMALIZADO: ID: 126
+Nombre: Óscar Javier Pineda Duarte
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:14 - ID extraído del QR: 126
+2026-04-06 11:44:14 - Resultado BD por ID: {"IdFuncionario":126,"Estado":"Activo"}
+2026-04-06 11:44:14 - Funcionario encontrado y activo: Óscar Javier Pineda Duarte
+2026-04-06 11:44:16 - === QR RAW HEX: 49443a203132350a4e6f6d6272653a204a756c69c3a16e20416e6472c3a973204d656ac3ad6120486f796f730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:44:16 - === QR TEXTO:   ID: 125
+Nombre: Julián Andrés Mejía Hoyos
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:16 - === QR NORMALIZADO: ID: 125
+Nombre: Julián Andrés Mejía Hoyos
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:16 - ID extraído del QR: 125
+2026-04-06 11:44:16 - Resultado BD por ID: {"IdFuncionario":125,"Estado":"Activo"}
+2026-04-06 11:44:16 - Funcionario encontrado y activo: Julián Andrés Mejía Hoyos
+2026-04-06 11:44:18 - === QR RAW HEX: 49443a203132340a4e6f6d6272653a204573746562616e20476972616c646f204f7370696e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:44:18 - === QR TEXTO:   ID: 124
+Nombre: Esteban Giraldo Ospina
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:18 - === QR NORMALIZADO: ID: 124
+Nombre: Esteban Giraldo Ospina
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:18 - ID extraído del QR: 124
+2026-04-06 11:44:18 - Resultado BD por ID: {"IdFuncionario":124,"Estado":"Activo"}
+2026-04-06 11:44:18 - Funcionario encontrado y activo: Esteban Giraldo Ospina
+2026-04-06 11:44:21 - === QR RAW HEX: 49443a203132330a4e6f6d6272653a2042726179616e2053746976656e2043c3a17264656e61732047696c0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:44:21 - === QR TEXTO:   ID: 123
+Nombre: Brayan Stiven Cárdenas Gil
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:21 - === QR NORMALIZADO: ID: 123
+Nombre: Brayan Stiven Cárdenas Gil
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:21 - ID extraído del QR: 123
+2026-04-06 11:44:21 - Resultado BD por ID: {"IdFuncionario":123,"Estado":"Activo"}
+2026-04-06 11:44:21 - Funcionario encontrado y activo: Brayan Stiven Cárdenas Gil
+2026-04-06 11:44:25 - === QR RAW HEX: 49443a203132320a4e6f6d6272653a20416c656a616e64726f205175696e7465726f2053616c617a61720a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:44:25 - === QR TEXTO:   ID: 122
+Nombre: Alejandro Quintero Salazar
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:25 - === QR NORMALIZADO: ID: 122
+Nombre: Alejandro Quintero Salazar
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:25 - ID extraído del QR: 122
+2026-04-06 11:44:25 - Resultado BD por ID: {"IdFuncionario":122,"Estado":"Activo"}
+2026-04-06 11:44:25 - Funcionario encontrado y activo: Alejandro Quintero Salazar
+2026-04-06 11:44:26 - === QR RAW HEX: 49443a203132310a4e6f6d6272653a20437269737469616e2044617669642052696e63c3b36e205065c3b1610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a20536564652043656e74726f2020554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:44:26 - === QR TEXTO:   ID: 121
+Nombre: Cristian David Rincón Peña
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:26 - === QR NORMALIZADO: ID: 121
+Nombre: Cristian David Rincón Peña
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Centro  UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:26 - ID extraído del QR: 121
+2026-04-06 11:44:26 - Resultado BD por ID: {"IdFuncionario":121,"Estado":"Activo"}
+2026-04-06 11:44:26 - Funcionario encontrado y activo: Cristian David Rincón Peña
+2026-04-06 11:44:28 - === QR RAW HEX: 49443a203132300a4e6f6d6272653a204b6576696e20416c6578616e64657220546f72726573204c65c3b36e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:44:28 - === QR TEXTO:   ID: 120
+Nombre: Kevin Alexander Torres León
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:44:28 - === QR NORMALIZADO: ID: 120
+Nombre: Kevin Alexander Torres León
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:44:28 - ID extraído del QR: 120
+2026-04-06 11:44:28 - Resultado BD por ID: {"IdFuncionario":120,"Estado":"Activo"}
+2026-04-06 11:44:28 - Funcionario encontrado y activo: Kevin Alexander Torres León
+2026-04-06 11:44:30 - === QR RAW HEX: 49443a203131390a4e6f6d6272653a2043616d696c6f20416e6472c3a973205665676120506172646f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:44:30 - === QR TEXTO:   ID: 119
+Nombre: Camilo Andrés Vega Pardo
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:44:30 - === QR NORMALIZADO: ID: 119
+Nombre: Camilo Andrés Vega Pardo
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:44:30 - ID extraído del QR: 119
+2026-04-06 11:44:30 - Resultado BD por ID: {"IdFuncionario":119,"Estado":"Activo"}
+2026-04-06 11:44:31 - Funcionario encontrado y activo: Camilo Andrés Vega Pardo
+2026-04-06 11:44:32 - === QR RAW HEX: 49443a203131380a4e6f6d6272653a204a6f726765204c756973204d6f72616c65732053696c76610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:44:32 - === QR TEXTO:   ID: 118
+Nombre: Jorge Luis Morales Silva
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:44:32 - === QR NORMALIZADO: ID: 118
+Nombre: Jorge Luis Morales Silva
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:44:32 - ID extraído del QR: 118
+2026-04-06 11:44:32 - Resultado BD por ID: {"IdFuncionario":118,"Estado":"Activo"}
+2026-04-06 11:44:32 - Funcionario encontrado y activo: Jorge Luis Morales Silva
+2026-04-06 11:44:34 - === QR RAW HEX: 49443a203131370a4e6f6d6272653a2044616e69656c204573746562616e204f7274697a20526f6a61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:44:34 - === QR TEXTO:   ID: 117
+Nombre: Daniel Esteban Ortiz Rojas
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:44:34 - === QR NORMALIZADO: ID: 117
+Nombre: Daniel Esteban Ortiz Rojas
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:44:34 - ID extraído del QR: 117
+2026-04-06 11:44:34 - Resultado BD por ID: {"IdFuncionario":117,"Estado":"Activo"}
+2026-04-06 11:44:34 - Funcionario encontrado y activo: Daniel Esteban Ortiz Rojas
+2026-04-06 11:44:36 - === QR RAW HEX: 49443a203131360a4e6f6d6272653a204e69636f6cc3a1732043617374726f204d656e646f7a610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465204e6f727465202041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:44:36 - === QR TEXTO:   ID: 116
+Nombre: Nicolás Castro Mendoza
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:44:36 - === QR NORMALIZADO: ID: 116
+Nombre: Nicolás Castro Mendoza
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Norte  Asturias
+Estado: Activo
+2026-04-06 11:44:36 - ID extraído del QR: 116
+2026-04-06 11:44:36 - Resultado BD por ID: {"IdFuncionario":116,"Estado":"Activo"}
+2026-04-06 11:44:36 - Funcionario encontrado y activo: Nicolás Castro Mendoza
+2026-04-06 11:44:40 - === QR RAW HEX: 49443a203131340a4e6f6d6272653a20446965676f20416c656a616e64726f2047c3b36d657a205275697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:44:40 - === QR TEXTO:   ID: 114
+Nombre: Diego Alejandro Gómez Ruiz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:40 - === QR NORMALIZADO: ID: 114
+Nombre: Diego Alejandro Gómez Ruiz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:40 - ID extraído del QR: 114
+2026-04-06 11:44:40 - Resultado BD por ID: {"IdFuncionario":114,"Estado":"Activo"}
+2026-04-06 11:44:40 - Funcionario encontrado y activo: Diego Alejandro Gómez Ruiz
+2026-04-06 11:44:42 - === QR RAW HEX: 49443a203131330a4e6f6d6272653a204d696775656c20c3816e67656c2052616dc3ad72657a2043617374726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:44:42 - === QR TEXTO:   ID: 113
+Nombre: Miguel Ángel Ramírez Castro
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:42 - === QR NORMALIZADO: ID: 113
+Nombre: Miguel Ángel Ramírez Castro
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:42 - ID extraído del QR: 113
+2026-04-06 11:44:42 - Resultado BD por ID: {"IdFuncionario":113,"Estado":"Activo"}
+2026-04-06 11:44:42 - Funcionario encontrado y activo: Miguel Ángel Ramírez Castro
+2026-04-06 11:44:44 - === QR RAW HEX: 49443a203131320a4e6f6d6272653a20416e6472c3a9732046656c6970652053c3a16e6368657a20546f727265730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:44:44 - === QR TEXTO:   ID: 112
+Nombre: Andrés Felipe Sánchez Torres
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:44 - === QR NORMALIZADO: ID: 112
+Nombre: Andrés Felipe Sánchez Torres
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:44 - ID extraído del QR: 112
+2026-04-06 11:44:44 - Resultado BD por ID: {"IdFuncionario":112,"Estado":"Activo"}
+2026-04-06 11:44:44 - Funcionario encontrado y activo: Andrés Felipe Sánchez Torres
+2026-04-06 11:44:47 - === QR RAW HEX: 49443a203131310a4e6f6d6272653a204c756973204665726e616e646f204d617274c3ad6e657a2044c3ad617a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:44:47 - === QR TEXTO:   ID: 111
+Nombre: Luis Fernando Martínez Díaz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:47 - === QR NORMALIZADO: ID: 111
+Nombre: Luis Fernando Martínez Díaz
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:47 - ID extraído del QR: 111
+2026-04-06 11:44:47 - Resultado BD por ID: {"IdFuncionario":111,"Estado":"Activo"}
+2026-04-06 11:44:47 - Funcionario encontrado y activo: Luis Fernando Martínez Díaz
+2026-04-06 11:44:49 - === QR RAW HEX: 49443a203131300a4e6f6d6272653a204361726c6f7320416e6472c3a97320526f6472c3ad6775657a204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:44:49 - === QR TEXTO:   ID: 110
+Nombre: Carlos Andrés Rodríguez López
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:49 - === QR NORMALIZADO: ID: 110
+Nombre: Carlos Andrés Rodríguez López
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:49 - ID extraído del QR: 110
+2026-04-06 11:44:49 - Resultado BD por ID: {"IdFuncionario":110,"Estado":"Activo"}
+2026-04-06 11:44:49 - Funcionario encontrado y activo: Carlos Andrés Rodríguez López
+2026-04-06 11:44:51 - === QR RAW HEX: 49443a203130390a4e6f6d6272653a204a75616e2044617669642050c3a972657a2047c3b36d657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a20536564652043686170696e65726f0a45737461646f3a2041637469766f
+2026-04-06 11:44:51 - === QR TEXTO:   ID: 109
+Nombre: Juan David Pérez Gómez
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:51 - === QR NORMALIZADO: ID: 109
+Nombre: Juan David Pérez Gómez
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Chapinero
+Estado: Activo
+2026-04-06 11:44:51 - ID extraído del QR: 109
+2026-04-06 11:44:51 - Resultado BD por ID: {"IdFuncionario":109,"Estado":"Activo"}
+2026-04-06 11:44:51 - Funcionario encontrado y activo: Juan David Pérez Gómez
+2026-04-06 11:44:54 - === QR RAW HEX: 49443a203130380a4e6f6d6272653a20416e646572736f6e204573746962656e204d6f72656e6f2050696e7a6f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-06 11:44:54 - === QR TEXTO:   ID: 108
+Nombre: Anderson Estiben Moreno Pinzon
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:54 - === QR NORMALIZADO: ID: 108
+Nombre: Anderson Estiben Moreno Pinzon
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-06 11:44:54 - ID extraído del QR: 108
+2026-04-06 11:44:54 - Resultado BD por ID: {"IdFuncionario":108,"Estado":"Activo"}
+2026-04-06 11:44:54 - Funcionario encontrado y activo: Anderson Estiben Moreno Pinzon
+2026-04-06 11:44:59 - === QR RAW HEX: 49443a203130370a4e6f6d6272653a20416e647265732063616d696c6f2063617272696c6c6f204a61696d65730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-06 11:44:59 - === QR TEXTO:   ID: 107
+Nombre: Andres camilo carrillo Jaimes
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:44:59 - === QR NORMALIZADO: ID: 107
+Nombre: Andres camilo carrillo Jaimes
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-06 11:44:59 - ID extraído del QR: 107
+2026-04-06 11:44:59 - Resultado BD por ID: {"IdFuncionario":107,"Estado":"Activo"}
+2026-04-06 11:44:59 - Funcionario encontrado y activo: Andres camilo carrillo Jaimes
+2026-04-06 11:45:01 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-06 11:45:01 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:45:01 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-06 11:45:01 - ID extraído del QR: 106
+2026-04-06 11:45:01 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-06 11:45:01 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
