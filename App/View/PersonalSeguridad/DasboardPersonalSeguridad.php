@@ -252,8 +252,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
     // ── Ruta del controlador desde la vista ──────────────────────
-    // Vista en:      App/View/PersonalSeguridad/
-    // Controlador en: App/Controller/
     const BASE = "../../Controller/ControladorDashboard.php";
 
     // ── Paleta de colores ────────────────────────────────────────
@@ -268,28 +266,75 @@ document.addEventListener("DOMContentLoaded", async () => {
         'rgba(52,58,64,0.85)'
     ];
 
-    // ── Helper fetch ─────────────────────────────────────────────
+    // ── Helper fetch con manejo de errores mejorado ────────────────
     async function get(accion) {
-        const resp = await fetch(`${BASE}?accion=${accion}`);
-        const text = await resp.text();           // primero texto crudo
         try {
-            return JSON.parse(text);              // luego parsear
+            const resp = await fetch(`${BASE}?accion=${accion}`);
+            if (!resp.ok) {
+                throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+            }
+            const text = await resp.text();
+            
+            // Verificar si la respuesta está vacía
+            if (!text || text.trim() === '') {
+                console.warn(`⚠️ [${accion}] Respuesta vacía`);
+                return [];
+            }
+            
+            try {
+                const data = JSON.parse(text);
+                // Verificar que data sea un array (para la mayoría de gráficos)
+                if (Array.isArray(data)) {
+                    return data;
+                } else if (data && typeof data === 'object') {
+                    // Si es un objeto, devolverlo tal cual
+                    return data;
+                } else {
+                    console.warn(`⚠️ [${accion}] Datos no válidos:`, data);
+                    return [];
+                }
+            } catch(e) {
+                console.error(`❌ [${accion}] Error parseando JSON:`, text.substring(0, 200));
+                return [];
+            }
         } catch(e) {
-            // Si PHP devuelve HTML, muéstralo en consola para depurar
-            console.error(`❌ [${accion}] Respuesta no es JSON:`, text.substring(0, 300));
-            throw new Error('Respuesta no es JSON');
+            console.error(`❌ [${accion}] Error en fetch:`, e.message);
+            return [];
         }
     }
 
     // ── Helper tarjeta ───────────────────────────────────────────
     function setCard(id, val) {
-        document.getElementById(id).textContent = (val !== undefined && val !== null) ? val : '0';
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = (val !== undefined && val !== null && val !== 0) ? val : '0';
+        }
     }
 
-    // ── Helper barras ────────────────────────────────────────────
+    // ── Helper barras con validación de datos ─────────────────────
     function barras(id, labels, datos, titulo, horizontal = false) {
         const ctx = document.getElementById(id);
-        if (!ctx) return;
+        if (!ctx) {
+            console.warn(`⚠️ Canvas ${id} no encontrado`);
+            return;
+        }
+        
+        // Validar que haya datos
+        if (!labels || !datos || labels.length === 0 || datos.length === 0) {
+            console.warn(`⚠️ Sin datos para ${id}`);
+            // Mostrar mensaje en el canvas
+            const parent = ctx.parentElement;
+            if (parent && !parent.querySelector('.no-data-message')) {
+                const msg = document.createElement('div');
+                msg.className = 'no-data-message text-center text-muted';
+                msg.style.padding = '40px 0';
+                msg.innerHTML = '<i class="fas fa-chart-bar fa-2x mb-2"></i><br>No hay datos disponibles';
+                parent.style.position = 'relative';
+                parent.appendChild(msg);
+            }
+            return;
+        }
+        
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -297,7 +342,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 datasets: [{
                     label: titulo || 'Total',
                     data: datos,
-                    backgroundColor: C,
+                    backgroundColor: C.slice(0, labels.length),
                     borderRadius: 5,
                     borderWidth: 1
                 }]
@@ -306,7 +351,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 indexAxis: horizontal ? 'y' : 'x',
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} registros` } }
+                },
                 scales: {
                     [horizontal ? 'x' : 'y']: {
                         beginAtZero: true,
@@ -317,17 +365,36 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // ── Helper dona / torta ──────────────────────────────────────
+    // ── Helper dona / torta con validación ────────────────────────
     function dona(id, labels, datos, tipo = 'doughnut') {
         const ctx = document.getElementById(id);
-        if (!ctx) return;
+        if (!ctx) {
+            console.warn(`⚠️ Canvas ${id} no encontrado`);
+            return;
+        }
+        
+        // Validar que haya datos
+        if (!labels || !datos || labels.length === 0 || datos.length === 0) {
+            console.warn(`⚠️ Sin datos para ${id}`);
+            const parent = ctx.parentElement;
+            if (parent && !parent.querySelector('.no-data-message')) {
+                const msg = document.createElement('div');
+                msg.className = 'no-data-message text-center text-muted';
+                msg.style.padding = '40px 0';
+                msg.innerHTML = '<i class="fas fa-chart-pie fa-2x mb-2"></i><br>No hay datos disponibles';
+                parent.style.position = 'relative';
+                parent.appendChild(msg);
+            }
+            return;
+        }
+        
         new Chart(ctx, {
             type: tipo,
             data: {
                 labels,
                 datasets: [{
                     data: datos,
-                    backgroundColor: C,
+                    backgroundColor: C.slice(0, labels.length),
                     borderColor: '#fff',
                     borderWidth: 2
                 }]
@@ -335,16 +402,28 @@ document.addEventListener("DOMContentLoaded", async () => {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom' } },
+                plugins: { 
+                    legend: { position: 'bottom' },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} registros` } }
+                },
                 cutout: tipo === 'doughnut' ? '60%' : 0
             }
         });
     }
 
-    // ── Helper línea ─────────────────────────────────────────────
+    // ── Helper línea con validación ───────────────────────────────
     function linea(id, labels, datos, color) {
         const ctx = document.getElementById(id);
-        if (!ctx) return;
+        if (!ctx) {
+            console.warn(`⚠️ Canvas ${id} no encontrado`);
+            return;
+        }
+        
+        if (!labels || !datos || labels.length === 0 || datos.length === 0) {
+            console.warn(`⚠️ Sin datos para ${id}`);
+            return;
+        }
+        
         color = color || 'rgba(246,194,62,1)';
         new Chart(ctx, {
             type: 'line',
@@ -365,7 +444,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} registros` } }
+                },
                 scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
             }
         });
@@ -388,176 +470,238 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch(e) {
         console.error('❌ Totales:', e.message);
         ['totalFuncionarios','totalVisitantes','totalVehiculos','totalDispositivos']
-            .forEach(id => document.getElementById(id).textContent = 'Error');
+            .forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = 'Error';
+            });
     }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 1 — Dispositivos por tipo (barras)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('tipos_dispositivos');
+    const dispositivosData = await get('tipos_dispositivos');
+    if (dispositivosData && dispositivosData.length > 0) {
         barras('graficoDispositivos',
-            d.map(r => r.tipo_dispositivos),
-            d.map(r => r.cantidad_Dispositivos),
+            dispositivosData.map(r => r.tipo_dispositivos || r.Tipo || 'Sin tipo'),
+            dispositivosData.map(r => parseInt(r.cantidad_Dispositivos) || 0),
             'Dispositivos'
         );
-    } catch(e) { console.error('❌ Dispositivos por tipo:', e.message); }
+    } else {
+        console.warn('⚠️ No hay datos de dispositivos');
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 2 — Vehículos por tipo (dona)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('vehiculos_por_tipo');
+    const vehiculosTipoData = await get('vehiculos_por_tipo');
+    if (vehiculosTipoData && vehiculosTipoData.length > 0) {
         dona('graficoVehiculos',
-            d.map(r => r.tipo_vehiculos),
-            d.map(r => r.cantidad_Vehiculos)
+            vehiculosTipoData.map(r => r.tipo_vehiculos || r.Tipo || 'Sin tipo'),
+            vehiculosTipoData.map(r => parseInt(r.cantidad_Vehiculos) || 0)
         );
-    } catch(e) { console.error('❌ Vehículos por tipo:', e.message); }
+    } else {
+        console.warn('⚠️ No hay datos de vehículos por tipo');
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 3 — Funcionarios por cargo (barras horizontales)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('funcionarios_por_cargo');
+    const funcionariosCargoData = await get('funcionarios_por_cargo');
+    if (funcionariosCargoData && funcionariosCargoData.length > 0) {
         barras('graficoFuncionariosCargo',
-            d.map(r => r.CargoFuncionario),
-            d.map(r => r.total),
+            funcionariosCargoData.map(r => r.CargoFuncionario || r.cargo || 'Sin cargo'),
+            funcionariosCargoData.map(r => parseInt(r.total) || 0),
             'Funcionarios',
             true
         );
-    } catch(e) { console.error('❌ Funcionarios por cargo:', e.message); }
+    } else {
+        console.warn('⚠️ No hay datos de funcionarios por cargo');
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 4 — Ingresos por mes (línea)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('visitantes_por_mes');
+    const ingresosMesData = await get('visitantes_por_mes');
+    if (ingresosMesData && ingresosMesData.length > 0) {
         linea('graficoIngresosMes',
-            d.map(r => r.mes),
-            d.map(r => r.total),
+            ingresosMesData.map(r => r.mes || r.Mes || 'Sin mes'),
+            ingresosMesData.map(r => parseInt(r.total) || 0),
             'rgba(246,194,62,1)'
         );
-    } catch(e) { console.error('❌ Ingresos por mes:', e.message); }
+    } else {
+        console.warn('⚠️ No hay datos de ingresos por mes');
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 5 — Funcionarios por sede (barras)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('funcionarios_por_sede');
+    const funcionariosSedeData = await get('funcionarios_por_sede');
+    if (funcionariosSedeData && funcionariosSedeData.length > 0) {
         barras('graficoFuncionariosSede',
-            d.map(r => r.NombreSede),
-            d.map(r => r.total),
+            funcionariosSedeData.map(r => r.NombreSede || r.sede || 'Sin sede'),
+            funcionariosSedeData.map(r => parseInt(r.total) || 0),
             'Funcionarios'
         );
-    } catch(e) { console.error('❌ Funcionarios por sede:', e.message); }
+    } else {
+        console.warn('⚠️ No hay datos de funcionarios por sede');
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 6 — Vehículos por sede (barras)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('vehiculos_por_sede');
+    const vehiculosSedeData = await get('vehiculos_por_sede');
+    if (vehiculosSedeData && vehiculosSedeData.length > 0) {
         barras('graficoVehiculosSede',
-            d.map(r => r.NombreSede),
-            d.map(r => r.total),
+            vehiculosSedeData.map(r => r.NombreSede || r.sede || 'Sin sede'),
+            vehiculosSedeData.map(r => parseInt(r.total) || 0),
             'Vehículos'
         );
-    } catch(e) { console.error('❌ Vehículos por sede:', e.message); }
+    } else {
+        console.warn('⚠️ No hay datos de vehículos por sede');
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 7 — Entrada vs Salida (dona)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('ingresos_por_tipo');
+    const ingresosTipoData = await get('ingresos_por_tipo');
+    if (ingresosTipoData && ingresosTipoData.length > 0) {
         dona('graficoIngresosTipo',
-            d.map(r => r.tipo),
-            d.map(r => r.total)
+            ingresosTipoData.map(r => r.tipo || r.Tipo || 'Sin tipo'),
+            ingresosTipoData.map(r => parseInt(r.total) || 0)
         );
-    } catch(e) { console.error('❌ Ingresos por tipo:', e.message); }
+    } else {
+        console.warn('⚠️ No hay datos de ingresos por tipo');
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 8 — Bitácora por turno (torta)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('bitacora_por_turno');
+    const bitacoraTurnoData = await get('bitacora_por_turno');
+    if (bitacoraTurnoData && bitacoraTurnoData.length > 0) {
         dona('graficoBitacoraTurno',
-            d.map(r => r.TurnoBitacora),
-            d.map(r => r.total),
+            bitacoraTurnoData.map(r => r.TurnoBitacora || r.turno || 'Sin turno'),
+            bitacoraTurnoData.map(r => parseInt(r.total) || 0),
             'pie'
         );
-    } catch(e) { console.error('❌ Bitácora por turno:', e.message); }
+    } else {
+        console.warn('⚠️ No hay datos de bitácora por turno');
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 9 — Dotación por tipo (barras)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('dotacion_por_tipo');
+    const dotacionTipoData = await get('dotacion_por_tipo');
+    console.log('📊 Dotación por tipo - Datos recibidos:', dotacionTipoData);
+    
+    if (dotacionTipoData && dotacionTipoData.length > 0) {
         barras('graficoDotacionTipo',
-            d.map(r => r.TipoDotacion),
-            d.map(r => r.total),
+            dotacionTipoData.map(r => r.TipoDotacion || r.tipo || r.Tipo || 'Sin tipo'),
+            dotacionTipoData.map(r => parseInt(r.total) || parseInt(r.cantidad) || 0),
             'Dotaciones'
         );
-    } catch(e) { console.error('❌ Dotación por tipo:', e.message); }
+    } else {
+        console.error('❌ No hay datos de dotación por tipo - Verificar consulta SQL');
+        // Mostrar mensaje de error en el canvas
+        const canvas = document.getElementById('graficoDotacionTipo');
+        if (canvas && canvas.parentElement) {
+            const msg = document.createElement('div');
+            msg.className = 'alert alert-warning text-center';
+            msg.style.margin = '20px';
+            msg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> No se pudieron cargar los datos de dotación por tipo';
+            canvas.parentElement.appendChild(msg);
+        }
+    }
 
     // ════════════════════════════════════════════════════════════
     //  GRÁFICA 10 — Dotación por estado (dona)
     // ════════════════════════════════════════════════════════════
-    try {
-        const d = await get('dotacion_por_estado');
+    const dotacionEstadoData = await get('dotacion_por_estado');
+    console.log('📊 Dotación por estado - Datos recibidos:', dotacionEstadoData);
+    
+    if (dotacionEstadoData && dotacionEstadoData.length > 0) {
         dona('graficoDotacionEstado',
-            d.map(r => r.EstadoDotacion),
-            d.map(r => r.total)
+            dotacionEstadoData.map(r => r.EstadoDotacion || r.estado || r.Estado || 'Sin estado'),
+            dotacionEstadoData.map(r => parseInt(r.total) || parseInt(r.cantidad) || 0)
         );
-    } catch(e) { console.error('❌ Dotación por estado:', e.message); }
+    } else {
+        console.error('❌ No hay datos de dotación por estado - Verificar consulta SQL');
+        const canvas = document.getElementById('graficoDotacionEstado');
+        if (canvas && canvas.parentElement) {
+            const msg = document.createElement('div');
+            msg.className = 'alert alert-warning text-center';
+            msg.style.margin = '20px';
+            msg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> No se pudieron cargar los datos de dotación por estado';
+            canvas.parentElement.appendChild(msg);
+        }
+    }
 
     // ════════════════════════════════════════════════════════════
     //  EXPORTAR PDF
     // ════════════════════════════════════════════════════════════
-    document.getElementById('btnExportarPDF').addEventListener('click', async () => {
-        const { jsPDF } = window.jspdf;
-        const panel = document.getElementById('panelDashboard');
-        const btn   = document.getElementById('btnExportarPDF');
-
-        btn.disabled  = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Generando...';
-
-        const canvas = await html2canvas(panel, { scale: 1.5, useCORS: true });
-        const pdf    = new jsPDF('p', 'mm', 'a4');
-        const pageW  = pdf.internal.pageSize.getWidth();
-        const pageH  = pdf.internal.pageSize.getHeight();
-        const imgW   = pageW - 20;
-        const imgH   = imgW / (canvas.width / canvas.height);
-
-        let posY = 10;
-        pdf.setFontSize(14); pdf.setTextColor(40);
-        pdf.text('Dashboard de Seguridad — SEGTRACK', 10, posY);
-        posY += 6;
-        pdf.setFontSize(9); pdf.setTextColor(120);
-        pdf.text('Generado: ' + new Date().toLocaleString('es-CO'), 10, posY);
-        posY += 6;
-
-        let restante = imgH, srcY = 0;
-        while (restante > 0) {
-            const bloque = Math.min(pageH - posY - 10, restante);
-            const srcH   = (bloque / imgH) * canvas.height;
-            const tmp    = document.createElement('canvas');
-            tmp.width    = canvas.width;
-            tmp.height   = srcH;
-            tmp.getContext('2d').drawImage(
-                canvas, 0, srcY, canvas.width, srcH,
-                0, 0, canvas.width, srcH
-            );
-            pdf.addImage(tmp.toDataURL('image/png'), 'PNG', 10, posY, imgW, bloque);
-            restante -= bloque;
-            srcY     += srcH;
-            posY      = 10;
-            if (restante > 0) pdf.addPage();
-        }
-
-        pdf.save('dashboard_seguridad.pdf');
-        btn.disabled  = false;
-        btn.innerHTML = '<i class="fas fa-file-pdf fa-sm mr-1"></i> Exportar PDF';
-    });
-
+    const btnExportar = document.getElementById('btnExportarPDF');
+    if (btnExportar) {
+        btnExportar.addEventListener('click', async () => {
+            const { jsPDF } = window.jspdf;
+            const panel = document.getElementById('panelDashboard');
+            
+            if (!panel) {
+                console.error('Panel no encontrado');
+                return;
+            }
+            
+            btnExportar.disabled  = true;
+            btnExportar.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Generando...';
+            
+            try {
+                const canvas = await html2canvas(panel, { 
+                    scale: 1.5, 
+                    useCORS: true,
+                    logging: false
+                });
+                const pdf    = new jsPDF('p', 'mm', 'a4');
+                const pageW  = pdf.internal.pageSize.getWidth();
+                const pageH  = pdf.internal.pageSize.getHeight();
+                const imgW   = pageW - 20;
+                const imgH   = imgW / (canvas.width / canvas.height);
+                
+                let posY = 10;
+                pdf.setFontSize(14); 
+                pdf.setTextColor(40);
+                pdf.text('Dashboard de Seguridad — SEGTRACK', 10, posY);
+                posY += 6;
+                pdf.setFontSize(9); 
+                pdf.setTextColor(120);
+                pdf.text('Generado: ' + new Date().toLocaleString('es-CO'), 10, posY);
+                posY += 6;
+                
+                let restante = imgH, srcY = 0;
+                while (restante > 0) {
+                    const bloque = Math.min(pageH - posY - 10, restante);
+                    const srcH   = (bloque / imgH) * canvas.height;
+                    const tmp    = document.createElement('canvas');
+                    tmp.width    = canvas.width;
+                    tmp.height   = srcH;
+                    tmp.getContext('2d').drawImage(
+                        canvas, 0, srcY, canvas.width, srcH,
+                        0, 0, canvas.width, srcH
+                    );
+                    pdf.addImage(tmp.toDataURL('image/png'), 'PNG', 10, posY, imgW, bloque);
+                    restante -= bloque;
+                    srcY     += srcH;
+                    posY      = 10;
+                    if (restante > 0) pdf.addPage();
+                }
+                
+                pdf.save('dashboard_seguridad.pdf');
+            } catch(error) {
+                console.error('Error generando PDF:', error);
+                alert('Error al generar el PDF: ' + error.message);
+            } finally {
+                btnExportar.disabled  = false;
+                btnExportar.innerHTML = '<i class="fas fa-file-pdf fa-sm mr-1"></i> Exportar PDF';
+            }
+        });
+    }
 });
 </script>
 

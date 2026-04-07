@@ -376,3 +376,195 @@
 2026-04-06 20:49:04 - Foto guardada para funcionario 157: qr/Fotos/FOTO-FUNC-157-69d4002004eaa.jpg
 2026-04-06 20:49:04 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-157-69d40020087a4.png
 2026-04-06 20:49:06 - Correo enviado correctamente a valentia2na@gmail.com
+2026-04-07 11:48:50 - === enviarQRPorCorreo llamado para ID: 108 ===
+2026-04-07 11:48:50 - ERROR en enviarQRPorCorreo: El archivo QR no existe en el servidor. Ruta: qr/Qr_Func/QR-FUNC-108-69d35c8ce2acf.png
+2026-04-07 11:55:57 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-162-69d4d4adf1156.jpg
+2026-04-07 11:55:57 - Foto guardada para funcionario 162: qr/Fotos/FOTO-FUNC-162-69d4d4adf1156.jpg
+2026-04-07 11:55:58 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-162-69d4d4adf2a64.png
+2026-04-07 11:56:00 - Correo enviado correctamente a carlos.mendez@email.com
+2026-04-07 11:57:21 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-163-69d4d50169568.jpg
+2026-04-07 11:57:21 - Foto guardada para funcionario 163: qr/Fotos/FOTO-FUNC-163-69d4d50169568.jpg
+2026-04-07 11:57:21 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-163-69d4d5016a8d7.png
+2026-04-07 11:57:23 - Correo enviado correctamente a luis.romero@email.com
+2026-04-07 11:57:55 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-164-69d4d5234b422.jpg
+2026-04-07 11:57:55 - Foto guardada para funcionario 164: qr/Fotos/FOTO-FUNC-164-69d4d5234b422.jpg
+2026-04-07 11:57:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-164-69d4d5234ce12.png
+2026-04-07 11:57:57 - Correo enviado correctamente a javier.torres@email.com
+2026-04-07 11:59:04 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-165-69d4d5689d9ef.jpg
+2026-04-07 11:59:04 - Foto guardada para funcionario 165: qr/Fotos/FOTO-FUNC-165-69d4d5689d9ef.jpg
+2026-04-07 11:59:04 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-165-69d4d5689f348.png
+2026-04-07 11:59:07 - Correo enviado correctamente a diego.suarez@email.com
+2026-04-07 12:00:22 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-166-69d4d5b642359.jpg
+2026-04-07 12:00:22 - Foto guardada para funcionario 166: qr/Fotos/FOTO-FUNC-166-69d4d5b642359.jpg
+2026-04-07 12:00:22 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-166-69d4d5b643fd8.png
+2026-04-07 12:00:24 - Correo enviado correctamente a andres.gil@email.com
+2026-04-07 12:01:25 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-167-69d4d5f56f6df.jpg
+2026-04-07 12:01:25 - Foto guardada para funcionario 167: qr/Fotos/FOTO-FUNC-167-69d4d5f56f6df.jpg
+2026-04-07 12:01:25 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-167-69d4d5f570e8c.png
+2026-04-07 12:01:27 - Correo enviado correctamente a juan.ortiz@email.com
+2026-04-07 12:02:44 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-168-69d4d64441baa.jpg
+2026-04-07 12:02:44 - Foto guardada para funcionario 168: qr/Fotos/FOTO-FUNC-168-69d4d64441baa.jpg
+2026-04-07 12:02:44 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-168-69d4d6444345e.png
+2026-04-07 12:02:47 - Correo enviado correctamente a pedro.vargas@email.com
+2026-04-07 12:03:27 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-169-69d4d66f0b47c.jpg
+2026-04-07 12:03:27 - Foto guardada para funcionario 169: qr/Fotos/FOTO-FUNC-169-69d4d66f0b47c.jpg
+2026-04-07 12:03:27 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-169-69d4d66f11168.png
+2026-04-07 12:03:29 - Correo enviado correctamente a miguel.rojas@email.com
+2026-04-07 12:04:55 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-170-69d4d6c7a671d.jpg
+2026-04-07 12:04:55 - Foto guardada para funcionario 170: qr/Fotos/FOTO-FUNC-170-69d4d6c7a671d.jpg
+2026-04-07 12:04:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-170-69d4d6c7a818a.png
+2026-04-07 12:04:58 - Correo enviado correctamente a ricardo.pena@email.com
+2026-04-07 12:05:53 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-171-69d4d701a46c1.jpg
+2026-04-07 12:05:53 - Foto guardada para funcionario 171: qr/Fotos/FOTO-FUNC-171-69d4d701a46c1.jpg
+2026-04-07 12:05:53 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-171-69d4d701a5f36.png
+2026-04-07 12:05:56 - Correo enviado correctamente a gabriel.silva@email.com
+2026-04-07 12:07:08 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-172-69d4d74cb77e3.jpg
+2026-04-07 12:07:08 - Foto guardada para funcionario 172: qr/Fotos/FOTO-FUNC-172-69d4d74cb77e3.jpg
+2026-04-07 12:07:08 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-172-69d4d74cb965c.png
+2026-04-07 12:07:11 - Correo enviado correctamente a daniel.castro@email.com
+2026-04-07 12:08:03 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-173-69d4d783e0228.jpg
+2026-04-07 12:08:03 - Foto guardada para funcionario 173: qr/Fotos/FOTO-FUNC-173-69d4d783e0228.jpg
+2026-04-07 12:08:04 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-173-69d4d783e2565.png
+2026-04-07 12:08:06 - Correo enviado correctamente a sergio.morales@email.com
+2026-04-07 12:08:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-174-69d4d7a9efbcf.png
+2026-04-07 12:08:44 - Correo enviado correctamente a camilo.jimenez@email.com
+2026-04-07 12:10:59 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-175-69d4d8336cc1b.jpg
+2026-04-07 12:10:59 - Foto guardada para funcionario 175: qr/Fotos/FOTO-FUNC-175-69d4d8336cc1b.jpg
+2026-04-07 12:10:59 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-175-69d4d8336ea3b.png
+2026-04-07 12:11:01 - Correo enviado correctamente a camilo.jimenez@email.com
+2026-04-07 12:12:37 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-176-69d4d895050f0.jpg
+2026-04-07 12:12:37 - Foto guardada para funcionario 176: qr/Fotos/FOTO-FUNC-176-69d4d895050f0.jpg
+2026-04-07 12:12:37 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-176-69d4d89506e0f.png
+2026-04-07 12:12:39 - Correo enviado correctamente a esteban.franco@email.com
+2026-04-07 12:15:00 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-177-69d4d9244aca5.jpg
+2026-04-07 12:15:00 - Foto guardada para funcionario 177: qr/Fotos/FOTO-FUNC-177-69d4d9244aca5.jpg
+2026-04-07 12:15:00 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-177-69d4d9244c371.png
+2026-04-07 12:15:02 - Correo enviado correctamente a julian.cardenas@email.com
+2026-04-07 12:15:40 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-178-69d4d94c6bca0.jpg
+2026-04-07 12:15:40 - Foto guardada para funcionario 178: qr/Fotos/FOTO-FUNC-178-69d4d94c6bca0.jpg
+2026-04-07 12:15:40 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-178-69d4d94c6d239.png
+2026-04-07 12:15:43 - Correo enviado correctamente a cristian.herrera@email.com
+2026-04-07 12:16:15 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-179-69d4d96fed90f.jpg
+2026-04-07 12:16:15 - Foto guardada para funcionario 179: qr/Fotos/FOTO-FUNC-179-69d4d96fed90f.jpg
+2026-04-07 12:16:16 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-179-69d4d96feedda.png
+2026-04-07 12:16:18 - Correo enviado correctamente a oscar.guzman@email.com
+2026-04-07 12:16:53 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-180-69d4d99561e37.jpg
+2026-04-07 12:16:53 - Foto guardada para funcionario 180: qr/Fotos/FOTO-FUNC-180-69d4d99561e37.jpg
+2026-04-07 12:16:53 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-180-69d4d99563581.png
+2026-04-07 12:16:56 - Correo enviado correctamente a mauricio.pineda@email.com
+2026-04-07 12:17:46 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-181-69d4d9ca5f56a.jpg
+2026-04-07 12:17:46 - Foto guardada para funcionario 181: qr/Fotos/FOTO-FUNC-181-69d4d9ca5f56a.jpg
+2026-04-07 12:17:46 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-181-69d4d9ca631b4.png
+2026-04-07 12:17:48 - Correo enviado correctamente a carrimorro8090@gmail.com
+2026-04-07 12:18:17 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-182-69d4d9e90309d.jpg
+2026-04-07 12:18:17 - Foto guardada para funcionario 182: qr/Fotos/FOTO-FUNC-182-69d4d9e90309d.jpg
+2026-04-07 12:18:17 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-182-69d4d9e90449f.png
+2026-04-07 12:18:19 - Correo enviado correctamente a Carrimorro8080@gmail.com
+2026-04-07 12:18:45 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-183-69d4da05212b9.jpg
+2026-04-07 12:18:45 - Foto guardada para funcionario 183: qr/Fotos/FOTO-FUNC-183-69d4da05212b9.jpg
+2026-04-07 12:18:45 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-183-69d4da0522632.png
+2026-04-07 12:18:47 - Correo enviado correctamente a nicolas.quintero@email.com
+2026-04-07 12:23:17 - === enviarQRPorCorreo llamado para ID: 181 ===
+2026-04-07 12:23:20 - Correo enviado correctamente a carrimorro8090@gmail.com
+2026-04-07 12:26:26 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-184-69d4dbd25c8fe.jpg
+2026-04-07 12:26:26 - Foto guardada para funcionario 184: qr/Fotos/FOTO-FUNC-184-69d4dbd25c8fe.jpg
+2026-04-07 12:26:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-184-69d4dbd25df75.png
+2026-04-07 12:26:28 - Correo enviado correctamente a maria.lopez@email.com
+2026-04-07 12:26:55 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-185-69d4dbef5405b.jpg
+2026-04-07 12:26:55 - Foto guardada para funcionario 185: qr/Fotos/FOTO-FUNC-185-69d4dbef5405b.jpg
+2026-04-07 12:26:55 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-185-69d4dbef591f9.png
+2026-04-07 12:26:57 - Correo enviado correctamente a ana.martinez@email.com
+2026-04-07 12:27:34 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-186-69d4dc1664b9a.jpg
+2026-04-07 12:27:34 - Foto guardada para funcionario 186: qr/Fotos/FOTO-FUNC-186-69d4dc1664b9a.jpg
+2026-04-07 12:27:34 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-186-69d4dc1666594.png
+2026-04-07 12:27:36 - Correo enviado correctamente a laura.rodriguez@email.com
+2026-04-07 12:27:57 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-187-69d4dc2d5faef.jpg
+2026-04-07 12:27:57 - Foto guardada para funcionario 187: qr/Fotos/FOTO-FUNC-187-69d4dc2d5faef.jpg
+2026-04-07 12:27:57 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-187-69d4dc2d60ca5.png
+2026-04-07 12:27:59 - Correo enviado correctamente a carolina.perez@email.com
+2026-04-07 12:28:40 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-188-69d4dc58347f6.jpg
+2026-04-07 12:28:40 - Foto guardada para funcionario 188: qr/Fotos/FOTO-FUNC-188-69d4dc58347f6.jpg
+2026-04-07 12:28:40 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-188-69d4dc5836292.png
+2026-04-07 12:28:42 - Correo enviado correctamente a natalia.gomez@email.com
+2026-04-07 12:29:08 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-189-69d4dc74dc481.jpg
+2026-04-07 12:29:08 - Foto guardada para funcionario 189: qr/Fotos/FOTO-FUNC-189-69d4dc74dc481.jpg
+2026-04-07 12:29:09 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-189-69d4dc74dd773.png
+2026-04-07 12:29:11 - Correo enviado correctamente a daniela.fernandez@email.com
+2026-04-07 12:30:40 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-190-69d4dcd0299da.jpg
+2026-04-07 12:30:40 - Foto guardada para funcionario 190: qr/Fotos/FOTO-FUNC-190-69d4dcd0299da.jpg
+2026-04-07 12:30:40 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-190-69d4dcd02b454.png
+2026-04-07 12:30:42 - Correo enviado correctamente a valentina.sanchez@email.com
+2026-04-07 12:31:11 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-191-69d4dcef633ab.jpg
+2026-04-07 12:31:11 - Foto guardada para funcionario 191: qr/Fotos/FOTO-FUNC-191-69d4dcef633ab.jpg
+2026-04-07 12:31:11 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-191-69d4dcef64936.png
+2026-04-07 12:31:13 - Correo enviado correctamente a andrea.castro@email.com
+2026-04-07 12:31:42 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-192-69d4dd0e2e58e.jpg
+2026-04-07 12:31:42 - Foto guardada para funcionario 192: qr/Fotos/FOTO-FUNC-192-69d4dd0e2e58e.jpg
+2026-04-07 12:31:42 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-192-69d4dd0e30418.png
+2026-04-07 12:31:44 - Correo enviado correctamente a paula.mendoza@email.com
+2026-04-07 12:32:33 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-193-69d4dd41d5228.jpg
+2026-04-07 12:32:33 - Foto guardada para funcionario 193: qr/Fotos/FOTO-FUNC-193-69d4dd41d5228.jpg
+2026-04-07 12:32:34 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-193-69d4dd41d6368.png
+2026-04-07 12:32:36 - Correo enviado correctamente a sandra.rojas@email.com
+2026-04-07 12:33:05 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-194-69d4dd611ad8a.jpg
+2026-04-07 12:33:05 - Foto guardada para funcionario 194: qr/Fotos/FOTO-FUNC-194-69d4dd611ad8a.jpg
+2026-04-07 12:33:05 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-194-69d4dd611c4ef.png
+2026-04-07 12:33:07 - Correo enviado correctamente a diana.herrera@email.com
+2026-04-07 12:33:32 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-195-69d4dd7ca9e2d.jpg
+2026-04-07 12:33:32 - Foto guardada para funcionario 195: qr/Fotos/FOTO-FUNC-195-69d4dd7ca9e2d.jpg
+2026-04-07 12:33:32 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-195-69d4dd7cab2a4.png
+2026-04-07 12:33:35 - Correo enviado correctamente a tatiana.paredes@email.com
+2026-04-07 12:34:01 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-196-69d4dd9923ca9.jpg
+2026-04-07 12:34:01 - Foto guardada para funcionario 196: qr/Fotos/FOTO-FUNC-196-69d4dd9923ca9.jpg
+2026-04-07 12:34:01 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-196-69d4dd992586e.png
+2026-04-07 12:34:03 - Correo enviado correctamente a lina.torres@email.com
+2026-04-07 12:34:28 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-197-69d4ddb4888b7.jpg
+2026-04-07 12:34:28 - Foto guardada para funcionario 197: qr/Fotos/FOTO-FUNC-197-69d4ddb4888b7.jpg
+2026-04-07 12:34:28 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-197-69d4ddb489c8f.png
+2026-04-07 12:34:30 - Correo enviado correctamente a adriana.vargas@email.com
+2026-04-07 12:34:54 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-198-69d4ddce67df6.jpg
+2026-04-07 12:34:54 - Foto guardada para funcionario 198: qr/Fotos/FOTO-FUNC-198-69d4ddce67df6.jpg
+2026-04-07 12:34:54 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-198-69d4ddce69642.png
+2026-04-07 12:34:56 - Correo enviado correctamente a viviana.silva@email.com
+2026-04-07 12:35:26 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-199-69d4ddeede5f0.jpg
+2026-04-07 12:35:26 - Foto guardada para funcionario 199: qr/Fotos/FOTO-FUNC-199-69d4ddeede5f0.jpg
+2026-04-07 12:35:27 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-199-69d4ddeedf8d3.png
+2026-04-07 12:35:29 - Correo enviado correctamente a marcela.orozco@email.com
+2026-04-07 12:36:11 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-200-69d4de1b79239.jpg
+2026-04-07 12:36:11 - Foto guardada para funcionario 200: qr/Fotos/FOTO-FUNC-200-69d4de1b79239.jpg
+2026-04-07 12:36:11 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-200-69d4de1b7af01.png
+2026-04-07 12:36:13 - Correo enviado correctamente a juliana.cardona@email.com
+2026-04-07 12:36:51 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-201-69d4de439dfe2.jpg
+2026-04-07 12:36:51 - Foto guardada para funcionario 201: qr/Fotos/FOTO-FUNC-201-69d4de439dfe2.jpg
+2026-04-07 12:36:51 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-201-69d4de439ef16.png
+2026-04-07 12:36:53 - Correo enviado correctamente a isabel.rios@email.com
+2026-04-07 12:37:25 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-202-69d4de659fa70.jpg
+2026-04-07 12:37:25 - Foto guardada para funcionario 202: qr/Fotos/FOTO-FUNC-202-69d4de659fa70.jpg
+2026-04-07 12:37:25 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-202-69d4de65a12b7.png
+2026-04-07 12:37:28 - Correo enviado correctamente a luisa.quintero@email.com
+2026-04-07 12:37:56 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-203-69d4de84bd0eb.jpg
+2026-04-07 12:37:56 - Foto guardada para funcionario 203: qr/Fotos/FOTO-FUNC-203-69d4de84bd0eb.jpg
+2026-04-07 12:37:56 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-203-69d4de84be5c5.png
+2026-04-07 12:37:59 - Correo enviado correctamente a gloria.ruiz@email.com
+2026-04-07 12:38:17 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-204-69d4de9982afb.jpg
+2026-04-07 12:38:17 - Foto guardada para funcionario 204: qr/Fotos/FOTO-FUNC-204-69d4de9982afb.jpg
+2026-04-07 12:38:17 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-204-69d4de99846a7.png
+2026-04-07 12:38:19 - Correo enviado correctamente a claudia.mora@email.com
+2026-04-07 12:38:48 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-205-69d4deb8871f7.jpg
+2026-04-07 12:38:48 - Foto guardada para funcionario 205: qr/Fotos/FOTO-FUNC-205-69d4deb8871f7.jpg
+2026-04-07 12:38:48 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-205-69d4deb888622.png
+2026-04-07 12:38:50 - Correo enviado correctamente a adriana.velasquez@email.com
+2026-04-07 12:39:21 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-206-69d4ded972ab1.jpg
+2026-04-07 12:39:21 - Foto guardada para funcionario 206: qr/Fotos/FOTO-FUNC-206-69d4ded972ab1.jpg
+2026-04-07 12:39:21 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-206-69d4ded974492.png
+2026-04-07 12:39:23 - Correo enviado correctamente a monica.chacon@email.com
+2026-04-07 12:39:45 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-207-69d4def16a430.jpg
+2026-04-07 12:39:45 - Foto guardada para funcionario 207: qr/Fotos/FOTO-FUNC-207-69d4def16a430.jpg
+2026-04-07 12:39:45 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-207-69d4def16ba9c.png
+2026-04-07 12:39:47 - Correo enviado correctamente a patricia.acosta@email.com
+2026-04-07 12:40:26 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-208-69d4df1a81fa2.jpg
+2026-04-07 12:40:26 - Foto guardada para funcionario 208: qr/Fotos/FOTO-FUNC-208-69d4df1a81fa2.jpg
+2026-04-07 12:40:26 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-208-69d4df1a83871.png
+2026-04-07 12:40:28 - Correo enviado correctamente a maria.betancur@email.com
+2026-04-07 13:55:03 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-209-69d4f0976bcc0.png
+2026-04-07 13:55:05 - Correo enviado correctamente a carlos.mendez@seguridad.gov.co

@@ -2183,3 +2183,1731 @@ Estado: Activo
 2026-04-07 07:14:12 - ID extraído del QR: 106
 2026-04-07 07:14:12 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
 2026-04-07 07:14:12 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 13:36:36 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:36:36 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:36:36 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:36:36 - ID extraído del QR: 106
+2026-04-07 13:36:36 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 13:36:36 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 13:36:42 - === QR RAW HEX: 49443a203130370a4e6f6d6272653a20416e647265732063616d696c6f2063617272696c6c6f204a61696d65730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-07 13:36:42 - === QR TEXTO:   ID: 107
+Nombre: Andres camilo carrillo Jaimes
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-07 13:36:42 - === QR NORMALIZADO: ID: 107
+Nombre: Andres camilo carrillo Jaimes
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-07 13:36:42 - ID extraído del QR: 107
+2026-04-07 13:36:42 - Resultado BD por ID: {"IdFuncionario":107,"Estado":"Activo"}
+2026-04-07 13:36:42 - Funcionario encontrado y activo: Andres camilo carrillo Jaimes
+2026-04-07 13:36:46 - === QR RAW HEX: 49443a203130380a4e6f6d6272653a20416e646572736f6e204573746962656e204d6f72656e6f2050696e7a6f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-07 13:36:46 - === QR TEXTO:   ID: 108
+Nombre: Anderson Estiben Moreno Pinzon
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-07 13:36:46 - === QR NORMALIZADO: ID: 108
+Nombre: Anderson Estiben Moreno Pinzon
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-07 13:36:46 - ID extraído del QR: 108
+2026-04-07 13:36:46 - Resultado BD por ID: {"IdFuncionario":108,"Estado":"Activo"}
+2026-04-07 13:36:46 - Funcionario encontrado y activo: Anderson Estiben Moreno Pinzon
+2026-04-07 13:36:51 - === QR RAW HEX: 49443a203136320a4e6f6d6272653a204361726c6f7320416e6472c3a973204dc3a96e64657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:36:51 - === QR TEXTO:   ID: 162
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:36:51 - === QR NORMALIZADO: ID: 162
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:36:51 - ID extraído del QR: 162
+2026-04-07 13:36:51 - Resultado BD por ID: {"IdFuncionario":162,"Estado":"Activo"}
+2026-04-07 13:36:51 - Funcionario encontrado y activo: Carlos Andrés Méndez
+2026-04-07 13:36:54 - === QR RAW HEX: 49443a203136330a4e6f6d6272653a204c756973204665726e616e646f20526f6d65726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:36:54 - === QR TEXTO:   ID: 163
+Nombre: Luis Fernando Romero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:36:54 - === QR NORMALIZADO: ID: 163
+Nombre: Luis Fernando Romero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:36:54 - ID extraído del QR: 163
+2026-04-07 13:36:54 - Resultado BD por ID: {"IdFuncionario":163,"Estado":"Activo"}
+2026-04-07 13:36:54 - Funcionario encontrado y activo: Luis Fernando Romero
+2026-04-07 13:36:58 - === QR RAW HEX: 49443a203136340a4e6f6d6272653a204a617669657220416c656a616e64726f20546f727265730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:36:58 - === QR TEXTO:   ID: 164
+Nombre: Javier Alejandro Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:36:58 - === QR NORMALIZADO: ID: 164
+Nombre: Javier Alejandro Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:36:58 - ID extraído del QR: 164
+2026-04-07 13:36:58 - Resultado BD por ID: {"IdFuncionario":164,"Estado":"Activo"}
+2026-04-07 13:36:58 - Funcionario encontrado y activo: Javier Alejandro Torres
+2026-04-07 13:37:01 - === QR RAW HEX: 49443a203136350a4e6f6d6272653a20446965676f2041726d616e646f205375c3a172657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:37:01 - === QR TEXTO:   ID: 165
+Nombre: Diego Armando Suárez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:01 - === QR NORMALIZADO: ID: 165
+Nombre: Diego Armando Suárez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:01 - ID extraído del QR: 165
+2026-04-07 13:37:01 - Resultado BD por ID: {"IdFuncionario":165,"Estado":"Activo"}
+2026-04-07 13:37:01 - Funcionario encontrado y activo: Diego Armando Suárez
+2026-04-07 13:37:05 - === QR RAW HEX: 49443a203136360a4e6f6d6272653a20416e6472c3a9732046656c6970652047696c0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:37:05 - === QR TEXTO:   ID: 166
+Nombre: Andrés Felipe Gil
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:05 - === QR NORMALIZADO: ID: 166
+Nombre: Andrés Felipe Gil
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:05 - ID extraído del QR: 166
+2026-04-07 13:37:05 - Resultado BD por ID: {"IdFuncionario":166,"Estado":"Activo"}
+2026-04-07 13:37:05 - Funcionario encontrado y activo: Andrés Felipe Gil
+2026-04-07 13:37:08 - === QR RAW HEX: 49443a203136370a4e6f6d6272653a204a75616e2053656261737469c3a16e204f7274697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:37:08 - === QR TEXTO:   ID: 167
+Nombre: Juan Sebastián Ortiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:08 - === QR NORMALIZADO: ID: 167
+Nombre: Juan Sebastián Ortiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:08 - ID extraído del QR: 167
+2026-04-07 13:37:08 - Resultado BD por ID: {"IdFuncionario":167,"Estado":"Activo"}
+2026-04-07 13:37:08 - Funcionario encontrado y activo: Juan Sebastián Ortiz
+2026-04-07 13:37:10 - === QR RAW HEX: 49443a203136380a4e6f6d6272653a20506564726f204a6f73c3a9205661726761730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:37:10 - === QR TEXTO:   ID: 168
+Nombre: Pedro José Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:10 - === QR NORMALIZADO: ID: 168
+Nombre: Pedro José Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:10 - ID extraído del QR: 168
+2026-04-07 13:37:10 - Resultado BD por ID: {"IdFuncionario":168,"Estado":"Activo"}
+2026-04-07 13:37:10 - Funcionario encontrado y activo: Pedro José Vargas
+2026-04-07 13:37:15 - === QR RAW HEX: 49443a203136390a4e6f6d6272653a204d696775656c20c3816e67656c20526f6a61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:37:15 - === QR TEXTO:   ID: 169
+Nombre: Miguel Ángel Rojas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:15 - === QR NORMALIZADO: ID: 169
+Nombre: Miguel Ángel Rojas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:15 - ID extraído del QR: 169
+2026-04-07 13:37:15 - Resultado BD por ID: {"IdFuncionario":169,"Estado":"Activo"}
+2026-04-07 13:37:15 - Funcionario encontrado y activo: Miguel Ángel Rojas
+2026-04-07 13:37:17 - === QR RAW HEX: 49443a203137300a4e6f6d6272653a205269636172646f20416e746f6e696f205065c3b1610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:37:17 - === QR TEXTO:   ID: 170
+Nombre: Ricardo Antonio Peña
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:17 - === QR NORMALIZADO: ID: 170
+Nombre: Ricardo Antonio Peña
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:17 - ID extraído del QR: 170
+2026-04-07 13:37:17 - Resultado BD por ID: {"IdFuncionario":170,"Estado":"Activo"}
+2026-04-07 13:37:17 - Funcionario encontrado y activo: Ricardo Antonio Peña
+2026-04-07 13:37:20 - === QR RAW HEX: 49443a203137310a4e6f6d6272653a204761627269656c204564756172646f2053696c76610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:37:20 - === QR TEXTO:   ID: 171
+Nombre: Gabriel Eduardo Silva
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:20 - === QR NORMALIZADO: ID: 171
+Nombre: Gabriel Eduardo Silva
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:20 - ID extraído del QR: 171
+2026-04-07 13:37:20 - Resultado BD por ID: {"IdFuncionario":171,"Estado":"Activo"}
+2026-04-07 13:37:20 - Funcionario encontrado y activo: Gabriel Eduardo Silva
+2026-04-07 13:37:22 - === QR RAW HEX: 49443a203137320a4e6f6d6272653a2044616e69656c20416c656a616e64726f2043617374726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:37:22 - === QR TEXTO:   ID: 172
+Nombre: Daniel Alejandro Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:22 - === QR NORMALIZADO: ID: 172
+Nombre: Daniel Alejandro Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:22 - ID extraído del QR: 172
+2026-04-07 13:37:22 - Resultado BD por ID: {"IdFuncionario":172,"Estado":"Activo"}
+2026-04-07 13:37:22 - Funcionario encontrado y activo: Daniel Alejandro Castro
+2026-04-07 13:37:24 - === QR RAW HEX: 49443a203137330a4e6f6d6272653a2053657267696f20416e6472c3a973204d6f72616c65730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:37:24 - === QR TEXTO:   ID: 173
+Nombre: Sergio Andrés Morales
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:24 - === QR NORMALIZADO: ID: 173
+Nombre: Sergio Andrés Morales
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:24 - ID extraído del QR: 173
+2026-04-07 13:37:24 - Resultado BD por ID: {"IdFuncionario":173,"Estado":"Activo"}
+2026-04-07 13:37:24 - Funcionario encontrado y activo: Sergio Andrés Morales
+2026-04-07 13:37:26 - === QR RAW HEX: 49443a203137340a4e6f6d6272653a2043616d696c6f2045726e6573746f204a696dc3a96e657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:37:26 - === QR TEXTO:   ID: 174
+Nombre: Camilo Ernesto Jiménez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:26 - === QR NORMALIZADO: ID: 174
+Nombre: Camilo Ernesto Jiménez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:26 - ID extraído del QR: 174
+2026-04-07 13:37:26 - Resultado BD por ID: false
+2026-04-07 13:37:26 - Funcionario ID 174 no existe en BD
+2026-04-07 13:37:33 - === QR RAW HEX: 49443a203137350a4e6f6d6272653a2043616d696c6f2045726e6573746f204a696dc3a96e657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:37:33 - === QR TEXTO:   ID: 175
+Nombre: Camilo Ernesto Jiménez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:33 - === QR NORMALIZADO: ID: 175
+Nombre: Camilo Ernesto Jiménez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:33 - ID extraído del QR: 175
+2026-04-07 13:37:33 - Resultado BD por ID: {"IdFuncionario":175,"Estado":"Activo"}
+2026-04-07 13:37:33 - Funcionario encontrado y activo: Camilo Ernesto Jiménez
+2026-04-07 13:37:35 - === QR RAW HEX: 49443a203137360a4e6f6d6272653a204573746562616e204461766964204672616e636f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:37:35 - === QR TEXTO:   ID: 176
+Nombre: Esteban David Franco
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:35 - === QR NORMALIZADO: ID: 176
+Nombre: Esteban David Franco
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:35 - ID extraído del QR: 176
+2026-04-07 13:37:35 - Resultado BD por ID: {"IdFuncionario":176,"Estado":"Activo"}
+2026-04-07 13:37:35 - Funcionario encontrado y activo: Esteban David Franco
+2026-04-07 13:37:38 - === QR RAW HEX: 49443a203137370a4e6f6d6272653a204a756c69c3a16e20416e6472c3a9732043c3a17264656e61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:37:38 - === QR TEXTO:   ID: 177
+Nombre: Julián Andrés Cárdenas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:38 - === QR NORMALIZADO: ID: 177
+Nombre: Julián Andrés Cárdenas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:37:38 - ID extraído del QR: 177
+2026-04-07 13:37:38 - Resultado BD por ID: {"IdFuncionario":177,"Estado":"Activo"}
+2026-04-07 13:37:38 - Funcionario encontrado y activo: Julián Andrés Cárdenas
+2026-04-07 13:37:41 - === QR RAW HEX: 49443a203137380a4e6f6d6272653a20437269737469616e20446176696420486572726572610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:37:41 - === QR TEXTO:   ID: 178
+Nombre: Cristian David Herrera
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:41 - === QR NORMALIZADO: ID: 178
+Nombre: Cristian David Herrera
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:41 - ID extraído del QR: 178
+2026-04-07 13:37:41 - Resultado BD por ID: {"IdFuncionario":178,"Estado":"Activo"}
+2026-04-07 13:37:41 - Funcionario encontrado y activo: Cristian David Herrera
+2026-04-07 13:37:43 - === QR RAW HEX: 49443a203137390a4e6f6d6272653a20c39373636172204976c3a16e2047757a6dc3a16e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:37:43 - === QR TEXTO:   ID: 179
+Nombre: Óscar Iván Guzmán
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:43 - === QR NORMALIZADO: ID: 179
+Nombre: Óscar Iván Guzmán
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:43 - ID extraído del QR: 179
+2026-04-07 13:37:43 - Resultado BD por ID: {"IdFuncionario":179,"Estado":"Activo"}
+2026-04-07 13:37:43 - Funcionario encontrado y activo: Óscar Iván Guzmán
+2026-04-07 13:37:45 - === QR RAW HEX: 49443a203138300a4e6f6d6272653a204d6175726963696f20416c6f6e736f2050696e6564610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:37:45 - === QR TEXTO:   ID: 180
+Nombre: Mauricio Alonso Pineda
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:45 - === QR NORMALIZADO: ID: 180
+Nombre: Mauricio Alonso Pineda
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:45 - ID extraído del QR: 180
+2026-04-07 13:37:45 - Resultado BD por ID: {"IdFuncionario":180,"Estado":"Activo"}
+2026-04-07 13:37:45 - Funcionario encontrado y activo: Mauricio Alonso Pineda
+2026-04-07 13:37:48 - === QR RAW HEX: 49443a203138310a4e6f6d6272653a2046656c69706520416e746f6e696f205275697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:37:48 - === QR TEXTO:   ID: 181
+Nombre: Felipe Antonio Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:48 - === QR NORMALIZADO: ID: 181
+Nombre: Felipe Antonio Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:48 - ID extraído del QR: 181
+2026-04-07 13:37:48 - Resultado BD por ID: {"IdFuncionario":181,"Estado":"Activo"}
+2026-04-07 13:37:48 - Funcionario encontrado y activo: Felipe Antonio Ruiz
+2026-04-07 13:37:50 - === QR RAW HEX: 49443a203138320a4e6f6d6272653a2053656261737469c3a16e20416c626572746f204c756e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:37:50 - === QR TEXTO:   ID: 182
+Nombre: Sebastián Alberto Luna
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:50 - === QR NORMALIZADO: ID: 182
+Nombre: Sebastián Alberto Luna
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:50 - ID extraído del QR: 182
+2026-04-07 13:37:50 - Resultado BD por ID: {"IdFuncionario":182,"Estado":"Activo"}
+2026-04-07 13:37:50 - Funcionario encontrado y activo: Sebastián Alberto Luna
+2026-04-07 13:37:53 - === QR RAW HEX: 49443a203138330a4e6f6d6272653a204e69636f6cc3a173204665726e616e646f205175696e7465726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:37:53 - === QR TEXTO:   ID: 183
+Nombre: Nicolás Fernando Quintero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:53 - === QR NORMALIZADO: ID: 183
+Nombre: Nicolás Fernando Quintero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:37:53 - ID extraído del QR: 183
+2026-04-07 13:37:53 - Resultado BD por ID: {"IdFuncionario":183,"Estado":"Activo"}
+2026-04-07 13:37:53 - Funcionario encontrado y activo: Nicolás Fernando Quintero
+2026-04-07 13:37:57 - === QR RAW HEX: 49443a203138340a4e6f6d6272653a204d6172c3ad61204665726e616e6461204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:37:57 - === QR TEXTO:   ID: 184
+Nombre: María Fernanda López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:57 - === QR NORMALIZADO: ID: 184
+Nombre: María Fernanda López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:37:57 - ID extraído del QR: 184
+2026-04-07 13:37:57 - Resultado BD por ID: {"IdFuncionario":184,"Estado":"Activo"}
+2026-04-07 13:37:57 - Funcionario encontrado y activo: María Fernanda López
+2026-04-07 13:38:00 - === QR RAW HEX: 49443a203138350a4e6f6d6272653a20416e6120536f66c3ad61204d617274c3ad6e657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:38:00 - === QR TEXTO:   ID: 185
+Nombre: Ana Sofía Martínez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:00 - === QR NORMALIZADO: ID: 185
+Nombre: Ana Sofía Martínez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:00 - ID extraído del QR: 185
+2026-04-07 13:38:00 - Resultado BD por ID: {"IdFuncionario":185,"Estado":"Activo"}
+2026-04-07 13:38:00 - Funcionario encontrado y activo: Ana Sofía Martínez
+2026-04-07 13:38:02 - === QR RAW HEX: 49443a203138360a4e6f6d6272653a204c617572612056616c656e74696e6120526f6472c3ad6775657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:38:02 - === QR TEXTO:   ID: 186
+Nombre: Laura Valentina Rodríguez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:02 - === QR NORMALIZADO: ID: 186
+Nombre: Laura Valentina Rodríguez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:02 - ID extraído del QR: 186
+2026-04-07 13:38:02 - Resultado BD por ID: {"IdFuncionario":186,"Estado":"Activo"}
+2026-04-07 13:38:02 - Funcionario encontrado y activo: Laura Valentina Rodríguez
+2026-04-07 13:38:04 - === QR RAW HEX: 49443a203138370a4e6f6d6272653a204361726f6c696e6120416e647265612050c3a972657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:38:04 - === QR TEXTO:   ID: 187
+Nombre: Carolina Andrea Pérez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:04 - === QR NORMALIZADO: ID: 187
+Nombre: Carolina Andrea Pérez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:04 - ID extraído del QR: 187
+2026-04-07 13:38:04 - Resultado BD por ID: {"IdFuncionario":187,"Estado":"Activo"}
+2026-04-07 13:38:04 - Funcionario encontrado y activo: Carolina Andrea Pérez
+2026-04-07 13:38:06 - === QR RAW HEX: 49443a203138380a4e6f6d6272653a204e6174616c69612050617472696369612047c3b36d657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:38:06 - === QR TEXTO:   ID: 188
+Nombre: Natalia Patricia Gómez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:06 - === QR NORMALIZADO: ID: 188
+Nombre: Natalia Patricia Gómez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:06 - ID extraído del QR: 188
+2026-04-07 13:38:06 - Resultado BD por ID: {"IdFuncionario":188,"Estado":"Activo"}
+2026-04-07 13:38:06 - Funcionario encontrado y activo: Natalia Patricia Gómez
+2026-04-07 13:38:08 - === QR RAW HEX: 49443a203138390a4e6f6d6272653a2044616e69656c6120416c656a616e647261204665726ec3a16e64657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:38:08 - === QR TEXTO:   ID: 189
+Nombre: Daniela Alejandra Fernández
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:08 - === QR NORMALIZADO: ID: 189
+Nombre: Daniela Alejandra Fernández
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:08 - ID extraído del QR: 189
+2026-04-07 13:38:08 - Resultado BD por ID: {"IdFuncionario":189,"Estado":"Activo"}
+2026-04-07 13:38:08 - Funcionario encontrado y activo: Daniela Alejandra Fernández
+2026-04-07 13:38:11 - === QR RAW HEX: 49443a203139300a4e6f6d6272653a2056616c656e74696e61204c7563c3ad612053c3a16e6368657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:38:11 - === QR TEXTO:   ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:11 - === QR NORMALIZADO: ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:11 - ID extraído del QR: 190
+2026-04-07 13:38:11 - Resultado BD por ID: {"IdFuncionario":190,"Estado":"Activo"}
+2026-04-07 13:38:11 - Funcionario encontrado y activo: Valentina Lucía Sánchez
+2026-04-07 13:38:13 - === QR RAW HEX: 49443a203139310a4e6f6d6272653a20416e64726561204361726f6c696e612043617374726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:38:13 - === QR TEXTO:   ID: 191
+Nombre: Andrea Carolina Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:13 - === QR NORMALIZADO: ID: 191
+Nombre: Andrea Carolina Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:13 - ID extraído del QR: 191
+2026-04-07 13:38:13 - Resultado BD por ID: {"IdFuncionario":191,"Estado":"Activo"}
+2026-04-07 13:38:13 - Funcionario encontrado y activo: Andrea Carolina Castro
+2026-04-07 13:38:19 - === QR RAW HEX: 49443a203139320a4e6f6d6272653a205061756c6120416e64726561204d656e646f7a610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 13:38:19 - === QR TEXTO:   ID: 192
+Nombre: Paula Andrea Mendoza
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:19 - === QR NORMALIZADO: ID: 192
+Nombre: Paula Andrea Mendoza
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 13:38:19 - ID extraído del QR: 192
+2026-04-07 13:38:19 - Resultado BD por ID: {"IdFuncionario":192,"Estado":"Activo"}
+2026-04-07 13:38:19 - Funcionario encontrado y activo: Paula Andrea Mendoza
+2026-04-07 13:38:21 - === QR RAW HEX: 49443a203139330a4e6f6d6272653a2053616e647261204d696c656e6120526f6a61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:21 - === QR TEXTO:   ID: 193
+Nombre: Sandra Milena Rojas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:21 - === QR NORMALIZADO: ID: 193
+Nombre: Sandra Milena Rojas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:21 - ID extraído del QR: 193
+2026-04-07 13:38:21 - Resultado BD por ID: {"IdFuncionario":193,"Estado":"Activo"}
+2026-04-07 13:38:21 - Funcionario encontrado y activo: Sandra Milena Rojas
+2026-04-07 13:38:23 - === QR RAW HEX: 49443a203139340a4e6f6d6272653a204469616e61204361726f6c696e6120486572726572610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:23 - === QR TEXTO:   ID: 194
+Nombre: Diana Carolina Herrera
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:23 - === QR NORMALIZADO: ID: 194
+Nombre: Diana Carolina Herrera
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:23 - ID extraído del QR: 194
+2026-04-07 13:38:23 - Resultado BD por ID: {"IdFuncionario":194,"Estado":"Activo"}
+2026-04-07 13:38:23 - Funcionario encontrado y activo: Diana Carolina Herrera
+2026-04-07 13:38:25 - === QR RAW HEX: 49443a203139350a4e6f6d6272653a2054617469616e6120416e6472656120506172656465730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:25 - === QR TEXTO:   ID: 195
+Nombre: Tatiana Andrea Paredes
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:25 - === QR NORMALIZADO: ID: 195
+Nombre: Tatiana Andrea Paredes
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:25 - ID extraído del QR: 195
+2026-04-07 13:38:25 - Resultado BD por ID: {"IdFuncionario":195,"Estado":"Activo"}
+2026-04-07 13:38:25 - Funcionario encontrado y activo: Tatiana Andrea Paredes
+2026-04-07 13:38:27 - === QR RAW HEX: 49443a203139360a4e6f6d6272653a204c696e61204d617263656c6120546f727265730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:27 - === QR TEXTO:   ID: 196
+Nombre: Lina Marcela Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:27 - === QR NORMALIZADO: ID: 196
+Nombre: Lina Marcela Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:27 - ID extraído del QR: 196
+2026-04-07 13:38:27 - Resultado BD por ID: {"IdFuncionario":196,"Estado":"Activo"}
+2026-04-07 13:38:27 - Funcionario encontrado y activo: Lina Marcela Torres
+2026-04-07 13:38:30 - === QR RAW HEX: 49443a203139370a4e6f6d6272653a2041647269616e61204c7563c3ad61205661726761730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:30 - === QR TEXTO:   ID: 197
+Nombre: Adriana Lucía Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:30 - === QR NORMALIZADO: ID: 197
+Nombre: Adriana Lucía Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:30 - ID extraído del QR: 197
+2026-04-07 13:38:30 - Resultado BD por ID: {"IdFuncionario":197,"Estado":"Activo"}
+2026-04-07 13:38:30 - Funcionario encontrado y activo: Adriana Lucía Vargas
+2026-04-07 13:38:32 - === QR RAW HEX: 49443a203139380a4e6f6d6272653a2056697669616e6120416e647265612053696c76610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:32 - === QR TEXTO:   ID: 198
+Nombre: Viviana Andrea Silva
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:32 - === QR NORMALIZADO: ID: 198
+Nombre: Viviana Andrea Silva
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:32 - ID extraído del QR: 198
+2026-04-07 13:38:32 - Resultado BD por ID: {"IdFuncionario":198,"Estado":"Activo"}
+2026-04-07 13:38:32 - Funcionario encontrado y activo: Viviana Andrea Silva
+2026-04-07 13:38:34 - === QR RAW HEX: 49443a203139390a4e6f6d6272653a204d617263656c612049736162656c204f726f7a636f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:34 - === QR TEXTO:   ID: 199
+Nombre: Marcela Isabel Orozco
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:34 - === QR NORMALIZADO: ID: 199
+Nombre: Marcela Isabel Orozco
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:34 - ID extraído del QR: 199
+2026-04-07 13:38:34 - Resultado BD por ID: {"IdFuncionario":199,"Estado":"Activo"}
+2026-04-07 13:38:34 - Funcionario encontrado y activo: Marcela Isabel Orozco
+2026-04-07 13:38:36 - === QR RAW HEX: 49443a203230300a4e6f6d6272653a204a756c69616e61204d6172c3ad6120436172646f6e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:36 - === QR TEXTO:   ID: 200
+Nombre: Juliana María Cardona
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:36 - === QR NORMALIZADO: ID: 200
+Nombre: Juliana María Cardona
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:36 - ID extraído del QR: 200
+2026-04-07 13:38:36 - Resultado BD por ID: {"IdFuncionario":200,"Estado":"Activo"}
+2026-04-07 13:38:36 - Funcionario encontrado y activo: Juliana María Cardona
+2026-04-07 13:38:38 - === QR RAW HEX: 49443a203230310a4e6f6d6272653a2049736162656c204372697374696e612052c3ad6f730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:38:38 - === QR TEXTO:   ID: 201
+Nombre: Isabel Cristina Ríos
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:38 - === QR NORMALIZADO: ID: 201
+Nombre: Isabel Cristina Ríos
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:38 - ID extraído del QR: 201
+2026-04-07 13:38:38 - Resultado BD por ID: {"IdFuncionario":201,"Estado":"Activo"}
+2026-04-07 13:38:38 - Funcionario encontrado y activo: Isabel Cristina Ríos
+2026-04-07 13:38:41 - === QR RAW HEX: 49443a203230320a4e6f6d6272653a204c75697361204665726e616e6461205175696e7465726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:38:41 - === QR TEXTO:   ID: 202
+Nombre: Luisa Fernanda Quintero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:41 - === QR NORMALIZADO: ID: 202
+Nombre: Luisa Fernanda Quintero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:41 - ID extraído del QR: 202
+2026-04-07 13:38:41 - Resultado BD por ID: {"IdFuncionario":202,"Estado":"Activo"}
+2026-04-07 13:38:41 - Funcionario encontrado y activo: Luisa Fernanda Quintero
+2026-04-07 13:38:43 - === QR RAW HEX: 49443a203230330a4e6f6d6272653a20476c6f72696120416d7061726f205275697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:38:43 - === QR TEXTO:   ID: 203
+Nombre: Gloria Amparo Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:43 - === QR NORMALIZADO: ID: 203
+Nombre: Gloria Amparo Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:43 - ID extraído del QR: 203
+2026-04-07 13:38:43 - Resultado BD por ID: {"IdFuncionario":203,"Estado":"Activo"}
+2026-04-07 13:38:43 - Funcionario encontrado y activo: Gloria Amparo Ruiz
+2026-04-07 13:38:45 - === QR RAW HEX: 49443a203230340a4e6f6d6272653a20436c6175646961205061747269636961204d6f72610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 13:38:45 - === QR TEXTO:   ID: 204
+Nombre: Claudia Patricia Mora
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:45 - === QR NORMALIZADO: ID: 204
+Nombre: Claudia Patricia Mora
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 13:38:45 - ID extraído del QR: 204
+2026-04-07 13:38:45 - Resultado BD por ID: {"IdFuncionario":204,"Estado":"Activo"}
+2026-04-07 13:38:45 - Funcionario encontrado y activo: Claudia Patricia Mora
+2026-04-07 13:38:48 - === QR RAW HEX: 49443a203230350a4e6f6d6272653a2041647269616e61204d6172c3ad612056656cc3a1737175657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:38:48 - === QR TEXTO:   ID: 205
+Nombre: Adriana María Velásquez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:48 - === QR NORMALIZADO: ID: 205
+Nombre: Adriana María Velásquez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:48 - ID extraído del QR: 205
+2026-04-07 13:38:48 - Resultado BD por ID: {"IdFuncionario":205,"Estado":"Activo"}
+2026-04-07 13:38:48 - Funcionario encontrado y activo: Adriana María Velásquez
+2026-04-07 13:38:51 - === QR RAW HEX: 49443a203230360a4e6f6d6272653a204dc3b36e69636120416e647265612043686163c3b36e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:38:51 - === QR TEXTO:   ID: 206
+Nombre: Mónica Andrea Chacón
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:51 - === QR NORMALIZADO: ID: 206
+Nombre: Mónica Andrea Chacón
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:51 - ID extraído del QR: 206
+2026-04-07 13:38:51 - Resultado BD por ID: {"IdFuncionario":206,"Estado":"Activo"}
+2026-04-07 13:38:51 - Funcionario encontrado y activo: Mónica Andrea Chacón
+2026-04-07 13:38:53 - === QR RAW HEX: 49443a203230370a4e6f6d6272653a20506174726963696120456c656e612041636f7374610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:38:53 - === QR TEXTO:   ID: 207
+Nombre: Patricia Elena Acosta
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:53 - === QR NORMALIZADO: ID: 207
+Nombre: Patricia Elena Acosta
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:53 - ID extraído del QR: 207
+2026-04-07 13:38:53 - Resultado BD por ID: {"IdFuncionario":207,"Estado":"Activo"}
+2026-04-07 13:38:53 - Funcionario encontrado y activo: Patricia Elena Acosta
+2026-04-07 13:38:55 - === QR RAW HEX: 49443a203230380a4e6f6d6272653a204d6172c3ad61204a6f73c3a920426574616e6375720a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 13:38:55 - === QR TEXTO:   ID: 208
+Nombre: María José Betancur
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:55 - === QR NORMALIZADO: ID: 208
+Nombre: María José Betancur
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 13:38:55 - ID extraído del QR: 208
+2026-04-07 13:38:55 - Resultado BD por ID: {"IdFuncionario":208,"Estado":"Activo"}
+2026-04-07 13:38:55 - Funcionario encontrado y activo: María José Betancur
+2026-04-07 14:03:56 - === QR RAW HEX: 49443a203230390a4e6f6d6272653a204361726c6f7320416e6472c3a973204dc3a96e64657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:03:56 - === QR TEXTO:   ID: 209
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:03:56 - === QR NORMALIZADO: ID: 209
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:03:56 - ID extraído del QR: 209
+2026-04-07 14:03:56 - Resultado BD por ID: {"IdFuncionario":209,"Estado":"Activo"}
+2026-04-07 14:03:56 - Funcionario encontrado y activo: Carlos Andrés Méndez
+2026-04-07 14:04:08 - === QR RAW HEX: 49443a203230380a4e6f6d6272653a204d6172c3ad61204a6f73c3a920426574616e6375720a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:04:08 - === QR TEXTO:   ID: 208
+Nombre: María José Betancur
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:04:08 - === QR NORMALIZADO: ID: 208
+Nombre: María José Betancur
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:04:08 - ID extraído del QR: 208
+2026-04-07 14:04:08 - Resultado BD por ID: {"IdFuncionario":208,"Estado":"Activo"}
+2026-04-07 14:04:08 - Funcionario encontrado y activo: María José Betancur
+2026-04-07 14:04:19 - === QR RAW HEX: 49443a203230390a4e6f6d6272653a204361726c6f7320416e6472c3a973204dc3a96e64657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:04:19 - === QR TEXTO:   ID: 209
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:04:19 - === QR NORMALIZADO: ID: 209
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:04:19 - ID extraído del QR: 209
+2026-04-07 14:04:19 - Resultado BD por ID: {"IdFuncionario":209,"Estado":"Activo"}
+2026-04-07 14:04:19 - Funcionario encontrado y activo: Carlos Andrés Méndez
+2026-04-07 14:05:33 - === QR RAW HEX: 49443a203230390a4e6f6d6272653a204361726c6f7320416e6472c3a973204dc3a96e64657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:05:33 - === QR TEXTO:   ID: 209
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:05:33 - === QR NORMALIZADO: ID: 209
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:05:33 - ID extraído del QR: 209
+2026-04-07 14:05:33 - Resultado BD por ID: {"IdFuncionario":209,"Estado":"Inactivo"}
+2026-04-07 14:05:33 - Funcionario ID 209 está INACTIVO
+2026-04-07 14:06:54 - === QR RAW HEX: 49443a203230390a4e6f6d6272653a204361726c6f7320416e6472c3a973204dc3a96e64657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:06:54 - === QR TEXTO:   ID: 209
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:06:54 - === QR NORMALIZADO: ID: 209
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:06:54 - ID extraído del QR: 209
+2026-04-07 14:06:54 - Resultado BD por ID: {"IdFuncionario":209,"Estado":"Inactivo"}
+2026-04-07 14:06:54 - Funcionario ID 209 está INACTIVO
+2026-04-07 14:07:13 - === QR RAW HEX: 49443a203230380a4e6f6d6272653a204d6172c3ad61204a6f73c3a920426574616e6375720a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:07:13 - === QR TEXTO:   ID: 208
+Nombre: María José Betancur
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:13 - === QR NORMALIZADO: ID: 208
+Nombre: María José Betancur
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:13 - ID extraído del QR: 208
+2026-04-07 14:07:13 - Resultado BD por ID: {"IdFuncionario":208,"Estado":"Activo"}
+2026-04-07 14:07:13 - Funcionario encontrado y activo: María José Betancur
+2026-04-07 14:07:17 - === QR RAW HEX: 49443a203230370a4e6f6d6272653a20506174726963696120456c656e612041636f7374610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:07:17 - === QR TEXTO:   ID: 207
+Nombre: Patricia Elena Acosta
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:17 - === QR NORMALIZADO: ID: 207
+Nombre: Patricia Elena Acosta
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:17 - ID extraído del QR: 207
+2026-04-07 14:07:17 - Resultado BD por ID: {"IdFuncionario":207,"Estado":"Activo"}
+2026-04-07 14:07:17 - Funcionario encontrado y activo: Patricia Elena Acosta
+2026-04-07 14:07:19 - === QR RAW HEX: 49443a203230360a4e6f6d6272653a204dc3b36e69636120416e647265612043686163c3b36e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:07:19 - === QR TEXTO:   ID: 206
+Nombre: Mónica Andrea Chacón
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:19 - === QR NORMALIZADO: ID: 206
+Nombre: Mónica Andrea Chacón
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:19 - ID extraído del QR: 206
+2026-04-07 14:07:19 - Resultado BD por ID: {"IdFuncionario":206,"Estado":"Activo"}
+2026-04-07 14:07:19 - Funcionario encontrado y activo: Mónica Andrea Chacón
+2026-04-07 14:07:23 - === QR RAW HEX: 49443a203230350a4e6f6d6272653a2041647269616e61204d6172c3ad612056656cc3a1737175657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:07:23 - === QR TEXTO:   ID: 205
+Nombre: Adriana María Velásquez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:23 - === QR NORMALIZADO: ID: 205
+Nombre: Adriana María Velásquez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:24 - ID extraído del QR: 205
+2026-04-07 14:07:24 - Resultado BD por ID: {"IdFuncionario":205,"Estado":"Activo"}
+2026-04-07 14:07:24 - Funcionario encontrado y activo: Adriana María Velásquez
+2026-04-07 14:07:25 - === QR RAW HEX: 49443a203230340a4e6f6d6272653a20436c6175646961205061747269636961204d6f72610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:25 - === QR TEXTO:   ID: 204
+Nombre: Claudia Patricia Mora
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:25 - === QR NORMALIZADO: ID: 204
+Nombre: Claudia Patricia Mora
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:25 - ID extraído del QR: 204
+2026-04-07 14:07:25 - Resultado BD por ID: {"IdFuncionario":204,"Estado":"Activo"}
+2026-04-07 14:07:25 - Funcionario encontrado y activo: Claudia Patricia Mora
+2026-04-07 14:07:27 - === QR RAW HEX: 49443a203230330a4e6f6d6272653a20476c6f72696120416d7061726f205275697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:07:27 - === QR TEXTO:   ID: 203
+Nombre: Gloria Amparo Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:27 - === QR NORMALIZADO: ID: 203
+Nombre: Gloria Amparo Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:27 - ID extraído del QR: 203
+2026-04-07 14:07:27 - Resultado BD por ID: {"IdFuncionario":203,"Estado":"Activo"}
+2026-04-07 14:07:27 - Funcionario encontrado y activo: Gloria Amparo Ruiz
+2026-04-07 14:07:29 - === QR RAW HEX: 49443a203230320a4e6f6d6272653a204c75697361204665726e616e6461205175696e7465726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:07:29 - === QR TEXTO:   ID: 202
+Nombre: Luisa Fernanda Quintero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:29 - === QR NORMALIZADO: ID: 202
+Nombre: Luisa Fernanda Quintero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:29 - ID extraído del QR: 202
+2026-04-07 14:07:29 - Resultado BD por ID: {"IdFuncionario":202,"Estado":"Activo"}
+2026-04-07 14:07:29 - Funcionario encontrado y activo: Luisa Fernanda Quintero
+2026-04-07 14:07:31 - === QR RAW HEX: 49443a203230310a4e6f6d6272653a2049736162656c204372697374696e612052c3ad6f730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:07:31 - === QR TEXTO:   ID: 201
+Nombre: Isabel Cristina Ríos
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:31 - === QR NORMALIZADO: ID: 201
+Nombre: Isabel Cristina Ríos
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:07:31 - ID extraído del QR: 201
+2026-04-07 14:07:31 - Resultado BD por ID: {"IdFuncionario":201,"Estado":"Activo"}
+2026-04-07 14:07:31 - Funcionario encontrado y activo: Isabel Cristina Ríos
+2026-04-07 14:07:33 - === QR RAW HEX: 49443a203230300a4e6f6d6272653a204a756c69616e61204d6172c3ad6120436172646f6e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:33 - === QR TEXTO:   ID: 200
+Nombre: Juliana María Cardona
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:33 - === QR NORMALIZADO: ID: 200
+Nombre: Juliana María Cardona
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:33 - ID extraído del QR: 200
+2026-04-07 14:07:33 - Resultado BD por ID: {"IdFuncionario":200,"Estado":"Activo"}
+2026-04-07 14:07:33 - Funcionario encontrado y activo: Juliana María Cardona
+2026-04-07 14:07:35 - === QR RAW HEX: 49443a203139390a4e6f6d6272653a204d617263656c612049736162656c204f726f7a636f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:35 - === QR TEXTO:   ID: 199
+Nombre: Marcela Isabel Orozco
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:35 - === QR NORMALIZADO: ID: 199
+Nombre: Marcela Isabel Orozco
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:35 - ID extraído del QR: 199
+2026-04-07 14:07:35 - Resultado BD por ID: {"IdFuncionario":199,"Estado":"Activo"}
+2026-04-07 14:07:35 - Funcionario encontrado y activo: Marcela Isabel Orozco
+2026-04-07 14:07:37 - === QR RAW HEX: 49443a203139380a4e6f6d6272653a2056697669616e6120416e647265612053696c76610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:37 - === QR TEXTO:   ID: 198
+Nombre: Viviana Andrea Silva
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:37 - === QR NORMALIZADO: ID: 198
+Nombre: Viviana Andrea Silva
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:37 - ID extraído del QR: 198
+2026-04-07 14:07:37 - Resultado BD por ID: {"IdFuncionario":198,"Estado":"Activo"}
+2026-04-07 14:07:37 - Funcionario encontrado y activo: Viviana Andrea Silva
+2026-04-07 14:07:39 - === QR RAW HEX: 49443a203139370a4e6f6d6272653a2041647269616e61204c7563c3ad61205661726761730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:39 - === QR TEXTO:   ID: 197
+Nombre: Adriana Lucía Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:39 - === QR NORMALIZADO: ID: 197
+Nombre: Adriana Lucía Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:39 - ID extraído del QR: 197
+2026-04-07 14:07:39 - Resultado BD por ID: {"IdFuncionario":197,"Estado":"Activo"}
+2026-04-07 14:07:39 - Funcionario encontrado y activo: Adriana Lucía Vargas
+2026-04-07 14:07:41 - === QR RAW HEX: 49443a203139360a4e6f6d6272653a204c696e61204d617263656c6120546f727265730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:41 - === QR TEXTO:   ID: 196
+Nombre: Lina Marcela Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:41 - === QR NORMALIZADO: ID: 196
+Nombre: Lina Marcela Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:41 - ID extraído del QR: 196
+2026-04-07 14:07:41 - Resultado BD por ID: {"IdFuncionario":196,"Estado":"Activo"}
+2026-04-07 14:07:41 - Funcionario encontrado y activo: Lina Marcela Torres
+2026-04-07 14:07:43 - === QR RAW HEX: 49443a203139350a4e6f6d6272653a2054617469616e6120416e6472656120506172656465730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:43 - === QR TEXTO:   ID: 195
+Nombre: Tatiana Andrea Paredes
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:43 - === QR NORMALIZADO: ID: 195
+Nombre: Tatiana Andrea Paredes
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:43 - ID extraído del QR: 195
+2026-04-07 14:07:43 - Resultado BD por ID: {"IdFuncionario":195,"Estado":"Activo"}
+2026-04-07 14:07:43 - Funcionario encontrado y activo: Tatiana Andrea Paredes
+2026-04-07 14:07:46 - === QR RAW HEX: 49443a203139340a4e6f6d6272653a204469616e61204361726f6c696e6120486572726572610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:46 - === QR TEXTO:   ID: 194
+Nombre: Diana Carolina Herrera
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:46 - === QR NORMALIZADO: ID: 194
+Nombre: Diana Carolina Herrera
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:46 - ID extraído del QR: 194
+2026-04-07 14:07:46 - Resultado BD por ID: {"IdFuncionario":194,"Estado":"Activo"}
+2026-04-07 14:07:46 - Funcionario encontrado y activo: Diana Carolina Herrera
+2026-04-07 14:07:48 - === QR RAW HEX: 49443a203139330a4e6f6d6272653a2053616e647261204d696c656e6120526f6a61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:07:48 - === QR TEXTO:   ID: 193
+Nombre: Sandra Milena Rojas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:48 - === QR NORMALIZADO: ID: 193
+Nombre: Sandra Milena Rojas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:07:48 - ID extraído del QR: 193
+2026-04-07 14:07:48 - Resultado BD por ID: {"IdFuncionario":193,"Estado":"Activo"}
+2026-04-07 14:07:48 - Funcionario encontrado y activo: Sandra Milena Rojas
+2026-04-07 14:07:50 - === QR RAW HEX: 49443a203139320a4e6f6d6272653a205061756c6120416e64726561204d656e646f7a610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:07:50 - === QR TEXTO:   ID: 192
+Nombre: Paula Andrea Mendoza
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:50 - === QR NORMALIZADO: ID: 192
+Nombre: Paula Andrea Mendoza
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:50 - ID extraído del QR: 192
+2026-04-07 14:07:50 - Resultado BD por ID: {"IdFuncionario":192,"Estado":"Activo"}
+2026-04-07 14:07:50 - Funcionario encontrado y activo: Paula Andrea Mendoza
+2026-04-07 14:07:52 - === QR RAW HEX: 49443a203139310a4e6f6d6272653a20416e64726561204361726f6c696e612043617374726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:07:52 - === QR TEXTO:   ID: 191
+Nombre: Andrea Carolina Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:52 - === QR NORMALIZADO: ID: 191
+Nombre: Andrea Carolina Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:52 - ID extraído del QR: 191
+2026-04-07 14:07:52 - Resultado BD por ID: {"IdFuncionario":191,"Estado":"Activo"}
+2026-04-07 14:07:52 - Funcionario encontrado y activo: Andrea Carolina Castro
+2026-04-07 14:07:54 - === QR RAW HEX: 49443a203139300a4e6f6d6272653a2056616c656e74696e61204c7563c3ad612053c3a16e6368657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:07:54 - === QR TEXTO:   ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:54 - === QR NORMALIZADO: ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:54 - ID extraído del QR: 190
+2026-04-07 14:07:54 - Resultado BD por ID: {"IdFuncionario":190,"Estado":"Activo"}
+2026-04-07 14:07:54 - Funcionario encontrado y activo: Valentina Lucía Sánchez
+2026-04-07 14:07:57 - === QR RAW HEX: 49443a203139300a4e6f6d6272653a2056616c656e74696e61204c7563c3ad612053c3a16e6368657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:07:57 - === QR TEXTO:   ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:57 - === QR NORMALIZADO: ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:57 - ID extraído del QR: 190
+2026-04-07 14:07:57 - Resultado BD por ID: {"IdFuncionario":190,"Estado":"Activo"}
+2026-04-07 14:07:57 - Funcionario encontrado y activo: Valentina Lucía Sánchez
+2026-04-07 14:07:58 - === QR RAW HEX: 49443a203139300a4e6f6d6272653a2056616c656e74696e61204c7563c3ad612053c3a16e6368657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:07:58 - === QR TEXTO:   ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:58 - === QR NORMALIZADO: ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:07:58 - ID extraído del QR: 190
+2026-04-07 14:07:58 - Resultado BD por ID: {"IdFuncionario":190,"Estado":"Activo"}
+2026-04-07 14:07:58 - Funcionario encontrado y activo: Valentina Lucía Sánchez
+2026-04-07 14:08:00 - === QR RAW HEX: 49443a203139300a4e6f6d6272653a2056616c656e74696e61204c7563c3ad612053c3a16e6368657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:00 - === QR TEXTO:   ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:00 - === QR NORMALIZADO: ID: 190
+Nombre: Valentina Lucía Sánchez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:00 - ID extraído del QR: 190
+2026-04-07 14:08:00 - Resultado BD por ID: {"IdFuncionario":190,"Estado":"Activo"}
+2026-04-07 14:08:00 - Funcionario encontrado y activo: Valentina Lucía Sánchez
+2026-04-07 14:08:19 - === QR RAW HEX: 49443a203138390a4e6f6d6272653a2044616e69656c6120416c656a616e647261204665726ec3a16e64657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:19 - === QR TEXTO:   ID: 189
+Nombre: Daniela Alejandra Fernández
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:19 - === QR NORMALIZADO: ID: 189
+Nombre: Daniela Alejandra Fernández
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:19 - ID extraído del QR: 189
+2026-04-07 14:08:19 - Resultado BD por ID: {"IdFuncionario":189,"Estado":"Activo"}
+2026-04-07 14:08:19 - Funcionario encontrado y activo: Daniela Alejandra Fernández
+2026-04-07 14:08:21 - === QR RAW HEX: 49443a203138380a4e6f6d6272653a204e6174616c69612050617472696369612047c3b36d657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:21 - === QR TEXTO:   ID: 188
+Nombre: Natalia Patricia Gómez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:21 - === QR NORMALIZADO: ID: 188
+Nombre: Natalia Patricia Gómez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:21 - ID extraído del QR: 188
+2026-04-07 14:08:21 - Resultado BD por ID: {"IdFuncionario":188,"Estado":"Activo"}
+2026-04-07 14:08:21 - Funcionario encontrado y activo: Natalia Patricia Gómez
+2026-04-07 14:08:23 - === QR RAW HEX: 49443a203138370a4e6f6d6272653a204361726f6c696e6120416e647265612050c3a972657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:23 - === QR TEXTO:   ID: 187
+Nombre: Carolina Andrea Pérez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:23 - === QR NORMALIZADO: ID: 187
+Nombre: Carolina Andrea Pérez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:23 - ID extraído del QR: 187
+2026-04-07 14:08:23 - Resultado BD por ID: {"IdFuncionario":187,"Estado":"Activo"}
+2026-04-07 14:08:23 - Funcionario encontrado y activo: Carolina Andrea Pérez
+2026-04-07 14:08:25 - === QR RAW HEX: 49443a203138360a4e6f6d6272653a204c617572612056616c656e74696e6120526f6472c3ad6775657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:25 - === QR TEXTO:   ID: 186
+Nombre: Laura Valentina Rodríguez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:25 - === QR NORMALIZADO: ID: 186
+Nombre: Laura Valentina Rodríguez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:25 - ID extraído del QR: 186
+2026-04-07 14:08:25 - Resultado BD por ID: {"IdFuncionario":186,"Estado":"Activo"}
+2026-04-07 14:08:25 - Funcionario encontrado y activo: Laura Valentina Rodríguez
+2026-04-07 14:08:27 - === QR RAW HEX: 49443a203138350a4e6f6d6272653a20416e6120536f66c3ad61204d617274c3ad6e657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:27 - === QR TEXTO:   ID: 185
+Nombre: Ana Sofía Martínez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:27 - === QR NORMALIZADO: ID: 185
+Nombre: Ana Sofía Martínez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:27 - ID extraído del QR: 185
+2026-04-07 14:08:27 - Resultado BD por ID: {"IdFuncionario":185,"Estado":"Activo"}
+2026-04-07 14:08:27 - Funcionario encontrado y activo: Ana Sofía Martínez
+2026-04-07 14:08:29 - === QR RAW HEX: 49443a203138340a4e6f6d6272653a204d6172c3ad61204665726e616e6461204cc3b370657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:29 - === QR TEXTO:   ID: 184
+Nombre: María Fernanda López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:29 - === QR NORMALIZADO: ID: 184
+Nombre: María Fernanda López
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:29 - ID extraído del QR: 184
+2026-04-07 14:08:29 - Resultado BD por ID: {"IdFuncionario":184,"Estado":"Activo"}
+2026-04-07 14:08:29 - Funcionario encontrado y activo: María Fernanda López
+2026-04-07 14:08:31 - === QR RAW HEX: 49443a203138330a4e6f6d6272653a204e69636f6cc3a173204665726e616e646f205175696e7465726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:08:31 - === QR TEXTO:   ID: 183
+Nombre: Nicolás Fernando Quintero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:31 - === QR NORMALIZADO: ID: 183
+Nombre: Nicolás Fernando Quintero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:31 - ID extraído del QR: 183
+2026-04-07 14:08:31 - Resultado BD por ID: {"IdFuncionario":183,"Estado":"Activo"}
+2026-04-07 14:08:31 - Funcionario encontrado y activo: Nicolás Fernando Quintero
+2026-04-07 14:08:33 - === QR RAW HEX: 49443a203138320a4e6f6d6272653a2053656261737469c3a16e20416c626572746f204c756e610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:08:33 - === QR TEXTO:   ID: 182
+Nombre: Sebastián Alberto Luna
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:33 - === QR NORMALIZADO: ID: 182
+Nombre: Sebastián Alberto Luna
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:33 - ID extraído del QR: 182
+2026-04-07 14:08:33 - Resultado BD por ID: {"IdFuncionario":182,"Estado":"Activo"}
+2026-04-07 14:08:33 - Funcionario encontrado y activo: Sebastián Alberto Luna
+2026-04-07 14:08:34 - === QR RAW HEX: 49443a203138310a4e6f6d6272653a2046656c69706520416e746f6e696f205275697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:08:34 - === QR TEXTO:   ID: 181
+Nombre: Felipe Antonio Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:34 - === QR NORMALIZADO: ID: 181
+Nombre: Felipe Antonio Ruiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:34 - ID extraído del QR: 181
+2026-04-07 14:08:34 - Resultado BD por ID: {"IdFuncionario":181,"Estado":"Activo"}
+2026-04-07 14:08:34 - Funcionario encontrado y activo: Felipe Antonio Ruiz
+2026-04-07 14:08:36 - === QR RAW HEX: 49443a203138300a4e6f6d6272653a204d6175726963696f20416c6f6e736f2050696e6564610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:08:36 - === QR TEXTO:   ID: 180
+Nombre: Mauricio Alonso Pineda
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:36 - === QR NORMALIZADO: ID: 180
+Nombre: Mauricio Alonso Pineda
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:36 - ID extraído del QR: 180
+2026-04-07 14:08:36 - Resultado BD por ID: {"IdFuncionario":180,"Estado":"Activo"}
+2026-04-07 14:08:36 - Funcionario encontrado y activo: Mauricio Alonso Pineda
+2026-04-07 14:08:38 - === QR RAW HEX: 49443a203137390a4e6f6d6272653a20c39373636172204976c3a16e2047757a6dc3a16e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:08:38 - === QR TEXTO:   ID: 179
+Nombre: Óscar Iván Guzmán
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:38 - === QR NORMALIZADO: ID: 179
+Nombre: Óscar Iván Guzmán
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:38 - ID extraído del QR: 179
+2026-04-07 14:08:38 - Resultado BD por ID: {"IdFuncionario":179,"Estado":"Activo"}
+2026-04-07 14:08:38 - Funcionario encontrado y activo: Óscar Iván Guzmán
+2026-04-07 14:08:40 - === QR RAW HEX: 49443a203137380a4e6f6d6272653a20437269737469616e20446176696420486572726572610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a1204e6f7274650a45737461646f3a2041637469766f
+2026-04-07 14:08:40 - === QR TEXTO:   ID: 178
+Nombre: Cristian David Herrera
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:40 - === QR NORMALIZADO: ID: 178
+Nombre: Cristian David Herrera
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Norte
+Estado: Activo
+2026-04-07 14:08:40 - ID extraído del QR: 178
+2026-04-07 14:08:40 - Resultado BD por ID: {"IdFuncionario":178,"Estado":"Activo"}
+2026-04-07 14:08:40 - Funcionario encontrado y activo: Cristian David Herrera
+2026-04-07 14:08:42 - === QR RAW HEX: 49443a203137370a4e6f6d6272653a204a756c69c3a16e20416e6472c3a9732043c3a17264656e61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:08:42 - === QR TEXTO:   ID: 177
+Nombre: Julián Andrés Cárdenas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:42 - === QR NORMALIZADO: ID: 177
+Nombre: Julián Andrés Cárdenas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:42 - ID extraído del QR: 177
+2026-04-07 14:08:42 - Resultado BD por ID: {"IdFuncionario":177,"Estado":"Activo"}
+2026-04-07 14:08:42 - Funcionario encontrado y activo: Julián Andrés Cárdenas
+2026-04-07 14:08:44 - === QR RAW HEX: 49443a203137360a4e6f6d6272653a204573746562616e204461766964204672616e636f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:08:44 - === QR TEXTO:   ID: 176
+Nombre: Esteban David Franco
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:44 - === QR NORMALIZADO: ID: 176
+Nombre: Esteban David Franco
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:44 - ID extraído del QR: 176
+2026-04-07 14:08:44 - Resultado BD por ID: {"IdFuncionario":176,"Estado":"Activo"}
+2026-04-07 14:08:44 - Funcionario encontrado y activo: Esteban David Franco
+2026-04-07 14:08:46 - === QR RAW HEX: 49443a203137350a4e6f6d6272653a2043616d696c6f2045726e6573746f204a696dc3a96e657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:08:46 - === QR TEXTO:   ID: 175
+Nombre: Camilo Ernesto Jiménez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:46 - === QR NORMALIZADO: ID: 175
+Nombre: Camilo Ernesto Jiménez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:46 - ID extraído del QR: 175
+2026-04-07 14:08:46 - Resultado BD por ID: {"IdFuncionario":175,"Estado":"Activo"}
+2026-04-07 14:08:46 - Funcionario encontrado y activo: Camilo Ernesto Jiménez
+2026-04-07 14:08:48 - === QR RAW HEX: 49443a203137340a4e6f6d6272653a2043616d696c6f2045726e6573746f204a696dc3a96e657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:08:48 - === QR TEXTO:   ID: 174
+Nombre: Camilo Ernesto Jiménez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:48 - === QR NORMALIZADO: ID: 174
+Nombre: Camilo Ernesto Jiménez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:48 - ID extraído del QR: 174
+2026-04-07 14:08:48 - Resultado BD por ID: false
+2026-04-07 14:08:48 - Funcionario ID 174 no existe en BD
+2026-04-07 14:08:50 - === QR RAW HEX: 49443a203137330a4e6f6d6272653a2053657267696f20416e6472c3a973204d6f72616c65730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:08:50 - === QR TEXTO:   ID: 173
+Nombre: Sergio Andrés Morales
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:50 - === QR NORMALIZADO: ID: 173
+Nombre: Sergio Andrés Morales
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:50 - ID extraído del QR: 173
+2026-04-07 14:08:50 - Resultado BD por ID: {"IdFuncionario":173,"Estado":"Activo"}
+2026-04-07 14:08:50 - Funcionario encontrado y activo: Sergio Andrés Morales
+2026-04-07 14:08:52 - === QR RAW HEX: 49443a203137320a4e6f6d6272653a2044616e69656c20416c656a616e64726f2043617374726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:08:52 - === QR TEXTO:   ID: 172
+Nombre: Daniel Alejandro Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:52 - === QR NORMALIZADO: ID: 172
+Nombre: Daniel Alejandro Castro
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:52 - ID extraído del QR: 172
+2026-04-07 14:08:52 - Resultado BD por ID: {"IdFuncionario":172,"Estado":"Activo"}
+2026-04-07 14:08:52 - Funcionario encontrado y activo: Daniel Alejandro Castro
+2026-04-07 14:08:54 - === QR RAW HEX: 49443a203137310a4e6f6d6272653a204761627269656c204564756172646f2053696c76610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a12043656e74726f0a45737461646f3a2041637469766f
+2026-04-07 14:08:54 - === QR TEXTO:   ID: 171
+Nombre: Gabriel Eduardo Silva
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:54 - === QR NORMALIZADO: ID: 171
+Nombre: Gabriel Eduardo Silva
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Centro
+Estado: Activo
+2026-04-07 14:08:54 - ID extraído del QR: 171
+2026-04-07 14:08:54 - Resultado BD por ID: {"IdFuncionario":171,"Estado":"Activo"}
+2026-04-07 14:08:54 - Funcionario encontrado y activo: Gabriel Eduardo Silva
+2026-04-07 14:08:56 - === QR RAW HEX: 49443a203137300a4e6f6d6272653a205269636172646f20416e746f6e696f205065c3b1610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:56 - === QR TEXTO:   ID: 170
+Nombre: Ricardo Antonio Peña
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:56 - === QR NORMALIZADO: ID: 170
+Nombre: Ricardo Antonio Peña
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:56 - ID extraído del QR: 170
+2026-04-07 14:08:56 - Resultado BD por ID: {"IdFuncionario":170,"Estado":"Activo"}
+2026-04-07 14:08:56 - Funcionario encontrado y activo: Ricardo Antonio Peña
+2026-04-07 14:08:58 - === QR RAW HEX: 49443a203136390a4e6f6d6272653a204d696775656c20c3816e67656c20526f6a61730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:08:58 - === QR TEXTO:   ID: 169
+Nombre: Miguel Ángel Rojas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:58 - === QR NORMALIZADO: ID: 169
+Nombre: Miguel Ángel Rojas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:08:58 - ID extraído del QR: 169
+2026-04-07 14:08:58 - Resultado BD por ID: {"IdFuncionario":169,"Estado":"Activo"}
+2026-04-07 14:08:58 - Funcionario encontrado y activo: Miguel Ángel Rojas
+2026-04-07 14:09:00 - === QR RAW HEX: 49443a203136380a4e6f6d6272653a20506564726f204a6f73c3a9205661726761730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:09:00 - === QR TEXTO:   ID: 168
+Nombre: Pedro José Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:00 - === QR NORMALIZADO: ID: 168
+Nombre: Pedro José Vargas
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:00 - ID extraído del QR: 168
+2026-04-07 14:09:00 - Resultado BD por ID: {"IdFuncionario":168,"Estado":"Activo"}
+2026-04-07 14:09:00 - Funcionario encontrado y activo: Pedro José Vargas
+2026-04-07 14:09:03 - === QR RAW HEX: 49443a203136370a4e6f6d6272653a204a75616e2053656261737469c3a16e204f7274697a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:09:03 - === QR TEXTO:   ID: 167
+Nombre: Juan Sebastián Ortiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:03 - === QR NORMALIZADO: ID: 167
+Nombre: Juan Sebastián Ortiz
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:03 - ID extraído del QR: 167
+2026-04-07 14:09:03 - Resultado BD por ID: {"IdFuncionario":167,"Estado":"Activo"}
+2026-04-07 14:09:03 - Funcionario encontrado y activo: Juan Sebastián Ortiz
+2026-04-07 14:09:07 - === QR RAW HEX: 49443a203136360a4e6f6d6272653a20416e6472c3a9732046656c6970652047696c0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:09:07 - === QR TEXTO:   ID: 166
+Nombre: Andrés Felipe Gil
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:07 - === QR NORMALIZADO: ID: 166
+Nombre: Andrés Felipe Gil
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:07 - ID extraído del QR: 166
+2026-04-07 14:09:07 - Resultado BD por ID: {"IdFuncionario":166,"Estado":"Activo"}
+2026-04-07 14:09:07 - Funcionario encontrado y activo: Andrés Felipe Gil
+2026-04-07 14:09:09 - === QR RAW HEX: 49443a203136350a4e6f6d6272653a20446965676f2041726d616e646f205375c3a172657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:09:09 - === QR TEXTO:   ID: 165
+Nombre: Diego Armando Suárez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:09 - === QR NORMALIZADO: ID: 165
+Nombre: Diego Armando Suárez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:09 - ID extraído del QR: 165
+2026-04-07 14:09:09 - Resultado BD por ID: {"IdFuncionario":165,"Estado":"Activo"}
+2026-04-07 14:09:09 - Funcionario encontrado y activo: Diego Armando Suárez
+2026-04-07 14:09:11 - === QR RAW HEX: 49443a203136340a4e6f6d6272653a204a617669657220416c656a616e64726f20546f727265730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:09:11 - === QR TEXTO:   ID: 164
+Nombre: Javier Alejandro Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:11 - === QR NORMALIZADO: ID: 164
+Nombre: Javier Alejandro Torres
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:11 - ID extraído del QR: 164
+2026-04-07 14:09:11 - Resultado BD por ID: {"IdFuncionario":164,"Estado":"Activo"}
+2026-04-07 14:09:11 - Funcionario encontrado y activo: Javier Alejandro Torres
+2026-04-07 14:09:13 - === QR RAW HEX: 49443a203136330a4e6f6d6272653a204c756973204665726e616e646f20526f6d65726f0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:09:13 - === QR TEXTO:   ID: 163
+Nombre: Luis Fernando Romero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:13 - === QR NORMALIZADO: ID: 163
+Nombre: Luis Fernando Romero
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:13 - ID extraído del QR: 163
+2026-04-07 14:09:13 - Resultado BD por ID: {"IdFuncionario":163,"Estado":"Activo"}
+2026-04-07 14:09:13 - Funcionario encontrado y activo: Luis Fernando Romero
+2026-04-07 14:09:16 - === QR RAW HEX: 49443a203136320a4e6f6d6272653a204361726c6f7320416e6472c3a973204dc3a96e64657a0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:09:16 - === QR TEXTO:   ID: 162
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:16 - === QR NORMALIZADO: ID: 162
+Nombre: Carlos Andrés Méndez
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:16 - ID extraído del QR: 162
+2026-04-07 14:09:16 - Resultado BD por ID: {"IdFuncionario":162,"Estado":"Activo"}
+2026-04-07 14:09:16 - Funcionario encontrado y activo: Carlos Andrés Méndez
+2026-04-07 14:09:18 - === QR RAW HEX: 49443a203130380a4e6f6d6272653a20416e646572736f6e204573746962656e204d6f72656e6f2050696e7a6f6e0a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20554e49434f4c4f4d4249410a536564653a2053656465205072696e636970616c20554e49434f4c4f4d4249410a45737461646f3a2041637469766f
+2026-04-07 14:09:18 - === QR TEXTO:   ID: 108
+Nombre: Anderson Estiben Moreno Pinzon
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-07 14:09:18 - === QR NORMALIZADO: ID: 108
+Nombre: Anderson Estiben Moreno Pinzon
+Cargo: Funcionario
+Institución: UNICOLOMBIA
+Sede: Sede Principal UNICOLOMBIA
+Estado: Activo
+2026-04-07 14:09:18 - ID extraído del QR: 108
+2026-04-07 14:09:18 - Resultado BD por ID: {"IdFuncionario":108,"Estado":"Activo"}
+2026-04-07 14:09:18 - Funcionario encontrado y activo: Anderson Estiben Moreno Pinzon
+2026-04-07 14:09:20 - === QR RAW HEX: 49443a203130370a4e6f6d6272653a20416e647265732063616d696c6f2063617272696c6c6f204a61696d65730a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20436f72706f72616369c3b36e20556e69766572736974617269612064652041737475726961730a536564653a2053656465205072696e636970616c2041737475726961730a45737461646f3a2041637469766f
+2026-04-07 14:09:20 - === QR TEXTO:   ID: 107
+Nombre: Andres camilo carrillo Jaimes
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-07 14:09:20 - === QR NORMALIZADO: ID: 107
+Nombre: Andres camilo carrillo Jaimes
+Cargo: Funcionario
+Institución: Corporación Universitaria de Asturias
+Sede: Sede Principal Asturias
+Estado: Activo
+2026-04-07 14:09:20 - ID extraído del QR: 107
+2026-04-07 14:09:20 - Resultado BD por ID: {"IdFuncionario":107,"Estado":"Activo"}
+2026-04-07 14:09:20 - Funcionario encontrado y activo: Andres camilo carrillo Jaimes
+2026-04-07 14:09:21 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:09:21 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:21 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:09:21 - ID extraído del QR: 106
+2026-04-07 14:09:21 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:09:21 - Funcionario encontrado y activo: Michael David Montoya Pasachoa

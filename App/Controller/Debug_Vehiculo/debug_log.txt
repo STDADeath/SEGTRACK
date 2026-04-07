@@ -1252,3 +1252,517 @@ Punto 1: Preparando SQL INSERT
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"44","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-44-69d3760f12e9f.png","FechaRegistro":"2026-04-06 03:59:59"}}
 === FIN ===
 
+
+2026-04-07 05:44:45 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:44:47 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "85"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":185,"NombreFuncionario":"Ana Sofía Martínez"},{"IdFuncionario":191,"NombreFuncionario":"Andrea Carolina Castro"},{"IdFuncionario":166,"NombreFuncionario":"Andrés Felipe Gil"},{"IdFuncionario":162,"NombreFuncionario":"Carlos Andrés Méndez"},{"IdFuncionario":187,"NombreFuncionario":"Carolina Andrea Pérez"},{"IdFuncionario":189,"NombreFuncionario":"Daniela Alejandra Fernández"},{"IdFuncionario":165,"NombreFuncionario":"Diego Armando Suárez"},{"IdFuncionario":164,"NombreFuncionario":"Javier Alejandro Torres"},{"IdFuncionario":167,"NombreFuncionario":"Juan Sebastián Ortiz"},{"IdFuncionario":186,"NombreFuncionario":"Laura Valentina Rodríguez"},{"IdFuncionario":163,"NombreFuncionario":"Luis Fernando Romero"},{"IdFuncionario":184,"NombreFuncionario":"María Fernanda López"},{"IdFuncionario":169,"NombreFuncionario":"Miguel Ángel Rojas"},{"IdFuncionario":188,"NombreFuncionario":"Natalia Patricia Gómez"},{"IdFuncionario":192,"NombreFuncionario":"Paula Andrea Mendoza"},{"IdFuncionario":168,"NombreFuncionario":"Pedro José Vargas"},{"IdFuncionario":170,"NombreFuncionario":"Ricardo Antonio Peña"},{"IdFuncionario":190,"NombreFuncionario":"Valentina Lucía Sánchez"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:45:15 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "MAZ123",
+    "DescripcionVehiculo": " Mazda 3, motor 2.0L, color gris, año 2020",
+    "TarjetaPropiedad": "123456789012",
+    "IdInstitucion": "35",
+    "IdSede": "85",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "185",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 46
+✅ QR actualizado para vehículo ID: 46
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"46","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-46-69d4e03b2ee4c.png","FechaRegistro":"2026-04-07 05:45:15"}}
+=== FIN ===
+
+
+2026-04-07 05:46:29 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:46:33 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "85"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":185,"NombreFuncionario":"Ana Sofía Martínez"},{"IdFuncionario":191,"NombreFuncionario":"Andrea Carolina Castro"},{"IdFuncionario":166,"NombreFuncionario":"Andrés Felipe Gil"},{"IdFuncionario":162,"NombreFuncionario":"Carlos Andrés Méndez"},{"IdFuncionario":187,"NombreFuncionario":"Carolina Andrea Pérez"},{"IdFuncionario":189,"NombreFuncionario":"Daniela Alejandra Fernández"},{"IdFuncionario":165,"NombreFuncionario":"Diego Armando Suárez"},{"IdFuncionario":164,"NombreFuncionario":"Javier Alejandro Torres"},{"IdFuncionario":167,"NombreFuncionario":"Juan Sebastián Ortiz"},{"IdFuncionario":186,"NombreFuncionario":"Laura Valentina Rodríguez"},{"IdFuncionario":163,"NombreFuncionario":"Luis Fernando Romero"},{"IdFuncionario":184,"NombreFuncionario":"María Fernanda López"},{"IdFuncionario":169,"NombreFuncionario":"Miguel Ángel Rojas"},{"IdFuncionario":188,"NombreFuncionario":"Natalia Patricia Gómez"},{"IdFuncionario":192,"NombreFuncionario":"Paula Andrea Mendoza"},{"IdFuncionario":168,"NombreFuncionario":"Pedro José Vargas"},{"IdFuncionario":170,"NombreFuncionario":"Ricardo Antonio Peña"},{"IdFuncionario":190,"NombreFuncionario":"Valentina Lucía Sánchez"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:47:11 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "YAM45",
+    "DescripcionVehiculo": "Yamaha NMAX 155cc, color negro, año 2022",
+    "TarjetaPropiedad": "2345678901234",
+    "IdInstitucion": "35",
+    "IdSede": "85",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "169",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 47
+✅ QR actualizado para vehículo ID: 47
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"47","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-47-69d4e0afd3099.png","FechaRegistro":"2026-04-07 05:47:11"}}
+=== FIN ===
+
+
+2026-04-07 05:47:52 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:47:59 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "85"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":185,"NombreFuncionario":"Ana Sofía Martínez"},{"IdFuncionario":191,"NombreFuncionario":"Andrea Carolina Castro"},{"IdFuncionario":166,"NombreFuncionario":"Andrés Felipe Gil"},{"IdFuncionario":162,"NombreFuncionario":"Carlos Andrés Méndez"},{"IdFuncionario":187,"NombreFuncionario":"Carolina Andrea Pérez"},{"IdFuncionario":189,"NombreFuncionario":"Daniela Alejandra Fernández"},{"IdFuncionario":165,"NombreFuncionario":"Diego Armando Suárez"},{"IdFuncionario":164,"NombreFuncionario":"Javier Alejandro Torres"},{"IdFuncionario":167,"NombreFuncionario":"Juan Sebastián Ortiz"},{"IdFuncionario":186,"NombreFuncionario":"Laura Valentina Rodríguez"},{"IdFuncionario":163,"NombreFuncionario":"Luis Fernando Romero"},{"IdFuncionario":184,"NombreFuncionario":"María Fernanda López"},{"IdFuncionario":169,"NombreFuncionario":"Miguel Ángel Rojas"},{"IdFuncionario":188,"NombreFuncionario":"Natalia Patricia Gómez"},{"IdFuncionario":192,"NombreFuncionario":"Paula Andrea Mendoza"},{"IdFuncionario":168,"NombreFuncionario":"Pedro José Vargas"},{"IdFuncionario":170,"NombreFuncionario":"Ricardo Antonio Peña"},{"IdFuncionario":190,"NombreFuncionario":"Valentina Lucía Sánchez"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:48:55 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "N-A",
+    "DescripcionVehiculo": "Bicicleta eléctrica, motor 250W, color rojo, año 2023",
+    "TarjetaPropiedad": "3456789012345",
+    "IdInstitucion": "35",
+    "IdSede": "85",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "184",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 48
+✅ QR actualizado para vehículo ID: 48
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"48","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-48-69d4e1178225f.png","FechaRegistro":"2026-04-07 05:48:55"}}
+=== FIN ===
+
+
+2026-04-07 05:49:16 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:49:18 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "85"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":185,"NombreFuncionario":"Ana Sofía Martínez"},{"IdFuncionario":191,"NombreFuncionario":"Andrea Carolina Castro"},{"IdFuncionario":166,"NombreFuncionario":"Andrés Felipe Gil"},{"IdFuncionario":162,"NombreFuncionario":"Carlos Andrés Méndez"},{"IdFuncionario":187,"NombreFuncionario":"Carolina Andrea Pérez"},{"IdFuncionario":189,"NombreFuncionario":"Daniela Alejandra Fernández"},{"IdFuncionario":165,"NombreFuncionario":"Diego Armando Suárez"},{"IdFuncionario":164,"NombreFuncionario":"Javier Alejandro Torres"},{"IdFuncionario":167,"NombreFuncionario":"Juan Sebastián Ortiz"},{"IdFuncionario":186,"NombreFuncionario":"Laura Valentina Rodríguez"},{"IdFuncionario":163,"NombreFuncionario":"Luis Fernando Romero"},{"IdFuncionario":184,"NombreFuncionario":"María Fernanda López"},{"IdFuncionario":169,"NombreFuncionario":"Miguel Ángel Rojas"},{"IdFuncionario":188,"NombreFuncionario":"Natalia Patricia Gómez"},{"IdFuncionario":192,"NombreFuncionario":"Paula Andrea Mendoza"},{"IdFuncionario":168,"NombreFuncionario":"Pedro José Vargas"},{"IdFuncionario":170,"NombreFuncionario":"Ricardo Antonio Peña"},{"IdFuncionario":190,"NombreFuncionario":"Valentina Lucía Sánchez"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:49:34 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": " SPK789",
+    "DescripcionVehiculo": "Chevrolet Spark, motor 1.2L, color blanco, año 2019",
+    "TarjetaPropiedad": "45678901234567",
+    "IdInstitucion": "35",
+    "IdSede": "85",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "189",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 49
+✅ QR actualizado para vehículo ID: 49
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"49","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-49-69d4e13eb5e7b.png","FechaRegistro":"2026-04-07 05:49:34"}}
+=== FIN ===
+
+
+2026-04-07 05:49:39 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:49:40 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "83"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":197,"NombreFuncionario":"Adriana Lucía Vargas"},{"IdFuncionario":108,"NombreFuncionario":"Anderson Estiben Moreno Pinzon"},{"IdFuncionario":107,"NombreFuncionario":"Andres camilo carrillo Jaimes"},{"IdFuncionario":175,"NombreFuncionario":"Camilo Ernesto Jiménez"},{"IdFuncionario":204,"NombreFuncionario":"Claudia Patricia Mora"},{"IdFuncionario":172,"NombreFuncionario":"Daniel Alejandro Castro"},{"IdFuncionario":194,"NombreFuncionario":"Diana Carolina Herrera"},{"IdFuncionario":176,"NombreFuncionario":"Esteban David Franco"},{"IdFuncionario":171,"NombreFuncionario":"Gabriel Eduardo Silva"},{"IdFuncionario":177,"NombreFuncionario":"Julián Andrés Cárdenas"},{"IdFuncionario":200,"NombreFuncionario":"Juliana María Cardona"},{"IdFuncionario":196,"NombreFuncionario":"Lina Marcela Torres"},{"IdFuncionario":199,"NombreFuncionario":"Marcela Isabel Orozco"},{"IdFuncionario":106,"NombreFuncionario":"Michael David Montoya Pasachoa"},{"IdFuncionario":193,"NombreFuncionario":"Sandra Milena Rojas"},{"IdFuncionario":173,"NombreFuncionario":"Sergio Andrés Morales"},{"IdFuncionario":195,"NombreFuncionario":"Tatiana Andrea Paredes"},{"IdFuncionario":198,"NombreFuncionario":"Viviana Andrea Silva"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:50:12 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "HON160",
+    "DescripcionVehiculo": "Honda CB160, motor 160cc, color azul, año 2021",
+    "TarjetaPropiedad": "56789012345678",
+    "IdInstitucion": "35",
+    "IdSede": "83",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "197",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 50
+✅ QR actualizado para vehículo ID: 50
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"50","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-50-69d4e1649d008.png","FechaRegistro":"2026-04-07 05:50:12"}}
+=== FIN ===
+
+
+2026-04-07 05:50:16 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:50:17 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "83"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":197,"NombreFuncionario":"Adriana Lucía Vargas"},{"IdFuncionario":108,"NombreFuncionario":"Anderson Estiben Moreno Pinzon"},{"IdFuncionario":107,"NombreFuncionario":"Andres camilo carrillo Jaimes"},{"IdFuncionario":175,"NombreFuncionario":"Camilo Ernesto Jiménez"},{"IdFuncionario":204,"NombreFuncionario":"Claudia Patricia Mora"},{"IdFuncionario":172,"NombreFuncionario":"Daniel Alejandro Castro"},{"IdFuncionario":194,"NombreFuncionario":"Diana Carolina Herrera"},{"IdFuncionario":176,"NombreFuncionario":"Esteban David Franco"},{"IdFuncionario":171,"NombreFuncionario":"Gabriel Eduardo Silva"},{"IdFuncionario":177,"NombreFuncionario":"Julián Andrés Cárdenas"},{"IdFuncionario":200,"NombreFuncionario":"Juliana María Cardona"},{"IdFuncionario":196,"NombreFuncionario":"Lina Marcela Torres"},{"IdFuncionario":199,"NombreFuncionario":"Marcela Isabel Orozco"},{"IdFuncionario":106,"NombreFuncionario":"Michael David Montoya Pasachoa"},{"IdFuncionario":193,"NombreFuncionario":"Sandra Milena Rojas"},{"IdFuncionario":173,"NombreFuncionario":"Sergio Andrés Morales"},{"IdFuncionario":195,"NombreFuncionario":"Tatiana Andrea Paredes"},{"IdFuncionario":198,"NombreFuncionario":"Viviana Andrea Silva"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:50:58 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Otro",
+    "PlacaVehiculo": "CU4T",
+    "DescripcionVehiculo": "Cuatrimoto 250cc, motor 4 tiempos, color verde, año 2020",
+    "TarjetaPropiedad": " 678901234567890",
+    "IdInstitucion": "35",
+    "IdSede": "83",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "172",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 51
+✅ QR actualizado para vehículo ID: 51
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"51","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-51-69d4e19240aba.png","FechaRegistro":"2026-04-07 05:50:58"}}
+=== FIN ===
+
+
+2026-04-07 05:52:10 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:52:12 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "83"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":197,"NombreFuncionario":"Adriana Lucía Vargas"},{"IdFuncionario":108,"NombreFuncionario":"Anderson Estiben Moreno Pinzon"},{"IdFuncionario":107,"NombreFuncionario":"Andres camilo carrillo Jaimes"},{"IdFuncionario":175,"NombreFuncionario":"Camilo Ernesto Jiménez"},{"IdFuncionario":204,"NombreFuncionario":"Claudia Patricia Mora"},{"IdFuncionario":172,"NombreFuncionario":"Daniel Alejandro Castro"},{"IdFuncionario":194,"NombreFuncionario":"Diana Carolina Herrera"},{"IdFuncionario":176,"NombreFuncionario":"Esteban David Franco"},{"IdFuncionario":171,"NombreFuncionario":"Gabriel Eduardo Silva"},{"IdFuncionario":177,"NombreFuncionario":"Julián Andrés Cárdenas"},{"IdFuncionario":200,"NombreFuncionario":"Juliana María Cardona"},{"IdFuncionario":196,"NombreFuncionario":"Lina Marcela Torres"},{"IdFuncionario":199,"NombreFuncionario":"Marcela Isabel Orozco"},{"IdFuncionario":106,"NombreFuncionario":"Michael David Montoya Pasachoa"},{"IdFuncionario":193,"NombreFuncionario":"Sandra Milena Rojas"},{"IdFuncionario":173,"NombreFuncionario":"Sergio Andrés Morales"},{"IdFuncionario":195,"NombreFuncionario":"Tatiana Andrea Paredes"},{"IdFuncionario":198,"NombreFuncionario":"Viviana Andrea Silva"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:52:27 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "LOG78",
+    "DescripcionVehiculo": "Renault Logan, motor 1.6L, color plateado, año 2018",
+    "TarjetaPropiedad": " 7890123456789012",
+    "IdInstitucion": "35",
+    "IdSede": "83",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "176",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 52
+✅ QR actualizado para vehículo ID: 52
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"52","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-52-69d4e1ebc37d2.png","FechaRegistro":"2026-04-07 05:52:27"}}
+=== FIN ===
+
+
+2026-04-07 05:53:00 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:53:02 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "84"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":205,"NombreFuncionario":"Adriana María Velásquez"},{"IdFuncionario":178,"NombreFuncionario":"Cristian David Herrera"},{"IdFuncionario":181,"NombreFuncionario":"Felipe Antonio Ruiz"},{"IdFuncionario":203,"NombreFuncionario":"Gloria Amparo Ruiz"},{"IdFuncionario":201,"NombreFuncionario":"Isabel Cristina Ríos"},{"IdFuncionario":202,"NombreFuncionario":"Luisa Fernanda Quintero"},{"IdFuncionario":208,"NombreFuncionario":"María José Betancur"},{"IdFuncionario":180,"NombreFuncionario":"Mauricio Alonso Pineda"},{"IdFuncionario":206,"NombreFuncionario":"Mónica Andrea Chacón"},{"IdFuncionario":183,"NombreFuncionario":"Nicolás Fernando Quintero"},{"IdFuncionario":179,"NombreFuncionario":"Óscar Iván Guzmán"},{"IdFuncionario":207,"NombreFuncionario":"Patricia Elena Acosta"},{"IdFuncionario":182,"NombreFuncionario":"Sebastián Alberto Luna"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:53:09 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Moto",
+    "PlacaVehiculo": "SUZ100",
+    "DescripcionVehiculo": "Suzuki AX100, motor 100cc, color rojo, año 2019",
+    "TarjetaPropiedad": " 89012345678901234",
+    "IdInstitucion": "35",
+    "IdSede": "84",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "182",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 53
+✅ QR actualizado para vehículo ID: 53
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"53","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-53-69d4e215bfe66.png","FechaRegistro":"2026-04-07 05:53:09"}}
+=== FIN ===
+
+
+2026-04-07 05:53:31 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 05:53:32 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "84"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":205,"NombreFuncionario":"Adriana María Velásquez"},{"IdFuncionario":178,"NombreFuncionario":"Cristian David Herrera"},{"IdFuncionario":181,"NombreFuncionario":"Felipe Antonio Ruiz"},{"IdFuncionario":203,"NombreFuncionario":"Gloria Amparo Ruiz"},{"IdFuncionario":201,"NombreFuncionario":"Isabel Cristina Ríos"},{"IdFuncionario":202,"NombreFuncionario":"Luisa Fernanda Quintero"},{"IdFuncionario":208,"NombreFuncionario":"María José Betancur"},{"IdFuncionario":180,"NombreFuncionario":"Mauricio Alonso Pineda"},{"IdFuncionario":206,"NombreFuncionario":"Mónica Andrea Chacón"},{"IdFuncionario":183,"NombreFuncionario":"Nicolás Fernando Quintero"},{"IdFuncionario":179,"NombreFuncionario":"Óscar Iván Guzmán"},{"IdFuncionario":207,"NombreFuncionario":"Patricia Elena Acosta"},{"IdFuncionario":182,"NombreFuncionario":"Sebastián Alberto Luna"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 05:53:38 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "N-A",
+    "DescripcionVehiculo": "Bicicleta de montaña, sin motor, 21 velocidades, color negro",
+    "TarjetaPropiedad": "90123456789012345",
+    "IdInstitucion": "35",
+    "IdSede": "84",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "183",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 54
+✅ QR actualizado para vehículo ID: 54
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"54","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-54-69d4e2327a299.png","FechaRegistro":"2026-04-07 05:53:38"}}
+=== FIN ===
+
+
+2026-04-07 06:00:45 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 06:00:46 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "84"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":205,"NombreFuncionario":"Adriana María Velásquez"},{"IdFuncionario":178,"NombreFuncionario":"Cristian David Herrera"},{"IdFuncionario":181,"NombreFuncionario":"Felipe Antonio Ruiz"},{"IdFuncionario":203,"NombreFuncionario":"Gloria Amparo Ruiz"},{"IdFuncionario":201,"NombreFuncionario":"Isabel Cristina Ríos"},{"IdFuncionario":202,"NombreFuncionario":"Luisa Fernanda Quintero"},{"IdFuncionario":208,"NombreFuncionario":"María José Betancur"},{"IdFuncionario":180,"NombreFuncionario":"Mauricio Alonso Pineda"},{"IdFuncionario":206,"NombreFuncionario":"Mónica Andrea Chacón"},{"IdFuncionario":183,"NombreFuncionario":"Nicolás Fernando Quintero"},{"IdFuncionario":179,"NombreFuncionario":"Óscar Iván Guzmán"},{"IdFuncionario":207,"NombreFuncionario":"Patricia Elena Acosta"},{"IdFuncionario":182,"NombreFuncionario":"Sebastián Alberto Luna"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 06:00:55 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "TORO22",
+    "DescripcionVehiculo": "Toyota Corolla, motor 1.8L, híbrido, color azul marino, año 2023",
+    "TarjetaPropiedad": "11223344556677889",
+    "IdInstitucion": "35",
+    "IdSede": "84",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "203",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 55
+✅ QR actualizado para vehículo ID: 55
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"55","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-55-69d4e3e7c6254.png","FechaRegistro":"2026-04-07 06:00:55"}}
+=== FIN ===
+
+
+2026-04-07 06:58:17 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "35"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":85,"TipoSede":"Sede Bogotá Alterna","Ciudad":"Bogotá"},{"IdSede":83,"TipoSede":"Sede Bogotá Centro","Ciudad":"Bogotá"},{"IdSede":84,"TipoSede":"Sede Bogotá Norte","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-07 06:58:19 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "85"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":185,"NombreFuncionario":"Ana Sofía Martínez"},{"IdFuncionario":191,"NombreFuncionario":"Andrea Carolina Castro"},{"IdFuncionario":166,"NombreFuncionario":"Andrés Felipe Gil"},{"IdFuncionario":162,"NombreFuncionario":"Carlos Andrés Méndez"},{"IdFuncionario":209,"NombreFuncionario":"Carlos Andrés Méndez"},{"IdFuncionario":187,"NombreFuncionario":"Carolina Andrea Pérez"},{"IdFuncionario":189,"NombreFuncionario":"Daniela Alejandra Fernández"},{"IdFuncionario":165,"NombreFuncionario":"Diego Armando Suárez"},{"IdFuncionario":164,"NombreFuncionario":"Javier Alejandro Torres"},{"IdFuncionario":167,"NombreFuncionario":"Juan Sebastián Ortiz"},{"IdFuncionario":186,"NombreFuncionario":"Laura Valentina Rodríguez"},{"IdFuncionario":163,"NombreFuncionario":"Luis Fernando Romero"},{"IdFuncionario":184,"NombreFuncionario":"María Fernanda López"},{"IdFuncionario":169,"NombreFuncionario":"Miguel Ángel Rojas"},{"IdFuncionario":188,"NombreFuncionario":"Natalia Patricia Gómez"},{"IdFuncionario":192,"NombreFuncionario":"Paula Andrea Mendoza"},{"IdFuncionario":168,"NombreFuncionario":"Pedro José Vargas"},{"IdFuncionario":170,"NombreFuncionario":"Ricardo Antonio Peña"},{"IdFuncionario":190,"NombreFuncionario":"Valentina Lucía Sánchez"}],"visitantes":[{"IdVisitante":50,"NombreVisitante":" Luis Fernando Romero"},{"IdVisitante":47,"NombreVisitante":"Daniela Alejandra Fernández"},{"IdVisitante":48,"NombreVisitante":"Ricardo Antonio Peña"},{"IdVisitante":46,"NombreVisitante":"Sebastián Alberto Luna"},{"IdVisitante":51,"NombreVisitante":"Sofía Alejandra Parra"},{"IdVisitante":49,"NombreVisitante":"Valentina Lucía Sánchez"}]}
+=== FIN ===
+
+
+2026-04-07 06:58:48 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "MAZ123",
+    "DescripcionVehiculo": "Color gris plata, modelo 2020, Mazda 3, motor 2.0L, 4 puertas, vidrios eléctricos, aire acondicionado",
+    "TarjetaPropiedad": "123456789012",
+    "IdInstitucion": "35",
+    "IdSede": "85",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "191",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+⚠️ Placa duplicada encontrada: MAZ123
+Respuesta: {"success":false,"message":"⚠️ La placa 'MAZ123' ya está registrada para un vehículo tipo 'Carro'."}
+=== FIN ===
+
+
+2026-04-07 06:58:54 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "MAZ2123",
+    "DescripcionVehiculo": "Color gris plata, modelo 2020, Mazda 3, motor 2.0L, 4 puertas, vidrios eléctricos, aire acondicionado",
+    "TarjetaPropiedad": "123456789012",
+    "IdInstitucion": "35",
+    "IdSede": "85",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "191",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+⚠️ Tarjeta de propiedad duplicada: 123456789012
+Respuesta: {"success":false,"message":"⚠️ La tarjeta '123456789012' ya está registrada para un vehículo tipo 'Carro'."}
+=== FIN ===
+
+
+2026-04-07 06:58:58 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Carro",
+    "PlacaVehiculo": "MAZ2123",
+    "DescripcionVehiculo": "Color gris plata, modelo 2020, Mazda 3, motor 2.0L, 4 puertas, vidrios eléctricos, aire acondicionado",
+    "TarjetaPropiedad": "123421389012",
+    "IdInstitucion": "35",
+    "IdSede": "85",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "191",
+    "IdVisitante": "",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 56
+✅ QR actualizado para vehículo ID: 56
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"56","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-56-69d4f182d41a6.png","FechaRegistro":"2026-04-07 06:58:58"}}
+=== FIN ===
+

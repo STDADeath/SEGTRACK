@@ -4,7 +4,7 @@
 //  Ruta: App/Model/ModeloDashboard.php
 //
 //  ✅ Funciona para: Personal Seguridad, Supervisor, Administrador
-//  ⚠️  Los métodos existentes NO se modificaron.
+//    Los métodos existentes NO se modificaron.
 //      Solo se agregaron métodos nuevos al final para el Admin:
 //      TotalSedes, TotalInstituciones, SedesPorCiudad,
 //      SedesPorInstitucion, TodasLasSedes, InstitucionesPorTipo
