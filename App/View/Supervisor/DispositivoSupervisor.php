@@ -235,9 +235,10 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         <th>Tipo</th>
                         <th>Marca</th>
                         <th>N° Serial</th>
-                        <th>Propietario</th>
                         <th>Institución</th>
                         <th>Sede</th>
+                        <th>Funcionario</th>
+                        <th>Visitante</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -246,14 +247,12 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                     <?php if ($result && count($result) > 0) : ?>
                         <?php foreach ($result as $row) : ?>
                             <?php
-                            $nombrePropietario = !empty($row['NombreFuncionario']) 
-                                ? $row['NombreFuncionario'] 
-                                : ($row['NombreVisitante'] ?? 'No asignado');
-                            $tipoPropietario = !empty($row['NombreFuncionario']) ? 'Funcionario' : 'Visitante';
                             $correoDisponible = $row['CorreoFuncionario'] ?? ($row['CorreoVisitante'] ?? '');
                             $tieneCorreo = !empty($correoDisponible);
                             ?>
                             <tr id="fila-<?= $row['IdDispositivo'] ?>" class="<?= $row['Estado'] === 'Inactivo' ? 'table-secondary' : '' ?>">
+
+                                <!-- QR -->
                                 <td class="text-center">
                                     <?php if (!empty($row['QrDispositivo'])) : ?>
                                         <button type="button" class="btn btn-sm btn-outline-success mb-1"
@@ -273,8 +272,14 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge bg-warning text-dark">Sin QR</span>
                                     <?php endif; ?>
                                 </td>
+
+                                <!-- Tipo -->
                                 <td><?= htmlspecialchars($row['TipoDispositivo']) ?></td>
+
+                                <!-- Marca -->
                                 <td><?= htmlspecialchars($row['MarcaDispositivo']) ?></td>
+
+                                <!-- Serial -->
                                 <td>
                                     <?php if (!empty($row['NumeroSerial'])) : ?>
                                         <?= htmlspecialchars($row['NumeroSerial']) ?>
@@ -282,12 +287,8 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge bg-info text-white">No tiene serial</span>
                                     <?php endif; ?>
                                 </td>
-                                <td>
-                                    <span class="badge bg-<?= $tipoPropietario === 'Funcionario' ? 'primary' : 'success' ?>">
-                                        <?= $tipoPropietario ?>
-                                    </span><br>
-                                    <small><?= htmlspecialchars($nombrePropietario) ?></small>
-                                </td>
+
+                                <!-- Institución -->
                                 <td>
                                     <?php if (!empty($row['NombreInstitucion'])) : ?>
                                         <?= htmlspecialchars($row['NombreInstitucion']) ?>
@@ -295,6 +296,8 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge bg-secondary text-white">Sin institución</span>
                                     <?php endif; ?>
                                 </td>
+
+                                <!-- Sede -->
                                 <td>
                                     <?php if (!empty($row['TipoSede'])) : ?>
                                         <?= htmlspecialchars($row['TipoSede']) ?> — <?= htmlspecialchars($row['CiudadSede'] ?? '') ?>
@@ -302,13 +305,35 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                                         <span class="badge bg-secondary text-white">Sin sede</span>
                                     <?php endif; ?>
                                 </td>
+
+                                <!-- Funcionario -->
+                                <td>
+                                    <?php if (!empty($row['NombreFuncionario'])) : ?>
+                                        <?= htmlspecialchars($row['NombreFuncionario']) ?>
+                                    <?php else : ?>
+                                        <span class="badge bg-info text-white">No aplica</span>
+                                    <?php endif; ?>
+                                </td>
+
+                                <!-- Visitante -->
+                                <td>
+                                    <?php if (!empty($row['NombreVisitante'])) : ?>
+                                        <?= htmlspecialchars($row['NombreVisitante']) ?>
+                                    <?php else : ?>
+                                        <span class="badge bg-info text-white">No aplica</span>
+                                    <?php endif; ?>
+                                </td>
+
+                                <!-- Estado -->
                                 <td>
                                     <?php if ($row['Estado'] === 'Activo') : ?>
                                         <span class="badge bg-success">Activo</span>
                                     <?php else : ?>
-                                        <span class="badge bg-secondary">Inactivo</span>
+                                        <span class="badge bg-warning text-white">Inactivo</span>
                                     <?php endif; ?>
                                 </td>
+
+                                <!-- Acciones -->
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-sm btn-outline-primary"
@@ -329,7 +354,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="9" class="text-center py-4">
+                            <td colspan="10" class="text-center py-4">
                                 <i class="fas fa-exclamation-circle fa-2x text-muted mb-2"></i>
                                 <p class="text-muted">No hay dispositivos registrados con los filtros seleccionados</p>
                             </td>
@@ -341,7 +366,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- Modales -->
+<!-- Modal Ver QR -->
 <div class="modal fade" id="modalVerQRDispositivo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -366,6 +391,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<!-- Modal Editar Dispositivo -->
 <div class="modal fade" id="modalEditarDispositivo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -415,9 +441,13 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Propietario <small class="text-muted">(Solo lectura)</small></label>
-                            <input type="text" id="editNombrePropietario" class="form-control bg-light" readonly>
+                            <label class="form-label">Funcionario <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editNombreFuncionario" class="form-control bg-light" readonly>
                             <input type="hidden" id="editIdFuncionario" name="id_funcionario">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Visitante <small class="text-muted">(Solo lectura)</small></label>
+                            <input type="text" id="editNombreVisitante" class="form-control bg-light" readonly>
                             <input type="hidden" id="editIdVisitante" name="id_visitante">
                         </div>
                     </div>
@@ -431,6 +461,7 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<!-- Modal Cambiar Estado -->
 <div class="modal fade" id="modalCambiarEstadoDispositivo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -462,8 +493,20 @@ $sedesDisponibles = $stmtSedes->fetchAll(PDO::FETCH_ASSOC);
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior_supervisor.php'; ?>
 
-<!-- PRIMERO jQuery, luego Bootstrap, luego SweetAlert, luego nuestro JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/SEGTRACK/Public/js/javascript/js/ValidacionDispositivo.js"></script>
+
+<script>
+$(document).ready(function () {
+    $('#TablaDispositivoSupervisor').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        },
+        pageLength: 10,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+        order: [[8, 'asc'], [0, 'desc']],
+        columnDefs: [
+            { orderable: false, targets: [0, 9] }
+        ]
+    });
+});
+</script>

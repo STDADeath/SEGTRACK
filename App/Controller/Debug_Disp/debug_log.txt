@@ -26469,3 +26469,524 @@ Acción detectada: enviar_qr
 Respuesta final: {"success":true,"message":"C\u00f3digo QR enviado exitosamente a: nomasjodas21@gmail.com"}
 === FIN ===
 
+
+2026-04-07 15:37:25 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":32,"NombreInstitucion":"Centro Educativo San Miguel"},{"IdInstitucion":30,"NombreInstitucion":"Colegio Nuevo Horizonte"},{"IdInstitucion":29,"NombreInstitucion":"Instituto T\u00e9cnico Andino"},{"IdInstitucion":31,"NombreInstitucion":"Universidad del Caribe Colombiano"},{"IdInstitucion":33,"NombreInstitucion":"Universidad Nacional de Colombia"}]
+=== FIN ===
+
+
+2026-04-07 15:37:31 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":68,"TipoSede":"Instituto  Andino Sur","Ciudad":"barranquilla"},{"IdSede":69,"TipoSede":"Instituto Andino Norte","Ciudad":"Bogota"},{"IdSede":67,"TipoSede":"Sede Principal","Ciudad":"Bogot\u00e1"}]}
+=== FIN ===
+
+
+2026-04-07 15:37:39 === INICIO ===
+
+2026-04-07 15:37:39 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "69"
+}
+Acción detectada: obtener_funcionarios_por_sede
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "69"
+}
+Respuesta final: {"success":true,"funcionarios":[]}
+=== FIN ===
+
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 15:37:44 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "31"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":75,"TipoSede":"caribe Colombiano Central","Ciudad":"Bogota"},{"IdSede":74,"TipoSede":"caribe Colombiano Norte","Ciudad":"Medellin"},{"IdSede":73,"TipoSede":"Sede Principal","Ciudad":"Medellin"}]}
+=== FIN ===
+
+
+2026-04-07 15:37:46 === INICIO ===
+
+2026-04-07 15:37:46 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "73"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "73"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":92,"NombreFuncionario":"Anderson Estiben Moreno Pinzon"}]}
+=== FIN ===
+
+
+2026-04-07 15:37:48 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "assus",
+    "NumeroSerial": "SN48765456784232234",
+    "IdFuncionario": "92",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'SN48765456784232234' ya est\u00e1 registrado en otro dispositivo (ID: 59 - Portatil assus)."}
+=== FIN ===
+
+
+2026-04-07 15:37:58 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Portatil",
+    "MarcaDispositivo": "assus",
+    "NumeroSerial": "SN48765445555434",
+    "IdFuncionario": "92",
+    "IdVisitante": ""
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Portatil, Marca: assus, Serial: SN48765445555434
+Funcionario: 92, Visitante: 
+INSERT exitoso, ID: 60
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 60","data":{"IdDispositivo":"60","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-60-69d508b625824.png"}}
+=== FIN ===
+
+
+2026-04-07 15:37:59 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":32,"NombreInstitucion":"Centro Educativo San Miguel"},{"IdInstitucion":30,"NombreInstitucion":"Colegio Nuevo Horizonte"},{"IdInstitucion":29,"NombreInstitucion":"Instituto T\u00e9cnico Andino"},{"IdInstitucion":31,"NombreInstitucion":"Universidad del Caribe Colombiano"},{"IdInstitucion":33,"NombreInstitucion":"Universidad Nacional de Colombia"}]
+=== FIN ===
+
+
+2026-04-07 15:41:16 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":32,"NombreInstitucion":"Centro Educativo San Miguel"},{"IdInstitucion":30,"NombreInstitucion":"Colegio Nuevo Horizonte"},{"IdInstitucion":29,"NombreInstitucion":"Instituto T\u00e9cnico Andino"},{"IdInstitucion":31,"NombreInstitucion":"Universidad del Caribe Colombiano"},{"IdInstitucion":33,"NombreInstitucion":"Universidad Nacional de Colombia"}]
+=== FIN ===
+
+
+2026-04-07 15:43:10 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":32,"NombreInstitucion":"Centro Educativo San Miguel"},{"IdInstitucion":30,"NombreInstitucion":"Colegio Nuevo Horizonte"},{"IdInstitucion":29,"NombreInstitucion":"Instituto T\u00e9cnico Andino"},{"IdInstitucion":31,"NombreInstitucion":"Universidad del Caribe Colombiano"},{"IdInstitucion":33,"NombreInstitucion":"Universidad Nacional de Colombia"}]
+=== FIN ===
+
+
+2026-04-07 15:43:20 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "31"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":75,"TipoSede":"caribe Colombiano Central","Ciudad":"Bogota"},{"IdSede":74,"TipoSede":"caribe Colombiano Norte","Ciudad":"Medellin"},{"IdSede":73,"TipoSede":"Sede Principal","Ciudad":"Medellin"}]}
+=== FIN ===
+
+
+2026-04-07 15:43:24 === INICIO ===
+
+2026-04-07 15:43:24 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "73"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":92,"NombreFuncionario":"Anderson Estiben Moreno Pinzon"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "73"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 15:43:27 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "73"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 15:43:31 === INICIO ===
+
+2026-04-07 15:43:31 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "75"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":94,"NombreFuncionario":"Laura Camila Rodr\u00edguez G\u00f3mez"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "75"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 15:43:33 === INICIO ===
+
+2026-04-07 15:43:33 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "74"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":95,"NombreFuncionario":"Diana Marcela Torres L\u00f3pez"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "74"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 15:43:35 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":68,"TipoSede":"Instituto  Andino Sur","Ciudad":"barranquilla"},{"IdSede":69,"TipoSede":"Instituto Andino Norte","Ciudad":"Bogota"},{"IdSede":67,"TipoSede":"Sede Principal","Ciudad":"Bogot\u00e1"}]}
+=== FIN ===
+
+
+2026-04-07 15:43:36 === INICIO ===
+
+2026-04-07 15:43:36 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "68"
+}
+Acción detectada: obtener_visitantes_por_sede
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "68"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+Respuesta final: {"success":true,"funcionarios":[]}
+=== FIN ===
+
+
+2026-04-07 15:43:38 === INICIO ===
+
+2026-04-07 15:43:38 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "69"
+}
+}
+Acción detectada: obtener_funcionarios_por_sede
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+
+
+2026-04-07 15:43:40 === INICIO ===
+
+2026-04-07 15:43:40 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "67"
+}
+Acción detectada: obtener_funcionarios_por_sede
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "67"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":93,"NombreFuncionario":"Andres camilo carrillo"}]}
+=== FIN ===
+
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 15:43:42 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "33"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":79,"TipoSede":"Sede Principal norte","Ciudad":"Bogota toberin"}]}
+=== FIN ===
+
+
+2026-04-07 15:43:44 === INICIO ===
+
+2026-04-07 15:43:44 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "79"
+}
+Acción detectada: obtener_funcionarios_por_sede
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "79"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"funcionarios":[]}
+=== FIN ===
+
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 15:43:46 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "30"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":70,"TipoSede":"Colegio Nuevo Horizonte norte","Ciudad":"Bogot\u00e1"},{"IdSede":71,"TipoSede":"Colegio Nuevo Horizonte Occi","Ciudad":"Bogot\u00e1"},{"IdSede":72,"TipoSede":"Colegio Nuevo Horizonte Sur","Ciudad":"Cundinamarca"}]}
+=== FIN ===
+
+
+2026-04-07 15:43:48 === INICIO ===
+
+2026-04-07 15:43:48 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "71"
+}
+Acción detectada: obtener_funcionarios_por_sede
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "71"
+}
+rio":"Ivon Sofia Palacios"},{"IdFuncionario":97,"NombreFuncionario":"Juan Sebasti\u00e1n P\u00e9rez Castro"}]}
+=== FIN ===
+
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[]}
+=== FIN ===
+
+
+2026-04-07 15:45:03 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":32,"NombreInstitucion":"Centro Educativo San Miguel"},{"IdInstitucion":30,"NombreInstitucion":"Colegio Nuevo Horizonte"},{"IdInstitucion":29,"NombreInstitucion":"Instituto T\u00e9cnico Andino"},{"IdInstitucion":31,"NombreInstitucion":"Universidad del Caribe Colombiano"},{"IdInstitucion":33,"NombreInstitucion":"Universidad Nacional de Colombia"}]
+=== FIN ===
+
+
+2026-04-07 15:45:31 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":77,"TipoSede":"San Miguel Norte","Ciudad":"Bogota"},{"IdSede":78,"TipoSede":"San Miguel Sur","Ciudad":"Norte bogota"},{"IdSede":76,"TipoSede":"Sede Principal","Ciudad":"soacha"}]}
+=== FIN ===
+
+
+2026-04-07 15:45:36 === INICIO ===
+
+2026-04-07 15:45:36 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "77"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[{"IdFuncionario":104,"NombreFuncionario":"Johanna Diaz"},{"IdFuncionario":100,"NombreFuncionario":"valentina"},{"IdFuncionario":105,"NombreFuncionario":"Valentina  Diaz"}]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "77"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[{"IdVisitante":22,"NombreVisitante":"Felipe Carrillo"},{"IdVisitante":24,"NombreVisitante":"felipe carrillo"},{"IdVisitante":25,"NombreVisitante":"Felipe Carrillo"},{"IdVisitante":21,"NombreVisitante":"Valentina Osorio"}]}
+=== FIN ===
+
+
+2026-04-07 15:45:38 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "77"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[{"IdVisitante":22,"NombreVisitante":"Felipe Carrillo"},{"IdVisitante":24,"NombreVisitante":"felipe carrillo"},{"IdVisitante":25,"NombreVisitante":"Felipe Carrillo"},{"IdVisitante":21,"NombreVisitante":"Valentina Osorio"}]}
+=== FIN ===
+
+
+2026-04-07 15:45:59 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":32,"NombreInstitucion":"Centro Educativo San Miguel"},{"IdInstitucion":30,"NombreInstitucion":"Colegio Nuevo Horizonte"},{"IdInstitucion":29,"NombreInstitucion":"Instituto T\u00e9cnico Andino"},{"IdInstitucion":31,"NombreInstitucion":"Universidad del Caribe Colombiano"},{"IdInstitucion":33,"NombreInstitucion":"Universidad Nacional de Colombia"}]
+=== FIN ===
+
+
+2026-04-07 15:46:06 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "32"
+}
+Acción detectada: obtener_sedes_por_institucion
+Respuesta final: {"success":true,"sedes":[{"IdSede":77,"TipoSede":"San Miguel Norte","Ciudad":"Bogota"},{"IdSede":78,"TipoSede":"San Miguel Sur","Ciudad":"Norte bogota"},{"IdSede":76,"TipoSede":"Sede Principal","Ciudad":"soacha"}]}
+=== FIN ===
+
+
+2026-04-07 15:46:09 === INICIO ===
+
+2026-04-07 15:46:09 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_funcionarios_por_sede",
+    "id_sede": "78"
+}
+Acción detectada: obtener_funcionarios_por_sede
+Respuesta final: {"success":true,"funcionarios":[]}
+=== FIN ===
+
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "78"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[{"IdVisitante":23,"NombreVisitante":"Valentina Osorio"}]}
+=== FIN ===
+
+
+2026-04-07 15:46:11 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_visitantes_por_sede",
+    "id_sede": "78"
+}
+Acción detectada: obtener_visitantes_por_sede
+Respuesta final: {"success":true,"visitantes":[{"IdVisitante":23,"NombreVisitante":"Valentina Osorio"}]}
+=== FIN ===
+
+
+2026-04-07 15:46:15 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "assus",
+    "NumeroSerial": "SN48765456784232234",
+    "IdFuncionario": "",
+    "IdVisitante": "23"
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+Respuesta final: {"success":false,"message":"\u26a0\ufe0f El n\u00famero serial 'SN48765456784232234' ya est\u00e1 registrado en otro dispositivo (ID: 59 - Portatil assus)."}
+=== FIN ===
+
+
+2026-04-07 15:46:25 === INICIO ===
+POST recibido:
+{
+    "accion": "registrar",
+    "TipoDispositivo": "Tablet",
+    "MarcaDispositivo": "assus",
+    "NumeroSerial": "SN48764567654322",
+    "IdFuncionario": "",
+    "IdVisitante": "23"
+}
+Acción detectada: registrar
+registrarDispositivo llamado
+=== MODELO: registrarDispositivo ===
+Tipo: Tablet, Marca: assus, Serial: SN48764567654322
+Funcionario: , Visitante: 23
+INSERT exitoso, ID: 61
+Respuesta final: {"success":true,"message":"Dispositivo registrado correctamente con ID: 61","data":{"IdDispositivo":"61","QrDispositivo":"qr\/Qr_Dipo\/QR-DISP-61-69d50ab17818c.png"}}
+=== FIN ===
+
+
+2026-04-07 15:46:26 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":32,"NombreInstitucion":"Centro Educativo San Miguel"},{"IdInstitucion":30,"NombreInstitucion":"Colegio Nuevo Horizonte"},{"IdInstitucion":29,"NombreInstitucion":"Instituto T\u00e9cnico Andino"},{"IdInstitucion":31,"NombreInstitucion":"Universidad del Caribe Colombiano"},{"IdInstitucion":33,"NombreInstitucion":"Universidad Nacional de Colombia"}]
+=== FIN ===
+

@@ -926,3 +926,57 @@ Punto 1: Preparando SQL INSERT
 Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"36","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-36-69d3076020f39.png","FechaRegistro":"2026-04-05 20:07:44"}}
 === FIN ===
 
+
+2026-04-06 14:25:28 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_sedes_por_institucion",
+    "id_institucion": "29"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_sedes_por_institucion
+Respuesta: {"success":true,"sedes":[{"IdSede":68,"TipoSede":"Instituto  Andino Sur","Ciudad":"barranquilla"},{"IdSede":69,"TipoSede":"Instituto Andino Norte","Ciudad":"Bogota"},{"IdSede":67,"TipoSede":"Sede Principal","Ciudad":"Bogotá"}]}
+=== FIN ===
+
+
+2026-04-06 14:25:30 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "68"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 14:25:37 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "accion": "obtener_personas_por_sede",
+    "id_sede": "67"
+}
+✅ Conexión establecida correctamente
+Acción: obtener_personas_por_sede
+Respuesta: {"success":true,"funcionarios":[{"IdFuncionario":93,"NombreFuncionario":"Andres camilo carrillo"}],"visitantes":[]}
+=== FIN ===
+
+
+2026-04-06 14:25:44 === INICIO CONTROLADOR VEHÍCULO ===
+POST recibido: {
+    "TipoVehiculo": "Bicicleta",
+    "PlacaVehiculo": "N-A",
+    "DescripcionVehiculo": "bicicleta morada",
+    "TarjetaPropiedad": "tj32454198765432",
+    "IdInstitucion": "29",
+    "IdSede": "67",
+    "TipoPersona": "Funcionario",
+    "IdFuncionario": "93",
+    "accion": "registrar"
+}
+✅ Conexión establecida correctamente
+Acción: registrar
+Punto 1: Preparando SQL INSERT
+✅ Vehículo insertado ID: 35
+✅ QR actualizado para vehículo ID: 35
+Respuesta: {"success":true,"message":"Vehículo registrado correctamente","data":{"IdVehiculo":"35","QrVehiculo":"qr\/Qr_Vehiculo\/QR-VEHICULO-35-69d408b86e4bc.png","FechaRegistro":"2026-04-06 14:25:44"}}
+=== FIN ===
+
