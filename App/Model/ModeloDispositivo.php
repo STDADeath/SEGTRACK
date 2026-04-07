@@ -86,7 +86,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * Obtiene todos los dispositivos ACTIVOS con nombres (incluyendo institución y sede mediante JOIN)
+     * Obtiene todos los dispositivos ACTIVOS
      */
     public function obtenerTodos(): array {
         try {
@@ -98,14 +98,16 @@ class ModeloDispositivo {
                         f.CorreoFuncionario,
                         v.NombreVisitante,
                         v.CorreoVisitante,
-                        s.TipoSede,
-                        s.Ciudad,
-                        i.NombreInstitucion
+                        COALESCE(s_func.TipoSede, s_vis.TipoSede) AS TipoSede,
+                        COALESCE(s_func.Ciudad, s_vis.Ciudad) AS CiudadSede,
+                        COALESCE(i_func.NombreInstitucion, i_vis.NombreInstitucion) AS NombreInstitucion
                     FROM dispositivo d
-                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
-                    LEFT JOIN sede        s ON COALESCE(f.IdSede, v.IdSede) = s.IdSede
-                    LEFT JOIN institucion i ON s.IdInstitucion = i.IdInstitucion
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario AND f.Estado = 'Activo'
+                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante AND v.Estado = 'Activo'
+                    LEFT JOIN sede s_func ON f.IdSede = s_func.IdSede
+                    LEFT JOIN sede s_vis  ON v.IdSede = s_vis.IdSede
+                    LEFT JOIN institucion i_func ON s_func.IdInstitucion = i_func.IdInstitucion
+                    LEFT JOIN institucion i_vis  ON s_vis.IdInstitucion = i_vis.IdInstitucion
                     WHERE d.Estado = 'Activo'
                     ORDER BY d.IdDispositivo DESC";
                     
@@ -132,15 +134,19 @@ class ModeloDispositivo {
                         f.CorreoFuncionario,
                         v.NombreVisitante,
                         v.CorreoVisitante,
-                        s.TipoSede,
-                        s.Ciudad,
-                        i.NombreInstitucion
+                        COALESCE(s_func.TipoSede, s_vis.TipoSede) AS TipoSede,
+                        COALESCE(s_func.Ciudad, s_vis.Ciudad) AS CiudadSede,
+                        COALESCE(i_func.NombreInstitucion, i_vis.NombreInstitucion) AS NombreInstitucion
                     FROM dispositivo d
-                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
-                    LEFT JOIN sede        s ON COALESCE(f.IdSede, v.IdSede) = s.IdSede
-                    LEFT JOIN institucion i ON s.IdInstitucion = i.IdInstitucion
-                    ORDER BY CASE WHEN d.Estado = 'Activo' THEN 1 ELSE 2 END, d.IdDispositivo DESC";
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario AND f.Estado = 'Activo'
+                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante AND v.Estado = 'Activo'
+                    LEFT JOIN sede s_func ON f.IdSede = s_func.IdSede
+                    LEFT JOIN sede s_vis  ON v.IdSede = s_vis.IdSede
+                    LEFT JOIN institucion i_func ON s_func.IdInstitucion = i_func.IdInstitucion
+                    LEFT JOIN institucion i_vis  ON s_vis.IdInstitucion = i_vis.IdInstitucion
+                    ORDER BY 
+                        CASE WHEN d.Estado = 'Activo' THEN 1 ELSE 2 END,
+                        d.IdDispositivo DESC";
                     
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
@@ -165,37 +171,21 @@ class ModeloDispositivo {
                         f.CorreoFuncionario,
                         v.NombreVisitante,
                         v.CorreoVisitante,
-                        s.TipoSede,
-                        s.Ciudad,
-                        i.NombreInstitucion
+                        COALESCE(s_func.TipoSede, s_vis.TipoSede) AS TipoSede,
+                        COALESCE(s_func.Ciudad, s_vis.Ciudad) AS CiudadSede,
+                        COALESCE(i_func.NombreInstitucion, i_vis.NombreInstitucion) AS NombreInstitucion
                     FROM dispositivo d
-                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario
-                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante
-                    LEFT JOIN sede        s ON COALESCE(f.IdSede, v.IdSede) = s.IdSede
-                    LEFT JOIN institucion i ON s.IdInstitucion = i.IdInstitucion
+                    LEFT JOIN funcionario f ON d.IdFuncionario = f.IdFuncionario AND f.Estado = 'Activo'
+                    LEFT JOIN visitante   v ON d.IdVisitante   = v.IdVisitante AND v.Estado = 'Activo'
+                    LEFT JOIN sede s_func ON f.IdSede = s_func.IdSede
+                    LEFT JOIN sede s_vis  ON v.IdSede = s_vis.IdSede
+                    LEFT JOIN institucion i_func ON s_func.IdInstitucion = i_func.IdInstitucion
+                    LEFT JOIN institucion i_vis  ON s_vis.IdInstitucion = i_vis.IdInstitucion
                     WHERE d.IdDispositivo = :id";
                     
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':id' => $idDispositivo]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-
-        } catch (PDOException $e) {
-            return null;
-        }
-    }
-
-    /**
-     * Obtiene solo la ruta QR de un dispositivo
-     */
-    public function obtenerQR(int $idDispositivo): ?string {
-        try {
-            if (!$this->conexion) return null;
-
-            $sql  = "SELECT QrDispositivo FROM dispositivo WHERE IdDispositivo = :id";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':id' => $idDispositivo]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $resultado['QrDispositivo'] ?? null;
 
         } catch (PDOException $e) {
             return null;
@@ -223,22 +213,12 @@ class ModeloDispositivo {
 
             $stmt = $this->conexion->prepare($sql);
 
-            $idFunc = null;
-            if (isset($datos['IdFuncionario']) && $datos['IdFuncionario'] !== '' && $datos['IdFuncionario'] !== null) {
-                $idFunc = (int)$datos['IdFuncionario'];
-            }
-
-            $idVis = null;
-            if (isset($datos['IdVisitante']) && $datos['IdVisitante'] !== '' && $datos['IdVisitante'] !== null) {
-                $idVis = (int)$datos['IdVisitante'];
-            }
-
             $params = [
                 ':tipo'        => $datos['TipoDispositivo']  ?? null,
                 ':marca'       => $datos['MarcaDispositivo'] ?? null,
                 ':serial'      => !empty($datos['NumeroSerial']) ? $datos['NumeroSerial'] : null,
-                ':funcionario' => $idFunc,
-                ':visitante'   => $idVis,
+                ':funcionario' => $datos['IdFuncionario'] ?? null,
+                ':visitante'   => $datos['IdVisitante'] ?? null,
                 ':id'          => $idDispositivo
             ];
 
@@ -283,7 +263,7 @@ class ModeloDispositivo {
     }
 
     /**
-     * Verifica si existe un número serial (excluyendo ID para edición)
+     * Verifica si existe un número serial
      */
     public function existeNumeroSerial(string $numeroSerial, ?int $excluirId = null): array {
         try {
@@ -322,12 +302,9 @@ class ModeloDispositivo {
     }
 
     // ════════════════════════════════════════════════════════════════
-    // MÉTODOS PARA CASCADA (No guardan en dispositivo, solo para selects)
+    // MÉTODOS PARA CASCADA
     // ════════════════════════════════════════════════════════════════
 
-    /**
-     * Obtiene todas las instituciones activas
-     */
     public function obtenerInstituciones(): array {
         try {
             $sql = "SELECT IdInstitucion, NombreInstitucion 
@@ -342,9 +319,6 @@ class ModeloDispositivo {
         }
     }
 
-    /**
-     * Obtiene sedes por institución
-     */
     public function obtenerSedesPorInstitucion(int $idInstitucion): array {
         try {
             $sql = "SELECT IdSede, TipoSede, Ciudad 
@@ -359,9 +333,6 @@ class ModeloDispositivo {
         }
     }
 
-    /**
-     * Obtiene funcionarios por sede
-     */
     public function obtenerFuncionariosPorSede(int $idSede): array {
         try {
             $sql = "SELECT IdFuncionario, NombreFuncionario 
@@ -376,9 +347,6 @@ class ModeloDispositivo {
         }
     }
 
-    /**
-     * Obtiene visitantes por sede
-     */
     public function obtenerVisitantesPorSede(int $idSede): array {
         try {
             $sql = "SELECT IdVisitante, NombreVisitante 

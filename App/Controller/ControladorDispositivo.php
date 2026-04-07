@@ -83,7 +83,7 @@ try {
         }
 
         // ════════════════════════════════════════════════════════════
-        // MÉTODOS PARA CASCADA (NO guardan en dispositivo)
+        // MÉTODOS PARA CASCADA
         // ════════════════════════════════════════════════════════════
 
         public function obtenerInstituciones(): array {
@@ -118,7 +118,6 @@ try {
             $idFuncionario = $datos['IdFuncionario']       ?? null;
             $idVisitante   = $datos['IdVisitante']         ?? null;
 
-            // Validaciones
             if ($this->campoVacio($tipo))  return ['success' => false, 'message' => 'Falta el campo: Tipo de dispositivo'];
             if ($this->campoVacio($marca)) return ['success' => false, 'message' => 'Falta el campo: Marca del dispositivo'];
             
@@ -126,7 +125,6 @@ try {
                 return ['success' => false, 'message' => 'Debe especificar el tipo de dispositivo'];
             }
 
-            // Validar que se seleccionó funcionario O visitante
             $tieneFuncionario = !$this->campoVacio($idFuncionario);
             $tieneVisitante   = !$this->campoVacio($idVisitante);
             
@@ -145,7 +143,6 @@ try {
                 $idFunc = $tieneFuncionario ? (int)$idFuncionario : null;
                 $idVis  = $tieneVisitante   ? (int)$idVisitante   : null;
 
-                // Verificar serial duplicado
                 if (!empty($numeroSerial)) {
                     $serialExiste = $this->modelo->existeNumeroSerial($numeroSerial);
                     if ($serialExiste['existe']) {
@@ -156,7 +153,6 @@ try {
                     }
                 }
 
-                // Registrar solo con funcionario o visitante
                 $resultado = $this->modelo->registrarDispositivo($tipoFinal, $marca, $numeroSerial, $idFunc, $idVis);
 
                 if ($resultado['success']) {
@@ -196,7 +192,6 @@ try {
                 $idFuncionario = !empty($datos['IdFuncionario']) ? (int)$datos['IdFuncionario'] : null;
                 $idVisitante   = !empty($datos['IdVisitante'])   ? (int)$datos['IdVisitante']   : null;
 
-                // Verificar serial duplicado
                 if (!empty($numeroSerial)) {
                     $serialExiste = $this->modelo->existeNumeroSerial($numeroSerial, $id);
                     if ($serialExiste['existe']) {
@@ -309,7 +304,7 @@ try {
                 $mail->Port       = 587;
                 $mail->CharSet    = 'UTF-8';
 
-                $mail->SMTPDebug   = 2;
+                $mail->SMTPDebug   = 0;
                 $mail->Debugoutput = function($str, $level) {
                     file_put_contents($this->carpetaDebug . '/debug_log.txt',
                         "[SMTP DEBUG nivel $level] $str\n", FILE_APPEND);
@@ -427,7 +422,6 @@ try {
             ? $controlador->enviarQRPorCorreo($id)
             : ['success' => false, 'message' => 'ID de dispositivo no válido'];
 
-    // ── ACCIONES PARA CASCADA ────────────────────────────────────────────
     } elseif ($accion === 'obtener_instituciones') {
         $resultado = $controlador->obtenerInstituciones();
 

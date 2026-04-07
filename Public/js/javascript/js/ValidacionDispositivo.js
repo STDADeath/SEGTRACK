@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // FUNCIONES DE CARGA PARA LA CASCADA
     // ══════════════════════════════════════════════════════════════
 
-    // Cargar instituciones activas
     function cargarInstituciones() {
         const select = document.getElementById('IdInstitucion');
         if (!select) return;
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Cargar sedes por institución
     function cargarSedesPorInstitucion(idInstitucion) {
         const selectSede = document.getElementById('IdSede');
         const selectFunc = document.getElementById('IdFuncionario');
@@ -52,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         selectSede.innerHTML = '<option value="" disabled selected>Cargando sedes...</option>';
         selectSede.disabled = true;
         
-        // Resetear selects dependientes
         if (selectFunc) {
             selectFunc.innerHTML = '<option value="" disabled selected>Primero seleccione una sede...</option>';
             selectFunc.disabled = true;
@@ -93,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Cargar funcionarios por sede
     function cargarFuncionariosPorSede(idSede) {
         const select = document.getElementById('IdFuncionario');
         if (!select) return;
@@ -131,7 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Cargar visitantes por sede
     function cargarVisitantesPorSede(idSede) {
         const select = document.getElementById('IdVisitante');
         if (!select) return;
@@ -188,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
             cargarFuncionariosPorSede(idSede);
             cargarVisitantesPorSede(idSede);
             
-            // Limpiar selecciones cuando cambia la sede
             const tieneVisitante = document.getElementById('TieneVisitante');
             const selectFunc = document.getElementById('IdFuncionario');
             const selectVisit = document.getElementById('IdVisitante');
@@ -201,14 +195,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Cargar instituciones al inicio
     cargarInstituciones();
 
     // ══════════════════════════════════════════════════════════════
     // VALIDACIONES EN TIEMPO REAL
     // ══════════════════════════════════════════════════════════════
 
-    // Validación de número serial
     const inputSerial = document.getElementById('NumeroSerial');
     if (inputSerial) {
         inputSerial.addEventListener('input', function (e) {
@@ -226,19 +218,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.target.classList.add('is-valid');
             }
         });
-
-        inputSerial.addEventListener('focus', function () {
-            if (!document.getElementById('serialHint')) {
-                const hint = document.createElement('small');
-                hint.id = 'serialHint';
-                hint.className = 'text-muted d-block mt-1';
-                hint.innerHTML = '<i class="fas fa-info-circle me-1"></i> Letras, números, guiones (-) y guiones bajos (_). Opcional.';
-                this.parentElement.parentElement.appendChild(hint);
-            }
-        });
     }
 
-    // Mostrar/Ocultar campo "Otro"
     const tipoSelect = document.getElementById('TipoDispositivo');
     const campoOtro = document.getElementById('campoOtro');
     if (tipoSelect && campoOtro) {
@@ -248,7 +229,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Mostrar/Ocultar Funcionario o Visitante
     const tieneVisitanteSelect = document.getElementById('TieneVisitante');
     const funcionarioContainer = document.getElementById('FuncionarioContainer');
     const visitanteContainer = document.getElementById('VisitanteContainer');
@@ -305,7 +285,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const regexTexto = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,-]+$/;
         const regexSerial = /^[a-zA-Z0-9\-_]+$/;
 
-        // Validaciones
         if (!tipo) {
             Swal.fire({ icon: 'error', title: 'Campo requerido', text: 'Debe seleccionar un tipo de dispositivo', confirmButtonColor: '#e74a3b' });
             return;
@@ -333,7 +312,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Validar que se seleccionó institución y sede
         const idInstitucion = document.getElementById('IdInstitucion').value;
         const idSede = document.getElementById('IdSede').value;
 
@@ -348,7 +326,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Validar funcionario o visitante
         if (tieneVisitante === 'no') {
             if (!idFuncionario) {
                 Swal.fire({ icon: 'error', title: 'Funcionario requerido', text: 'Debe seleccionar un funcionario', confirmButtonColor: '#e74a3b' });
@@ -424,10 +401,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function verQRDispositivo(rutaQR, idDispositivo) {
     var rutaCompleta = '/SEGTRACK/Public/' + rutaQR;
-    jQuery('#qrDispositivoId').text(idDispositivo);
-    jQuery('#qrImagenDispositivo').attr('src', rutaCompleta);
-    jQuery('#btnDescargarQRDispositivo').attr('href', rutaCompleta).attr('download', 'QR-Dispositivo-' + idDispositivo + '.png');
-    jQuery('#modalVerQRDispositivo').modal('show');
+    document.getElementById('qrDispositivoId').textContent = idDispositivo;
+    document.getElementById('qrImagenDispositivo').src = rutaCompleta;
+    document.getElementById('btnDescargarQRDispositivo').href = rutaCompleta;
+    document.getElementById('btnDescargarQRDispositivo').download = 'QR-Dispositivo-' + idDispositivo + '.png';
+    $('#modalVerQRDispositivo').modal('show');
 }
 
 function enviarQRPorCorreo(idDispositivo, correoDestinatario) {
@@ -461,7 +439,7 @@ function enviarQRPorCorreo(idDispositivo, correoDestinatario) {
                 showConfirmButton: false
             });
 
-            jQuery.ajax({
+            $.ajax({
                 url: '/SEGTRACK/App/Controller/ControladorDispositivo.php',
                 type: 'POST',
                 data: { accion: 'enviar_qr', id_dispositivo: idDispositivo },
@@ -484,17 +462,20 @@ function enviarQRPorCorreo(idDispositivo, correoDestinatario) {
 }
 
 function cargarDatosEdicionDispositivo(row) {
-    jQuery('#editIdDispositivo').val(row.IdDispositivo);
-    jQuery('#editTipoDispositivo').val(row.TipoDispositivo);
-    jQuery('#editMarcaDispositivo').val(row.MarcaDispositivo);
-    jQuery('#editNumeroSerial').val(row.NumeroSerial || '');
-    jQuery('#editIdFuncionario').val(row.IdFuncionario || '');
-    jQuery('#editIdVisitante').val(row.IdVisitante || '');
-    jQuery('#editNombreFuncionario').val(row.NombreFuncionario || '-');
-    jQuery('#editNombreVisitante').val(row.NombreVisitante || '-');
-    jQuery('#editNombreInstitucion').val(row.NombreInstitucion || 'Sin institución asignada');
-    jQuery('#editTipoSede').val(row.TipoSede || 'Sin sede asignada');
-    jQuery('#modalEditarDispositivo').modal('show');
+    document.getElementById('editIdDispositivo').value = row.IdDispositivo;
+    document.getElementById('editTipoDispositivo').value = row.TipoDispositivo;
+    document.getElementById('editMarcaDispositivo').value = row.MarcaDispositivo;
+    document.getElementById('editNumeroSerial').value = row.NumeroSerial || '';
+    document.getElementById('editIdFuncionario').value = row.IdFuncionario || '';
+    document.getElementById('editIdVisitante').value = row.IdVisitante || '';
+    
+    var nombrePropietario = row.NombreFuncionario || row.NombreVisitante || 'No asignado';
+    var tipoPropietario = row.NombreFuncionario ? 'Funcionario' : (row.NombreVisitante ? 'Visitante' : 'Sin propietario');
+    document.getElementById('editNombrePropietario').value = tipoPropietario + ': ' + nombrePropietario;
+    document.getElementById('editNombreInstitucion').value = row.NombreInstitucion || 'Sin institución asignada';
+    document.getElementById('editTipoSede').value = row.TipoSede || 'Sin sede asignada';
+    
+    $('#modalEditarDispositivo').modal('show');
 }
 
 function confirmarCambioEstadoDispositivo(id, estado) {
@@ -506,10 +487,10 @@ function confirmarCambioEstadoDispositivo(id, estado) {
     var colorHeader = nuevoEstado === 'Activo' ? 'bg-success' : 'bg-warning';
     var icono = nuevoEstado === 'Activo' ? 'fa-lock-open' : 'fa-lock';
 
-    jQuery('#headerCambioEstadoDispositivo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
-    jQuery('#tituloCambioEstadoDispositivo').html('<i class="fas ' + icono + ' mr-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Dispositivo');
-    jQuery('#mensajeCambioEstadoDispositivo').html('¿Está seguro que desea <strong>' + accion + '</strong> este dispositivo?');
-    jQuery('#modalCambiarEstadoDispositivo').modal('show');
+    $('#headerCambioEstadoDispositivo').removeClass('bg-success bg-warning').addClass(colorHeader + ' text-white');
+    $('#tituloCambioEstadoDispositivo').html('<i class="fas ' + icono + ' mr-2"></i>' + accion.charAt(0).toUpperCase() + accion.slice(1) + ' Dispositivo');
+    $('#mensajeCambioEstadoDispositivo').html('¿Está seguro que desea <strong>' + accion + '</strong> este dispositivo?');
+    $('#modalCambiarEstadoDispositivo').modal('show');
 
     setTimeout(function () {
         var toggleLabel = document.getElementById('toggleEstadoVisualDispositivo');
@@ -522,3 +503,105 @@ function confirmarCambioEstadoDispositivo(id, estado) {
         }
     }, 100);
 }
+
+// ══════════════════════════════════════════════════════════════
+// EVENTOS PARA MODALES
+// ══════════════════════════════════════════════════════════════
+
+$(document).ready(function() {
+    // Evento para guardar cambios en edición
+    $(document).on('click', '#btnGuardarCambiosDispositivo', function() {
+        var formData = {
+            accion: 'actualizar',
+            id: $('#editIdDispositivo').val(),
+            tipo: $('#editTipoDispositivo').val(),
+            marca: $('#editMarcaDispositivo').val(),
+            serial: $('#editNumeroSerial').val(),
+            id_funcionario: $('#editIdFuncionario').val() || null,
+            id_visitante: $('#editIdVisitante').val() || null
+        };
+        
+        Swal.fire({ title: 'Guardando...', text: 'Por favor espere', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+        
+        $.ajax({
+            url: '/SEGTRACK/App/Controller/ControladorDispositivo.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({ icon: 'success', title: '¡Éxito!', text: response.message, timer: 2000 }).then(() => location.reload());
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Error', text: response.message });
+                }
+            },
+            error: function() {
+                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo actualizar el dispositivo.' });
+            }
+        });
+    });
+
+    // Evento para confirmar cambio de estado
+    $(document).on('click', '#btnConfirmarCambioEstadoDispositivo', function() {
+        if (!window.dispositivoACambiarEstado) return;
+
+        var nuevoEstado = window.estadoActualDispositivo === 'Activo' ? 'Inactivo' : 'Activo';
+        $('#modalCambiarEstadoDispositivo').modal('hide');
+
+        Swal.fire({ title: 'Procesando...', text: 'Por favor espere', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+        $.ajax({
+            url: '/SEGTRACK/App/Controller/ControladorDispositivo.php',
+            type: 'POST',
+            data: { accion: 'cambiar_estado', id: window.dispositivoACambiarEstado, estado: nuevoEstado },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({ icon: 'success', title: '¡Éxito!', text: response.message, timer: 2000 }).then(() => location.reload());
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Error', text: response.message });
+                }
+            },
+            error: function() {
+                Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo cambiar el estado del dispositivo.' });
+            }
+        });
+    });
+
+    // Carga dinámica de sedes en los filtros
+    $(document).on('change', '#filtroInstitucion', function() {
+        var idInstitucion = $(this).val();
+        var $selectSede = $('#filtroSede');
+        
+        if (!idInstitucion) {
+            location.reload();
+            return;
+        }
+        
+        $selectSede.html('<option value="">Cargando sedes...</option>');
+        
+        $.ajax({
+            url: '/SEGTRACK/App/Controller/ControladorDispositivo.php',
+            type: 'POST',
+            data: {
+                accion: 'obtener_sedes_por_institucion',
+                id_institucion: idInstitucion
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success && response.sedes && response.sedes.length > 0) {
+                    var options = '<option value="">Todas</option>';
+                    $.each(response.sedes, function(index, sede) {
+                        options += '<option value="' + sede.IdSede + '">' + sede.TipoSede + ' — ' + sede.Ciudad + '</option>';
+                    });
+                    $selectSede.html(options);
+                } else {
+                    $selectSede.html('<option value="">No hay sedes disponibles</option>');
+                }
+            },
+            error: function() {
+                $selectSede.html('<option value="">Error al cargar sedes</option>');
+            }
+        });
+    });
+});

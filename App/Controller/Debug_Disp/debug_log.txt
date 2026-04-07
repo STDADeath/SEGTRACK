@@ -4304,3 +4304,76 @@ Acción detectada: obtener_instituciones
 Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
 === FIN ===
 
+
+2026-04-07 07:37:24 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-07 07:37:42 === INICIO ===
+POST recibido:
+{
+    "accion": "actualizar",
+    "id": "67",
+    "tipo": "Portatil",
+    "marca": "lenovo",
+    "serial": "114121s4f4524",
+    "id_funcionario": "",
+    "id_visitante": "27"
+}
+Acción detectada: actualizar
+=== actualizarDispositivo ID: 67 ===
+=== MODELO: actualizar ID: 67 ===
+{"TipoDispositivo":"Portatil","MarcaDispositivo":"lenovo","NumeroSerial":"114121s4f4524","IdFuncionario":null,"IdVisitante":27}
+Respuesta final: {"success":true,"message":"Dispositivo actualizado correctamente","rows":0,"qr":"qr\/Qr_Dipo\/QR-DISP-67-69d49826144bf.png"}
+=== FIN ===
+
+
+2026-04-07 07:38:16 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-07 07:39:06 === INICIO ===
+POST recibido:
+{
+    "accion": "obtener_instituciones"
+}
+Acción detectada: obtener_instituciones
+Respuesta final: [{"IdInstitucion":36,"NombreInstitucion":"Corporaci\u00f3n Universitaria de Asturias"},{"IdInstitucion":34,"NombreInstitucion":"UNICOLOMBIA"},{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
+=== FIN ===
+
+
+2026-04-07 07:39:38 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "67",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
+
+2026-04-07 07:39:55 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "57",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+
