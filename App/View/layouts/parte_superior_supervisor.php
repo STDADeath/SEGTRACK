@@ -1,7 +1,4 @@
 <?php
-// ==============================
-// 🔐 CONTROL DE SESIÓN
-// ==============================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -13,18 +10,12 @@ if (!isset($_SESSION['usuario'])) {
 
 $usuario = $_SESSION['usuario'];
 
-// ==============================
-// 🚫 VALIDAR ESTADO
-// ==============================
 if (!isset($usuario['Estado']) || $usuario['Estado'] !== 'Activo') {
     session_destroy();
     header("Location: ../Login/Login.php?error=inactivo");
     exit();
 }
 
-// ==============================
-// 🔄 VALIDAR ROL
-// ==============================
 if ($usuario['TipoRol'] !== 'Supervisor') {
     switch ($usuario['TipoRol']) {
         case 'Administrador':
@@ -40,18 +31,12 @@ if ($usuario['TipoRol'] !== 'Supervisor') {
     exit();
 }
 
-// ==============================
-// 🌐 BASE URL
-// ==============================
 $baseUrl = rtrim(
     str_replace('\\', '/',
         dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))))
     ), '/'
 );
 
-// ==============================
-// 🖼️ FOTO PERFIL
-// ==============================
 $fotoFallback = $baseUrl . "/Public/img/undraw_profile.svg";
 $fotoPerfil   = $fotoFallback;
 
@@ -78,6 +63,14 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
     <link href="../../../Public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../../../Public/css/graficas.css" rel="stylesheet">
     <link href="../../../Public/css/icono.css" rel="stylesheet">
+    <link href="../../../Public/css/Scaner.css" rel="stylesheet">
+
+    <style>
+        /* Utilidad responsive para botones */
+        @media (min-width: 576px) {
+            .w-sm-auto { width: auto !important; }
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -218,20 +211,24 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
             </div>
         </div>
     </li>
-     <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages">
-                <i class="fas fa-fw fa-folder"></i>
-                <span>Tabla de ingreso</span>
-            </a>
-            <div id="collapsePages" class="collapse" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Escanear QR</h6>
-                    <a class="collapse-item" href="../Supervisor/IngresoSupervisor.php">Ingreso Funcionario</a>
-                    <a class="collapse-item" href="../Supervisor/IngresoDispositivoSupervisor.php">Ingreso Dispositivo</a>
-                    <a class="collapse-item" href="../Supervisor/IngresoParquederoSupervisor.php">Ingreso Parqueadero</a>
-                </div>
+
+    <hr class="sidebar-divider">
+
+    <!-- Módulo: Tabla de ingreso -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Tabla de ingreso</span>
+        </a>
+        <div id="collapsePages" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Escanear QR</h6>
+                <a class="collapse-item" href="../Supervisor/IngresoSUP.php">Ingreso Funcionario</a>
+                <a class="collapse-item" href="../Supervisor/IngresoDispositivoSup.php">Ingreso Dispositivo</a>
+                <a class="collapse-item" href="../Supervisor/IngresoParquederoSup.php">Ingreso Parqueadero</a>
             </div>
-        </li>
+        </div>
+    </li>
 
     <hr class="sidebar-divider d-none d-md-block">
 
@@ -257,7 +254,6 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
             </a>
         </li>
 
-        <!-- Perfil con foto -->
         <li class="nav-item dropdown no-arrow">
 
             <a class="nav-link dropdown-toggle" href="#"
@@ -284,7 +280,6 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
 
-                <!-- Foto grande + nombre en el dropdown -->
                 <div class="text-center" style="padding:16px 12px 12px;">
                     <img src="<?= $fotoPerfil ?>"
                         style="width:72px;height:72px;object-fit:cover;
@@ -314,5 +309,4 @@ if (!empty($usuario['FotoFuncionario']) && $usuario['FotoFuncionario'] !== 'NULL
     </ul>
 </nav>
 
-<!-- 🔥 IMPORTANTE: inicio del contenido de cada página -->
 <div class="container-fluid">

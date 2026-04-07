@@ -1,5 +1,8 @@
 <?php require_once __DIR__ . '/../layouts/parte_superior.php'; ?>
 
+<!-- DataTables Responsive CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+
 <div class="container py-4">
     <div class="card border-0 shadow-lg rounded-4 bg-light">
         <div class="card-body px-3 px-md-4 py-4 py-md-5">
@@ -84,10 +87,10 @@
                     <table id="tablaIngresosDT" class="table table-hover align-middle text-center mb-0 small">
                         <thead class="bg-primary text-white">
                             <tr>
-                                <th class="text-nowrap">Funcionario</th>
-                                <th class="text-nowrap d-none d-md-table-cell">Cargo</th>
-                                <th class="text-nowrap">Movimiento</th>
-                                <th class="text-nowrap">Fecha</th>
+                                <th>Funcionario</th>
+                                <th>Cargo</th>
+                                <th>Movimiento</th>
+                                <th>Fecha</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -103,6 +106,10 @@
 
 <!-- QR Scanner -->
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+<!-- DataTables Responsive JS (va ANTES de tu JS) -->
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/parte_inferior.php'; ?>
 
