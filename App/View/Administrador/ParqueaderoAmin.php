@@ -234,36 +234,36 @@ $sedesConParqueadero = array_column($parqueaderos, 'IdSede');
             <div class="modal-body">
                 <form id="formCrearParqueadero">
 
-                    <!-- Select de Institución -->
+                    <!-- Select de Institución con nuevo estilo -->
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">
-                            Institución <span class="text-danger">*</span>
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-university mr-1 text-primary"></i>Institución <span class="text-danger">*</span>
                         </label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-university"></i></span>
-                            <select class="form-select" id="crearIdInstitucion" required>
-                                <option value="">Seleccione una institución...</option>
-                                <?php foreach ($instituciones as $inst) : ?>
-                                    <option value="<?= $inst['IdInstitucion'] ?>">
-                                        <?= htmlspecialchars($inst['NombreInstitucion']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                        <select class="form-control" id="crearIdInstitucion" required>
+                            <option value="">Seleccione una institución...</option>
+                            <?php foreach ($instituciones as $inst) : ?>
+                                <option value="<?= $inst['IdInstitucion'] ?>">
+                                    <?= htmlspecialchars($inst['NombreInstitucion']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <small class="form-text text-muted">
+                            <i class="fas fa-info-circle"></i> Seleccione la institución propietaria de la sede
+                        </small>
                     </div>
 
-                    <!-- Select de Sede (se llena dinámicamente según institución) -->
+                    <!-- Select de Sede con nuevo estilo (se llena dinámicamente según institución) -->
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">
-                            Sede <span class="text-danger">*</span>
+                        <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                            <i class="fas fa-building mr-1 text-primary"></i>Sede <span class="text-danger">*</span>
                         </label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-building"></i></span>
-                            <select class="form-select" name="IdSede" id="crearIdSede" required disabled>
-                                <option value="">Primero seleccione una institución...</option>
-                            </select>
-                        </div>
+                        <select class="form-control" name="IdSede" id="crearIdSede" required disabled>
+                            <option value="">Primero seleccione una institución...</option>
+                        </select>
                         <div class="invalid-feedback">Debe seleccionar una sede</div>
+                        <small class="form-text text-muted">
+                            <i class="fas fa-info-circle"></i> Seleccione la sede donde se configurará el parqueadero
+                        </small>
                     </div>
 
                     <div class="alert alert-info py-2 mb-3">

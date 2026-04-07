@@ -39,11 +39,13 @@ $sedes = $modelo->obtenerSedesConParqueadero();
                 </div>
             <?php else : ?>
                 <div class="row g-3 align-items-end">
+                    <!-- Select Institución con nuevo estilo -->
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold">Institución</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-university"></i></span>
-                            <select class="form-select" id="selectInstitucion">
+                        <div class="mb-3">
+                            <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                                <i class="fas fa-university mr-1 text-primary"></i>Institución <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-control" id="selectInstitucion" required>
                                 <option value="">-- Seleccione una institución --</option>
                                 <?php foreach ($instituciones as $inst) : ?>
                                     <option value="<?= $inst['IdInstitucion'] ?>">
@@ -51,16 +53,24 @@ $sedes = $modelo->obtenerSedesConParqueadero();
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i> Seleccione la institución a la que pertenece
+                            </small>
                         </div>
                     </div>
                     
+                    <!-- Select Sede con nuevo estilo -->
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold">Sede donde se encuentra</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-building"></i></span>
-                            <select class="form-select" id="selectSede" disabled>
+                        <div class="mb-3">
+                            <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                                <i class="fas fa-building mr-1 text-primary"></i>Sede <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-control" id="selectSede" disabled required>
                                 <option value="">Primero seleccione una institución...</option>
                             </select>
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i> Indique la sede donde se encuentra actualmente
+                            </small>
                         </div>
                     </div>
                     
@@ -131,19 +141,17 @@ $sedes = $modelo->obtenerSedesConParqueadero();
                     Este espacio es para: <strong id="ocuparTipoLabel"></strong>
                 </div>
 
+                <!-- Select Vehículo con nuevo estilo -->
                 <div class="mb-3">
-                    <label class="form-label font-weight-bold">
-                        Seleccione el vehículo <span class="text-danger">*</span>
+                    <label class="form-label font-weight-bold text-gray-700 small text-uppercase">
+                        <i class="fas fa-car mr-1 text-primary"></i>Seleccione el vehículo <span class="text-danger">*</span>
                     </label>
-                    <div class="input-group">
-                        <span class="input-group-text" id="ocuparIconoTipo">
-                            <i class="fas fa-car"></i>
-                        </span>
-                        <select class="form-control" id="selectVehiculo">
-                            <option value="">-- Cargando vehículos... --</option>
-                        </select>
-                    </div>
-                    <small class="text-muted mt-1 d-block" id="ocuparSelectInfo"></small>
+                    <select class="form-control" id="selectVehiculo">
+                        <option value="">-- Cargando vehículos... --</option>
+                    </select>
+                    <small class="form-text text-muted" id="ocuparSelectInfo">
+                        <i class="fas fa-info-circle"></i> Seleccione el vehículo que ocupará este espacio
+                    </small>
                 </div>
 
                 <div id="ocuparDetalleVehiculo" class="card border-info" style="display:none;">

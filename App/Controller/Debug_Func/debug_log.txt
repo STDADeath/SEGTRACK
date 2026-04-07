@@ -568,3 +568,7 @@
 2026-04-07 12:40:28 - Correo enviado correctamente a maria.betancur@email.com
 2026-04-07 13:55:03 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-209-69d4f0976bcc0.png
 2026-04-07 13:55:05 - Correo enviado correctamente a carlos.mendez@seguridad.gov.co
+2026-04-07 16:31:58 - Foto guardada (archivo): C:\xampp\htdocs\SEGTRACK/Public/qr/Fotos/FOTO-FUNC-210-69d5155e7df70.jpg
+2026-04-07 16:31:58 - Foto guardada para funcionario 210: qr/Fotos/FOTO-FUNC-210-69d5155e7df70.jpg
+2026-04-07 16:31:58 - QR generado exitosamente: C:\xampp\htdocs\SEGTRACK/Public/qr/Qr_Func/QR-FUNC-210-69d5155e7efcb.png
+2026-04-07 16:32:01 - Correo enviado correctamente a deahtpala8090@gmail.com

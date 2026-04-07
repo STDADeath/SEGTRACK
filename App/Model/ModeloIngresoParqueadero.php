@@ -32,22 +32,16 @@ class ModeloIngresoParqueadero {
         $this->log("=== QR TEXTO:   " . $qrCodigo);
 
         $qrNormalizado = trim(str_replace("\r", "", $qrCodigo));
-        $this->log("=== QR NORMALIZADO: " . $qrNormalizado);
 
-        // Extraer placa del QR
-        $placa = null;
-        
-        if (preg_match('/Placa:\s*(.+)/i', $qrNormalizado, $match)) {
-            $placa = strtoupper(trim($match[1]));
-        } else {
-            // Si no tiene formato "Placa:", asumimos que el QR es directamente la placa
-            $placa = strtoupper($qrNormalizado);
+        $idVehiculo = null;
+        if (preg_match('/IdVehiculo:\s*(\d+)/i', $qrNormalizado, $match)) {
+            $idVehiculo = intval($match[1]);
         }
 
-        $this->log("=== PLACA EXTRAÍDA: " . $placa);
+        $this->log("=== ID EXTRAÍDO: " . $idVehiculo);
 
-        if (!$placa) {
-            $this->log("ERROR: No se pudo extraer placa del QR");
+        if (!$idVehiculo || $idVehiculo <= 0) {
+            $this->log("ERROR: ID inválido del QR");
             return ['encontrado' => false, 'inactivo' => false];
         }
 
@@ -55,22 +49,22 @@ class ModeloIngresoParqueadero {
         $stmtExiste = $this->pdo->prepare(
             "SELECT IdVehiculo, Estado, PlacaVehiculo, TipoVehiculo 
              FROM vehiculo 
-             WHERE PlacaVehiculo = ? 
+             WHERE IdVehiculo = ? 
              LIMIT 1"
         );
-        $stmtExiste->execute([$placa]);
+        $stmtExiste->execute([$idVehiculo]);
         $existe = $stmtExiste->fetch(PDO::FETCH_ASSOC);
 
-        $this->log("Resultado BD por placa: " . json_encode($existe));
+        $this->log("Resultado BD por ID: " . json_encode($existe));
 
         if (!$existe) {
-            $this->log("Vehículo con placa $placa no existe en BD");
+            $this->log("Vehículo con ID $idVehiculo no existe en BD");
             return ['encontrado' => false, 'inactivo' => false];
         }
 
         // Verificar si está inactivo
         if ($existe['Estado'] !== 'Activo') {
-            $this->log("Vehículo con placa $placa está INACTIVO");
+            $this->log("Vehículo con ID $idVehiculo está INACTIVO");
             return ['encontrado' => true, 'inactivo' => true, 'datos' => $existe];
         }
 
@@ -95,12 +89,12 @@ class ModeloIngresoParqueadero {
                 LEFT JOIN visitante vis ON v.IdVisitante = vis.IdVisitante
                 LEFT JOIN espacio_parqueadero ep
                        ON ep.IdVehiculo = v.IdVehiculo AND ep.Estado = 'Ocupado'
-                WHERE v.PlacaVehiculo = ?
+                WHERE v.IdVehiculo = ?
                   AND v.Estado = 'Activo'
                 LIMIT 1";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$placa]);
+        $stmt->execute([$idVehiculo]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row) {
@@ -171,4 +165,4 @@ class ModeloIngresoParqueadero {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-?>
+?>  

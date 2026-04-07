@@ -45,11 +45,12 @@ try {
                 $nombreArchivo = "QR-VEHICULO-" . $idVehiculo . "-" . uniqid() . ".png";
                 $rutaCompleta  = $rutaCarpeta . '/' . $nombreArchivo;
 
-                $contenidoQR  = "VEHÍCULO\n";
-                $contenidoQR .= "Placa: $placa\n";
-                $contenidoQR .= "Tipo: $tipo\n";
-                $contenidoQR .= "Descripción: $descripcion\n";
-                $contenidoQR .= "Fecha: " . date('Y-m-d H:i:s');
+              $contenidoQR  = "IdVehiculo: $idVehiculo\n";
+$contenidoQR .= "VEHÍCULO\n";
+$contenidoQR .= "Placa: $placa\n";
+$contenidoQR .= "Tipo: $tipo\n";
+$contenidoQR .= "Descripción: $descripcion\n";
+$contenidoQR .= "Fecha: " . date('Y-m-d H:i:s');
 
                 QRcode::png($contenidoQR, $rutaCompleta, QR_ECLEVEL_H, 8);
 
