@@ -9,6 +9,8 @@ const App = {
     mensajeExito: null,
     mensajeError: null,
     _timerCard: null,
+    _timerCamara: null,
+    _timerCountdown: null,
 
     config: {
         urlControlador: "/SEGTRACK/App/Controller/ControladorIngreso.php",
@@ -17,7 +19,8 @@ const App = {
         fps: 10,
         qrboxSize: 250,
         bloqueoQRms: 1500,
-        tiempoCard: 7000
+        tiempoCard: 7000,
+        tiempoCamara: 5000
     }
 };
 
@@ -43,12 +46,11 @@ function mostrarMensaje(esExito, texto) {
 
 
 // ========================================
-// ALERTA ESPECIAL FUNCIONARIO INACTIVO
+// ALERTA FUNCIONARIO INACTIVO
 // ========================================
 
 function mostrarAlertaInactivo() {
 
-    // Si SweetAlert2 está disponible usarlo, si no caer a alert nativo
     if (typeof Swal !== 'undefined') {
         Swal.fire({
             icon: 'warning',
@@ -63,8 +65,55 @@ function mostrarAlertaInactivo() {
         alert('⛔ Funcionario inactivo. No tiene permiso de acceso.');
     }
 
-    // También mostrar en el banner de error de la página
     mostrarMensaje(false, '⛔ Funcionario inactivo. No tiene permiso de acceso.');
+}
+
+
+// ========================================
+// ALERTA SIN ENTRADA PREVIA
+// ========================================
+
+function mostrarAlertaSinEntrada() {
+
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Salida no permitida',
+            text: 'Este funcionario no tiene una entrada activa. Debe ingresar primero.',
+            confirmButtonColor: '#f6c23e',
+            confirmButtonText: 'Entendido',
+            timer: 5000,
+            timerProgressBar: true
+        });
+    } else {
+        alert('⚠️ El funcionario debe registrar una Entrada antes de salir.');
+    }
+
+    mostrarMensaje(false, '⚠️ Debe registrar una Entrada antes de poder registrar una Salida.');
+}
+
+
+// ========================================
+// ALERTA ENTRADA DUPLICADA
+// ========================================
+
+function mostrarAlertaEntradaDuplicada() {
+
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'info',
+            title: 'Entrada duplicada',
+            text: 'Este funcionario ya tiene una entrada activa. Debe registrar una Salida primero.',
+            confirmButtonColor: '#36b9cc',
+            confirmButtonText: 'Entendido',
+            timer: 5000,
+            timerProgressBar: true
+        });
+    } else {
+        alert('ℹ️ El funcionario ya tiene una Entrada activa. Registre una Salida primero.');
+    }
+
+    mostrarMensaje(false, 'ℹ️ El funcionario ya tiene una Entrada activa. Registre una Salida primero.');
 }
 
 
@@ -135,9 +184,18 @@ async function enviarQr(qr, tipo) {
 
         const data = await res.json();
 
-        // Caso especial: funcionario inactivo
         if (!data.success && data.codigo === 'inactivo') {
             mostrarAlertaInactivo();
+            return;
+        }
+
+        if (!data.success && data.codigo === 'sin_entrada_previa') {
+            mostrarAlertaSinEntrada();
+            return;
+        }
+
+        if (!data.success && data.codigo === 'entrada_duplicada') {
+            mostrarAlertaEntradaDuplicada();
             return;
         }
 
@@ -200,6 +258,47 @@ function actualizarBoton(camaraActiva) {
 
 
 // ========================================
+// COUNTDOWN VISUAL EN EL BOTÓN
+// ========================================
+
+function iniciarCountdown(segundos) {
+
+    limpiarCountdown();
+
+    let restantes = segundos;
+
+    // Actualizar el botón inmediatamente con el primer valor
+    if (App.btnCapturar) {
+        App.btnCapturar.innerHTML =
+            `<i class="fas fa-times me-2"></i>Cancelar Cámara (${restantes}s)`;
+    }
+
+    App._timerCountdown = setInterval(() => {
+        restantes--;
+
+        if (restantes <= 0) {
+            limpiarCountdown();
+            detenerCamara();
+            return;
+        }
+
+        if (App.btnCapturar) {
+            App.btnCapturar.innerHTML =
+                `<i class="fas fa-times me-2"></i>Cancelar Cámara (${restantes}s)`;
+        }
+
+    }, 1000);
+}
+
+function limpiarCountdown() {
+    if (App._timerCountdown) {
+        clearInterval(App._timerCountdown);
+        App._timerCountdown = null;
+    }
+}
+
+
+// ========================================
 // INICIAR CÁMARA
 // ========================================
 
@@ -245,6 +344,7 @@ async function iniciarCamara() {
         );
 
         actualizarBoton(true);
+        iniciarCountdown(20);
 
     } catch (error) {
 
@@ -261,6 +361,7 @@ async function iniciarCamara() {
             );
 
             actualizarBoton(true);
+            iniciarCountdown(5);
 
         } catch (error2) {
 
@@ -278,6 +379,8 @@ async function iniciarCamara() {
 // ========================================
 
 async function detenerCamara() {
+
+    limpiarCountdown();
 
     if (!App.qrReader) return;
 

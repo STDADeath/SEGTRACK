@@ -36,11 +36,39 @@ class ControladorIngreso {
 
         // Funcionario existe pero está inactivo
         if ($resultado['inactivo']) {
-            return $this->responder(false, 'Funcionario inactivo. No tiene permiso de acceso.', null, 'inactivo');
+            return $this->responder(
+                false,
+                'Funcionario inactivo. No tiene permiso de acceso.',
+                null,
+                'inactivo'
+            );
         }
 
-        // Funcionario activo — registrar movimiento
+        // Funcionario activo — validar lógica de movimiento
         $funcionario = $resultado;
+        $ultimoMov   = $this->modelo->obtenerUltimoMovimiento($funcionario['IdFuncionario']);
+
+        if ($tipoMovimiento === 'Salida') {
+            if ($ultimoMov !== 'Entrada') {
+                return $this->responder(
+                    false,
+                    'El funcionario debe registrar una Entrada antes de poder registrar una Salida.',
+                    null,
+                    'sin_entrada_previa'
+                );
+            }
+        }
+
+        if ($tipoMovimiento === 'Entrada') {
+            if ($ultimoMov === 'Entrada') {
+                return $this->responder(
+                    false,
+                    'El funcionario ya tiene una Entrada activa. Debe registrar una Salida primero.',
+                    null,
+                    'entrada_duplicada'
+                );
+            }
+        }
 
         $exito = $this->modelo->registrarIngreso(
             $funcionario['IdFuncionario'],
@@ -76,7 +104,7 @@ class ControladorIngreso {
         echo json_encode([
             'success' => $success,
             'message' => $message,
-            'codigo'  => $codigo,   // para que el JS pueda distinguir el tipo de error
+            'codigo'  => $codigo,
             'data'    => $data
         ], JSON_UNESCAPED_UNICODE);
 

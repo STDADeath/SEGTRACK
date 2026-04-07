@@ -1,0 +1,106 @@
+2026-04-07 15:20:25 - === QR RAW HEX: 53657269616c3a20534e3132333435363738390a5469706f3a20506f72746174696c0a4d617263613a204850
+2026-04-07 15:20:25 - === QR TEXTO:   Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:20:25 - === QR NORMALIZADO: Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:20:25 - === SERIAL EXTRAÍDO: SN123456789
+2026-04-07 15:20:25 - Resultado BD por serial: {"IdDispositivo":68,"Estado":"Activo","TipoDispositivo":"Portatil","MarcaDispositivo":"HP","NumeroSerial":"SN123456789"}
+2026-04-07 15:20:25 - Dispositivo encontrado y activo: SN123456789
+2026-04-07 15:20:32 - === QR RAW HEX: 53657269616c3a20534e3132333435363738390a5469706f3a20506f72746174696c0a4d617263613a204850
+2026-04-07 15:20:32 - === QR TEXTO:   Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:20:32 - === QR NORMALIZADO: Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:20:32 - === SERIAL EXTRAÍDO: SN123456789
+2026-04-07 15:20:32 - Resultado BD por serial: {"IdDispositivo":68,"Estado":"Activo","TipoDispositivo":"Portatil","MarcaDispositivo":"HP","NumeroSerial":"SN123456789"}
+2026-04-07 15:20:32 - Dispositivo encontrado y activo: SN123456789
+2026-04-07 15:20:40 - === QR RAW HEX: 53657269616c3a20534e3132333435363738390a5469706f3a20506f72746174696c0a4d617263613a204850
+2026-04-07 15:20:40 - === QR TEXTO:   Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:20:40 - === QR NORMALIZADO: Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:20:40 - === SERIAL EXTRAÍDO: SN123456789
+2026-04-07 15:20:40 - Resultado BD por serial: {"IdDispositivo":68,"Estado":"Activo","TipoDispositivo":"Portatil","MarcaDispositivo":"HP","NumeroSerial":"SN123456789"}
+2026-04-07 15:20:40 - Dispositivo encontrado y activo: SN123456789
+2026-04-07 15:20:50 - === QR RAW HEX: 53657269616c3a20534e3132333435363738390a5469706f3a20506f72746174696c0a4d617263613a204850
+2026-04-07 15:20:50 - === QR TEXTO:   Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:20:50 - === QR NORMALIZADO: Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:20:50 - === SERIAL EXTRAÍDO: SN123456789
+2026-04-07 15:20:50 - Resultado BD por serial: {"IdDispositivo":68,"Estado":"Activo","TipoDispositivo":"Portatil","MarcaDispositivo":"HP","NumeroSerial":"SN123456789"}
+2026-04-07 15:20:50 - Dispositivo encontrado y activo: SN123456789
+2026-04-07 15:32:58 - === QR RAW HEX: 53657269616c3a20534e3132333435363738390a5469706f3a20506f72746174696c0a4d617263613a204850
+2026-04-07 15:32:58 - === QR TEXTO:   Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:32:58 - === QR NORMALIZADO: Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:32:58 - === SERIAL EXTRAÍDO: SN123456789
+2026-04-07 15:32:58 - Resultado BD por serial: {"IdDispositivo":68,"Estado":"Activo","TipoDispositivo":"Portatil","MarcaDispositivo":"HP","NumeroSerial":"SN123456789"}
+2026-04-07 15:32:58 - Dispositivo encontrado y activo: SN123456789
+2026-04-07 15:33:11 - === QR RAW HEX: 53657269616c3a20534e3132333435363738390a5469706f3a20506f72746174696c0a4d617263613a204850
+2026-04-07 15:33:11 - === QR TEXTO:   Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:33:11 - === QR NORMALIZADO: Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:33:11 - === SERIAL EXTRAÍDO: SN123456789
+2026-04-07 15:33:11 - Resultado BD por serial: {"IdDispositivo":68,"Estado":"Activo","TipoDispositivo":"Portatil","MarcaDispositivo":"HP","NumeroSerial":"SN123456789"}
+2026-04-07 15:33:11 - Dispositivo encontrado y activo: SN123456789
+2026-04-07 15:33:21 - === QR RAW HEX: 53657269616c3a20534e3132333435363738390a5469706f3a20506f72746174696c0a4d617263613a204850
+2026-04-07 15:33:21 - === QR TEXTO:   Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:33:21 - === QR NORMALIZADO: Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:33:21 - === SERIAL EXTRAÍDO: SN123456789
+2026-04-07 15:33:21 - Resultado BD por serial: {"IdDispositivo":68,"Estado":"Activo","TipoDispositivo":"Portatil","MarcaDispositivo":"HP","NumeroSerial":"SN123456789"}
+2026-04-07 15:33:21 - Dispositivo encontrado y activo: SN123456789
+2026-04-07 15:33:32 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 15:33:32 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:33:32 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:33:32 - === SERIAL EXTRAÍDO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:33:32 - Resultado BD por serial: false
+2026-04-07 15:33:32 - Dispositivo con serial ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo no existe en BD
+2026-04-07 15:33:36 - === QR RAW HEX: 53657269616c3a20534e3132333435363738390a5469706f3a20506f72746174696c0a4d617263613a204850
+2026-04-07 15:33:36 - === QR TEXTO:   Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:33:36 - === QR NORMALIZADO: Serial: SN123456789
+Tipo: Portatil
+Marca: HP
+2026-04-07 15:33:36 - === SERIAL EXTRAÍDO: SN123456789
+2026-04-07 15:33:36 - Resultado BD por serial: {"IdDispositivo":68,"Estado":"Activo","TipoDispositivo":"Portatil","MarcaDispositivo":"HP","NumeroSerial":"SN123456789"}
+2026-04-07 15:33:36 - Dispositivo encontrado y activo: SN123456789

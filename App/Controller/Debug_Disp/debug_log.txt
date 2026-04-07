@@ -4931,3 +4931,15 @@ Acción detectada: obtener_instituciones
 Respuesta final: [{"IdInstitucion":35,"NombreInstitucion":"Universidad EAFIT"}]
 === FIN ===
 
+
+2026-04-07 15:38:31 === INICIO ===
+POST recibido:
+{
+    "accion": "cambiar_estado",
+    "id": "75",
+    "estado": "Inactivo"
+}
+Acción detectada: cambiar_estado
+Respuesta final: {"success":true,"message":"Dispositivo desactivado correctamente","nuevoEstado":"Inactivo"}
+=== FIN ===
+

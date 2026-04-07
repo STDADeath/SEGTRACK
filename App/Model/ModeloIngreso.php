@@ -25,16 +25,14 @@ class ModeloIngreso {
 
     public function buscarFuncionarioPorQr($qrCodigo) {
 
-        // ── LOG: ver exactamente qué llega del escáner ──────────
         $this->log("=== QR RAW HEX: " . bin2hex($qrCodigo));
         $this->log("=== QR TEXTO:   " . $qrCodigo);
 
-        // Normalizar: quitar \r, espacios sobrantes
         $qrNormalizado = trim(str_replace("\r", "", $qrCodigo));
 
         $this->log("=== QR NORMALIZADO: " . $qrNormalizado);
 
-        // ── CASO 1: QR contiene texto con "ID: 12" ───────────────
+        // CASO 1: QR contiene texto con "ID: 12"
         if (preg_match('/ID:\s*(\d+)/i', $qrNormalizado, $match)) {
 
             $id = (int)$match[1];
@@ -77,7 +75,7 @@ class ModeloIngreso {
             return ['encontrado' => false, 'inactivo' => false];
         }
 
-        // ── CASO 2: QR es un código simple sin "ID: X" ──────────
+        // CASO 2: QR es un código simple sin "ID: X"
         $this->log("No se encontró patrón ID: en el QR, intentando búsqueda directa");
 
         $stmtExiste = $this->pdo->prepare(
@@ -107,12 +105,24 @@ class ModeloIngreso {
             : ['encontrado' => false, 'inactivo' => false];
     }
 
+    public function obtenerUltimoMovimiento($idFuncionario) {
+        $stmt = $this->pdo->prepare(
+            "SELECT TipoMovimiento FROM ingreso
+             WHERE IdFuncionario = ?
+             ORDER BY IdIngreso DESC
+             LIMIT 1"
+        );
+        $stmt->execute([$idFuncionario]);
+        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $fila ? $fila['TipoMovimiento'] : null;
+    }
+
     public function registrarIngreso($idFuncionario, $idSede, $tipoMovimiento = 'Entrada') {
 
-        $sql  = "INSERT INTO ingreso
-                     (TipoMovimiento, FechaIngreso, Estado, IdSede, IdFuncionario, IdVehiculo, IdParqueadero)
-                 VALUES
-                     (?, NOW(), 'Activo', ?, ?, NULL, NULL)";
+        $sql = "INSERT INTO ingreso
+                    (TipoMovimiento, FechaIngreso, Estado, IdSede, IdFuncionario, IdVehiculo, IdParqueadero)
+                VALUES
+                    (?, NOW(), 'Activo', ?, ?, NULL, NULL)";
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -125,16 +135,16 @@ class ModeloIngreso {
 
     public function listarIngresos() {
 
-        $sql  = "SELECT
-                     i.IdIngreso,
-                     i.TipoMovimiento,
-                     i.FechaIngreso,
-                     f.NombreFuncionario,
-                     f.CargoFuncionario
-                 FROM ingreso i
-                 INNER JOIN funcionario f ON i.IdFuncionario = f.IdFuncionario
-                 WHERE i.IdFuncionario IS NOT NULL
-                 ORDER BY i.IdIngreso DESC";
+        $sql = "SELECT
+                    i.IdIngreso,
+                    i.TipoMovimiento,
+                    i.FechaIngreso,
+                    f.NombreFuncionario,
+                    f.CargoFuncionario
+                FROM ingreso i
+                INNER JOIN funcionario f ON i.IdFuncionario = f.IdFuncionario
+                WHERE i.IdFuncionario IS NOT NULL
+                ORDER BY i.IdIngreso DESC";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();

@@ -1,43 +1,98 @@
 <?php
 
 class ModeloIngresoParqueadero {
-
     private $pdo;
+    private $logPath;
 
     public function __construct() {
         require_once __DIR__ . '/../Core/conexion.php';
         $conexionObj = new Conexion();
         $this->pdo   = $conexionObj->getConexion();
+        $this->logPath = __DIR__ . '/../Controller/Debug_Parqueadero/qr_debug.txt';
 
         if (!$this->pdo) {
-            die("ERROR: La conexión no se inicializó correctamente.");
+            die(json_encode(['success' => false, 'message' => 'Conexión fallida']));
         }
+    }
+
+    private function log($msg) {
+        $dir = dirname($this->logPath);
+        if (!is_dir($dir)) mkdir($dir, 0777, true);
+        
+        file_put_contents(
+            $this->logPath,
+            date('Y-m-d H:i:s') . " - $msg\n",
+            FILE_APPEND
+        );
     }
 
     public function buscarVehiculoPorQr($qrCodigo) {
 
-        if (preg_match('/Placa:\s*(.+)/i', $qrCodigo, $match)) {
+        $this->log("=== QR RAW HEX: " . bin2hex($qrCodigo));
+        $this->log("=== QR TEXTO:   " . $qrCodigo);
+
+        $qrNormalizado = trim(str_replace("\r", "", $qrCodigo));
+        $this->log("=== QR NORMALIZADO: " . $qrNormalizado);
+
+        // Extraer placa del QR
+        $placa = null;
+        
+        if (preg_match('/Placa:\s*(.+)/i', $qrNormalizado, $match)) {
             $placa = strtoupper(trim($match[1]));
         } else {
-            return false;
+            // Si no tiene formato "Placa:", asumimos que el QR es directamente la placa
+            $placa = strtoupper($qrNormalizado);
         }
 
+        $this->log("=== PLACA EXTRAÍDA: " . $placa);
+
+        if (!$placa) {
+            $this->log("ERROR: No se pudo extraer placa del QR");
+            return ['encontrado' => false, 'inactivo' => false];
+        }
+
+        // PRIMERO: Verificar si el vehículo existe y su estado
+        $stmtExiste = $this->pdo->prepare(
+            "SELECT IdVehiculo, Estado, PlacaVehiculo, TipoVehiculo 
+             FROM vehiculo 
+             WHERE PlacaVehiculo = ? 
+             LIMIT 1"
+        );
+        $stmtExiste->execute([$placa]);
+        $existe = $stmtExiste->fetch(PDO::FETCH_ASSOC);
+
+        $this->log("Resultado BD por placa: " . json_encode($existe));
+
+        if (!$existe) {
+            $this->log("Vehículo con placa $placa no existe en BD");
+            return ['encontrado' => false, 'inactivo' => false];
+        }
+
+        // Verificar si está inactivo
+        if ($existe['Estado'] !== 'Activo') {
+            $this->log("Vehículo con placa $placa está INACTIVO");
+            return ['encontrado' => true, 'inactivo' => true, 'datos' => $existe];
+        }
+
+        // Vehículo activo - obtener todos los datos
         $sql = "SELECT
                     v.IdVehiculo,
                     v.TipoVehiculo,
                     v.PlacaVehiculo,
                     v.DescripcionVehiculo,
                     v.IdSede,
-                    COALESCE(f.NombreFuncionario, vis.NombreVisitante, v.TarjetaPropiedad) AS DuenoVehiculo,
-                    f.IdFuncionario  AS IdFuncionarioReal,
+                    v.Estado,
+                    COALESCE(f.NombreFuncionario, vis.NombreVisitante, v.TarjetaPropiedad, 'No registrado') AS DuenoVehiculo,
+                    f.IdFuncionario AS IdFuncionarioReal,
                     f.FotoFuncionario,
+                    f.Estado AS EstadoFuncionario,
                     (SELECT p.IdParqueadero FROM parqueadero p
                      WHERE p.IdSede = v.IdSede AND p.Estado = 'Activo'
                      LIMIT 1) AS IdParqueadero,
                     ep.NumeroEspacio
                 FROM vehiculo v
-                LEFT JOIN funcionario f   ON v.IdFuncionario = f.IdFuncionario
-                LEFT JOIN visitante   vis ON v.IdVisitante   = vis.IdVisitante
+                LEFT JOIN funcionario f ON v.IdFuncionario = f.IdFuncionario
+                LEFT JOIN visitante vis ON v.IdVisitante = vis.IdVisitante
                 LEFT JOIN espacio_parqueadero ep
                        ON ep.IdVehiculo = v.IdVehiculo AND ep.Estado = 'Ocupado'
                 WHERE v.PlacaVehiculo = ?
@@ -46,14 +101,33 @@ class ModeloIngresoParqueadero {
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$placa]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $this->log("Vehículo encontrado y activo: " . $row['PlacaVehiculo']);
+            return array_merge($row, ['encontrado' => true, 'inactivo' => false]);
+        }
+
+        return ['encontrado' => false, 'inactivo' => false];
+    }
+
+    public function obtenerUltimoMovimientoVehiculo($idVehiculo) {
+        $stmt = $this->pdo->prepare(
+            "SELECT TipoMovimiento FROM ingreso
+             WHERE IdVehiculo = ?
+             ORDER BY IdIngreso DESC
+             LIMIT 1"
+        );
+        $stmt->execute([$idVehiculo]);
+        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $fila ? $fila['TipoMovimiento'] : null;
     }
 
     public function registrarIngreso(
         $idVehiculo,
-        $idFuncionario  = null,
-        $idSede         = null,
-        $idParqueadero  = null,
+        $idFuncionario = null,
+        $idSede = null,
+        $idParqueadero = null,
         $tipoMovimiento = 'Entrada'
     ) {
         $sql = "INSERT INTO ingreso
@@ -79,16 +153,16 @@ class ModeloIngresoParqueadero {
                     v.PlacaVehiculo,
                     v.TipoVehiculo,
                     v.DescripcionVehiculo,
-                    COALESCE(f.NombreFuncionario, vis.NombreVisitante, v.TarjetaPropiedad) AS DuenoVehiculo,
+                    COALESCE(f.NombreFuncionario, vis.NombreVisitante, v.TarjetaPropiedad, 'No registrado') AS DuenoVehiculo,
                     ep.NumeroEspacio,
                     i.TipoMovimiento,
                     i.FechaIngreso
                 FROM ingreso i
-                INNER JOIN vehiculo      v   ON i.IdVehiculo    = v.IdVehiculo
-                LEFT  JOIN funcionario   f   ON v.IdFuncionario = f.IdFuncionario
-                LEFT  JOIN visitante     vis ON v.IdVisitante   = vis.IdVisitante
-                LEFT  JOIN espacio_parqueadero ep
-                        ON ep.IdVehiculo = v.IdVehiculo AND ep.Estado = 'Ocupado'
+                INNER JOIN vehiculo v ON i.IdVehiculo = v.IdVehiculo
+                LEFT JOIN funcionario f ON v.IdFuncionario = f.IdFuncionario
+                LEFT JOIN visitante vis ON v.IdVisitante = vis.IdVisitante
+                LEFT JOIN espacio_parqueadero ep
+                       ON ep.IdVehiculo = v.IdVehiculo AND ep.Estado = 'Ocupado'
                 WHERE i.IdVehiculo IS NOT NULL
                 ORDER BY i.IdIngreso DESC";
 

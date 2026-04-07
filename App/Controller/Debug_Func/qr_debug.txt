@@ -3911,3 +3911,259 @@ Estado: Activo
 2026-04-07 14:09:21 - ID extraído del QR: 106
 2026-04-07 14:09:21 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
 2026-04-07 14:09:21 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:57:25 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:57:25 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:57:25 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:57:25 - ID extraído del QR: 106
+2026-04-07 14:57:25 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:57:25 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:57:40 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:57:40 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:57:40 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:57:40 - ID extraído del QR: 106
+2026-04-07 14:57:40 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:57:40 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:57:59 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:57:59 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:57:59 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:57:59 - ID extraído del QR: 106
+2026-04-07 14:57:59 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:57:59 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:58:07 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:58:07 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:58:07 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:58:07 - ID extraído del QR: 106
+2026-04-07 14:58:07 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:58:07 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:58:36 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:58:36 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:58:36 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:58:37 - ID extraído del QR: 106
+2026-04-07 14:58:37 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:58:37 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:58:43 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:58:43 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:58:43 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:58:43 - ID extraído del QR: 106
+2026-04-07 14:58:43 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:58:43 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:58:51 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:58:51 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:58:51 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:58:51 - ID extraído del QR: 106
+2026-04-07 14:58:51 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:58:51 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:59:03 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:59:03 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:59:03 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:59:03 - ID extraído del QR: 106
+2026-04-07 14:59:03 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:59:03 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:59:14 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:59:14 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:59:14 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:59:14 - ID extraído del QR: 106
+2026-04-07 14:59:14 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:59:14 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 14:59:19 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 14:59:19 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:59:19 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 14:59:19 - ID extraído del QR: 106
+2026-04-07 14:59:19 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 14:59:19 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 15:31:16 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 15:31:16 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:31:16 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:31:16 - ID extraído del QR: 106
+2026-04-07 15:31:16 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 15:31:16 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 15:31:34 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 15:31:34 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:31:34 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:31:34 - ID extraído del QR: 106
+2026-04-07 15:31:34 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 15:31:34 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 15:31:48 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 15:31:48 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:31:48 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:31:48 - ID extraído del QR: 106
+2026-04-07 15:31:48 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 15:31:48 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 15:31:58 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 15:31:58 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:31:58 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:31:58 - ID extraído del QR: 106
+2026-04-07 15:31:58 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 15:31:58 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 15:32:10 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 15:32:10 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:32:10 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:32:10 - ID extraído del QR: 106
+2026-04-07 15:32:10 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 15:32:10 - Funcionario encontrado y activo: Michael David Montoya Pasachoa
+2026-04-07 15:32:18 - === QR RAW HEX: 49443a203130360a4e6f6d6272653a204d69636861656c204461766964204d6f6e746f7961205061736163686f610a436172676f3a2046756e63696f6e6172696f0a496e73746974756369c3b36e3a20556e6976657273696461642045414649540a536564653a205365646520426f676f74c3a120416c7465726e610a45737461646f3a2041637469766f
+2026-04-07 15:32:18 - === QR TEXTO:   ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:32:18 - === QR NORMALIZADO: ID: 106
+Nombre: Michael David Montoya Pasachoa
+Cargo: Funcionario
+Institución: Universidad EAFIT
+Sede: Sede Bogotá Alterna
+Estado: Activo
+2026-04-07 15:32:18 - ID extraído del QR: 106
+2026-04-07 15:32:18 - Resultado BD por ID: {"IdFuncionario":106,"Estado":"Activo"}
+2026-04-07 15:32:18 - Funcionario encontrado y activo: Michael David Montoya Pasachoa

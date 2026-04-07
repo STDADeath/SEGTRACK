@@ -1,4 +1,4 @@
-const AppPark = {
+const AppParqueadero = {
     table: null,
     qrReader: null,
     ultimaLectura: null,
@@ -8,15 +8,18 @@ const AppPark = {
     mensajeExito: null,
     mensajeError: null,
     _timerCard: null,
+    _timerCamara: null,
+    _timerCountdown: null,
 
     config: {
         urlControlador: "/SEGTRACK/App/Controller/ControladorIngresoParqueadero.php",
-        rutaFotos:      "/SEGTRACK/Public/",
-        avatarDefault:  "/SEGTRACK/Public/img/avatar_default.png",
-        fps:            10,
-        qrboxSize:      250,
-        bloqueoQRms:    1500,
-        tiempoCard:     7000
+        rutaFotos: "/SEGTRACK/Public/",
+        avatarDefault: "/SEGTRACK/Public/img/avatar_default.png",
+        fps: 10,
+        qrboxSize: 250,
+        bloqueoQRms: 1500,
+        tiempoCard: 7000,
+        tiempoCamara: 5000
     }
 };
 
@@ -25,16 +28,89 @@ const AppPark = {
 // ========================================
 
 function mostrarMensaje(esExito, texto) {
-    const exito = document.getElementById("mensajeExito");
-    const error = document.getElementById("mensajeError");
-    if (!exito || !error) return;
-    exito.classList.toggle("d-none", !esExito);
-    error.classList.toggle("d-none", esExito);
-    (esExito ? exito : error).textContent = texto;
+    const { mensajeExito, mensajeError } = AppParqueadero;
+    if (!mensajeExito || !mensajeError) return;
+    
+    mensajeExito.classList.toggle("d-none", !esExito);
+    mensajeError.classList.toggle("d-none", esExito);
+    (esExito ? mensajeExito : mensajeError).textContent = texto;
+    
     setTimeout(() => {
-        exito.classList.add("d-none");
-        error.classList.add("d-none");
+        mensajeExito.classList.add("d-none");
+        mensajeError.classList.add("d-none");
     }, 5000);
+}
+
+// ========================================
+// ALERTAS ESPECÍFICAS DE PARQUEADERO
+// ========================================
+
+function mostrarAlertaInactivo() {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Acceso denegado',
+            text: 'Este vehículo está inactivo y no tiene permiso de acceso.',
+            confirmButtonColor: '#e74a3b',
+            confirmButtonText: 'Entendido',
+            timer: 5000,
+            timerProgressBar: true
+        });
+    } else {
+        alert('⛔ Vehículo inactivo. No tiene permiso de acceso.');
+    }
+    mostrarMensaje(false, '⛔ Vehículo inactivo. No tiene permiso de acceso.');
+}
+
+function mostrarAlertaSinEntrada() {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Salida no permitida',
+            text: 'Este vehículo no tiene una entrada activa. Debe registrar entrada primero.',
+            confirmButtonColor: '#f6c23e',
+            confirmButtonText: 'Entendido',
+            timer: 5000,
+            timerProgressBar: true
+        });
+    } else {
+        alert('⚠️ El vehículo debe registrar una Entrada antes de salir.');
+    }
+    mostrarMensaje(false, '⚠️ Debe registrar una Entrada antes de poder registrar una Salida.');
+}
+
+function mostrarAlertaEntradaDuplicada() {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'info',
+            title: 'Entrada duplicada',
+            text: 'Este vehículo ya tiene una entrada activa. Debe registrar una Salida primero.',
+            confirmButtonColor: '#36b9cc',
+            confirmButtonText: 'Entendido',
+            timer: 5000,
+            timerProgressBar: true
+        });
+    } else {
+        alert('ℹ️ El vehículo ya tiene una Entrada activa. Registre una Salida primero.');
+    }
+    mostrarMensaje(false, 'ℹ️ El vehículo ya tiene una Entrada activa. Registre una Salida primero.');
+}
+
+function mostrarAlertaSinEspacio() {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Parqueadero lleno',
+            text: 'No hay espacios de parqueadero disponibles en este momento.',
+            confirmButtonColor: '#e74a3b',
+            confirmButtonText: 'Entendido',
+            timer: 5000,
+            timerProgressBar: true
+        });
+    } else {
+        alert('🅿️ No hay espacios de parqueadero disponibles.');
+    }
+    mostrarMensaje(false, '🅿️ No hay espacios de parqueadero disponibles.');
 }
 
 // ========================================
@@ -54,95 +130,110 @@ function mostrarVehiculo(data) {
 
     if (!card) return;
 
-    foto.onerror = () => { foto.src = AppPark.config.avatarDefault; };
+    foto.onerror = () => { foto.src = AppParqueadero.config.avatarDefault; };
     foto.src = (data.foto && data.foto.trim() !== "" && data.foto !== "NULL")
-        ? AppPark.config.rutaFotos + data.foto.trim()
-        : AppPark.config.avatarDefault;
+        ? AppParqueadero.config.rutaFotos + data.foto.trim()
+        : AppParqueadero.config.avatarDefault;
 
-    console.log("FOTO recibida:", data.foto);
-    console.log("RUTA final:", foto.src);
-
-    nombre.textContent  = data.dueno         ?? "Sin asignar";
-    tipo.textContent    = data.tipo          ?? "—";
-    placa.textContent   = data.placa         ?? "—";
-    desc.textContent    = data.descripcion   ?? "—";
+    nombre.textContent  = data.dueno ?? "Sin asignar";
+    tipo.textContent    = data.tipo ?? "—";
+    placa.textContent   = data.placa ?? "—";
+    desc.textContent    = data.descripcion ?? "—";
     espacio.textContent = data.numeroEspacio ?? "Sin asignar";
-    fecha.textContent   = data.fecha
-        ? new Date(data.fecha).toLocaleString('es-ES')
-        : "";
+    fecha.textContent   = data.fecha ? new Date(data.fecha).toLocaleString('es-ES') : "";
 
     badge.textContent = data.movimiento ?? "—";
     badge.className   = "badge fs-5 px-4 py-2 mb-2 " +
         (data.movimiento === "Entrada" ? "bg-success" : "bg-danger");
 
-    if (AppPark._timerCard) clearTimeout(AppPark._timerCard);
+    if (AppParqueadero._timerCard) clearTimeout(AppParqueadero._timerCard);
 
     card.classList.remove("d-none");
     card.style.transition = "opacity 0.4s ease";
-    card.style.opacity    = "0";
+    card.style.opacity = "0";
     requestAnimationFrame(() => {
         requestAnimationFrame(() => { card.style.opacity = "1"; });
     });
 
-    AppPark._timerCard = setTimeout(() => {
+    AppParqueadero._timerCard = setTimeout(() => {
         card.style.opacity = "0";
         setTimeout(() => card.classList.add("d-none"), 400);
-    }, AppPark.config.tiempoCard);
+    }, AppParqueadero.config.tiempoCard);
 }
 
 // ========================================
-// ENVIAR QR AL SERVIDOR
+// ENVIAR QR AL SERVIDOR (CON CÓDIGOS DE ERROR)
 // ========================================
 
 async function enviarQr(qr, tipo) {
-    if (AppPark.btnCapturar) AppPark.btnCapturar.disabled = true;
+    if (AppParqueadero.btnCapturar) AppParqueadero.btnCapturar.disabled = true;
+    
     try {
-        const res  = await fetch(AppPark.config.urlControlador, {
+        const res = await fetch(AppParqueadero.config.urlControlador, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ qr_codigo: qr, tipoMovimiento: tipo })
         });
+        
         const data = await res.json();
-
-        console.log("RESPUESTA COMPLETA:", JSON.stringify(data));
-
-        mostrarMensaje(data.success, data.message);
-        if (data.success) {
-            if (AppPark.table) AppPark.table.ajax.reload(null, false);
-            if (data.data)     mostrarVehiculo(data.data);
+        
+        // Manejar códigos de error específicos
+        if (!data.success) {
+            switch(data.codigo) {
+                case 'inactivo':
+                    mostrarAlertaInactivo();
+                    return;
+                case 'sin_entrada_previa':
+                    mostrarAlertaSinEntrada();
+                    return;
+                case 'entrada_duplicada':
+                    mostrarAlertaEntradaDuplicada();
+                    return;
+                case 'sin_espacio':
+                    mostrarAlertaSinEspacio();
+                    return;
+                default:
+                    mostrarMensaje(false, data.message);
+            }
+        } else {
+            mostrarMensaje(true, data.message);
+            if (AppParqueadero.table) AppParqueadero.table.ajax.reload(null, false);
+            if (data.data) mostrarVehiculo(data.data);
         }
+        
     } catch (e) {
         console.error("Error enviarQr:", e);
         mostrarMensaje(false, "Error de conexión.");
     } finally {
-        if (AppPark.btnCapturar) AppPark.btnCapturar.disabled = false;
+        if (AppParqueadero.btnCapturar) AppParqueadero.btnCapturar.disabled = false;
     }
 }
 
 // ========================================
-// CUANDO SE DETECTA UN QR
+// DETECCIÓN DE QR
 // ========================================
 
 function onScanQR(qr) {
     qr = qr.trim();
-    if (!qr || AppPark.escaneando || qr === AppPark.ultimaLectura) return;
-    AppPark.escaneando    = true;
-    AppPark.ultimaLectura = qr;
-    enviarQr(qr, AppPark.tipoMovimiento.value).finally(() => {
+    if (!qr || AppParqueadero.escaneando || qr === AppParqueadero.ultimaLectura) return;
+    
+    AppParqueadero.escaneando = true;
+    AppParqueadero.ultimaLectura = qr;
+    
+    enviarQr(qr, AppParqueadero.tipoMovimiento.value).finally(() => {
         setTimeout(() => {
-            AppPark.escaneando    = false;
-            AppPark.ultimaLectura = null;
-        }, AppPark.config.bloqueoQRms);
+            AppParqueadero.escaneando = false;
+            AppParqueadero.ultimaLectura = null;
+        }, AppParqueadero.config.bloqueoQRms);
     });
 }
 
 // ========================================
-// ACTUALIZAR BOTÓN SEGÚN ESTADO CÁMARA
+// CONTROL DE CÁMARA CON COUNTDOWN
 // ========================================
 
 function actualizarBoton(camaraActiva) {
-    const btn = AppPark.btnCapturar;
-    if (!btn) return;
+    const btn = AppParqueadero.btnCapturar;
     if (camaraActiva) {
         btn.classList.replace("btn-primary", "btn-danger");
         btn.innerHTML = '<i class="fas fa-times me-2"></i>Cancelar Cámara';
@@ -152,96 +243,107 @@ function actualizarBoton(camaraActiva) {
     }
 }
 
-// ========================================
-// INICIAR CÁMARA
-// ========================================
+function iniciarCountdown(segundos) {
+    limpiarCountdown();
+    let restantes = segundos;
+    
+    if (AppParqueadero.btnCapturar) {
+        AppParqueadero.btnCapturar.innerHTML = `<i class="fas fa-times me-2"></i>Cancelar Cámara (${restantes}s)`;
+    }
+    
+    AppParqueadero._timerCountdown = setInterval(() => {
+        restantes--;
+        if (restantes <= 0) {
+            limpiarCountdown();
+            detenerCamara();
+            return;
+        }
+        if (AppParqueadero.btnCapturar) {
+            AppParqueadero.btnCapturar.innerHTML = `<i class="fas fa-times me-2"></i>Cancelar Cámara (${restantes}s)`;
+        }
+    }, 1000);
+}
+
+function limpiarCountdown() {
+    if (AppParqueadero._timerCountdown) {
+        clearInterval(AppParqueadero._timerCountdown);
+        AppParqueadero._timerCountdown = null;
+    }
+}
 
 async function iniciarCamara() {
-    if (AppPark.qrReader) return;
-
-    // Paso 1: pedir permiso explícito primero
+    if (AppParqueadero.qrReader) return;
+    
     try {
         await navigator.mediaDevices.getUserMedia({ video: true });
     } catch {
-        mostrarMensaje(false, "Permiso de cámara denegado. Habilítalo en la barra del navegador.");
+        mostrarMensaje(false, "Permiso de cámara denegado.");
         return;
     }
-
-    AppPark.qrReader = new Html5Qrcode("qr-reader");
-
+    
+    AppParqueadero.qrReader = new Html5Qrcode("qr-reader");
+    
     try {
         const devices = await Html5Qrcode.getCameras();
         if (!devices || devices.length === 0) {
             mostrarMensaje(false, "No se detectaron cámaras.");
-            AppPark.qrReader.clear();
-            AppPark.qrReader = null;
+            AppParqueadero.qrReader.clear();
+            AppParqueadero.qrReader = null;
             return;
         }
-
-        const camara =
-            devices.find(d => d.label.toLowerCase().includes("back"))    ||
-            devices.find(d => d.label.toLowerCase().includes("rear"))    ||
-            devices.find(d => d.label.toLowerCase().includes("trasera")) ||
-            devices.find(d => d.label.toLowerCase().includes("droid"))   ||
-            devices[0];
-
-        await AppPark.qrReader.start(
+        
+        const camara = devices.find(d => d.label.toLowerCase().includes("back")) ||
+                      devices.find(d => d.label.toLowerCase().includes("rear")) ||
+                      devices.find(d => d.label.toLowerCase().includes("trasera")) ||
+                      devices[0];
+        
+        await AppParqueadero.qrReader.start(
             camara.id,
-            { fps: AppPark.config.fps, qrbox: { width: AppPark.config.qrboxSize, height: AppPark.config.qrboxSize } },
+            { fps: AppParqueadero.config.fps, qrbox: { width: AppParqueadero.config.qrboxSize, height: AppParqueadero.config.qrboxSize } },
             onScanQR,
             () => {}
         );
-
+        
         actualizarBoton(true);
-
+        iniciarCountdown(20);
+        
     } catch (error) {
-        console.error("Error iniciando por deviceId:", error);
-
-        // Fallback con facingMode
         try {
-            await AppPark.qrReader.start(
+            await AppParqueadero.qrReader.start(
                 { facingMode: "environment" },
-                { fps: AppPark.config.fps, qrbox: { width: AppPark.config.qrboxSize, height: AppPark.config.qrboxSize } },
+                { fps: AppParqueadero.config.fps, qrbox: { width: AppParqueadero.config.qrboxSize, height: AppParqueadero.config.qrboxSize } },
                 onScanQR,
                 () => {}
             );
-
             actualizarBoton(true);
-
+            iniciarCountdown(20);
         } catch (error2) {
-            console.error("Fallback también falló:", error2);
             mostrarMensaje(false, "No se pudo iniciar la cámara: " + error2.message);
-            AppPark.qrReader.clear();
-            AppPark.qrReader = null;
+            AppParqueadero.qrReader.clear();
+            AppParqueadero.qrReader = null;
         }
     }
 }
 
-// ========================================
-// DETENER CÁMARA
-// ========================================
-
 async function detenerCamara() {
-    if (!AppPark.qrReader) return;
+    limpiarCountdown();
+    if (!AppParqueadero.qrReader) return;
+    
     try {
-        await AppPark.qrReader.stop();
-        AppPark.qrReader.clear();
+        await AppParqueadero.qrReader.stop();
+        AppParqueadero.qrReader.clear();
     } catch (e) {
         console.error("Error deteniendo cámara:", e);
     } finally {
-        AppPark.qrReader      = null;
-        AppPark.escaneando    = false;
-        AppPark.ultimaLectura = null;
+        AppParqueadero.qrReader = null;
+        AppParqueadero.escaneando = false;
+        AppParqueadero.ultimaLectura = null;
         actualizarBoton(false);
     }
 }
 
-// ========================================
-// ALTERNAR CÁMARA (un solo botón)
-// ========================================
-
 async function toggleCamara() {
-    if (AppPark.qrReader) {
+    if (AppParqueadero.qrReader) {
         await detenerCamara();
     } else {
         await iniciarCamara();
@@ -253,21 +355,21 @@ async function toggleCamara() {
 // ========================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    AppPark.tipoMovimiento = document.getElementById("tipoMovimiento");
-    AppPark.btnCapturar    = document.getElementById("btnCapturar");
-    AppPark.mensajeExito   = document.getElementById("mensajeExito");
-    AppPark.mensajeError   = document.getElementById("mensajeError");
-
-    AppPark.table = $("#tablaParqueaderoDT").DataTable({
+    AppParqueadero.tipoMovimiento = document.getElementById("tipoMovimiento");
+    AppParqueadero.btnCapturar = document.getElementById("btnCapturar");
+    AppParqueadero.mensajeExito = document.getElementById("mensajeExito");
+    AppParqueadero.mensajeError = document.getElementById("mensajeError");
+    
+    AppParqueadero.table = $("#tablaParqueaderoDT").DataTable({
         ajax: {
-            url:     AppPark.config.urlControlador,
+            url: AppParqueadero.config.urlControlador,
             dataSrc: json => json.data || []
         },
         columns: [
-            { data: "PlacaVehiculo",  defaultContent: "—" },
-            { data: "TipoVehiculo",   defaultContent: "—" },
-            { data: "DuenoVehiculo",  defaultContent: "No registrado" },
-            { data: "NumeroEspacio",  defaultContent: "Sin asignar" },
+            { data: "PlacaVehiculo", defaultContent: "—" },
+            { data: "TipoVehiculo", defaultContent: "—" },
+            { data: "DuenoVehiculo", defaultContent: "No registrado" },
+            { data: "NumeroEspacio", defaultContent: "Sin asignar" },
             { data: "TipoMovimiento", defaultContent: "—" },
             {
                 data: "FechaIngreso",
@@ -278,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
         language: { url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json" },
         order: [[5, 'desc']]
     });
-
-    if (AppPark.btnCapturar)
-        AppPark.btnCapturar.addEventListener("click", toggleCamara); // ← CAMBIADO
+    
+    if (AppParqueadero.btnCapturar)
+        AppParqueadero.btnCapturar.addEventListener("click", toggleCamara);
 });
